@@ -160,7 +160,7 @@ p {
 .updates {
   font-size: 14px;
   margin-top: 10px;
-  background-color: #fbfbfb;
+  background-color: #f5f6fc;
   padding: 10px;
   -webkit-box-shadow: 0.5px 0.5px 0.5px 1px rgba(116, 114, 114, 0.48);
   -moz-box-shadow: 0.5px 0.5px 0.5px 1px rgba(116, 114, 114, 0.48);
