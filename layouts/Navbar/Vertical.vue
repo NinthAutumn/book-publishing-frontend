@@ -109,6 +109,7 @@ export default {
   padding-left: 30px;
   align-items: center;
   font-size: 18px;
+  /* position: relative; */
 }
 
 .list:hover {
@@ -127,6 +128,17 @@ ul {
 }
 li {
   list-style: none;
+}
+.updates::before {
+  position: absolute;
+  top: 10px;
+  right: 5px;
+  width: 6px;
+  height: 6px;
+  margin-right: 6px;
+  content: "";
+  border-radius: 8px;
+  background-color: #8860d0;
 }
 
 hr {
@@ -148,12 +160,18 @@ p {
 .updates {
   font-size: 14px;
   margin-top: 10px;
-  background-color: aliceblue;
+  background-color: #fbfbfb;
   padding: 10px;
-  -webkit-box-shadow: 0.5px 0.5px 0.5px 1px rgba(0, 0, 0, 0.48);
-  -moz-box-shadow: 0.5px 0.5px 0.5px 1px rgba(0, 0, 0, 0.48);
+  -webkit-box-shadow: 0.5px 0.5px 0.5px 1px rgba(116, 114, 114, 0.48);
+  -moz-box-shadow: 0.5px 0.5px 0.5px 1px rgba(116, 114, 114, 0.48);
   box-shadow: 0.5px 0.5px 0.5px 1px rgba(116, 114, 114, 0.48);
   /* border-radius: 5px; */
+  position: relative;
+}
+
+.updates:hover {
+  cursor: pointer;
+  transform: scale(1.005);
 }
 .update-time {
   font-size: 15px;
