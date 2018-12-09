@@ -1,7 +1,8 @@
 <template>
   <div class="book-card" @click="linkTo" :class="size">
-    <div class="book-cover" :style="{background: 'url(' + book.cover +')' }">
-      <!-- <img :src="book.cover" class="book-img" alt="Book cover"> -->
+    <div class="book-cover">
+      <span class="star-rating"></span>
+      <img :src="book.cover" class="book-img" alt="Book cover">
     </div>
     <div class="text-info">
       <p class="book-title full">{{book.title}}</p>
@@ -30,13 +31,15 @@ export default {
 .book-cover {
   width: 165px;
   height: 245px;
-  background-size: cover;
+  position: relative;
 }
 .book-card {
   display: flex;
   flex-direction: column;
+  border-radius: 10px;
+
   width: 165px;
-  height: 245px;
+  /* height: 245px; */
   position: relative;
 
   -webkit-box-shadow: 1px 1px 1px 0px rgba(153, 153, 153, 0.75);
@@ -49,9 +52,12 @@ export default {
   height: 245px;
   position: relative;
   /* border-radius: 10px; */
-  /* border-top-left-radius: 10px;
-  border-top-right-radius: 10px; */
+
+  /* border-radius: 10px; */
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 }
+
 .book-title {
   margin: 0;
   padding: 0;
@@ -68,8 +74,8 @@ export default {
   padding: 5px 0;
   padding-left: 5px;
 
-  /* border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px; */
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
 }
 
 /* .book-card::after {
@@ -105,7 +111,9 @@ export default {
   animation: gradualAppearance 200ms ease-out;
   animation-fill-mode: reverse;
   width: 100%;
-  height: 85%;
+  height: 100%;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 }
 
 .p-ending {
@@ -119,7 +127,7 @@ export default {
 
 .big {
   width: 165px;
-  height: 245px;
+  /* height: 245px; */
 }
 
 @keyframes gradualAppearance {

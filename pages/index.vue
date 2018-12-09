@@ -9,6 +9,14 @@
         </div>
       </div>
     </div>
+    <div class="main-books">
+      <h3 class="card-title">Recommended</h3>
+      <div class="main-books-list">
+        <div v-for="book in books" :key="book.id">
+          <Book :book="book" :size="size = 'big'"></Book>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -23,27 +31,27 @@ export default {
       books: [
         {
           title: "神達に拾われた男",
-          cover: "'/_nuxt/assets/bookcover.jpeg'"
+          cover: require("~/assets/bookcover.png")
+        },
+        {
+          title: "この素晴らしい世界に祝福を!",
+          cover: require("~/assets/book1.jpeg")
         },
         {
           title: "神達に拾われた男",
-          cover: "'/_nuxt/assets/books.jpeg'"
+          cover: require("~/assets/book2.jpeg")
         },
         {
           title: "神達に拾われた男",
-          cover: "'/_nuxt/assets/bookcover.jpeg'"
+          cover: require("~/assets/bookcover.png")
         },
         {
           title: "神達に拾われた男",
-          cover: "'/_nuxt/assets/bookcover.jpeg'"
+          cover: require("~/assets/book1.jpeg")
         },
         {
           title: "神達に拾われた男",
-          cover: "/_nuxt/assets/bookcover.jpeg"
-        },
-        {
-          title: "神達に拾われた男",
-          cover: "/_nuxt/assets/bookcover.jpeg"
+          cover: require("~/assets/book2.jpeg")
         }
       ],
       size: null
@@ -63,6 +71,8 @@ export default {
   align-items: center;
   justify-content: space-between;
   padding: 5px 0;
+  animation: appearGradually 300ms ease-out;
+  animation-fill-mode: backwards;
 }
 
 .card-title {
@@ -72,5 +82,14 @@ export default {
 }
 body {
   background: #eeeeee;
+}
+
+@keyframes appearGradually {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 </style>
