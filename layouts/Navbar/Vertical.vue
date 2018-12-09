@@ -65,7 +65,7 @@ export default {
           chapter: "10c"
         },
         {
-          title: "スライムになった件",
+          title: "スライムにならなかった件",
           time: moment().format("LTS"),
           chapter: "90c"
         },
@@ -90,9 +90,11 @@ export default {
 <style scoped>
 .v-nav {
   background-color: #fbf9f9;
-  width: 240px;
+  width: 20vw;
+  min-width: 186.188px;
+  max-width: 240px;
   height: 100vh;
-  position: absolute;
+  position: fixed;
   top: 50px;
   left: 0;
   /* -webkit-box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.36);
@@ -102,6 +104,7 @@ export default {
   -moz-box-shadow: inset 0.25px 0.25px 0.25px 0.25px rgba(0, 0, 0, 0.2);
   box-shadow: inset 0.25px 0.25px 0.25px 0.25px rgba(177, 175, 175, 0.2);
   opacity: 0.75;
+  overflow: auto;
 }
 .list {
   display: flex;
@@ -146,7 +149,7 @@ hr {
 }
 
 p {
-  font-size: 15px;
+  font-size: 14px;
 
   text-align: center;
 }

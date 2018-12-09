@@ -1,11 +1,11 @@
 <template>
-  <div class="horizontal">
+  <div class="h-nav">
     <nav>
       <div class="left-menu">
-        <i class="el-icon-menu"></i>
+        <i class="el-icon-menu" :class="onClick" @click="nice"></i>
       </div>
       <SearchBar class="searchbar"></SearchBar>
-      <img src="http://placehold.jp/40x40.png" style="border-radius:100px;  margin-right: 10px;">
+      <img src="http://placehold.jp/45x45.png" style="border-radius:100px;  margin-right: 10px;">
     </nav>
   </div>
 </template>
@@ -13,21 +13,44 @@
 import SearchBar from "./../../components/SearchBar";
 export default {
   name: "Horizontal",
+  data() {
+    return {
+      onClick: "not-clicked",
+      feedback: null
+    };
+  },
   components: {
     SearchBar
+  },
+
+  methods: {
+    nice() {
+      if (this.onClick != "clicked") {
+        this.onClick = "clicked";
+      } else {
+        this.onClick = "not-clicked";
+      }
+    }
   }
 };
 </script>
 <style scoped>
-nav {
+.h-nav {
   height: 50px;
   width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  position: fixed;
   -webkit-box-shadow: 0px 2px 2px 0px rgba(217, 208, 219, 1);
   -moz-box-shadow: 0px 2px 2px 0px rgba(217, 208, 219, 1);
   box-shadow: 0px 2px 2px 0px rgba(217, 208, 219, 1);
+  top: 0;
+  left: 0;
+  background-color: white;
+}
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 50px;
 }
 ul {
   list-style: none;
@@ -39,10 +62,47 @@ ul {
   font-size: 32px;
   color: #c9b1f5;
 }
+.el-icon-menu:hover {
+  cursor: pointer;
+}
+.clicked {
+  background-color: #eaecf5;
+  -webkit-animation: flip-diagonal-2-br 300ms
+    cubic-bezier(0.455, 0.03, 0.515, 0.955) both;
+  animation: flip-diagonal-2-br 300ms cubic-bezier(0.455, 0.03, 0.515, 0.955)
+    both;
+}
+.not-clicked {
+  -webkit-animation: flip-diagonal-2-br 300ms
+    cubic-bezier(0.455, 0.03, 0.515, 0.955) both;
+  animation: flip-diagonal-2-br 300ms cubic-bezier(0.455, 0.03, 0.515, 0.955)
+    both;
+}
 .searchbar {
 }
 
 .left-menu {
   margin-left: 10px;
+}
+
+@-webkit-keyframes flip-diagonal-2-br {
+  0% {
+    -webkit-transform: rotate3d(-1, 1, 0, 0deg);
+    transform: rotate3d(-1, 1, 0, 0deg);
+  }
+  100% {
+    -webkit-transform: rotate3d(-1, 1, 0, 180deg);
+    transform: rotate3d(-1, 1, 0, 180deg);
+  }
+}
+@keyframes flip-diagonal-2-br {
+  0% {
+    -webkit-transform: rotate3d(-1, 1, 0, 0deg);
+    transform: rotate3d(-1, 1, 0, 0deg);
+  }
+  100% {
+    -webkit-transform: rotate3d(-1, 1, 0, 180deg);
+    transform: rotate3d(-1, 1, 0, 180deg);
+  }
 }
 </style>

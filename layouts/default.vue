@@ -1,14 +1,18 @@
 <template>
   <div>
-    <Nav></Nav>
-    <nuxt/>
+    <Horizontal></Horizontal>
+    <Vertical></Vertical>
+    <nuxt></nuxt>
   </div>
 </template>
 <script>
-import Nav from "./Navbar/Nav";
+import Horizontal from "./Navbar/Horizontal";
+import Vertical from "./Navbar/Vertical";
+
 export default {
   components: {
-    Nav
+    Horizontal,
+    Vertical
   }
 };
 </script>
@@ -16,5 +20,8 @@ export default {
 <style>
 body {
   margin: 0;
+}
+* {
+  font-family: "Noto Sans JP", sans-serif;
 }
 </style>

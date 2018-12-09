@@ -1,16 +1,35 @@
 <template>
   <div class="search-bar">
-    <form action @submit class="search-form">
+    <form action @submit.prevent="searchOutput" class="search-form">
       <!-- <span>
         <i class="el-icon-search"></i>
       </span>-->
-      <input type="text" class="search-input">
+      <input
+        type="text"
+        class="search-input"
+        placeholder="Find the right Book"
+        v-model="searchItem"
+      >
       <input type="submit" class="btn btn-search" value="Search">
     </form>
   </div>
 </template>
 <script>
-export default {};
+export default {
+  name: "SearchBar",
+  data() {
+    return {
+      searchItem: ""
+    };
+  },
+  methods: {
+    searchOutput() {
+      console.log(this.searchItem);
+      this.$router.push("/search?query=" + this.searchItem);
+      this.$emit("searched", this.searchItem);
+    }
+  }
+};
 </script>
 <style >
 .search-input {
@@ -18,15 +37,16 @@ export default {};
   width: 100%;
   border: none;
   border-radius: 14px;
-  font-size: 16px;
+  font-size: 14px;
   background: url("");
-  margin-left: 10px;
+  /* margin-left: 10px; */
+  padding: 10px;
   color: #a16dff;
   font-weight: 500;
 }
 
 .search-form {
-  height: 38px;
+  height: 32px;
   border-radius: 10px;
   /* padding: 0 2px; */
   display: flex;
