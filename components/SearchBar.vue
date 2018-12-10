@@ -82,13 +82,13 @@ export default {
 }
 
 .search-bar span {
-  padding: 0 10px;
+  padding: 0 1rem;
   height: 100%;
   display: flex;
   align-items: center;
   /* border: 1px solid red; */
-  border-top-left-radius: 10px;
-  border-bottom-left-radius: 10px;
+  border-top-left-radius: 1rem;
+  border-bottom-left-radius: 1rem;
   margin: 0;
   /* font-size: 17px; */
   background-color: #f9f9fc;
@@ -97,7 +97,7 @@ export default {
   color: #a16dff;
   opacity: 0.5;
   font-weight: bold;
-  font-size: 20px;
+  font-size: 2rem;
 }
 input:focus {
   outline: none;
@@ -105,18 +105,18 @@ input:focus {
 
 @keyframes underNav {
   0% {
-    border-bottom: 10px solid #a16dff;
+    border-bottom: 1rem solid #a16dff;
   }
   100% {
-    border: 1px solid #a16dff;
+    border: 0.5rem solid #a16dff;
   }
 }
 
 .btn {
-  width: 80px;
+  width: 8rem;
   height: 100%;
-  border-top-right-radius: 8px;
-  border-bottom-right-radius: 8px;
+  border-top-right-radius: 0.8rem;
+  border-bottom-right-radius: 0.8rem;
   /* padding: 10px; */
   color: white;
   background-color: #e7daff;

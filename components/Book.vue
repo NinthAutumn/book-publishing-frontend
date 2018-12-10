@@ -5,56 +5,83 @@
       <img :src="book.cover" class="book-img" alt="Book cover">
     </div>
     <div class="text-info">
-      <p class="book-title full">{{book.title}}</p>
+      <p class="book-title full" ref="texting">{{book.title}}</p>
       <span class="p-ending"></span>
+      <star-rating
+        v-model="rating"
+        :star-size="20"
+        read-only="true"
+        :show-rating="true"
+        inactive-color="#CCCCCC"
+        active-color="#5580E9"
+        :increment="0.01"
+        :round-start-rating="false"
+        border-color="#5580E9"
+        :glow="1"
+        glow-color="#CCCCCC"
+        class="star-rating"
+      ></star-rating>
     </div>
   </div>
 </template>
 <script>
+// import StarRating from "vue-star-rating";
 export default {
   name: "book-card",
+  comonents: {
+    // StarRating
+  },
   props: {
     book: Object,
     size: String
   },
   data() {
-    return {};
+    return {
+      rating: 3.5
+    };
   },
   methods: {
     linkTo() {
       this.$router.push("/");
     }
   },
-  createdAt() {}
+  mounted() {
+    var el = this.$refs.texting;
+    var wordArray = el.innerHTML.split("");
+    while (el.scrollHeight > el.offsetHeight) {
+      wordArray.pop();
+      el.innerHTML = wordArray.join("") + "...";
+    }
+  }
 };
 </script>
 <style>
 .book-cover {
-  width: 165px;
-  height: 245px;
+  width: 16.5rem;
+  height: 24.5rem;
   position: relative;
   -webkit-box-shadow: 1px 1px 1px 0px rgba(153, 153, 153, 0.75);
   -moz-box-shadow: 1px 1px 1px 0px rgba(153, 153, 153, 0.75);
   box-shadow: 1px 1px 1px 0px rgba(153, 153, 153, 0.75);
-  border-radius: 10px;
+  border-radius: 1rem;
 }
 #book-card {
   display: flex;
   flex-direction: column;
-  border-radius: 10px;
-
-  width: 165px;
+  border-radius: 1rem;
+  margin-right: 2rem;
+  width: 16.5rem;
   /* height: 245px; */
   position: relative;
 }
 
 .book-img {
-  width: 165px;
-  height: 245px;
+  width: 16.5rem;
+  height: 24.5rem;
   position: relative;
   /* border-radius: 10px; */
 
-  border-radius: 10px;
+  border-radius: 1rem;
   /* border-top-left-radius: 10px;
   border-top-right-radius: 10px; */
 }
@@ -63,14 +90,23 @@ export default {
   margin: 0;
   /* margin-top: 10px; */
   padding: 0;
-  font-size: 16px;
+  font-size: 1.6rem;
   width: inherit;
-  height: 50px;
+  height: 5rem;
   overflow: hidden;
-  text-overflow: ellipsis;
+  /* text-overflow: ellipsis; */
   position: relative;
   /* line-clamp: 2; */
-  /* white-space: pre-wrap; */
+  /* white-space: normal; */
+  /* display: -webkit-box; */
+  /* white-space: normal; */
+  /* word-wrap: break-word; */
+  /* -webkit-box-orient: vertical; */
+  /* -webkit-line-clamp: 1; */
+}
+
+.book-title:hover {
+  overflow: visible;
 }
 /* .book-title::after {
   position: absolute;
@@ -81,9 +117,10 @@ export default {
 .text-info {
   display: flex;
   align-items: center;
+  flex-direction: column;
   /* background: white; */
-  height: 50px;
-  padding: 5px;
+  height: 7rem;
+  padding: 0.5rem;
   /* padding-left: 5px; */
 
   /* border-bottom-left-radius: 10px;
@@ -124,7 +161,7 @@ export default {
   animation-fill-mode: reverse;
   width: 100%;
   height: 100%;
-  border-radius: 10px;
+  border-radius: 1rem;
 }
 
 /* .p-ending {
@@ -137,8 +174,16 @@ export default {
 /* } */
 
 .big {
-  width: 165px;
+  width: 16.5rem;
   /* height: 245px; */
+}
+
+.vue-star-rating-rating-text {
+  font-size: 1.6rem;
+  margin: 0 !important;
+  margin-left: 1rem !important;
+}
+.star-rating {
 }
 
 @keyframes gradualAppearance {

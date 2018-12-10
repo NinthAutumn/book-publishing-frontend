@@ -8,6 +8,7 @@
 <script>
 import Horizontal from "./Navbar/Horizontal";
 import Vertical from "./Navbar/Vertical";
+import "~/assets/css/typography.css";
 
 export default {
   components: {

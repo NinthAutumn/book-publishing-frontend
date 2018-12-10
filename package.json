@@ -16,6 +16,7 @@
     "element-ui": "^2.4.6",
     "moment": "^2.22.2",
     "nuxt": "^2.0.0",
+    "vue-star-rating": "^1.6.1",
     "vue-text-dot": "^1.0.0"
   },
   "devDependencies": {

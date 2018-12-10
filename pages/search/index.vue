@@ -12,8 +12,8 @@ export default {
 </script>
 <style>
 #search {
-  margin-left: 240px;
-  margin-top: 50px;
-  padding: 10px;
+  margin-left: 24rem;
+  margin-top: 50rem;
+  padding: 10rem;
 }
 </style>
