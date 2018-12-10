@@ -1,5 +1,5 @@
 <template>
-  <div class="book-card" @click="linkTo" :class="size">
+  <div id="book-card" @click="linkTo" :class="size">
     <div class="book-cover">
       <span class="star-rating"></span>
       <img :src="book.cover" class="book-img" alt="Book cover">
@@ -24,7 +24,8 @@ export default {
     linkTo() {
       this.$router.push("/");
     }
-  }
+  },
+  createdAt() {}
 };
 </script>
 <style>
@@ -32,8 +33,12 @@ export default {
   width: 165px;
   height: 245px;
   position: relative;
+  -webkit-box-shadow: 1px 1px 1px 0px rgba(153, 153, 153, 0.75);
+  -moz-box-shadow: 1px 1px 1px 0px rgba(153, 153, 153, 0.75);
+  box-shadow: 1px 1px 1px 0px rgba(153, 153, 153, 0.75);
+  border-radius: 10px;
 }
-.book-card {
+#book-card {
   display: flex;
   flex-direction: column;
   border-radius: 10px;
@@ -41,10 +46,6 @@ export default {
   width: 165px;
   /* height: 245px; */
   position: relative;
-
-  -webkit-box-shadow: 1px 1px 1px 0px rgba(153, 153, 153, 0.75);
-  -moz-box-shadow: 1px 1px 1px 0px rgba(153, 153, 153, 0.75);
-  box-shadow: 1px 1px 1px 0px rgba(153, 153, 153, 0.75);
 }
 
 .book-img {
@@ -53,29 +54,40 @@ export default {
   position: relative;
   /* border-radius: 10px; */
 
-  /* border-radius: 10px; */
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
+  border-radius: 10px;
+  /* border-top-left-radius: 10px;
+  border-top-right-radius: 10px; */
 }
 
 .book-title {
   margin: 0;
+  /* margin-top: 10px; */
   padding: 0;
   font-size: 16px;
   width: inherit;
-  height: 20px;
+  height: 50px;
   overflow: hidden;
+  text-overflow: ellipsis;
+  position: relative;
+  /* line-clamp: 2; */
+  /* white-space: pre-wrap; */
 }
+/* .book-title::after {
+  position: absolute;
+  content: "...";
+  right: 0;
+  bottom: 0;
+} */
 .text-info {
   display: flex;
   align-items: center;
-  background: white;
-  height: 30px;
-  padding: 5px 0;
-  padding-left: 5px;
+  /* background: white; */
+  height: 50px;
+  padding: 5px;
+  /* padding-left: 5px; */
 
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
+  /* border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px; */
 }
 
 /* .book-card::after {
@@ -112,18 +124,17 @@ export default {
   animation-fill-mode: reverse;
   width: 100%;
   height: 100%;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
+  border-radius: 10px;
 }
 
-.p-ending {
+/* .p-ending {
   position: absolute;
   height: 10%;
-  width: 30%;
-  /* top: 0; */
-  right: 0;
-  background: linear-gradient(to left, white, transparent);
-}
+  width: 30%; */
+/* top: 0; */
+/* right: 0; */
+/* background: linear-gradient(to left, white, transparent); */
+/* } */
 
 .big {
   width: 165px;
