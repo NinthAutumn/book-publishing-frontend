@@ -1,7 +1,7 @@
 <template>
   <div class="home-page">
     <div class="head-banner">
-      <img src="http://placehold.jp/1090x240.png">
+      <img src="http://placehold.jp/1090x240.png" style="width:100%;">
     </div>
     <div class="main-books">
       <div class="card-title">
