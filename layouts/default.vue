@@ -24,5 +24,6 @@ body {
 }
 * {
   font-family: "Noto Sans JP", sans-serif;
+  font-size: 10px;
 }
 </style>

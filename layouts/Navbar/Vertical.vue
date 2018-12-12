@@ -15,7 +15,7 @@
         <p>ブックマーク</p>
         <li v-for="update in updates" :key="update.index" class="updates">
           <div class="updates-title">
-            <span>{{update.title}}</span>
+            <span class="updates-title-text">{{update.title}}</span>
           </div>
           <div class="updates-info">
             <span class="update-chapter">{{update.chapter}}</span>
@@ -91,8 +91,8 @@ export default {
 .v-nav {
   background-color: #fbf9f9;
   width: 20vw;
-  min-width: 186.188px;
-  max-width: 240px;
+  min-width: 18.6rem;
+  max-width: 24rem;
   height: 100vh;
   position: fixed;
   top: 50px;
@@ -108,10 +108,10 @@ export default {
 }
 .list {
   display: flex;
-  padding: 10px;
-  padding-left: 30px;
+  padding: 1rem;
+  padding-left: 3rem;
   align-items: center;
-  font-size: 18px;
+  font-size: 1.8rem;
   /* position: relative; */
 }
 
@@ -122,6 +122,7 @@ export default {
 
 .icons {
   margin-right: 24px;
+  font-size: 1.6rem;
 }
 p {
   margin: 0;
@@ -149,7 +150,7 @@ hr {
 }
 
 p {
-  font-size: 14px;
+  font-size: 1.4rem;
 
   text-align: center;
 }
@@ -157,11 +158,12 @@ p {
 .updates-title {
   display: flex;
   align-items: center;
+
   /* justify-content: space-around; */
 }
 
 .updates {
-  font-size: 14px;
+  font-size: 1.35rem;
   margin-top: 10px;
   background-color: #f5f6fc;
   padding: 10px;
@@ -172,12 +174,16 @@ p {
   position: relative;
 }
 
+.updates-title-text {
+  font-size: 1.35rem;
+}
+
 .updates:hover {
   cursor: pointer;
   transform: scale(1.005);
 }
 .update-time {
-  font-size: 15px;
+  font-size: 1.5rem;
 }
 
 .update-list {
@@ -191,8 +197,10 @@ p {
   display: flex;
   justify-content: space-between;
   opacity: 0.8;
+  /* font-size: 1.35rem; */
 }
 
 .update-chapter {
+  font-size: 1.35rem;
 }
 </style>

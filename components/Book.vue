@@ -1,6 +1,6 @@
 <template>
-  <div id="book-card" @click="linkTo" :class="size">
-    <div class="book-cover">
+  <div id="book-card" :class="size">
+    <div class="book-cover" @click="linkTo">
       <span class="star-rating"></span>
       <img :src="book.cover" class="book-img" alt="Book cover">
     </div>
@@ -8,7 +8,7 @@
       <p class="book-title full" ref="texting">{{book.title}}</p>
       <span class="p-ending"></span>
       <star-rating
-        v-model="rating"
+        v-model="book.rating"
         :star-size="20"
         read-only="true"
         :show-rating="true"
@@ -119,7 +119,7 @@ export default {
   align-items: center;
   flex-direction: column;
   /* background: white; */
-  height: 7rem;
+  /* height: 7rem; */
   padding: 0.5rem;
   /* padding-left: 5px; */
 
@@ -143,7 +143,7 @@ export default {
   font-weight: bold;
 } */
 
-.book-card:hover {
+.book-cover:hover {
   cursor: pointer;
 }
 
@@ -181,7 +181,7 @@ export default {
 .vue-star-rating-rating-text {
   font-size: 1.6rem;
   margin: 0 !important;
-  margin-left: 1rem !important;
+  margin-left: 0.5rem !important;
 }
 .star-rating {
 }

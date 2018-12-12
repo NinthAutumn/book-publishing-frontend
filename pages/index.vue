@@ -7,48 +7,50 @@
       <div class="card-title">
         <h3>Recommended</h3>
       </div>
-      <div class="main-books-list">
-        <div v-for="book in books" :key="book.id">
-          <Book :book="book" :size="size = 'big'"></Book>
-        </div>
-      </div>
+      <BooksList></BooksList>
     </div>
   </div>
 </template>
 
 <script>
-import Book from "../components/Book";
+import BooksList from "../components/BooksList";
 export default {
   components: {
-    Book
+    BooksList
   },
   data() {
     return {
       books: [
         {
           title: "神達に拾われた男",
-          cover: require("~/assets/bookcover.png")
+          cover: require("~/assets/bookcover.png"),
+          rating: 5
         },
         {
           title: "この素晴らしい世界に祝福を!",
-          cover: require("~/assets/book1.jpeg")
+          cover: require("~/assets/book1.jpeg"),
+          rating: 4.3
         },
         {
           title:
             "(´・ω・`)最強勇者はお払い箱→魔王になったらずっと俺の無双ターン",
-          cover: require("~/assets/book2.jpeg")
+          cover: require("~/assets/book2.jpeg"),
+          rating: 2.5
         },
         {
           title: "神達に拾われた男",
-          cover: require("~/assets/bookcover.png")
+          cover: require("~/assets/bookcover.png"),
+          rating: 3.4
         },
         {
           title: "神達に拾われた男",
-          cover: require("~/assets/book1.jpeg")
+          cover: require("~/assets/book1.jpeg"),
+          rating: 1.2
         },
         {
           title: "神達に拾われた男",
-          cover: require("~/assets/book2.jpeg")
+          cover: require("~/assets/book2.jpeg"),
+          rating: 4.5
         },
         {
           title: "この素晴らしい世界に祝福を!",
@@ -113,7 +115,7 @@ h3 {
   font-weight: 500;
 }
 body {
-  background: #eeeeee;
+  background: white;
 }
 
 .head-banner {

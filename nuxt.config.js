@@ -39,7 +39,8 @@ module.exports = {
    ** Global CSS
    */
   css: [
-    'element-ui/lib/theme-chalk/index.css'
+    'element-ui/lib/theme-chalk/index.css',
+    'swiper/dist/css/swiper.css'
   ],
 
   /*
@@ -49,6 +50,10 @@ module.exports = {
     '@/plugins/element-ui',
     {
       src: '~plugins/vue-star-rating',
+      ssr: false
+    },
+    {
+      src: '~/plugins/swiper',
       ssr: false
     }
   ],
