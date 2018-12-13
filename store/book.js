@@ -4,10 +4,14 @@ export const state = () => {
 
 
 export const getters = {
-  isGoodBook: (state) => {
-    state.filter((book) => {
+  isHighRated: (state) => {
+   let goodBook = state.filter((book) => {
       book.rating > 4
-    })
+    });
+    return goodBook
+  },
+  isTrending: (state) => {
+    
   }
 }
 
