@@ -73,7 +73,9 @@ export default {
       ],
       size: null
     };
-  }
+  },
+  middleware: "auth",
+  auth: false
 };
 </script>
 

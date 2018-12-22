@@ -7,7 +7,9 @@ export default {
   data() {
     return {};
   },
-  methods: {}
+  methods: {},
+  middleware: "auth",
+  auth: false
 };
 </script>
 <style>
