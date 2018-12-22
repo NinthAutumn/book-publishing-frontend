@@ -8,7 +8,7 @@
 <script>
 import Horizontal from "./Navbar/Horizontal";
 import Vertical from "./Navbar/Vertical";
-import "~/assets/css/typography.css";
+// import "~/assets/css/typography.css";
 
 export default {
   components: {
@@ -19,11 +19,11 @@ export default {
 </script>
 
 <style>
-body {
+/* body {
   margin: 0;
 }
 * {
   font-family: "Noto Sans JP", sans-serif;
   font-size: 10px;
-}
+} */
 </style>

@@ -10,7 +10,7 @@
       <star-rating
         v-model="book.rating"
         :star-size="20"
-        read-only="true"
+        :read-only="true"
         :show-rating="true"
         inactive-color="#CCCCCC"
         active-color="#5580E9"
