@@ -5,7 +5,9 @@
       <img :src="book.cover" class="book-img" alt="Book cover">
     </div>
     <div class="text-info">
-      <p class="book-title full" ref="texting">{{book.title}}</p>
+      <p class="book-title full" ref="texting">
+        <a>{{book.title}}</a>
+      </p>
       <span class="p-ending"></span>
       <star-rating
         v-model="book.rating"
@@ -46,12 +48,12 @@ export default {
     }
   },
   mounted() {
-    var el = this.$refs.texting;
-    var wordArray = el.innerHTML.split("");
-    while (el.scrollHeight > el.offsetHeight) {
-      wordArray.pop();
-      el.innerHTML = wordArray.join("") + "...";
-    }
+    // var el = this.$refs.texting;
+    // var wordArray = el.innerHTML.split("");
+    // while (el.scrollHeight > el.offsetHeight) {
+    //   wordArray.pop();
+    //   el.innerHTML = wordArray.join("") + "...";
+    // }
   }
 };
 </script>
@@ -88,25 +90,44 @@ export default {
 
 .book-title {
   margin: 0;
+  /* text-align: center; */
   /* margin-top: 10px; */
   padding: 0;
-  font-size: 1.6rem;
-  width: inherit;
-  height: 5rem;
+
+  width: 95%;
+  /* height: 5rem; */
   overflow: hidden;
-  /* text-overflow: ellipsis; */
+  text-overflow: ellipsis;
   position: relative;
   /* line-clamp: 2; */
-  /* white-space: normal; */
-  /* display: -webkit-box; */
-  /* white-space: normal; */
-  /* word-wrap: break-word; */
-  /* -webkit-box-orient: vertical; */
-  /* -webkit-line-clamp: 1; */
+  white-space: nowrap;
+  /* display: -webkit-box;
+  white-space: normal;
+  word-wrap: break-word;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1; */
+  transition: 300ms;
+}
+a {
+  text-decoration: none;
+  background-image: linear-gradient(#8860d0, #8860d0);
+  background-position: 0% 100%;
+  background-repeat: no-repeat;
+  background-size: 0% 2px;
+  transition: 200ms;
+  font-size: 1.6rem;
+}
+a:hover {
+  background-size: 100% 2px;
+  color: #8860d0;
 }
 
 .book-title:hover {
   overflow: visible;
+  cursor: pointer;
+  white-space: normal;
+  /* transition: overflow 500ms; */
+  transition: 200ms;
 }
 /* .book-title::after {
   position: absolute;
@@ -121,6 +142,7 @@ export default {
   /* background: white; */
   /* height: 7rem; */
   padding: 0.5rem;
+  /* width: 100%; */
   /* padding-left: 5px; */
 
   /* border-bottom-left-radius: 10px;

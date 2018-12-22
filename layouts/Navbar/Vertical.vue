@@ -172,6 +172,7 @@ p {
   box-shadow: 0.5px 0.5px 0.5px 1px rgba(116, 114, 114, 0.48);
   /* border-radius: 5px; */
   position: relative;
+  transition: 200ms;
 }
 
 .updates-title-text {
@@ -180,7 +181,8 @@ p {
 
 .updates:hover {
   cursor: pointer;
-  transform: scale(1.005);
+  transform: scale(1.019);
+  transition: 200ms;
 }
 .update-time {
   font-size: 1.5rem;

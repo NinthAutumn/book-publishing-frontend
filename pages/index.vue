@@ -95,6 +95,9 @@ export default {
   animation-fill-mode: backwards;
 }
 
+.main-books {
+}
+
 .card-title {
   margin-top: 1rem;
   /* padding: 5px 0; */
