@@ -9,8 +9,11 @@
         class="search-input"
         placeholder="Find the right Book"
         v-model="searchItem"
+        @focus="clickedSearch"
+        @blur="clickedSearch"
       >
       <input type="submit" class="btn btn-search" value="Search">
+      <a class="searchMenu" :class="show">Menu</a>
     </form>
   </div>
 </template>
@@ -19,7 +22,9 @@ export default {
   name: "SearchBar",
   data() {
     return {
-      searchItem: ""
+      searchItem: "",
+      inputclicked: false,
+      show: "noShow"
     };
   },
   methods: {
@@ -27,11 +32,22 @@ export default {
       console.log(this.searchItem);
       this.$router.push("/search?query=" + this.searchItem);
       this.$emit("searched", this.searchItem);
+    },
+    clickedSearch() {
+      this.inputclicked = !this.inputclicked;
+      if (this.inputclicked) {
+        this.show = "show";
+      } else {
+        this.show = "noShow";
+      }
     }
   }
 };
 </script>
 <style >
+.search-bar {
+  /* display: flex; */
+}
 .search-input {
   height: 100%;
   width: 100%;
@@ -56,6 +72,57 @@ export default {
   border: 1px solid #c9b1f583;
   animation: stay 200ms ease-out 1s;
   transition: height 200ms ease-out, width 200ms ease-out;
+  position: relative;
+}
+
+.searchMenu {
+}
+.show {
+  position: absolute;
+  background-color: #5bb8eb;
+  height: 30px;
+  width: 100px;
+  bottom: -30px;
+  left: 10px;
+  border-radius: 10px;
+  animation: appearmenu 1000ms;
+  /* align-content: center; */
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  transition: 300ms;
+}
+.noShow {
+  position: absolute;
+  background-color: #5bb8eb;
+  height: 30px;
+  width: 100px;
+  bottom: -30px;
+  left: 10px;
+  border-radius: 10px;
+  animation: disappearrmenu 1000ms;
+  /* align-content: center; */
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  transition: 300ms;
+  animation-fill-mode: forwards;
+}
+@keyframes disappearrmenu {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+@keyframes appearmenu {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .search-form:focus-within,

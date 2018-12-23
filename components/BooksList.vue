@@ -150,7 +150,7 @@ export default {
   height: 100%;
   top: 21px;
   width: 50px;
-  background-color: rgb(255, 255, 255);
+  background-color: rgba(255, 255, 255, 0.945);
 
   // filter: blur(1px);
   // -webkit-box-shadow: 0px 0px 54px 0px rgba(219, 219, 219, 1);
