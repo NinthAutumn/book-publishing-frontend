@@ -46,14 +46,6 @@ export default {
     linkTo() {
       this.$router.push("/");
     }
-  },
-  mounted() {
-    // var el = this.$refs.texting;
-    // var wordArray = el.innerHTML.split("");
-    // while (el.scrollHeight > el.offsetHeight) {
-    //   wordArray.pop();
-    //   el.innerHTML = wordArray.join("") + "...";
-    // }
   }
 };
 </script>
@@ -204,8 +196,6 @@ a:hover {
   font-size: 1.6rem;
   margin: 0 !important;
   margin-left: 0.5rem !important;
-}
-.star-rating {
 }
 
 @keyframes gradualAppearance {

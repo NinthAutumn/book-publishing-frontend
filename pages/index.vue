@@ -84,6 +84,7 @@ export default {
   margin-left: 24rem;
   margin-top: 5rem;
   padding: 1rem 5rem;
+  /* position: relative; */
 }
 .main-books-list {
   display: flex;

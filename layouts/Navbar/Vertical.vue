@@ -1,31 +1,28 @@
 <template>
-  <div class="v-nav">
-    <nav>
-      <ul>
-        <li v-for="menu in menus" :key="menu.title">
-          <div class="list" :to="menu.link">
-            <i :class="menu.icon" class="icons"></i>
-            <p>{{menu.title}}</p>
-          </div>
-        </li>
-        <!-- <HomeIcon/> -->
-      </ul>
-      <hr>
-      <ul class="update-list">
-        <p>ブックマーク</p>
-        <li v-for="update in updates" :key="update.index" class="updates">
-          <div class="updates-title">
-            <span class="updates-title-text">{{update.title}}</span>
-          </div>
-          <div class="updates-info">
-            <span class="update-chapter">{{update.chapter}}</span>
-            <span class="update-time">{{update.time}}</span>
-          </div>
-        </li>
-      </ul>
-      <hr>
-    </nav>
-  </div>
+  <nav class="v-nav" :class="show">
+    <ul>
+      <li v-for="menu in menus" :key="menu.title">
+        <div class="list" :to="menu.link">
+          <i :class="menu.icon" class="icons"></i>
+          <p>{{menu.title}}</p>
+        </div>
+      </li>
+    </ul>
+    <hr>
+    <ul class="update-list">
+      <p>ブックマーク</p>
+      <li v-for="update in updates" :key="update.index" class="updates">
+        <div class="updates-title">
+          <span class="updates-title-text">{{update.title}}</span>
+        </div>
+        <div class="updates-info">
+          <span class="update-chapter">{{update.chapter}}</span>
+          <span class="update-time">{{update.time}}</span>
+        </div>
+      </li>
+    </ul>
+    <hr>
+  </nav>
 </template>
 <script>
 import HomeIcon from "../../assets/home-icon";
@@ -33,6 +30,9 @@ var moment = require("moment");
 
 export default {
   name: "Vertical",
+  props: {
+    show: String
+  },
   data() {
     return {
       draw: null,
@@ -90,9 +90,8 @@ export default {
 <style scoped>
 .v-nav {
   background-color: #fbf9f9;
-  width: 20vw;
-  min-width: 18.6rem;
-  max-width: 24rem;
+  /* display: none; */
+  width: 25rem;
   height: 100vh;
   position: fixed;
   top: 50px;
@@ -105,6 +104,8 @@ export default {
   box-shadow: inset 0.25px 0.25px 0.25px 0.25px rgba(177, 175, 175, 0.2);
   opacity: 0.75;
   overflow: auto;
+  /* animation: content-enter 1s;
+  animation-fill-mode: forwards; */
 }
 .list {
   display: flex;
@@ -204,5 +205,22 @@ p {
 
 .update-chapter {
   font-size: 1.35rem;
+}
+
+@keyframes content-enter {
+  from {
+    visibility: hidden;
+    width: 0rem;
+  }
+  to {
+    visibility: visible;
+    width: 25rem;
+  }
+}
+@keyframes content-leave {
+  from {
+  }
+  to {
+  }
 }
 </style>

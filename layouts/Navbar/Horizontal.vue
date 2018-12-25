@@ -16,7 +16,8 @@ export default {
   data() {
     return {
       onClick: "not-clicked",
-      feedback: null
+      feedback: null,
+      show: "notClicked"
     };
   },
   components: {
@@ -30,6 +31,7 @@ export default {
       } else {
         this.onClick = "not-clicked";
       }
+      this.$emit("onClick", onClick);
     }
   }
 };
