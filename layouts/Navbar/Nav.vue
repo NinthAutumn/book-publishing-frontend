@@ -1,7 +1,7 @@
 <template>
   <div class="nav">
-    <Horizontal @onClick="showClicked"></Horizontal>
-    <Vertical :showed="showed"></Vertical>
+    <Horizontal></Horizontal>
+    <Vertical></Vertical>
   </div>
 </template>
 <script>
@@ -13,19 +13,9 @@ export default {
     Vertical
   },
   data() {
-    return {
-      show: "notClicked"
-    };
+    return {};
   },
-  methods: {
-    showClicked() {
-      if (this.showed !== "clicked") {
-        this.showed = "clicked";
-      } else {
-        this.showed = "notClicked";
-      }
-    }
-  }
+  methods: {}
 };
 </script>
 <style>

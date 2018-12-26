@@ -5,7 +5,7 @@
         <i class="el-icon-menu" :class="onClick" @click="nice"></i>
       </div>
       <SearchBar class="searchbar"></SearchBar>
-      <img src="http://placehold.jp/45x45.png" style="border-radius:100px;  margin-right: 10px;">
+      <img class="profile-pic" src="http://placehold.jp/45x45.png">
     </nav>
   </div>
 </template>
@@ -80,11 +80,13 @@ ul {
   animation: flip-diagonal-2-br 300ms cubic-bezier(0.455, 0.03, 0.515, 0.955)
     both;
 }
-.searchbar {
-}
-
 .left-menu {
   margin-left: 10px;
+}
+.profile-pic {
+  border-radius: 100px;
+  margin-right: 10px;
+  width: 45px;
 }
 
 @-webkit-keyframes flip-diagonal-2-br {

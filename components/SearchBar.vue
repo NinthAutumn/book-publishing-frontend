@@ -13,7 +13,6 @@
         @blur="clickedSearch"
       >
       <input type="submit" class="btn btn-search" value="Search">
-      <a class="searchMenu" :class="show">Menu</a>
     </form>
   </div>
 </template>
@@ -23,8 +22,7 @@ export default {
   data() {
     return {
       searchItem: "",
-      inputclicked: false,
-      show: "noShow"
+      inputclicked: false
     };
   },
   methods: {
@@ -75,9 +73,7 @@ export default {
   position: relative;
 }
 
-.searchMenu {
-}
-.show {
+/* .show {
   position: absolute;
   background-color: #5bb8eb;
   height: 30px;
@@ -85,14 +81,14 @@ export default {
   bottom: -30px;
   left: 10px;
   border-radius: 10px;
-  animation: appearmenu 1000ms;
-  /* align-content: center; */
-  display: flex;
+  animation: appearmenu 1000ms; */
+/* align-content: center; */
+/* display: flex;
   align-items: center;
   justify-content: space-around;
   transition: 300ms;
-}
-.noShow {
+} */
+/* .noShow {
   position: absolute;
   background-color: #5bb8eb;
   height: 30px;
@@ -100,14 +96,14 @@ export default {
   bottom: -30px;
   left: 10px;
   border-radius: 10px;
-  animation: disappearrmenu 1000ms;
-  /* align-content: center; */
-  display: flex;
+  animation: disappearrmenu 1000ms; */
+/* align-content: center; */
+/* display: flex;
   align-items: center;
   justify-content: space-around;
   transition: 300ms;
   animation-fill-mode: forwards;
-}
+} */
 @keyframes disappearrmenu {
   from {
     opacity: 1;
