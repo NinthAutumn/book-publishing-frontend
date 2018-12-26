@@ -5,21 +5,21 @@ export const state = () => {
 
 export const getters = {
   isHighRated: (state) => {
-   let goodBook = state.filter((book) => {
+    let goodBook = state.filter((book) => {
       book.rating > 4
     });
     return goodBook
   },
   isTrending: (state) => {
-    
+
   }
 }
 
 export const actions = {
   addBook({
     commit
-  }) {
-
+  }, book) {
+    commit('add', book)
   },
   editBook({
     commit
@@ -30,14 +30,24 @@ export const actions = {
     commit
   }) {
 
+  },
+  allBooks({
+    commit
+  }) {
+    commit('all')
   }
 }
 
 export const mutations = {
-  add() {
-
+  add(state, book) {
+    state.books.push(book)
   },
-  show() {
+  all(state) {
+    axios.get('localhost:5000/books/all').then((response) => {
+      state.books = response
+    })
+  },
+  show(state) {
 
   },
   edit() {

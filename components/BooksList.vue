@@ -20,69 +20,7 @@ import Book from "~/components/Book";
 export default {
   data() {
     return {
-      books: [
-        {
-          title: "神達に拾われた男",
-          cover: require("~/assets/bookcover.png"),
-          rating: 5,
-          synopsis:
-            "ウィズに正体を暴露され、バニルに金をむしられたダークプリースト・セレナはカズマとの交渉の末、これから行うことを口外しないようお互い約束する。これをきっかけに再びアクセルの街に波乱が訪れ——!? ※電子特別版として、暁なつめ書き下ろしショートストーリー収録！"
-        },
-        {
-          title: "この素晴らしい世界に祝福を!",
-          cover: require("~/assets/book1.jpeg"),
-          rating: 4.3,
-          synopsis:
-            "時限爆弾を領主の家にテレポートさせたカズマは、国家転覆罪の容疑で裁判にかけられることに。アクアの不祥事のせいで、カズマに不利な証言が続く中、いよいよ判決が下される。「うん。死刑」……俺、また死ぬの？　電子版特典として、電子限定書き下ろし短編『眠れる森のクルセイダー』を特別収録！"
-        },
-        {
-          title:
-            "(´・ω・`)最強勇者はお払い箱→魔王になったらずっと俺の無双ターン",
-          cover: require("~/assets/book2.jpeg"),
-          rating: 2.5,
-          synopsis:
-            "時限爆弾を領主の家にテレポートさせたカズマは、国家転覆罪の容疑で裁判にかけられることに。アクアの不祥事のせいで、カズマに不利な証言が続く中、いよいよ判決が下される。「うん。死刑」……俺、また死ぬの？　電子版特典として、電子限定書き下ろし短編『眠れる森のクルセイダー』を特別収録！"
-        },
-        {
-          title: "神達に拾われた男",
-          cover: require("~/assets/bookcover.png"),
-          rating: 3.4,
-          synopsis:
-            "時限爆弾を領主の家にテレポートさせたカズマは、国家転覆罪の容疑で裁判にか下される。「うん。死刑」……俺、ろし短編『眠れる森のクルセイダー』を特別収録！"
-        },
-        {
-          title: "神達に拾われた男",
-          cover: require("~/assets/book1.jpeg"),
-          rating: 1.2,
-          synopsis:
-            "時限爆弾を領主の家にテレポートさせたカズマは、国家転覆。「うん。死刑」……俺、また死ぬの？"
-        },
-        {
-          title: "神達に拾われた男",
-          cover: require("~/assets/book2.jpeg"),
-          rating: 4.5,
-          synopsis:
-            "時限爆弾を領主の家にテレポートさせたカズマは、国家転覆罪の容疑で裁判にかけられることよ判決"
-        },
-        {
-          title: "この素晴らしい世界に祝福を!",
-          cover: require("~/assets/book1.jpeg")
-        },
-        {
-          title:
-            "(´・ω・`)最強勇者はお払い箱→魔王になったらずっと俺の無双ターン",
-          cover: require("~/assets/book2.jpeg")
-        },
-        {
-          title: "この素晴らしい世界に祝福を!",
-          cover: require("~/assets/book1.jpeg")
-        },
-        {
-          title:
-            "(´・ω・`)最強勇者はお払い箱→魔王になったらずっと俺の無双ターン",
-          cover: require("~/assets/book2.jpeg")
-        }
-      ],
+      books: [],
       swiperOption: {
         // loop: true,
         slidesPerView: "7",
@@ -116,6 +54,20 @@ export default {
   },
   components: {
     Book
+  },
+  methods: {
+    async fetchSomething() {
+      const res = await this.$axios.$get("http://0.0.0.0:5000/books/all");
+      console.log(res.books);
+      this.books = res.books;
+    }
+  },
+  watch: {
+    $route: "fetchSomething"
+  },
+  created() {
+    this.fetchSomething();
+    console.log(this.books);
   }
 };
 </script>

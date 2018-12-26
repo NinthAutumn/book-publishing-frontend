@@ -74,8 +74,13 @@ export default {
       size: null
     };
   },
+  methods: {},
   middleware: "auth",
-  auth: false
+  auth: false,
+  watch: {
+    // call again the method if the route changes
+    $route: "fetchData"
+  }
 };
 </script>
 
