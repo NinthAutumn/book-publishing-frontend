@@ -56,10 +56,6 @@ module.exports = {
     {
       src: '~/plugins/swiper',
       ssr: false
-    },
-    {
-      src: '~/plugins/vue-drawer-layout',
-      ssr: false
     }
   ],
 

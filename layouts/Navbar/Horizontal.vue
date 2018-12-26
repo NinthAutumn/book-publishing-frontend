@@ -2,7 +2,7 @@
   <div class="h-nav">
     <nav>
       <div class="left-menu">
-        <i class="el-icon-menu" :class="onClick" @click="nice"></i>
+        <i class="el-icon-menu" :class="$store.state.menuState" @click="menuDrawer"></i>
       </div>
       <SearchBar class="searchbar"></SearchBar>
       <img class="profile-pic" src="http://placehold.jp/45x45.png">
@@ -15,9 +15,7 @@ export default {
   name: "Horizontal",
   data() {
     return {
-      onClick: "not-clicked",
-      feedback: null,
-      show: "notClicked"
+      menuStates: "menu-inactive"
     };
   },
   components: {
@@ -25,13 +23,9 @@ export default {
   },
 
   methods: {
-    nice() {
-      if (this.onClick != "clicked") {
-        this.onClick = "clicked";
-      } else {
-        this.onClick = "not-clicked";
-      }
-      this.$emit("onClick", onClick);
+    //menu
+    menuDrawer() {
+      this.$store.commit("menuStateChange");
     }
   }
 };
@@ -67,14 +61,16 @@ ul {
 .el-icon-menu:hover {
   cursor: pointer;
 }
-.clicked {
+.menu-active {
   background-color: #eaecf5;
   -webkit-animation: flip-diagonal-2-br 300ms
     cubic-bezier(0.455, 0.03, 0.515, 0.955) both;
   animation: flip-diagonal-2-br 300ms cubic-bezier(0.455, 0.03, 0.515, 0.955)
     both;
+  animation: appearSlides 300ms;
+  animation-direction: backwards;
 }
-.not-clicked {
+.menu-inactive {
   -webkit-animation: flip-diagonal-2-br 300ms
     cubic-bezier(0.455, 0.03, 0.515, 0.955) both;
   animation: flip-diagonal-2-br 300ms cubic-bezier(0.455, 0.03, 0.515, 0.955)
@@ -107,6 +103,15 @@ ul {
   100% {
     -webkit-transform: rotate3d(-1, 1, 0, 180deg);
     transform: rotate3d(-1, 1, 0, 180deg);
+  }
+}
+
+@keyframes appearSlides {
+  from {
+    left: -25rem;
+  }
+  to {
+    left: 0rem;
   }
 }
 </style>

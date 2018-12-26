@@ -1,5 +1,5 @@
 <template>
-  <div class="home-page">
+  <div class="home-page" :class="$store.state.menuState">
     <div class="head-banner">
       <img src="http://placehold.jp/1090x240.png" style="width:100%;">
     </div>
@@ -84,11 +84,18 @@ export default {
 };
 </script>
 
-<style>
-.home-page {
+<style scoped>
+.menu-active {
   margin-left: 24rem;
   margin-top: 5rem;
   padding: 1rem 5rem;
+  transition: 300ms;
+}
+.menu-inactive {
+  padding: 5.9rem 3rem;
+  transition: 300ms;
+}
+.home-page {
   /* position: relative; */
 }
 .main-books-list {

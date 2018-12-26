@@ -1,5 +1,5 @@
 <template>
-  <nav class="v-nav">
+  <nav class="v-nav" :class="$store.state.menuState">
     <ul>
       <li v-for="menu in menus" :key="menu.title">
         <div class="v-nav-list" :to="menu.link">
@@ -90,6 +90,10 @@ export default {
 
 
 <style lang="scss"  scoped>
+.menu-inactive {
+  left: -25rem !important;
+  transition: 300ms;
+}
 .v-nav {
   background-color: #fbf9f9;
   /* display: none; */
@@ -97,7 +101,7 @@ export default {
   height: 100vh;
   position: fixed;
   top: 50px;
-  left: -25rem;
+  left: 0rem;
   /* -webkit-box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.36);
   -moz-box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.36);
   box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.36); */
@@ -108,7 +112,7 @@ export default {
   overflow: auto;
   /* animation: content-enter 1s;
   animation-fill-mode: forwards; */
-  transition: 500ms;
+  transition: 300ms;
 
   &-list {
     display: flex;

@@ -21,9 +21,10 @@ export default {
   data() {
     return {
       books: [],
+      slidesNumber: 7,
       swiperOption: {
         // loop: true,
-        slidesPerView: "7",
+        slidesPerView: this.$store.state.slidesPerView,
         // centeredSlides: true,
         // spaceBetween: 15,
         // effect: "coverflow",
