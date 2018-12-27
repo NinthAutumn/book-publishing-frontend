@@ -1,7 +1,6 @@
-export const state = () => {
+export const state = () => ({
   books: {}
-}
-
+})
 
 export const getters = {
   isHighRated: (state) => {
@@ -16,22 +15,22 @@ export const getters = {
 }
 
 export const actions = {
-  addBook({
+  async addBook({
     commit
   }, book) {
     commit('add', book)
   },
-  editBook({
+  async editBook({
     commit
   }) {
 
   },
-  deleteBook({
+  async deleteBook({
     commit
   }) {
 
   },
-  allBooks({
+  async allBooks({
     commit
   }) {
     commit('all')
@@ -39,24 +38,24 @@ export const actions = {
 }
 
 export const mutations = {
-  add(state, book) {
+  ADD(state, book) {
     state.books.push(book)
   },
-  all(state) {
+  ALL(state) {
     axios.get('localhost:5000/books/all').then((response) => {
       state.books = response
     })
   },
-  show(state) {
+  SHOW(state) {
 
   },
-  edit() {
+  EDIT() {
 
   },
-  update() {
+  UPDATE() {
 
   },
-  delete() {
+  DELETE() {
 
   }
 

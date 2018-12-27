@@ -13,6 +13,7 @@
   "dependencies": {
     "@nuxtjs/auth": "^4.5.3",
     "@nuxtjs/axios": "^5.3.6",
+    "cookie-universal-nuxt": "^2.0.11",
     "cross-env": "^5.2.0",
     "element-ui": "^2.4.6",
     "lodash-es": "^4.17.11",

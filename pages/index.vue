@@ -88,6 +88,14 @@ export default {
     // return axios.get(`https://my-api/posts/${params.id}`).then(res => {
     //   return { title: res.data.title };
     // });
+  },
+  created() {
+    console.log(
+      this.$auth.logout().then(a => {
+        console.log(a);
+      })
+    );
+    console.log(this.$cookies.get("Authorization"));
   }
 };
 </script>

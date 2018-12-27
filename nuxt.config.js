@@ -65,7 +65,8 @@ module.exports = {
   modules: [
     // Doc: https://github.com/nuxt-community/axios-module#usage
     '@nuxtjs/axios',
-    '@nuxtjs/auth'
+    '@nuxtjs/auth',
+    'cookie-universal-nuxt'
 
   ],
   /*
@@ -78,6 +79,26 @@ module.exports = {
   },
   auth: {
     // Options
+    strategies: {
+      local: {
+        endpoints: {
+          login: {
+            url: 'http://0.0.0.0:5000/users/login',
+            method: 'post',
+            propertyName: 'token'
+          },
+          logout: {
+            url: 'http://0.0.0.0:5000/users/logout',
+            method: 'post'
+          },
+          user: false
+        },
+        tokenRequired: true,
+        tokenType: 'bearer',
+        // decodeJWT: false,
+        // tokenName: "x-auth"
+      }
+    }
   },
   router: {
     middleware: ['auth']
