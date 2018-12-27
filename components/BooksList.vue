@@ -18,9 +18,11 @@
 <script>
 import Book from "~/components/Book";
 export default {
+  props: {
+    books: Array
+  },
   data() {
     return {
-      books: [],
       slidesNumber: 7,
       swiperOption: {
         // loop: true,
@@ -29,10 +31,6 @@ export default {
         // spaceBetween: 15,
         // effect: "coverflow",
         freeMode: true,
-        pagination: {
-          el: ".swiper-pagination",
-          dynamicBullets: true
-        },
         mousewheel: {
           invert: true,
           sensitivity: 1,
@@ -56,23 +54,13 @@ export default {
   components: {
     Book
   },
-  methods: {
-    async fetchSomething() {
-      const res = await this.$axios.$get("http://0.0.0.0:5000/books/all");
-      console.log(res.books);
-      this.books = res.books;
-    }
-  },
-  watch: {
-    $route: "fetchSomething"
-  },
-  created() {
-    this.fetchSomething();
-    console.log(this.books);
-  }
+  methods: {}
 };
 </script>
 <style lang="scss">
+.swiper-wrapper {
+  // z-index: -10;
+}
 .main-books {
   width: 100%;
   // display: flex;

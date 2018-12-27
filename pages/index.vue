@@ -7,7 +7,7 @@
       <div class="card-title">
         <h3>Recommended</h3>
       </div>
-      <BooksList></BooksList>
+      <BooksList :books="books"></BooksList>
     </div>
   </div>
 </template>
@@ -18,68 +18,76 @@ export default {
   components: {
     BooksList
   },
-  data() {
-    return {
-      books: [
-        {
-          title: "神達に拾われた男",
-          cover: require("~/assets/bookcover.png"),
-          rating: 5
-        },
-        {
-          title: "この素晴らしい世界に祝福を!",
-          cover: require("~/assets/book1.jpeg"),
-          rating: 4.3
-        },
-        {
-          title:
-            "(´・ω・`)最強勇者はお払い箱→魔王になったらずっと俺の無双ターン",
-          cover: require("~/assets/book2.jpeg"),
-          rating: 2.5
-        },
-        {
-          title: "神達に拾われた男",
-          cover: require("~/assets/bookcover.png"),
-          rating: 3.4
-        },
-        {
-          title: "神達に拾われた男",
-          cover: require("~/assets/book1.jpeg"),
-          rating: 1.2
-        },
-        {
-          title: "神達に拾われた男",
-          cover: require("~/assets/book2.jpeg"),
-          rating: 4.5
-        },
-        {
-          title: "この素晴らしい世界に祝福を!",
-          cover: require("~/assets/book1.jpeg")
-        },
-        {
-          title:
-            "(´・ω・`)最強勇者はお払い箱→魔王になったらずっと俺の無双ターン",
-          cover: require("~/assets/book2.jpeg")
-        },
-        {
-          title: "この素晴らしい世界に祝福を!",
-          cover: require("~/assets/book1.jpeg")
-        },
-        {
-          title:
-            "(´・ω・`)最強勇者はお払い箱→魔王になったらずっと俺の無双ターン",
-          cover: require("~/assets/book2.jpeg")
-        }
-      ],
-      size: null
-    };
-  },
+  // data() {
+  //   return {
+  //     books: [
+  //       {
+  //         title: "神達に拾われた男",
+  //         cover: require("~/assets/bookcover.png"),
+  //         rating: 5
+  //       },
+  //       {
+  //         title: "この素晴らしい世界に祝福を!",
+  //         cover: require("~/assets/book1.jpeg"),
+  //         rating: 4.3
+  //       },
+  //       {
+  //         title:
+  //           "(´・ω・`)最強勇者はお払い箱→魔王になったらずっと俺の無双ターン",
+  //         cover: require("~/assets/book2.jpeg"),
+  //         rating: 2.5
+  //       },
+  //       {
+  //         title: "神達に拾われた男",
+  //         cover: require("~/assets/bookcover.png"),
+  //         rating: 3.4
+  //       },
+  //       {
+  //         title: "神達に拾われた男",
+  //         cover: require("~/assets/book1.jpeg"),
+  //         rating: 1.2
+  //       },
+  //       {
+  //         title: "神達に拾われた男",
+  //         cover: require("~/assets/book2.jpeg"),
+  //         rating: 4.5
+  //       },
+  //       {
+  //         title: "この素晴らしい世界に祝福を!",
+  //         cover: require("~/assets/book1.jpeg")
+  //       },
+  //       {
+  //         title:
+  //           "(´・ω・`)最強勇者はお払い箱→魔王になったらずっと俺の無双ターン",
+  //         cover: require("~/assets/book2.jpeg")
+  //       },
+  //       {
+  //         title: "この素晴らしい世界に祝福を!",
+  //         cover: require("~/assets/book1.jpeg")
+  //       },
+  //       {
+  //         title:
+  //           "(´・ω・`)最強勇者はお払い箱→魔王になったらずっと俺の無双ターン",
+  //         cover: require("~/assets/book2.jpeg")
+  //       }
+  //     ],
+  //     size: null
+  //   };
+  // },
   methods: {},
   middleware: "auth",
   auth: false,
-  watch: {
-    // call again the method if the route changes
-    $route: "fetchData"
+  asyncData({ $axios }) {
+    return $axios.$get("http://0.0.0.0:5000/books/all").then(res => {
+      return {
+        books: res.books,
+        size: null
+      };
+    });
+
+    // return axios.get(`https://my-api/posts/${params.id}`).then(res => {
+    //   return { title: res.data.title };
+    // });
   }
 };
 </script>
@@ -92,11 +100,13 @@ export default {
   transition: 300ms;
 }
 .menu-inactive {
-  padding: 5.9rem 3rem;
+  padding: 6rem 3rem;
   transition: 300ms;
 }
 .home-page {
   /* position: relative; */
+  /* display: grid; */
+  /* grid-template-columns:  */
 }
 .main-books-list {
   display: flex;

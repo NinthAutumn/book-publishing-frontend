@@ -113,7 +113,7 @@ export default {
   /* animation: content-enter 1s;
   animation-fill-mode: forwards; */
   transition: 300ms;
-
+  // animation: appearSlides 300ms;
   &-list {
     display: flex;
     padding: 1rem;
@@ -198,6 +198,14 @@ export default {
   from {
   }
   to {
+  }
+}
+@keyframes appearSlides {
+  from {
+    left: -25rem;
+  }
+  to {
+    left: 0rem;
   }
 }
 </style>

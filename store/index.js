@@ -1,7 +1,7 @@
 export const state = () => ({
   counter: 0,
   menuState: "menu-active",
-  slidesPerView: 7
+  slidesPerView: 6.5
 })
 
 export const getters = {
@@ -22,7 +22,7 @@ export const mutations = {
       state.slidesPerView = 7
     } else {
       state.menuState = "menu-inactive";
-      state.slidesPerView = 11
+      state.slidesPerView = 9
     }
     // console.log(state.menuState)
   }

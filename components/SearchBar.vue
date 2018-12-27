@@ -57,6 +57,7 @@ export default {
   padding: 10px;
   color: #a16dff;
   font-weight: 500;
+  transition: 200ms;
 }
 
 .search-form {
@@ -71,6 +72,26 @@ export default {
   animation: stay 200ms ease-out 1s;
   transition: height 200ms ease-out, width 200ms ease-out;
   position: relative;
+}
+.search-form:focus-within,
+.search-form:hover {
+  /* border: 2px solid #a16dff; */
+  animation: shadowes 200ms ease-out;
+  /* -webkit-box-shadow: 0px 0px 10px 0px rgba(122, 122, 122, 0.48);
+  -moz-box-shadow: 0px 0px 10px 0px rgba(122, 122, 122, 0.48);
+  box-shadow: 0 1px 6px 0 rgba(32, 33, 36, 0.28); */
+  animation-fill-mode: forwards;
+  /* animation- */
+  height: 40px;
+  width: 750px;
+  transition: height 200ms ease-out, width 200ms ease-out;
+  /* font-size: 15px !important; */
+  /* transition: width 200ms ease-out; */
+}
+.search-input:focus,
+.search-input:hover {
+  font-size: 16px;
+  transition: 200ms;
 }
 
 /* .show {
@@ -119,21 +140,6 @@ export default {
   to {
     opacity: 1;
   }
-}
-
-.search-form:focus-within,
-.search-form:hover {
-  /* border: 2px solid #a16dff; */
-  animation: shadowes 200ms ease-out;
-  /* -webkit-box-shadow: 0px 0px 10px 0px rgba(122, 122, 122, 0.48);
-  -moz-box-shadow: 0px 0px 10px 0px rgba(122, 122, 122, 0.48);
-  box-shadow: 0 1px 6px 0 rgba(32, 33, 36, 0.28); */
-  animation-fill-mode: forwards;
-  /* animation- */
-  height: 40px;
-  width: 750px;
-  transition: height 200ms ease-out, width 200ms ease-out;
-  /* transition: width 200ms ease-out; */
 }
 
 @keyframes shadowes {

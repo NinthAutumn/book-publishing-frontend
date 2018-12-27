@@ -41,6 +41,7 @@ export default {
   top: 0;
   left: 0;
   background-color: white;
+  z-index: 1000;
 }
 nav {
   display: flex;
@@ -63,18 +64,19 @@ ul {
 }
 .menu-active {
   background-color: #eaecf5;
-  -webkit-animation: flip-diagonal-2-br 300ms
+  /* -webkit-animation: flip-diagonal-2-br 300ms
     cubic-bezier(0.455, 0.03, 0.515, 0.955) both;
   animation: flip-diagonal-2-br 300ms cubic-bezier(0.455, 0.03, 0.515, 0.955)
-    both;
-  animation: appearSlides 300ms;
-  animation-direction: backwards;
+    both; */
+  /* animation: appearSlides 300ms; */
+  /* animation-direction: forwards; */
 }
 .menu-inactive {
   -webkit-animation: flip-diagonal-2-br 300ms
     cubic-bezier(0.455, 0.03, 0.515, 0.955) both;
   animation: flip-diagonal-2-br 300ms cubic-bezier(0.455, 0.03, 0.515, 0.955)
     both;
+  /* animation: forwards; */
 }
 .left-menu {
   margin-left: 10px;
@@ -83,6 +85,9 @@ ul {
   border-radius: 100px;
   margin-right: 10px;
   width: 45px;
+  -webkit-box-shadow: 0px 0px 2px 0px rgb(102, 101, 101);
+  -moz-box-shadow: 0px 0px 2px 0px rgb(109, 109, 109);
+  box-shadow: 0px 0px 2px 0px rgb(114, 112, 112);
 }
 
 @-webkit-keyframes flip-diagonal-2-br {
@@ -103,15 +108,6 @@ ul {
   100% {
     -webkit-transform: rotate3d(-1, 1, 0, 180deg);
     transform: rotate3d(-1, 1, 0, 180deg);
-  }
-}
-
-@keyframes appearSlides {
-  from {
-    left: -25rem;
-  }
-  to {
-    left: 0rem;
   }
 }
 </style>
