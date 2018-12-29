@@ -5,8 +5,7 @@
       <label>User name</label>
       <input required v-model="username" type="text" placeholder="Snoopy">
       <label>Password</label>
-      <input required v-model="password" type="password" placeholder="Password">
-      <hr>
+      <input required minlength="6" v-model="password" type="password" placeholder="Password">
       <button type="submit">Login</button>
     </form>
   </div>
@@ -21,20 +20,28 @@ export default {
     };
   },
   methods: {
-    login() {
-      console.log(this.username, this.password);
-      this.$auth
-        .loginWith("local", {
-          data: {
-            username: this.username,
-            password: this.password
-          }
-        })
-        .then(user => {
-          console.log(user);
-        });
+    async login() {
+      console.log("dog");
+      const user = {
+        username: this.username,
+        password: this.password
+      };
+      console.log(user);
+      this.$store.dispatch("auth/login", user);
+      // await this.$auth
+      //   .loginWith("local", {
+      //     data: {
+      //       username: this.username,
+      //       password: this.password
+      //     }
+      //   })
+      //   .catch(e => {});
     }
-  }
+  },
+  created() {
+    // this.$store.dispatch("auth/login");
+  },
+  auth: false
 };
 </script>
 

@@ -75,8 +75,6 @@ export default {
   //   };
   // },
   methods: {},
-  middleware: "auth",
-  auth: false,
   asyncData({ $axios }) {
     return $axios.$get("http://0.0.0.0:5000/books/all").then(res => {
       return {
@@ -89,14 +87,8 @@ export default {
     //   return { title: res.data.title };
     // });
   },
-  created() {
-    console.log(
-      this.$auth.logout().then(a => {
-        console.log(a);
-      })
-    );
-    console.log(this.$cookies.get("Authorization"));
-  }
+  created() {},
+  auth: false
 };
 </script>
 

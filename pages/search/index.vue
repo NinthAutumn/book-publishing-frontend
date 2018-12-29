@@ -8,7 +8,6 @@ export default {
     return {};
   },
   methods: {},
-  middleware: "auth",
   auth: false
 };
 </script>
