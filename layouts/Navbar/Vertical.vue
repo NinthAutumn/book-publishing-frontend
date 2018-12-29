@@ -105,9 +105,12 @@ export default {
   /* -webkit-box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.36);
   -moz-box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.36);
   box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.36); */
-  -webkit-box-shadow: inset 0.25px 0.25px 0.25px 0.25px rgba(0, 0, 0, 0.2);
-  -moz-box-shadow: inset 0.25px 0.25px 0.25px 0.25px rgba(0, 0, 0, 0.2);
-  box-shadow: inset 0.25px 0.25px 0.25px 0.25px rgba(177, 175, 175, 0.2);
+  // -webkit-box-shadow: inset 0.25px 0.25px 0.25px 0.25px rgba(0, 0, 0, 0.2);
+  // -moz-box-shadow: inset 0.25px 0.25px 0.25px 0.25px rgba(0, 0, 0, 0.2);
+  // box-shadow: inset 0.25px 0.25px 0.25px 0.25px rgba(177, 175, 175, 0.2);
+  -webkit-box-shadow: inset 0px 0px 3px 0px rgba(122, 122, 122, 1);
+  -moz-box-shadow: inset 0px 0px 3px 0px rgba(122, 122, 122, 1);
+  box-shadow: inset 0px 0px 3px 0px rgba(122, 122, 122, 1);
   opacity: 0.75;
   overflow: auto;
   /* animation: content-enter 1s;

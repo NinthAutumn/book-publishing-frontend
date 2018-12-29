@@ -10,6 +10,6 @@ export default function (context) {
   if (context.store.state.token) {
 
   } else {
-    context.redirect("/login")
+    context.redirect("/auth/login")
   }
 }
