@@ -2,10 +2,12 @@
   <nav class="v-nav" :class="$store.state.menuState">
     <ul>
       <li v-for="menu in menus" :key="menu.title">
-        <div class="v-nav-list" :to="menu.link">
-          <i :class="menu.icon" class="v-nav-icons"></i>
-          <p>{{menu.title}}</p>
-        </div>
+        <nuxt-link :to="menu.link">
+          <div class="v-nav-list">
+            <i :class="menu.icon" class="v-nav-icons"></i>
+            <p>{{menu.title}}</p>
+          </div>
+        </nuxt-link>
       </li>
     </ul>
     <hr>
@@ -40,14 +42,24 @@ export default {
           link: "/",
           meta: ""
         },
-        { title: "検索", icon: "el-icon-search", link: "/", meta: "search" },
+        {
+          title: "検索",
+          icon: "el-icon-search",
+          link: "/search",
+          meta: "search"
+        },
         {
           title: "ランキング",
           icon: "el-icon-search",
-          link: "/",
+          link: "/rankings",
           meta: "ranking"
         },
-        { title: "ストアー", icon: "el-icon-search", link: "/", meta: "store" },
+        {
+          title: "ストアー",
+          icon: "el-icon-search",
+          link: "/store",
+          meta: "store"
+        },
         {
           title: "ライブラリー",
           icon: "el-icon-search",
