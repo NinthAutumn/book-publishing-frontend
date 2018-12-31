@@ -7,9 +7,7 @@ export default function (context) {
   if (routeOption(context.route, 'auth', false)) {
     return
   }
-  if (context.store.state.token) {
-
-  } else {
+  if (!context.store.state.auth.token) {
     context.redirect("/auth/login")
   }
 }

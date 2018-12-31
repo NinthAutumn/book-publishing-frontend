@@ -1,5 +1,5 @@
 <template>
-  <div class="home-page" :class="$store.state.menuState">
+  <div class="home-page">
     <div class="head-banner">
       <img src="http://placehold.jp/1090x240.png" style="width:100%;">
     </div>
@@ -93,7 +93,7 @@ export default {
 </script>
 
 <style scoped>
-.menu-active {
+/* .menu-active {
   margin-left: 24rem;
   margin-top: 5rem;
   padding: 1rem 5rem;
@@ -102,7 +102,7 @@ export default {
 .menu-inactive {
   padding: 6rem 3rem;
   transition: 300ms;
-}
+} */
 .home-page {
   /* position: relative; */
   /* display: grid; */

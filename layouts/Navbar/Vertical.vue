@@ -63,7 +63,7 @@ export default {
         {
           title: "ライブラリー",
           icon: "el-icon-search",
-          link: "/",
+          link: "/users/?id=" + this.$store.state.auth.userId + "/library",
           meta: "library"
         }
       ],

@@ -62,6 +62,8 @@ export const actions = {
         token: token,
         userId: res.data.userId
       });
+      console.log(state.token)
+      console.log(state.userId)
     }).catch((e) => {
       console.log(e);
     })

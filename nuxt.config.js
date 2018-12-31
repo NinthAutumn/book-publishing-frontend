@@ -56,6 +56,10 @@ module.exports = {
     {
       src: '~/plugins/swiper',
       ssr: false
+    },
+    {
+      ssr: false,
+      src: '~plugins/auth'
     }
   ],
 
@@ -77,35 +81,41 @@ module.exports = {
     // proxyHeaders: false
 
   },
-  auth: {
-    // Options
-    // strategies: {
-    //   local: {
-    //     endpoints: {
-    //       login: {
-    //         url: 'http://0.0.0.0:5000/users/login',
-    //         method: 'post',
-    //         propertyName: 'token'
-    //       },
-    //       logout: {
-    //         url: 'http://0.0.0.0:5000/users/logout',
-    //         method: 'post'
-    //       },
-    //       user: {
-    //         url: 'http://0.0.0.0:5000/users/show',
-    //         method: 'get',
-    //         propertyName: "user"
-    //       }
-    //     },
-    //     tokenRequired: true,
-    //     tokenType: 'bearer',
-    //     // decodeJWT: false,
-    //     // tokenName: "x-auth"
-    //   }
-    // }
-  },
+  // auth: {
+  //   strategies: {
+  //     'api.provider': {
+  //       _scheme: 'api',
+  //       authorization_endpoints: {
+  //         login: {
+  //           url: 'http://0.0.0.0:5000/users/login',
+  //           method: 'post',
+  //           propertyName: 'token'
+  //         },
+  //         logout: {
+  //           url: 'http://0.0.0.0:5000/users/logout',
+  //           method: 'post'
+  //         },
+  //         user: {
+  //           url: 'http://0.0.0.0:5000/users/show',
+  //           method: 'get',
+  //           propertyName: "user"
+  //         }
+  //       },
+  //       tokenRequired: true,
+  //       tokenType: 'Bearer',
+  //       // decodeJWT: false,
+  //       // tokenName: "x-auth"
+  //     }
+  //   },
+  // redirect: {
+  //   login: '/auth/login',
+  //   logout: '/',
+  //   callback: '/auth/login',
+  //   home: '/'
+  // }
+  // },
   router: {
-    middleware: 'authentication'
+    middleware: 'auth'
   },
   /*
    ** Build configuration

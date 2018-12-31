@@ -2,7 +2,9 @@
   <div>
     <Horizontal></Horizontal>
     <Vertical></Vertical>
-    <nuxt></nuxt>
+    <div class="nuxt-pages">
+      <nuxt :class="$store.state.menuState"></nuxt>
+    </div>
   </div>
 </template>
 <script>
@@ -18,7 +20,18 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.nuxt-pages .menu-active {
+  margin-left: 24rem;
+  margin-top: 5rem;
+  padding: 1rem 5rem;
+  transition: 300ms;
+}
+.nuxt-pages .menu-inactive {
+  padding: 6rem 3rem;
+  transition: 300ms;
+}
+
 /* body {
   margin: 0;
 }
