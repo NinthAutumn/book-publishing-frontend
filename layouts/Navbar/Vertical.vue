@@ -32,42 +32,13 @@ var moment = require("moment");
 
 export default {
   name: "Vertical",
+  props: {
+    menus: Array
+  },
   data() {
     return {
       userId: "",
       draw: null,
-      menus: [
-        {
-          title: "ホーム",
-          icon: "el-icon-search",
-          link: "/",
-          meta: ""
-        },
-        {
-          title: "検索",
-          icon: "el-icon-search",
-          link: "/search",
-          meta: "search"
-        },
-        {
-          title: "ランキング",
-          icon: "el-icon-search",
-          link: "/rankings",
-          meta: "ranking"
-        },
-        {
-          title: "ストアー",
-          icon: "el-icon-search",
-          link: "/store",
-          meta: "store"
-        },
-        {
-          title: "ライブラリー",
-          icon: "el-icon-search",
-          link: "/users/?id=" + this.$store.state.auth.userId + "/library",
-          meta: "library"
-        }
-      ],
       updates: [
         {
           title: "スライムになった件",
@@ -104,7 +75,7 @@ export default {
     // fetchUserId() {}
   },
   created() {
-    // console.log(this.$store.state.auth.userId);
+    // console.log(this.$store.state.auth.userId, "dog");
     // this.userId = this.$store.state.auth.userId;
   }
 };

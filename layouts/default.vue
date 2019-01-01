@@ -1,7 +1,7 @@
 <template>
   <div>
     <Horizontal></Horizontal>
-    <Vertical></Vertical>
+    <Vertical :menus="$store.state.auth.menus"></Vertical>
     <div class="nuxt-pages">
       <nuxt :class="$store.state.menuState"></nuxt>
     </div>
@@ -16,9 +16,15 @@ export default {
   components: {
     Horizontal,
     Vertical
-  }
+  },
+  data() {
+    return {};
+  },
+  computed: {},
+  watch: {}
 };
 </script>
+
 
 <style scoped>
 .nuxt-pages .menu-active {

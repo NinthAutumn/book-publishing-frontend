@@ -12,6 +12,7 @@
 </template>
 
 <script>
+import Cookies from "js-cookie";
 export default {
   data() {
     return {
@@ -27,7 +28,9 @@ export default {
         password: this.password
       };
       console.log(user);
-      this.$store.dispatch("auth/login", user);
+      this.$store.dispatch("auth/login", user).then(() => {
+        this.$router.push("/");
+      });
       // await this.$auth
       //   .loginWith("local", {
       //     data: {
@@ -38,10 +41,8 @@ export default {
       //   .catch(e => {});
     }
   },
-  created() {
-    // this.$store.dispatch("auth/login");
-  },
   auth: false
+  // middleware: "auth"
 };
 </script>
 

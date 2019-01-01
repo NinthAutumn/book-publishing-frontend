@@ -1,7 +1,8 @@
 export const state = () => ({
   counter: 0,
   menuState: "menu-active",
-  slidesPerView: 6.5
+  slidesPerView: 6.5,
+
 })
 
 export const getters = {

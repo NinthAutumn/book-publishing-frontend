@@ -7,7 +7,38 @@ export const state = () => ({
   userId: "",
   token: Cookies.get('token') || '',
   status: "",
-  loggedIn: false
+  loggedIn: false,
+  menus: [{
+      title: "ホーム",
+      icon: "el-icon-search",
+      link: "/",
+      meta: ""
+    },
+    {
+      title: "検索",
+      icon: "el-icon-search",
+      link: "/search",
+      meta: "search"
+    },
+    {
+      title: "ランキング",
+      icon: "el-icon-search",
+      link: "/rankings",
+      meta: "ranking"
+    },
+    {
+      title: "ストアー",
+      icon: "el-icon-search",
+      link: "/store",
+      meta: "store"
+    },
+    {
+      title: "ライブラリー",
+      icon: "el-icon-search",
+      link: "auth/login",
+      meta: "library"
+    }
+  ]
   // username: "admin1",
   // password: "admin1"
 })
@@ -35,6 +66,7 @@ export const mutations = {
   },
   AUTH_SUCCESS_USER(state, userId) {
     state.userId = userId
+    state.menus[4].link = "/library/?id=" + state.userId
   },
   AUTH_ERROR(state) {
     state.status = 'error'
