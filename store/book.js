@@ -1,5 +1,5 @@
 export const state = () => ({
-  books: {}
+  books: []
 })
 
 export const getters = {

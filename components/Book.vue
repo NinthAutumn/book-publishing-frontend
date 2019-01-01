@@ -100,19 +100,6 @@ export default {
   -webkit-line-clamp: 1; */
   transition: 300ms;
 }
-a {
-  text-decoration: none;
-  background-image: linear-gradient(#8860d0, #8860d0);
-  background-position: 0% 100%;
-  background-repeat: no-repeat;
-  background-size: 0% 2px;
-  transition: 200ms;
-  font-size: 1.6rem;
-}
-a:hover {
-  background-size: 100% 2px;
-  color: #8860d0;
-}
 
 .book-title:hover {
   overflow: visible;

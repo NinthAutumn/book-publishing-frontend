@@ -34,6 +34,7 @@ export default {
   name: "Vertical",
   data() {
     return {
+      userId: "",
       draw: null,
       menus: [
         {
@@ -93,6 +94,18 @@ export default {
   },
   components: {
     HomeIcon
+  },
+  watch: {
+    // fetchUserId: function() {
+    //   ;
+    // }
+  },
+  methods: {
+    // fetchUserId() {}
+  },
+  created() {
+    // console.log(this.$store.state.auth.userId);
+    // this.userId = this.$store.state.auth.userId;
   }
 };
 </script>
