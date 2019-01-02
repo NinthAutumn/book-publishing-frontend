@@ -60,6 +60,9 @@ module.exports = {
     {
       ssr: false,
       src: '~plugins/auth'
+    }, {
+      ssr: false,
+      src: "~plugins/clickOutside"
     }
   ],
 

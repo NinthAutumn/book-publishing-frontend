@@ -33,7 +33,7 @@ var moment = require("moment");
 export default {
   name: "Vertical",
   props: {
-    menus: Array
+    // menus: Array
   },
   data() {
     return {
@@ -60,6 +60,38 @@ export default {
           time: moment().format("LTS"),
           chapter: "46c"
         }
+      ],
+      menus: [
+        {
+          title: "ホーム",
+          icon: "el-icon-search",
+          link: "/",
+          meta: ""
+        },
+        {
+          title: "検索",
+          icon: "el-icon-search",
+          link: "/search",
+          meta: "search"
+        },
+        {
+          title: "ランキング",
+          icon: "el-icon-search",
+          link: "/rankings",
+          meta: "ranking"
+        },
+        {
+          title: "ストアー",
+          icon: "el-icon-search",
+          link: "/store",
+          meta: "store"
+        },
+        {
+          title: "ライブラリー",
+          icon: "el-icon-search",
+          link: "/library",
+          meta: "library"
+        }
       ]
     };
   },
@@ -72,7 +104,9 @@ export default {
     // }
   },
   methods: {
-    // fetchUserId() {}
+    dropOff() {
+      this.$store.commit("DROPDOWN_FALSE");
+    }
   },
   created() {
     // console.log(this.$store.state.auth.userId, "dog");

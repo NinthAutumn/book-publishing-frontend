@@ -39,3 +39,8 @@ a:hover {
   background-size: 100% 2px;
   color: #8860d0;
 }
+
+a:link,
+a:visited {
+  color: #8860d0;
+}

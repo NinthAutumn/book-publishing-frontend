@@ -34,6 +34,9 @@ export const mutations = {
     } else {
       state.dropdownState = "dropdown-inactive"
     }
+  },
+  DROPDOWN_FALSE(state) {
+    state.dropdownState = "dropdown-inactive"
   }
 }
 

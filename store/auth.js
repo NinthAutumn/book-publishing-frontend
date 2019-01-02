@@ -9,37 +9,7 @@ export const state = () => ({
   status: "",
   user: "",
   loggedIn: false,
-  menus: [{
-      title: "ホーム",
-      icon: "el-icon-search",
-      link: "/",
-      meta: ""
-    },
-    {
-      title: "検索",
-      icon: "el-icon-search",
-      link: "/search",
-      meta: "search"
-    },
-    {
-      title: "ランキング",
-      icon: "el-icon-search",
-      link: "/rankings",
-      meta: "ranking"
-    },
-    {
-      title: "ストアー",
-      icon: "el-icon-search",
-      link: "/store",
-      meta: "store"
-    },
-    {
-      title: "ライブラリー",
-      icon: "el-icon-search",
-      link: "auth/login",
-      meta: "library"
-    }
-  ]
+
   // username: "admin1",
   // password: "admin1"
 })
@@ -68,7 +38,7 @@ export const mutations = {
   AUTH_SUCCESS_USER(state, user) {
     console.log(user)
     state.user = user
-    state.menus[4].link = "/library/?id=" + state.user._id
+    // state.menus[4].link = "/library/?id=" + state.user._id
   },
   AUTH_ERROR(state) {
     state.status = 'error'
@@ -88,7 +58,7 @@ export const actions = {
   }, user) {
     console.log("dogs")
     commit("AUTH_REQUEST")
-    await this.$axios.post(process.env.BASE_URL + '/users/login', {
+    await this.$axios.post(process.env.baseUrl + '/users/login', {
       username: user.username,
       password: user.password
     }).then((res) => {
@@ -108,7 +78,7 @@ export const actions = {
   async logOut({
     commit
   }) {
-    await this.$axios.delete(process.env.BASE_URL + '/users/logout').then((res) => {
+    await this.$axios.delete(process.env.baseUrl + '/users/logout').then((res) => {
       console.log(res.headers.authorization);
       Cookies.remove('token')
       delete this.$axios.defaults.headers.common['Authorization']
@@ -120,7 +90,7 @@ export const actions = {
   async signUp({
     commit
   }, user) {
-    await this.$axios.post(process.env.BASE_URL + '/users/signup', {
+    await this.$axios.post(process.env.baseUrl + '/users/signup', {
       username: user.username,
       email: user.email,
       password: user.password

@@ -1,6 +1,6 @@
 <template>
-  <div id="book-card" :class="size">
-    <div class="book-cover" @click="linkTo">
+  <div id="book-card" :class="size" @click="linkTo">
+    <div class="book-cover">
       <span class="star-rating"></span>
       <img :src="book.cover" class="book-img" alt="Book cover">
     </div>
@@ -44,7 +44,7 @@ export default {
   },
   methods: {
     linkTo() {
-      this.$router.push("/");
+      this.$router.push("/books/" + this.book._id);
     }
   }
 };

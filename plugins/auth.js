@@ -10,15 +10,17 @@ export default function ({
   store,
   app: {
     router
-  }
+  },
+  env
 }) {
   sync(store, router)
   window.onNuxtReady(() => {
     console.log('Nuxt.js is ready and mounted', )
     const token = Cookies.get('token');
     if (token) {
+      // console.log(env.baseUrl)
       axios.defaults.headers.common['Authorization'] = token;
-      axios.get(process.env.BASE_URL + '/users/show').then((res) => {
+      axios.get(env.baseUrl + '/users/show').then((res) => {
         // console.log(token);
         store.commit('auth/AUTH_SUCCESS', token);
         store.commit("auth/AUTH_SUCCESS_USER", res.data);

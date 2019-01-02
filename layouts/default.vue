@@ -1,9 +1,9 @@
 <template>
   <div>
     <Horizontal></Horizontal>
-    <Vertical :menus="$store.state.auth.menus"></Vertical>
+    <Vertical></Vertical>
     <div class="nuxt-pages">
-      <div class="dropdown" :class="$store.state.dropdownState"></div>
+      <div class="dropdown"></div>
       <nuxt :class="$store.state.menuState" class="permanent"></nuxt>
     </div>
   </div>
@@ -22,7 +22,12 @@ export default {
     return {};
   },
   computed: {},
-  watch: {}
+  watch: {},
+  methods: {
+    dropOff() {
+      this.$store.commit("DROPDOWN_FALSE");
+    }
+  }
 };
 </script>
 
@@ -39,29 +44,10 @@ export default {
   position: relative !important;
 }
 .nuxt-pages .menu-inactive {
-  padding: 1rem 5rem;
+  padding: 1rem 7rem;
   transition: 300ms;
   position: relative !important;
   margin-top: 5rem;
-}
-.dropdown-inactive {
-  // display: none;
-  height: 0;
-  // width: 0;
-}
-.dropdown-active {
-  position: absolute;
-  width: 300px;
-  height: 500px;
-  background-color: #c8b0f5;
-  right: 5px;
-  z-index: 2200;
-  // top: 55px;
-  transition: 300ms;
-  -webkit-box-shadow: 0px 2px 12px 3px rgba(191, 191, 191, 1);
-  -moz-box-shadow: 0px 2px 12px 3px rgba(191, 191, 191, 1);
-  box-shadow: 0px 2px 12px 3px rgba(191, 191, 191, 1);
-  border-radius: 10px;
 }
 
 /* body {

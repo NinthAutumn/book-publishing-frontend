@@ -38,6 +38,9 @@ export default {
       } else {
         this.show = "noShow";
       }
+    },
+    dropOff() {
+      this.$store.commit("DROPDOWN_FALSE");
     }
   }
 };

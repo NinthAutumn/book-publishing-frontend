@@ -5,8 +5,27 @@
         <i class="el-icon-menu" :class="$store.state.menuState" @click="menuDrawer"></i>
       </div>
       <SearchBar class="searchbar"></SearchBar>
-      <span @click="stateDropChange" v-if="$store.state.auth.loggedIn">
-        <img class="profile-pic" src="http://placehold.jp/45x45.png">
+      <span
+        v-click-outside="dropOff"
+        v-if="$store.state.auth.loggedIn"
+        style="z-index:3000;"
+        id="prof"
+      >
+        <img @click="stateDropChange" class="profile-pic" src="http://placehold.jp/45x45.png">
+        <div :class="$store.state.dropdownState">
+          <div class="dropdown-menu">
+            <div class="profile-info">
+              <img class="dropdown-profile-pic" src="http://placehold.jp/45x45.png">
+              <div class="profile-text">
+                <span class="profile-name">{{$store.state.auth.user.username}}</span>
+                <span class="profile-profession">Author</span>
+              </div>
+            </div>
+            <div class="dropdown-menu__item">
+              <a @click="logOut">Logout</a>
+            </div>
+          </div>
+        </div>
       </span>
       <div class="not-loggedin" v-else>
         <span class="signup">
@@ -22,6 +41,7 @@
 </template>
 <script>
 import SearchBar from "./../../components/SearchBar";
+
 export default {
   name: "Horizontal",
   data() {
@@ -39,11 +59,15 @@ export default {
       this.$store.commit("menuStateChange");
     },
     logOut() {
-      this.$store.dispatch("logOut");
+      this.$store.dispatch("auth/logOut");
     },
     stateDropChange() {
       this.$store.commit("DROPDOWN_STATE");
       // console.log("yes");
+      // console.log(e.target);
+    },
+    dropOff() {
+      this.$store.commit("DROPDOWN_FALSE");
     }
   }
 };
@@ -62,6 +86,34 @@ export default {
       // cursor: pointer;
     }
   }
+}
+.dropdown-inactive {
+  // display: none;
+  position: fixed;
+  // right: 0;
+  top: -1111px;
+  height: 0;
+  // width: 45px;
+  border-radius: 100px;
+  // background-color: red;
+  // z-index: -1;
+  // width: 0;
+  // background-image: url("http://placehold.jp/45x45.png");
+}
+.dropdown-active {
+  position: fixed;
+  width: 300px;
+  height: 500px;
+  background-color: #c8b0f5;
+  right: 5px;
+  z-index: 2200;
+  // top: 55px;
+  transition: 300ms;
+  -webkit-box-shadow: 0px 2px 12px 3px rgba(191, 191, 191, 1);
+  -moz-box-shadow: 0px 2px 12px 3px rgba(191, 191, 191, 1);
+  box-shadow: 0px 2px 12px 3px rgba(191, 191, 191, 1);
+  border-radius: 10px;
+  background-image: none;
 }
 
 .h-nav {
@@ -121,9 +173,12 @@ ul {
   -webkit-box-shadow: 0px 0px 2px 0px rgb(102, 101, 101);
   -moz-box-shadow: 0px 0px 2px 0px rgb(109, 109, 109);
   box-shadow: 0px 0px 2px 0px rgb(114, 112, 112);
+  position: relative;
 }
-.el-dropdown-menu {
+.dropdown-menu {
   display: flex;
+  -ms-flex-direction: column;
+  -webkit-flex-direction: column;
   flex-direction: column;
   width: 300px;
   padding: 0;
@@ -133,12 +188,12 @@ ul {
   // padding: 0 10px;
 }
 
-.el-dropdown-menu__item:hover {
+.dropdown-menu__item:hover {
   color: black;
   background-color: white;
 }
 
-.el-dropdown-menu__item {
+.dropdown-menu__item {
   width: 100%;
   padding: 0;
   text-align: center;
@@ -146,9 +201,10 @@ ul {
 }
 .profile-info {
   display: flex;
-  justify-content: space-between;
+  // justify-content: space-between;
   align-items: center;
   // padding: 10px;
+  flex-direction: row;
   // position: relative;
   height: 73px;
   border-top-left-radius: 9px;
@@ -165,36 +221,36 @@ ul {
   .dropdown-profile-pic {
     width: 50px;
     height: 50px;
-    margin-left: 10px;
+    margin: 0 10px;
     // position: absolute;
     // right: 10px;
     // top: 10px;
     border-radius: 100px;
   }
   .profile-text {
-    // display: flex;
-    // flex-direction: column;
-    margin-right: 100px;
-    height: 46px;
-    position: relative;
-    // justify-content: space-around;
-    // align-items: center;
+    display: flex;
+    -ms-flex-direction: column;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+    -ms-flex-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
     .profile-name {
       font-size: 20px;
       // flex-grow: 1;
       // position: absolute;
       // left: 15px;
       // top: 10px;
-      text-align: left;
+      // text-align: left;
       // color: white;
     }
     .profile-profession {
       font-size: 14px;
-      position: absolute;
+      // position: absolute;
       font-weight: 300;
-      text-align: left;
-      bottom: -10px;
-      left: 0;
+      // text-align: left;
+      // bottom: -10px;
+      // left: 0;
       // color: white;
       // right: 140px;
       // top: 30px;

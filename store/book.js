@@ -22,7 +22,7 @@ export const actions = {
   async addBook({
     commit
   }, book) {
-    await this.$axios.post(process.env.BASE_URL + '/books/add', {
+    await this.$axios.post(process.env.baseUrl + '/books/add', {
       title: book.title,
       genres: book.genres,
       synopsis: book.synopsis,
@@ -50,7 +50,7 @@ export const actions = {
   async allBooks({
     commit
   }) {
-    const book = await this.$axios.get(process.env.BASE_URL + '/books/all')
+    const book = await this.$axios.get(process.env.baseUrl + '/books/all')
 
     commit('ALL', book.data.books)
     // console.log(state.books)
