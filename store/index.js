@@ -2,6 +2,7 @@ export const state = () => ({
   counter: 0,
   menuState: "menu-active",
   slidesPerView: 6.5,
+  dropdownState: "dropdown-inactive"
 
 })
 
@@ -26,6 +27,13 @@ export const mutations = {
       state.slidesPerView = 9
     }
     // console.log(state.menuState)
+  },
+  DROPDOWN_STATE(state) {
+    if (state.dropdownState !== "dropdown-active") {
+      state.dropdownState = "dropdown-active"
+    } else {
+      state.dropdownState = "dropdown-inactive"
+    }
   }
 }
 

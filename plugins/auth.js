@@ -18,10 +18,10 @@ export default function ({
     const token = Cookies.get('token');
     if (token) {
       axios.defaults.headers.common['Authorization'] = token;
-      axios.get('http://localhost:5000/users/show').then((res) => {
+      axios.get(process.env.BASE_URL + '/users/show').then((res) => {
         // console.log(token);
         store.commit('auth/AUTH_SUCCESS', token);
-        store.commit("auth/AUTH_SUCCESS_USER", res.data._id);
+        store.commit("auth/AUTH_SUCCESS_USER", res.data);
 
         // console.log(store.state.auth.userId)
       }).catch((e) => {

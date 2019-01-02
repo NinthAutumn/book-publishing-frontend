@@ -5,24 +5,9 @@
         <i class="el-icon-menu" :class="$store.state.menuState" @click="menuDrawer"></i>
       </div>
       <SearchBar class="searchbar"></SearchBar>
-      <el-dropdown v-if="$store.state.auth.loggedIn">
-        <span class="el-dropdown-link">
-          <img class="profile-pic" src="http://placehold.jp/45x45.png">
-        </span>
-        <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item class="profile-info">
-            <img class="dropdown-profile-pic" src="http://placehold.jp/45x45.png">
-            <div class="profile-text">
-              <span class="profile-name">NinthAutumn</span>
-              <span class="profile-profession">Author</span>
-            </div>
-          </el-dropdown-item>
-          <el-dropdown-item>Action 2</el-dropdown-item>
-          <el-dropdown-item>Action 3</el-dropdown-item>
-          <el-dropdown-item>Action 4</el-dropdown-item>
-          <el-dropdown-item @click="logOut">Log out</el-dropdown-item>
-        </el-dropdown-menu>
-      </el-dropdown>
+      <span @click="stateDropChange" v-if="$store.state.auth.loggedIn">
+        <img class="profile-pic" src="http://placehold.jp/45x45.png">
+      </span>
       <div class="not-loggedin" v-else>
         <span class="signup">
           <nuxt-link to="/auth/signup">Sign up</nuxt-link>
@@ -55,6 +40,10 @@ export default {
     },
     logOut() {
       this.$store.dispatch("logOut");
+    },
+    stateDropChange() {
+      this.$store.commit("DROPDOWN_STATE");
+      // console.log("yes");
     }
   }
 };
