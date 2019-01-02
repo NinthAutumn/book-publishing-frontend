@@ -12,9 +12,9 @@ export default {
 };
 </script>
 <style>
-#search {
+/* #search {
   margin-left: 24rem;
   margin-top: 50rem;
   padding: 10rem;
-}
+} */
 </style>

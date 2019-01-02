@@ -1,3 +1,7 @@
+// import {
+//   axios
+// } from 'axios'
+
 export const state = () => ({
   books: []
 })
@@ -18,15 +22,15 @@ export const actions = {
   async addBook({
     commit
   }, book) {
-    await this.$axios.post('localhost:5000/books/add', {
-      title: body.title,
-      genres: body.genres,
-      synopsis: body.synopsis,
-      price: body.price,
-      tags: body.tags,
-      cover: body.cover,
-      published: body.published,
-      author: body.author
+    await this.$axios.post('http://localhost:5000/books/add', {
+      title: book.title,
+      genres: book.genres,
+      synopsis: book.synopsis,
+      price: book.price,
+      tags: book.tags,
+      cover: book.cover,
+      published: book.published,
+      author: book.userId
     }).then((response) => {
       commit('ALL', response)
     })
@@ -46,10 +50,10 @@ export const actions = {
   async allBooks({
     commit
   }) {
-    await this.$axios.get('localhost:5000/books/all').then((response) => {
-      commit('ALL', response)
-    })
-    // 
+    const book = await this.$axios.get('http://localhost:5000/books/all')
+
+    commit('ALL', book.data.books)
+    // console.log(state.books)
   }
 }
 

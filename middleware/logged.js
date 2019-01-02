@@ -13,6 +13,9 @@ export default function ({
   if (route.query.id) {
     return
   }
+  if (store.state.auth.loggedIn) {
+    return
+  }
   // If the user is not authenticated
   if (!Cookies.get('token')) {
     return redirect('/auth/login')

@@ -7,7 +7,7 @@
       <div class="card-title">
         <h3>Recommended</h3>
       </div>
-      <BooksList :books="books"></BooksList>
+      <BooksList :books="$store.state.book.books"></BooksList>
     </div>
   </div>
 </template>
@@ -75,17 +75,8 @@ export default {
   //   };
   // },
   methods: {},
-  asyncData({ $axios }) {
-    return $axios.$get("http://0.0.0.0:5000/books/all").then(res => {
-      return {
-        books: res.books,
-        size: null
-      };
-    });
-
-    // return axios.get(`https://my-api/posts/${params.id}`).then(res => {
-    //   return { title: res.data.title };
-    // });
+  async fetch({ store }) {
+    await store.dispatch("book/allBooks");
   },
   created() {},
   auth: false

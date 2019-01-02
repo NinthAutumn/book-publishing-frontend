@@ -73,6 +73,8 @@ export const mutations = {
   },
   AUTH_LOGOUT(state) {
     state.loggedIn = false
+    state.userId = ""
+    state.token = ""
   }
 
 }
@@ -102,23 +104,32 @@ export const actions = {
 
       console.log(state.token)
       console.log(state.userId)
-    }).catch((e) => {
-      console.log(e);
     })
 
   },
   async logOut({
-    commit,
-    state
+    commit
   }) {
     await this.$axios.delete('http://localhost:5000/users/logout').then((res) => {
       console.log(res.headers.authorization);
-      state.userId = ""
       Cookies.remove('token')
       delete this.$axios.defaults.headers.common['Authorization']
-      commit("AUTH_SUCCESS", token);
+      commit("AUTH_LOGOUT");
     }).catch((e) => {
       console.log(e);
+    })
+  },
+  async signUp({
+    commit
+  }, user) {
+    await this.$axios.post('http://localhost:5000/users/signup', {
+      username: user.username,
+      email: user.email,
+      password: user.password
+    }).then((res) => {
+      const token = res.headers.authorization
+      commit("AUTH_SUCCESS", token);
+      commit("AUTH_SUCCESS_USER", res.data.userId)
     })
   }
 }

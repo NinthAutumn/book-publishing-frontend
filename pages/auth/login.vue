@@ -28,9 +28,14 @@ export default {
         password: this.password
       };
       console.log(user);
-      this.$store.dispatch("auth/login", user).then(() => {
-        this.$router.push("/");
-      });
+      await this.$store
+        .dispatch("auth/login", user)
+        .then(() => {
+          this.$router.push("/");
+        })
+        .catch(e => {
+          console.log(e.response);
+        });
       // await this.$auth
       //   .loginWith("local", {
       //     data: {
@@ -41,7 +46,12 @@ export default {
       //   .catch(e => {});
     }
   },
-  auth: false
+  auth: false,
+  beforeCreate() {
+    if (Cookies.get("token")) {
+      this.$router.push("/");
+    }
+  }
   // middleware: "auth"
 };
 </script>

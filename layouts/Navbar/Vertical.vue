@@ -97,7 +97,7 @@ export default {
   height: 100vh;
   position: fixed;
   top: 50px;
-  left: 0rem;
+  left: 0.1rem;
   /* -webkit-box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.36);
   -moz-box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.36);
   box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.36); */
