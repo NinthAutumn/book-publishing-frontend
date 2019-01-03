@@ -1,5 +1,5 @@
 <template>
-  <div class="library">{{$route.query.id}}</div>
+  <div class="library">{{$store.state.auth.user._id}}</div>
 </template>
 
 <script>

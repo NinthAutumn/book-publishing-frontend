@@ -83,7 +83,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 /* .menu-active {
   margin-left: 24rem;
   margin-top: 5rem;

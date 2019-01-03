@@ -3,15 +3,16 @@
 // } from 'axios'
 
 export const state = () => ({
-  books: []
+  books: [],
+  book: {}
 })
 
 export const getters = {
   isHighRated: (state) => {
-    let goodBook = state.books.filter((book) => {
-      book.rating > 4
-    });
-    return goodBook
+    // let goodBook = state.books.filter((book) => {
+    //   book.rating > 4
+    // });
+    // return goodBook
   },
   isTrending: (state) => {
 
@@ -19,6 +20,14 @@ export const getters = {
 }
 
 export const actions = {
+  async getBook({
+    commit
+  }, id) {
+    await this.$axios.get(process.env.baseUrl + '/books/show?id=' + id).then((res) => {
+      // console.log()
+      commit('SHOW', res.data.book)
+    })
+  },
   async addBook({
     commit
   }, book) {
@@ -64,7 +73,9 @@ export const mutations = {
   ALL(state, books) {
     state.books = books
   },
-  SHOW(state) {},
+  SHOW(state, book) {
+    state.book = book
+  },
   EDIT() {
 
   },

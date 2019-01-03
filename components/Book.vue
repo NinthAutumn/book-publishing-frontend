@@ -49,16 +49,7 @@ export default {
   }
 };
 </script>
-<style>
-.book-cover {
-  width: 16.5rem;
-  height: 24.5rem;
-  position: relative;
-  -webkit-box-shadow: 1px 1px 1px 0px rgba(153, 153, 153, 0.75);
-  -moz-box-shadow: 1px 1px 1px 0px rgba(153, 153, 153, 0.75);
-  box-shadow: 1px 1px 1px 0px rgba(153, 153, 153, 0.75);
-  border-radius: 1rem;
-}
+<style lang="scss">
 #book-card {
   display: flex;
   flex-direction: column;
@@ -67,66 +58,93 @@ export default {
   width: 16.5rem;
   /* height: 245px; */
   position: relative;
-}
+  .book-cover {
+    width: 16.5rem;
+    height: 24.5rem;
+    position: relative;
+    -webkit-box-shadow: 1px 1px 1px 0px rgba(153, 153, 153, 0.75);
+    -moz-box-shadow: 1px 1px 1px 0px rgba(153, 153, 153, 0.75);
+    box-shadow: 1px 1px 1px 0px rgba(153, 153, 153, 0.75);
+    border-radius: 1rem;
+    &:hover {
+      cursor: pointer;
+      &::after {
+        position: absolute;
+        background: black;
+        top: 0;
+        left: 0;
+        content: "";
+        /* z-index: -1; */
+        /* border-radius: 10px; */
+        opacity: 0.2;
+        display: block;
+        animation: gradualAppearance 200ms ease-out;
+        animation-fill-mode: reverse;
+        width: 100%;
+        height: 100%;
+        border-radius: 1rem;
+      }
+    }
 
-.book-img {
-  width: 16.5rem;
-  height: 24.5rem;
-  position: relative;
-  /* border-radius: 10px; */
+    .book-img {
+      width: 16.5rem;
+      height: 24.5rem;
+      position: relative;
+      /* border-radius: 10px; */
 
-  border-radius: 1rem;
-  /* border-top-left-radius: 10px;
+      border-radius: 1rem;
+      /* border-top-left-radius: 10px;
   border-top-right-radius: 10px; */
-}
+    }
+  }
+  .text-info {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    /* background: white; */
+    /* height: 7rem; */
+    padding: 0.5rem;
+    /* width: 100%; */
+    /* padding-left: 5px; */
 
-.book-title {
-  margin: 0;
-  /* text-align: center; */
-  /* margin-top: 10px; */
-  padding: 0;
+    /* border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px; */
+    .book-title {
+      margin: 0;
+      /* text-align: center; */
+      /* margin-top: 10px; */
+      padding: 0;
 
-  width: 95%;
-  /* height: 5rem; */
-  overflow: hidden;
-  text-overflow: ellipsis;
-  position: relative;
-  /* line-clamp: 2; */
-  white-space: nowrap;
-  /* display: -webkit-box;
+      width: 95%;
+      /* height: 5rem; */
+      overflow: hidden;
+      text-overflow: ellipsis;
+      position: relative;
+      /* line-clamp: 2; */
+      white-space: nowrap;
+      /* display: -webkit-box;
   white-space: normal;
   word-wrap: break-word;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 1; */
-  transition: 300ms;
+      transition: 300ms;
+      &:hover {
+        overflow: visible;
+        cursor: pointer;
+        white-space: normal;
+        /* transition: overflow 500ms; */
+        transition: 200ms;
+      }
+    }
+  }
 }
 
-.book-title:hover {
-  overflow: visible;
-  cursor: pointer;
-  white-space: normal;
-  /* transition: overflow 500ms; */
-  transition: 200ms;
-}
 /* .book-title::after {
   position: absolute;
   content: "...";
   right: 0;
   bottom: 0;
 } */
-.text-info {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  /* background: white; */
-  /* height: 7rem; */
-  padding: 0.5rem;
-  /* width: 100%; */
-  /* padding-left: 5px; */
-
-  /* border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px; */
-}
 
 /* .book-card::after {
   position: absolute;
@@ -143,27 +161,6 @@ export default {
   font-size: 14px;
   font-weight: bold;
 } */
-
-.book-cover:hover {
-  cursor: pointer;
-}
-
-.book-cover:hover::after {
-  position: absolute;
-  background: black;
-  top: 0;
-  left: 0;
-  content: "";
-  /* z-index: -1; */
-  /* border-radius: 10px; */
-  opacity: 0.2;
-  display: block;
-  animation: gradualAppearance 200ms ease-out;
-  animation-fill-mode: reverse;
-  width: 100%;
-  height: 100%;
-  border-radius: 1rem;
-}
 
 /* .p-ending {
   position: absolute;
