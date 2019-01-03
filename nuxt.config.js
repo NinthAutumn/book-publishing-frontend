@@ -73,7 +73,17 @@ module.exports = {
     // Doc: https://github.com/nuxt-community/axios-module#usage
     '@nuxtjs/axios',
     // "@nuxtjs/auth",
-    'cookie-universal-nuxt'
+    'cookie-universal-nuxt',
+    ['nuxt-fontawesome', {
+      component: 'fa',
+      imports: [
+        //import whole set
+        {
+          set: '@fortawesome/free-solid-svg-icons',
+          icons: ['fas']
+        }
+      ]
+    }]
 
   ],
   /*

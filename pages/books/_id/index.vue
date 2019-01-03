@@ -19,11 +19,11 @@
           <div class="book__info__meta__views__text">{{$store.state.book.book.views}}</div>
         </div>
       </div>
-      <div class="book__info__desc">
-        <div class="book__info__desc__text">
+      <div class="book_stats">
+        <div class="book__stats__text">
           <p>{{$store.state.book.book.synopsis}}</p>
         </div>
-        <div class="book__info__desc__buttons">
+        <div class="book__stats__buttons">
           <button></button>
           <button></button>
         </div>
@@ -80,8 +80,8 @@ export default {
         }
       }
     }
-    &__desc {
-    }
+  }
+  &__stats {
   }
 }
 </style>

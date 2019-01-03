@@ -4,7 +4,7 @@
       <li v-for="menu in menus" :key="menu.title">
         <nuxt-link :to="menu.link">
           <div class="v-nav-list">
-            <i :class="menu.icon" class="v-nav-icons"></i>
+            <fa :icon="menu.icon" class="v-nav-icons"></fa>
             <p>{{menu.title}}</p>
           </div>
         </nuxt-link>
@@ -29,6 +29,8 @@
 <script>
 import HomeIcon from "../../assets/home-icon";
 var moment = require("moment");
+// import { fas } from "@fortawesome/free-solid-svg-icons";
+// import { faGithub } from '@fortawesome/free-brands-svg-icons'
 
 export default {
   name: "Vertical",
@@ -64,31 +66,31 @@ export default {
       menus: [
         {
           title: "ホーム",
-          icon: "el-icon-search",
+          icon: "home",
           link: "/",
           meta: ""
         },
         {
           title: "検索",
-          icon: "el-icon-search",
+          icon: "search",
           link: "/search",
           meta: "search"
         },
         {
           title: "ランキング",
-          icon: "el-icon-search",
+          icon: "crown",
           link: "/rankings",
           meta: "ranking"
         },
         {
           title: "ストアー",
-          icon: "el-icon-search",
+          icon: "store",
           link: "/store",
           meta: "store"
         },
         {
           title: "ライブラリー",
-          icon: "el-icon-search",
+          icon: "book",
           link: "/library",
           meta: "library"
         }
@@ -107,10 +109,6 @@ export default {
     dropOff() {
       this.$store.commit("DROPDOWN_FALSE");
     }
-  },
-  created() {
-    // console.log(this.$store.state.auth.userId, "dog");
-    // this.userId = this.$store.state.auth.userId;
   }
 };
 </script>

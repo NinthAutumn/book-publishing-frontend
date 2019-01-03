@@ -44,3 +44,55 @@ a:link,
 a:visited {
   color: #8860d0;
 }
+
+@media screen and (max-width: 1136px) {
+  * {
+    font-family: "Noto Sans JP", sans-serif;
+    /* font-size: 6px; */
+  }
+
+  .nuxt-pages .menu-active {
+    padding: 1rem 7rem !important;
+    /* transition: 300ms !important; */
+    /* position: relative !important; */
+    margin-top: 5rem !important;
+    transition: 300ms;
+    position: relative !important;
+    margin-left: 0 !important;
+  }
+
+
+  .v-nav {
+    position: absolute;
+    /* display: none; */
+    z-index: 10000 !important;
+    opacity: 1 !important;
+    -webkit-box-shadow: inset 0px 0px 0px 0px rgba(122, 122, 122, 1) !important;
+    -moz-box-shadow: inset 0px 0px 0px 0px rgba(122, 122, 122, 1) !important;
+    box-shadow: inset 0px 0px 0px 0px rgba(122, 122, 122, 1) !important;
+    -webkit-box-shadow: 1px 1px 13px 0px rgba(145, 145, 145, 1) !important;
+    -moz-box-shadow: 1px 1px 13px 0px rgba(145, 145, 145, 1) !important;
+    box-shadow: 1px 1px 13px 0px rgba(145, 145, 145, 1) !important;
+  }
+}
+
+@media screen and (min-width: 1136px) {
+  * {
+    font-family: "Noto Sans JP", sans-serif;
+    /* font-size: 7px; */
+  }
+}
+
+@media screen and (min-width: 1275px) {
+  * {
+    font-family: "Noto Sans JP", sans-serif;
+    /* font-size: 8px; */
+  }
+}
+
+@media screen and (min-width: 1276px) {
+  * {
+    font-family: "Noto Sans JP", sans-serif;
+    /* font-size: 9px; */
+  }
+}

@@ -1,5 +1,5 @@
 <template>
-  <div id="book-card" :class="size" @click="linkTo">
+  <div id="book-card" class="big" @click="linkTo">
     <div class="book-cover">
       <span class="star-rating"></span>
       <img :src="book.cover" class="book-img" alt="Book cover">
@@ -171,9 +171,13 @@ export default {
 /* background: linear-gradient(to left, white, transparent); */
 /* } */
 
-.big {
-  width: 16.5rem;
-  /* height: 245px; */
+// .big {
+//   width: 16.5rem;
+//   /* height: 245px; */
+// }
+
+.medium {
+  width: 14.5rem;
 }
 
 .vue-star-rating-rating-text {

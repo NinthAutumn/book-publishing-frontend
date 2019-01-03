@@ -23,7 +23,7 @@ export default {
   },
   data() {
     return {
-      slidesNumber: 7,
+      // slidesNumber: 7,
       swiperOption: {
         // loop: true,
         slidesPerView: this.$store.state.slidesPerView,
@@ -46,6 +46,24 @@ export default {
           },
           tap() {
             console.log("onTap", this);
+          }
+        },
+        breakpoints: {
+          1024: {
+            slidesPerView: 4
+            // spaceBetween: 40
+          },
+          768: {
+            slidesPerView: 3
+            // spaceBetween: 30
+          },
+          640: {
+            slidesPerView: 2
+            // spaceBetween: 20
+          },
+          320: {
+            slidesPerView: 2
+            // spaceBetween: 10
           }
         }
       }
