@@ -49,7 +49,7 @@ export default {
   auth: false,
   beforeCreate() {
     if (Cookies.get("token")) {
-      this.$router.push("/");
+      this.$router.go(-1);
     }
   }
   // middleware: "auth"

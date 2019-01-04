@@ -1,3 +1,12 @@
+import Cookies from 'js-cookie';
+import {
+  serialize,
+  parse
+} from 'cookie'
+// var cookieParser = require('cookie-parser');
+var cookie = require('cookie');
+
+
 export const state = () => ({
   counter: 0,
   menuState: "menu-active",
@@ -42,5 +51,36 @@ export const mutations = {
 
 
 export const actions = {
+  async nuxtServerInit({
+    commit,
+    state
 
+  }, {
+    req
+  }) {
+    console.log("serverinit")
+    if (req.headers.cookie) {
+      const token = cookie.parse(req.headers.cookie).token
+
+      // parsed = cookieparser.parse(req.headers.cookie);
+      // console.log()
+
+      if (token) {
+        // console.log(env.baseUrl)
+        this.$axios.defaults.headers.common['Authorization'] = token;
+        commit('auth/AUTH_SUCCESS', token);
+        await this.$axios.get(process.env.baseUrl + '/users/show').then((res) => {
+          // console.log(token);
+          commit("auth/AUTH_SUCCESS_USER", res.data);
+          console.log(state.auth.user._id)
+
+          // console.log(store.state.auth.userId)
+        }).catch((e) => {
+          console.log(e)
+        })
+
+      }
+    }
+
+  }
 }

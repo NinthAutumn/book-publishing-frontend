@@ -14,6 +14,8 @@
     "@fortawesome/free-solid-svg-icons": "^5.6.3",
     "@nuxtjs/auth": "^4.5.3",
     "@nuxtjs/axios": "^5.3.6",
+    "cookie": "^0.3.1",
+    "cookie-parser": "^1.4.3",
     "cookie-universal-nuxt": "^2.0.11",
     "cross-env": "^5.2.0",
     "element-ui": "^2.4.6",

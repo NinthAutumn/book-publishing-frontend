@@ -56,7 +56,7 @@ export default {
   },
   beforeCreate() {
     if (Cookies.get("token")) {
-      this.$router.push("/");
+      this.$router.go(-1);
     }
   }
 };

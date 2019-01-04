@@ -170,10 +170,19 @@ ul {
   border-radius: 100px;
   margin-right: 10px;
   width: 45px;
-  -webkit-box-shadow: 0px 0px 2px 0px rgb(102, 101, 101);
-  -moz-box-shadow: 0px 0px 2px 0px rgb(109, 109, 109);
-  box-shadow: 0px 0px 2px 0px rgb(114, 112, 112);
+
   position: relative;
+  border: 1px solid #ffd700;
+  &:hover {
+    -webkit-box-shadow: 0px 2px 4px 0px rgba(217, 217, 217, 1);
+    -moz-box-shadow: 0px 2px 4px 0px rgba(217, 217, 217, 1);
+    box-shadow: 0px 2px 4px 0px rgba(217, 217, 217, 1);
+  }
+  &:focus {
+    -webkit-box-shadow: 0px 0px 4px 0px rgba(217, 217, 217, 1);
+    -moz-box-shadow: 0px 0px 4px 0px rgba(217, 217, 217, 1);
+    box-shadow: 0px 0px 4px 0px rgba(217, 217, 217, 1);
+  }
 }
 .dropdown-menu {
   display: flex;
@@ -226,6 +235,7 @@ ul {
     // right: 10px;
     // top: 10px;
     border-radius: 100px;
+    border: 2px solid #ffd700;
   }
   .profile-text {
     display: flex;

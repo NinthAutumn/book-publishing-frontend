@@ -18,17 +18,8 @@ export default function ({
     console.log('Nuxt.js is ready and mounted', )
     const token = Cookies.get('token');
     if (token) {
-      // console.log(env.baseUrl)
-      axios.defaults.headers.common['Authorization'] = token;
-      axios.get(env.baseUrl + '/users/show').then((res) => {
-        // console.log(token);
-        store.commit('auth/AUTH_SUCCESS', token);
-        store.commit("auth/AUTH_SUCCESS_USER", res.data);
 
-        // console.log(store.state.auth.userId)
-      }).catch((e) => {
-        console.log(e)
-      })
+      axios.defaults.headers.common['Authorization'] = token;
     }
   })
 
