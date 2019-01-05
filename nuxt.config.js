@@ -83,6 +83,13 @@ module.exports = {
           icons: ['fas']
         }
       ]
+    }],
+    ['nuxt-validate', {
+      lang: 'es'
+      // regular vee-validate options 
+    }],
+    ['@nuxtjs/google-analytics', {
+      id: 'UA-119733183-2'
     }]
 
   ],

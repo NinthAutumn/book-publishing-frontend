@@ -58,7 +58,7 @@ export const actions = {
   }, {
     req
   }) {
-    console.log("serverinit")
+    // console.log("serverinit")
     if (req.headers.cookie) {
       const token = cookie.parse(req.headers.cookie).token
 
@@ -72,7 +72,7 @@ export const actions = {
         await this.$axios.get(process.env.baseUrl + '/users/show').then((res) => {
           // console.log(token);
           commit("auth/AUTH_SUCCESS_USER", res.data);
-          console.log(state.auth.user._id)
+          // console.log(state.auth.user._id)
 
           // console.log(store.state.auth.userId)
         }).catch((e) => {

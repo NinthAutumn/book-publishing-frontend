@@ -49,21 +49,36 @@ export default {
           }
         },
         breakpoints: {
+          1090: {
+            slidesPerView: 5.5
+          },
           1024: {
-            slidesPerView: 4
+            slidesPerView: 5
             // spaceBetween: 40
           },
-          768: {
-            slidesPerView: 3
+          878: {
+            slidesPerView: 4.5
+          },
+          802: {
+            slidesPerView: 4
+          },
+          734: {
+            slidesPerView: 3.5
+          },
+          664: {
+            slidesPerView: 3.2
             // spaceBetween: 30
           },
           640: {
-            slidesPerView: 2
+            slidesPerView: 3
             // spaceBetween: 20
           },
-          320: {
-            slidesPerView: 2
+          575: {
+            slidesPerView: 2.5
             // spaceBetween: 10
+          },
+          375: {
+            slidesPerView: 1.5
           }
         }
       }

@@ -4,13 +4,33 @@
       <p class="signup-title">Signup to Lyfr</p>
 
       <label for="username">Username</label>
-      <input type="text" v-model="username" required>
+      <input type="text" v-model="formUsername">
       <label for="email">Email</label>
-      <input type="email" v-model="email" required>
+      <input type="email" v-model="formEmail">
       <label for="password">Password</label>
-      <input type="password" v-model="password" required>
+      <input
+        name="password"
+        v-validate="'required'"
+        type="password"
+        :class="{'is-danger': errors.has('password')}"
+        v-model="formPassword"
+        ref="password"
+      >
+      <span v-show="errors.has('password')" class="help is-danger">{{ errors.first('password') }}</span>
+      
       <label for="cPassword">Confirm Password</label>
-      <input type="password" v-model="cPassword" required>
+      <input
+        name="confirm_password"
+        v-validate="'confirmed:password'"
+        type="password"
+        data-vv-as="password"
+        v-model="formCPassword"
+      >
+      <span
+        v-show="errors.has('confirm_password')"
+        class="help is-danger"
+      >{{ errors.first('confirm_password') }}</span>
+      
       <input type="submit">
     </form>
   </div>
@@ -22,10 +42,11 @@ import Cookies from "js-cookie";
 export default {
   data() {
     return {
-      username: "",
-      email: "",
-      password: "",
-      cPassword: "",
+      validated: false,
+      formUsername: "",
+      formEmail: "",
+      formPassword: "",
+      formCPassword: "",
       gender: "",
       last_name: "",
       first_name: ""
@@ -33,30 +54,44 @@ export default {
   },
   auth: false,
   methods: {
-    signUp: function() {
-      const user = {
-        username: this.username,
-        email: this.email,
-        password: this.password
-      };
-      this.$store
-        .dispatch("auth/signUp", user)
-        .then(() => {
-          this.$router.push("/");
-        })
-        .catch(e => {
-          if (e.response.data.errors.username) {
-            alert(e.response.data.errors.username.message);
-          }
-          if (e.response.data.errors.email) {
-            alert(e.response.data.errors.email.message);
-          }
-        });
+    async signUp() {
+      // const isValid = await this.$refs.observer.validate();
+      await this.$validator.validateAll();
+      console.log("test");
+      if (!this.errors.any()) {
+        alert("woo no errors");
+        const user = {
+          username: this.formUsername,
+          email: this.formEmail,
+          password: this.formPassword
+        };
+        await this.$store
+          .dispatch("auth/signUp", user)
+          .then(() => {
+            this.$router.push("/");
+          })
+          .catch(e => {
+            if (e.response.data.errors.username) {
+              alert(e.response.data.errors.username.message);
+            }
+            if (e.response.data.errors.email) {
+              alert(e.response.data.errors.email.message);
+            }
+          });
+      }
+    },
+    async submit() {
+      // 🐿 ship it
     }
   },
   beforeCreate() {
     if (Cookies.get("token")) {
       this.$router.go(-1);
+    }
+  },
+  computed: {
+    isFormInValid() {
+      return Object.keys(this.fields).some(key => this.fields[key].invalid);
     }
   }
 };

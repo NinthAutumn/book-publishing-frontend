@@ -19,7 +19,8 @@
           <div class="book__info__meta__views__text">{{$store.state.book.book.views}}</div>
         </div>
       </div>
-      <div class="book_stats">
+      <div class="book__stats">
+        <div class="book__stats__meta"></div>
         <div class="book__stats__text">
           <p>{{$store.state.book.book.synopsis}}</p>
         </div>
