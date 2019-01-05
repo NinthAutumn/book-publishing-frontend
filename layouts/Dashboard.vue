@@ -1,22 +1,39 @@
 <template>
-  <nav class="v-nav" :class="$store.state.menuState">
-    <ul>
-      <li>
-        <div class="dashboard-profile">
-          <img class="dashboard-profile-pic" src="http://placehold.jp/100x100.png">
+  <div class="d-nav-all">
+    <div class="d-nav-h">
+      <div class="dashboard-h-menu">
+        <div class="dashboard-icon">
+          <i class="el-icon-menu" @click="menuDrawer"></i>
         </div>
-      </li>
-      <li v-for="menu in menus" :key="menu.title">
-        <nuxt-link :to="menu.link">
-          <div class="v-nav-list">
-            <fa :icon="menu.icon" class="v-nav-icons"></fa>
-            <p>{{menu.title}}</p>
+        <div class="dashboard-logo">
+          <img class="dashboard-logo-img" src="http://placehold.jp/80x32.png">
+        </div>
+      </div>
+    </div>
+    <nav class="d-nav-v" :class="$store.state.dashboardMenuState">
+      <ul>
+        <li>
+          <div
+            v-if="$store.state.dashboardMenuState === 'dashboard-active'"
+            class="dashboard-profile"
+          >
+            <img class="dashboard-profile-pic" src="http://placehold.jp/100x100.png">
           </div>
-        </nuxt-link>
-      </li>
-    </ul>
-    <hr>
-  </nav>
+          <div v-else></div>
+        </li>
+        <li v-for="menu in menus" :key="menu.title">
+          <nuxt-link :to="menu.link">
+            <div class="d-nav-v-list">
+              <fa :icon="menu.icon" class="d-nav-v-icons"></fa>
+              <p v-if="$store.state.dashboardMenuState === 'dashboard-active'">{{menu.title}}</p>
+              <p v-else></p>
+            </div>
+          </nuxt-link>
+        </li>
+      </ul>
+      <hr>
+    </nav>
+  </div>
 </template>
 <script>
 // import HomeIcon from "../../assets/home-icon";
@@ -68,7 +85,12 @@ export default {
     //   ;
     // }
   },
-  methods: {}
+  methods: {
+    menuDrawer() {
+      this.$store.commit("DASHBOARD_MENU_STATE_CHANGE");
+      console.log("dog");
+    }
+  }
 };
 </script>
 
@@ -77,6 +99,46 @@ export default {
 
 
 <style lang="scss"  scoped>
+.d-nav-h {
+  width: 100vw;
+  -webkit-box-shadow: 0px 2px 3px 0px rgba(245, 226, 245, 1);
+  -moz-box-shadow: 0px 2px 3px 0px rgba(245, 226, 245, 1);
+  box-shadow: 0px 2px 3px 0px rgba(245, 226, 245, 1);
+  height: 50px;
+  position: fixed;
+  top: 0;
+  background-color: white;
+  // background-color: black;
+}
+.dashboard-h-menu {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  // justify-content: space-around;
+  // -webkit-box-shadow: 2px 0px 3px 0px rgba(245, 226, 245, 1);
+  // -moz-box-shadow: 2px 0px 3px 0px rgba(245, 226, 245, 1);
+  // box-shadow: 2px 0px 3px 0px rgba(245, 226, 245, 1);
+}
+.el-icon-menu {
+  margin-left: 16px;
+  font-size: 3rem;
+  color: #c9b1f5;
+  transition: 200ms;
+  &:hover {
+    cursor: pointer;
+    color: #9a7fcc;
+    transition: 200ms;
+  }
+  &:active {
+    background-color: #dbd4e9;
+    transition: 200ms;
+  }
+}
+
+.dashboard-logo {
+  margin-left: 16px;
+  height: 32px;
+}
 .dashboard-profile {
   display: flex;
   justify-content: space-around;
@@ -90,23 +152,31 @@ export default {
   left: -25rem !important;
   transition: 300ms;
 }
-.v-nav {
-  background-color: #fbf9f9;
+
+.d-nav-all .dashboard-inactive {
+  width: 50px !important;
+}
+
+.d-nav-v {
   /* display: none; */
-  width: 25rem;
+  width: 255px;
   height: 100vh;
   position: fixed;
+  top: 50px;
   // top: 50px;
   left: 0.1rem;
+  -webkit-box-shadow: 2px 0px 3px 0px rgba(245, 226, 245, 1);
+  -moz-box-shadow: 2px 0px 3px 0px rgba(245, 226, 245, 1);
+  box-shadow: 2px 0px 3px 0px rgba(245, 226, 245, 1);
   /* -webkit-box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.36);
   -moz-box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.36);
   box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.36); */
   // -webkit-box-shadow: inset 0.25px 0.25px 0.25px 0.25px rgba(0, 0, 0, 0.2);
   // -moz-box-shadow: inset 0.25px 0.25px 0.25px 0.25px rgba(0, 0, 0, 0.2);
   // box-shadow: inset 0.25px 0.25px 0.25px 0.25px rgba(177, 175, 175, 0.2);
-  -webkit-box-shadow: inset 0px 0px 3px 0px rgba(122, 122, 122, 1);
-  -moz-box-shadow: inset 0px 0px 3px 0px rgba(122, 122, 122, 1);
-  box-shadow: inset 0px 0px 3px 0px rgba(122, 122, 122, 1);
+  // -webkit-box-shadow: inset 0px 0px 3px 0px rgba(122, 122, 122, 1);
+  // -moz-box-shadow: inset 0px 0px 3px 0px rgba(122, 122, 122, 1);
+  // box-shadow: inset 0px 0px 3px 0px rgba(122, 122, 122, 1);
   opacity: 0.75;
   overflow: auto;
   /* animation: content-enter 1s;
@@ -116,7 +186,7 @@ export default {
   &-list {
     display: flex;
     // padding: 1rem;
-    padding-left: 3rem;
+    padding-left: 16px;
     align-items: center;
     // justify-content: center;
     text-align: left;
@@ -132,7 +202,7 @@ export default {
     }
   }
   &-icons {
-    margin-right: 2.4rem;
+    margin-right: 3rem;
     font-size: 2.5rem;
     width: 20px;
   }
@@ -142,12 +212,13 @@ export default {
   margin-top: 10px;
   background-color: #f5f6fc;
   padding: 10px;
-  -webkit-box-shadow: 0.5px 0.5px 0.5px 1px rgba(116, 114, 114, 0.48);
-  -moz-box-shadow: 0.5px 0.5px 0.5px 1px rgba(116, 114, 114, 0.48);
-  box-shadow: 0.5px 0.5px 0.5px 1px rgba(116, 114, 114, 0.48);
+
   /* border-radius: 5px; */
   position: relative;
   transition: 200ms;
+  -webkit-box-shadow: 0.5px 0.5px 0.5px 1px rgba(116, 114, 114, 0.48);
+  -moz-box-shadow: 0.5px 0.5px 0.5px 1px rgba(116, 114, 114, 0.48);
+  box-shadow: 0.5px 0.5px 0.5px 1px rgba(116, 114, 114, 0.48);
 
   &::before {
     position: absolute;

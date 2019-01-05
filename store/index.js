@@ -10,6 +10,7 @@ var cookie = require('cookie');
 export const state = () => ({
   counter: 0,
   menuState: "menu-active",
+  dashboardMenuState: "dashboard-active",
   slidesPerView: 6.5,
   dropdownState: "dropdown-inactive"
 
@@ -46,6 +47,15 @@ export const mutations = {
   },
   DROPDOWN_FALSE(state) {
     state.dropdownState = "dropdown-inactive"
+  },
+  DASHBOARD_MENU_STATE_CHANGE(state) {
+    console.log("claled")
+    if (state.dashboardMenuState === "dashboard-active") {
+      state.dashboardMenuState = "dashboard-inactive"
+    } else {
+      state.dashboardMenuState = "dashboard-active"
+    }
+
   }
 }
 
