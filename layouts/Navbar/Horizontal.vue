@@ -14,7 +14,7 @@
         <img @click="stateDropChange" class="profile-pic" src="http://placehold.jp/45x45.png">
         <div :class="$store.state.dropdownState">
           <div class="dropdown-menu">
-            <div class="profile-info">
+            <div class="profile-info" @click="userProfile">
               <img class="dropdown-profile-pic" src="http://placehold.jp/45x45.png">
               <div class="profile-text">
                 <span class="profile-name">{{$store.state.auth.user.username}}</span>
@@ -68,6 +68,9 @@ export default {
     },
     dropOff() {
       this.$store.commit("DROPDOWN_FALSE");
+    },
+    userProfile() {
+      this.$router.push("/users/dashboard");
     }
   }
 };
@@ -218,6 +221,9 @@ ul {
   height: 73px;
   border-top-left-radius: 9px;
   border-top-right-radius: 10px;
+  &:hover {
+    cursor: pointer;
+  }
 
   h3 {
     margin: 0;
