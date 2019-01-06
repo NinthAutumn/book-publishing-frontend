@@ -154,7 +154,8 @@ export default {
 }
 
 .d-nav-all .dashboard-inactive {
-  width: 50px !important;
+  width: 55px !important;
+  background-color: white;
 }
 
 .d-nav-v {

@@ -4,8 +4,12 @@
       <li v-for="menu in menus" :key="menu.title">
         <nuxt-link :to="menu.link">
           <div class="v-nav-list">
-            <fa :icon="menu.icon" class="v-nav-icons"></fa>
-            <p>{{menu.title}}</p>
+            <div class="v-nav-icon">
+              <fa :icon="menu.icon" class="v-nav-icons"></fa>
+            </div>
+            <div class="v-nav-title">
+              <p>{{menu.title}}</p>
+            </div>
           </div>
         </nuxt-link>
       </li>
@@ -119,13 +123,13 @@ export default {
 
 <style lang="scss"  scoped>
 .menu-inactive {
-  left: -25rem !important;
+  left: -240px !important;
   transition: 300ms;
 }
 .v-nav {
-  background-color: #fbf9f9;
+  background-color: white;
   /* display: none; */
-  width: 25rem;
+  width: 240px;
   height: 100vh;
   position: fixed;
   top: 50px;
@@ -136,18 +140,20 @@ export default {
   // -webkit-box-shadow: inset 0.25px 0.25px 0.25px 0.25px rgba(0, 0, 0, 0.2);
   // -moz-box-shadow: inset 0.25px 0.25px 0.25px 0.25px rgba(0, 0, 0, 0.2);
   // box-shadow: inset 0.25px 0.25px 0.25px 0.25px rgba(177, 175, 175, 0.2);
-  -webkit-box-shadow: inset 0px 0px 3px 0px rgba(122, 122, 122, 1);
-  -moz-box-shadow: inset 0px 0px 3px 0px rgba(122, 122, 122, 1);
-  box-shadow: inset 0px 0px 3px 0px rgba(122, 122, 122, 1);
-  opacity: 0.75;
+  -webkit-box-shadow: 2px 0px 3px 0px rgba(245, 226, 245, 1);
+  -moz-box-shadow: 2px 0px 3px 0px rgba(245, 226, 245, 1);
+  box-shadow: 2px 0px 3px 0px rgba(245, 226, 245, 1);
+  // opacity: 0.75;
   overflow: auto;
   /* animation: content-enter 1s;
   animation-fill-mode: forwards; */
   transition: 300ms;
   // animation: appearSlides 300ms;
+  // color: #5bb8eb;
   &-list {
     display: flex;
-    padding: 1rem;
+    // padding: 1rem;
+    height: 40px;
     padding-left: 3rem;
     align-items: center;
     font-size: 1.8rem;
@@ -159,21 +165,24 @@ export default {
   }
   &-icons {
     margin-right: 2.4rem;
-    font-size: 1.6rem;
+    font-size: 1.9rem;
+    width: 20px;
   }
 }
 .update {
+  color: black;
+  font-weight: 500;
   font-size: 1.35rem;
   margin-top: 10px;
-  background-color: #f5f6fc;
+  // background-color: #5bb9eb4b;
   padding: 10px;
-  -webkit-box-shadow: 0.5px 0.5px 0.5px 1px rgba(116, 114, 114, 0.48);
-  -moz-box-shadow: 0.5px 0.5px 0.5px 1px rgba(116, 114, 114, 0.48);
-  box-shadow: 0.5px 0.5px 0.5px 1px rgba(116, 114, 114, 0.48);
+  -webkit-box-shadow: 0.5px 0.5px 0.5px 1px rgba(245, 226, 245, 1);
+  -moz-box-shadow: 0.5px 0.5px 0.5px 1px rgba(245, 226, 245, 1);
+  box-shadow: 0.5px 0.5px 0.5px 1px rgba(245, 226, 245, 1);
   /* border-radius: 5px; */
   position: relative;
   transition: 200ms;
-
+  border-radius: 10px;
   &::before {
     position: absolute;
     top: 10px;
@@ -183,7 +192,7 @@ export default {
     margin-right: 6px;
     content: "";
     border-radius: 8px;
-    background-color: #8860d0;
+    background-color: #8768c0;
   }
   &:hover {
     cursor: pointer;

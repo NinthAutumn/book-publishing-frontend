@@ -123,9 +123,9 @@ export default {
   height: 50px;
   width: 100%;
   position: fixed;
-  -webkit-box-shadow: 0px 2px 2px 0px rgba(217, 208, 219, 1);
-  -moz-box-shadow: 0px 2px 2px 0px rgba(217, 208, 219, 1);
-  box-shadow: 0px 2px 2px 0px rgba(217, 208, 219, 1);
+  -webkit-box-shadow: 0px 2px 3px 0px rgba(245, 226, 245, 1);
+  -moz-box-shadow: 0px 2px 3px 0px rgba(245, 226, 245, 1);
+  box-shadow: 0px 2px 3px 0px rgba(245, 226, 245, 1);
   top: 0;
   left: 0;
   background-color: white;
