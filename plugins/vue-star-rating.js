@@ -6,4 +6,4 @@ const VueSelect = {
   }
 };
 Vue.use(VueSelect);
-export default VueSelect;
+// export default VueSelect;

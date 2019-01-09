@@ -3,17 +3,16 @@
 // } from 'axios'
 
 export const state = () => ({
-  books: [],
-  book: {}
+  // books: [],
+  books: {
+    highestrated: {}
+  },
+  view: "",
+  bookSynopsis: true
 })
 
 export const getters = {
-  isHighRated: (state) => {
-    // let goodBook = state.books.filter((book) => {
-    //   book.rating > 4
-    // });
-    // return goodBook
-  },
+  highestrated: state => state.highestrated,
   isTrending: (state) => {
 
   }
@@ -26,6 +25,10 @@ export const actions = {
     await this.$axios.get(process.env.baseUrl + '/books/show?id=' + id).then((res) => {
       // console.log()
       commit('SHOW', res.data.book)
+    })
+    await this.$axios.get(process.env.baseUrl + "/books/bookview?id=" + id).then((res) => {
+      // console.log(res.data);
+      commit('BOOK_VIEW', res.data)
     })
   },
   async addBook({
@@ -59,9 +62,11 @@ export const actions = {
   async allBooks({
     commit
   }) {
-    const book = await this.$axios.get(process.env.baseUrl + '/books/all')
+    const book = await this.$axios.get(process.env.baseUrl + '/homepage/highestrated')
+    // console.log(book.data);
+    commit('HIGHEST_RATED', book.data)
 
-    commit('ALL', book.data.books)
+
     // console.log(state.books)
   }
 }
@@ -70,8 +75,8 @@ export const mutations = {
   ADD(state, book) {
     state.books.push(book)
   },
-  ALL(state, books) {
-    state.books = books
+  HIGHEST_RATED(state, books) {
+    state.books.highestrated = books
   },
   SHOW(state, book) {
     state.book = book
@@ -84,6 +89,9 @@ export const mutations = {
   },
   DELETE() {
 
+  },
+  BOOK_VIEW(state, view) {
+    state.view = view
   }
 
 }

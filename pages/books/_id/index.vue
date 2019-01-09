@@ -12,7 +12,7 @@
         </div>
         <div class="book__info__meta__chapterCount">
           <div class="book__info__meta__chapterCount__icon"></div>
-          <div class="book__info__meta__chapterCount__text">{{$store.state.book.book.views}}</div>
+          <div class="book__info__meta__chapterCount__text">{{$store.state.book.view}}</div>
         </div>
         <div class="book__info__meta__views">
           <div class="book__info__meta__views__icon"></div>
@@ -22,7 +22,7 @@
       <div class="book__stats">
         <div class="book__stats__meta"></div>
         <div class="book__stats__text">
-          <p>{{$store.state.book.book.synopsis}}</p>
+          <BookContent :book="book"></BookContent>
         </div>
         <div class="book__stats__buttons">
           <button></button>
@@ -30,14 +30,18 @@
         </div>
       </div>
     </div>
+    <div class="book__chapters"></div>
+    <div class="book__reviews"></div>
   </div>
 </template>
 
 <script>
+import BookContent from "@/components/BookContent";
 export default {
   auth: false,
   async fetch({ store, params }) {
     await store.dispatch("book/getBook", params.id);
+    // await
     // const john = JSON.stringify();
     // console.log(book);
 
@@ -47,19 +51,33 @@ export default {
     return {
       book: {}
     };
+  },
+
+  components: {
+    BookContent
   }
 };
 </script>
 
 <style lang="scss">
 .book {
+  // margin-top: 6.6rem !important;
+  display: grid;
+  grid-template-areas: "cover info info" "chapters chapters chapters" "reviews reviews reviews";
+  grid-gap: 10px;
   &__cover {
+    grid-area: cover;
     &__img {
+      width: 30.8rem;
+      height: 45.9rem;
+      border-radius: 10px;
     }
   }
 
   &__info {
+    grid-area: info;
     &__title {
+      font-size: 22px;
     }
     &__meta {
       &__genre {
@@ -82,7 +100,11 @@ export default {
       }
     }
   }
-  &__stats {
+  &__chapters {
+    grid-area: chapters;
+  }
+  &__reviews {
+    grid-area: reviews;
   }
 }
 </style>

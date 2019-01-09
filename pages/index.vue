@@ -7,7 +7,7 @@
       <div class="card-title">
         <h3>Recommended</h3>
       </div>
-      <BooksList :books="$store.state.book.books"></BooksList>
+      <BooksList :books="$store.state.book.books.highestrated"></BooksList>
     </div>
   </div>
 </template>

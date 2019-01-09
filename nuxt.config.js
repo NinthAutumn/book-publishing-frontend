@@ -150,12 +150,16 @@ module.exports = {
     }
   },
   env: {
-    baseUrl: process.env.BASE_URL || 'http://localhost:5000'
+    baseUrl: process.env.BASE_URL || 'http://192.168.8.101:5000'
   },
   loading: {
     color: '#c9b1f5',
     height: '2px',
     continuous: true
   },
-  layoutTransition: 'layout'
+  layoutTransition: 'layout',
+  server: {
+    port: 3000, // default: 3000
+    host: '0.0.0.0', // default: localhost
+  },
 }

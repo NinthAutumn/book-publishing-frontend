@@ -9,20 +9,22 @@
         <a>{{book.title}}</a>
       </p>
       <span class="p-ending"></span>
-      <star-rating
-        v-model="book.rating"
-        :star-size="20"
-        :read-only="true"
-        :show-rating="true"
-        inactive-color="#CCCCCC"
-        active-color="#5580E9"
-        :increment="0.01"
-        :round-start-rating="false"
-        border-color="#5580E9"
-        :glow="1"
-        glow-color="#CCCCCC"
-        class="star-rating"
-      ></star-rating>
+      <no-ssr>
+        <star-rating
+          v-model="book.rating"
+          :star-size="20"
+          :read-only="true"
+          :show-rating="true"
+          inactive-color="#CCCCCC"
+          active-color="#5580E9"
+          :increment="0.01"
+          :round-start-rating="false"
+          border-color="#5580E9"
+          :glow="1"
+          glow-color="#CCCCCC"
+          class="star-rating"
+        ></star-rating>
+      </no-ssr>
     </div>
   </div>
 </template>

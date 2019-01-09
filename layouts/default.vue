@@ -38,7 +38,7 @@ export default {
 
 .nuxt-pages .menu-active {
   margin-left: 240px;
-  margin-top: 5rem;
+  margin-top: 6.6rem;
   padding: 1rem 5rem;
   transition: 300ms;
   position: relative !important;
@@ -47,7 +47,7 @@ export default {
   padding: 1rem 7rem;
   transition: 300ms;
   position: relative !important;
-  margin-top: 5rem;
+  margin-top: 6.6rem;
 }
 
 /* body {

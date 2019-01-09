@@ -59,7 +59,6 @@ export default {
       await this.$validator.validateAll();
       console.log("test");
       if (!this.errors.any()) {
-        alert("woo no errors");
         const user = {
           username: this.formUsername,
           email: this.formEmail,
