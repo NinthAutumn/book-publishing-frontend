@@ -147,7 +147,14 @@ module.exports = {
     vendor: ['vue-star-rating'],
     extend(config, ctx) {
 
-    }
+    },
+    postcss: [
+      require('postcss-gap-properties')(),
+      require('autoprefixer')({
+        browsers: ['IE 11', 'last 2 versions'],
+        grid: true
+      })
+    ]
   },
   env: {
     baseUrl: process.env.BASE_URL || 'http://192.168.8.101:5000'

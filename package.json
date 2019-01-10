@@ -36,6 +36,8 @@
     "vuex-router-sync": "^5.0.0"
   },
   "devDependencies": {
-    "nodemon": "^1.11.0"
+    "autoprefixer": "^9.4.4",
+    "nodemon": "^1.11.0",
+    "postcss-gap-properties": "^2.0.0"
   }
 }

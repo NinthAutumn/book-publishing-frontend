@@ -76,6 +76,10 @@ export const mutations = {
     state.books.push(book)
   },
   HIGHEST_RATED(state, books) {
+    books.forEach((book) => {
+      book.ratings = +book.ratings.toFixed(2)
+    })
+    // books.ratings = Math.round(books.ratings)
     state.books.highestrated = books
   },
   SHOW(state, book) {

@@ -11,7 +11,7 @@
       <span class="p-ending"></span>
       <no-ssr>
         <star-rating
-          v-model="book.rating"
+          v-model="book.ratings"
           :star-size="20"
           :read-only="true"
           :show-rating="true"
@@ -47,6 +47,11 @@ export default {
   methods: {
     linkTo() {
       this.$router.push("/books/" + this.book._id);
+    }
+  },
+  computated: {
+    round() {
+      book.ratings = Math.round(book.ratings);
     }
   }
 };
