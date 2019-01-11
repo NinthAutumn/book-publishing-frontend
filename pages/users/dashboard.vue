@@ -1,6 +1,6 @@
 <template>
   <div class="user-dashboard">
-    <nuxt-child></nuxt-child>
+    <nuxt-child keep-alive></nuxt-child>
   </div>
 </template>
 

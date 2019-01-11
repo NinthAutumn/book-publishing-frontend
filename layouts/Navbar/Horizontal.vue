@@ -52,7 +52,7 @@ export default {
   components: {
     SearchBar
   },
-
+  computed: {},
   methods: {
     //menu
     menuDrawer() {

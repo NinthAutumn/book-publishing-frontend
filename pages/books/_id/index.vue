@@ -65,6 +65,7 @@ export default {
   display: grid;
   grid-template-areas: "cover info info" "chapters chapters chapters" "reviews reviews reviews";
   grid-gap: 10px;
+  grid-template-columns: 3;
   &__cover {
     grid-area: cover;
     &__img {

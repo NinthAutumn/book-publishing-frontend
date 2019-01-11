@@ -2,11 +2,11 @@
   <div class="book-content">
     <div class="book-content--nav">
       <ul class="book-content--nav__list">
-        <li class="book-content--nav__list__item--synopsis">
-          <a href="#" @click="bookSynopsis = true">要約</a>
+        <li class="book-content--nav__list__item--synopsis" :class="bookSynopsis">
+          <span @click="bookSynopsis = true">要約</span>
         </li>
         <li class="book-content--nav__list__item--table">
-          <a href="#" @click="bookSynopsis = false">情報</a>
+          <span @click="bookSynopsis = false">情報</span>
         </li>
       </ul>
     </div>
@@ -76,8 +76,11 @@ export default {
         // text-align: center;
         // display: flex;
         // align-content: center;
-        a {
+        span {
           font-size: 18px;
+          &:hover {
+            cursor: pointer;
+          }
         }
       }
       &__item--table {
@@ -90,7 +93,10 @@ export default {
         // text-align: center;
         // display: flex;
         // align-content: center;
-        a {
+        span {
+          &:hover {
+            cursor: pointer;
+          }
           font-size: 18px;
         }
       }
@@ -101,7 +107,7 @@ export default {
     -webkit-box-shadow: 0px 2px 5px 0px rgb(233, 218, 233);
     -moz-box-shadow: 0px 2px 5px 0px rgb(233, 218, 233);
     box-shadow: 0px 2px 5px 0px rgb(233, 218, 233);
-    width: 802.812px;
+    // width: 802.812px;
     height: 280px;
     overflow: hidden;
     // text-overflow: ellipsis;
