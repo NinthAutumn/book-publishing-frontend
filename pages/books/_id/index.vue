@@ -22,7 +22,7 @@
       <div class="book__stats">
         <div class="book__stats__meta"></div>
         <div class="book__stats__text">
-          <BookContent :book="book"></BookContent>
+          <BookContent :book="$store.state.book.book"></BookContent>
         </div>
         <div class="book__stats__buttons">
           <button></button>
@@ -30,13 +30,17 @@
         </div>
       </div>
     </div>
-    <div class="book__chapters"></div>
+    <div class="book__chapters">
+      <BookChapterList :chapters="$store.state.book.book.chapters"></BookChapterList>
+    </div>
     <div class="book__reviews"></div>
   </div>
 </template>
 
 <script>
 import BookContent from "@/components/BookContent";
+import BookChapterList from "@/components/BookChapterList";
+
 export default {
   auth: false,
   async fetch({ store, params }) {
@@ -46,6 +50,7 @@ export default {
     // console.log(book);
 
     // await store.dispatch('review/getReview')
+    // console.log(object);
   },
   data() {
     return {
@@ -54,7 +59,8 @@ export default {
   },
 
   components: {
-    BookContent
+    BookContent,
+    BookChapterList
   }
 };
 </script>

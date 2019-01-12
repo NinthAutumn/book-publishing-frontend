@@ -39,10 +39,11 @@ export default {
 .book-content {
   width: 100%;
   -webkit-box-shadow: 0px 2px 5px 0px rgb(233, 218, 233);
-  -moz-box-shadow: 0px 2px 5px 0px rgb(233, 218, 233);
+  -moz-box-shadow: 0px 2px 5px 0px rgb(255, 255, 255);
   box-shadow: 0px 2px 5px 0px rgb(233, 218, 233);
   padding: 5px;
   height: 100%;
+  box-sizing: border-box;
 
   &--nav {
     &__list {

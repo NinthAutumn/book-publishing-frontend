@@ -42,10 +42,10 @@ export default {
         },
         on: {
           slideChange() {
-            console.log("onSlideChangeEnd", this);
+            // console.log("onSlideChangeEnd", this);
           },
           tap() {
-            console.log("onTap", this);
+            // console.log("onTap", this);
           }
         },
         breakpoints: {
