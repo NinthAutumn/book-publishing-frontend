@@ -7,7 +7,7 @@ export const state = () => ({
   userId: "",
   token: Cookies.get('token') || '',
   status: "",
-  user: "",
+  user: {},
   loggedIn: false,
 
   // username: "admin1",
@@ -27,17 +27,24 @@ export const mutations = {
   AUTH_REQUEST(state) {
     state.status = 'loading'
   },
-  AUTH_SUCCESS(state, token) {
+  AUTH_SUCCESS(state, {
+    token,
+    user
+  }) {
+    // console.log(user)
     state.status = 'success'
+    state.user = user
+
     state.token = token
     state.loggedIn = true
+
     // console.log(userId, "dog")
     // state.userId = userId
 
   },
   AUTH_SUCCESS_USER(state, user) {
     // console.log(user)
-    state.user = user
+    // console.log(state.user);
     // state.menus[4].link = "/library/?id=" + state.user._id
   },
   AUTH_ERROR(state) {
@@ -62,17 +69,21 @@ export const actions = {
       username: user.username,
       password: user.password
     }).then((res) => {
+      // commit("AUTH_SUCCESS_USER", {
+      //   user: res.data
+      // });
       // console.log(res.data, "dog") 
       const token = res.headers.authorization
-      this.$axios.defaults.headers.common['Authorization'] = token
-      Cookies.set("token", token)
-      Cookies.set('user', res.data)
+      // console.log(res.data);
       commit("AUTH_SUCCESS", {
-        token: token
-      });
-      commit("AUTH_SUCCESS_USER", {
+        token: token,
         user: res.data
       });
+      this.$axios.defaults.headers.common['Authorization'] = token
+
+      Cookies.set("token", token)
+      // Cookies.set('user', res.data)
+
     })
 
   },
@@ -99,8 +110,8 @@ export const actions = {
       password: user.password
     }).then((res) => {
       const token = res.headers.authorization
-      commit("AUTH_SUCCESS", token);
-      commit("AUTH_SUCCESS_USER", res.data)
+      commit("AUTH_SUCCESS", token, res.data);
+      // commit("AUTH_SUCCESS_USER", )
     })
   }
 }

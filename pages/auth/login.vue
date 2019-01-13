@@ -22,7 +22,8 @@ export default {
   },
   methods: {
     async login() {
-      console.log("dog");
+      // console.log("dog");
+
       const user = {
         username: this.username,
         password: this.password
@@ -31,7 +32,8 @@ export default {
       await this.$store
         .dispatch("auth/login", user)
         .then(() => {
-          this.$router.push("/");
+          this.$store.commit("DROPDOWN_FALSE");
+          this.$router.go(-1);
         })
         .catch(e => {
           console.log(e.response);

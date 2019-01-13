@@ -12,7 +12,8 @@ export const state = () => ({
   menuState: "menu-active",
   dashboardMenuState: "dashboard-active",
   slidesPerView: 6.5,
-  dropdownState: "dropdown-inactive"
+  dropdownState: "dropdown-inactive",
+
 
 })
 
@@ -78,12 +79,15 @@ export const actions = {
       if (token) {
         // console.log(env.baseUrl)
         this.$axios.defaults.headers.common['Authorization'] = token;
-        commit('auth/AUTH_SUCCESS', token);
+
         await this.$axios.get(process.env.baseUrl + '/users/show').then((res) => {
           // console.log(token);
-          commit("auth/AUTH_SUCCESS_USER", res.data);
+          // commit("auth/AUTH_SUCCESS_USER", );
           // console.log(state.auth.user._id)
-
+          commit('auth/AUTH_SUCCESS', {
+            token: token,
+            user: res.data
+          });
           // console.log(store.state.auth.userId)
         }).catch((e) => {
           console.log(e)

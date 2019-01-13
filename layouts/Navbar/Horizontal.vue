@@ -5,19 +5,14 @@
         <i class="el-icon-menu" :class="$store.state.menuState" @click="menuDrawer"></i>
       </div>
       <SearchBar class="searchbar"></SearchBar>
-      <span
-        v-click-outside="dropOff"
-        v-if="$store.state.auth.loggedIn"
-        style="z-index:3000;"
-        id="prof"
-      >
+      <span v-click-outside="dropOff" v-if="loggedIn" style="z-index:3000;" id="prof">
         <img @click="stateDropChange" class="profile-pic" src="http://placehold.jp/45x45.png">
         <div :class="$store.state.dropdownState">
           <div class="dropdown-menu">
             <div class="profile-info" @click="userProfile">
               <img class="dropdown-profile-pic" src="http://placehold.jp/45x45.png">
               <div class="profile-text">
-                <span class="profile-name">{{$store.state.auth.user.username}}</span>
+                <span class="profile-name">{{user.username}}</span>
                 <span class="profile-profession">Author</span>
               </div>
             </div>
@@ -52,7 +47,15 @@ export default {
   components: {
     SearchBar
   },
-  computed: {},
+  computed: {
+    user() {
+      // console.log(this.$store.state.auth.user);
+      return this.$store.state.auth.user;
+    },
+    loggedIn() {
+      return this.$store.state.auth.loggedIn;
+    }
+  },
   methods: {
     //menu
     menuDrawer() {

@@ -24,10 +24,7 @@
         <div class="book__stats__text">
           <BookContent :book="$store.state.book.book"></BookContent>
         </div>
-        <div class="book__stats__buttons">
-          <button></button>
-          <button></button>
-        </div>
+        <div class="book__stats__buttons"></div>
       </div>
     </div>
     <div class="book__chapters">
