@@ -54,7 +54,7 @@ export default {
     display: flex;
     right: 20px;
     bottom: -5px;
-    z-index: 10000;
+    // z-index: 2000;
     button {
       height: 25px;
     }

@@ -30,18 +30,22 @@
     <div class="book__chapters">
       <BookChapterList :chapters="$store.state.book.book.chapters"></BookChapterList>
     </div>
-    <div class="book__reviews"></div>
+    <div class="book__reviews">
+      <Reviews :reviews="$store.state.review.reviews"></Reviews>
+    </div>
   </div>
 </template>
 
 <script>
 import BookContent from "@/components/BookContent";
 import BookChapterList from "@/components/BookChapterList";
+import Reviews from "@/components/Reviews";
 
 export default {
   auth: false,
   async fetch({ store, params }) {
     await store.dispatch("book/getBook", params.id);
+    await store.dispatch("review/showAll", params.id);
     // await
     // const john = JSON.stringify();
     // console.log(book);
@@ -57,7 +61,8 @@ export default {
 
   components: {
     BookContent,
-    BookChapterList
+    BookChapterList,
+    Reviews
   }
 };
 </script>

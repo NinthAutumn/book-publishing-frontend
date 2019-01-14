@@ -16,7 +16,7 @@
   </div>
 </template>
 <script>
-import Book from "~/components/Book";
+import Book from "@/components/Book";
 export default {
   props: {
     books: Array

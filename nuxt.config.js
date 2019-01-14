@@ -74,6 +74,7 @@ module.exports = {
     '@nuxtjs/axios',
     // "@nuxtjs/auth",
     'cookie-universal-nuxt',
+    'nuxt-svg-loader',
     ['nuxt-fontawesome', {
       component: 'fa',
       imports: [
@@ -165,8 +166,8 @@ module.exports = {
     continuous: true
   },
   layoutTransition: 'layout',
-  server: {
-    port: 3000, // default: 3000
-    host: '0.0.0.0', // default: localhost
-  },
+  // server: {
+  //   port: 3000, // default: 3000
+  //   host: '0.0.0.0', // default: localhost
+  // },
 }
