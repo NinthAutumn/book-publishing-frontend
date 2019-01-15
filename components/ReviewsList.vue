@@ -1,8 +1,10 @@
 <template>
   <div class="reviews-list">
     <ul>
+      <hr>
       <li v-for="(review, index) in reviews" :key="index">
         <Review :review="review"></Review>
+        <hr>
       </li>
     </ul>
   </div>
@@ -22,5 +24,9 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" >
+hr {
+  // background: red;
+  border: 0.5px solid #c2bac3;
+}
 </style>

@@ -31,6 +31,7 @@
       <BookChapterList :chapters="$store.state.book.book.chapters"></BookChapterList>
     </div>
     <div class="book__reviews">
+      <header>Reviews</header>
       <ReviewsList :reviews="$store.state.review.reviews"></ReviewsList>
     </div>
   </div>

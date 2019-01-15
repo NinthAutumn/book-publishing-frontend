@@ -71,9 +71,9 @@ export default {
 .reviews {
   width: 100%;
   display: flex;
-  -webkit-box-shadow: 0px 2px 5px 0px rgb(233, 218, 233);
-  -moz-box-shadow: 0px 2px 5px 0px rgb(233, 218, 233);
-  box-shadow: 0px 2px 5px 0px rgb(233, 218, 233);
+  // -webkit-box-shadow: 0px 2px 5px 0px rgb(233, 218, 233);
+  // -moz-box-shadow: 0px 2px 5px 0px rgb(233, 218, 233);
+  // box-shadow: 0px 2px 5px 0px rgb(233, 218, 233);
   // justify-content: space-around;
   // height: 200px;
   margin-bottom: 10px;
@@ -92,6 +92,7 @@ export default {
       border-radius: 100px;
     }
     &-username {
+      font-family: "メイリオ", "Meiryo", "Lucida Grande", "sans-serif";
       font-size: 16px;
     }
   }
@@ -103,34 +104,56 @@ export default {
     width: 100%;
     line-height: 28px;
     // height: 150px;
+    color: #444444;
     // justify-content: space-between;
     &-title {
+      margin-bottom: 5px;
       // padding: 10px;
       font-size: 18px;
       margin-left: 10px;
-      font-weight: 500;
+      // font-weight: 500;
+      // line-height: 28.8px;
+      color: #444444;
+      font-family: "メイリオ", "Meiryo", "Lucida Grande", "sans-serif";
+    }
+    .buts {
+      text-align: right;
+    }
+    a {
+      &:hover {
+        cursor: pointer;
+      }
     }
     .collapsed {
+      color: #444444;
       // height: 150px;
       // padding: 10px;
       margin-left: 10px;
       // height: 100%;
       p {
+        font-size: 16px;
+        line-height: 28px;
+        font-weight: 300;
+        color: #2e2635;
+        text-align: left;
         overflow: hidden;
         height: 132px;
-        text-align: left;
-        font-size: 16px;
-        font-weight: 300;
+
+        // font-weight: 300;
       }
     }
     .open {
       margin-left: 10px;
       p {
+        font-size: 16px;
+        line-height: 28px;
+        font-weight: 300;
+        color: #2e2635;
+        text-align: left;
         overflow: hidden;
         height: 100% !important;
-        text-align: left;
-        font-size: 16px;
-        font-weight: 300;
+
+        // font-weight: 300;
       }
     }
     &-text-bigger {
