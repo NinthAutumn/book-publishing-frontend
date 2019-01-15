@@ -3,9 +3,15 @@
     <ul class="bookchapterlists__list">
       <li class="bookchapterlists__list--items" v-for="chapter in chapters" :key="chapter.index">
         <nuxt-link
+          v-if="chapter.index === 0"
+          class="bookchapterlists__list--items__links"
+        >Prologue {{chapter.index}}: {{chapter.title}}</nuxt-link>
+
+        <nuxt-link
+          v-else
           class="bookchapterlists__list--items__links"
           :to="{path: `${ $route.params.id}/${chapter._id}`}"
-        >{{chapter.index}}: {{chapter.title}}</nuxt-link>
+        >Chapter {{chapter.index}}: {{chapter.title}}</nuxt-link>
       </li>
     </ul>
   </div>

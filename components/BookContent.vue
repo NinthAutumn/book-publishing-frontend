@@ -3,7 +3,7 @@
     <div class="book-content--nav">
       <ul class="book-content--nav__list">
         <li class="book-content--nav__list__item--synopsis" :class="bookSynopsis">
-          <span @click="bookSynopsis = true">要約</span>
+          <span @click="bookSynopsis = true">あらすじ</span>
         </li>
         <li class="book-content--nav__list__item--table">
           <span @click="bookSynopsis = false">情報</span>
@@ -12,7 +12,7 @@
     </div>
     <div class="book-content--text">
       <div v-if="bookSynopsis" class="book-content--text__summary">
-        <span class="book-content--text__summary--text">{{$store.state.book.book.synopsis}}</span>
+        <p class="book-content--text__summary--text">{{$store.state.book.book.synopsis}}</p>
       </div>
       <div v-else class="book-content--text__statistics">
         <span class="book-content--text__statistics--title">視聴者</span>
@@ -73,7 +73,7 @@ export default {
       &::after {
         position: absolute;
         content: "";
-        right: 52%;
+        right: 45%;
         height: 25px;
         width: 1px;
         background: rgb(233, 218, 233);
@@ -136,6 +136,7 @@ export default {
         line-height: 28px;
         font-weight: 300;
         color: rgb(46, 38, 53);
+        text-align: left;
       }
     }
     &__statistics {

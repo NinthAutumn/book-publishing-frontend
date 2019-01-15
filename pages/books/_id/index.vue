@@ -31,7 +31,7 @@
       <BookChapterList :chapters="$store.state.book.book.chapters"></BookChapterList>
     </div>
     <div class="book__reviews">
-      <Reviews :reviews="$store.state.review.reviews"></Reviews>
+      <ReviewsList :reviews="$store.state.review.reviews"></ReviewsList>
     </div>
   </div>
 </template>
@@ -39,7 +39,7 @@
 <script>
 import BookContent from "@/components/BookContent";
 import BookChapterList from "@/components/BookChapterList";
-import Reviews from "@/components/Reviews";
+import ReviewsList from "@/components/ReviewsList";
 
 export default {
   auth: false,
@@ -62,7 +62,7 @@ export default {
   components: {
     BookContent,
     BookChapterList,
-    Reviews
+    ReviewsList
   }
 };
 </script>
@@ -71,7 +71,10 @@ export default {
 .book {
   // margin-top: 6.6rem !important;
   display: grid;
-  grid-template-areas: "cover info info" "chapters chapters chapters" "reviews reviews reviews";
+  grid-template-areas:
+    "cover info info"
+    "chapters chapters chapters"
+    "reviews reviews reviews";
   grid-gap: 10px;
   grid-template-columns: 3;
   &__cover {
