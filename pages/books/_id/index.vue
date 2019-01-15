@@ -71,6 +71,7 @@ export default {
 .book {
   // margin-top: 6.6rem !important;
   display: grid;
+  grid-template-columns: 30.8rem auto auto;
   grid-template-areas:
     "cover info info"
     "chapters chapters chapters"

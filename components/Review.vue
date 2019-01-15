@@ -57,7 +57,7 @@ export default {
     }
   },
   created() {
-    console.log(this.review.content.length);
+    // console.log(this.review.content.length);
     if (this.review.content.length > 340) {
       this.readMore = "collapsed";
     } else {
