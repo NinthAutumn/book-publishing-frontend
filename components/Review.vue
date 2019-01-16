@@ -131,6 +131,7 @@ export default {
       margin-left: 10px;
       // height: 100%;
       p {
+        white-space: pre-wrap;
         font-size: 16px;
         line-height: 28px;
         font-weight: 300;
@@ -145,6 +146,7 @@ export default {
     .open {
       margin-left: 10px;
       p {
+        white-space: pre-wrap;
         font-size: 16px;
         line-height: 28px;
         font-weight: 300;

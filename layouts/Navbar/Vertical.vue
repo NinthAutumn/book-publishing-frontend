@@ -2,7 +2,7 @@
   <nav class="v-nav" :class="$store.state.menuState">
     <ul>
       <li v-for="menu in menus" :key="menu.title">
-        <nuxt-link :to="menu.link">
+        <nuxt-link :to="menu.link" class="animated-link">
           <div class="v-nav-list">
             <div class="v-nav-icon">
               <fa :icon="menu.icon" class="v-nav-icons"></fa>

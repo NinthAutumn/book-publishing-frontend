@@ -32,6 +32,12 @@
     </div>
     <div class="book__reviews">
       <header>Reviews</header>
+      <form submit.prevent>
+        <label for="title"></label>
+        <input type="text" name="title">
+        <textarea v-model="content" name="content" id cols="30" rows="10"></textarea>
+        <!-- <p style="white-space:pre-wrap">{{content}}</p> -->
+      </form>
       <ReviewsList :reviews="$store.state.review.reviews"></ReviewsList>
     </div>
   </div>
@@ -56,7 +62,8 @@ export default {
   },
   data() {
     return {
-      book: {}
+      book: {},
+      content: ""
     };
   },
 

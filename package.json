@@ -16,14 +16,16 @@
     "@nuxtjs/auth": "^4.5.3",
     "@nuxtjs/axios": "^5.3.6",
     "@nuxtjs/google-analytics": "^2.0.2",
+    "@nuxtjs/moment": "^1.1.0",
     "cookie": "^0.3.1",
     "cookie-parser": "^1.4.3",
     "cookie-universal-nuxt": "^2.0.11",
     "cross-env": "^5.2.0",
     "element-ui": "^2.4.6",
     "js-cookie": "^2.2.0",
+    "lodash": "^4.17.11",
     "lodash-es": "^4.17.11",
-    "moment": "^2.22.2",
+    "moment": "^2.23.0",
     "node-sass": "^4.11.0",
     "nuxt": "^2.0.0",
     "nuxt-fontawesome": "^0.4.0",
@@ -39,6 +41,7 @@
   },
   "devDependencies": {
     "autoprefixer": "^9.4.4",
+    "moment-locales-webpack-plugin": "^1.0.7",
     "nodemon": "^1.11.0",
     "postcss-gap-properties": "^2.0.0"
   }

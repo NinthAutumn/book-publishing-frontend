@@ -1,6 +1,12 @@
+import {
+  strict
+} from 'assert';
+
 // import {
 //   axios
 // } from 'axios'
+
+const moment = require('moment');
 
 export const state = () => ({
   // books: [],
@@ -8,12 +14,16 @@ export const state = () => ({
     highestrated: {}
   },
   view: "",
-  bookSynopsis: true
+  bookSynopsis: true,
+  book: {}
 })
 
 export const getters = {
   highestrated: state => state.highestrated,
   isTrending: (state) => {
+
+  },
+  chapAsc: (state) => {
 
   }
 }
@@ -96,6 +106,26 @@ export const mutations = {
   },
   BOOK_VIEW(state, view) {
     state.view = view
+  },
+  ASC_CHAP(state) {
+    // console.log(state.book);
+    state.book.chapters = state.book.chapters.reverse()
+  },
+  FORMAT_DATE(state) {
+    state.book.chapters.forEach((chapter) => {
+
+      // let createdAt = new Date(chapter.createdAt);
+      // console.log(createdAt - Date.now())
+      // const day = createdAt.toLocaleDateString("en-US");
+      // console.log(moment(createdAt, 'YYYY-MM-DDYYYY-MM-DDTHH:mm:ss.SSSZ').isValid());
+      // const kiss = 
+
+      // console.log(kiss);
+      // chapter.createdAt = moment(createdAt, 'YYYY-MM-DDYYYY-MM-DDTHH:mm:ss.SSSZ').isValid();
+
+      // console.log(chapter.createdAt);
+    })
+
   }
 
 }

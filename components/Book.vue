@@ -6,7 +6,7 @@
     </div>
     <div class="text-info">
       <p class="book-title full" ref="texting">
-        <a>{{book.title}}</a>
+        <a class="animated-link">{{book.title}}</a>
       </p>
       <span class="p-ending"></span>
       <no-ssr>
