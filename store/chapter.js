@@ -1,5 +1,7 @@
 export const state = () => ({
-  chapter: {}
+  chapters: [],
+  chapter: {},
+  chapterCover: ""
 })
 
 export const getters = {
@@ -9,7 +11,12 @@ export const getters = {
 export const mutations = {
   SHOW(state, chapter) {
     state.chapter = chapter
+    state.chapterCover = chapter.bookId.cover
     // console.log(state.chapter);
+  },
+  infiniteNext(state, chapter) {
+    state.chapter = chapter
+    state.chapterCover = chapter.bookId.cover
   }
 }
 export const actions = {
@@ -19,6 +26,24 @@ export const actions = {
     await this.$axios.get(process.env.baseUrl + '/chapters/show?id=' + chapterId).then((res) => {
       commit('SHOW', res.data)
     })
+
+  },
+  async nextChapter({
+    commit
+  }, {
+    bookId,
+    index
+  }) {
+    // const nextindex = index
+    await this.$axios.get(process.env.baseUrl + '/chapters/direct?id=' + bookId + '&' + 'index=' + index).then((res) => {
+      console.log(res.data)
+      commit('infiniteNext', res.data)
+    })
+  },
+  async previousChapter({
+    commit
+  }) {
+
   }
 
 }

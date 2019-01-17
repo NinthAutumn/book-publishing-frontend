@@ -19,7 +19,7 @@ export const state = () => ({
 })
 
 export const getters = {
-  highestrated: state => state.highestrated,
+  highestrated: state => state.books.highestrated,
   isTrending: (state) => {
 
   },
@@ -86,7 +86,7 @@ export const mutations = {
     state.books.push(book)
   },
   HIGHEST_RATED(state, books) {
-    books.forEach((book) => {
+    books.forEach(async (book) => {
       book.ratings = +book.ratings.toFixed(2)
     })
     // books.ratings = Math.round(books.ratings)

@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import BooksList from "../components/BooksList";
+import BooksList from "@/components/Homepage/BooksList";
 export default {
   components: {
     BooksList

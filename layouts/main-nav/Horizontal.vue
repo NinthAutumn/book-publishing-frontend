@@ -35,7 +35,7 @@
   </div>
 </template>
 <script>
-import SearchBar from "./../../components/SearchBar";
+import SearchBar from "@/components/Navigation/SearchBar";
 
 export default {
   name: "Horizontal",

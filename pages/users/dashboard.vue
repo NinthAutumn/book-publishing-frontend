@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  layout: "User"
+  layout: "user-nav/User"
 };
 </script>
 

@@ -8,7 +8,7 @@
       <div class="book__info__meta">
         <div class="book__info__meta__genre">
           <div class="book__info__meta__genre__icon">
-            <fa icon="star-of-life"></fa>
+            <fa icon="fist-raised"></fa>
           </div>
           <div class="book__info__meta__genre__text">{{$store.state.book.book.genres[0]}}</div>
         </div>
@@ -52,9 +52,9 @@
 </template>
 
 <script>
-import BookContent from "@/components/BookContent";
-import BookChapterList from "@/components/BookChapterList";
-import ReviewsList from "@/components/ReviewsList";
+import BookContent from "@/components/Bookpage/BookContent";
+import BookChapterList from "@/components/Bookpage/BookChapterList";
+import ReviewsList from "@/components/Bookpage/ReviewsList";
 
 export default {
   auth: false,

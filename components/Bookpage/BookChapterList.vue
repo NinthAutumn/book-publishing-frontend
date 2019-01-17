@@ -20,7 +20,7 @@
         <nuxt-link
           v-else
           class="bookchapterlists__list--items__links"
-          :to="{path: `${ $route.params.id}/${chapter._id}`}"
+          :to="{path: `${ $route.params.id}/${chapter.index}`}"
         >
           <p
             class="bookchapterlists__list--items__links--title"

@@ -9,8 +9,8 @@
   </div>
 </template>
 <script>
-import Horizontal from "./Navbar/Horizontal";
-import Vertical from "./Navbar/Vertical";
+import Horizontal from "./main-nav/Horizontal";
+import Vertical from "./main-nav/Vertical";
 // import "~/assets/css/typography.css";
 
 export default {
