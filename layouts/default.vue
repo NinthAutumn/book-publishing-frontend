@@ -33,6 +33,10 @@ export default {
 
 
 <style lang="scss" scoped>
+// body,
+// html {
+//   background-color: white;
+// }
 .permanent {
 }
 

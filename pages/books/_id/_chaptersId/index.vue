@@ -85,7 +85,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .left-vertical-nav {
   position: fixed;
   top: 60px;
@@ -93,8 +93,8 @@ export default {
   left: 14.4rem;
   // left: 0;
   .book-cover {
-    height: 17.8rem;
-    width: 12rem;
+    height: 16.8rem;
+    width: 11rem;
     border-radius: 10px;
   }
 }
@@ -102,8 +102,11 @@ export default {
 .chapter {
   display: flex;
   justify-content: space-around;
-  // height: 100%;
+  // height: 100vh;
+  background: black;
+  color: white;
   .chapter-wrapper {
+    // height: 100vh;
     .chapter-navigation__next {
       text-align: center;
     }
@@ -148,3 +151,6 @@ export default {
   }
 }
 </style>
+// >
+
+// </style>

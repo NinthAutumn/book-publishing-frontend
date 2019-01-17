@@ -1,12 +1,13 @@
 body {
   margin: 0;
+  height: 100vh;
 }
 
-* {
-  font-family: "Noto Sans JP", sans-serif;
-  font-size: 9px;
-  line-height: 28px;
-}
+
+
+/* body {
+  background-color: white;
+} */
 
 p {
   margin: 0;
@@ -52,11 +53,6 @@ a {
 }
 
 @media screen and (max-width: 1136px) {
-  * {
-    font-family: "Noto Sans JP", sans-serif;
-    /* font-size: 6px; */
-  }
-
   .nuxt-pages .menu-active {
     padding: 1rem 7rem !important;
     /* transition: 300ms !important; */
@@ -66,7 +62,6 @@ a {
     position: relative !important;
     margin-left: 0 !important;
   }
-
 
   .v-nav {
     position: absolute;
@@ -78,26 +73,5 @@ a {
     -webkit-box-shadow: 1px 1px 13px 0px rgba(145, 145, 145, 1) !important;
     -moz-box-shadow: 1px 1px 13px 0px rgba(145, 145, 145, 1) !important;
     box-shadow: 1px 1px 13px 0px rgba(145, 145, 145, 1) !important;
-  }
-}
-
-@media screen and (min-width: 1136px) {
-  * {
-    font-family: "Noto Sans JP", sans-serif;
-    /* font-size: 7px; */
-  }
-}
-
-@media screen and (min-width: 1275px) {
-  * {
-    font-family: "Noto Sans JP", sans-serif;
-    /* font-size: 8px; */
-  }
-}
-
-@media screen and (min-width: 1276px) {
-  * {
-    font-family: "Noto Sans JP", sans-serif;
-    /* font-size: 9px; */
   }
 }

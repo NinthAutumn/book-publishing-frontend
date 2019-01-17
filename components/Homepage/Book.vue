@@ -12,16 +12,14 @@
       <no-ssr>
         <star-rating
           v-model="book.ratings"
-          :star-size="20"
+          :star-size="18"
           :read-only="true"
-          :show-rating="true"
-          inactive-color="#CCCCCC"
-          active-color="#5580E9"
+          inactive-color="#D8D7D5"
+          active-color="#FFB727"
           :increment="0.01"
           :round-start-rating="false"
-          border-color="#5580E9"
+          border-color="#FFB727"
           :glow="1"
-          glow-color="#CCCCCC"
           class="star-rating"
         ></star-rating>
       </no-ssr>
@@ -109,8 +107,18 @@ export default {
     align-items: center;
     flex-direction: column;
     /* background: white; */
+    // position: relative;
     /* height: 7rem; */
     padding: 0.5rem;
+    .vue-star-rating-rating-text {
+      font-size: 1.6rem;
+      // position: absolute;
+      // right: 0;
+      margin: 0 !important;
+      margin-bottom: 5px !important;
+      margin-left: 2px !important;
+      // height: 16px;
+    }
     /* width: 100%; */
     /* padding-left: 5px; */
 
@@ -185,12 +193,6 @@ export default {
 
 .medium {
   width: 14.5rem;
-}
-
-.vue-star-rating-rating-text {
-  font-size: 1.6rem;
-  margin: 0 !important;
-  margin-left: 0.5rem !important;
 }
 
 @keyframes gradualAppearance {
