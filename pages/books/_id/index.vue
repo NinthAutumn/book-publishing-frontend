@@ -7,16 +7,24 @@
       <div class="book__info__title">{{$store.state.book.book.title}}</div>
       <div class="book__info__meta">
         <div class="book__info__meta__genre">
-          <div class="book__info__meta__genre__icon"></div>
+          <div class="book__info__meta__genre__icon">
+            <fa icon="star-of-life"></fa>
+          </div>
           <div class="book__info__meta__genre__text">{{$store.state.book.book.genres[0]}}</div>
         </div>
         <div class="book__info__meta__chapterCount">
-          <div class="book__info__meta__chapterCount__icon"></div>
-          <div class="book__info__meta__chapterCount__text">{{$store.state.book.view}}</div>
+          <div class="book__info__meta__chapterCount__icon">
+            <fa icon="scroll"></fa>
+          </div>
+          <div
+            class="book__info__meta__chapterCount__text"
+          >{{$store.state.book.book.chapters.length}} Chapters</div>
         </div>
         <div class="book__info__meta__views">
-          <div class="book__info__meta__views__icon"></div>
-          <div class="book__info__meta__views__text">{{$store.state.book.book.views}}</div>
+          <div class="book__info__meta__views__icon">
+            <fa icon="eye"></fa>
+          </div>
+          <div class="book__info__meta__views__text">{{$store.state.book.view}}</div>
         </div>
       </div>
       <div class="book__stats">
@@ -101,22 +109,69 @@ export default {
       font-size: 22px;
     }
     &__meta {
+      display: flex;
+      // justify-content: center;/
       &__genre {
+        color: white;
+        display: flex;
+        align-items: center;
+        // height: 32px;
+        margin-right: 10px;
+        justify-content: center;
+        border-radius: 5px;
+        padding: 3px 7px;
+        background-color: #c3aee9;
         &__icon {
+          font-size: 14px;
+          margin-right: 5px;
         }
         &__text {
+          &::first-letter {
+            text-transform: capitalize;
+          }
+          font-size: 14px;
         }
       }
       &__chapterCount {
+        color: white;
+        display: flex;
+        margin-right: 10px;
+
+        align-items: center;
+        // height: 32px;
+        // width: 150px;
+        border-radius: 5px;
+        background-color: #5580e9;
+        justify-content: center;
+        padding: 3px 7px;
         &__icon {
+          font-size: 14px;
+          margin-right: 5px;
         }
         &__text {
+          font-size: 14px;
         }
       }
       &__views {
+        color: white;
+        display: flex;
+        margin-right: 10px;
+
+        align-items: center;
+        // height: 32px;
+        justify-content: center;
+        // width: 150px;
+        padding: 3px 7px;
+        border-radius: 5px;
+        background-color: #8860d0;
         &__icon {
+          // color: black;
+          font-size: 18px;
+          margin-right: 5px;
         }
         &__text {
+          font-size: 14px;
+          margin-top: 1px;
         }
       }
     }
