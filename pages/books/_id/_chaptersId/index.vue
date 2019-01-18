@@ -85,7 +85,10 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss" >
+body {
+  // background-color: black;
+}
 .left-vertical-nav {
   position: fixed;
   top: 60px;
@@ -103,8 +106,8 @@ export default {
   display: flex;
   justify-content: space-around;
   // height: 100vh;
-  background: black;
-  color: white;
+  // background: black;
+  // color: white;
   .chapter-wrapper {
     // height: 100vh;
     .chapter-navigation__next {

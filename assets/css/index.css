@@ -12,7 +12,7 @@ body {
 p {
   margin: 0;
   font-size: 1.4rem;
-  text-align: center;
+  /* text-align: center; */
 }
 
 ul {
@@ -39,7 +39,7 @@ hr {
 a {
   font-size: 1.6rem;
   text-decoration: none;
-  color: #8860d0;
+  /* color:  */
 }
 
 .animated-link:hover {

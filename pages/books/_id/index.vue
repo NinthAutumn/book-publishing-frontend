@@ -46,6 +46,12 @@
         <textarea v-model="content" name="content" id cols="30" rows="10"></textarea>
         <!-- <p style="white-space:pre-wrap">{{content}}</p> -->
       </form>
+      <!-- <froala :tag="'textarea'" :config="config" v-model="content"></froala> -->
+      <no-ssr>
+        <vue-editor v-model="content" :editorToolbar="customToolBar"></vue-editor>
+      </no-ssr>
+
+      <!-- <div v-html="content"></div> -->
       <ReviewsList :reviews="$store.state.review.reviews"></ReviewsList>
     </div>
   </div>
@@ -71,7 +77,8 @@ export default {
   data() {
     return {
       book: {},
-      content: ""
+      content: "<p>Dog lol Dogg<p>",
+      customToolBar: [["bold", "italic"], [{ list: "bullet" }]]
     };
   },
 

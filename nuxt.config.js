@@ -1,5 +1,4 @@
 const pkg = require('./package')
-
 module.exports = {
   mode: 'universal',
 
@@ -25,6 +24,7 @@ module.exports = {
       rel: 'icon',
       type: 'image/x-icon',
       href: '/favicon.ico'
+
     }]
   },
 
@@ -64,6 +64,9 @@ module.exports = {
     }, {
       ssr: false,
       src: "~plugins/clickOutside"
+    }, {
+      ssr: false,
+      src: "~plugins/vueEditor"
     }
   ],
 
@@ -160,7 +163,8 @@ module.exports = {
         browsers: ['IE 11', 'last 2 versions'],
         grid: true
       })
-    ]
+    ],
+    plugins: []
   },
   env: {
     baseUrl: process.env.BASE_URL || 'http://localhost:5000'
