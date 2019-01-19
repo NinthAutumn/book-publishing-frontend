@@ -2,20 +2,20 @@
   <div class="reviews">
     <div class="reviews-like">
       <ArrowUp class="reviews-like-up" :class="liked" @click="likedReview"></ArrowUp>
-      <p>{{review.like}}</p>
+      <p>{{reviewLikes.like}}</p>
       <ArrowDown class="reviews-like-down" :class="disliked" @click="dislikedReview"></ArrowDown>
     </div>
 
     <div class="reviews-rating"></div>
     <div class="reviews-content">
-      <div class="reviews-content-title">{{review.title}}</div>
+      <div class="reviews-content-title">{{reviewLikes.title}}</div>
       <div class="flex-row">
         <div class="reviews-total-rating">
           <span class="reviews-rating-total">総計:</span>
           <no-ssr>
             <star-rating
               name="rating"
-              v-model="review.rating.total"
+              v-model="reviewLikes.rating.total"
               :star-size="20"
               :read-only="true"
               inactive-color="#D8D7D5"
@@ -28,7 +28,7 @@
           </no-ssr>
         </div>
         <div class="reviews-author">
-          <p class="reviews-content-username">投稿者：{{review.userId.username}}</p>
+          <p class="reviews-content-username">投稿者：{{reviewLikes.userId.username}}</p>
         </div>
       </div>
 
@@ -58,6 +58,13 @@ export default {
   props: {
     review: Object
   },
+  watch: {
+    // likedWatch() {
+    //   if (this.liked) {
+    //     this.$store.commit("review/LIKED_REVIEW", this.review._id);
+    //   }
+    // }
+  },
   data() {
     return {
       readMore: "collapsed",
@@ -83,6 +90,8 @@ export default {
       } else {
         this.liked = "liked";
         this.disliked = "";
+        this.$store.dispatch("review/likeReview", this.review._id);
+        // this.review.like++;
       }
     },
     dislikedReview() {
@@ -94,12 +103,22 @@ export default {
       }
     }
   },
+  computed: {
+    reviewLikes() {
+      return this.review;
+    }
+  },
   created() {
     // console.log(this.review.content.length);
     if (this.review.content.length > 340) {
       this.readMore = "collapsed";
     } else {
       this.readMore = "open";
+    }
+    if (this.$store.state.auth.loggedIn) {
+      if (this.review.liked) {
+        this.liked = "liked";
+      }
     }
   }
 };

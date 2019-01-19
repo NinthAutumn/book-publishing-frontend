@@ -1,3 +1,8 @@
+import {
+  Store
+} from "vuex";
+
+// import auth from './auth'
 export const state = () => {
   reviews: []
 }
@@ -21,14 +26,38 @@ export const mutations = {
   },
   ADD_Review(state, reviews) {
     state.reviews.unshift(reviews)
+  },
+  LIKED_REVIEWS(state, reviewId) {
+    state.reviews.forEach((review) => {
+      if (review._id === reviewId) {
+        review.like = review.like + 1
+      }
+    })
+  },
+  USER_LIKED_REVIEWS(state, likedReviews) {
+    state.reviews.forEach((review) => {
+      likedReviews.forEach((reviewId) => {
+        if (review._id === reviewId) {
+          review.liked = true
+        }
+      })
+    })
   }
 }
 export const actions = {
   async showAll({
-    commit
+    commit,
+    rootState
   }, bookId) {
-    await this.$axios.get(process.env.baseUrl + "/reviews/book?id=" + bookId).then((res) => {
+    await this.$axios.get(process.env.baseUrl + "/reviews/book?id=" + bookId).then(async (res) => {
       commit('GET_REVIEWS', res.data)
+      // commit('USER_LIKED_REVIEWS', rootState.auth.user)
+      if (rootState.auth.loggedIn) {
+        await this.$axios.get(process.env.baseUrl + '/users/liked').then((res) => {
+          console.log("doubt?");
+          commit('USER_LIKED_REVIEWS', res.data.reviews)
+        })
+      }
     })
   },
   async addReview({
@@ -60,7 +89,7 @@ export const actions = {
     await this.$axios.patch(process.env.baseUrl + '/reviews/like', {
       id: reviewId
     }).then((res) => {
-
+      commit('LIKED_REVIEWS', reviewId)
     }).catch((d) => {
       console.log(d);
     })
