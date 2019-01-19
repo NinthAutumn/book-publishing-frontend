@@ -18,7 +18,7 @@
           </div>
           <div
             class="book__info__meta__chapterCount__text"
-          >{{$store.state.book.book.chapters.length}} Chapters</div>
+          >{{$store.state.book.book.chapters.length}} 話</div>
         </div>
         <div class="book__info__meta__views">
           <div class="book__info__meta__views__icon">
@@ -39,20 +39,59 @@
       <BookChapterList :chapters="$store.state.book.book.chapters"></BookChapterList>
     </div>
     <div class="book__reviews">
-      <header>Reviews</header>
-      <form submit.prevent>
-        <label for="title"></label>
-        <input type="text" name="title">
-        <textarea v-model="content" name="content" id cols="30" rows="10"></textarea>
-        <!-- <p style="white-space:pre-wrap">{{content}}</p> -->
+      <form class="review-form" @submit.prevent="addReview">
+        <!-- <label for="title">Title</label> -->
+        <h3>感想を書く</h3>
+        <input
+          class="review-form__title"
+          type="text"
+          v-model="review.title"
+          name="title"
+          placeholder="タイトル"
+        >
+        <div class="form-control">
+          <label for="rating" class="rating-label">評価</label>
+          <input
+            type="Number"
+            placeholder="5"
+            v-model="review.rating.total"
+            class="rating-input"
+            v-validate="'max:5'"
+            :class="{'is-danger': errors.has('reviewRating')}"
+            step=".01"
+          >
+          <no-ssr>
+            <star-rating
+              name="rating"
+              v-model="review.rating.total"
+              :star-size="20"
+              :read-only="false"
+              inactive-color="#D8D7D5"
+              active-color="#FFB727"
+              :increment="0.01"
+              :round-start-rating="false"
+              border-color="#FFB727"
+              :glow="1"
+              class="star-rating"
+            ></star-rating>
+          </no-ssr>
+        </div>
+
+        <textarea
+          class="review-form__content"
+          v-model="review.content"
+          name="content"
+          placeholder="本についての感想文"
+          required
+        ></textarea>
+        <button type="submit" class="review-submit">投稿</button>
       </form>
       <!-- <froala :tag="'textarea'" :config="config" v-model="content"></froala> -->
-      <no-ssr>
+      <!-- <no-ssr>
         <vue-editor v-model="content" :editorOptions="config"></vue-editor>
-      </no-ssr>
-
+      </no-ssr>-->
       <!-- <div v-html="content"></div> -->
-      <ReviewsList :reviews="$store.state.review.reviews"></ReviewsList>
+      <ReviewsList :reviews="reviews"></ReviewsList>
     </div>
   </div>
 </template>
@@ -77,7 +116,14 @@ export default {
   data() {
     return {
       book: {},
-      content: "<p>Dog lol Dogg<p>",
+      reviews: [],
+      review: {
+        title: "",
+        content: "",
+        rating: {
+          total: 5
+        }
+      },
       customToolBar: false,
       config: {
         theme: "snow",
@@ -87,16 +133,123 @@ export default {
       }
     };
   },
-
+  methods: {
+    async addReview() {
+      await this.$store
+        .dispatch("review/addReview", {
+          review: this.review,
+          bookId: this.$route.params.id
+        })
+        .then(res => {
+          this.$router.go("/");
+        });
+    }
+  },
   components: {
     BookContent,
     BookChapterList,
     ReviewsList
+  },
+  computed: {
+    compReviews() {
+      // return ();
+    }
+  },
+  created() {
+    this.reviews = this.$store.state.review.reviews;
+  },
+  watch: {
+    reviews(reviews) {
+      return (this.reviews = this.$store.state.review.reviews);
+    }
   }
 };
 </script>
 
 <style lang="scss">
+.review-form {
+  display: flex;
+  flex-direction: column;
+  &__title {
+    height: 50px;
+    font-size: 15px;
+    // width: 410px;
+    width: 50%;
+    padding: 5px;
+    border: 2px solid #c1c9e4;
+    border-radius: 10px;
+    box-sizing: border-box;
+    color: #796477;
+    margin-bottom: 10px;
+  }
+  &__content {
+    height: 150px;
+    padding: 5px;
+    width: 50%;
+
+    border: 2px solid #c1c9e4;
+    border-radius: 10px;
+    box-sizing: border-box;
+    resize: none;
+    font-size: 14px;
+    &:focus {
+      outline: none;
+    }
+    margin-bottom: 10px;
+  }
+  h3 {
+    font-size: 20px;
+    margin: 0;
+    font-weight: 500;
+  }
+  .star-rating {
+    // margin-bottom: 10px;
+    .vue-star-rating-rating-text {
+      font-size: 15px;
+      margin: 0;
+    }
+  }
+  .form-control {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    .rating-label {
+      font-size: 16px;
+      margin-right: 10px;
+    }
+  }
+  .rating-input {
+    width: 32px;
+    // height: 50px;
+    height: 22px;
+    font-size: 15px;
+    border: 2px solid #c1c9e4;
+    padding: 2px 1px;
+    border-radius: 5px;
+    margin-right: 5px;
+    // margin-bottom: 12px;
+    // box-sizing: border-box;
+  }
+  .review-submit {
+    background-color: #c1c9e4;
+    width: 90px;
+    height: 33px;
+    border-radius: 10px;
+    font-size: 15px;
+    color: white;
+    // align-self: right;
+    // align-content: right;
+    // display: flex;
+    // -webkit-box-shadow: 1px 1px 5px 0px rgba(224, 224, 224, 1);
+    // -moz-box-shadow: 1px 1px 5px 0px rgba(224, 224, 224, 1);
+    // box-shadow: 1px 1px 5px 0px rgba(224, 224, 224, 1);
+  }
+}
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
 .book {
   .ql-snow,
   .ql-snow * {
@@ -139,7 +292,7 @@ export default {
         justify-content: center;
         border-radius: 5px;
         padding: 3px 7px;
-        background-color: #c3aee9;
+        background-color: #11c6ff;
         &__icon {
           font-size: 14px;
           margin-right: 5px;

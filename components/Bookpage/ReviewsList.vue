@@ -4,7 +4,7 @@
       <hr>
       <li v-for="(review, index) in reviews" :key="index">
         <Review :review="review"></Review>
-        <hr>
+        <!-- <hr> -->
       </li>
     </ul>
   </div>

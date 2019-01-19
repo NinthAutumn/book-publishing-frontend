@@ -1,12 +1,37 @@
 <template>
   <div class="reviews">
-    <div class="reviews-author">
-      <img class="reviews-author-cover" src="http://placehold.jp/100x100.png" alt>
-      <span class="reviews-author-username">{{review.userId.username}}</span>
+    <div class="reviews-like">
+      <ArrowUp class="reviews-like-up" :class="liked" @click="likedReview"></ArrowUp>
+      <p>{{review.like}}</p>
+      <ArrowDown class="reviews-like-down" :class="disliked" @click="dislikedReview"></ArrowDown>
     </div>
+
     <div class="reviews-rating"></div>
     <div class="reviews-content">
       <div class="reviews-content-title">{{review.title}}</div>
+      <div class="flex-row">
+        <div class="reviews-total-rating">
+          <span class="reviews-rating-total">総計:</span>
+          <no-ssr>
+            <star-rating
+              name="rating"
+              v-model="review.rating.total"
+              :star-size="20"
+              :read-only="true"
+              inactive-color="#D8D7D5"
+              active-color="#FFB727"
+              :increment="0.01"
+              :round-start-rating="false"
+              border-color="#FFB727"
+              :glow="1"
+            ></star-rating>
+          </no-ssr>
+        </div>
+        <div class="reviews-author">
+          <p class="reviews-content-username">投稿者：{{review.userId.username}}</p>
+        </div>
+      </div>
+
       <div class="reviews-content-text" :class="readMore">
         <p>{{review.content}}</p>
         <div v-if="this.review.content.length > 340" class="buts">
@@ -23,11 +48,6 @@
         </div>
       </div>
     </div>
-    <div class="reviews-like">
-      <ArrowUp class="reviews-like-up"></ArrowUp>
-      <p>{{review.like}}</p>
-      <ArrowDown class="reviews-like-down"></ArrowDown>
-    </div>
   </div>
 </template>
 
@@ -40,7 +60,9 @@ export default {
   },
   data() {
     return {
-      readMore: "collapsed"
+      readMore: "collapsed",
+      liked: "",
+      disliked: ""
     };
   },
   components: {
@@ -53,6 +75,22 @@ export default {
         this.readMore = "open";
       } else {
         this.readMore = "collapsed";
+      }
+    },
+    likedReview() {
+      if (this.liked) {
+        this.liked = "";
+      } else {
+        this.liked = "liked";
+        this.disliked = "";
+      }
+    },
+    dislikedReview() {
+      if (this.disliked) {
+        this.disliked = "";
+      } else {
+        this.liked = "";
+        this.disliked = "disliked";
       }
     }
   },
@@ -67,10 +105,29 @@ export default {
 };
 </script>
 
-<style scoped lang="scss" >
+<style  lang="scss" >
+@import "../../assets/css/main.scss";
 .reviews {
+  a {
+    color: $primary;
+    font-weight: bold;
+  }
+  .reviews-total-rating {
+    display: flex;
+    align-items: center;
+    .reviews-rating-total {
+      font-size: 16px;
+      color: rgb(150, 123, 167);
+    }
+  }
+
   width: 100%;
   display: flex;
+  border: 3px solid #c1c9e4;
+  border-radius: 10px;
+  -webkit-box-shadow: 0px 4px 4px rgba(139, 139, 139, 0.25);
+  -moz-box-shadow: 0px 4px 4px rgba(139, 139, 139, 0.25);
+  box-shadow: 0px 4px 4px rgba(139, 139, 139, 0.25);
   // -webkit-box-shadow: 0px 2px 5px 0px rgb(233, 218, 233);
   // -moz-box-shadow: 0px 2px 5px 0px rgb(233, 218, 233);
   // box-shadow: 0px 2px 5px 0px rgb(233, 218, 233);
@@ -99,36 +156,52 @@ export default {
   &-rating {
   }
   &-content {
+    padding: 5px 10px;
     display: flex;
     flex-direction: column;
     width: 100%;
-    line-height: 28px;
+    box-sizing: border-box;
     // height: 150px;
     color: #444444;
     // justify-content: space-between;
+    .flex-row {
+      font-size: 16px;
+      line-height: none;
+      margin-bottom: 5px;
+      .vue-star-rating-rating-text {
+        font-size: 16px;
+        margin: 0;
+      }
+      p {
+        font-size: 16px;
+      }
+    }
+    &-username {
+    }
     &-title {
       margin-bottom: 5px;
       // padding: 10px;
       font-size: 18px;
-      margin-left: 10px;
+      // margin-left: 10px;
       // font-weight: 500;
       // line-height: 28.8px;
       color: #444444;
       font-family: "メイリオ", "Meiryo", "Lucida Grande", "sans-serif";
     }
     .buts {
-      text-align: right;
-    }
-    a {
-      &:hover {
-        cursor: pointer;
+      text-align: center;
+      a {
+        &:hover {
+          cursor: pointer;
+        }
       }
     }
+
     .collapsed {
       color: #444444;
       // height: 150px;
       // padding: 10px;
-      margin-left: 10px;
+      // margin-left: 10px;
       // height: 100%;
       p {
         white-space: pre-wrap;
@@ -139,12 +212,12 @@ export default {
         text-align: left;
         overflow: hidden;
         height: 132px;
-
+        line-height: 28px;
         // font-weight: 300;
       }
     }
     .open {
-      margin-left: 10px;
+      // margin-left: 10px;
       p {
         white-space: pre-wrap;
         font-size: 16px;
@@ -175,7 +248,7 @@ export default {
   &-like {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: left;
     p {
       text-align: center;
     }
@@ -185,11 +258,24 @@ export default {
       width: 20px;
       // viewbox: 0, 0, 60, 55;
       // height: auto;
-      fill: red;
+      cursor: pointer;
+      &:hover {
+        fill: red;
+      }
     }
     &-down {
       height: 50px;
       width: 20px;
+      cursor: pointer;
+      &:hover {
+        fill: blue;
+      }
+    }
+    .liked {
+      fill: red;
+    }
+    .disliked {
+      fill: blue;
     }
   }
 }

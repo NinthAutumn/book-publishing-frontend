@@ -115,8 +115,8 @@ export default {
       // position: absolute;
       // right: 0;
       margin: 0 !important;
-      margin-bottom: 5px !important;
-      margin-left: 2px !important;
+      // margin-bottom: 5px !important;
+      // margin-left: 2px !important;
       // height: 16px;
     }
     /* width: 100%; */
