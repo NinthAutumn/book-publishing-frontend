@@ -218,6 +218,9 @@ export default {
   }
   &-list {
     padding: 5px;
+    p {
+      text-align: center;
+    }
   }
   &-chapter {
     font-size: 1.35rem;

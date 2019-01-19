@@ -176,6 +176,9 @@ export default {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    p {
+      text-align: center;
+    }
     &-up {
       // : 20px;
       height: 50px;

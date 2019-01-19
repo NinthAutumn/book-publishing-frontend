@@ -13,9 +13,11 @@
         <div class="chapter-title">
           <header>{{$store.state.chapter.chapter.title}}</header>
         </div>
-        <div class="chapter-content">
-          <p>{{$store.state.chapter.chapter.content}}</p>
-        </div>
+        <div
+          class="chapter-content"
+          v-html="$store.state.chapter.chapter.content"
+          style="flex-direction:column;"
+        ></div>
       </div>
       <nuxt-link
         class="chapter-navigation__next"
@@ -122,13 +124,18 @@ body {
         header {
           font-size: 24px;
           // font-weight: bold;
+          margin-bottom: 14px;
+          margin-top: 12px;
         }
       }
       padding: 0px 50px;
-      width: 94.5rem;
+      width: 802px;
       display: flex;
       flex-direction: column;
       box-sizing: border-box;
+      p {
+        margin-bottom: 12px;
+      }
       // align-items: center;
       // justify-content: space-around;
     }

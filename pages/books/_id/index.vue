@@ -48,7 +48,7 @@
       </form>
       <!-- <froala :tag="'textarea'" :config="config" v-model="content"></froala> -->
       <no-ssr>
-        <vue-editor v-model="content" :editorToolbar="customToolBar"></vue-editor>
+        <vue-editor v-model="content" :editorOptions="config"></vue-editor>
       </no-ssr>
 
       <!-- <div v-html="content"></div> -->
@@ -78,7 +78,13 @@ export default {
     return {
       book: {},
       content: "<p>Dog lol Dogg<p>",
-      customToolBar: [["bold", "italic"], [{ list: "bullet" }]]
+      customToolBar: false,
+      config: {
+        theme: "snow",
+        modules: {
+          toolbar: false
+        }
+      }
     };
   },
 
@@ -92,6 +98,12 @@ export default {
 
 <style lang="scss">
 .book {
+  .ql-snow,
+  .ql-snow * {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    font-size: 16px;
+  }
   // margin-top: 6.6rem !important;
   display: grid;
   grid-template-columns: 30.8rem auto auto;
