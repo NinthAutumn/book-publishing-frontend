@@ -105,7 +105,12 @@ export default {
     &--sort {
       // text-align: right;
       // position: sticky;
-      color: #c1c9e4;
+      color: #885cd3;
+
+      &:hover {
+        cursor: pointer;
+        color: #512e8d;
+      }
     }
     &--bookmark {
       margin-right: 10px;

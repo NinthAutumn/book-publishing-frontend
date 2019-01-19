@@ -236,7 +236,14 @@ export default {
     height: 33px;
     border-radius: 10px;
     font-size: 15px;
+    border: none;
     color: white;
+    transition: 300ms;
+    &:hover {
+      cursor: pointer;
+      background-color: rgb(228, 212, 231);
+      transition: 300ms;
+    }
     // align-self: right;
     // align-content: right;
     // display: flex;

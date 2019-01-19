@@ -53,5 +53,16 @@ export const actions = {
     }).catch((e) => {
 
     })
+  },
+  async likeReview({
+    commit
+  }, reviewId) {
+    await this.$axios.patch(process.env.baseUrl + '/reviews/like', {
+      id: reviewId
+    }).then((res) => {
+
+    }).catch((d) => {
+      console.log(d);
+    })
   }
 }

@@ -110,7 +110,13 @@ export const actions = {
       password: user.password
     }).then((res) => {
       const token = res.headers.authorization
-      commit("AUTH_SUCCESS", token, res.data);
+      commit("AUTH_SUCCESS", {
+        token: token,
+        user: res.data
+      });
+      this.$axios.defaults.headers.common['Authorization'] = token
+
+      Cookies.set("token", token)
       // commit("AUTH_SUCCESS_USER", )
     })
   }
