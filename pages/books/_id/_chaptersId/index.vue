@@ -1,8 +1,5 @@
 <template>
   <div class="chapter">
-    <nav class="left-vertical-nav">
-      <img class="book-cover" :src="$store.state.chapter.chapterCover" alt>
-    </nav>
     <div class="chapter-wrapper">
       <nuxt-link
         class="chapter-navigation__previous"
@@ -29,11 +26,15 @@
 </template>
 
 <script>
+import Chapter from "@/components/ChapterPage/Chapter";
 export default {
   data() {
     return {
       bottom: false
     };
+  },
+  components: {
+    Chapter
   },
   methods: {
     // bottomVisible() {
@@ -83,7 +84,8 @@ export default {
     //     this.bottom = this.bottomVisible();
     //   });
     // }
-  }
+  },
+  scrollToTop: false
 };
 </script>
 
@@ -120,6 +122,7 @@ body {
     }
     .chapter-container {
       // position: relative;
+      // height: 100vh;
       .chapter-title {
         header {
           font-size: 24px;

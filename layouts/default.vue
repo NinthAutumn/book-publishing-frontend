@@ -32,9 +32,8 @@ export default {
 </script>
 
 
-<style lang="scss" scoped>
-// body,
-// html {
+<style lang="scss">
+// body {
 //   background-color: white;
 // }
 .permanent {

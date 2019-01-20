@@ -28,7 +28,7 @@
           </no-ssr>
         </div>
         <div class="reviews-author">
-          <p class="reviews-content-username">投稿者：{{reviewLikes.userId.username}}</p>
+          <p class="reviews-content-username">投稿者：{{reviewLikes.author}}</p>
         </div>
       </div>
 
@@ -298,5 +298,6 @@ export default {
       fill: blue;
     }
   }
+  transition: 300ms;
 }
 </style>

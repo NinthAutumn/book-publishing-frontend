@@ -1,11 +1,7 @@
-import {
-  Store
-} from "vuex";
-
 // import auth from './auth'
-export const state = () => {
+export const state = () => ({
   reviews: []
-}
+})
 export const getters = {
   // truncate: (state) => {
   //   const review = state.reviews.map((review) => {
@@ -18,13 +14,25 @@ export const getters = {
 
   //   return review
   // }
+  allReviews: (
+    state
+  ) => {
+    return state.reviews
+  }
 }
+
 
 export const mutations = {
   GET_REVIEWS(state, reviews) {
     state.reviews = reviews
   },
-  ADD_Review(state, reviews) {
+  ADD_REVIEW(
+    state, {
+      reviews
+    }
+  ) {
+    // console.log(state.reviews);
+    console.log(reviews);
     state.reviews.unshift(reviews)
   },
   LIKED_REVIEWS(state, reviewId) {
@@ -42,6 +50,7 @@ export const mutations = {
     })
   },
   USER_LIKED_REVIEWS(state, likedReviews) {
+    // console.log(state.reviews);
     state.reviews.forEach((review) => {
       likedReviews.forEach((reviewId) => {
         if (review._id === reviewId) {
@@ -58,19 +67,23 @@ export const actions = {
   }, bookId) {
     await this.$axios.get(process.env.baseUrl + "/reviews/book?id=" + bookId).then(async (res) => {
       commit('GET_REVIEWS', res.data)
+      // console.log(res.data);
       // commit('USER_LIKED_REVIEWS', rootState.auth.user)
       if (rootState.auth.loggedIn) {
         await this.$axios.get(process.env.baseUrl + '/users/liked').then((res) => {
+          // console.log(res.data);
           commit('USER_LIKED_REVIEWS', res.data.reviews)
         })
       }
     })
   },
   async addReview({
-    commit
+    commit,
+    rootState
   }, {
     review,
-    bookId
+    bookId,
+    username
   }) {
     let recommended = false
     if (review.rating > 3) {
@@ -82,9 +95,12 @@ export const actions = {
       content: review.content,
       bookId: bookId,
       rating: review.rating,
-      recommended: recommended
+      recommended: recommended,
+      author: username
     }).then((res) => {
-      commit('ADD_REVIEW', res.data)
+      commit('ADD_REVIEW', {
+        reviews: res.data
+      })
     }).catch((e) => {
 
     })

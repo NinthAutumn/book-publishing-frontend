@@ -1,16 +1,16 @@
 <template>
   <div class="book">
     <div class="book__cover">
-      <img class="book__cover__img" :src="$store.state.book.book.cover" alt>
+      <img class="book__cover__img" :src="$store.getters['book/showbook'].cover" alt>
     </div>
     <div class="book__info">
-      <div class="book__info__title">{{$store.state.book.book.title}}</div>
+      <div class="book__info__title">{{$store.getters['book/showbook'].title}}</div>
       <div class="book__info__meta">
         <div class="book__info__meta__genre">
           <div class="book__info__meta__genre__icon">
             <fa icon="fist-raised"></fa>
           </div>
-          <div class="book__info__meta__genre__text">{{$store.state.book.book.genres[0]}}</div>
+          <div class="book__info__meta__genre__text">{{$store.getters['book/showbook'].genres[0]}}</div>
         </div>
         <div class="book__info__meta__chapterCount">
           <div class="book__info__meta__chapterCount__icon">
@@ -18,7 +18,7 @@
           </div>
           <div
             class="book__info__meta__chapterCount__text"
-          >{{$store.state.book.book.chapters.length}} 話</div>
+          >{{$store.getters['book/showbook'].chapters.length}} 話</div>
         </div>
         <div class="book__info__meta__views">
           <div class="book__info__meta__views__icon">
@@ -30,13 +30,13 @@
       <div class="book__stats">
         <div class="book__stats__meta"></div>
         <div class="book__stats__text">
-          <BookContent :book="$store.state.book.book"></BookContent>
+          <BookContent :book="$store.getters['book/showbook']"></BookContent>
         </div>
         <div class="book__stats__buttons"></div>
       </div>
     </div>
     <div class="book__chapters">
-      <BookChapterList :chapters="$store.state.book.book.chapters"></BookChapterList>
+      <BookChapterList :chapters="$store.getters['book/showbook'].chapters"></BookChapterList>
     </div>
     <div class="book__reviews">
       <form class="review-form" @submit.prevent="addReview">
@@ -91,12 +91,13 @@
         <vue-editor v-model="content" :editorOptions="config"></vue-editor>
       </no-ssr>-->
       <!-- <div v-html="content"></div> -->
-      <ReviewsList :reviews="reviews"></ReviewsList>
+      <ReviewsList></ReviewsList>
     </div>
   </div>
 </template>
 
 <script>
+//
 import BookContent from "@/components/Bookpage/BookContent";
 import BookChapterList from "@/components/Bookpage/BookChapterList";
 import ReviewsList from "@/components/Bookpage/ReviewsList";
@@ -135,14 +136,15 @@ export default {
   },
   methods: {
     async addReview() {
-      await this.$store
-        .dispatch("review/addReview", {
-          review: this.review,
-          bookId: this.$route.params.id
-        })
-        .then(res => {
-          this.$router.go("/");
-        });
+      const username = this.$store.state.auth.user.username;
+      await this.$store.dispatch("review/addReview", {
+        review: this.review,
+        bookId: this.$route.params.id,
+        username: username
+      });
+    },
+    allReviews: function(state, change) {
+      return state;
     }
   },
   components: {
@@ -150,19 +152,8 @@ export default {
     BookChapterList,
     ReviewsList
   },
-  computed: {
-    compReviews() {
-      // return ();
-    }
-  },
-  created() {
-    this.reviews = this.$store.state.review.reviews;
-  },
-  watch: {
-    reviews(reviews) {
-      return (this.reviews = this.$store.state.review.reviews);
-    }
-  }
+  created() {},
+  scrollToTop: false
 };
 </script>
 
@@ -299,7 +290,7 @@ input[type="number"]::-webkit-outer-spin-button {
         justify-content: center;
         border-radius: 5px;
         padding: 3px 7px;
-        background-color: #11c6ff;
+        background-color: $secondary-light;
         &__icon {
           font-size: 14px;
           margin-right: 5px;
@@ -320,7 +311,7 @@ input[type="number"]::-webkit-outer-spin-button {
         // height: 32px;
         // width: 150px;
         border-radius: 5px;
-        background-color: #5580e9;
+        background-color: $secondary;
         justify-content: center;
         padding: 3px 7px;
         &__icon {
@@ -342,7 +333,7 @@ input[type="number"]::-webkit-outer-spin-button {
         // width: 150px;
         padding: 3px 7px;
         border-radius: 5px;
-        background-color: #8860d0;
+        background-color: $primary;
         &__icon {
           // color: black;
           font-size: 18px;

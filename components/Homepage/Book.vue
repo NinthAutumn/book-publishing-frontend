@@ -1,12 +1,12 @@
 <template>
-  <div id="book-card" class="big" @click="linkTo">
+  <div id="book-card" class="big">
     <div class="book-cover">
       <span class="star-rating"></span>
       <img :src="book.cover" class="book-img" alt="Book cover">
     </div>
     <div class="text-info">
       <p class="book-title full" ref="texting">
-        <a class="animated-link">{{book.title}}</a>
+        <nuxt-link :to="{path: `books/${book._id}`}" class="animated-link">{{book.title}}</nuxt-link>
       </p>
       <span class="p-ending"></span>
       <no-ssr>
@@ -43,9 +43,9 @@ export default {
     };
   },
   methods: {
-    linkTo() {
-      this.$router.push("/books/" + this.book._id);
-    }
+    // linkTo() {
+    //   this.$router.push("/books/" + this.book._id);
+    // }
   },
   computated: {
     round() {

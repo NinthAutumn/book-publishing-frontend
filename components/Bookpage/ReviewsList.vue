@@ -15,9 +15,21 @@ import Review from "./Review";
 
 export default {
   props: {
-    reviews: Array
+    // reviews: Array
   },
-
+  computed: {
+    reviews() {
+      return this.$store.getters["review/allReviews"];
+    }
+  },
+  watch: {
+    reviews: {
+      immediate: true,
+      handler: function(newReview, oldREview) {
+        return newReview;
+      }
+    }
+  },
   components: {
     Review
   }

@@ -24,7 +24,7 @@
         >
           <p
             class="bookchapterlists__list--items__links--title"
-          >Chapter {{chapter.index}}: {{chapter.title}}</p>
+          >{{chapter.index}}話: {{chapter.title}}</p>
           <p class="chapter-createdAt">{{$moment(chapter.createdAt).fromNow()}}</p>
           <!-- <timeago  :datetime="chapter.createdAt" locale="ja"></timeago> -->
         </nuxt-link>

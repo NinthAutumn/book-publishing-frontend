@@ -22,7 +22,10 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
+// body {
+//   background-color: azure;
+// }
 /* .chapter-page .menu-active {
   margin-left: 240px;
   margin-top: 6.6rem;

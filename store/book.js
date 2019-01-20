@@ -25,7 +25,8 @@ export const getters = {
   },
   chapAsc: (state) => {
 
-  }
+  },
+  showbook: state => state.book
 }
 
 export const actions = {

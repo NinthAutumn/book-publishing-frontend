@@ -74,6 +74,9 @@ module.exports = {
    ** Nuxt.js modules
    */
   modules: [
+
+    '@nuxtjs/pwa',
+
     // Doc: https://github.com/nuxt-community/axios-module#usage
     '@nuxtjs/axios',
     ['@nuxtjs/moment', {
