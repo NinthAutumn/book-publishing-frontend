@@ -87,6 +87,7 @@ export default {
     likedReview() {
       if (this.liked) {
         this.liked = "";
+        this.$store.dispatch("review/unLikeReview", this.review._id);
       } else {
         this.liked = "liked";
         this.disliked = "";
@@ -125,7 +126,7 @@ export default {
 </script>
 
 <style  lang="scss" >
-@import "../../assets/css/main.scss";
+// @import "../../assets/css/main.scss";
 .reviews {
   a {
     color: $primary;

@@ -157,6 +157,15 @@ module.exports = {
     extend(config, ctx) {
 
     },
+    styleResources: {
+      scss: './assets/css/abstracts/main.scss',
+      // sass: ...,
+      // scss: ...
+      options: {
+        // See https://github.com/yenshih/style-resources-loader#options
+        // Except `patterns` property
+      }
+    },
     postcss: [
       require('postcss-gap-properties')(),
       require('autoprefixer')({

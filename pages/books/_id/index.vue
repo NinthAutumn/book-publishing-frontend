@@ -176,10 +176,10 @@ export default {
     // width: 410px;
     width: 50%;
     padding: 5px;
-    border: 2px solid #c1c9e4;
+    border: 2px solid $review-color;
     border-radius: 10px;
     box-sizing: border-box;
-    color: #796477;
+    color: $primary-black;
     margin-bottom: 10px;
   }
   &__content {
@@ -187,7 +187,7 @@ export default {
     padding: 5px;
     width: 50%;
 
-    border: 2px solid #c1c9e4;
+    border: 2px solid $review-color;
     border-radius: 10px;
     box-sizing: border-box;
     resize: none;
@@ -223,7 +223,7 @@ export default {
     // height: 50px;
     height: 22px;
     font-size: 15px;
-    border: 2px solid #c1c9e4;
+    border: 2px solid $review-color;
     padding: 2px 1px;
     border-radius: 5px;
     margin-right: 5px;
@@ -231,7 +231,7 @@ export default {
     // box-sizing: border-box;
   }
   .review-submit {
-    background-color: #c1c9e4;
+    background-color: $review-color;
     width: 90px;
     height: 33px;
     border-radius: 10px;
