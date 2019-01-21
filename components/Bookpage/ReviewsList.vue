@@ -1,8 +1,7 @@
 <template>
   <div class="reviews-list">
-    <ul>
-      <hr>
-      <li v-for="(review, index) in reviews" :key="index">
+    <ul class="list">
+      <li class="show" v-for="(review, index) in reviews" :key="index">
         <Review :review="review"></Review>
         <!-- <hr> -->
       </li>
@@ -23,12 +22,12 @@ export default {
     }
   },
   watch: {
-    reviews: {
-      immediate: true,
-      handler: function(newReview, oldREview) {
-        return newReview;
-      }
-    }
+    // reviews: {
+    //   immediate: true,
+    //   handler: function(newReview, oldREview) {
+    //     return newReview;
+    //   }
+    // }
   },
   components: {
     Review
@@ -40,5 +39,12 @@ export default {
 hr {
   // background: red;
   border: 0.5px solid #c2bac3;
+}
+
+.list {
+}
+
+li {
+  transition: 300ms;
 }
 </style>

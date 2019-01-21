@@ -1,9 +1,24 @@
 <template>
-  <div id="search">{{$route.query.query}}</div>
+  <div id="search">
+    <ul>
+      <li v-for="(book, index) in searchBooks" :key="index">
+        <Books :book="book"></Books>
+      </li>
+    </ul>
+  </div>
 </template>
 <script>
+import Books from "@/components/SearchPage/Books";
 export default {
   name: "search",
+  components: {
+    Books
+  },
+  computed: {
+    searchBooks() {
+      return this.$store.state.search.books;
+    }
+  },
   data() {
     return {};
   },

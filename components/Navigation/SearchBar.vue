@@ -26,10 +26,13 @@ export default {
     };
   },
   methods: {
-    searchOutput() {
+    async searchOutput() {
+      await this.$store
+        .dispatch("search/searchBooks", this.searchItem)
+        .then(() => {
+          this.$router.push("/search?query=" + this.searchItem);
+        });
       console.log(this.searchItem);
-      this.$router.push("/search?query=" + this.searchItem);
-      this.$emit("searched", this.searchItem);
     },
     clickedSearch() {
       this.inputclicked = !this.inputclicked;
