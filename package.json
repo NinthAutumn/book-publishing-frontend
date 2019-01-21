@@ -28,6 +28,7 @@
     "lodash-es": "^4.17.11",
     "moment": "^2.23.0",
     "nuxt": "^2.0.0",
+    "nuxt-device-detect": "^1.1.2",
     "nuxt-fontawesome": "^0.4.0",
     "nuxt-svg-loader": "^1.0.1",
     "nuxt-validate": "^0.1.2",

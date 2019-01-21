@@ -71,7 +71,7 @@ export const actions = {
       // commit('USER_LIKED_REVIEWS', rootState.auth.user)
       if (rootState.auth.loggedIn) {
         await this.$axios.get(process.env.baseUrl + '/users/liked').then((res) => {
-          // console.log(res.data);
+          console.log(res.data);
           commit('USER_LIKED_REVIEWS', res.data.reviews)
         })
       }

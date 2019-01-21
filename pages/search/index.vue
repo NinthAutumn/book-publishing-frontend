@@ -1,7 +1,7 @@
 <template>
   <div id="search">
     <ul>
-      <li v-for="(book, index) in searchBooks" :key="index">
+      <li class="search-book-item" v-for="(book, index) in searchBooks" :key="index">
         <Books :book="book"></Books>
       </li>
     </ul>
@@ -32,4 +32,8 @@ export default {
   margin-top: 50rem;
   padding: 10rem;
 } */
+
+.search-book-item {
+  margin-bottom: 10px;
+}
 </style>

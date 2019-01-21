@@ -5,26 +5,30 @@
     </div>
     <div class="book__info">
       <div class="book__info__title">{{$store.getters['book/showbook'].title}}</div>
-      <div class="book__info__meta">
-        <div class="book__info__meta__genre">
-          <div class="book__info__meta__genre__icon">
+      <div class="book-meta flex">
+        <div class="book-genre pill pill-secondary-light">
+          <div class="book-genre-icon pill-text">
             <fa icon="fist-raised"></fa>
           </div>
-          <div class="book__info__meta__genre__text">{{$store.getters['book/showbook'].genres[0]}}</div>
+          <div class="book-genre-text pill-text">
+            <p>{{$store.getters['book/showbook'].genres[0]}}</p>
+          </div>
         </div>
-        <div class="book__info__meta__chapterCount">
-          <div class="book__info__meta__chapterCount__icon">
+        <div class="book-chapterCount pill pill-secondary">
+          <div class="book-chapter-count-icon pill-text">
             <fa icon="scroll"></fa>
           </div>
-          <div
-            class="book__info__meta__chapterCount__text"
-          >{{$store.getters['book/showbook'].chapters.length}} 話</div>
+          <div class="book-chapter-count-text pill-text">
+            <p>{{$store.getters['book/showbook'].chapters.length}} 話</p>
+          </div>
         </div>
-        <div class="book__info__meta__views">
-          <div class="book__info__meta__views__icon">
+        <div class="book-views pill pill-primary">
+          <div class="book-views-icon pill-text">
             <fa icon="eye"></fa>
           </div>
-          <div class="book__info__meta__views__text">{{$store.state.book.view}}</div>
+          <div class="book-views-icon pill-text">
+            <p>{{$store.state.book.view}}</p>
+          </div>
         </div>
       </div>
       <div class="book__stats">
@@ -289,7 +293,7 @@ input[type="number"]::-webkit-outer-spin-button {
         margin-right: 10px;
         justify-content: center;
         border-radius: 5px;
-        padding: 3px 7px;
+        width: 100px;
         background-color: $secondary-light;
         &__icon {
           font-size: 14px;
@@ -313,7 +317,7 @@ input[type="number"]::-webkit-outer-spin-button {
         border-radius: 5px;
         background-color: $secondary;
         justify-content: center;
-        padding: 3px 7px;
+        width: 100px;
         &__icon {
           font-size: 14px;
           margin-right: 5px;
@@ -331,7 +335,7 @@ input[type="number"]::-webkit-outer-spin-button {
         // height: 32px;
         justify-content: center;
         // width: 150px;
-        padding: 3px 7px;
+        width: 100px;
         border-radius: 5px;
         background-color: $primary;
         &__icon {

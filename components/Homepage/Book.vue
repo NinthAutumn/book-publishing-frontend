@@ -129,7 +129,7 @@ export default {
       /* text-align: center; */
       /* margin-top: 10px; */
       padding: 0;
-
+      text-align: center;
       width: 95%;
       /* height: 5rem; */
       overflow: hidden;
