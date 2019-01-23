@@ -1,0 +1,83 @@
+.button {
+  border: none;
+  text-align: center;
+  width: 90px;
+  height: 33px;
+  font-size: 15px;
+  color: black;
+  border-radius: 10px;
+
+  &--primary {
+    color: white;
+    background-color: $primary;
+
+    &--lighter {
+      background-color: $primary-lighter;
+    }
+
+    &--black {
+      background-color: $primary-black;
+    }
+
+    &--open {
+      background-color: white;
+      border: 1px solid $primary;
+      color: $primary;
+
+      &:hover {
+        background-color: $primary;
+        color: white;
+      }
+    }
+  }
+
+  &--secondary {
+    color: white;
+    background-color: $secondary;
+
+    &--light {
+      color: white;
+      background-color: $secondary-light;
+    }
+
+    &--light-dark {
+      color: white;
+      background-color: $secondary-light-dark;
+    }
+
+    &--light-lighter {
+      color: white;
+      background-color: $secondary-light-lighter;
+    }
+
+    &--open {
+      background-color: white;
+      border: 1px solid $secondary;
+      color: $secondary;
+
+      &:hover {
+        background-color: $secondary;
+        color: white;
+      }
+    }
+  }
+}
+
+// $primary: #8860d0;
+// $primary-lighter: #C1C9E4;
+// $primary-black: #796477;
+
+// $secondary: #5580E9;
+// $secondary-light: #11c6ff;
+// $secondary-light-dark: #5BB8EB;
+// $secondary-light-lighter: #84CEEB;
+
+// $review-color:#c1c9e4;
+
+// $gold:#FEC936;
+// $bronze:#CD7F32;
+// $silver:#C0C0C0;
+
+
+// $rating-color:#FFB727;
+// $rating-color-inactive:#D8D7D5;

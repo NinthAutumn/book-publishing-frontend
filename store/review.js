@@ -1,6 +1,7 @@
 // import auth from './auth'
 export const state = () => ({
-  reviews: []
+  reviews: [],
+  goodReviews: []
 })
 export const getters = {
   // truncate: (state) => {
@@ -58,6 +59,9 @@ export const mutations = {
         }
       })
     })
+  },
+  GET_GOOD_REVIEWS(state, goodReviews) {
+    state.goodReviews = goodReviews
   }
 }
 export const actions = {
@@ -125,6 +129,14 @@ export const actions = {
       commit('UNLIKED_REVIEWS', reviewId)
     }).catch((e) => {
       console.log(e);
+    })
+  },
+  async mostLiked({
+    commit
+  }) {
+    await this.$axios.get(process.env.baseUrl + '/reviews/mostLikedToday').then((res) => {
+      commit('GET_GOOD_REVIEWS', res.data)
+      // console.log(res.data[0]);
     })
   }
 }

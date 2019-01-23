@@ -8,15 +8,18 @@
         <h3>Recommended</h3>
       </div>
       <BooksList :books="$store.state.book.books.highestrated"></BooksList>
+      <ReviewList></ReviewList>
     </div>
   </div>
 </template>
 
 <script>
 import BooksList from "@/components/Homepage/BooksList";
+import ReviewList from "@/components/Homepage/ReviewList";
 export default {
   components: {
-    BooksList
+    BooksList,
+    ReviewList
   },
   // data() {
   //   return {
@@ -77,6 +80,7 @@ export default {
   methods: {},
   async fetch({ store }) {
     await store.dispatch("book/allBooks");
+    await store.dispatch("review/mostLiked");
   },
   created() {},
   auth: false
