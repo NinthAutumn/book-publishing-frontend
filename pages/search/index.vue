@@ -27,11 +27,9 @@ export default {
 };
 </script>
 <style>
-/* #search {
-  margin-left: 24rem;
-  margin-top: 50rem;
-  padding: 10rem;
-} */
+#search {
+  position: relative;
+}
 
 .search-book-item {
   margin-bottom: 10px;

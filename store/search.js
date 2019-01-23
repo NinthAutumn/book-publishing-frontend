@@ -1,5 +1,6 @@
 export const state = () => ({
-  books: []
+  books: [],
+  isLoading: false
 })
 
 export const getters = {
@@ -20,20 +21,28 @@ export const getters = {
   },
   sortRatingDESC: (state) => {
 
-  },
+  }
 }
 
 export const mutations = {
   QUERIED_BOOKS(state, books) {
     state.books = books
+  },
+  LOADING: (state) => {
+    state.isLoading = true
+  },
+  LOADING_FIN: (state) => {
+    state.isLoading = false
   }
 }
 export const actions = {
   async searchBooks({
     commit
   }, query) {
+    commit('LOADING')
     await this.$axios.get(process.env.baseUrl + '/searchBooks?query=' + query).then((res) => {
       commit('QUERIED_BOOKS', res.data)
+      commit('LOADING_FIN')
     })
   }
 }

@@ -1,12 +1,16 @@
 <template>
   <section class="search-books">
-    <div class="book-container container flex-row flex-row--betweeen">
+    <div class="book-container flex-row flex-row--betweeen">
       <div class="book-cover">
-        <img class="book-cover-img" :src="book.cover" alt>
+        <nuxt-link :to="{path: `books/${book._id}`}">
+          <img class="book-cover-img" :src="book.cover" alt>
+        </nuxt-link>
       </div>
       <div class="book-info flex-column" :class="readMore">
         <div class="book-title">
-          <header class="book-title--text">{{book.title}}</header>
+          <nuxt-link :to="{path: `books/${book._id}`}">
+            <header class="book-title--text">{{book.title}}</header>
+          </nuxt-link>
         </div>
         <div class="book-genres">
           <ul class="genre-list flex-row">
@@ -50,6 +54,7 @@
 </template>
 
 <script>
+// import Truncate from "@/components/Truncate";
 export default {
   props: {
     book: Object
@@ -74,17 +79,21 @@ export default {
 
 <style lang="scss">
 .book-synopsis {
-  &:hover {
-    cursor: pointer;
+  a {
+    &:hover {
+      cursor: pointer;
+    }
   }
 }
 .book-cover-img {
-  width: 110px;
-  height: 162px;
+  width: 119px;
+  height: 175px;
   border-radius: 10px;
   margin-right: 10px;
 }
 .book-container {
+  padding: 5px 7px;
+  // padding-top: 5px;
   .vue-star-rating-rating-text {
     margin: 0 !important;
     font-size: 15px;
@@ -104,6 +113,7 @@ export default {
   }
   .book-synopsis {
     overflow: hidden;
+    line-height: 27px;
 
     p {
       font-size: 16.5px;
@@ -119,7 +129,6 @@ export default {
       overflow: visible;
       // transition: 300ms;
     }
-    line-height: 27px;
   }
 }
 
@@ -132,6 +141,10 @@ export default {
   &--text {
     font-size: 18px;
     font-weight: 500;
+    color: rgb(65, 57, 66);
+    &:hover {
+      color: $primary;
+    }
   }
 }
 

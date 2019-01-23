@@ -1,4 +1,14 @@
 const pkg = require('./package')
+// var FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
+// const webpack = require('webpack');
+// var webpackConfig = {
+//   // ...
+//   plugins: [
+//     new FriendlyErrorsWebpackPlugin(),
+//   ],
+//   // ...
+// }
+
 module.exports = {
   mode: 'universal',
 
@@ -76,6 +86,8 @@ module.exports = {
   modules: [
 
     '@nuxtjs/pwa',
+
+    'nuxt-device-detect',
 
     // Doc: https://github.com/nuxt-community/axios-module#usage
     '@nuxtjs/axios',

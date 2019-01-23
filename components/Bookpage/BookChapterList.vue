@@ -25,7 +25,7 @@
           <p
             class="bookchapterlists__list--items__links--title"
           >{{chapter.index}}話: {{chapter.title}}</p>
-          <p class="chapter-createdAt">{{$moment(chapter.createdAt).fromNow()}}</p>
+          <p class="chapter-createdAt">{{$moment(chapter.createdAt).startOf('hour').fromNow()}}</p>
           <!-- <timeago  :datetime="chapter.createdAt" locale="ja"></timeago> -->
         </nuxt-link>
 
@@ -67,6 +67,7 @@ export default {
     // this.$store.commit("book/FORMAT_DATE");
     await this.chapters.forEach(chapter => {
       // this.createdAt = chapter.createdAt;
+      // console.log(chapter.start);
       if (chapter.index % 2 === 1) {
         this.rowCount++;
       }
@@ -136,6 +137,7 @@ export default {
     padding: 10px 15px;
     // grid-auto-flow: dense;
     // transition: 300ms;
+    // transition: 100ms;
 
     &--items {
       // direction: ltr;

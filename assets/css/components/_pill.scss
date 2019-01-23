@@ -1,0 +1,48 @@
+.pill {
+  height: 27px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  margin-right: 5px;
+  padding: 0 10px;
+
+  &-round {
+    border-radius: 15px;
+  }
+
+  // width: 100px;
+  &-text {
+    margin: auto;
+    font-size: 14px;
+  }
+
+  &-secondary {
+    background-color: $secondary;
+    color: white;
+
+    &-open {
+      background-color: white;
+      color: $secondary;
+      border: 1px solid $secondary;
+
+      &:hover {
+        background-color: $secondary;
+        color: white;
+        cursor: pointer;
+      }
+    }
+  }
+
+  &-secondary-light {
+    background-color: $secondary-light;
+    color: white;
+
+  }
+
+  &-primary {
+    background-color: $primary;
+    color: white;
+
+  }
+
+}
