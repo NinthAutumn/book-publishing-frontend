@@ -9,7 +9,7 @@ export const state = () => ({
   status: "",
   user: {},
   loggedIn: false,
-
+  // library:
   // username: "admin1",
   // password: "admin1"
 })
