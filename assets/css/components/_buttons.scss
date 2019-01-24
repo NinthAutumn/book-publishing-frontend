@@ -1,11 +1,25 @@
 .button {
   border: none;
-  text-align: center;
+  // text-align: center;
   width: 90px;
   height: 33px;
   font-size: 15px;
   color: black;
   border-radius: 10px;
+  // margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &--small {
+    width: 73px;
+    height: 27.25px;
+    font-size: 13px;
+  }
 
   &--primary {
     color: white;

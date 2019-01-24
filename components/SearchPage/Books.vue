@@ -54,7 +54,6 @@
 </template>
 
 <script>
-// import Truncate from "@/components/Truncate";
 export default {
   props: {
     book: Object

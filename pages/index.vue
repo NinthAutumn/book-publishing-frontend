@@ -1,11 +1,14 @@
 <template>
   <div class="home-page">
     <div class="head-banner">
-      <img src="http://placehold.jp/1090x240.png" style="width:100%;">
+      <img
+        src="http://gonakedselling.com/wp-content/uploads/2014/04/book-web-banner.jpg"
+        style="width:100%;"
+      >
     </div>
     <div class="main-books">
       <div class="card-title">
-        <h3>Recommended</h3>
+        <h3>今日のおすすめ</h3>
       </div>
       <BooksList :books="$store.state.book.books.highestrated"></BooksList>
       <ReviewList></ReviewList>

@@ -1,5 +1,7 @@
 <template>
   <div class="swiping-page">
+    <!-- <h3>Hi</h3> -->
+    <span style="font-size:16px;">評価が高いレビュー</span>
     <div v-swiper:mySwiper="swiperOption">
       <div class="swiper-wrapper">
         <div class="swiper-slide" v-for="review in reviews" :key="review.id">
@@ -71,8 +73,13 @@ export default {
   // justify-content: space-around;
   // align-content: center;
 }
+
 .my-swiper {
-  height: 300px;
+  height: 100%;
+}
+.my-swiper {
+  height: 100%;
+
   // width: 80% !important;
   .swiper-slide {
     text-align: center;

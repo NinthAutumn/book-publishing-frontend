@@ -1,11 +1,20 @@
 .flex {
   display: flex;
 
+  &--align {
+    align-items: center;
+  }
+
+  &--grow {
+    flex-grow: 1;
+  }
+
   &-row {
     display: flex;
     // justify-content: space-between;
     // align-items: center;
     flex-direction: row;
+
 
     &--center {
       justify-content: center;
