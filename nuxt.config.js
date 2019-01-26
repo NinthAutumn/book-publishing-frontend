@@ -191,7 +191,7 @@ module.exports = {
     plugins: []
   },
   env: {
-    baseUrl: process.env.BASE_URL || 'http://localhost:5000'
+    baseUrl: process.env.BASE_URL || 'http://0.0.0.0:5000'
   },
   loading: {
     color: '#c9b1f5',

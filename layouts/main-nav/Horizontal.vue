@@ -6,11 +6,11 @@
       </div>
       <SearchBar class="searchbar"></SearchBar>
       <span v-click-outside="dropOff" v-if="loggedIn" style="z-index:3000;" id="prof">
-        <img @click="stateDropChange" class="profile-pic" src="http://placehold.jp/45x45.png">
+        <img @click="stateDropChange" class="profile-pic" :src="user.avatar">
         <div :class="$store.state.dropdownState">
           <div class="dropdown-menu">
             <div class="profile-info" @click="userProfile">
-              <img class="dropdown-profile-pic" src="http://placehold.jp/45x45.png">
+              <img class="dropdown-profile-pic" :src="user.avatar">
               <div class="profile-text">
                 <span class="profile-name">{{user.username}}</span>
                 <span class="profile-profession">Author</span>

@@ -55,6 +55,7 @@ export default {
   background-color: #c1c9e438;
   margin: 10px 5px;
   margin-left: 1px;
+  margin-right: 10px;
   border-radius: 5px;
   -webkit-box-shadow: 1px 1px 5px 0px rgba(186, 186, 186, 1);
   -moz-box-shadow: 1px 1px 5px 0px rgba(186, 186, 186, 1);
@@ -72,7 +73,7 @@ export default {
     margin: 0 5px 0 0px;
     align-items: center;
     &__pic {
-      border-radius: 10px;
+      border-radius: 100px;
     }
     &__username {
       // text-align: center;
