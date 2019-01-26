@@ -3,6 +3,9 @@ import {
   serialize,
   parse
 } from 'cookie'
+// import {
+//   stat
+// } from 'fs';
 // var cookieParser = require('cookie-parser');
 var cookie = require('cookie');
 
@@ -13,8 +16,7 @@ export const state = () => ({
   dashboardMenuState: "dashboard-active",
   slidesPerView: 6.5,
   dropdownState: "dropdown-inactive",
-
-
+  signUpForm: ''
 })
 
 export const getters = {
@@ -25,6 +27,16 @@ export const getters = {
 
 
 export const mutations = {
+  SIGNUP_STATE(state) {
+    if (state.signUpForm) {
+      state.signUpForm = ''
+    } else {
+      state.signUpForm = 'active'
+    }
+  },
+  SIGNUP_FALSE(state) {
+    state.signUpForm = ''
+  },
   increment(state) {
     state.counter++
   },
@@ -65,7 +77,6 @@ export const actions = {
   async nuxtServerInit({
     commit,
     state
-
   }, {
     req
   }) {

@@ -1,5 +1,5 @@
 <template>
-  <div class="sign-up">
+  <div class="sign-up" v-click-outside="signOff">
     <form @submit.prevent="signUp" class="signup-form">
       <p class="signup-title">Signup to Lyfr</p>
       <label for="username">Username</label>
@@ -34,8 +34,6 @@
 </template>
 
 <script>
-import Cookies from "js-cookie";
-
 export default {
   data() {
     return {
@@ -49,7 +47,11 @@ export default {
       first_name: ""
     };
   },
-  auth: false,
+  computed: {
+    isFormInValid() {
+      return Object.keys(this.fields).some(key => this.fields[key].invalid);
+    }
+  },
   methods: {
     async signUp() {
       // const isValid = await this.$refs.observer.validate();
@@ -76,19 +78,10 @@ export default {
           });
       }
     },
-    async submit() {}
-  },
-  beforeCreate() {
-    if (Cookies.get("token")) {
-      this.$router.go(-1);
+    signOff() {
+      this.$store.commit("SIGNUP_FALSE");
     }
-  },
-  computed: {
-    isFormInValid() {
-      return Object.keys(this.fields).some(key => this.fields[key].invalid);
-    }
-  },
-  layout: "none"
+  }
 };
 </script>
 
@@ -96,8 +89,10 @@ export default {
 .sign-up {
   display: flex;
   align-items: center;
+  justify-content: space-around;
   padding: 10px;
-  // width: 50%;
+  width: 100%;
+  // transition: 300ms;
   .signup-title {
     height: 50px;
     display: flex;

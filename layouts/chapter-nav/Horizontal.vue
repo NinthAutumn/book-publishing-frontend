@@ -54,6 +54,9 @@ export default {
     },
     loggedIn() {
       return this.$store.state.auth.loggedIn;
+    },
+    signState() {
+      return this.$store.state.signUpForm;
     }
   },
   methods: {

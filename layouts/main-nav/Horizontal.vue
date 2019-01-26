@@ -5,7 +5,7 @@
         <i class="el-icon-menu" :class="$store.state.menuState" @click="menuDrawer"></i>
       </div>
       <SearchBar class="searchbar"></SearchBar>
-      <span v-click-outside="dropOff" v-if="loggedIn" style="z-index:3000;" id="prof">
+      <span v-if="loggedIn" style="z-index:3000;" id="prof" v-click-outside="dropOff">
         <img @click="stateDropChange" class="profile-pic" :src="user.avatar">
         <div :class="$store.state.dropdownState">
           <div class="dropdown-menu">
@@ -24,7 +24,7 @@
       </span>
       <div class="not-loggedin" v-else>
         <span class="signup">
-          <nuxt-link to="/auth/signup">Sign up</nuxt-link>
+          <a @click="signUpState">Sign up</a>
         </span>
         <span>|</span>
         <span class="login">
@@ -32,20 +32,26 @@
         </span>
       </div>
     </nav>
+    <div class="signupform" v-if="signState&&!loggedIn">
+      <SignUpForm></SignUpForm>
+    </div>
   </div>
 </template>
 <script>
 import SearchBar from "@/components/Navigation/SearchBar";
+import SignUpForm from "@/components/Navigation/SignUpFrom";
 
 export default {
   name: "Horizontal",
   data() {
     return {
       menuStates: "menu-inactive"
+      // signUpForm: ""
     };
   },
   components: {
-    SearchBar
+    SearchBar,
+    SignUpForm
   },
   computed: {
     user() {
@@ -54,10 +60,12 @@ export default {
     },
     loggedIn() {
       return this.$store.state.auth.loggedIn;
+    },
+    signState() {
+      return this.$store.state.signUpForm;
     }
   },
   methods: {
-    //menu
     menuDrawer() {
       this.$store.commit("menuStateChange");
     },
@@ -74,11 +82,29 @@ export default {
     },
     userProfile() {
       this.$router.push("/users/dashboard");
+    },
+    signUpState() {
+      this.$store.commit("SIGNUP_STATE");
     }
   }
 };
 </script>
 <style lang="scss" scoped>
+.signupform {
+  // display: flex;
+  // position: absolute;
+  // top: 70px;
+  // width: 100%;
+  width: 25%;
+  margin: auto;
+  // left: 50%;
+  // margin-left: -50%;
+  // margin-right: -50%;
+  // right: 50%;
+  // top: 50%;
+  // margin-top: -50px;
+  // justify-content: space-around;
+}
 .not-loggedin {
   margin-right: 10px;
   // font-size: 16px;

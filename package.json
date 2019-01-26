@@ -40,6 +40,7 @@
     "vue-star-rating": "^1.6.1",
     "vue-text-dot": "^1.0.0",
     "vue2-editor": "^2.6.6",
+    "vuex-iframe-sync": "^1.4.5",
     "vuex-router-sync": "^5.0.0"
   },
   "devDependencies": {
