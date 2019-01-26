@@ -77,7 +77,7 @@ export default {
         {
           title: "検索",
           icon: "search",
-          link: "/search",
+          link: "/browse",
           meta: "search"
         },
         {

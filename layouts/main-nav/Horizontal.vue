@@ -95,8 +95,9 @@ export default {
   // position: absolute;
   // top: 70px;
   // width: 100%;
-  width: 25%;
+  width: 30%;
   margin: auto;
+  // height: 50%;
   // left: 50%;
   // margin-left: -50%;
   // margin-right: -50%;

@@ -2,33 +2,35 @@
   <div class="sign-up" v-click-outside="signOff">
     <form @submit.prevent="signUp" class="signup-form">
       <p class="signup-title">Signup to Lyfr</p>
-      <label for="username">Username</label>
-      <input type="text" v-model="formUsername">
-      <label for="email">Email</label>
-      <input type="email" v-model="formEmail">
-      <label for="password">Password</label>
+      <label for="username">ユーザー名</label>
+      <input class="form-input form-input--primary--lighter" type="text" v-model="formUsername">
+      <label for="email">メールアドレス</label>
       <input
+        name="email"
+        v-validate="'email'"
+        class="form-input form-input--primary--lighter"
+        type="email"
+        data-vv-as="記入されたメールアドレス"
+        v-model="formEmail"
+      >
+      <span class="help is-danger">{{ errors.first('email') }}</span>
+      <label for="password">パスワード</label>
+      <input
+        class="form-input form-input--primary--lighter"
         name="password"
-        v-validate="'required'"
+        v-validate="'required||min:6'"
         type="password"
         :class="{'is-danger': errors.has('password')}"
         v-model="formPassword"
+        data-vv-as="パスワード"
         ref="password"
       >
       <span v-show="errors.has('password')" class="help is-danger">{{ errors.first('password') }}</span>
-      <label for="cPassword">Confirm Password</label>
       <input
-        name="confirm_password"
-        v-validate="'confirmed:password'"
-        type="password"
-        data-vv-as="password"
-        v-model="formCPassword"
+        type="submit"
+        class="signup-button form-submit"
+        :class="{active: errors.any()||!formUsername||!formEmail||!formPassword}"
       >
-      <span
-        v-show="errors.has('confirm_password')"
-        class="help is-danger"
-      >{{ errors.first('confirm_password') }}</span>
-      <input type="submit" class="signup-button">
     </form>
   </div>
 </template>
@@ -56,7 +58,6 @@ export default {
     async signUp() {
       // const isValid = await this.$refs.observer.validate();
       await this.$validator.validateAll();
-      console.log("test");
       if (!this.errors.any()) {
         const user = {
           username: this.formUsername,
@@ -92,6 +93,11 @@ export default {
   justify-content: space-around;
   padding: 10px;
   width: 100%;
+  .help {
+    color: red;
+    font-size: 16px;
+    margin-top: 5px;
+  }
   // transition: 300ms;
   .signup-title {
     height: 50px;
@@ -101,6 +107,7 @@ export default {
     font-size: 20px;
   }
   .signup-form {
+    border-radius: 10px;
     background-color: white;
     display: flex;
     flex-direction: column;
@@ -111,20 +118,23 @@ export default {
     height: 100%;
     padding: 10px;
     width: 100%;
+    box-sizing: border-box;
     // grid-column-start: 2;
     // grid-row-start: 2;
     input {
       padding-left: 5px;
-      font-size: 16px;
-      height: 30px;
-      border: 1px solid grey;
-      margin-bottom: 10px;
+      // font-size: 16px;
+      // height: 30px;
+      // border: 1px solid grey;
+      // margin-bottom: 10px;
 
       // box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-      border-radius: 10px;
+      // border-radius: 10px;
     }
     label {
-      font-size: 2rem;
+      margin-top: 10px;
+      font-size: 13px;
+      color: $review-color;
     }
     .signup-button {
       &:hover {

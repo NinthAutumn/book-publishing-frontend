@@ -77,6 +77,9 @@ module.exports = {
     }, {
       ssr: false,
       src: "~plugins/vueEditor"
+    }, {
+      src: '@/plugins/vee-validate',
+      ssr: false
     }
   ],
 
@@ -107,10 +110,6 @@ module.exports = {
           icons: ['fas']
         }
       ]
-    }],
-    ['nuxt-validate', {
-      lang: 'es'
-      // regular vee-validate options 
     }],
     ['@nuxtjs/google-analytics', {
       id: 'UA-119733183-2'
