@@ -9,24 +9,24 @@
     flex-grow: 1;
   }
 
+  &--between {
+    justify-content: space-between;
+  }
+
+  &--center {
+    justify-content: center;
+  }
+
+  &--around {
+    justify-content: space-around;
+  }
+
   &-row {
     display: flex;
     // justify-content: space-between;
     // align-items: center;
     flex-direction: row;
 
-
-    &--center {
-      justify-content: center;
-    }
-
-    &--between {
-      justify-content: space-between;
-    }
-
-    &--around {
-      justify-content: space-around;
-    }
 
     &-reverse {
       display: flex;

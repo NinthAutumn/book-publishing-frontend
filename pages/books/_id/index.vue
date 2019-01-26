@@ -4,33 +4,53 @@
       <img class="book__cover__img" :src="$store.getters['book/showbook'].cover" alt>
     </div>
     <div class="book__info">
-      <div class="book__info__title">{{$store.getters['book/showbook'].title}}</div>
-      <div class="book-meta flex">
-        <div class="book-genre pill pill-secondary-light">
-          <div class="book-genre-icon pill-text">
-            <fa icon="fist-raised"></fa>
+      <div class="divider flex-row flex--align flex--between">
+        <div class="divider flex-column flex--between">
+          <div class="book__info__title">{{$store.getters['book/showbook'].title}}</div>
+          <div class="book-meta flex">
+            <div class="book-genre pill pill-secondary-light">
+              <div class="book-genre-icon pill-text">
+                <fa icon="fist-raised"></fa>
+              </div>
+              <div class="book-genre-text pill-text">
+                <p>{{$store.getters['book/showbook'].genres[0]}}</p>
+              </div>
+            </div>
+            <div class="book-chapterCount pill pill-secondary">
+              <div class="book-chapter-count-icon pill-text">
+                <fa icon="scroll"></fa>
+              </div>
+              <div class="book-chapter-count-text pill-text">
+                <p>{{$store.getters['book/showbook'].chapters.length}} 話</p>
+              </div>
+            </div>
+            <div class="book-views pill pill-primary">
+              <div class="book-views-icon pill-text">
+                <fa icon="eye"></fa>
+              </div>
+              <div class="book-views-icon pill-text">
+                <p>{{$store.state.book.view}}</p>
+              </div>
+            </div>
           </div>
-          <div class="book-genre-text pill-text">
-            <p>{{$store.getters['book/showbook'].genres[0]}}</p>
+          <div class="tab-container">
+            <div
+              class="tab-list__item"
+              :class="{navActive: $store.state.book.bookSynopsis}"
+              @click="$store.commit('book/SYNOPSIS_TRUE')"
+            >あらすじ</div>
+            <div
+              class="tab-list__item"
+              :class="{navActive: !$store.state.book.bookSynopsis}"
+              @click="$store.commit('book/SYNOPSIS_FALSE')"
+            >情報</div>
           </div>
         </div>
-        <div class="book-chapterCount pill pill-secondary">
-          <div class="book-chapter-count-icon pill-text">
-            <fa icon="scroll"></fa>
-          </div>
-          <div class="book-chapter-count-text pill-text">
-            <p>{{$store.getters['book/showbook'].chapters.length}} 話</p>
-          </div>
-        </div>
-        <div class="book-views pill pill-primary">
-          <div class="book-views-icon pill-text">
-            <fa icon="eye"></fa>
-          </div>
-          <div class="book-views-icon pill-text">
-            <p>{{$store.state.book.view}}</p>
-          </div>
+        <div class="book-info">
+          <img class="book-author" :src="$store.state.book.book.author.avatar" alt="author avatar">
         </div>
       </div>
+
       <div class="book__stats">
         <div class="book__stats__meta"></div>
         <div class="book__stats__text">
@@ -61,9 +81,10 @@
             v-model="review.rating.total"
             class="rating-input"
             v-validate="'max:5'"
-            :class="{'is-danger': errors.has('reviewRating')}"
+            name="reviewRating"
             step=".01"
           >
+          <!-- <span class="help is-danger">{{ errors.first('reviewRating') }}</span> -->
           <no-ssr>
             <star-rating
               name="rating"
@@ -162,6 +183,27 @@ export default {
 </script>
 
 <style lang="scss">
+.navActive {
+  border-bottom: 2px solid $secondary;
+  transition: border-color 500ms;
+}
+.tab-container {
+  display: flex;
+  margin-left: 5px;
+  margin-top: 5px;
+  border-bottom: 2px solid white;
+  .tab-list__item {
+    font-size: 19px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
 .review-form {
   display: flex;
   flex-direction: column;
@@ -278,6 +320,7 @@ input[type="number"]::-webkit-outer-spin-button {
   }
 
   &__info {
+    // display: flex;
     grid-area: info;
     &__title {
       font-size: 22px;

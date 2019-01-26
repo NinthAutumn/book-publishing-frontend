@@ -1,12 +1,14 @@
 .button {
   border: none;
   // text-align: center;
-  width: 90px;
-  height: 33px;
-  font-size: 15px;
-  color: black;
-  border-radius: 10px;
+  // width: 90px;
+  // height: 33px;
+  // font-size: 15px;
+  // color: black;
+  // border-radius: 10px;
   // margin: auto;
+  padding: 5px;
+  box-sizing: border-box;
   display: flex;
   align-items: center;
   justify-content: space-around;
@@ -21,9 +23,37 @@
     font-size: 13px;
   }
 
+  &--big {
+    height: 35px !important;
+    font-size: 13px;
+  }
+
+  &--shadow {
+    -webkit-box-shadow: 1px 1px 5px 0px rgba(191, 191, 191, 1);
+    -moz-box-shadow: 1px 1px 5px 0px rgba(191, 191, 191, 1);
+    box-shadow: 1px 1px 5px 0px rgba(191, 191, 191, 1);
+  }
+
+  &--gradient {
+    background: #7F00FF;
+    /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #E100FF, #7F00FF);
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #E100FF, #7F00FF);
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+    color: white;
+  }
+
+  &--black {
+    color: black;
+    border: 1px solid rgb(102, 102, 102);
+  }
+
   &--primary {
     color: white;
     background-color: $primary;
+    border: none;
 
     &--lighter {
       background-color: $primary-lighter;
@@ -48,6 +78,7 @@
   &--secondary {
     color: white;
     background-color: $secondary;
+    border: none;
 
     &--light {
       color: white;

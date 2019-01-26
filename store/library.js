@@ -56,6 +56,13 @@ export const actions = {
   async addStore({
     commit
   }, store) {
-    await this.$axios.patch(process.env.baseUrl + '/library/updateLibrary')
+    await this.$axios.patch(process.env.baseUrl + '/library/updateLibrary', {
+      store
+    })
+  },
+  async removeStore({
+    commit
+  }, store) {
+
   }
 }

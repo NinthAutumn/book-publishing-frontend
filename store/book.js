@@ -127,6 +127,14 @@ export const mutations = {
       // console.log(chapter.createdAt);
     })
 
+  },
+  SYNOPSIS_TRUE(state) {
+    state.bookSynopsis = true
+  },
+  SYNOPSIS_FALSE(state) {
+
+    state.bookSynopsis = false
+
   }
 
 }
