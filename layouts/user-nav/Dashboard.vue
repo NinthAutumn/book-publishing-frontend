@@ -1,6 +1,6 @@
 <template>
   <div class="d-nav-all">
-    <div class="d-nav-h">
+    <div class="d-nav-h" style="z-index:2000;">
       <div class="dashboard-h-menu">
         <div class="dashboard-icon">
           <i class="el-icon-menu" @click="menuDrawer"></i>
@@ -8,6 +8,9 @@
         <div class="dashboard-logo">
           <img class="dashboard-logo-img" src="http://placehold.jp/80x32.png">
         </div>
+      </div>
+      <div class="create-books">
+        <book-form></book-form>
       </div>
     </div>
     <nav class="d-nav-v" :class="$store.state.dashboardMenuState">

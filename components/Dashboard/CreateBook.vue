@@ -19,6 +19,7 @@
         for="title"
         class="book-form--input form-input form-input--primary"
         placeholder="Title"
+        v-model="form.title"
       >
       <label for="synopsis">あらすじ</label>
       <textarea
@@ -28,18 +29,22 @@
         cols="30"
         rows="10"
         placeholder="Summary"
+        v-model="form.synopsis"
       ></textarea>
       <label for="genre">ジャンル</label>
       <v-select
+        required
         name="genre"
         class="tags-form"
         multiple
-        v-model="selected"
+        v-model="form.genre"
         :options="list"
         :closeOnSelect="false"
+        placeholder="ジャンルの検索"
       ></v-select>
       <label for>タグ</label>
-      <input-tag v-model="tags"></input-tag>
+      <input-tag v-model="form.tags" placeholder="タグの検索"></input-tag>
+      <input type="submit" class="form-submit" value="投稿">
     </form>
   </div>
 </template>
@@ -51,7 +56,9 @@ export default {
       imageUrl: "",
       form: {
         synopsis: "",
-        title: ""
+        title: "",
+        tags: [],
+        genre: []
       },
       selected: [],
       list: [
@@ -79,8 +86,7 @@ export default {
         "推理",
         "青春",
         "学園"
-      ],
-      tags: []
+      ]
     };
   },
   methods: {
@@ -110,20 +116,27 @@ export default {
   font-size: 16px;
   // height: 45px;
   .input-tag {
-    border: none;
-    background-color: $secondary;
+    border: 1px solid $secondary;
+    background-color: white;
+    border-radius: 100px;
+    padding: 3px 10px;
   }
   span {
     font-size: 16px;
-    color: white;
+    color: $secondary;
   }
   .remove::before {
-    color: white;
+    color: $secondary;
     font-size: 20px;
   }
   input {
-    font-size: 16px;
+    font-size: 16px !important;
   }
+}
+
+.dropdown-menu {
+  max-height: none;
+  height: 100px;
 }
 .tags-form {
   // height: 50px;

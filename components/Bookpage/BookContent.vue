@@ -51,13 +51,21 @@ export default {
         bookId: this.$store.state.book.book._id,
         createdAt: Date.now()
       };
-      await this.$store.dispatch("library/addStore", store).then(() => {
-        this.$store.commit("library/BOOKMARK");
-        this.$message({
-          message: "ブックマークに入りました！",
-          type: "success"
+      await this.$store
+        .dispatch("library/addStore", store)
+        .then(() => {
+          this.$store.commit("library/BOOKMARK");
+          this.$message({
+            message: "ブックマークに入りました！",
+            type: "success"
+          });
+        })
+        .catch(e => {
+          this.$message({
+            message: `ログイン視聴者のみブックマーク機能を使えます`,
+            type: "error"
+          });
         });
-      });
     }
   },
   created() {

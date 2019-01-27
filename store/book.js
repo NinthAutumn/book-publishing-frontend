@@ -47,13 +47,12 @@ export const actions = {
   }, book) {
     await this.$axios.post(process.env.baseUrl + '/books/add', {
       title: book.title,
-      genres: book.genres,
+      genres: book.genre,
       synopsis: book.synopsis,
       price: book.price,
       tags: book.tags,
       cover: book.cover,
-      published: book.published,
-      author: book.userId
+      published: book.published
     }).then((response) => {
       commit('ALL', response)
     })
@@ -137,11 +136,17 @@ export const mutations = {
 
   },
   BOOKMARKED(state, bookmark) {
-    bookmark.store.forEach((store) => {
-      if (store.bookId === state.book._id) {
-        state.book.bookmarked = true
-      }
-    })
+    if (bookmark.store) {
+      bookmark.store.forEach((store) => {
+        if (store.bookId === state.book._id) {
+          state.book.bookmarked = true
+        }
+      })
+    }
+
+  },
+  BOOKMARK(state) {
+    state.book.bookmarked = true
   }
 
 }
