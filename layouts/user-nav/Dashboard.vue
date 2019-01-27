@@ -17,7 +17,7 @@
             v-if="$store.state.dashboardMenuState === 'dashboard-active'"
             class="dashboard-profile"
           >
-            <img class="dashboard-profile-pic" src="http://placehold.jp/100x100.png">
+            <img class="dashboard-profile-pic" :src="$store.state.auth.user.avatar">
           </div>
           <div v-else></div>
         </li>
@@ -141,11 +141,13 @@ export default {
 }
 .dashboard-profile {
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
-  height: 155px;
   &-pic {
+    box-shadow: 1px 1px 5px 0px rgb(172, 170, 170);
+    width: 125px;
     border-radius: 100px;
+    margin-bottom: 5px;
   }
 }
 .menu-inactive {

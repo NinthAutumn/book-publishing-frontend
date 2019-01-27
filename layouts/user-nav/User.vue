@@ -20,14 +20,18 @@ export default {
 <style>
 .dashboards .dashboard-active {
   margin-left: 255px;
-  padding-left: 45px;
+  margin-top: 50px;
+  padding: 0 45px;
+  padding-top: 10px;
   height: 100vh;
   background-color: #fbf9f9;
   transition: 200ms;
 }
 .dashboards .dashboard-inactive {
+  margin-top: 50px;
   margin-left: 50px;
-  padding-left: 45px;
+  padding: 0 45px;
+  padding-top: 10px;
   height: 100vh;
   background-color: #fbf9f9;
   transition: 200ms;

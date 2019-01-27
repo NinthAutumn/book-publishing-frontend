@@ -28,7 +28,7 @@ export const actions = {
   async getBookmark({
     commit
   }) {
-    await this.$axios.get(process.env.baseUrl + '/library/show?type=bookmark').then((res) => {
+    await this.$axios.get(process.env.baseUrl + '/library/bookmarks').then((res) => {
       commit('GET_BOOKMARK', res.data)
     })
   },

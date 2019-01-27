@@ -3,7 +3,7 @@
     <div class="book-content__left flex flex-column divider">
       <div class="book-content--text">
         <div :class="{hidden:!bookSynopsis}" class="book-content--text__summary">
-          <p class="book-content--text__summary--text">{{$store.state.book.book.synopsis}}</p>
+          <p class="book-content--text__summary--text">{{book.synopsis}}</p>
         </div>
         <div :class="{hidden:bookSynopsis}" class="book-content--text__statistics">
           <span class="book-content--text__statistics--title">視聴者</span>
@@ -16,9 +16,12 @@
         >登録</span>
         <span
           @click="bookmarkBook"
-          class="book-content__buttons__item button button--shadow button--big button--secondary--open"
+          class="book-content__buttons__item button button--shadow button--big"
+          :class="{'button--secondary': book.bookmarked, 'button--secondary--open': !book.bookmarked}"
         >
-          <fa class style="font-size:15px;" icon="bookmark"></fa>ブックマーク
+          <fa class style="font-size:15px;" icon="bookmark"></fa>
+          <span style="font-size:13px;" v-if="!book.bookmarked">ブックマーク</span>
+          <span style="font-size:13px;" v-else>ブックマーク済み</span>
         </span>
       </div>
     </div>
@@ -28,7 +31,7 @@
 <script>
 export default {
   props: {
-    book: Object
+    // book: Object
   },
   data() {
     return {};
@@ -36,6 +39,9 @@ export default {
   computed: {
     bookSynopsis() {
       return this.$store.state.book.bookSynopsis;
+    },
+    book() {
+      return this.$store.state.book.book;
     }
   },
   methods: {
@@ -47,6 +53,9 @@ export default {
       };
       await this.$store.dispatch("library/addStore", store);
     }
+  },
+  created() {
+    console.log(this.book);
   }
 };
 </script>
@@ -81,7 +90,7 @@ export default {
     // z-index: 2000;
     &__item {
       // height: 25px;
-      width: 120px;
+      width: 140px;
       margin-left: 10px;
     }
   }

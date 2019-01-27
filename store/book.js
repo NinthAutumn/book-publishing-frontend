@@ -135,6 +135,13 @@ export const mutations = {
 
     state.bookSynopsis = false
 
+  },
+  BOOKMARKED(state, bookmark) {
+    bookmark.store.forEach((store) => {
+      if (store.bookId === state.book._id) {
+        state.book.bookmarked = true
+      }
+    })
   }
 
 }

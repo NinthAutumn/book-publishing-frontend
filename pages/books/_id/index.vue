@@ -129,9 +129,13 @@ import ReviewsList from "@/components/Bookpage/ReviewsList";
 
 export default {
   auth: false,
+  async asyncData({ params, store }) {},
   async fetch({ store, params }) {
     await store.dispatch("book/getBook", params.id);
     await store.dispatch("review/showAll", params.id);
+    await store.dispatch("library/getBookmark").then(() => {
+      store.commit("book/BOOKMARKED", store.state.library.bookmarks);
+    });
     // await
     // const john = JSON.stringify();
     // console.log(book);

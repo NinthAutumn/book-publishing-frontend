@@ -9,7 +9,7 @@
     <div class="reviews-rating"></div>
     <div class="reviews-content">
       <div class="reviews-content-title">{{reviewLikes.title}}</div>
-      <div class="flex-row flex-row--between">
+      <div class="flex-row flex--between">
         <div class="reviews-total-rating">
           <span class="reviews-rating-total">総計:</span>
           <no-ssr>
