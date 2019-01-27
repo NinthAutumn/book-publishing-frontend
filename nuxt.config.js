@@ -80,6 +80,12 @@ module.exports = {
     }, {
       src: '@/plugins/vee-validate',
       ssr: false
+    }, {
+      src: '@/plugins/v-selectpage',
+      ssr: false
+    }, {
+      src: '@/plugins/v-input-tag',
+      ssr: false
     }
   ],
 

@@ -51,7 +51,13 @@ export default {
         bookId: this.$store.state.book.book._id,
         createdAt: Date.now()
       };
-      await this.$store.dispatch("library/addStore", store);
+      await this.$store.dispatch("library/addStore", store).then(() => {
+        this.$store.commit("library/BOOKMARK");
+        this.$message({
+          message: "ブックマークに入りました！",
+          type: "success"
+        });
+      });
     }
   },
   created() {
