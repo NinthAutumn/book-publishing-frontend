@@ -1,16 +1,24 @@
 <template>
   <div class="d-nav-all">
-    <div class="d-nav-h" style="z-index:2000;">
-      <div class="dashboard-h-menu">
-        <div class="dashboard-icon">
-          <i class="el-icon-menu" @click="menuDrawer"></i>
+    <div class="d-nav-h" style="z-index:1000;">
+      <div class="dashboard-h-menu flex flex--between">
+        <div class="divider flex">
+          <div class="dashboard-icon">
+            <i class="el-icon-menu" @click="menuDrawer"></i>
+          </div>
+          <div class="dashboard-logo">
+            <img class="dashboard-logo-img" src="http://placehold.jp/80x32.png">
+          </div>
         </div>
-        <div class="dashboard-logo">
-          <img class="dashboard-logo-img" src="http://placehold.jp/80x32.png">
-        </div>
+
+        <div
+          @click="writeBookState = !writeBookState"
+          class="write-book button--shadow button button--primary--open"
+        >本を書く</div>
       </div>
-      <div class="create-books">
-        <book-form></book-form>
+
+      <div class="create-books" v-if="writeBookState">
+        <book-form v-click-outside="bookOff"></book-form>
       </div>
     </div>
     <nav class="d-nav-v" :class="$store.state.dashboardMenuState">
@@ -43,6 +51,7 @@
 var moment = require("moment");
 // import { fas } from "@fortawesome/free-solid-svg-icons";
 // import { faGithub } from '@fortawesome/free-brands-svg-icons'
+import BookForm from "@/components/Dashboard/CreateBook";
 
 export default {
   name: "Vertical",
@@ -52,6 +61,7 @@ export default {
   data() {
     return {
       draw: null,
+      writeBookState: false,
       menus: [
         {
           title: "ダッシュボード",
@@ -82,6 +92,7 @@ export default {
   },
   components: {
     // HomeIcon
+    BookForm
   },
   watch: {
     // fetchUserId: function() {
@@ -92,6 +103,9 @@ export default {
     menuDrawer() {
       this.$store.commit("DASHBOARD_MENU_STATE_CHANGE");
       console.log("dog");
+    },
+    bookOff() {
+      this.writeBookState = false;
     }
   }
 };
@@ -102,6 +116,18 @@ export default {
 
 
 <style lang="scss"  scoped>
+.create-books {
+  // position: fixed;
+  // top: 0;
+  margin: auto;
+  width: 30%;
+  // top: 0;
+  // right: 500px;
+  z-index: 4000;
+  // display: flex;
+  // align-items: center;
+  // justify-content: center;
+}
 .d-nav-h {
   width: 100vw;
   -webkit-box-shadow: 0px 2px 3px 0px rgba(245, 226, 245, 1);
@@ -117,6 +143,12 @@ export default {
   display: flex;
   align-items: center;
   height: 100%;
+  .write-book {
+    height: 40px;
+    width: 150px;
+    font-size: 16px;
+    margin-right: 45px;
+  }
   // justify-content: space-around;
   // -webkit-box-shadow: 2px 0px 3px 0px rgba(245, 226, 245, 1);
   // -moz-box-shadow: 2px 0px 3px 0px rgba(245, 226, 245, 1);

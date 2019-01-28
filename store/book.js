@@ -42,22 +42,38 @@ export const actions = {
       commit('BOOK_VIEW', res.data)
     })
   },
+  async addCover({
+    commit
+  }, data) {
+
+
+    await this.$axios.post(process.env.baseUrl + '/books/addCover', {
+
+    }, config).then((res) => {
+
+    })
+  },
   async addBook({
     commit
   }, book) {
-    await this.$axios.post(process.env.baseUrl + '/books/add', {
-      title: book.title,
-      genres: book.genre,
-      synopsis: book.synopsis,
-      price: book.price,
-      tags: book.tags,
-      cover: book.cover,
-      published: book.published
-    }).then((response) => {
-      commit('ALL', response)
-    })
 
+    let config = {
+      headers: {
+        'content-type': 'multipart/form-data',
+      }
+    };
+    config.headers['X-HTTP-Method-Override'] = 'PUT';
+
+    await this.$axios.post(process.env.baseUrl + '/books/add', book, config).then((response) => {
+      commit('ALL', response)
+      console.log("object");
+    })
     // commit('add', book)
+  },
+  async uploadCover({
+    commit
+  }, formData) {
+
   },
   async editBook({
     commit

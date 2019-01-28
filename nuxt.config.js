@@ -53,6 +53,7 @@ module.exports = {
     'swiper/dist/css/swiper.css',
     "assets/css/index.css",
     "assets/css/main.scss"
+
   ],
 
   /*

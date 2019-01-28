@@ -1,8 +1,9 @@
 <template>
   <div class="book-form">
-    <form action class="flex flex-column">
+    <form ref="form" @submit.prevent="postBook" class="flex flex-column">
+      <label for="avatar-uploader">本のカバー</label>
       <el-upload
-        class="avatar-uploader"
+        class="avatar-uploader flex flex--center"
         action
         drag
         :show-file-list="false"
@@ -44,6 +45,7 @@
       ></v-select>
       <label for>タグ</label>
       <input-tag v-model="form.tags" placeholder="タグの検索"></input-tag>
+      <vue-editor v-model="content" :editorToolbar="customToolbar"></vue-editor>
       <input type="submit" class="form-submit" value="投稿">
     </form>
   </div>
@@ -53,13 +55,21 @@
 export default {
   data() {
     return {
+      content: "",
+      customToolbar: [
+        ["bold", "italic", "underline"],
+        [{ list: "ordered" }, { list: "bullet" }],
+        ["image", "code-block"]
+      ],
       imageUrl: "",
       form: {
         synopsis: "",
         title: "",
         tags: [],
-        genre: []
+        genre: [],
+        avatar: {}
       },
+
       selected: [],
       list: [
         "ファンタジー",
@@ -91,6 +101,8 @@ export default {
   },
   methods: {
     handleAvatarSuccess(res, file) {
+      // console.log(file);
+      this.form.avatar = file.raw;
       this.imageUrl = URL.createObjectURL(file.raw);
     },
     beforeAvatarUpload(file) {
@@ -103,6 +115,31 @@ export default {
       //   this.$message.error("Avatar picture size can not exceed 2MB!");
       // }
       // return isJPG && isLt2M;
+    },
+    async postBook() {
+      const data = new FormData();
+
+      data.append("avatar", this.form.avatar);
+      // await thi
+      data.append("synopsis", this.form.synopsis);
+      data.append("title", this.form.title);
+      data.append("tags", this.form.tags);
+      data.append("genre", this.form.genre);
+      const book = this.form;
+      await this.$store
+        .dispatch("book/addBook", data)
+        .then(() => {
+          this.$message({
+            message: "本の投稿に成功しました",
+            type: "success"
+          });
+        })
+        .catch(e => {
+          this.$message({
+            message: `本の投稿に失敗しました！`,
+            type: "error"
+          });
+        });
     }
   }
 };
@@ -110,24 +147,24 @@ export default {
 
 <style lang="scss">
 .vue-input-tag-wrapper {
-  border: 0px solid $primary;
-  border-bottom: 2px solid $primary;
-  -webkit-appearance: none;
-  font-size: 16px;
+  border: 0px solid $primary !important;
+  border-bottom: 2px solid $primary !important;
+  -webkit-appearance: none !important;
+  font-size: 16px !important;
   // height: 45px;
   .input-tag {
-    border: 1px solid $secondary;
-    background-color: white;
-    border-radius: 100px;
-    padding: 3px 10px;
+    border: 1px solid $secondary !important;
+    background-color: white !important;
+    border-radius: 100px !important;
+    padding: 3px 10px !important;
   }
   span {
-    font-size: 16px;
-    color: $secondary;
+    font-size: 16px !important;
+    color: $secondary !important;
   }
   .remove::before {
-    color: $secondary;
-    font-size: 20px;
+    color: $secondary !important;
+    font-size: 20px !important;
   }
   input {
     font-size: 16px !important;
@@ -145,7 +182,7 @@ export default {
     font-size: 16px !important;
   }
   .dropdown-toggle {
-    height: 45px;
+    min-height: 45px;
     border: 0px solid $primary;
     border-bottom: 2px solid $primary;
     border-radius: 0;
@@ -164,6 +201,12 @@ export default {
   }
 }
 .book-form {
+  background-color: white;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 1px 1px 5px 0px rgb(199, 198, 198);
+  overflow: scroll;
+  height: 80vh;
   &--input {
     margin-bottom: 10px;
   }

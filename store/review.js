@@ -33,7 +33,7 @@ export const mutations = {
     }
   ) {
     // console.log(state.reviews);
-    console.log(reviews);
+    // console.log(reviews);
     state.reviews.unshift(reviews)
   },
   LIKED_REVIEWS(state, reviewId) {
@@ -92,7 +92,7 @@ export const actions = {
     if (review.rating > 3) {
       recommended = true
     }
-
+    console.log(review);
     await this.$axios.post(process.env.baseUrl + '/reviews/add', {
       title: review.title,
       content: review.content,

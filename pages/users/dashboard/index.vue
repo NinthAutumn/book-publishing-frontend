@@ -2,7 +2,6 @@
   <div class="user-dashboard">
     <div class="user-dashboard__header flex flex--align flex--between">
       <header>ダッシュボード</header>
-      <div class="write-book button--shadow button button--primary--open">本を書く</div>
     </div>
     <div class="user-analytics">
       <table class="analytics-overview">
@@ -18,37 +17,18 @@
         </tr>
       </table>
       <div class="card"></div>
-      <div class="create-books">
-        <book-form></book-form>
-      </div>
     </div>
   </div>
 </template>
 
 <script>
-import BookForm from "@/components/Dashboard/CreateBook";
-
 export default {
   layout: "user-nav/User",
-  components: {
-    BookForm
-  }
+  components: {}
 };
 </script>
 
 <style lang="scss">
-.create-books {
-  // position: fixed;
-  // top: 0;
-  margin: auto;
-  width: 30%;
-  // top: 0;
-  // right: 500px;
-  z-index: 4000;
-  // display: flex;
-  // align-items: center;
-  // justify-content: center;
-}
 .user-dashboard {
   position: relative;
   /* background-color: grey; */
