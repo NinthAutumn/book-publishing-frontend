@@ -4,7 +4,7 @@
     <div class="comment-modal__container">
       <div class="comment-modal__comment-list">
         <div
-          v-for="(comment, index) in comments"
+          v-for="(comment, index) in comment"
           :key="index"
           class="comment-modal__comment__comment-list__item"
         ></div>
@@ -15,15 +15,11 @@
 
 <script>
 export default {
-  data() {
-    return {
-      comment: []
-    };
+  props: {
+    comment: Object
   },
-  computed: {
-    comments() {
-      return this.comment;
-    }
+  data() {
+    return {};
   }
 };
 </script>

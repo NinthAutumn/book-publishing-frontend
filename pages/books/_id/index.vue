@@ -96,10 +96,6 @@ export default {
 
     // await
     // const john = JSON.stringify();
-    // console.log(book);
-
-    // await store.dispatch('review/getReview')
-    // console.log(object);
   },
   data() {
     return {

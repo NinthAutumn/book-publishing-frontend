@@ -92,7 +92,7 @@ export const actions = {
     if (review.rating > 3) {
       recommended = true
     }
-    console.log(review);
+    // console.log(review);
     await this.$axios.post(process.env.baseUrl + '/reviews/add', {
       title: review.title,
       content: review.content,

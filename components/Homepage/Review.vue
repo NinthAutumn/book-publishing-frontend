@@ -2,7 +2,7 @@
   <div class="review-card flex flex-row--between">
     <div class="review-card__profile flex-column">
       <div class="divider">
-        <img class="review-card__profile__pic" src="http://placehold.it/100" alt>
+        <img class="review-card__profile__pic" :src="this.review._id.user[0].avatar" alt>
       </div>
       <div class="divider">
         <p class="review-card__profile__username">{{review._id.review[0].author}}</p>
@@ -46,6 +46,9 @@
 export default {
   props: {
     review: Object
+  },
+  created() {
+    console.log(this.review._id.user[0].avatar);
   }
 };
 </script>
@@ -73,6 +76,7 @@ export default {
     margin: 0 5px 0 0px;
     align-items: center;
     &__pic {
+      width: 100px;
       border-radius: 100px;
     }
     &__username {

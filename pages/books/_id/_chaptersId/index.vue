@@ -17,7 +17,7 @@
           v-html="$store.state.chapter.chapter.content"
           style="flex-direction:column;"
         ></div>
-        <Comment></Comment>
+        <CommentList></CommentList>
       </div>
 
       <nuxt-link
@@ -33,7 +33,7 @@
 
 <script>
 import Chapter from "@/components/ChapterPage/Chapter";
-import Comment from "@/components/ChapterPage/Comment";
+import CommentList from "@/components/ChapterPage/CommentList";
 export default {
   data() {
     return {
@@ -42,7 +42,7 @@ export default {
   },
   components: {
     Chapter,
-    Comment
+    CommentList
   },
   methods: {
     // bottomVisible() {
@@ -77,12 +77,15 @@ export default {
   //   }
   // },
   async fetch({ store, params }) {
-    // console.log("fetch called");
     const index = params.chaptersId;
-    console.log(index);
     await store.dispatch("chapter/nextChapter", {
       bookId: params.id,
       index: index
+    });
+
+    await store.dispatch("comment/getComments", {
+      chapterIndex: index,
+      bookId: params.id
     });
   },
   layout: "chapter-nav/Chapter",

@@ -41,7 +41,6 @@ export const mutations = {
     state.counter++
   },
   menuStateChange(state) {
-    // console.log("dogss")
     if (state.menuState != "menu-active") {
       state.menuState = "menu-active";
       state.slidesPerView = 7
@@ -49,7 +48,6 @@ export const mutations = {
       state.menuState = "menu-inactive";
       state.slidesPerView = 9
     }
-    // console.log(state.menuState)
   },
   DROPDOWN_STATE(state) {
     if (state.dropdownState !== "dropdown-active") {
@@ -62,7 +60,6 @@ export const mutations = {
     state.dropdownState = "dropdown-inactive"
   },
   DASHBOARD_MENU_STATE_CHANGE(state) {
-    console.log("claled")
     if (state.dashboardMenuState === "dashboard-active") {
       state.dashboardMenuState = "dashboard-inactive"
     } else {
@@ -80,26 +77,17 @@ export const actions = {
   }, {
     req
   }) {
-    // console.log("serverinit")
     if (req.headers.cookie) {
       const token = cookie.parse(req.headers.cookie).token
 
-      // parsed = cookieparser.parse(req.headers.cookie);
-      // console.log()
-
       if (token) {
-        // console.log(env.baseUrl)
         this.$axios.defaults.headers.common['Authorization'] = token;
 
         await this.$axios.get(process.env.baseUrl + '/users/show').then((res) => {
-          // console.log(token);
-          // commit("auth/AUTH_SUCCESS_USER", );
-          // console.log(state.auth.user._id)
           commit('auth/AUTH_SUCCESS', {
             token: token,
             user: res.data
           });
-          // console.log(store.state.auth.userId)
         }).catch((e) => {
           console.log(e)
         })

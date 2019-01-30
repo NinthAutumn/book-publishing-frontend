@@ -34,11 +34,9 @@ export const actions = {
     commit
   }, id) {
     await this.$axios.get(process.env.baseUrl + '/books/show?id=' + id).then((res) => {
-      // console.log()
       commit('SHOW', res.data.book)
     })
     await this.$axios.get(process.env.baseUrl + "/books/bookview?id=" + id).then((res) => {
-      // console.log(res.data);
       commit('BOOK_VIEW', res.data)
     })
   },
@@ -66,7 +64,6 @@ export const actions = {
 
     await this.$axios.post(process.env.baseUrl + '/books/add', book, config).then((response) => {
       commit('ALL', response)
-      console.log("object");
     })
     // commit('add', book)
   },
@@ -89,11 +86,7 @@ export const actions = {
     commit
   }) {
     const book = await this.$axios.get(process.env.baseUrl + '/homepage/highestrated')
-    // console.log(book.data);
     commit('HIGHEST_RATED', book.data)
-
-
-    // console.log(state.books)
   }
 }
 
@@ -124,7 +117,6 @@ export const mutations = {
     state.view = view
   },
   ASC_CHAP(state) {
-    // console.log(state.book);
     state.book.chapters = state.book.chapters.reverse()
   },
   FORMAT_DATE(state) {
