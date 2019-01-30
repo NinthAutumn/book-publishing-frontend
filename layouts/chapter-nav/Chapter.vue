@@ -1,31 +1,27 @@
 <template>
   <div class="chapter-page">
     <Horizontal></Horizontal>
-    <!-- <LeftV></LeftV> -->
+    <LeftV></LeftV>
     <RightV></RightV>
-
     <nuxt class="yes"></nuxt>
   </div>
 </template>
 
 <script>
 import Horizontal from "./Horizontal";
-// import LeftV from "./Left-V";
+import LeftV from "./Left-V";
 import RightV from "./Right-V";
 
 export default {
   components: {
     Horizontal,
-    // LeftV,
+    LeftV,
     RightV
   }
 };
 </script>
 
 <style lang="scss">
-// body {
-//   background-color: azure;
-// }
 /* .chapter-page .menu-active {
   margin-left: 240px;
   margin-top: 6.6rem;
@@ -34,9 +30,11 @@ export default {
   position: relative !important;
 } */
 .chapter-page .yes {
-  padding: 1rem 0rem;
+  // padding: 1rem 0rem;
   transition: 300ms;
-  position: relative !important;
+  // position: relative !important;
   margin-top: 50px;
+  margin-right: 50px;
+  background-color: #f2f2f2;
 }
 </style>

@@ -120,7 +120,7 @@ export default {
   // position: fixed;
   // top: 0;
   margin: auto;
-  width: 30%;
+  width: 40%;
   // top: 0;
   // right: 500px;
   z-index: 4000;

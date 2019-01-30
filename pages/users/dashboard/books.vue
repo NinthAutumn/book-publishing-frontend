@@ -38,7 +38,7 @@
 export default {
   layout: "user-nav/User",
   async fetch({ store }) {
-    store.dispatch("user/getBooks");
+    await store.dispatch("user/getBooks");
   },
   computed: {
     books() {

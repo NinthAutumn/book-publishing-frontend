@@ -1,11 +1,13 @@
 <template>
   <div class="chapter">
-    <div class="chapter-wrapper">
+    <div class="chapter-wrapper flex">
       <nuxt-link
-        class="chapter-navigation__previous"
+        class="navigation-prev flex flex-column flex--center flex--align"
         v-if=" $store.state.chapter.chapter.bookId.chapters[0].index !== $store.state.chapter.chapter.index"
         :to="{path: `${$store.state.chapter.chapter.index-1}`}"
-      >Previous Chapter</nuxt-link>
+      >
+        <fa icon="angle-left"></fa>
+      </nuxt-link>
       <div class="chapter-container">
         <div class="chapter-title">
           <header>{{$store.state.chapter.chapter.title}}</header>
@@ -15,18 +17,23 @@
           v-html="$store.state.chapter.chapter.content"
           style="flex-direction:column;"
         ></div>
+        <Comment></Comment>
       </div>
+
       <nuxt-link
-        class="chapter-navigation__next"
+        class="navigation-next flex flex-column flex--center flex--align"
         v-if="($store.state.chapter.chapter.bookId.chapters.length) !== $store.state.chapter.chapter.index"
         :to="{path: `${$store.state.chapter.chapter.index+1}`}"
-      >Next Chapter</nuxt-link>
+      >
+        <fa icon="angle-right"></fa>
+      </nuxt-link>
     </div>
   </div>
 </template>
 
 <script>
 import Chapter from "@/components/ChapterPage/Chapter";
+import Comment from "@/components/ChapterPage/Comment";
 export default {
   data() {
     return {
@@ -34,7 +41,8 @@ export default {
     };
   },
   components: {
-    Chapter
+    Chapter,
+    Comment
   },
   methods: {
     // bottomVisible() {
@@ -89,13 +97,40 @@ export default {
 };
 </script>
 
-<style lang="scss" >
+<style lang="scss">
 body {
   // background-color: black;
 }
+.navigation-next {
+  position: sticky !important;
+  height: 100vh;
+  width: 50px;
+  font-size: 30px;
+  top: 0;
+  &:hover {
+    background-color: $secondary;
+    cursor: pointer;
+    color: white;
+    transition: 300ms;
+  }
+}
+.navigation-prev {
+  position: sticky !important;
+  height: 100vh;
+  width: 50px;
+  font-size: 30px;
+  top: 0;
+  &:hover {
+    background-color: $primary;
+    cursor: pointer;
+    color: white;
+    transition: 300ms;
+  }
+}
+
 .left-vertical-nav {
   position: fixed;
-  top: 60px;
+  // top: 60px;
   // left: 12rem;
   left: 14.4rem;
   // left: 0;
@@ -113,6 +148,7 @@ body {
   // background: black;
   // color: white;
   .chapter-wrapper {
+    position: relative;
     // height: 100vh;
     .chapter-navigation__next {
       text-align: center;
@@ -121,9 +157,12 @@ body {
       text-align: center;
     }
     .chapter-container {
-      // position: relative;
+      background-color: white;
+      position: relative;
       // height: 100vh;
+      padding: 0 10px;
       .chapter-title {
+        margin-top: 10px;
         header {
           font-size: 24px;
           // font-weight: bold;
@@ -131,12 +170,14 @@ body {
           margin-top: 12px;
         }
       }
-      padding: 0px 50px;
-      width: 802px;
+      // padding: 0px 50px;
+      width: 700px;
       display: flex;
       flex-direction: column;
       box-sizing: border-box;
       p {
+        line-height: 28px;
+        font-weight: 400;
         margin-bottom: 12px;
       }
       // align-items: center;
@@ -164,6 +205,4 @@ body {
   }
 }
 </style>
-// >
 
-// </style>

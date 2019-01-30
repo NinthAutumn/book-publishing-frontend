@@ -22,7 +22,7 @@ export const actions = {
     commit
   }, query) {
     commit('LOADING')
-    this.$axios.get(process.env.baseUrl + '/users/books').then((res) => {
+    await this.$axios.get(process.env.baseUrl + '/users/books').then((res) => {
       // console.log(res.data);
       commit('USERS_BOOKS', res.data)
     })

@@ -178,6 +178,9 @@ module.exports = {
     extend(config, ctx) {
 
     },
+    splitChunks: {
+      layouts: true
+    },
     styleResources: {
       scss: './assets/css/abstracts/main.scss',
       // sass: ...,
