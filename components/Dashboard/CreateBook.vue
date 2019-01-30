@@ -1,9 +1,10 @@
 <template>
   <div class="book-form">
+    <h3 class="book-form__title">本の情報</h3>
     <form ref="form" @submit.prevent="postBook" class="flex flex-column">
       <label for="avatar-uploader">本のカバー</label>
       <el-upload
-        class="avatar-uploader flex flex--center"
+        class="avatar-uploader flex"
         action
         drag
         :show-file-list="false"
@@ -45,8 +46,9 @@
       ></v-select>
       <label for>タグ</label>
       <input-tag v-model="form.tags" placeholder="タグの検索"></input-tag>
-      <vue-editor v-model="content" :editorToolbar="customToolbar"></vue-editor>
-      <input type="submit" class="form-submit" value="投稿">
+      <div class="divider flex flex--center">
+        <input type="submit" class="form-submit book-form__submit" value="投稿">
+      </div>
     </form>
   </div>
 </template>
@@ -177,7 +179,7 @@ export default {
 }
 .tags-form {
   // height: 50px;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   input {
     font-size: 16px !important;
   }
@@ -202,16 +204,30 @@ export default {
 }
 .book-form {
   background-color: white;
-  padding: 10px;
-  border-radius: 10px;
-  box-shadow: 1px 1px 5px 0px rgb(199, 198, 198);
+  padding: 50px;
+  // border-radius: 10px;
+  // box-shadow: 1px 1px 5px 0px rgb(199, 198, 198);
   overflow: scroll;
-  height: 80vh;
+  // height: 80vh;
+  width: 500px;
+  &__title {
+    font-size: 20px;
+    margin-top: 0;
+    color: #8b8b8b;
+    font-weight: 400;
+    text-align: center;
+    // mar
+  }
   &--input {
-    margin-bottom: 10px;
+    margin-bottom: 20px;
   }
   label {
     font-size: 16px;
+    color: #bfbfc2;
+  }
+
+  &__submit {
+    width: 140px;
   }
   &--textarea {
     resize: none;
@@ -222,7 +238,7 @@ export default {
     border-style: solid;
     border-bottom-color: $primary;
     padding: 5px;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
     &:focus {
       // display: none;
       outline: none;
@@ -244,6 +260,7 @@ export default {
   cursor: pointer;
   position: relative;
   overflow: hidden;
+  margin-bottom: 20px;
 }
 .avatar-uploader .el-upload:hover {
   border-color: $primary;

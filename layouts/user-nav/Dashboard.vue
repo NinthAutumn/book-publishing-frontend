@@ -11,10 +11,10 @@
           </div>
         </div>
 
-        <div
-          @click="writeBookState = !writeBookState"
+        <nuxt-link
+          :to="'/users/book'"
           class="write-book button--shadow button button--primary--open"
-        >本を書く</div>
+        >本を書く</nuxt-link>
       </div>
 
       <div class="create-books" v-if="writeBookState">
@@ -33,12 +33,10 @@
           <div v-else></div>
         </li>
         <li v-for="menu in menus" :key="menu.title">
-          <nuxt-link :to="menu.link">
-            <div class="d-nav-v-list">
-              <fa :icon="menu.icon" class="d-nav-v-icons"></fa>
-              <p v-if="$store.state.dashboardMenuState === 'dashboard-active'">{{menu.title}}</p>
-              <p v-else></p>
-            </div>
+          <nuxt-link class="d-nav-v-list" :to="menu.link">
+            <fa :icon="menu.icon" class="d-nav-v-icons"></fa>
+            <p v-if="$store.state.dashboardMenuState === 'dashboard-active'">{{menu.title}}</p>
+            <p v-else></p>
           </nuxt-link>
         </li>
       </ul>
@@ -116,11 +114,19 @@ export default {
 
 
 <style lang="scss"  scoped>
+.nuxt-link-exact-active {
+  background-color: rgb(227, 236, 245);
+}
+.write-book.nuxt-link-exact-active {
+  background-color: $primary !important;
+  color: white !important;
+}
 .create-books {
   // position: fixed;
   // top: 0;
   margin: auto;
   width: 40%;
+
   // top: 0;
   // right: 500px;
   z-index: 4000;

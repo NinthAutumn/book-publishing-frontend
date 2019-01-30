@@ -2,14 +2,12 @@
   <nav class="v-nav" :class="$store.state.menuState">
     <ul>
       <li v-for="menu in menus" :key="menu.title">
-        <nuxt-link :to="menu.link" class="animated-link">
-          <div class="v-nav-list">
-            <div class="v-nav-icon">
-              <fa :icon="menu.icon" class="v-nav-icons"></fa>
-            </div>
-            <div class="v-nav-title">
-              <p>{{menu.title}}</p>
-            </div>
+        <nuxt-link :to="menu.link" class="v-nav-list">
+          <div class="v-nav-icon">
+            <fa :icon="menu.icon" class="v-nav-icons"></fa>
+          </div>
+          <div class="v-nav-title">
+            <p>{{menu.title}}</p>
           </div>
         </nuxt-link>
       </li>
@@ -122,6 +120,9 @@ export default {
 
 
 <style lang="scss"  scoped>
+.nuxt-link-exact-active {
+  background-color: rgb(227, 236, 245);
+}
 .menu-inactive {
   left: -240px !important;
   transition: 300ms;

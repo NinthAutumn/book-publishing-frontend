@@ -165,7 +165,8 @@ module.exports = {
   // }
   // },
   router: {
-    middleware: ['logged']
+    middleware: ['logged'],
+    linkActiveClass: 'active-link'
   },
   /*
    ** Build configuration

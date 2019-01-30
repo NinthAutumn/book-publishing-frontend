@@ -32,6 +32,7 @@ export default {
 .user-dashboard {
   position: relative;
   /* background-color: grey; */
+  height: 100vh;
   &__header {
     header {
       font-size: 30px;

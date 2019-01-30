@@ -9,4 +9,7 @@ export default {
 </script>
 
 <style>
+.user-comments {
+  height: 100vh;
+}
 </style>

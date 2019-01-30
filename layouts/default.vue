@@ -36,6 +36,7 @@ export default {
 // body {
 //   background-color: white;
 // }
+
 .permanent {
 }
 

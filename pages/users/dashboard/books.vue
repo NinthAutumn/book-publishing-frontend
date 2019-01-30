@@ -50,6 +50,7 @@ export default {
 
 <style lang="scss">
 .user-books {
+  height: 100vh;
   padding: 5px;
   &__header {
     header {
