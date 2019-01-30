@@ -12,7 +12,6 @@ export const mutations = {
   SHOW(state, chapter) {
     state.chapter = chapter
     state.chapterCover = chapter.bookId.cover
-    // console.log(state.chapter);
   },
   infiniteNext(state, chapter) {
     state.chapter = chapter
@@ -35,7 +34,6 @@ export const actions = {
   }) {
     // const nextindex = index
     await this.$axios.get(process.env.baseUrl + '/chapters/direct?id=' + bookId + '&' + 'index=' + index).then((res) => {
-      // console.log(res.data)
       commit('infiniteNext', res.data)
     })
   },

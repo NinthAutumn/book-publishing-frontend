@@ -1,25 +1,26 @@
 <template>
   <div class="comment-list">
+    <h3 class="comment-header">コメント欄</h3>
+
     <div class="ul">
       <li v-for="(comment, index) in comments" :key="index">
-        <!-- <Comment :comment="comment"></Comment> -->
+        <Comment :comment="comment" :depth="0" :children="comment.children"></Comment>
       </li>
     </div>
   </div>
 </template>
 
 <script>
-// import Comment from "@/components/ChapterPage/Comment";
+import Comment from "@/components/ChapterPage/Comment";
 export default {
-  async asyncData({ store, params }) {
-    await store.dispatch("comment/getComments", store.state.chapter._id);
-  },
   computed: {
     comments() {
-      // return this.$state.store.comment.comments;
+      return this.$store.state.comment.comments;
     }
   },
-  components: {}
+  components: {
+    Comment
+  }
 };
 </script>
 
