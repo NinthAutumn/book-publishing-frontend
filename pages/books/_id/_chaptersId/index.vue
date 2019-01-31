@@ -8,18 +8,10 @@
       >
         <fa icon="angle-left"></fa>
       </nuxt-link>
-      <div class="chapter-container">
-        <div class="chapter-title">
-          <header>{{$store.state.chapter.chapter.title}}</header>
-        </div>
-        <div
-          class="chapter-content"
-          v-html="$store.state.chapter.chapter.content"
-          style="flex-direction:column;"
-        ></div>
+      <div class="divider chapter-container">
+        <Chapter></Chapter>
         <CommentList></CommentList>
       </div>
-
       <nuxt-link
         class="navigation-next flex flex-column flex--center flex--align"
         v-if="($store.state.chapter.chapter.bookId.chapters.length) !== $store.state.chapter.chapter.index"
@@ -34,6 +26,7 @@
 <script>
 import Chapter from "@/components/ChapterPage/Chapter";
 import CommentList from "@/components/ChapterPage/CommentList";
+// import
 export default {
   data() {
     return {
@@ -160,10 +153,9 @@ body {
       text-align: center;
     }
     .chapter-container {
-      background-color: white;
+      background-color: rgba(247, 247, 247, 0.959);
       position: relative;
       // height: 100vh;
-      padding: 0 10px;
       .chapter-title {
         margin-top: 10px;
         header {
@@ -174,7 +166,7 @@ body {
         }
       }
       // padding: 0px 50px;
-      width: 700px;
+      width: 750px;
       display: flex;
       flex-direction: column;
       box-sizing: border-box;
@@ -185,25 +177,6 @@ body {
       }
       // align-items: center;
       // justify-content: space-around;
-    }
-  }
-
-  &-title {
-    font-size: 18px;
-    text-align: center;
-  }
-  &-content {
-    // padding: 10px;
-    // width: 50vw;
-    // width:
-    // padding: 5px;
-    // text-align: center;
-    display: flex;
-    justify-content: space-around;
-    p {
-      white-space: pre-wrap;
-      font-size: 17px;
-      text-align: left;
     }
   }
 }

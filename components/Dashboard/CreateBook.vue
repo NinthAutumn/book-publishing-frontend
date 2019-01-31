@@ -47,7 +47,7 @@
       <label for>タグ</label>
       <input-tag v-model="form.tags" placeholder="タグの検索"></input-tag>
       <div class="divider flex flex--center">
-        <input type="submit" class="form-submit book-form__submit" value="投稿">
+        <input type="submit" class="form-submit form-submit--primary book-form__submit" value="投稿">
       </div>
     </form>
   </div>
@@ -135,6 +135,7 @@ export default {
             message: "本の投稿に成功しました",
             type: "success"
           });
+          this.form = {};
         })
         .catch(e => {
           this.$message({

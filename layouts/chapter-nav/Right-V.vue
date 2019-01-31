@@ -7,6 +7,9 @@
           <fa class="nav-icon__item" icon="user-ninja"></fa>
         </div>
         <div class="nav-icon">
+          <fa class="nav-icon__item" icon="image"></fa>
+        </div>
+        <div class="nav-icon">
           <fa class="nav-icon__item" icon="list-ul"></fa>
         </div>
         <div class="nav-icon">

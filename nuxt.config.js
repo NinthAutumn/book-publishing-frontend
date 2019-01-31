@@ -87,6 +87,9 @@ module.exports = {
     }, {
       src: '@/plugins/v-input-tag',
       ssr: false
+    }, {
+      src: '@/plugins/zondiIcon',
+      ssr: false
     }
   ],
 

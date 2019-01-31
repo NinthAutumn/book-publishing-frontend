@@ -21,6 +21,10 @@
     justify-content: space-around;
   }
 
+  &--right {
+    justify-content: flex-end;
+  }
+
   &-row {
     display: flex;
     // justify-content: space-between;

@@ -49,7 +49,6 @@
 .form-submit {
   height: 40px;
   color: white;
-  background-color: $primary;
   border-radius: 10px;
   border: none;
   font-size: 14px;
@@ -58,7 +57,15 @@
   -moz-box-shadow: 1px 1px 5px 0px rgb(185, 185, 185);
   box-shadow: 1px 1px 5px 0px rgb(185, 185, 185);
 
+  &--primary {
+    background-color: $primary;
 
+  }
+
+  &--secondary {
+    background-color: $secondary;
+
+  }
 
   &:hover {
     cursor: pointer;

@@ -69,7 +69,10 @@
         <vue-editor v-model="content" :editorOptions="config"></vue-editor>
       </no-ssr>-->
       <!-- <div v-html="content"></div> -->
-      <ReviewsForm></ReviewsForm>
+      <div class="book__reviews__divider">
+        <ReviewsForm></ReviewsForm>
+      </div>
+
       <ReviewsList></ReviewsList>
     </div>
   </div>

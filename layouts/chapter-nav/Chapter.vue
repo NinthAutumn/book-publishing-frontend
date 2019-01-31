@@ -35,6 +35,6 @@ export default {
   // position: relative !important;
   margin-top: 50px;
   margin-right: 50px;
-  background-color: #f2f2f2;
+  background-color: #dae0e6;
 }
 </style>
