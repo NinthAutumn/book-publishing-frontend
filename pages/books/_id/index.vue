@@ -69,11 +69,42 @@
         <vue-editor v-model="content" :editorOptions="config"></vue-editor>
       </no-ssr>-->
       <!-- <div v-html="content"></div> -->
-      <div class="book__reviews__divider">
-        <ReviewsForm></ReviewsForm>
-      </div>
+      <div class="book__reviews__divider flex flex--align flex--between">
+        <div class="book__rating__all flex flex--align">
+          <h3 class="reviews__title">レビュー({{$store.state.review.reviews.length}})</h3>
 
+          <no-ssr class>
+            <star-rating
+              name="rating"
+              v-model="review.rating.total"
+              :star-size="23"
+              :read-only="true"
+              inactive-color="#D8D7D5"
+              active-color="#FFB727"
+              :increment="0.01"
+              :round-start-rating="false"
+              border-color="#FFB727"
+              :glow="1"
+              class="star-rating"
+            ></star-rating>
+          </no-ssr>
+        </div>
+        <button @click="reviewOpen" class="review-open button">レビューを書く</button>
+      </div>
+      <hr>
       <ReviewsList></ReviewsList>
+    </div>
+    <div class="divider">
+      <div
+        class="divider review-form-modal"
+        v-click-outside="reviewClose"
+        v-if="reviewState"
+        :class="{center: $store.state.menuState === 'menu-inactive'}"
+      >
+        <transition name="fade">
+          <ReviewsForm></ReviewsForm>
+        </transition>
+      </div>
     </div>
   </div>
 </template>
@@ -110,12 +141,21 @@ export default {
         rating: {
           total: 5
         }
-      }
+      },
+      reviewState: false
     };
   },
+  // transition: "test",
+
   methods: {
     allReviews: function(state, change) {
       return state;
+    },
+    reviewOpen() {
+      this.reviewState = !this.reviewState;
+    },
+    reviewClose() {
+      this.reviewState = false;
     }
   },
   components: {
@@ -130,6 +170,46 @@ export default {
 </script>
 
 <style lang="scss">
+.center {
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  transition: 300ms;
+}
+.review-form-modal {
+  position: fixed;
+  // margin: auto;
+  background-color: white;
+  top: 60px;
+  width: 500px;
+  padding: 10px;
+  top: 50%;
+  left: 60%;
+  transform: translate(-60%, -50%);
+  border-radius: 5px;
+  box-shadow: 1px 1px 5px 0px rgb(212, 212, 212);
+  transition: 300ms;
+}
+
+.reviews__title {
+  font-size: 20px;
+  margin-right: 10px;
+}
+.review-open {
+  height: 45px;
+  font-size: 18px;
+  padding: 0 10px;
+  background-color: $review-color;
+  color: white;
+}
+.book__rating__all {
+  .star-rating {
+    // margin-bottom: 10px;
+    .vue-star-rating-rating-text {
+      font-size: 20px;
+      margin: 0;
+    }
+  }
+}
 .navActive {
   border-bottom: 2px solid $secondary;
   transition: border-color 500ms;

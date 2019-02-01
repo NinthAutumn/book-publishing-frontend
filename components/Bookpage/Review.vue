@@ -143,8 +143,8 @@ export default {
 
   width: 100%;
   display: flex;
-  border: 3px solid #c1c9e4;
-  border-radius: 10px;
+  border: 2px solid #c1c9e4;
+  // border-radius: 10px;
   -webkit-box-shadow: 0px 4px 4px rgba(139, 139, 139, 0.25);
   -moz-box-shadow: 0px 4px 4px rgba(139, 139, 139, 0.25);
   box-shadow: 0px 4px 4px rgba(139, 139, 139, 0.25);

@@ -2,7 +2,12 @@
   <div class="bookchapterlists">
     <div class="bookchapterlists__options">
       <fa class="bookchapterlists__options--bookmark" icon="bookmark"></fa>
-      <fa class="bookchapterlists__options--sort" icon="sort-numeric-down" @click="asc"></fa>
+      <fa
+        class="bookchapterlists__options--sort"
+        icon="sort-numeric-down"
+        @click="asc"
+        :class="{rotate: ascending}"
+      ></fa>
     </div>
     <ul class="bookchapterlists__list">
       <li class="bookchapterlists__list--items" v-for="(chapter, index) in chap" :key="index">
@@ -44,7 +49,8 @@ export default {
   data() {
     return {
       rowCount: 0,
-      createdAt: "null"
+      createdAt: "null",
+      ascending: false
       // ascState: "asc"
       // chapters: {}
     };
@@ -61,6 +67,7 @@ export default {
     // },
     async asc() {
       await this.$store.commit("book/ASC_CHAP");
+      this.ascending = !this.ascending;
     }
   },
   async created() {
@@ -88,14 +95,14 @@ export default {
   text-align: right;
 }
 .bookchapterlists {
-  -webkit-box-shadow: 0px 2px 5px 0px rgb(233, 218, 233);
-  -moz-box-shadow: 0px 2px 5px 0px rgb(255, 255, 255);
-  box-shadow: 0px 2px 5px 0px rgb(233, 218, 233);
+  // -webkit-box-shadow: 0px 2px 5px 0px rgb(233, 218, 233);
+  // -moz-box-shadow: 0px 2px 5px 0px rgb(255, 255, 255);
+  // box-shadow: 0px 2px 5px 0px rgb(233, 218, 233);
   padding: 10px 5px 10px 20px;
   // height: 482px;
   width: 100%;
   box-sizing: border-box;
-
+  //
   &__options {
     text-align: right;
     margin-right: 17.12px;
@@ -103,11 +110,16 @@ export default {
     font-size: 25px;
 
     // transition: 300ms;
+    .rotate {
+      transform: rotate(-180deg);
+      transition: 300ms;
+    }
     &--sort {
       // text-align: right;
       // position: sticky;
       color: #885cd3;
-
+      transform: rotate(-360deg);
+      transition: 300ms;
       &:hover {
         cursor: pointer;
         color: #512e8d;
@@ -119,11 +131,14 @@ export default {
       color: #c1c9e4;
     }
   }
-
+  // border: 1px solid $primary;
   &__list {
-    -webkit-box-shadow: inset 0px 2px 5px 0px rgb(233, 218, 233);
-    -moz-box-shadow: inset 0px 2px 5px 0px rgb(255, 255, 255);
-    box-shadow: inset 0px 2px 5px 0px rgb(233, 218, 233);
+    overflow: scroll;
+    // -webkit-box-shadow: inset 0px 2px 5px 0px rgb(233, 218, 233);
+    // -moz-box-shadow: inset 0px 2px 5px 0px rgb(255, 255, 255);
+    // box-shadow: inset 0px 2px 5px 0px rgb(233, 218, 233);
+    // border: 1px solid $primary;
+    box-shadow: 1px 1px 5px 0px rgb(179, 179, 179);
     height: 482px;
     display: grid;
     // grid-auto-flow: dense;
@@ -132,7 +147,7 @@ export default {
     grid-template-columns: 1fr 1fr;
     // grid-template-areas: "chapter";
     grid-gap: 2px 15px;
-    overflow: scroll;
+
     // justify-content: space-between;
     padding: 10px 15px;
     // grid-auto-flow: dense;
@@ -141,6 +156,7 @@ export default {
 
     &--items {
       // direction: ltr;
+
       &:nth-child(4n + 1) {
         background-color: #fcefff;
         &:hover {

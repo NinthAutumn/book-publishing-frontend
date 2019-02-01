@@ -32,9 +32,11 @@
         </span>
       </div>
     </nav>
-    <div class="signupform" v-if="signState&&!loggedIn">
-      <SignUpForm></SignUpForm>
-    </div>
+    <transition name="fade">
+      <div class="signupform" v-if="signState&&!loggedIn">
+        <SignUpForm></SignUpForm>
+      </div>
+    </transition>
   </div>
 </template>
 <script>

@@ -89,7 +89,8 @@ export default {
     //   });
     // }
   },
-  scrollToTop: false
+  scrollToTop: false,
+  transition: "none"
 };
 </script>
 

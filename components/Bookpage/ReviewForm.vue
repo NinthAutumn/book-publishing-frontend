@@ -2,13 +2,14 @@
   <div class="book__reviews">
     <form class="review-form" @submit.prevent="addReview">
       <!-- <label for="title">Title</label> -->
-      <h3>感想を書く</h3>
+      <h3 style="text-align:center;">感想を書く</h3>
       <input
         class="review-form__title"
         type="text"
         v-model="review.title"
         name="title"
         placeholder="タイトル"
+        max="100"
       >
       <div class="form-control">
         <label for="rating" class="rating-label">評価</label>
@@ -48,7 +49,9 @@
           placeholder="本についての感想文"
         ></vue-editor>
       </no-ssr>
-      <button type="submit" class="review-submit">投稿</button>
+      <div class="divider flex flex--right">
+        <button type="submit" class="review-submit">投稿</button>
+      </div>
     </form>
     <!-- <froala :tag="'textarea'" :config="config" v-model="content"></froala> -->
     <!-- <no-ssr>
@@ -98,12 +101,12 @@ export default {
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
   padding: 8px;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
+  // border-top-left-radius: 10;
+  // border-top-right-radius: 10px;
 }
 .ql-container.ql-snow {
   border: 2px solid $review-color !important;
-  border-radius: 10px;
+  // border-radius: 10px;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
   color: #796477;
@@ -115,10 +118,10 @@ export default {
     height: 50px;
     font-size: 15px;
     // width: 410px;
-    width: 50%;
+    width: 100%;
     padding: 5px;
     border: 2px solid $review-color;
-    border-radius: 10px;
+    // border-radius: 5px;
     box-sizing: border-box;
     color: $primary-black;
     margin-bottom: 10px;
@@ -129,10 +132,10 @@ export default {
   &__content {
     height: 150px;
     padding: 5px;
-    width: 50%;
+    width: 100%;
 
     border: 2px solid $review-color;
-    border-radius: 10px;
+    // border-radius: 5px;
     box-sizing: border-box;
     resize: none;
     font-size: 14px;
