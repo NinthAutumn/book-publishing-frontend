@@ -177,13 +177,13 @@ export default {
   margin-top: 10px;
   // background-color: #5bb9eb4b;
   padding: 10px;
-  -webkit-box-shadow: 0.5px 0.5px 0.5px 1px rgba(245, 226, 245, 1);
-  -moz-box-shadow: 0.5px 0.5px 0.5px 1px rgba(245, 226, 245, 1);
-  box-shadow: 0.5px 0.5px 0.5px 1px rgba(245, 226, 245, 1);
+  -webkit-box-shadow: 0.5px 0.5px 0.5px 1px rgb(243, 243, 243);
+  -moz-box-shadow: 0.5px 0.5px 0.5px 1px rgb(243, 243, 243);
+  box-shadow: 0.5px 0.5px 0.5px 1px rgb(243, 243, 243);
   /* border-radius: 5px; */
   position: relative;
   transition: 200ms;
-  border-radius: 10px;
+  // border-radius: 10px;
   &::before {
     position: absolute;
     top: 10px;

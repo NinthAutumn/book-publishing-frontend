@@ -1,7 +1,6 @@
 <template>
   <div class="bookchapterlists">
     <div class="bookchapterlists__options">
-      <fa class="bookchapterlists__options--bookmark" icon="bookmark"></fa>
       <fa
         class="bookchapterlists__options--sort"
         icon="sort-numeric-down"

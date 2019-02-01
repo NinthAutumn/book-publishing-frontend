@@ -8,6 +8,10 @@
       >
         <fa icon="angle-left"></fa>
       </nuxt-link>
+      <div
+        class="navigation-prev-cont flex flex-column flex--center flex--align"
+        v-if=" $store.state.chapter.chapter.bookId.chapters[0].index === $store.state.chapter.chapter.index"
+      ></div>
       <div class="divider chapter-container">
         <Chapter></Chapter>
         <CommentList></CommentList>
@@ -124,6 +128,19 @@ body {
     transition: 300ms;
   }
 }
+.navigation-prev-cont {
+  position: sticky !important;
+  height: 100vh;
+  width: 50px;
+  font-size: 30px;
+  top: 0;
+  // &:hover {
+  //   background-color: $primary;
+  //   cursor: pointer;
+  //   color: white;
+  //   transition: 300ms;
+  // }
+}
 
 .left-vertical-nav {
   position: fixed;
@@ -167,7 +184,7 @@ body {
         }
       }
       // padding: 0px 50px;
-      width: 750px;
+      width: 700px;
       display: flex;
       flex-direction: column;
       box-sizing: border-box;

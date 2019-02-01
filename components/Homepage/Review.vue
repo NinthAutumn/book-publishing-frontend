@@ -55,7 +55,7 @@ export default {
 
 <style lang="scss">
 .review-card {
-  background-color: #c1c9e438;
+  background-color: #f2f5ff38;
   margin: 10px 5px;
   margin-left: 1px;
   margin-right: 10px;

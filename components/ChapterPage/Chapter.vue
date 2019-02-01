@@ -25,9 +25,10 @@ export default {};
 
 <style lang="scss">
 .chapter-title {
-  font-size: 18px;
+  font-size: 1px;
   text-align: center;
 }
+
 .chapter-content {
   // padding: 10px;
   // width: 50vw;
@@ -36,10 +37,16 @@ export default {};
   // text-align: center;
   display: flex;
   justify-content: space-around;
+  line-height: 30px;
+  // font-family: "Meiryo", "Lucida Grande", "sans-serif";
+
   p {
-    white-space: pre-wrap;
-    font-size: 17px;
+    // white-space: pre-wrap;
+    font-size: 16px !important;
+    // font-weight: 300;
     text-align: left;
+    line-height: 30px !important;
+    margin-bottom: 15px !important;
   }
 }
 </style>
