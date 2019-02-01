@@ -15,7 +15,8 @@ export const state = () => ({
   },
   view: "",
   bookSynopsis: true,
-  book: {}
+  book: {},
+  loading: false
 })
 
 export const getters = {

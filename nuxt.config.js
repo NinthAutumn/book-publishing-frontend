@@ -41,9 +41,7 @@ module.exports = {
   /*
    ** Customize the progress-bar color
    */
-  loading: {
-    color: '#fff'
-  },
+  loading: 'components/loading.vue',
 
   /*
    ** Global CSS
@@ -52,7 +50,8 @@ module.exports = {
     'element-ui/lib/theme-chalk/index.css',
     'swiper/dist/css/swiper.css',
     "assets/css/index.css",
-    "assets/css/main.scss"
+    "assets/css/main.scss",
+    'vue-loaders/dist/vue-loaders.css'
 
   ],
 
@@ -89,6 +88,9 @@ module.exports = {
       ssr: false
     }, {
       src: '@/plugins/zondiIcon',
+      ssr: false
+    }, {
+      src: '@/plugins/elementLoading',
       ssr: false
     }
   ],
@@ -205,11 +207,6 @@ module.exports = {
   },
   env: {
     baseUrl: process.env.BASE_URL || 'http://0.0.0.0:5000'
-  },
-  loading: {
-    color: '#c9b1f5',
-    height: '2px',
-    continuous: true
   },
   layoutTransition: 'layout',
   server: {
