@@ -10,7 +10,7 @@
           <fa class="nav-icon__item" icon="image"></fa>
         </div>
         <div class="nav-icon">
-          <fa class="nav-icon__item" icon="list-ul"></fa>
+          <fa class="nav-icon__item" @click="table" icon="list-ul"></fa>
         </div>
         <div class="nav-icon">
           <fa class="nav-icon__item" icon="cog"></fa>
@@ -21,7 +21,16 @@
 </template>
 
 <script>
-export default {};
+export default {
+  methods: {
+    async table() {
+      await this.$store.dispatch(
+        "chapter/tableOfContent",
+        this.$route.params.id
+      );
+    }
+  }
+};
 </script>
 
 <style lang="scss">

@@ -118,23 +118,19 @@ export const mutations = {
     state.view = view
   },
   ASC_CHAP(state) {
-    state.book.chapters = state.book.chapters.reverse()
+    // state.book.chapters = state.book.chapters.reverse()
   },
   FORMAT_DATE(state) {
     state.book.chapters.forEach((chapter) => {
-
       // let createdAt = new Date(chapter.createdAt);
       // console.log(createdAt - Date.now())
       // const day = createdAt.toLocaleDateString("en-US");
       // console.log(moment(createdAt, 'YYYY-MM-DDYYYY-MM-DDTHH:mm:ss.SSSZ').isValid());
       // const kiss = 
-
       // console.log(kiss);
       // chapter.createdAt = moment(createdAt, 'YYYY-MM-DDYYYY-MM-DDTHH:mm:ss.SSSZ').isValid();
-
       // console.log(chapter.createdAt);
     })
-
   },
   SYNOPSIS_TRUE(state) {
     state.bookSynopsis = true

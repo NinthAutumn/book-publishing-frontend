@@ -23,6 +23,14 @@
       >
         <fa icon="angle-right"></fa>
       </nuxt-link>
+      <div class="chapters-modal" v-if="modal">
+        <div class="chapters-modal__author-profile" v-if="modal === 'profile'"></div>
+        <div class="chapters-modal__images" v-else-if="modal === 'images'"></div>
+        <div class="chapters-modal__table-of-content" v-else-if="modal === 'table'">
+          <TOC></TOC>
+        </div>
+        <div class="chapters-modal__user-setting" v-else-if="modal === 'setting'"></div>
+      </div>
     </div>
   </div>
 </template>
@@ -30,6 +38,8 @@
 <script>
 import Chapter from "@/components/ChapterPage/Chapter";
 import CommentList from "@/components/ChapterPage/CommentList";
+import TOC from "@/components/ChapterPage/Modal/TOC";
+
 // import
 export default {
   data() {
@@ -37,9 +47,15 @@ export default {
       bottom: false
     };
   },
+  computed: {
+    modal() {
+      return this.$store.state.chapter.modal;
+    }
+  },
   components: {
     Chapter,
-    CommentList
+    CommentList,
+    TOC
   },
   methods: {
     // bottomVisible() {
@@ -101,6 +117,23 @@ export default {
 <style lang="scss">
 body {
   // background-color: black;
+}
+.chapters-modal {
+  position: sticky;
+  height: 100vh;
+  width: 400px;
+  background-color: white;
+  top: 0;
+  // right: 0;
+  &__author-profile {
+  }
+  &__images {
+  }
+  &__table-of-content {
+    height: 100%;
+  }
+  &__user-setting {
+  }
 }
 .navigation-next {
   position: sticky !important;

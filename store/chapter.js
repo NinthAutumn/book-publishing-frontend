@@ -1,7 +1,9 @@
 export const state = () => ({
   chapters: [],
   chapter: {},
-  chapterCover: ""
+  chapterCover: "",
+  toc: '',
+  modal: ''
 })
 
 export const getters = {
@@ -15,6 +17,16 @@ export const mutations = {
   },
   infiniteNext(state, chapter) {
     state.chapter = chapter
+  },
+  TOC(state, toc) {
+    state.toc = toc
+    state.modal = 'table'
+  },
+  TOC_CLOSE(state) {
+    state.modal = ''
+  },
+  TOC_REVERSE(state) {
+    state.toc = state.toc.reverse()
   }
 }
 export const actions = {
@@ -41,6 +53,17 @@ export const actions = {
     commit
   }) {
 
+  },
+  async tableOfContent({
+    commit,
+    state
+  }, bookId) {
+    if (state.modal === 'table') {
+      return commit('TOC_CLOSE')
+    }
+    await this.$axios.get(process.env.baseUrl + '/chapters/toc?bookId=' + bookId).then((res) => {
+      commit('TOC', res.data)
+    })
   }
 
 }

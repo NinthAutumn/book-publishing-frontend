@@ -65,7 +65,7 @@ export default {
     //   // console.log(this.rowCount);
     // },
     async asc() {
-      await this.$store.commit("book/ASC_CHAP");
+      await this.$store.commit("chapter/TOC_REVERSE");
       this.ascending = !this.ascending;
     }
   },
@@ -81,7 +81,7 @@ export default {
   },
   computed: {
     chap: function() {
-      return this.$store.state.book.book.chapters;
+      return this.$store.state.chapter.toc;
     }
   },
   asyncData() {}
