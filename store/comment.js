@@ -32,7 +32,6 @@ export const actions = {
     chapterIndex,
     bookId
   }) {
-    // console.log(chapterIndex);
     await this.$axios.get(process.env.baseUrl + '/comments/show?bookId=' + bookId + '&chapterIndex=' + chapterIndex).then(async (res) => {
       commit('GET_COMMENTS', res.data)
     })

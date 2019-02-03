@@ -1,7 +1,9 @@
 <template></template>
 
 <script>
-export default {};
+export default {
+  layout: "user-nav/User"
+};
 </script>
 
 <style>

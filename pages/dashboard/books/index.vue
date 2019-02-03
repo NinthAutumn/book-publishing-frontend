@@ -26,7 +26,9 @@
           <td>{{book.views}}</td>
           <td>15</td>
           <td>
-            <div class="button button--primary book-list-button">投稿</div>
+            <nuxt-link :to="`books/${book._id}`">
+              <div class="button button--primary book-list-button">投稿</div>
+            </nuxt-link>
           </td>
         </tr>
       </tbody>

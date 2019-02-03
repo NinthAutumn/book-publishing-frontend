@@ -103,7 +103,6 @@ export default {
   },
   methods: {
     handleAvatarSuccess(res, file) {
-      // console.log(file);
       this.form.avatar = file.raw;
       this.imageUrl = URL.createObjectURL(file.raw);
     },

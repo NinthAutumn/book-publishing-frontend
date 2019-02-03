@@ -15,7 +15,7 @@
 
       <div class="review-card__info__content">{{review._id.review[0].content}}</div>
     </div>
-    <div class="review-card__book flex-column">
+    <div class="review-card__book flex-column flex--center">
       <div class="review-card__info__rating">
         <no-ssr>
           <star-rating
@@ -28,7 +28,6 @@
             :increment="0.01"
             :round-start-rating="false"
             border-color="#FFB727"
-            :glow="1"
             class="star-rating"
           ></star-rating>
         </no-ssr>
@@ -55,11 +54,18 @@ export default {
 
 <style lang="scss">
 .review-card {
-  background-color: #f2f5ff38;
+  // transform: rotateX(0deg) rotateY(0deg);
+  // transform: rotateX(-100deg);
+  transition: 300ms;
+  &:hover {
+    transition: 300ms;
+  }
+  // background-color: $review-color;
+  border: 2px solid $review-color;
   margin: 10px 5px;
   margin-left: 1px;
   margin-right: 10px;
-  border-radius: 5px;
+  // border-radius: 5px;
   -webkit-box-shadow: 1px 1px 5px 0px rgba(186, 186, 186, 1);
   -moz-box-shadow: 1px 1px 5px 0px rgba(186, 186, 186, 1);
   box-shadow: 1px 1px 5px 0px rgba(186, 186, 186, 1);
@@ -102,7 +108,7 @@ export default {
       overflow: hidden;
       font-size: 15px;
       line-height: 28px;
-      height: 15vh;
+      height: 20vh;
       // width: 70%;
       // text-overflow: ellipsis;
     }
