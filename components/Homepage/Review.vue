@@ -48,7 +48,7 @@ export default {
     review: Object
   },
   created() {
-    console.log(this.review._id.user[0].avatar);
+    // console.log(this.review._id.user[0].avatar);
   }
 };
 </script>

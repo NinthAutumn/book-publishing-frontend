@@ -12,7 +12,7 @@
         </div>
 
         <nuxt-link
-          :to="'/users/book'"
+          :to="'/dashboard/books/new'"
           class="write-book button--shadow button button--primary--open"
         >本を書く</nuxt-link>
       </div>
@@ -64,25 +64,25 @@ export default {
         {
           title: "ダッシュボード",
           icon: "map",
-          link: "/users/dashboard",
+          link: "/dashboard",
           meta: ""
         },
         {
           title: "本棚",
           icon: "book",
-          link: "/users/dashboard/books",
+          link: "/dashboard/books",
           meta: "search"
         },
         {
           title: "アナリティクス",
           icon: "chart-pie",
-          link: "/users/dashboard/analytics",
+          link: "/dashboard/analytics",
           meta: "analytics"
         },
         {
           title: "コメント",
           icon: "comment",
-          link: "/users/dashboard/comments",
+          link: "/dashboard/comments",
           meta: "comments"
         }
       ]

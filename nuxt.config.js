@@ -92,6 +92,9 @@ module.exports = {
     }, {
       src: '@/plugins/elementLoading',
       ssr: false
+    }, {
+      src: '@/plugins/vue-swipe-tab',
+      ssr: false
     }
   ],
 

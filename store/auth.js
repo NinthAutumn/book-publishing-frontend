@@ -31,20 +31,17 @@ export const mutations = {
     token,
     user
   }) {
-    // console.log(user)
     state.status = 'success'
     state.user = user
 
     state.token = token
     state.loggedIn = true
 
-    // console.log(userId, "dog")
     // state.userId = userId
 
   },
   AUTH_SUCCESS_USER(state, user) {
-    // console.log(user)
-    // console.log(state.user);
+
     // state.menus[4].link = "/library/?id=" + state.user._id
   },
   AUTH_ERROR(state) {
@@ -72,9 +69,7 @@ export const actions = {
       // commit("AUTH_SUCCESS_USER", {
       //   user: res.data
       // });
-      // console.log(res.data, "dog") 
       const token = res.headers.authorization
-      // console.log(res.data);
       commit("AUTH_SUCCESS", {
         token: token,
         user: res.data
@@ -93,7 +88,6 @@ export const actions = {
     // console.log();
     // this.$axios.defaults.headers.common['Authorization'] = Cookies.get('token')
     await this.$axios.delete(process.env.baseUrl + '/users/logout').then((res) => {
-      // console.log(res.headers.authorization);
       Cookies.remove('token')
       delete this.$axios.defaults.headers.common['Authorization']
       commit("AUTH_LOGOUT");

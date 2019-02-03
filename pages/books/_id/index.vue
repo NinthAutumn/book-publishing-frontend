@@ -60,7 +60,7 @@
       </div>
     </div>
     <div class="book__chapters">
-      <BookChapterList :chapters="$store.getters['book/showbook'].chapters"></BookChapterList>
+      <BookChapterList></BookChapterList>
     </div>
     <div class="book__reviews">
       <!-- <label for="title">Title</label> -->
@@ -95,16 +95,16 @@
       <ReviewsList></ReviewsList>
     </div>
     <div class="divider">
-      <div
-        class="divider review-form-modal"
-        v-click-outside="reviewClose"
-        v-if="reviewState"
-        :class="{center: $store.state.menuState === 'menu-inactive'}"
-      >
-        <transition name="fade">
+      <transition name="fade">
+        <div
+          class="divider review-form-modal"
+          v-click-outside="reviewClose"
+          v-if="reviewState"
+          :class="{center: $store.state.menuState === 'menu-inactive'}"
+        >
           <ReviewsForm></ReviewsForm>
-        </transition>
-      </div>
+        </div>
+      </transition>
     </div>
   </div>
 </template>
@@ -122,7 +122,7 @@ export default {
   async fetch({ store, params }) {
     await store.dispatch("book/getBook", params.id);
     await store.dispatch("review/showAll", params.id);
-    await store.dispatch("chapter/tableOfContent", params.id);
+    await store.dispatch("chapter/TOCBook", params.id);
     if (store.state.auth.loggedIn) {
       await store.dispatch("library/getBookmark").then(() => {
         store.commit("book/BOOKMARKED", store.state.library.bookmarks);

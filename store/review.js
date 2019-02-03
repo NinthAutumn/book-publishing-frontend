@@ -11,7 +11,6 @@ export const getters = {
   //     }
   //     return review
   //   })
-  //   console.log(review);
 
   //   return review
   // }
@@ -32,8 +31,7 @@ export const mutations = {
       reviews
     }
   ) {
-    // console.log(state.reviews);
-    // console.log(reviews);
+
     state.reviews.unshift(reviews)
   },
   LIKED_REVIEWS(state, reviewId) {
@@ -51,7 +49,6 @@ export const mutations = {
     })
   },
   USER_LIKED_REVIEWS(state, likedReviews) {
-    // console.log(state.reviews);
     state.reviews.forEach((review) => {
       likedReviews.forEach((reviewId) => {
         if (review._id === reviewId) {
@@ -71,7 +68,6 @@ export const actions = {
   }, bookId) {
     await this.$axios.get(process.env.baseUrl + "/reviews/book?id=" + bookId).then(async (res) => {
       commit('GET_REVIEWS', res.data)
-      // console.log(res.data);
       // commit('USER_LIKED_REVIEWS', rootState.auth.user)
       if (rootState.auth.loggedIn) {
         await this.$axios.get(process.env.baseUrl + '/users/liked').then((res) => {
@@ -92,7 +88,6 @@ export const actions = {
     if (review.rating > 3) {
       recommended = true
     }
-    // console.log(review);
     await this.$axios.post(process.env.baseUrl + '/reviews/add', {
       title: review.title,
       content: review.content,
@@ -135,7 +130,6 @@ export const actions = {
   }) {
     await this.$axios.get(process.env.baseUrl + '/reviews/mostLikedToday').then((res) => {
       commit('GET_GOOD_REVIEWS', res.data)
-      // console.log(res.data[0]);
     })
   }
 }

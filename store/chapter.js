@@ -3,7 +3,8 @@ export const state = () => ({
   chapter: {},
   chapterCover: "",
   toc: '',
-  modal: ''
+  modal: '',
+  cToc: ''
 })
 
 export const getters = {
@@ -26,7 +27,10 @@ export const mutations = {
     state.modal = ''
   },
   TOC_REVERSE(state) {
-    state.toc = state.toc.reverse()
+    state.cToc = state.cToc.reverse()
+  },
+  TOC_BOOK(state, toc) {
+    state.cToc = toc
   }
 }
 export const actions = {
@@ -42,10 +46,11 @@ export const actions = {
     commit
   }, {
     bookId,
-    index
+    index,
+    userId
   }) {
     // const nextindex = index
-    await this.$axios.get(process.env.baseUrl + '/chapters/direct?id=' + bookId + '&' + 'index=' + index).then((res) => {
+    await this.$axios.get(process.env.baseUrl + '/chapters/direct?id=' + bookId + '&' + 'index=' + index + '&user=' + userId).then((res) => {
       commit('infiniteNext', res.data)
     })
   },
@@ -63,6 +68,13 @@ export const actions = {
     }
     await this.$axios.get(process.env.baseUrl + '/chapters/toc?bookId=' + bookId).then((res) => {
       commit('TOC', res.data)
+    })
+  },
+  async TOCBook({
+    commit
+  }, bookId) {
+    await this.$axios.get(process.env.baseUrl + '/chapters/toc?bookId=' + bookId).then((res) => {
+      commit('TOC_BOOK', res.data)
     })
   }
 

@@ -83,7 +83,7 @@ export default {
       this.$store.commit("DROPDOWN_FALSE");
     },
     userProfile() {
-      this.$router.push("/users/dashboard");
+      this.$router.push("/dashboard");
     },
     signUpState() {
       this.$store.commit("SIGNUP_STATE");

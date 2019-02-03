@@ -1,28 +1,30 @@
 <template>
-  <div id="book-card" class="big" @click="linkTo">
-    <div class="book-cover">
-      <span class="star-rating"></span>
-      <img :src="book.cover" class="book-img" alt="Book cover">
-    </div>
-    <div class="text-info">
-      <p class="book-title full" ref="texting">
-        <a class="animated-link">{{book.title}}</a>
-      </p>
-      <span class="p-ending"></span>
-      <no-ssr>
-        <star-rating
-          v-model="book.ratings"
-          :star-size="18"
-          :read-only="true"
-          inactive-color="#D8D7D5"
-          active-color="#FFB727"
-          :increment="0.01"
-          :round-start-rating="false"
-          border-color="#FFB727"
-          :glow="1"
-          class="star-rating"
-        ></star-rating>
-      </no-ssr>
+  <div class="book-homepage">
+    <div id="book-card" class="big" @click="linkTo">
+      <div class="book-cover">
+        <span class="star-rating"></span>
+        <img :src="book.cover" class="book-img" alt="Book cover">
+      </div>
+      <div class="text-info">
+        <p class="book-title full" ref="texting">
+          <a class="animated-link">{{book.title}}</a>
+        </p>
+        <span class="p-ending"></span>
+        <no-ssr>
+          <star-rating
+            v-model="book.ratings"
+            :star-size="18"
+            :read-only="true"
+            inactive-color="#D8D7D5"
+            active-color="#FFB727"
+            :increment="0.01"
+            :round-start-rating="false"
+            border-color="#FFB727"
+            :glow="1"
+            class="star-rating"
+          ></star-rating>
+        </no-ssr>
+      </div>
     </div>
   </div>
 </template>
@@ -35,7 +37,8 @@ export default {
   },
   props: {
     book: Object,
-    size: String
+    size: String,
+    trending: Object
   },
   data() {
     return {
@@ -45,11 +48,17 @@ export default {
   methods: {
     linkTo() {
       this.$router.push("/books/" + this.book._id);
+    },
+    linkToT() {
+      this.$router.push("/books/" + this.book._id.book[0]._id);
     }
   },
   computated: {
     round() {
       book.ratings = Math.round(book.ratings);
+    },
+    roundT() {
+      // book._id.book[0] = Mo
     }
   }
 };

@@ -12,6 +12,10 @@
       </div>
       <BooksList :books="$store.state.book.books.highestrated"></BooksList>
       <ReviewList></ReviewList>
+      <div class="card-title">
+        <h3>今人気の小説</h3>
+      </div>
+      <BooksList :trendings="$store.state.book.books.trending"></BooksList>
     </div>
   </div>
 </template>

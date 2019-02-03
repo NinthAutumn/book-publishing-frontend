@@ -1,5 +1,18 @@
 <template>
   <div class="swiping-page">
+    <div v-if="trendings" v-swiper:mySwiper="swiperOption">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide" v-for="book in trendings" :key="book.id">
+          <Book :book="book._id.book[0]" :size="size = 'big'"></Book>
+        </div>
+      </div>
+      <div class="background">
+        <div class="swiper-button-prev swiper-button-black" slot="button-prev"></div>
+      </div>
+      <div class="background">
+        <div class="swiper-button-next swiper-button-black" slot="button-next"></div>
+      </div>
+    </div>
     <div v-swiper:mySwiper="swiperOption">
       <div class="swiper-wrapper">
         <div class="swiper-slide" v-for="book in books" :key="book.id">
@@ -19,7 +32,8 @@
 import Book from "./Book";
 export default {
   props: {
-    books: Array
+    books: Array,
+    trendings: Array
   },
   data() {
     return {

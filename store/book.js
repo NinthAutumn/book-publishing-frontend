@@ -11,7 +11,8 @@ const moment = require('moment');
 export const state = () => ({
   // books: [],
   books: {
-    highestrated: {}
+    highestrated: [],
+    trending: []
   },
   view: "",
   bookSynopsis: true,
@@ -86,8 +87,13 @@ export const actions = {
   async allBooks({
     commit
   }) {
-    const book = await this.$axios.get(process.env.baseUrl + '/homepage/highestrated')
-    commit('HIGHEST_RATED', book.data)
+    await this.$axios.get(process.env.baseUrl + '/homepage/highestrated').then((res) => {
+      commit('HIGHEST_RATED', res.data)
+    })
+    await this.$axios.get(process.env.baseUrl + '/homepage/trending').then((res) => {
+      commit('TRENDING', res.data)
+    })
+
   }
 }
 
@@ -101,6 +107,12 @@ export const mutations = {
     })
     // books.ratings = Math.round(books.ratings)
     state.books.highestrated = books
+  },
+  TRENDING(state, books) {
+    books.forEach(async (book) => {
+      book._id.book[0].ratings = +book._id.book[0].ratings.toFixed(2)
+    })
+    state.books.trending = books
   },
   SHOW(state, book) {
     state.book = book

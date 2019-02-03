@@ -71,17 +71,10 @@ export default {
   },
   async created() {
     // this.$store.commit("book/FORMAT_DATE");
-    await this.chapters.forEach(chapter => {
-      // this.createdAt = chapter.createdAt;
-      // console.log(chapter.start);
-      if (chapter.index % 2 === 1) {
-        this.rowCount++;
-      }
-    });
   },
   computed: {
     chap: function() {
-      return this.$store.state.chapter.toc;
+      return this.$store.state.chapter.cToc;
     }
   },
   asyncData() {}
@@ -146,7 +139,7 @@ export default {
     grid-template-columns: 1fr 1fr;
     // grid-template-areas: "chapter";
     grid-gap: 2px 15px;
-
+    grid-template-rows: 50px;
     // justify-content: space-between;
     padding: 10px 15px;
     // grid-auto-flow: dense;

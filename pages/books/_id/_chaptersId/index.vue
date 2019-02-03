@@ -3,14 +3,14 @@
     <div class="chapter-wrapper flex">
       <nuxt-link
         class="navigation-prev flex flex-column flex--center flex--align"
-        v-if=" $store.state.chapter.chapter.bookId.chapters[0].index !== $store.state.chapter.chapter.index"
+        v-if="$store.state.chapter.chapter.index !== 1"
         :to="{path: `${$store.state.chapter.chapter.index-1}`}"
       >
         <fa icon="angle-left"></fa>
       </nuxt-link>
       <div
         class="navigation-prev-cont flex flex-column flex--center flex--align"
-        v-if=" $store.state.chapter.chapter.bookId.chapters[0].index === $store.state.chapter.chapter.index"
+        v-if="$store.state.chapter.chapter.index === 1"
       ></div>
       <div class="divider chapter-container">
         <Chapter></Chapter>
@@ -18,7 +18,7 @@
       </div>
       <nuxt-link
         class="navigation-next flex flex-column flex--center flex--align"
-        v-if="($store.state.chapter.chapter.bookId.chapters.length) !== $store.state.chapter.chapter.index"
+        v-if="$store.state.chapter.chapter.next"
         :to="{path: `${$store.state.chapter.chapter.index+1}`}"
       >
         <fa icon="angle-right"></fa>
@@ -91,10 +91,18 @@ export default {
   // },
   async fetch({ store, params }) {
     const index = params.chaptersId;
-    await store.dispatch("chapter/nextChapter", {
-      bookId: params.id,
-      index: index
-    });
+    if (store.state.auth.loggedIn) {
+      await store.dispatch("chapter/nextChapter", {
+        bookId: params.id,
+        index: index,
+        userId: store.state.auth.user._id
+      });
+    } else {
+      await store.dispatch("chapter/nextChapter", {
+        bookId: params.id,
+        index: index
+      });
+    }
 
     await store.dispatch("comment/getComments", {
       chapterIndex: index,
