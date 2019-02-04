@@ -23,29 +23,21 @@
         </div>
       </span>
       <div class="not-loggedin" v-else>
-        <span class="signup">
-          <a @click="signUpState">Sign up</a>
-        </span>
-        <span>|</span>
-        <span class="login">
-          <nuxt-link to="/auth/login">Log in</nuxt-link>
-        </span>
+        <img class="not-loggedin__img text--link" src="~/assets/profile.png" @click="loginInState">
       </div>
     </nav>
     <transition name="fade">
-      <div class="signupform" v-if="signState&&!loggedIn">
-        <SignUpForm></SignUpForm>
+      <div class="loginform" v-if="loginState">
+        <AuthModal></AuthModal>
       </div>
     </transition>
-    <div class="loginform">
-      <login-form></login-form>
-    </div>
   </div>
 </template>
 <script>
 import SearchBar from "@/components/Navigation/SearchBar";
 import SignUpForm from "@/components/Navigation/SignUpFrom";
 import LoginForm from "@/components/Navigation/LoginForm";
+import AuthModal from "@/components/Navigation/AuthModal";
 
 export default {
   name: "Horizontal",
@@ -57,8 +49,7 @@ export default {
   },
   components: {
     SearchBar,
-    SignUpForm,
-    LoginForm
+    AuthModal
   },
   computed: {
     user() {
@@ -68,8 +59,8 @@ export default {
     loggedIn() {
       return this.$store.state.auth.loggedIn;
     },
-    signState() {
-      return this.$store.state.signUpForm;
+    loginState() {
+      return this.$store.state.loginForm;
     }
   },
   methods: {
@@ -90,8 +81,8 @@ export default {
     userProfile() {
       this.$router.push("/dashboard");
     },
-    signUpState() {
-      this.$store.commit("SIGNUP_STATE");
+    loginInState() {
+      this.$store.commit("LOGIN_STATE");
     }
   }
 };
@@ -118,6 +109,11 @@ export default {
   // justify-content: space-around;
 }
 .not-loggedin {
+  &__img {
+    width: 40px;
+    border-radius: 100px;
+    box-shadow: 1px 1px 5px 0px rgb(201, 200, 200);
+  }
   margin-right: 10px;
   // font-size: 16px;
   span {

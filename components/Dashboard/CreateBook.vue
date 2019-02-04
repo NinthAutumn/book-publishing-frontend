@@ -123,7 +123,6 @@ export default {
     },
     async postBook() {
       const data = new FormData();
-
       data.append("avatar", this.form.avatar);
       // await thi
       data.append("synopsis", this.form.synopsis);

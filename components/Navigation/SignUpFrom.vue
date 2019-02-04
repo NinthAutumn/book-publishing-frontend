@@ -1,7 +1,17 @@
 <template>
-  <div class="sign-up" v-click-outside="signOff">
+  <div class="sign-up">
     <form @submit.prevent="signUp" class="signup-form">
+      <div @click="signOff" class="flex go-back">
+        <div class="divider">
+          <Zondicon class="zond-back" icon="arrow-thick-left"></Zondicon>
+        </div>
+        <div class="divider">
+          <p>戻る</p>
+        </div>
+      </div>
+
       <p class="signup-title">Signup to Lyfr</p>
+
       <label for="username">ユーザー名</label>
       <input class="form-input form-input--primary--lighter" type="text" v-model="formUsername">
       <label for="email">メールアドレス</label>
@@ -28,7 +38,8 @@
       <span v-show="errors.has('password')" class="help is-danger">{{ errors.first('password') }}</span>
       <input
         type="submit"
-        class="signup-button form-submit"
+        value="サインイン"
+        class="signup-button form-submit form-submit--primary"
         :class="{active: errors.any()||!formUsername||!formEmail||!formPassword}"
       >
     </form>
@@ -67,7 +78,7 @@ export default {
         await this.$store
           .dispatch("auth/signUp", user)
           .then(() => {
-            this.$store.commit("SIGNUP_FALSE");
+            this.$store.commit("LOGIN_FALSE");
           })
           .catch(e => {
             if (e.response.data.errors.username) {
@@ -80,14 +91,43 @@ export default {
       }
     },
     signOff() {
-      this.$store.commit("SIGNUP_FALSE");
+      this.$store.commit("START");
     }
   }
 };
 </script>
 
 <style lang="scss">
+@keyframes goback {
+  to {
+    transform: translateX(-2px);
+  }
+  from {
+    transform: translateX(2px);
+  }
+}
+.go-back {
+  color: $primary-lighter;
+  fill: $primary-lighter;
+  transition: 100ms;
+  &:hover {
+    cursor: pointer;
+    animation: goback 500ms ease-in;
+    // animation-iteration-count: infinite;
+    color: $primary;
+    fill: $primary;
+    transition: 100ms;
+  }
+}
+.zond-back {
+  height: 20px;
+}
 .sign-up {
+  position: absolute;
+  .active {
+    background-color: #fff;
+    color: black;
+  }
   display: flex;
   align-items: center;
   justify-content: space-around;

@@ -9,6 +9,8 @@ export const state = () => ({
   status: "",
   user: {},
   loggedIn: false,
+  signupForm: false,
+  loginForm: false
   // library:
   // username: "admin1",
   // password: "admin1"
@@ -24,6 +26,7 @@ export const getters = {
 }
 
 export const mutations = {
+
   AUTH_REQUEST(state) {
     state.status = 'loading'
   },

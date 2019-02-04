@@ -1,0 +1,40 @@
+.text {
+  &--small {
+    font-size: 12px;
+  }
+
+  &--medium {
+    font-size: 16px;
+  }
+
+  &--large {
+    font-size: 20px;
+  }
+
+  &--center {
+    text-align: center;
+  }
+
+  &--left {
+    text-align: left;
+  }
+
+  &--right {
+    text-align: right;
+  }
+
+  &--primary {
+    color: $primary;
+  }
+
+  &--secondary {
+    color: $secondary;
+  }
+
+  &--link {
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+}

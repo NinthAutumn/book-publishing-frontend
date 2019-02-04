@@ -1,18 +1,14 @@
 <template>
-  <div class="login-page" :class="$store.state.menuState">
-    <form class="login-form" @submit.prevent="login">
-      <h1>Sign in</h1>
-      <label>User name</label>
-      <input required v-model="username" type="text" placeholder="Snoopy">
-      <label>Password</label>
-      <input required minlength="6" v-model="password" type="password" placeholder="Password">
-      <button type="submit">Login</button>
-    </form>
+  <div class="login-page flex flex--center" :class="$store.state.menuState">
+    <div class="log-form">
+      <login-form></login-form>
+    </div>
   </div>
 </template>
 
 <script>
 import Cookies from "js-cookie";
+import LoginForm from "@/components/Navigation/LoginForm";
 export default {
   data() {
     return {
@@ -20,6 +16,10 @@ export default {
       password: ""
     };
   },
+  components: {
+    LoginForm
+  },
+  // layout: "Horizontal",
   methods: {
     async login() {
       // console.log("dog");
@@ -58,7 +58,15 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+.login-page {
+  /* height: 500px; */
+  // display: flex;
+  // justify-content: center;
+  .log-form {
+    width: 40%;
+  }
+}
 .menu-active {
   margin-left: 24rem;
   margin-top: 5rem;

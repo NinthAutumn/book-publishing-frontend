@@ -16,7 +16,8 @@ export const state = () => ({
   dashboardMenuState: "dashboard-active",
   slidesPerView: 6.5,
   dropdownState: "dropdown-inactive",
-  signUpForm: ''
+  auth: 0,
+  loginForm: false
 })
 
 export const getters = {
@@ -28,14 +29,21 @@ export const getters = {
 
 export const mutations = {
   SIGNUP_STATE(state) {
-    if (state.signUpForm) {
-      state.signUpForm = ''
+    state.auth = 1;
+  },
+  START(state) {
+    state.auth = 0
+  },
+  LOGIN_STATE(state) {
+    if (state.loginForm) {
+      state.loginForm = false
     } else {
-      state.signUpForm = 'active'
+      state.loginForm = true
+      state.auth = 0;
     }
   },
-  SIGNUP_FALSE(state) {
-    state.signUpForm = ''
+  LOGIN_FALSE(state) {
+    state.loginForm = false
   },
   increment(state) {
     state.counter++
