@@ -52,7 +52,6 @@ module.exports = {
     "assets/css/index.css",
     "assets/css/main.scss",
     'vue-loaders/dist/vue-loaders.css'
-
   ],
 
   /*
@@ -81,12 +80,6 @@ module.exports = {
       src: '@/plugins/vee-validate',
       ssr: false
     }, {
-      src: '@/plugins/v-selectpage',
-      ssr: false
-    }, {
-      src: '@/plugins/v-input-tag',
-      ssr: false
-    }, {
       src: '@/plugins/zondiIcon',
       ssr: false
     }, {
@@ -94,6 +87,9 @@ module.exports = {
       ssr: false
     }, {
       src: '@/plugins/vue-swipe-tab',
+      ssr: false
+    }, {
+      src: '@/plugins/datePicker',
       ssr: false
     }
   ],
@@ -212,8 +208,7 @@ module.exports = {
     baseUrl: process.env.BASE_URL || 'http://0.0.0.0:5000'
   },
   transition: {
-    name: 'fade',
-    mode: 'out-in'
+    name: 'fade'
   },
   server: {
     port: 3000, // default: 3000

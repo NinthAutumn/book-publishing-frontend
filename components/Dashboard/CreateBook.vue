@@ -34,18 +34,21 @@
         v-model="form.synopsis"
       ></textarea>
       <label for="genre">ジャンル</label>
-      <v-select
-        required
-        name="genre"
-        class="tags-form"
-        multiple
-        v-model="form.genre"
-        :options="list"
-        :closeOnSelect="false"
-        placeholder="ジャンルの検索"
-      ></v-select>
+      <el-select v-model="form.genre" multiple filterable placeholder="Select">
+        <el-option v-for="item in list" :key="item" :label="item" :value="item"></el-option>
+      </el-select>
+
       <label for>タグ</label>
-      <input-tag v-model="form.tags" placeholder="タグの検索"></input-tag>
+      <el-select
+        v-model="form.tags"
+        multiple
+        allow-create
+        default-first-option
+        filterable
+        placeholder="Select"
+      >
+        <el-option v-for="item in tags" :key="item" :label="item" :value="item"></el-option>
+      </el-select>
       <div class="divider flex flex--center">
         <input type="submit" class="form-submit form-submit--primary book-form__submit" value="投稿">
       </div>
@@ -98,7 +101,8 @@ export default {
         "推理",
         "青春",
         "学園"
-      ]
+      ],
+      tags: ["最強", "最弱"]
     };
   },
   methods: {
@@ -148,6 +152,18 @@ export default {
 </script>
 
 <style lang="scss">
+.el-scrollbar {
+  font-size: 16px !important;
+  span {
+    font-size: 16px;
+  }
+}
+.el-select__tags-text {
+  font-size: 14px;
+}
+.el-input__inner {
+  // height: 40px;
+}
 .vue-input-tag-wrapper {
   border: 0px solid $primary !important;
   border-bottom: 2px solid $primary !important;

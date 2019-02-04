@@ -2,7 +2,6 @@
   <div class="user-books">
     <div class="user-books__header flex flex--align flex--between">
       <header>本棚</header>
-      <div class="write-book button--shadow button button--primary--open">本を書く</div>
     </div>
 
     <table class="user-books__books-list">

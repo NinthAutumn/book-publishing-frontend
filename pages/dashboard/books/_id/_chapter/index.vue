@@ -1,4 +1,6 @@
-<template></template>
+<template>
+  <div class="chapter-show"></div>
+</template>
 
 <script>
 export default {

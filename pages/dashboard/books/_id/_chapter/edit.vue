@@ -1,5 +1,5 @@
 <template>
-  <div class="chapter"></div>
+  <div class="chapter-edit"></div>
 </template>
 
 <script>

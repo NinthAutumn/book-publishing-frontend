@@ -4,16 +4,16 @@
     <div class="nav-container flex flex-column flex--align flex--center">
       <div class="nav-icons">
         <div class="nav-icon">
-          <fa class="nav-icon__item" icon="user-ninja"></fa>
+          <fa class="nav-icon__item nav-icon__item--author" icon="user-ninja"></fa>
         </div>
         <div class="nav-icon">
-          <fa class="nav-icon__item" icon="image"></fa>
+          <fa class="nav-icon__item nav-icon__item--image" icon="image"></fa>
+        </div>
+        <div class="nav-icon" @click="table">
+          <fa class="nav-icon__item" icon="list-ul"></fa>
         </div>
         <div class="nav-icon">
-          <fa class="nav-icon__item" @click="table" icon="list-ul"></fa>
-        </div>
-        <div class="nav-icon">
-          <fa class="nav-icon__item" icon="cog"></fa>
+          <fa class="nav-icon__item nav-icon__item--cog" icon="cog"></fa>
         </div>
       </div>
     </div>
@@ -64,7 +64,23 @@ export default {
       cursor: pointer;
     }
     &__item {
-      transform: rotateY(180deg);
+      // transform: rotateY(180deg);
+      &--author {
+        transform: scale(1);
+        transition: 300ms;
+        &:hover {
+          transform: scale(1.1);
+          transition: 300ms;
+        }
+      }
+      &--cog {
+        transform: rotate(0deg);
+        transition: 300ms;
+        &:hover {
+          transform: rotate(180deg);
+          transition: 300ms;
+        }
+      }
       font-size: 30px;
     }
   }

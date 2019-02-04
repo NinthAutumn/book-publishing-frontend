@@ -48,7 +48,7 @@
 
 .form-submit {
   height: 40px;
-  color: white;
+  color: black;
   border-radius: 10px;
   border: none;
   font-size: 14px;
@@ -56,6 +56,8 @@
   -webkit-box-shadow: 1px 1px 5px 0px rgb(185, 185, 185);
   -moz-box-shadow: 1px 1px 5px 0px rgb(185, 185, 185);
   box-shadow: 1px 1px 5px 0px rgb(185, 185, 185);
+  padding: 0 20px;
+  text-align: center;
 
   &--primary {
     background-color: $primary;
