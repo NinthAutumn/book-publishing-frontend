@@ -37,11 +37,15 @@
         <SignUpForm></SignUpForm>
       </div>
     </transition>
+    <div class="loginform">
+      <login-form></login-form>
+    </div>
   </div>
 </template>
 <script>
 import SearchBar from "@/components/Navigation/SearchBar";
 import SignUpForm from "@/components/Navigation/SignUpFrom";
+import LoginForm from "@/components/Navigation/LoginForm";
 
 export default {
   name: "Horizontal",
@@ -53,7 +57,8 @@ export default {
   },
   components: {
     SearchBar,
-    SignUpForm
+    SignUpForm,
+    LoginForm
   },
   computed: {
     user() {
@@ -92,6 +97,10 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.loginform {
+  width: 30%;
+  margin: auto;
+}
 .signupform {
   // display: flex;
   // position: absolute;

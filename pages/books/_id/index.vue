@@ -95,14 +95,16 @@
       <ReviewsList></ReviewsList>
     </div>
     <div class="divider">
-      <div
-        class="divider review-form-modal"
-        v-click-outside="reviewClose"
-        v-if="reviewState"
-        :class="{center: $store.state.menuState === 'menu-inactive'}"
-      >
-        <ReviewsForm></ReviewsForm>
-      </div>
+      <transition name="fade">
+        <div
+          class="divider review-form-modal"
+          v-click-outside="reviewClose"
+          v-if="reviewState"
+          :class="{center: $store.state.menuState === 'menu-inactive'}"
+        >
+          <ReviewsForm></ReviewsForm>
+        </div>
+      </transition>
     </div>
   </div>
 </template>
@@ -144,7 +146,7 @@ export default {
       reviewState: false
     };
   },
-  // transition: "test",
+  // transition: "fade",
 
   methods: {
     allReviews: function(state, change) {

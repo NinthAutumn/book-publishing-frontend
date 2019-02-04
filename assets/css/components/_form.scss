@@ -12,7 +12,8 @@
   // box-shadow: 0.5px 0.5px 2px 0px rgb(190, 189, 189);
 
   &--primary {
-
+    // color:white;
+    // color:white;
     border-color: $primary;
 
     &--lighter {
@@ -61,11 +62,12 @@
 
   &--primary {
     background-color: $primary;
-
+    color: white;
   }
 
   &--secondary {
     background-color: $secondary;
+    color: white;
 
   }
 

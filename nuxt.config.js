@@ -207,9 +207,7 @@ module.exports = {
   env: {
     baseUrl: process.env.BASE_URL || 'http://0.0.0.0:5000'
   },
-  transition: {
-    name: 'fade'
-  },
+  transition: 'fade',
   server: {
     port: 3000, // default: 3000
     host: '0.0.0.0', // default: localhost

@@ -137,6 +137,7 @@ export default {
       color: $review-color;
     }
     .signup-button {
+      color: white;
       &:hover {
         cursor: pointer;
       }
