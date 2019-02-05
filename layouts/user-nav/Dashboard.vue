@@ -10,8 +10,13 @@
             <img class="dashboard-logo-img" src="http://placehold.jp/80x32.png">
           </div>
         </div>
-
         <nuxt-link
+          v-if="$route.name ==='dashboard-books-id-index-draft'||$route.name ==='dashboard-books-id-index-published'||$route.name ==='dashboard-books-id-index'||$route.name ==='dashboard-books-id-index-deleted'||$route.name ==='dashboard-books-id-new-chapter'"
+          class="write-chapter button--shadow button button--secondary--open"
+          to="new-chapter"
+        >新しい話を書く</nuxt-link>
+        <nuxt-link
+          v-else
           :to="'/dashboard/books/new'"
           class="write-book button--shadow button button--primary--open"
         >本を書く</nuxt-link>
@@ -120,6 +125,20 @@ export default {
 .write-book.nuxt-link-exact-active {
   background-color: $primary !important;
   color: white !important;
+}
+.write-chapter.nuxt-link-exact-active {
+  background-color: $secondary !important;
+  color: white !important;
+}
+.write-chapter {
+  height: 40px;
+  width: 150px;
+  font-size: 16px;
+  margin-right: 45px;
+  color: $secondary;
+  &:hover {
+    color: white;
+  }
 }
 .create-books {
   // position: fixed;

@@ -10,6 +10,9 @@ export default {
   layout: "user-nav/User",
   components: {
     CreateChapter
+  },
+  created() {
+    // console.log(this.$route.name);
   }
 };
 </script>

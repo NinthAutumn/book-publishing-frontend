@@ -3,7 +3,6 @@
     <div class="user-books__header flex flex--align flex--between">
       <header>本棚</header>
     </div>
-
     <table class="user-books__books-list">
       <thead>
         <tr>
@@ -25,7 +24,7 @@
           <td>{{book.views}}</td>
           <td>15</td>
           <td>
-            <nuxt-link :to="`books/${book._id}`">
+            <nuxt-link :to="`books/${book._id}/published`">
               <div class="button button--primary book-list-button">投稿</div>
             </nuxt-link>
           </td>

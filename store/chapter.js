@@ -8,7 +8,21 @@ export const state = () => ({
 })
 
 export const getters = {
-
+  published: (state) => {
+    return state.cToc.filter((chapter) => {
+      return chapter.state === 'published'
+    })
+  },
+  deleted: (state) => {
+    return state.cToc.filter((chapter) => {
+      return chapter.state === 'deleted'
+    })
+  },
+  draft: (state) => {
+    return state.cToc.filter((chapter) => {
+      return chapter.state === 'draft'
+    })
+  }
 }
 
 export const mutations = {

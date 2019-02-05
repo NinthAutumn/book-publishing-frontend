@@ -10,7 +10,7 @@
 export default {
   computed: {
     toc() {
-      return this.$store.state.chapter.toc;
+      return this.$store.state.getters["chapter/published"];
     }
   },
   created() {}

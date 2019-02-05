@@ -1,15 +1,12 @@
 
 <template>
   <tr class="dashboard-toc__body__row">
-    <td class="dashboard-toc__body__row__item">{{chapter.index}}話</td>
+    <td v-if="published" class="dashboard-toc__body__row__item">{{chapter.index}}話</td>
     <td class="dashboard-toc__body__row__item">{{chapter.title}}</td>
     <td class="dashboard-toc__body__row__item">{{$moment(chapter.createdAt).format('DD-M-YYYY')}}</td>
     <td
       class="dashboard-toc__body__row__item dashboard-toc__body__row__item--icons flex flex--center flex--align"
     >
-      <fa class="dashboard-toc__body__row__item--icons--trash" icon="trash"></fa>
-      <fa class="dashboard-toc__body__row__item--icons--cog" icon="cog"></fa>
-
       <fa class="dashboard-toc__body__row__item--icons--edit" icon="edit"></fa>
     </td>
   </tr>
@@ -18,7 +15,8 @@
 <script>
 export default {
   props: {
-    chapter: Object
+    chapter: Object,
+    published: Boolean
   }
 };
 </script>
