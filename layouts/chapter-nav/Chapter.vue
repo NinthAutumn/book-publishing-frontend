@@ -3,7 +3,39 @@
     <Horizontal></Horizontal>
     <LeftV></LeftV>
     <RightV></RightV>
-    <nuxt class="yes"></nuxt>
+    <div class="chapter">
+      <div class="chapter-wrapper flex">
+        <nuxt-link
+          class="navigation-prev flex flex-column flex--center flex--align"
+          v-if="$store.state.chapter.chapter.index !== 1"
+          :to="{path: `${$store.state.chapter.chapter.index-1}`}"
+        >
+          <fa icon="angle-left"></fa>
+        </nuxt-link>
+        <div
+          class="navigation-prev-cont flex flex-column flex--center flex--align"
+          v-if="$store.state.chapter.chapter.index === 1"
+        ></div>
+        <nuxt class="yikes"></nuxt>
+        <nuxt-link
+          class="navigation-next flex flex-column flex--center flex--align"
+          v-if="$store.state.chapter.chapter.next"
+          :to="{path: `${$store.state.chapter.chapter.index+1}`}"
+        >
+          <fa icon="angle-right"></fa>
+        </nuxt-link>
+        <transition name="chapter-modal">
+          <div class="chapters-modal" v-if="modal">
+            <div class="chapters-modal__author-profile" v-if="modal === 'profile'"></div>
+            <div class="chapters-modal__images" v-else-if="modal === 'images'"></div>
+            <div class="chapters-modal__table-of-content" v-else-if="modal === 'table'">
+              <TOC></TOC>
+            </div>
+            <div class="chapters-modal__user-setting" v-else-if="modal === 'setting'"></div>
+          </div>
+        </transition>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -11,17 +43,27 @@
 import Horizontal from "./Horizontal";
 import LeftV from "./Left-V";
 import RightV from "./Right-V";
+import TOC from "@/components/ChapterPage/Modal/TOC";
 
 export default {
   components: {
     Horizontal,
     LeftV,
-    RightV
+    RightV,
+    TOC
+  },
+  computed: {
+    modal() {
+      return this.$store.state.chapter.modal;
+    }
   }
 };
 </script>
 
 <style lang="scss">
+.yikes {
+  // transition: 200ms;
+}
 /* .chapter-page .menu-active {
   margin-left: 240px;
   margin-top: 6.6rem;
@@ -29,7 +71,7 @@ export default {
   transition: 300ms;
   position: relative !important;
 } */
-.chapter-page .yes {
+.chapter-page {
   // padding: 1rem 0rem;
   transition: 300ms;
   // position: relative !important;

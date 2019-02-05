@@ -9,8 +9,6 @@ export const state = () => ({
   status: "",
   user: {},
   loggedIn: false,
-  signupForm: false,
-  loginForm: false
   // library:
   // username: "admin1",
   // password: "admin1"
@@ -34,7 +32,6 @@ export const mutations = {
     token,
     user
   }) {
-    state.status = 'success'
     state.user = user
 
     state.token = token
@@ -63,8 +60,6 @@ export const actions = {
     commit,
     state
   }, user) {
-    // console.log("dogs")
-    commit("AUTH_REQUEST")
     await this.$axios.post(process.env.baseUrl + '/users/login', {
       username: user.username,
       password: user.password
@@ -73,13 +68,13 @@ export const actions = {
       //   user: res.data
       // });
       const token = res.headers.authorization
+      this.$axios.defaults.headers.common['Authorization'] = token
+      Cookies.set("token", token)
       commit("AUTH_SUCCESS", {
         token: token,
         user: res.data
       });
-      this.$axios.defaults.headers.common['Authorization'] = token
 
-      Cookies.set("token", token)
       // Cookies.set('user', res.data)
 
     })
@@ -107,13 +102,12 @@ export const actions = {
       password: user.password
     }).then((res) => {
       const token = res.headers.authorization
+      this.$axios.defaults.headers.common['Authorization'] = token
+      Cookies.set("token", token)
       commit("AUTH_SUCCESS", {
         token: token,
         user: res.data
       });
-      this.$axios.defaults.headers.common['Authorization'] = token
-
-      Cookies.set("token", token)
       // commit("AUTH_SUCCESS_USER", )
     })
   }

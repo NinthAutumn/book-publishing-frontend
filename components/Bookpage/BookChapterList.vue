@@ -8,7 +8,7 @@
         :class="{rotate: ascending}"
       ></fa>
     </div>
-    <ul class="bookchapterlists__list">
+    <transition-group class="bookchapterlists__list" name="list-complete" tag="ul">
       <li class="bookchapterlists__list--items" v-for="(chapter, index) in chap" :key="index">
         <!-- {{rowCount = 0}} -->
         <!-- {{formatDate(chapter.createdAt)}} -->
@@ -35,7 +35,7 @@
 
         <!-- {{rowCounts(index)}} -->
       </li>
-    </ul>
+    </transition-group>
   </div>
 </template>
 

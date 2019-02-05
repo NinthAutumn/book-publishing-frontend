@@ -1,8 +1,8 @@
 <template>
   <div class="auth-modal" v-click-outside="close">
     <transition name="slide-fade">
-      <login-form v-if="$store.state.auth === 0"></login-form>
-      <sign-up-from v-if="$store.state.auth === 1"></sign-up-from>
+      <login-form v-if="$store.state.authed === 0"></login-form>
+      <sign-up-from v-if="$store.state.authed === 1"></sign-up-from>
     </transition>
   </div>
 </template>

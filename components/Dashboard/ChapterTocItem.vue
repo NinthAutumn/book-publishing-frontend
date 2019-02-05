@@ -4,10 +4,13 @@
     <td class="dashboard-toc__body__row__item">{{chapter.index}}話</td>
     <td class="dashboard-toc__body__row__item">{{chapter.title}}</td>
     <td class="dashboard-toc__body__row__item">{{$moment(chapter.createdAt).format('DD-M-YYYY')}}</td>
-    <td class="dashboard-toc__body__row__item flex flex--center">
-      <fa icon="cog"></fa>
-      <fa icon="edit"></fa>
-      <fa icon="trash"></fa>
+    <td
+      class="dashboard-toc__body__row__item dashboard-toc__body__row__item--icons flex flex--center flex--align"
+    >
+      <fa class="dashboard-toc__body__row__item--icons--trash" icon="trash"></fa>
+      <fa class="dashboard-toc__body__row__item--icons--cog" icon="cog"></fa>
+
+      <fa class="dashboard-toc__body__row__item--icons--edit" icon="edit"></fa>
     </td>
   </tr>
 </template>
@@ -24,10 +27,44 @@ export default {
 .dashboard-toc__body__row {
   &:hover {
     background-color: rgb(239, 247, 247);
-    cursor: pointer;
+    cursor: default;
   }
   &__item {
     // height: 50px;
+    &--icons {
+      font-size: 18px;
+      &:hover {
+        cursor: pointer;
+      }
+      &--cog {
+        transform: roate(0deg) scale(1);
+        transition: 300ms;
+        &:hover {
+          transform: rotate(180deg) scale(1.2);
+          transition: 300ms;
+        }
+        color: $secondary;
+        margin-right: 10px;
+      }
+      &--edit {
+        transform: scale(1);
+        transition: transform 300ms;
+        &:hover {
+          transform: scale(1.2);
+        }
+        color: $primary;
+        margin-right: 10px;
+      }
+      &--trash {
+        color: rgb(241, 136, 136);
+        transition: color 300ms;
+        &:hover {
+          color: red;
+          transition: color 300ms;
+        }
+        margin-right: 10px;
+      }
+    }
     font-size: 14px;
     padding: 5px;
   }

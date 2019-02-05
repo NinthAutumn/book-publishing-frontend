@@ -18,7 +18,10 @@
         <th></th>
         <th></th>
         <th>
-          <div class="button button--primary--open">最新</div>
+          <nuxt-link
+            :to="`${$route.params.id}/new-chapter?index=${toc.length+1}`"
+            class="button button--primary--open"
+          >最新</nuxt-link>
         </th>
       </tr>
     </tfoot>

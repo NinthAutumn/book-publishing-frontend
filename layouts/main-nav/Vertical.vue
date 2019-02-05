@@ -1,15 +1,63 @@
 <template>
   <nav class="v-nav" :class="$store.state.menuState">
     <ul>
-      <li v-for="menu in menus" :key="menu.title">
-        <nuxt-link :to="menu.link" class="v-nav-list">
+      <li>
+        <nuxt-link to="/" class="v-nav-list">
           <div class="v-nav-icon">
-            <fa :icon="menu.icon" class="v-nav-icons"></fa>
+            <fa icon="home" class="v-nav-icons"></fa>
           </div>
           <div class="v-nav-title">
-            <p>{{menu.title}}</p>
+            <p>ホーム</p>
           </div>
         </nuxt-link>
+      </li>
+      <li>
+        <nuxt-link to="/browse" class="v-nav-list">
+          <div class="v-nav-icon">
+            <fa icon="search" class="v-nav-icons"></fa>
+          </div>
+          <div class="v-nav-title">
+            <p>検索</p>
+          </div>
+        </nuxt-link>
+      </li>
+      <li>
+        <nuxt-link to="/rankings" class="v-nav-list">
+          <div class="v-nav-icon">
+            <fa icon="crown" class="v-nav-icons"></fa>
+          </div>
+          <div class="v-nav-title">
+            <p>ランキング</p>
+          </div>
+        </nuxt-link>
+      </li>
+      <li>
+        <nuxt-link to="/store" class="v-nav-list">
+          <div class="v-nav-icon">
+            <fa icon="store" class="v-nav-icons"></fa>
+          </div>
+          <div class="v-nav-title">
+            <p>ストアー</p>
+          </div>
+        </nuxt-link>
+      </li>
+      <li>
+        <nuxt-link to="/library" class="v-nav-list" v-if="$store.state.auth.loggedIn">
+          <div class="v-nav-icon">
+            <fa icon="book" class="v-nav-icons"></fa>
+          </div>
+          <div class="v-nav-title">
+            <p>ライブラリー</p>
+          </div>
+        </nuxt-link>
+        <div @click="loginInState" class="v-nav-list" v-else>
+          <div class="v-nav-icon">
+            <fa icon="book" class="v-nav-icons"></fa>
+          </div>
+          <div class="v-nav-title">
+            <p class="v-nav-title__item">ライブラリー</p>
+          </div>
+        </div>
       </li>
     </ul>
     <hr>
@@ -110,6 +158,9 @@ export default {
   methods: {
     dropOff() {
       this.$store.commit("DROPDOWN_FALSE");
+    },
+    loginInState() {
+      this.$store.commit("LOGIN_STATE");
     }
   }
 };
@@ -126,6 +177,9 @@ export default {
 .menu-inactive {
   left: -240px !important;
   transition: 300ms;
+}
+.v-nav-title__item {
+  color: $primary;
 }
 .v-nav {
   background-color: white;
@@ -168,6 +222,7 @@ export default {
     margin-right: 2.4rem;
     font-size: 1.9rem;
     width: 20px;
+    color: $primary;
   }
 }
 .update {

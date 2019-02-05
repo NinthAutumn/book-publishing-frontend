@@ -26,7 +26,7 @@
         <img class="not-loggedin__img text--link" src="~/assets/profile.png" @click="loginInState">
       </div>
     </nav>
-    <transition name="fade">
+    <transition name="grow-shrink">
       <div class="loginform" v-if="loginState">
         <AuthModal></AuthModal>
       </div>
@@ -113,6 +113,17 @@ export default {
     width: 40px;
     border-radius: 100px;
     box-shadow: 1px 1px 5px 0px rgb(201, 200, 200);
+    transition: 300ms;
+    margin-right: 5px;
+    &:hover {
+      transform: scale(1.1);
+      box-shadow: 3px 3px 5px 0px rgb(184, 182, 182);
+      transition: 300ms;
+    }
+    &:active {
+      box-shadow: 1px 1px 5px 0px rgb(201, 200, 200);
+      transition: 300ms;
+    }
   }
   margin-right: 10px;
   // font-size: 16px;

@@ -110,7 +110,9 @@ export const mutations = {
   },
   TRENDING(state, books) {
     books.forEach(async (book) => {
-      book._id.book[0].ratings = +book._id.book[0].ratings.toFixed(2)
+      if (book._id.book[0].ratings) {
+        book._id.book[0].ratings = +book._id.book[0].ratings.toFixed(2)
+      }
     })
     state.books.trending = books
   },

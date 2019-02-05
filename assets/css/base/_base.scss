@@ -21,32 +21,3 @@ a:visited {
 }
 
 //transition animation
-
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity .5s;
-}
-
-.fade-enter,
-.fade-leave-to {
-  opacity: 0;
-}
-
-.slide-fade-enter-active {
-  transition: all .3s ease;
-}
-
-.slide-fade-leave-active {
-  transition: transform .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
-}
-
-.slide-fade-enter {
-  transform: translateX(10px);
-  opacity: 0;
-  // display: none;
-}
-
-.slide-fade-leave-to {
-  transform: translateX(-10px);
-  opacity: 0;
-}

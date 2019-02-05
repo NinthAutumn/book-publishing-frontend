@@ -1,36 +1,8 @@
 <template>
-  <div class="chapter">
-    <div class="chapter-wrapper flex">
-      <nuxt-link
-        class="navigation-prev flex flex-column flex--center flex--align"
-        v-if="$store.state.chapter.chapter.index !== 1"
-        :to="{path: `${$store.state.chapter.chapter.index-1}`}"
-      >
-        <fa icon="angle-left"></fa>
-      </nuxt-link>
-      <div
-        class="navigation-prev-cont flex flex-column flex--center flex--align"
-        v-if="$store.state.chapter.chapter.index === 1"
-      ></div>
-      <div class="divider chapter-container">
-        <Chapter></Chapter>
-        <CommentList></CommentList>
-      </div>
-      <nuxt-link
-        class="navigation-next flex flex-column flex--center flex--align"
-        v-if="$store.state.chapter.chapter.next"
-        :to="{path: `${$store.state.chapter.chapter.index+1}`}"
-      >
-        <fa icon="angle-right"></fa>
-      </nuxt-link>
-      <div class="chapters-modal" v-if="modal">
-        <div class="chapters-modal__author-profile" v-if="modal === 'profile'"></div>
-        <div class="chapters-modal__images" v-else-if="modal === 'images'"></div>
-        <div class="chapters-modal__table-of-content" v-else-if="modal === 'table'">
-          <TOC></TOC>
-        </div>
-        <div class="chapters-modal__user-setting" v-else-if="modal === 'setting'"></div>
-      </div>
+  <div class="divider flex">
+    <div class="divider chapter-container">
+      <Chapter></Chapter>
+      <CommentList></CommentList>
     </div>
   </div>
 </template>
@@ -38,7 +10,6 @@
 <script>
 import Chapter from "@/components/ChapterPage/Chapter";
 import CommentList from "@/components/ChapterPage/CommentList";
-import TOC from "@/components/ChapterPage/Modal/TOC";
 
 // import
 export default {
@@ -47,15 +18,10 @@ export default {
       bottom: false
     };
   },
-  computed: {
-    modal() {
-      return this.$store.state.chapter.modal;
-    }
-  },
+
   components: {
     Chapter,
-    CommentList,
-    TOC
+    CommentList
   },
   methods: {
     // bottomVisible() {
@@ -197,6 +163,7 @@ body {
 }
 
 .chapter {
+  // margin-top: 50px;
   display: flex;
   justify-content: space-around;
   // height: 100vh;

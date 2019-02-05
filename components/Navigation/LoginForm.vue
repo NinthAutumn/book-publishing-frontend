@@ -63,7 +63,7 @@ export default {
         username: this.form.username,
         password: this.form.password
       };
-      console.log(user);
+
       await this.$store
         .dispatch("auth/login", user)
         .then(() => {
