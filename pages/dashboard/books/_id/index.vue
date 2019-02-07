@@ -24,6 +24,7 @@
       </div>
     </div>
     <nuxt-child></nuxt-child>
+
     <div class="create-book flex flex--right">
       <div class="button button--secondary">話を書く</div>
     </div>

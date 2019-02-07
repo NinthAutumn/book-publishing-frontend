@@ -18,13 +18,13 @@
 
 .slide-fade-enter {
   transform: translateX(10px);
-  opacity: 0;
+  // opacity: 0;
   // display: none;
 }
 
 .slide-fade-leave-to {
   transform: translateX(-10px);
-  opacity: 0;
+  // opacity: 0;
 }
 
 .chapter-enter-active {

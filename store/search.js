@@ -41,7 +41,7 @@ export const actions = {
   }, query) {
     commit('LOADING')
     await this.$axios.get(process.env.baseUrl + '/searchBooks?query=' + query).then((res) => {
-      commit('QUERIED_BOOKS', res.data)
+      commit('QUERIED_BOOKS', res.data.hits.hits)
       commit('LOADING_FIN')
     })
   }

@@ -15,6 +15,10 @@ export default {
   },
   components: {
     ChapterToc
+  },
+  transition: {
+    name: "slide-fade",
+    type: "in-out"
   }
 };
 </script>

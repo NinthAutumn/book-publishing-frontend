@@ -15,7 +15,8 @@ export default {
   },
   components: {
     ChapterToc
-  }
+  },
+  transition: "slide-fade"
 };
 </script>
 

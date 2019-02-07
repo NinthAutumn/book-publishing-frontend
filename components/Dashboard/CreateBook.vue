@@ -45,7 +45,7 @@
         allow-create
         default-first-option
         filterable
-        placeholder="Select"
+        placeholder="タグを作る"
       >
         <el-option v-for="item in tags" :key="item" :label="item" :value="item"></el-option>
       </el-select>
@@ -162,6 +162,19 @@ export default {
 }
 .el-input__inner {
   // height: 40px;
+}
+.el-select {
+  margin-bottom: 10px;
+}
+.el-input__inner {
+  border-radius: 0;
+  border: 0;
+  border-bottom: 2px solid $primary;
+  padding-left: 2px;
+  font-size: 16px;
+}
+.el-select__input {
+  margin: 0;
 }
 .vue-input-tag-wrapper {
   border: 0px solid $primary !important;
