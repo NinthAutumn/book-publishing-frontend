@@ -1,13 +1,9 @@
 
 <template>
   <div class="table-list-component">
-    <div v-if="published" class="table-header">
-      <div class="volume-title">
-        <h3>章</h3>
-      </div>
-    </div>
-    <table class="dashboard-toc">
-      <!-- <thead class="dashboard-toc__header">
+    <div class="divider" v-if="!published">
+      <table class="dashboard-toc">
+        <!-- <thead class="dashboard-toc__header">
       <tr class="dashboard-toc__header__row">
         <th
           class="dashboard-toc__header__row__item dashboard-toc__header__row__item--index"
@@ -17,31 +13,31 @@
         <th class="dashboard-toc__header__row__item">制作日</th>
         <th class="dashboard-toc__header__row__item"></th>
       </tr>
-      </thead>-->
-      <tbody class="dashboard-toc__body">
-        <chapter-toc-item
-          :published="published"
-          :chapter="chapter"
-          v-for="(chapter) in toc"
-          :key="chapter.index"
-        ></chapter-toc-item>
-      </tbody>
-      <!-- <tfoot class="dashboard-toc__footer" style="background:none;">
-      <tr class="dashboard-toc__footer__row">
-        <th></th>
-        <th></th>
-        <th></th>
-        <th class="flex flex--center" style="padding:5px;">
-          <nuxt-link
-            :to="`${$route.params.id}/new-chapter?index=${toc.length+1}`"
-            class="button button--primary--open dashboard-toc__footer__row__item"
-          >
-            <fa icon="plus" style="margin-right:5px;"></fa>新話
-          </nuxt-link>
-        </th>
-      </tr>
-      </tfoot>-->
-    </table>
+        </thead>-->
+        <tbody class="dashboard-toc__body">
+          <chapter-toc-item :chapter="chapter" v-for="(chapter, index) in toc" :key="index"></chapter-toc-item>
+        </tbody>
+      </table>
+    </div>
+    <div class="table" v-else v-for="(volume, index) in toc" :key="index">
+      <div class="table-volume">
+        <div class="table-header">
+          <div class="volume-title">
+            <h3>第{{index + 1}}章</h3>
+          </div>
+        </div>
+      </div>
+      <table class="dashboard-toc">
+        <tbody class="dashboard-toc__body">
+          <chapter-toc-item
+            :published="published"
+            :chapter="chapter"
+            v-for="(chapter, index) in volume"
+            :key="index"
+          ></chapter-toc-item>
+        </tbody>
+      </table>
+    </div>
   </div>
 </template>
 
@@ -71,6 +67,12 @@ export default {
   }
 }
 .dashboard-toc {
+  .divider {
+    width: 100%;
+  }
+  .table {
+    width: 100%;
+  }
   border-spacing: 0;
   width: 100%;
   background-color: rgb(255, 255, 255);

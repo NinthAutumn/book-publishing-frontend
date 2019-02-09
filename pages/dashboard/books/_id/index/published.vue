@@ -10,12 +10,13 @@ import ChapterToc from "@/components/Dashboard/ChapterToc";
 export default {
   computed: {
     toc() {
-      return this.$store.getters["chapter/published"];
+      return this.$store.state.chapter.pTOC;
     }
   },
   components: {
     ChapterToc
   },
+  created() {},
   transition: {
     name: "slide-fade",
     type: "in-out"

@@ -47,7 +47,11 @@
           </div>
         </div>
         <div class="book-info">
-          <img class="book-author" :src="$store.state.book.book.author.avatar" alt="author avatar">
+          <img
+            class="book-author"
+            :src="$store.state.book.book.authorId.avatar"
+            alt="author avatar"
+          >
         </div>
       </div>
 

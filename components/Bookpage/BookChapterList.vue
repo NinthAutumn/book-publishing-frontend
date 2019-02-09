@@ -43,7 +43,7 @@
 // const _ = require("lodash");
 export default {
   props: {
-    chapters: Array
+    // chapters: Array
   },
   data() {
     return {
@@ -74,7 +74,7 @@ export default {
   },
   computed: {
     chap: function() {
-      return this.$store.state.chapter.cToc;
+      return this.$store.getters["chapter/published"];
     }
   },
   asyncData() {}

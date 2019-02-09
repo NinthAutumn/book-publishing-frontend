@@ -4,22 +4,20 @@ export const state = () => ({
   chapterCover: "",
   toc: '',
   modal: '',
-  cToc: ''
+  cToc: '',
+  dTOC: [], //chapters that aren't published
+  pTOC: [] //chapters that are published shown in dashbaord of the user
 })
 
 export const getters = {
-  published: (state) => {
-    return state.cToc.filter((chapter) => {
-      return chapter.state === 'published'
-    })
-  },
+
   deleted: (state) => {
-    return state.cToc.filter((chapter) => {
+    return state.dTOC.filter((chapter) => {
       return chapter.state === 'deleted'
     })
   },
   draft: (state) => {
-    return state.cToc.filter((chapter) => {
+    return state.dTOC.filter((chapter) => {
       return chapter.state === 'draft'
     })
   }
@@ -45,6 +43,12 @@ export const mutations = {
   },
   TOC_BOOK(state, toc) {
     state.cToc = toc
+  },
+  D_TOC(state, toc) {
+    state.dTOC = toc
+  },
+  P_TOC(state, toc) {
+    state.pTOC = toc
   }
 }
 export const actions = {
@@ -89,6 +93,23 @@ export const actions = {
   }, bookId) {
     await this.$axios.get(process.env.baseUrl + '/chapters/toc?bookId=' + bookId).then((res) => {
       commit('TOC_BOOK', res.data)
+    })
+  },
+  async dashboardTOC({
+    commit
+  }, bookId) {
+    await this.$axios.get(process.env.baseUrl + '/chapters/dashboard?bookId=' + bookId).then((res) => {
+      commit('D_TOC', res.data)
+      // console.log(res.data.undefined);
+    })
+  },
+  async publishedTOC({
+    commit
+  }, bookId) {
+    await this.$axios.get(process.env.baseUrl + '/chapters/published?bookId=' + bookId).then((res) => {
+      commit('P_TOC', res.data)
+      // console.log(res.data.undefined);
+
     })
   }
 

@@ -11,10 +11,7 @@
         >下書き({{$store.getters['chapter/draft'].length}})</nuxt-link>
       </div>
       <div class="book-tab__item">
-        <nuxt-link
-          class="book-tab__item__text"
-          to="published"
-        >公開済({{$store.getters['chapter/published'].length}})</nuxt-link>
+        <nuxt-link class="book-tab__item__text" to="published">公開済</nuxt-link>
       </div>
       <div class="book-tab__item">
         <nuxt-link
@@ -36,8 +33,10 @@ export default {
   layout: "user-nav/User",
   components: {},
   async fetch({ store, params }) {
-    await store.dispatch("chapter/TOCBook", params.id);
-    await store.dispatch("book/getBook", params.id);
+    // await store.dispatch("chapter/TOCBook", params.id);
+    await store.dispatch("chapter/dashboardTOC", params.id);
+    await store.dispatch("chapter/publishedTOC", params.id);
+    // await store.dispatch("book/getBook", params.id);
     // console.log(store.state.auth);
   },
   created() {
@@ -46,7 +45,7 @@ export default {
   },
   computed: {
     toc() {
-      return this.$store.state.chapter.cToc;
+      return this.$store.state.chapter.dToc;
     }
   },
   methods: {

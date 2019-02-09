@@ -1,7 +1,6 @@
 
 <template>
   <div class="chapter-form">
-    <h3 class="chapter-new-title">話を書く</h3>
     <form action class="flex flex-column">
       <!-- <h3></h3> -->
       <div class="form-control flex-column">
@@ -82,12 +81,6 @@ export default {
 </script>
 
 <style lang="scss">
-.chapter-new-title {
-  margin: 0;
-  font-size: 20px;
-  margin-bottom: 10px;
-  font-weight: 400;
-}
 .chapter-new-submit {
   margin-bottom: 10px;
 }

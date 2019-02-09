@@ -14,12 +14,16 @@
           v-if="$route.name ==='dashboard-books-id-index-draft'||$route.name ==='dashboard-books-id-index-published'||$route.name ==='dashboard-books-id-index'||$route.name ==='dashboard-books-id-index-deleted'||$route.name ==='dashboard-books-id-new-chapter'"
           class="write-chapter button--shadow button button--secondary--open"
           to="new-chapter"
-        >新しい話を書く</nuxt-link>
+        >
+          <fa icon="pen-nib" style="margin-right:5px;"></fa>新しい話を書く
+        </nuxt-link>
         <nuxt-link
           v-else
           :to="'/dashboard/books/new'"
           class="write-book button--shadow button button--primary--open"
-        >本を書く</nuxt-link>
+        >
+          <fa icon="pen-nib" class style="margin-right:5px;"></fa>本を書く
+        </nuxt-link>
       </div>
 
       <div class="create-books" v-if="writeBookState">
@@ -240,7 +244,7 @@ export default {
   // -webkit-box-shadow: inset 0px 0px 3px 0px rgba(122, 122, 122, 1);
   // -moz-box-shadow: inset 0px 0px 3px 0px rgba(122, 122, 122, 1);
   // box-shadow: inset 0px 0px 3px 0px rgba(122, 122, 122, 1);
-  opacity: 0.75;
+  // opacity: 0.75;
   overflow: auto;
   /* animation: content-enter 1s;
   animation-fill-mode: forwards; */
