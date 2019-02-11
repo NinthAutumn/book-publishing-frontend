@@ -28,9 +28,9 @@ export default {
     cursor: default;
   }
   &__item {
-    // height: 50px;
+    height: 45px;
     &--icons {
-      font-size: 18px;
+      font-size: 20px;
       &:hover {
         cursor: pointer;
       }
@@ -63,7 +63,7 @@ export default {
         margin-right: 10px;
       }
     }
-    font-size: 14px;
+    font-size: 16px;
     padding: 5px;
   }
 }

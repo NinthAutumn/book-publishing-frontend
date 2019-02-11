@@ -82,17 +82,22 @@ export default {
     &__item {
       margin-right: 10px;
       font-size: 14px;
-      margin-bottom: 5px;
+      margin-bottom: 10px;
       &__text {
         color: black;
+        font-size: 20px;
+        // margin-bottom: 10px;
         &:visited {
           color: black;
+        }
+        &:hover {
+          border-bottom: 2px solid rgb(230, 230, 230);
         }
         // margin-bottom: 2px;
         padding-bottom: 4px;
       }
       .nuxt-link-exact-active {
-        border-bottom: 2px solid green;
+        border-bottom: 2px solid $secondary;
         // transition: border-color 100ms;
       }
     }

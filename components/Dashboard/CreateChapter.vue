@@ -1,27 +1,77 @@
 
 <template>
   <div class="chapter-form">
-    <form action class="flex flex-column">
+    <form action class="flex flex-column chapter-new">
       <!-- <h3></h3> -->
-      <div class="form-control flex-column">
-        <textarea placeholder="前書き" name="header" id rows="5"></textarea>
+      <!-- <fa icon="plus"></fa> -->
+      <div class="chapter-form__navigation flex flex--between">
+        <div class="divider">
+          <div @click="back" class="button button--secondary" v-if="progress > 0">
+            <fa style="font-size:14px;" icon="chevron-left"></fa>
+            <p style="font-size:14px;margin-left:2px;">前</p>
+          </div>
+        </div>
+        <div class="divider">
+          <div @click="front" class="button button--primary flex flex--align" v-if="progress < 2">
+            <p style="font-size:14px;margin-right:2px;">次</p>
+            <fa style="font-size:14px;" icon="chevron-right"></fa>
+          </div>
+        </div>
       </div>
-      <div class="form-control">
-        <input placeholder="タイトル" type="text" class="chapter-title form-input" v-model="form.title">
+      <transition name="slide-fade">
+        <div class="chapter-form__announcement" v-if="progress === 0">
+          <div class="form-control flex-column">
+            <textarea placeholder="前書き" name="header" id rows="5"></textarea>
+          </div>
+          <div class="form-control flex-column">
+            <textarea placeholder="後書き" name="footer" id rows="5"></textarea>
+          </div>
+        </div>
+      </transition>
+      <transition name="slide-fade">
+        <div class="chapter-form__content-subject" v-if="progress === 1">
+          <div class="form-control">
+            <input
+              placeholder="タイトル"
+              type="text"
+              class="chapter-title form-input"
+              v-model="form.title"
+            >
+          </div>
+          <div class="form-control" style="height:500px;">
+            <vue-editor
+              class="chapter-content-new"
+              :editorToolbar="customToolbar"
+              v-model="form.content"
+              placeholder="本文"
+            ></vue-editor>
+          </div>
+        </div>
+      </transition>
+      <transition name="slide-fade">
+        <div class="chapter-form__extra" v-if="progress === 2"></div>
+      </transition>
+      <div class="chapter-form__navigation flex flex--between">
+        <div class="divider">
+          <div @click="back" class="button button--secondary" v-if="progress > 0">
+            <fa style="font-size:14px;" icon="chevron-left"></fa>
+            <p style="font-size:14px;margin-left:2px;">前</p>
+          </div>
+        </div>
+        <div class="divider">
+          <div @click="front" class="button button--primary flex flex--align" v-if="progress < 2">
+            <p style="font-size:14px;margin-right:2px;">次</p>
+            <fa style="font-size:14px;" icon="chevron-right"></fa>
+          </div>
+        </div>
       </div>
-      <div class="form-control" style="height:500px;">
-        <vue-editor
-          class="chapter-content-new"
-          :editorToolbar="customToolbar"
-          v-model="form.content"
-          placeholder="本文"
-        ></vue-editor>
-      </div>
-      <div class="form-control flex-column">
-        <textarea placeholder="後書き" name="footer" id rows="5"></textarea>
-      </div>
-      <div class="form-control flex flex--right">
-        <input type="submit" class="form-submit chapter-new-submit" value="話を投稿する">
+
+      <div class="flex flex--right" v-if="progress === 2">
+        <input
+          type="submit"
+          class="form-submit form-submit--primary chapter-new-submit"
+          value="話を投稿する"
+        >
       </div>
     </form>
   </div>
@@ -31,6 +81,7 @@
 export default {
   data() {
     return {
+      progress: 0,
       form: {
         title: "",
         content: "",
@@ -76,6 +127,17 @@ export default {
         }
       }
     };
+  },
+  methods: {
+    front() {
+      this.progress++;
+    },
+    back() {
+      this.progress--;
+    }
+    // move(e){
+    //   if(e === )
+    // }
   }
 };
 </script>
@@ -84,41 +146,66 @@ export default {
 .chapter-new-submit {
   margin-bottom: 10px;
 }
+.ql-editor {
+  padding: 0 15px !important;
+}
 .ql-editor.ql-blank:before {
   font-style: none;
 }
 .ql-snow * {
   font-size: 16px;
 }
+.quillWrapper .ql-snow.ql-toolbar {
+  // padding: 0 15px !important;
+  padding-top: 5px !important;
+  padding-bottom: 0px !important;
+}
 .ql-toolbar.ql-snow {
-  border: 0px solid $review-color !important;
+  border: 1px solid $review-color !important;
   border-bottom: 0 !important;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
   padding: 8px;
-  // border-top-left-radius: 10;
-  // border-top-right-radius: 10px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
   background-color: white;
-  box-shadow: 1px 1px 5px 0px rgb(209, 209, 209);
+  // box-shadow: 1px 1px 5px 0px rgb(209, 209, 209);
   p {
     font-size: 16px;
   }
+}
+.ql-editor.ql-blank:before {
+  font-style: normal !important;
 }
 .ql-container.ql-snow {
-  border: 0px solid $review-color !important;
+  border: 1px solid $review-color !important;
+  border-top: 0 !important;
   // border-radius: 10px;
+
   p {
     font-size: 16px;
+    font-family: $text-font-stack;
+    font-weight: 400;
   }
+
   background-color: white;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-  color: #796477;
-  box-shadow: 1px 1px 5px 0px rgb(209, 209, 209);
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  color: #979797;
+  //
 }
 .chapter-form {
-  label * {
+  .chapter-new {
+    box-shadow: 1px 1px 5px 0px rgb(209, 209, 209);
+    padding: 10px 40px !important;
+    margin-top: 10px;
+    background-color: white;
+  }
+  label {
     font-size: 16px;
+  }
+  .form-control {
+    margin-top: 10px;
   }
   .draft-checkbox {
     // height: 50px;
@@ -128,19 +215,28 @@ export default {
     resize: none;
     font-size: 16px;
     padding: 10px;
-    border: none;
-    box-shadow: 1px 1px 5px 0px rgb(209, 209, 209);
+    // box-shadow: 1px 1px 5px 0px rgb(209, 209, 209);
     margin-bottom: 10px;
     color: #a3a3a3;
+    border: 1px solid $review-color !important;
+    border-radius: 5px;
+    line-height: 20px;
+
     &:focus {
       outline: none;
     }
   }
   .chapter-title {
+    height: 50px;
+    font-size: 20px;
     width: 100%;
     border: none;
-    box-shadow: 1px 1px 5px 0px rgb(209, 209, 209);
-    margin-bottom: 10px;
+    padding: 12px 12px !important;
+    border: 1px solid rgb(202, 202, 202);
+    border-radius: 5px;
+    // box-sizing: bord !important;
+    // box-shadow: 1px 1px 5px 0px rgb(209, 209, 209);
+    // margin-bottom: 10px;
     &:focus {
       outline: none;
     }

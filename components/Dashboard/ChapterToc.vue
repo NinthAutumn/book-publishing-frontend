@@ -21,7 +21,7 @@
     </div>
     <div class="table" v-else v-for="(volume, index) in toc" :key="index">
       <div class="table-volume">
-        <div class="table-header">
+        <div class="table-header flex flex--align">
           <div class="volume-title">
             <h3>第{{index + 1}}章</h3>
           </div>
@@ -57,13 +57,15 @@ export default {
 <style lang="scss">
 .table-header {
   width: 100%;
-  background-color: $primary-lighter;
+  background-color: #f5f5f5;
   padding: 5px;
   box-sizing: border-box;
+  height: 45px;
+  // dispay:
   h3 {
     margin: 0;
-    font-size: 13px;
-    font-weight: 400;
+    font-size: 16px;
+    font-weight: bold;
   }
 }
 .dashboard-toc {

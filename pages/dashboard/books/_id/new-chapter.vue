@@ -29,7 +29,7 @@ export default {
 .chapter-new {
   /* width: 100%; */
   padding: 0 !important;
-  background-color: white !important;
+  // background-color: white !important;
 }
 .chapter-new-title {
   margin: 0;
@@ -40,7 +40,7 @@ export default {
 }
 .chapter-title__wrapper {
   background-color: rgb(248, 246, 246);
-  width: 100%;
+  // width: 100%;
   height: 85px;
   padding: 0px 45px;
 }

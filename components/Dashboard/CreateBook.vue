@@ -109,6 +109,7 @@ export default {
     handleAvatarSuccess(res, file) {
       this.form.avatar = file.raw;
       this.imageUrl = URL.createObjectURL(file.raw);
+      console.log(file.raw);
     },
     beforeAvatarUpload(file) {
       // const isJPG = file.type === "image/jpeg";
@@ -122,29 +123,31 @@ export default {
       // return isJPG && isLt2M;
     },
     async postBook() {
-      const data = new FormData();
-      data.append("avatar", this.form.avatar);
-      // await thi
-      data.append("synopsis", this.form.synopsis);
-      data.append("title", this.form.title);
-      data.append("tags", this.form.tags);
-      data.append("genre", this.form.genre);
-      const book = this.form;
-      await this.$store
-        .dispatch("book/addBook", data)
-        .then(() => {
-          this.$message({
-            message: "本の投稿に成功しました",
-            type: "success"
-          });
-          this.form = {};
-        })
-        .catch(e => {
-          this.$message({
-            message: `本の投稿に失敗しました！`,
-            type: "error"
-          });
-        });
+      // delete this.#a
+      await this.$store.dispatch("upload/image", this.form.avatar);
+      // const data = new FormData();
+      // data.append("avatar", this.form.avatar);
+      // // await thi
+      // data.append("synopsis", this.form.synopsis);
+      // data.append("title", this.form.title);
+      // data.append("tags", this.form.tags);
+      // data.append("genre", this.form.genre);
+      // const book = this.form;
+      // await this.$store
+      //   .dispatch("book/addBook", data)
+      //   .then(() => {
+      //     this.$message({
+      //       message: "本の投稿に成功しました",
+      //       type: "success"
+      //     });
+      //     this.form = {};
+      //   })
+      //   .catch(e => {
+      //     this.$message({
+      //       message: `本の投稿に失敗しました！`,
+      //       type: "error"
+      //     });
+      //   });
     }
   }
 };

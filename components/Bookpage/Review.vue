@@ -33,7 +33,7 @@
       </div>
 
       <div class="reviews-content-text" :class="readMore">
-        <p>{{review.content}}</p>
+        <div v-html="review.content"></div>
         <div v-if="this.review.content.length > 340" class="buts">
           <a
             @click="toggleCollapse"

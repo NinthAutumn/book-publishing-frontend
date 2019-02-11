@@ -57,16 +57,10 @@ export const actions = {
     commit
   }, book) {
 
-    let config = {
-      headers: {
-        'content-type': 'multipart/form-data',
-      }
-    };
-    config.headers['X-HTTP-Method-Override'] = 'PUT';
-
-    await this.$axios.post(process.env.baseUrl + '/books/add', book, config).then((response) => {
-      commit('ALL', response)
-    })
+    // await this.$axios.post(process.env.baseUrl + '/books/add', book, config).then((response) => {
+    //   commit('ALL', response)
+    // })
+    console.log("why?????");
     // commit('add', book)
   },
   async uploadCover({

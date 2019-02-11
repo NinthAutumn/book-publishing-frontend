@@ -100,7 +100,6 @@ module.exports = {
   modules: [
 
     '@nuxtjs/pwa',
-
     'nuxt-device-detect',
 
     // Doc: https://github.com/nuxt-community/axios-module#usage
