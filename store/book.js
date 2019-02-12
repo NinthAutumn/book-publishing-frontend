@@ -119,6 +119,9 @@ export const mutations = {
   UPDATE() {
 
   },
+  URL_GOOGLE() {
+    const url = "https://storage.googleapis.com/theta-images/"
+  },
   DELETE() {
 
   },

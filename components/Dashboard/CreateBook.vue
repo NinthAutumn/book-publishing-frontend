@@ -2,37 +2,42 @@
   <div class="book-form">
     <h3 class="book-form__title">本の情報</h3>
     <form ref="form" @submit.prevent="postBook" class="flex flex-column">
-      <label for="avatar-uploader">本のカバー</label>
-      <el-upload
-        class="avatar-uploader flex"
-        action
-        drag
-        :show-file-list="false"
-        :on-success="handleAvatarSuccess"
-        :before-upload="beforeAvatarUpload"
-      >
-        <img v-if="imageUrl" :src="imageUrl" class="avatar">
-        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-      </el-upload>
-      <label for="title">タイトル</label>
-      <input
-        type="text"
-        name="title"
-        for="title"
-        class="book-form--input form-input form-input--primary"
-        placeholder="Title"
-        v-model="form.title"
-      >
-      <label for="synopsis">あらすじ</label>
-      <textarea
-        class="book-form--textarea"
-        name="synopsis"
-        id
-        cols="30"
-        rows="10"
-        placeholder="Summary"
-        v-model="form.synopsis"
-      ></textarea>
+      <div class="divider flex">
+        <div class="divider" style="margin-right:10px;">
+          <label for="avatar-uploader">本のカバー</label>
+          <el-upload
+            class="avatar-uploader flex"
+            action
+            drag
+            :show-file-list="false"
+            :on-success="handleAvatarSuccess"
+            :before-upload="beforeAvatarUpload"
+          >
+            <img v-if="imageUrl" :src="imageUrl" class="avatar">
+            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+          </el-upload>
+        </div>
+        <div class="divider flex flex-column" style="width:100%;">
+          <label for="book-title">タイトル</label>
+          <input
+            type="text"
+            name="book-title"
+            for="book-title"
+            class="book-form--input form-input form-input--primary"
+            placeholder="タイトル"
+            v-model="form.title"
+          >
+          <label for="synopsis">あらすじ</label>
+          <textarea
+            class="book-form--textarea"
+            name="synopsis"
+            for="synopsis"
+            placeholder="あらすじ"
+            v-model="form.synopsis"
+          ></textarea>
+        </div>
+      </div>
+
       <label for="genre">ジャンル</label>
       <el-select v-model="form.genre" multiple filterable placeholder="Select">
         <el-option v-for="item in list" :key="item" :label="item" :value="item"></el-option>
@@ -124,7 +129,32 @@ export default {
     },
     async postBook() {
       // delete this.#a
-      await this.$store.dispatch("upload/image", this.form.avatar);
+      await this.$store
+        .dispatch("upload/image", this.form.avatar)
+        .then(async () => {
+          const book = {
+            title: this.form.title,
+            tags: this.form.tags,
+            genre: this.form.genre,
+            synopsis: this.form.synopsis,
+            cover: this.$store.state.upload.url
+          };
+          await this.$store
+            .dispatch("book/addBook", book)
+            .then(() => {
+              this.$message({
+                message: "本の投稿に成功しました",
+                type: "success"
+              });
+              this.form = {};
+            })
+            .catch(e => {
+              this.$message({
+                message: `本の投稿に失敗しました！`,
+                type: "error"
+              });
+            });
+        });
       // const data = new FormData();
       // data.append("avatar", this.form.avatar);
       // // await thi
@@ -132,22 +162,6 @@ export default {
       // data.append("title", this.form.title);
       // data.append("tags", this.form.tags);
       // data.append("genre", this.form.genre);
-      // const book = this.form;
-      // await this.$store
-      //   .dispatch("book/addBook", data)
-      //   .then(() => {
-      //     this.$message({
-      //       message: "本の投稿に成功しました",
-      //       type: "success"
-      //     });
-      //     this.form = {};
-      //   })
-      //   .catch(e => {
-      //     this.$message({
-      //       message: `本の投稿に失敗しました！`,
-      //       type: "error"
-      //     });
-      //   });
     }
   }
 };
@@ -240,9 +254,9 @@ export default {
   // box-shadow: 1px 1px 5px 0px rgb(199, 198, 198);
   overflow: scroll;
   // height: 80vh;
-  width: 500px;
+  width: 800px;
   &__title {
-    font-size: 20px;
+    font-size: 25px;
     margin-top: 0;
     color: #8b8b8b;
     font-weight: 400;
@@ -251,9 +265,14 @@ export default {
   }
   &--input {
     margin-bottom: 20px;
+    line-height: 20px;
+    font-size: 18px;
+    &:focus {
+      outline: none;
+    }
   }
   label {
-    font-size: 16px;
+    font-size: 18px;
     color: #bfbfc2;
   }
 
@@ -261,15 +280,18 @@ export default {
     width: 140px;
   }
   &--textarea {
+    line-height: 20px;
     resize: none;
     font-size: 16px;
     border: 0px solid;
     color: #a3a3a3;
     border-bottom-width: 2px;
     border-style: solid;
+    height: 100%;
     border-bottom-color: $primary;
     padding: 5px;
     margin-bottom: 20px;
+    width: 100%;
     &:focus {
       // display: none;
       outline: none;
@@ -277,8 +299,9 @@ export default {
   }
 }
 .el-upload-dragger {
-  width: 130px;
-  height: 191px;
+  width: 30.8rem;
+  height: 45.9rem;
+  display: flex;
   border: none;
   &:hover {
     border: none;
@@ -303,10 +326,11 @@ export default {
   height: 191px;
   line-height: 178px;
   text-align: center;
+  margin: auto;
 }
 .avatar {
-  width: 130px;
-  height: 191px;
+  width: 30.8rem;
+  height: 45.9rem;
   display: block;
 }
 </style>

@@ -10,7 +10,9 @@ export const state = () => ({
 })
 
 export const getters = {
-
+  published: (state) => {
+    return state.pTOC
+  },
   deleted: (state) => {
     return state.dTOC.filter((chapter) => {
       return chapter.state === 'deleted'
@@ -39,7 +41,10 @@ export const mutations = {
     state.modal = ''
   },
   TOC_REVERSE(state) {
-    state.cToc = state.cToc.reverse()
+    state.pTOC = state.pTOC.reverse()
+    state.pTOC.forEach((volume) => {
+      volume.reverse()
+    })
   },
   TOC_BOOK(state, toc) {
     state.cToc = toc

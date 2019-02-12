@@ -126,7 +126,7 @@ export default {
   async fetch({ store, params }) {
     await store.dispatch("book/getBook", params.id);
     await store.dispatch("review/showAll", params.id);
-    await store.dispatch("chapter/TOCBook", params.id);
+    await store.dispatch("chapter/publishedTOC", params.id);
     if (store.state.auth.loggedIn) {
       await store.dispatch("library/getBookmark").then(() => {
         store.commit("book/BOOKMARKED", store.state.library.bookmarks);

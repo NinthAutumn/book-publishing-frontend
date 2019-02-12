@@ -108,6 +108,9 @@ module.exports = {
       locales: ['ja'],
       defaultLocale: 'ja'
     }],
+    ['@nuxtjs/component-cache', {
+      maxAge: 1000 * 60 * 60
+    }],
     // "@nuxtjs/auth",
     'cookie-universal-nuxt',
     'nuxt-svg-loader',

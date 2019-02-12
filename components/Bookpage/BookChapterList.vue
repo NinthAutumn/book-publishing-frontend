@@ -9,32 +9,20 @@
       ></fa>
     </div>
     <transition-group class="bookchapterlists__list" name="list-complete" tag="ul">
-      <li class="bookchapterlists__list--items" v-for="(chapter, index) in chap" :key="index">
-        <!-- {{rowCount = 0}} -->
-        <!-- {{formatDate(chapter.createdAt)}} -->
-        <nuxt-link
-          v-if="chapter.index === 0"
-          class="bookchapterlists__list--items__links"
-        >Prologue {{chapter.index}}: {{chapter.title}}</nuxt-link>
-        <!-- <nuxt-link
-          class="bookchapterlists__list--items__links--darker"
-          v-else-if="index  % 2  === 1"
-          :to="{path: `${ $route.params.id}/${chapter._id}`}"
-        >Chapter {{chapter.index}}: {{chapter.title}}</nuxt-link>-->
-        <nuxt-link
-          v-else
-          class="bookchapterlists__list--items__links"
-          :to="{path: `${ $route.params.id}/${chapter.index}`}"
-        >
-          <p
-            class="bookchapterlists__list--items__links--title"
-          >{{chapter.index}}話: {{chapter.title}}</p>
-          <p class="chapter-createdAt">{{$moment(chapter.createdAt).startOf('hour').fromNow()}}</p>
-          <!-- <timeago  :datetime="chapter.createdAt" locale="ja"></timeago> -->
-        </nuxt-link>
-
-        <!-- {{rowCounts(index)}} -->
-      </li>
+      <div class="li" v-for="(volume, index) in chap" :key="index">
+        <div class="volume-title">第{{index + 1}}章</div>
+        <li class="bookchapterlists__list--items" v-for="(chapter, index) in volume" :key="index">
+          <nuxt-link
+            class="bookchapterlists__list--items__links"
+            :to="{path: `${ $route.params.id}/${chapter.index}`}"
+          >
+            <p
+              class="bookchapterlists__list--items__links--title"
+            >{{chapter.index}}話: {{chapter.title}}</p>
+            <p class="chapter-createdAt">{{$moment(chapter.createdAt).startOf('hour').fromNow()}}</p>
+          </nuxt-link>
+        </li>
+      </div>
     </transition-group>
   </div>
 </template>
@@ -74,7 +62,7 @@ export default {
   },
   computed: {
     chap: function() {
-      return this.$store.getters["chapter/published"];
+      return this.$store.state.chapter.pTOC;
     }
   },
   asyncData() {}
