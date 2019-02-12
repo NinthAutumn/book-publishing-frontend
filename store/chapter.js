@@ -37,7 +37,13 @@ export const mutations = {
     state.toc = toc
     state.modal = 'table'
   },
-  TOC_CLOSE(state) {
+  IMAGE(state) {
+    state.modal = 'image'
+  },
+  SETTING(state) {
+    state.modal = 'setting'
+  },
+  MODAL_CLOSE(state) {
     state.modal = ''
   },
   TOC_REVERSE(state) {
@@ -87,7 +93,7 @@ export const actions = {
     state
   }, bookId) {
     if (state.modal === 'table') {
-      return commit('TOC_CLOSE')
+      return commit('MODAL_CLOSE')
     }
     await this.$axios.get(process.env.baseUrl + '/chapters/toc?bookId=' + bookId).then((res) => {
       commit('TOC', res.data)

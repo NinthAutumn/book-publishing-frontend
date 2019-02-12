@@ -61,6 +61,25 @@ export default {
 </script>
 
 <style lang="scss">
+.chapters-modal {
+  // right: 0;
+  position: sticky;
+  // left: 50%;
+  top: 0;
+  height: 100vh;
+  width: 400px;
+  background-color: white;
+  // top: 50px;
+  &__author-profile {
+  }
+  &__images {
+  }
+  &__table-of-content {
+    height: 100%;
+  }
+  &__user-setting {
+  }
+}
 .yikes {
   // transition: 200ms;
 }

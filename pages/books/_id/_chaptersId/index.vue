@@ -92,23 +92,7 @@ export default {
 body {
   // background-color: black;
 }
-.chapters-modal {
-  position: sticky;
-  height: 100vh;
-  width: 400px;
-  background-color: white;
-  top: 0;
-  // right: 0;
-  &__author-profile {
-  }
-  &__images {
-  }
-  &__table-of-content {
-    height: 100%;
-  }
-  &__user-setting {
-  }
-}
+
 .navigation-next {
   position: sticky !important;
   height: 100vh;

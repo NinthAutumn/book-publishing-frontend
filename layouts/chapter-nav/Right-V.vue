@@ -7,12 +7,12 @@
           <fa class="nav-icon__item nav-icon__item--author" icon="user-ninja"></fa>
         </div>
         <div class="nav-icon">
-          <fa class="nav-icon__item nav-icon__item--image" icon="image"></fa>
+          <fa class="nav-icon__item nav-icon__item--image" icon="image" @click="images"></fa>
         </div>
         <div class="nav-icon" @click="table">
           <fa class="nav-icon__item" icon="list-ul"></fa>
         </div>
-        <div class="nav-icon">
+        <div class="nav-icon" @click="setting">
           <fa class="nav-icon__item nav-icon__item--cog" icon="cog"></fa>
         </div>
       </div>
@@ -28,6 +28,20 @@ export default {
         "chapter/tableOfContent",
         this.$route.params.id
       );
+    },
+    async setting() {
+      if (this.$store.state.chapter.modal === "setting") {
+        await this.$store.commit("chapter/MODAL_CLOSE");
+      } else {
+        await this.$store.commit("chapter/SETTING");
+      }
+    },
+    async images() {
+      if (this.$store.state.chapter.modal === "image") {
+        await this.$store.commit("chapter/MODAL_CLOSE");
+      } else {
+        await this.$store.commit("chapter/IMAGE");
+      }
     }
   }
 };

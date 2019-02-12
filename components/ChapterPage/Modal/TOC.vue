@@ -10,7 +10,7 @@
 export default {
   computed: {
     toc() {
-      return this.$store.state.getters["chapter/published"];
+      return this.$store.state.chapter.toc;
     }
   },
   created() {}
@@ -18,4 +18,12 @@ export default {
 </script>
 
 <style>
+.table-of-content {
+  top: 50px;
+  position: sticky;
+  width: 400px;
+  padding: 10px;
+  box-sizing: border-box;
+  /* height: 100vh; */
+}
 </style>
