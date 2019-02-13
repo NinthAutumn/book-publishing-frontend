@@ -1,4 +1,5 @@
 import Cookies from 'js-cookie';
+import uuid from 'uuid'
 import {
   serialize,
   parse
@@ -83,10 +84,22 @@ export const actions = {
     commit,
     state
   }, {
-    req
+    req,
+    res
   }) {
     if (req.headers.cookie) {
       const token = cookie.parse(req.headers.cookie).token
+      const track_id = cookie.parse(req.headers.cookie).track_id
+      console.log(track_id);
+
+      if (!track_id) {
+        const id = uuid()
+        res.setHeader('Set-Cookie', [serialize('track_id', id)])
+        this.$axios.defaults.headers.common['TrackId'] = id
+      } else {
+        console.log("set");
+        this.$axios.defaults.headers.common['TrackId'] = track_id
+      }
 
       if (token) {
         this.$axios.defaults.headers.common['Authorization'] = token;

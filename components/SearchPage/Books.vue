@@ -45,8 +45,14 @@
         </div>
         <div class="book-synopsis">
           <p class="synopsis" :class="readMore">{{book.synopsis}}</p>
-          <a class="primary flex-row flex-row--around" @click="openState" v-if="!readMore">Read More</a>
-          <a class="primary flex-row flex-row--around" @click="openState" v-else>Read Less</a>
+          <div class="divider" v-if="readMore">
+            <a
+              class="primary flex-row flex-row--around"
+              @click="openState"
+              v-if="!readMore"
+            >Read More</a>
+            <a class="primary flex-row flex-row--around" @click="openState" v-else>Read Less</a>
+          </div>
         </div>
       </div>
     </div>
@@ -71,6 +77,14 @@ export default {
       } else {
         this.readMore = "open";
       }
+    }
+  },
+  created() {
+    if (this.book.synopsis.length > 340) {
+      this.readMore = "open";
+      // this.read = "open";
+    } else {
+      this.readMore = "";
     }
   }
 };

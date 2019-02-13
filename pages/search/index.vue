@@ -1,11 +1,6 @@
 <template>
   <div id="search">
     <ul>
-      <vue-element-loading
-        :active="$store.state.search.isLoading"
-        spinner="bar-fade-scale"
-        is-full-screen
-      ></vue-element-loading>
       <li class="search-book-item" v-for="(book, index) in searchBooks" :key="index">
         <Books :book="book"></Books>
       </li>
@@ -28,6 +23,9 @@ export default {
     return {};
   },
   methods: {},
+  created() {
+    console.log(this.$store.state.search.books[0]);
+  },
   auth: false
 };
 </script>
