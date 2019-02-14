@@ -128,7 +128,7 @@ export default {
   /* padding: 5px 0; */
   /* text-align: center; */
   /* background: #557fe980; */
-  width: 15rem;
+  // width: 15rem;
   border-radius: 0.5rem;
   font-weight: 300;
   /* -webkit-box-shadow: 1px 1px 1px 0px rgba(153, 153, 153, 0.75);

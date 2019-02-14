@@ -1,7 +1,11 @@
 <template>
   <main class="book">
     <div class="book__cover">
-      <img class="book__cover__img" :src="$store.getters['book/showbook'].cover" alt>
+      <img
+        class="book__cover__img"
+        :src="'https://storage.googleapis.com/theta-images/' + $store.getters['book/showbook'].cover"
+        alt
+      >
     </div>
     <section class="book__info">
       <div class="divider flex-row flex--align flex--between">

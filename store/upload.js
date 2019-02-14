@@ -20,13 +20,14 @@ export const actions = {
   }, file) {
     console.log("this is gract");
     delete this.$axios.defaults.headers.common['Authorization'];
-
+    delete this.$axios.defaults.headers.common['TrackId'];
     const uploadConfig = await this.$axios.get(process.env.baseUrl + '/upload/cover?dataType=' + file.type)
     console.log(uploadConfig.data);
     await this.$axios.put(uploadConfig.data.url, file, {
       headers: {
         'Content-Type': file.type,
-        "Authorization": null
+        "Authorization": null,
+        "TrackId": null
       }
     }).then(() => {
       commit('ADD_URL', uploadConfig.data.filename)
@@ -34,6 +35,8 @@ export const actions = {
       console.log(e);
     })
     const token = Cookies.get('token');
+    const uuid = Cookies.get('track_id');
+    this.$axios.defaults.headers.common['TrackId'] = uuid
     this.$axios.defaults.headers.common['Authorization'] = token;
 
   }

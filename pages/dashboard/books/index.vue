@@ -17,7 +17,11 @@
       <tbody>
         <tr v-for="(book, index) in books" :key="index">
           <td>
-            <img class="user-books__cover" :src="book.cover" alt>
+            <img
+              class="user-books__cover"
+              :src="'https://storage.googleapis.com/theta-images/' + book.cover"
+              alt
+            >
           </td>
           <td></td>
           <td>連載中</td>

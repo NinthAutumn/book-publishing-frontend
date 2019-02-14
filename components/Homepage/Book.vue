@@ -3,7 +3,11 @@
     <div id="book-card" class="big" @click="linkTo">
       <div class="book-cover">
         <span class="star-rating"></span>
-        <img :src="book.cover" class="book-img" alt="Book cover">
+        <img
+          :src=" 'https://storage.googleapis.com/theta-images/'+ book.cover"
+          class="book-img"
+          alt="Book cover"
+        >
       </div>
       <div class="text-info">
         <p class="book-title full" ref="texting">

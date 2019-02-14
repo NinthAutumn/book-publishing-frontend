@@ -37,7 +37,10 @@
           ></textarea>
         </div>
       </div>
-
+      <label for="mgenre">メインジャンル</label>
+      <el-select v-model="form.mgenre" filterable placeholder="Select">
+        <el-option v-for="item in list" :key="item" :label="item" :value="item"></el-option>
+      </el-select>
       <label for="genre">ジャンル</label>
       <el-select v-model="form.genre" multiple filterable placeholder="Select">
         <el-option v-for="item in list" :key="item" :label="item" :value="item"></el-option>
@@ -76,6 +79,7 @@ export default {
         synopsis: "",
         title: "",
         tags: [],
+        mgenre: "",
         genre: [],
         avatar: {}
       },
@@ -135,7 +139,7 @@ export default {
           const book = {
             title: this.form.title,
             tags: this.form.tags,
-            genre: this.form.genre,
+            genres: this.form.genre,
             synopsis: this.form.synopsis,
             cover: this.$store.state.upload.url
           };
