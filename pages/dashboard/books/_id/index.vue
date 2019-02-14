@@ -36,7 +36,8 @@ export default {
     // await store.dispatch("chapter/TOCBook", params.id);
     await store.dispatch("chapter/dashboardTOC", params.id);
     await store.dispatch("chapter/publishedTOC", params.id);
-    // await store.dispatch("book/getBook", params.id);
+    // await store.dispatch('')
+    await store.dispatch("book/getBook", params.id);
     // console.log(store.state.auth);
   },
   created() {

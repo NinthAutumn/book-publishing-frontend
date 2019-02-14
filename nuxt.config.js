@@ -101,7 +101,7 @@ module.exports = {
 
     '@nuxtjs/pwa',
     'nuxt-device-detect',
-
+    'nuxt-webfontloader',
     // Doc: https://github.com/nuxt-community/axios-module#usage
     '@nuxtjs/axios',
     ['@nuxtjs/moment', {
@@ -173,6 +173,11 @@ module.exports = {
   router: {
     middleware: ['logged'],
     linkActiveClass: 'active-link'
+  },
+  webfontloader: {
+    google: {
+      families: ['IBM Plex Sans:300,400,700'] //Loads Lato font with weights 400 and 700
+    }
   },
   /*
    ** Build configuration

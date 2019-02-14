@@ -33,6 +33,7 @@
     "nuxt-device-detect": "^1.1.2",
     "nuxt-fontawesome": "^0.4.0",
     "nuxt-svg-loader": "^1.0.1",
+    "nuxt-webfontloader": "^1.0.0",
     "swiper": "^4.4.2",
     "uuid": "^3.3.2",
     "v-click-outside-x": "^3.5.6",

@@ -13,7 +13,7 @@
         <div class="review-card__info__title">{{review._id.review[0].title}}</div>
       </div>
 
-      <div class="review-card__info__content">{{review._id.review[0].content}}</div>
+      <div class="review-card__info__content" v-html="review._id.review[0].content"></div>
     </div>
     <div class="review-card__book flex-column flex--center">
       <div class="review-card__info__rating">
