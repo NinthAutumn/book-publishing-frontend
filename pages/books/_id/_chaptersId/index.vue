@@ -1,9 +1,9 @@
 <template>
   <div class="divider flex">
-    <div class="divider chapter-container">
+    <main class="divider chapter-container">
       <Chapter></Chapter>
       <CommentList></CommentList>
-    </div>
+    </main>
   </div>
 </template>
 

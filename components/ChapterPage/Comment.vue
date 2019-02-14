@@ -1,6 +1,6 @@
 <template>
-  <div class="comment-modal">
-    <div class="comment-modal__container" v-if="showChildren">
+  <section class="comment-modal">
+    <article class="comment-modal__container" v-if="showChildren">
       <div :style="indent" class="divider flex">
         <div class="comment-modal__rate flex flex-column flex--align flex--left">
           <div class="rate-up">
@@ -77,7 +77,7 @@
           :depth="depth + 1"
         ></comment-modal>
       </div>
-    </div>
+    </article>
     <div class="comment-modal__closed" v-else>
       <div :style="indented" class="container">
         <div class="open-comment" @click="toggleChildren">
@@ -93,7 +93,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </section>
 </template>
 
 <script>

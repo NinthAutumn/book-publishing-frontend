@@ -1,12 +1,12 @@
 <template>
-  <div class="book">
+  <main class="book">
     <div class="book__cover">
       <img class="book__cover__img" :src="$store.getters['book/showbook'].cover" alt>
     </div>
-    <div class="book__info">
+    <section class="book__info">
       <div class="divider flex-row flex--align flex--between">
         <div class="divider flex-column flex--between">
-          <div class="book__info__title">{{$store.getters['book/showbook'].title}}</div>
+          <header class="book__info__title">{{$store.getters['book/showbook'].title}}</header>
           <div class="book-meta flex">
             <div class="book-genre pill pill-secondary-light">
               <div class="book-genre-icon pill-text">
@@ -62,11 +62,11 @@
         </div>
         <div class="book__stats__buttons"></div>
       </div>
-    </div>
+    </section>
     <div class="book__chapters">
       <BookChapterList></BookChapterList>
     </div>
-    <div class="book__reviews">
+    <section class="book__reviews">
       <!-- <label for="title">Title</label> -->
       <!-- <froala :tag="'textarea'" :config="config" v-model="content"></froala> -->
       <!-- <no-ssr>
@@ -75,7 +75,7 @@
       <!-- <div v-html="content"></div> -->
       <div class="book__reviews__divider flex flex--align flex--between">
         <div class="book__rating__all flex flex--align">
-          <h3 class="reviews__title">レビュー({{$store.state.review.reviews.length}})</h3>
+          <header class="reviews__title">レビュー({{$store.state.review.reviews.length}})</header>
 
           <no-ssr class>
             <star-rating
@@ -98,7 +98,7 @@
       </div>
       <hr>
       <ReviewsList></ReviewsList>
-    </div>
+    </section>
     <div class="divider">
       <transition name="fade">
         <div
@@ -111,7 +111,7 @@
         </div>
       </transition>
     </div>
-  </div>
+  </main>
 </template>
 
 <script>

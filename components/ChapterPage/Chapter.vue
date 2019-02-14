@@ -1,5 +1,5 @@
 <template>
-  <div class="divider" style="padding: 0 10px;">
+  <section class="divider" style="padding: 0 10px;">
     <div class="chapter-title">
       <header>{{$store.state.chapter.chapter.title}}</header>
     </div>
@@ -7,16 +7,17 @@
       class="chapter-announcement"
       v-if="$store.state.chapter.chapter.extra"
     >{{$store.state.chapter.chapter.extra}}</div>
-    <div
+    <article
       class="chapter-content"
       v-html="$store.state.chapter.chapter.content"
       style="flex-direction:column;"
-    ></div>
+    ></article>
+
     <div
       class="chapter-announcement"
       v-if="$store.state.chapter.chapter.extra"
     >{{$store.state.chapter.chapter.extra}}</div>
-  </div>
+  </section>
 </template>
 
 <script>
