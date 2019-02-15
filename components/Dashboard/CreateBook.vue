@@ -175,28 +175,68 @@ export default {
 .el-scrollbar {
   font-size: 16px !important;
   span {
-    font-size: 16px;
+    font-size: 16px !important;
   }
 }
 .el-select__tags-text {
   font-size: 14px;
 }
 .el-input__inner {
-  // height: 40px;
-}
-.el-select {
-  margin-bottom: 10px;
-}
-.el-input__inner {
-  border-radius: 0;
-  border: 0;
-  border-bottom: 2px solid $primary;
-  padding-left: 2px;
   font-size: 16px;
 }
-.el-select__input {
-  margin: 0;
+.book-form {
+  .el-input__inner {
+    // height: 40px;
+  }
+  .el-select {
+    margin-bottom: 10px;
+  }
+  .el-input__inner {
+    border-radius: 0;
+    border: 0;
+    border-bottom: 2px solid $primary;
+    padding-left: 2px;
+  }
+  .el-select__input {
+    margin: 0;
+  }
+  .el-upload-dragger {
+    width: 30.8rem;
+    height: 45.9rem;
+    display: flex;
+    border: none;
+    &:hover {
+      border: none;
+    }
+  }
+  .avatar-uploader .el-upload {
+    border: 2px solid;
+    border-color: $primary-lighter;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 20px;
+  }
+  .avatar-uploader .el-upload:hover {
+    border-color: $primary;
+  }
+  .avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 130px;
+    height: 191px;
+    line-height: 178px;
+    text-align: center;
+    margin: auto;
+  }
+  .avatar {
+    width: 30.8rem;
+    height: 45.9rem;
+    display: block;
+  }
 }
+
 .vue-input-tag-wrapper {
   border: 0px solid $primary !important;
   border-bottom: 2px solid $primary !important;
@@ -301,40 +341,5 @@ export default {
       outline: none;
     }
   }
-}
-.el-upload-dragger {
-  width: 30.8rem;
-  height: 45.9rem;
-  display: flex;
-  border: none;
-  &:hover {
-    border: none;
-  }
-}
-.avatar-uploader .el-upload {
-  border: 2px solid;
-  border-color: $primary-lighter;
-  border-radius: 6px;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-  margin-bottom: 20px;
-}
-.avatar-uploader .el-upload:hover {
-  border-color: $primary;
-}
-.avatar-uploader-icon {
-  font-size: 28px;
-  color: #8c939d;
-  width: 130px;
-  height: 191px;
-  line-height: 178px;
-  text-align: center;
-  margin: auto;
-}
-.avatar {
-  width: 30.8rem;
-  height: 45.9rem;
-  display: block;
 }
 </style>

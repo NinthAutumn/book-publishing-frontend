@@ -1,35 +1,87 @@
 
 <template>
   <div class="chapter-form">
-    <form action class="flex flex-column chapter-new">
+    <form action class="flex flex-column chapter-new" @submit.prevent="createChapter">
       <!-- <h3></h3> -->
       <!-- <fa icon="plus"></fa> -->
-      <div class="chapter-form__navigation flex flex--between">
-        <div class="divider">
-          <div @click="back" class="button button--secondary" v-if="progress > 0">
-            <fa style="font-size:14px;" icon="chevron-left"></fa>
-            <p style="font-size:14px;margin-left:2px;">前</p>
+      <el-steps :active="progress">
+        <el-step title="ステップ１" icon="el-icon-upload"></el-step>
+        <el-step title="ステップ２" icon=" el-icon-edit"></el-step>
+        <el-step title="ステップ３" icon="el-icon-picture"></el-step>
+      </el-steps>
+      <div class="chapter-form__navigation flex flex--between" style="margin-top:10px;">
+        <div
+          class="divider chapter-form__navigation__button chapter-form__navigation__button--back"
+        >
+          <div @click="back" class="flex flex--align" v-if="progress > 1">
+            <fa
+              class="chapter-form__navigation__item chapter-form__navigation__item--icon"
+              style
+              icon="chevron-left"
+            ></fa>
+            <p
+              class="chapter-form__navigation__item chapter-form__navigation__item--text"
+              style="margin-left:2px;"
+            >戻ろ</p>
           </div>
         </div>
-        <div class="divider">
-          <div @click="front" class="button button--primary flex flex--align" v-if="progress < 2">
-            <p style="font-size:14px;margin-right:2px;">次</p>
-            <fa style="font-size:14px;" icon="chevron-right"></fa>
+        <div
+          class="divider chapter-form__navigation__button chapter-form__navigation__button--front"
+        >
+          <div @click="front" class="flex flex--align" v-if="progress < 3">
+            <p
+              class="chapter-form__navigation__item chapter-form__navigation__item--text"
+              style="margin-right:2px;"
+            >進む</p>
+            <fa
+              class="chapter-form__navigation__item chapter-form__navigation__item--icon"
+              style
+              icon="chevron-right"
+            ></fa>
           </div>
         </div>
       </div>
       <transition name="slide-fade">
-        <div class="chapter-form__announcement" v-if="progress === 0">
+        <div class="chapter-form__announcement" v-if="progress === 1">
           <div class="form-control flex-column">
-            <textarea placeholder="前書き" name="header" id rows="5"></textarea>
+            <textarea
+              placeholder="前書き"
+              name="header"
+              v-model="form.extra.announcement.header"
+              id
+              rows="5"
+            ></textarea>
           </div>
           <div class="form-control flex-column">
-            <textarea placeholder="後書き" name="footer" id rows="5"></textarea>
+            <textarea
+              placeholder="後書き"
+              name="footer"
+              v-model="form.extra.announcement.footer"
+              id
+              rows="5"
+            ></textarea>
           </div>
+          <div class="form-control flex flex--align">
+            <label for="schedule" style="margin-right:10px;">投稿する時間を指定する</label>
+            <el-switch v-model="schedule"></el-switch>
+          </div>
+          <transition name="grow-shrink">
+            <div class="form-control" v-if="schedule">
+              <date-picker
+                type="datetime"
+                format="DD/MM/YYYY HH:mm"
+                :not-before="$moment()"
+                :minute-step="1"
+                :lang="lang"
+                v-model="form.date"
+              ></date-picker>
+              <!-- <input type="time" name id> -->
+            </div>
+          </transition>
         </div>
       </transition>
       <transition name="slide-fade">
-        <div class="chapter-form__content-subject" v-if="progress === 1">
+        <div class="chapter-form__content-subject" v-if="progress === 2">
           <div class="form-control">
             <input
               placeholder="タイトル"
@@ -49,24 +101,57 @@
         </div>
       </transition>
       <transition name="slide-fade">
-        <div class="chapter-form__extra" v-if="progress === 2"></div>
+        <div class="chapter-form__extra" v-if="progress === 3">
+          <el-upload
+            class="upload-demo"
+            action
+            :on-preview="handlePreview"
+            :on-remove="handleRemove"
+            :on-success="successPhoto"
+            list-type="picture"
+            :limit="3"
+            :on-exceed="handleExceed"
+            accept="image/*"
+          >
+            <el-button size="small" type="primary">絵など写真の投稿</el-button>
+            <div slot="tip" class="el-upload__tip">jpeg などイメージフォーマットでお願いします</div>
+          </el-upload>
+        </div>
       </transition>
       <div class="chapter-form__navigation flex flex--between">
-        <div class="divider">
-          <div @click="back" class="button button--secondary" v-if="progress > 0">
-            <fa style="font-size:14px;" icon="chevron-left"></fa>
-            <p style="font-size:14px;margin-left:2px;">前</p>
+        <div
+          class="divider chapter-form__navigation__button chapter-form__navigation__button--back"
+        >
+          <div @click="back" class="flex flex--align" v-if="progress > 1">
+            <fa
+              class="chapter-form__navigation__item chapter-form__navigation__item--icon"
+              style
+              icon="chevron-left"
+            ></fa>
+            <p
+              class="chapter-form__navigation__item chapter-form__navigation__item--text"
+              style="margin-left:2px;"
+            >戻る</p>
           </div>
         </div>
-        <div class="divider">
-          <div @click="front" class="button button--primary flex flex--align" v-if="progress < 2">
-            <p style="font-size:14px;margin-right:2px;">次</p>
-            <fa style="font-size:14px;" icon="chevron-right"></fa>
+        <div
+          class="divider chapter-form__navigation__button chapter-form__navigation__button--front"
+        >
+          <div @click="front" class="flex flex--align" v-if="progress < 3">
+            <p
+              class="chapter-form__navigation__item chapter-form__navigation__item--text"
+              style="margin-right:2px;"
+            >進む</p>
+            <fa
+              class="chapter-form__navigation__item chapter-form__navigation__item--icon"
+              style
+              icon="chevron-right"
+            ></fa>
           </div>
         </div>
       </div>
 
-      <div class="flex flex--right" v-if="progress === 2">
+      <div class="flex flex--right" v-if="progress === 3">
         <input
           type="submit"
           class="form-submit form-submit--primary chapter-new-submit"
@@ -81,7 +166,9 @@
 export default {
   data() {
     return {
-      progress: 0,
+      progress: 1,
+      fileList: [],
+      schedule: false,
       form: {
         title: "",
         content: "",
@@ -90,7 +177,8 @@ export default {
           announcement: {
             header: "",
             footer: ""
-          }
+          },
+          drawings: []
         }
       },
       customToolbar: [
@@ -100,7 +188,7 @@ export default {
         ["clean"]
       ],
       lang: {
-        days: ["日曜", "月曜", "火曜", "水曜", "木曜", "金曜", "土曜"],
+        days: ["日", "月", "火", "水", "木", "金", "土"],
         months: [
           "1月",
           "2月",
@@ -122,7 +210,7 @@ export default {
           "previous 30 days"
         ],
         placeholder: {
-          date: "日にちを選ぶ(選ばなかったら関係ない)",
+          date: "日にちを選ぶ",
           dateRange: "Select Date Range"
         }
       }
@@ -134,6 +222,27 @@ export default {
     },
     back() {
       this.progress--;
+    },
+    handleRemove(file, fileList) {
+      console.log(file, fileList);
+    },
+    handlePreview(file) {
+      console.log(file);
+    },
+    successPhoto(res, file) {
+      this.form.extra.drawings.push(file.raw);
+    },
+    async createChapter() {
+      this.form.extra.drawings.forEach(async image => {
+        await this.$store.dispatch("upload/image", image);
+      });
+    },
+    handleExceed(files, fileList) {
+      this.$message.warning(
+        `The limit is 3, you selected ${
+          files.length
+        } files this time, add up to ${files.length + fileList.length} totally`
+      );
     }
     // move(e){
     //   if(e === )
@@ -143,6 +252,10 @@ export default {
 </script>
 
 <style lang="scss">
+.el-button--mini,
+.el-button--small span {
+  font-size: 13px;
+}
 .chapter-new-submit {
   margin-bottom: 10px;
 }
@@ -154,6 +267,12 @@ export default {
 }
 .ql-snow * {
   font-size: 16px;
+}
+.el-step__line {
+  font-size: 16px !important;
+}
+.el-step__icon-inner {
+  font-size: 20px !important;
 }
 .quillWrapper .ql-snow.ql-toolbar {
   // padding: 0 15px !important;
@@ -195,6 +314,52 @@ export default {
   //
 }
 .chapter-form {
+  .el-step__title {
+    font-size: 14px;
+    line-height: 1;
+  }
+  &__navigation {
+    &__button {
+      height: 30px;
+      // width: 70px;
+
+      transition: 300ms;
+      &:hover {
+        transform: scale(1.2);
+        transition: 300ms;
+      }
+      &--back {
+        display: flex;
+        align-items: center;
+        color: $secondary;
+        // font-si
+      }
+      &--front {
+        display: flex;
+        align-items: center;
+        color: $primary;
+        // justify-content: flex-end;
+      }
+      // justify-content: space-around;
+    }
+    &:hover {
+      cursor: pointer;
+    }
+    &__item {
+      line-height: 0;
+      font-size: 16px;
+      // &--icon {
+      //   &:hover {
+      //     transform: translateX(100px);
+      //   }
+      // }
+      // display: flex;
+      // align-items: center;
+    }
+  }
+  &__extra {
+    margin: 10px 0;
+  }
   .chapter-new {
     box-shadow: 1px 1px 5px 0px rgb(209, 209, 209);
     padding: 10px 40px !important;

@@ -57,11 +57,8 @@ export const actions = {
     commit
   }, book) {
 
-    await this.$axios.post(process.env.baseUrl + '/books/add', book).then((response) => {
-      commit('ALL', response)
-    })
+    await this.$axios.post(process.env.baseUrl + '/books/add', book)
     // console.log("why?????");
-    commit('add', book)
   },
   async uploadCover({
     commit
