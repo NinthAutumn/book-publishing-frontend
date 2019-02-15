@@ -91,6 +91,9 @@ module.exports = {
     }, {
       src: '@/plugins/datePicker',
       ssr: false
+    }, {
+      src: '@/plugins/vuelineclamp',
+      ssr: false
     }
   ],
 

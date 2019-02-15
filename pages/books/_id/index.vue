@@ -111,7 +111,7 @@
           v-if="reviewState"
           :class="{center: $store.state.menuState === 'menu-inactive'}"
         >
-          <ReviewsForm></ReviewsForm>
+          <ReviewsForm v-model="reviewState"></ReviewsForm>
         </div>
       </transition>
     </div>

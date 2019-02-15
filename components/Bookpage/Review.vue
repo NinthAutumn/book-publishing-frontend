@@ -38,7 +38,7 @@
           v-html="review.content"
           :class="{readmore: readMore}"
         ></div>
-        <div v-if="this.review.content.length > 340" class="buts">
+        <div v-if="this.review.content.length > 80" class="buts">
           <a @click="toggleCollapse" v-if="!readMore" class="reviews-content-text-more">Read More</a>
           <a @click="toggleCollapse" v-else class="reviews-content-text-more">Read Less</a>
         </div>
@@ -144,7 +144,6 @@ export default {
     background-color: white;
   }
   .reviews-content-text-more {
-    width: 100%;
   }
 }
 .reviews {
