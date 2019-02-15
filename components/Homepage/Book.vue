@@ -11,7 +11,7 @@
       </div>
       <div class="text-info">
         <p class="book-title full" ref="texting">
-          <a class="animated-link">{{book.title}}</a>
+          <a class="animated-link">{{book.title | truncate(17)}}</a>
         </p>
         <span class="p-ending"></span>
         <no-ssr>
@@ -64,6 +64,15 @@ export default {
     roundT() {
       // book._id.book[0] = Mo
     }
+  },
+  filters: {
+    truncate: (string, number) => {
+      if (string.length > 8) {
+        return (string || "").substring(0, number) + "…";
+      } else {
+        return string;
+      }
+    }
   }
 };
 </script>
@@ -73,12 +82,14 @@ export default {
   flex-direction: column;
   border-radius: 5px;
   margin-right: 2rem;
-  width: 16.5rem;
+  width: 142px;
   /* height: 245px; */
   position: relative;
   .book-cover {
-    width: 16.5rem;
-    height: 24.5rem;
+    width: 142px;
+    height: 209px;
+    // width: 16.5rem;
+    // height: 24.5rem;
     position: relative;
     -webkit-box-shadow: 1px 1px 1px 0px rgba(153, 153, 153, 0.75);
     -moz-box-shadow: 1px 1px 1px 0px rgba(153, 153, 153, 0.75);
@@ -105,8 +116,8 @@ export default {
     }
 
     .book-img {
-      width: 16.5rem;
-      height: 24.5rem;
+      width: 142px;
+      height: 209px;
       position: relative;
       /* border-radius: 10px; */
 
@@ -122,7 +133,7 @@ export default {
     /* background: white; */
     // position: relative;
     /* height: 7rem; */
-    padding: 0.5rem;
+    // padding: 0.5rem;
     .vue-star-rating-rating-text {
       font-size: 1.6rem;
       // position: absolute;
@@ -145,11 +156,11 @@ export default {
       text-align: center;
       width: 95%;
       /* height: 5rem; */
-      overflow: hidden;
-      text-overflow: ellipsis;
-      position: relative;
+      // overflow: hidden;
+      // text-overflow: ellipsis;
+      // position: relative;
       /* line-clamp: 2; */
-      white-space: nowrap;
+      // white-space: nowrap;
       /* display: -webkit-box;
   white-space: normal;
   word-wrap: break-word;
@@ -157,9 +168,9 @@ export default {
   -webkit-line-clamp: 1; */
       transition: 300ms;
       &:hover {
-        overflow: visible;
+        // overflow: visible;
         cursor: pointer;
-        white-space: normal;
+        // white-space: normal;
         /* transition: overflow 500ms; */
         transition: 200ms;
       }

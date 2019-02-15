@@ -32,19 +32,15 @@
         </div>
       </div>
 
-      <div class="reviews-content-text" :class="readMore">
-        <div v-html="review.content"></div>
+      <div class="reviews-content-text flex flex-column flex--between">
+        <div
+          class="reviews-content-text--html"
+          v-html="review.content"
+          :class="{readmore: readMore}"
+        ></div>
         <div v-if="this.review.content.length > 340" class="buts">
-          <a
-            @click="toggleCollapse"
-            v-if="readMore  === 'collapsed'"
-            class="reviews-content-text-more"
-          >Read More</a>
-          <a
-            @click="toggleCollapse"
-            v-if="readMore  === 'open'"
-            class="reviews-content-text-more"
-          >Read Less</a>
+          <a @click="toggleCollapse" v-if="!readMore" class="reviews-content-text-more">Read More</a>
+          <a @click="toggleCollapse" v-else class="reviews-content-text-more">Read Less</a>
         </div>
       </div>
     </div>
@@ -67,7 +63,7 @@ export default {
   },
   data() {
     return {
-      readMore: "collapsed",
+      readMore: false,
       liked: "",
       disliked: ""
     };
@@ -78,11 +74,7 @@ export default {
   },
   methods: {
     toggleCollapse() {
-      if (this.readMore === "collapsed") {
-        this.readMore = "open";
-      } else {
-        this.readMore = "collapsed";
-      }
+      this.readMore = !this.readMore;
     },
     likedReview() {
       if (this.liked) {
@@ -109,13 +101,18 @@ export default {
       return this.review;
     }
   },
-  created() {
-    console.log(this.review.content.length);
-    if (this.review.content.length > 340) {
-      this.readMore = "collapsed";
-    } else {
-      this.readMore = "open";
+  filters: {
+    truncate: (string, number) => {
+      if (string.length > 300) {
+        return (string || "").substring(0, number) + "…";
+      } else {
+        return string;
+      }
     }
+  },
+  created() {
+    // console.log(this.review.content.length);
+
     if (this.$store.state.auth.loggedIn) {
       if (this.review.liked) {
         this.liked = "liked";
@@ -127,6 +124,29 @@ export default {
 
 <style  lang="scss" >
 // @import "../../assets/css/main.scss";
+.reviews-content-text {
+  &--html {
+    height: 142px;
+  }
+  p {
+    font-size: 16px;
+    font-weight: 400;
+    color: #2e2635;
+    text-align: left;
+    // font-weight: 300;
+  }
+  .readmore {
+    height: 100% !important;
+  }
+  .buts {
+    width: 100%;
+    height: 20px;
+    background-color: white;
+  }
+  .reviews-content-text-more {
+    width: 100%;
+  }
+}
 .reviews {
   a {
     color: $primary;
@@ -155,6 +175,7 @@ export default {
   // height: 200px;
   margin-bottom: 10px;
   padding: 10px 5px;
+  padding-bottom: 0 !important;
   box-sizing: border-box;
   // height: 183px;
   overflow: hidden;
@@ -177,6 +198,7 @@ export default {
   }
   &-content {
     padding: 5px 10px;
+    padding-bottom: 0px !important;
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -223,18 +245,6 @@ export default {
       // padding: 10px;
       // margin-left: 10px;
       // height: 100%;
-      p {
-        white-space: pre-wrap;
-        font-size: 16px;
-        line-height: 28px;
-        font-weight: 300;
-        color: #2e2635;
-        text-align: left;
-        overflow: hidden;
-        height: 132px;
-        line-height: 28px;
-        // font-weight: 300;
-      }
     }
     .open {
       // margin-left: 10px;

@@ -12,7 +12,6 @@
       <div class="divider flex-row flex--align">
         <div class="review-card__info__title">{{review._id.review[0].title}}</div>
       </div>
-
       <div class="review-card__info__content" v-html="review._id.review[0].content"></div>
     </div>
     <div class="review-card__book flex-column flex--center">
@@ -51,6 +50,15 @@ export default {
   },
   created() {
     // console.log(this.review._id.user[0].avatar);
+  },
+  filters: {
+    truncate: (string, number) => {
+      if (string.length > 8) {
+        return (string || "").substring(0, number) + "…";
+      } else {
+        return string;
+      }
+    }
   }
 };
 </script>

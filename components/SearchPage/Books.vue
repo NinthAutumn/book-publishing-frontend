@@ -3,7 +3,11 @@
     <div class="book-container flex-row flex-row--betweeen">
       <div class="book-cover">
         <nuxt-link :to="{path: `books/${book._id}`}">
-          <img class="book-cover-img" :src="book.cover" alt>
+          <img
+            class="book-cover-img"
+            :src="'https://storage.googleapis.com/theta-images/' + book.cover"
+            alt
+          >
         </nuxt-link>
       </div>
       <div class="book-info flex-column" :class="readMore">

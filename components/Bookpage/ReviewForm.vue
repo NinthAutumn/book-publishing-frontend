@@ -83,11 +83,24 @@ export default {
   methods: {
     async addReview() {
       const username = this.$store.state.auth.user.username;
-      await this.$store.dispatch("review/addReview", {
-        review: this.review,
-        bookId: this.$route.params.id,
-        username: username
-      });
+      await this.$store
+        .dispatch("review/addReview", {
+          review: this.review,
+          bookId: this.$route.params.id,
+          username: username
+        })
+        .then(() => {
+          this.$message({
+            message: "レビューの投稿に成功しました",
+            type: "success"
+          });
+        })
+        .catch(() => {
+          this.$message({
+            message: "レビューの投稿に失敗しました",
+            type: "error"
+          });
+        });
       // console.log(this.$route.params.id);
     }
   }
