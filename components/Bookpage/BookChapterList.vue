@@ -1,5 +1,5 @@
 <template>
-  <div class="bookchapterlists">
+  <div class="Book-Toc">
     <div class="bookchapterlists__options">
       <fa
         class="bookchapterlists__options--sort"
@@ -8,21 +8,21 @@
         :class="{rotate: ascending}"
       ></fa>
     </div>
-    <transition-group class="bookchapterlists__list" name="list-complete" tag="ul">
-      <div class="li" v-for="(volume, index) in chap" :key="index">
-        <div class="volume-title">第{{index + 1}}章</div>
-        <li class="bookchapterlists__list--items" v-for="(chapter, index) in volume" :key="index">
+    <transition-group name="list-complete" tag="ul" class="Book-TOC__content">
+      <li v-for="(volume, index) in chap" :key="index" class="Book-TOC__all">
+        <div class="volume-title">第{{volume[0].volume.index}}章</div>
+        <div class="Book-TOC__list" v-for="(chapter, index) in volume" :key="index">
           <nuxt-link
-            class="bookchapterlists__list--items__links"
+            class="Book-TOC__item flex flex--between flex--align"
             :to="{path: `${ $route.params.id}/${chapter.index}`}"
           >
+            <p class="Book-TOC__text Book-TOC__text--title">{{chapter.index}}話: {{chapter.title}}</p>
             <p
-              class="bookchapterlists__list--items__links--title"
-            >{{chapter.index}}話: {{chapter.title}}</p>
-            <p class="chapter-createdAt">{{$moment(chapter.createdAt).startOf('hour').fromNow()}}</p>
+              class="Book-TOC__text Book-TOC__text--date"
+            >{{$moment(chapter.createdAt).startOf('hour').fromNow()}}</p>
           </nuxt-link>
-        </li>
-      </div>
+        </div>
+      </li>
     </transition-group>
   </div>
 </template>
@@ -53,7 +53,7 @@ export default {
     //   // console.log(this.rowCount);
     // },
     async asc() {
-      await this.$store.commit("chapter/TOC_REVERSE");
+      this.$store.commit("chapter/TOC_REVERSE");
       this.ascending = !this.ascending;
     }
   },
@@ -74,6 +74,56 @@ export default {
   font-size: 13px;
   text-align: right;
 }
+.volume-title {
+  // display: flex;
+  // align-items: center;
+  font-size: 17px;
+  margin-top: 10px;
+  // height: 50px;
+  // background-color: #eff4ff;
+  // padding: 0 10px;
+  grid-area: title;
+  width: 100%;
+}
+.Book-TOC {
+  &__list {
+    // padding: 0 10px;
+    // &:nth-child(4n-1) {
+    //   background-color: #eff4ff !important;
+    // }
+  }
+  &__content {
+    // padding: 0 10px;
+    // &:nth-child(even) {
+    //   background-color: #eff4ff;
+    // }
+  }
+  &__all {
+    display: grid;
+    // grid-template-columns: 1fr 1fr;
+    grid-template-areas: "title title " "content content";
+    grid-template-columns: 1fr 1fr;
+    // grid-template-columns: 1fr 1fr;
+    grid-gap: 2px 15px;
+  }
+  &__item {
+    padding: 0 10px;
+    grid-area: content;
+
+    &:hover {
+      background-color: #fff;
+    }
+    p {
+      font-size: 16px;
+      // color: white;
+    }
+    height: 50px;
+    background-color: #fcefff;
+  }
+  &__text {
+  }
+}
+
 .bookchapterlists {
   // -webkit-box-shadow: 0px 2px 5px 0px rgb(233, 218, 233);
   // -moz-box-shadow: 0px 2px 5px 0px rgb(255, 255, 255);
@@ -137,15 +187,15 @@ export default {
     &--items {
       // direction: ltr;
 
-      &:nth-child(4n + 1) {
+      &:nth-child(odd) {
         background-color: #fcefff;
         &:hover {
           background-color: white;
           transition: 100ms;
         }
       }
-      &:nth-child(4n + 2) {
-        background-color: #fcefff;
+      &:nth-child(even) {
+        background-color: #eff4ff;
 
         &:hover {
           background-color: white;

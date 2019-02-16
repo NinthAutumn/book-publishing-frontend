@@ -13,7 +13,7 @@
       >
       <div class="form-control">
         <label for="rating" class="rating-label">評価</label>
-        <input
+        <!-- <input
           type="Number"
           placeholder="5"
           v-model="review.rating.total"
@@ -21,7 +21,7 @@
           v-validate="'max:5'"
           name="reviewRating"
           step=".01"
-        >
+        >-->
         <!-- <span class="help is-danger">{{ errors.first('reviewRating') }}</span> -->
         <no-ssr>
           <star-rating
@@ -31,7 +31,7 @@
             :read-only="false"
             inactive-color="#D8D7D5"
             active-color="#FFB727"
-            :increment="0.01"
+            :increment="0.25"
             :round-start-rating="false"
             border-color="#FFB727"
             :glow="1"
