@@ -33,15 +33,24 @@
       </div>
 
       <div class="reviews-content-text flex flex-column flex--between">
-        <div
+        <truncate
+          action-class="customClass"
+          clamp="Show more"
+          :length="90"
+          less="Show Less"
+          type="html"
+          :text="review.content"
+        ></truncate>
+
+        <!-- <div
           class="reviews-content-text--html"
           v-html="review.content"
           :class="{readmore: readMore}"
-        ></div>
-        <div v-if="this.review.content.length > 80" class="buts">
+        ></div>-->
+        <!-- <div v-if="this.review.content.length > 85" class="buts">
           <a @click="toggleCollapse" v-if="!readMore" class="reviews-content-text-more">Read More</a>
           <a @click="toggleCollapse" v-else class="reviews-content-text-more">Read Less</a>
-        </div>
+        </div>-->
       </div>
     </div>
   </div>
@@ -125,14 +134,19 @@ export default {
 <style  lang="scss" >
 // @import "../../assets/css/main.scss";
 .reviews-content-text {
+  .customClass {
+    display: flex;
+    justify-content: center;
+  }
   &--html {
-    height: 142px;
+    height: 140px;
   }
   p {
     font-size: 16px;
     font-weight: 400;
     color: #2e2635;
     text-align: left;
+    line-height: 28px;
     // font-weight: 300;
   }
   .readmore {

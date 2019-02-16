@@ -167,9 +167,9 @@ export default {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        -webkit-box-shadow: 0px 2px 5px 0px rgb(233, 218, 233);
-        -moz-box-shadow: 0px 2px 5px 0px rgb(255, 255, 255);
-        box-shadow: 0px 2px 5px 0px rgb(233, 218, 233);
+        // -webkit-box-shadow: 0px 2px 5px 0px rgb(233, 218, 233);
+        // -moz-box-shadow: 0px 2px 5px 0px rgb(255, 255, 255);
+        // box-shadow: 0px 2px 5px 0px rgb(233, 218, 233);
         padding: 0 10px;
 
         height: 100%;

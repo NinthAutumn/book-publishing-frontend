@@ -63,6 +63,7 @@
 
 <script>
 export default {
+  props: ["value"],
   data() {
     return {
       review: {
@@ -72,6 +73,7 @@ export default {
           total: 5
         }
       },
+      state: this.value,
       customToolbar: [
         ["bold", "italic", "underline", "strike"],
         [{ list: "ordered" }, { list: "bullet" }],
@@ -94,6 +96,7 @@ export default {
             message: "レビューの投稿に成功しました",
             type: "success"
           });
+          this.$emit("input", false);
         })
         .catch(() => {
           this.$message({

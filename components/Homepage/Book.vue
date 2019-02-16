@@ -150,8 +150,11 @@ export default {
   border-bottom-right-radius: 10px; */
     .book-title {
       margin: 0;
+      color: black;
+      font-weight: 400;
       /* text-align: center; */
       /* margin-top: 10px; */
+      // color: black !important;
       padding: 0;
       text-align: center;
       width: 95%;
@@ -166,6 +169,7 @@ export default {
   word-wrap: break-word;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 1; */
+      // color: black;
       transition: 300ms;
       &:hover {
         // overflow: visible;
