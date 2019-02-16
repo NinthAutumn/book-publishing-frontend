@@ -1,6 +1,36 @@
 <template>
   <div class="ranking-main">
-    <BooksList :books="$store.state.book.books.highestrated"></BooksList>
+    <header class="ranking-header">
+      <h3 class="ranking-header__text">ランキングリスト</h3>
+    </header>
+    <section>
+      <div class="flex-divider flex flex--between">
+        <div class="sub-header">ベストセラー</div>
+        <div class="select-time"></div>
+      </div>
+      <BooksList :books="$store.state.book.books.highestrated"></BooksList>
+    </section>
+    <section>
+      <div class="flex-divider flex flex--between">
+        <div class="sub-header">視聴回数</div>
+        <div class="select-time"></div>
+      </div>
+      <BooksList :books="$store.state.book.books.highestrated"></BooksList>
+    </section>
+    <section>
+      <div class="flex-divider flex flex--between">
+        <div class="sub-header">高評価</div>
+        <div class="select-time"></div>
+      </div>
+      <BooksList :books="$store.state.book.books.highestrated"></BooksList>
+    </section>
+    <section>
+      <div class="flex-divider flex flex--between">
+        <div class="sub-header">ブックマーク数</div>
+        <div class="select-time"></div>
+      </div>
+      <BooksList :books="$store.state.book.books.highestrated"></BooksList>
+    </section>
   </div>
 </template>
 
@@ -15,5 +45,18 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
+.ranking-header {
+  &__text {
+    margin: 0;
+    margin-bottom: 10px;
+    font-size: 20px;
+    font-weight: 400;
+  }
+}
+
+.sub-header {
+  font-size: 18px;
+  margin-bottom: 5px;
+}
 </style>
