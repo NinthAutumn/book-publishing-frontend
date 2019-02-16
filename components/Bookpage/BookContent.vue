@@ -52,8 +52,7 @@ export default {
     async bookmarkBook() {
       const store = {
         storeType: "bookmark",
-        bookId: this.$store.state.book.book._id,
-        createdAt: Date.now()
+        bookId: this.$store.state.book.book._id
       };
       await this.$store
         .dispatch("library/addStore", store)
@@ -66,7 +65,7 @@ export default {
         })
         .catch(e => {
           this.$message({
-            message: `ログイン視聴者のみブックマーク機能を使えます`,
+            message: `ブックマークを失敗しました`,
             type: "error"
           });
         });

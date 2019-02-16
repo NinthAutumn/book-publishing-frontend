@@ -78,7 +78,7 @@ export default {
   // -webkit-box-shadow: 0px 2px 5px 0px rgb(233, 218, 233);
   // -moz-box-shadow: 0px 2px 5px 0px rgb(255, 255, 255);
   // box-shadow: 0px 2px 5px 0px rgb(233, 218, 233);
-  padding: 10px 5px 10px 20px;
+  padding: 10px 5px 10px 0px;
   // height: 482px;
   width: 100%;
   box-sizing: border-box;

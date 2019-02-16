@@ -1,16 +1,31 @@
 <template>
-  <div class="swiping-page">
-    <div v-swiper:mySwiper="swiperOption">
-      <div class="swiper-wrapper">
-        <div class="swiper-slide" v-for="(book,index) in books" :key="index">
-          <Book :ranking="index" :book="book" :size="size = 'big'"></Book>
+  <div class="book-list">
+    <div class="swiping-page">
+      <div v-swiper:mySwiper="swiperOption" v-if="weirdBook">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide" v-for="(book,index) in books" :key="index">
+            <Book :ranking="index" :book="book._id.book[0]" :size="size = 'big'"></Book>
+          </div>
+        </div>
+        <div class="background">
+          <div class="swiper-button-prev swiper-button-black" slot="button-prev"></div>
+        </div>
+        <div class="background">
+          <div class="swiper-button-next swiper-button-black" slot="button-next"></div>
         </div>
       </div>
-      <div class="background">
-        <div class="swiper-button-prev swiper-button-black" slot="button-prev"></div>
-      </div>
-      <div class="background">
-        <div class="swiper-button-next swiper-button-black" slot="button-next"></div>
+      <div v-swiper:mySwiper="swiperOption" v-else>
+        <div class="swiper-wrapper">
+          <div class="swiper-slide" v-for="(book, index) in books" :key="index">
+            <Book :ranking="index" :book="book" :size="size = 'big'"></Book>
+          </div>
+        </div>
+        <div class="background">
+          <div class="swiper-button-prev swiper-button-black" slot="button-prev"></div>
+        </div>
+        <div class="background">
+          <div class="swiper-button-next swiper-button-black" slot="button-next"></div>
+        </div>
       </div>
     </div>
   </div>
@@ -20,7 +35,8 @@ import Book from "./Book";
 export default {
   props: {
     books: Array,
-    trendings: Array
+    trendings: Array,
+    weirdBook: Boolean
   },
   data() {
     return {
@@ -92,8 +108,12 @@ export default {
 };
 </script>
 <style lang="scss">
+.book-list {
+  margin-bottom: 10px;
+}
 .swiper-wrapper {
   // z-index: -10;
+  // height: 300px;
 }
 .main-books {
   width: 100%;
@@ -101,8 +121,12 @@ export default {
   // justify-content: space-around;
   // align-content: center;
 }
+.swiper.slide {
+  // display: flex;
+  // align-items: center;
+}
 .my-swiper {
-  height: 300px;
+  height: 320px;
   // width: 80% !important;
   .swiper-slide {
     text-align: center;

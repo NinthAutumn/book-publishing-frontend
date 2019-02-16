@@ -1,6 +1,12 @@
 <template>
   <div class="book-homepage">
     <div id="book-card" class="big" @click="linkTo">
+      <div class="book-rank__container">
+        <div
+          class="book-rank__index flex flex--align flex--around"
+          :class="{one: numberOne, two: numberTwo, three: numberThree, other: other}"
+        >{{ranking + 1}}</div>
+      </div>
       <div class="book-cover">
         <span class="star-rating"></span>
         <img
@@ -47,7 +53,11 @@ export default {
   },
   data() {
     return {
-      rating: 3.5
+      rating: 3.5,
+      numberOne: this.ranking === 0,
+      numberTwo: this.ranking === 1,
+      numberThree: this.ranking === 2,
+      other: this.ranking > 2
     };
   },
   methods: {
@@ -78,12 +88,46 @@ export default {
 };
 </script>
 <style lang="scss">
+.book-rank__container {
+  height: 30px;
+  width: 30px;
+  position: absolute;
+  top: -10px;
+  left: -10px;
+
+  z-index: 10000;
+  .book-rank__index {
+    font-size: 16px;
+    font-weight: bold;
+    height: 100%;
+    width: 100%;
+    // color: white;
+  }
+  .one {
+    background-color: $gold;
+    opacity: 0.9;
+  }
+  .two {
+    background-color: $silver;
+    opacity: 0.9;
+  }
+  .three {
+    background-color: $bronze;
+    opacity: 0.9;
+  }
+  .other {
+    background-color: $secondary;
+    opacity: 0.9;
+  }
+}
 #book-card {
+  margin-left: 10px;
   display: flex;
   flex-direction: column;
   border-radius: 5px;
   margin-right: 2rem;
   width: 142px;
+  margin-top: 10px;
   /* height: 245px; */
   position: relative;
   .book-cover {
