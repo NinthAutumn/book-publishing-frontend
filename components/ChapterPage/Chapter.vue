@@ -44,14 +44,25 @@ export default {
 
 .chapter-announcement {
   position: relative;
+  // background-color: ;
+  padding: 10px;
+  border-radius: 5px;
+  // color: rgb(0, 31, 78);
+  box-shadow: 1px 1px 5px 0px rgb(207, 207, 207);
+  font-family: "Noto Sans JP" !important;
+
+  &--header {
+    margin-bottom: 10px;
+  }
+  &--footer {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
   .announcement-pin {
-    &--header {
-    }
-    &--footer {
-    }
     font-size: 30px;
     position: absolute;
     top: 7px;
+
     // font-family: "Noto Serif Sans" !important;
     right: 10px;
     color: $primary-lighter;
@@ -59,17 +70,16 @@ export default {
   }
 
   h4 {
+    font-family: "Noto Sans JP", "sans-serif" !important;
     font-size: 18px;
     margin-top: 0;
     margin-bottom: 5px;
   }
   p {
+    font-family: "Noto Sans JP", "sans-serif" !important;
     font-size: 16px;
     margin: 0 !important;
   }
-
-  padding: 10px;
-  background-color: white;
 }
 
 .chapter-content {

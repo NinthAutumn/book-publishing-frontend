@@ -163,7 +163,7 @@ body {
       text-align: center;
     }
     .chapter-container {
-      background-color: rgba(247, 247, 247, 0.959);
+      background-color: white;
       position: relative;
       // height: 100vh;
       .chapter-title {
