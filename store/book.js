@@ -148,11 +148,11 @@ export const mutations = {
   },
   BOOKMARKED(state, bookmark) {
     if (bookmark.store) {
+      // console.log(bookmark.store);
       bookmark.store.forEach((store) => {
         if (store.bookId === state.book._id) {
           state.book.bookmarked = true
-        } else {
-          state.book.bookmarked = false
+          console.log(state.book);
         }
       })
     }

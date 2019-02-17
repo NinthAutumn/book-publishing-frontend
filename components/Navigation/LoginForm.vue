@@ -7,6 +7,7 @@
         <input
           class="form-input form-input--primary--lighter login__input"
           type="text"
+          ref="username"
           name="username"
           v-model="form.username"
           autocomplete="username"
@@ -48,6 +49,9 @@ export default {
   props: {},
   components: {
     SignUpFrom
+  },
+  mounted() {
+    this.$refs.username.focus();
   },
   methods: {
     // async stateOff() {

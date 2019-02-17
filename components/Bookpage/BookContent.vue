@@ -56,6 +56,13 @@ export default {
         storeType: "bookmark",
         bookId: this.$store.state.book.book._id
       };
+      if (!this.$store.state.loggedIn) {
+        this.$message({
+          message: `ブックマークをするにはログインかアカウント作成が必要です`,
+          type: "error"
+        });
+        return this.$store.commit("LOGIN_STATE");
+      }
       if (this.bookmarked) {
       } else {
         this.bookmarked = true;

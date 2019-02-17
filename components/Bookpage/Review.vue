@@ -33,14 +33,16 @@
       </div>
 
       <div class="reviews-content-text flex flex-column flex--between">
-        <truncate
-          action-class="customClass"
-          clamp="Show more"
-          :length="90"
-          less="Show Less"
-          type="html"
-          :text="review.content"
-        ></truncate>
+        <no-ssr>
+          <truncate
+            action-class="customClass"
+            clamp="Show more"
+            :length="90"
+            less="Show Less"
+            type="html"
+            :text="review.content"
+          ></truncate>
+        </no-ssr>
 
         <!-- <div
           class="reviews-content-text--html"

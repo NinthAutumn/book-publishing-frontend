@@ -13,7 +13,12 @@
       <p class="signup-title">Signup to Lyfr</p>
 
       <label for="username">ユーザー名</label>
-      <input class="form-input form-input--primary--lighter" type="text" v-model="formUsername">
+      <input
+        ref="username"
+        class="form-input form-input--primary--lighter"
+        type="text"
+        v-model="formUsername"
+      >
       <label for="email">メールアドレス</label>
       <input
         name="email"
@@ -93,6 +98,9 @@ export default {
     signOff() {
       this.$store.commit("START");
     }
+  },
+  mounted() {
+    this.$refs.username.focus();
   }
 };
 </script>

@@ -12,6 +12,7 @@ export const getters = {
 export const mutations = {
   GET_BOOKMARK(state, bookmarked) {
     state.bookmarks = bookmarked
+    // console.log(state.bookmarks);
   },
   GET_FAVORITE(state, favorites) {
     state.favorites = favorites
@@ -32,8 +33,8 @@ export const actions = {
     commit
   }) {
     await this.$axios.get(process.env.baseUrl + '/library/bookmarks').then((res) => {
-
       commit('GET_BOOKMARK', res.data)
+      // console.log(res.data);
     })
   },
   async getFavorites({
