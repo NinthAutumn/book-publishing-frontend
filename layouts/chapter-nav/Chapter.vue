@@ -25,13 +25,19 @@
           <fa icon="angle-right"></fa>
         </nuxt-link>
         <transition name="chapter-modal">
-          <div class="chapters-modal" v-if="modal">
-            <div class="chapters-modal__author-profile" v-if="modal === 'profile'"></div>
-            <div class="chapters-modal__images" v-else-if="modal === 'images'"></div>
+          <div class="chapters-modal" v-if="modal" :class="'chapter-modal--'+modal">
+            <div class="chapters-modal__author-profile" v-if="modal === 'profile'">
+              <Profile></Profile>
+            </div>
+            <div class="chapters-modal__images" v-else-if="modal === 'image'">
+              <Images></Images>
+            </div>
             <div class="chapters-modal__table-of-content" v-else-if="modal === 'table'">
               <TOC></TOC>
             </div>
-            <div class="chapters-modal__user-setting" v-else-if="modal === 'setting'"></div>
+            <div class="chapters-modal__user-setting" v-else-if="modal === 'setting'">
+              <Setting></Setting>
+            </div>
           </div>
         </transition>
       </div>
@@ -44,13 +50,19 @@ import Horizontal from "./Horizontal";
 import LeftV from "./Left-V";
 import RightV from "./Right-V";
 import TOC from "@/components/ChapterPage/Modal/TOC";
+import Profile from "@/components/ChapterPage/Modal/Profile";
+import Setting from "@/components/ChapterPage/Modal/Setting";
+import Images from "@/components/ChapterPage/Modal/Images";
 
 export default {
   components: {
     Horizontal,
     LeftV,
     RightV,
-    TOC
+    TOC,
+    Profile,
+    Setting,
+    Images
   },
   computed: {
     modal() {
@@ -61,7 +73,15 @@ export default {
 </script>
 
 <style lang="scss">
+// .chapters-modal .image {
+//   background-color: black !important;
+// }
+.chapter-modal--image {
+  background-color: black !important;
+}
 .chapters-modal {
+  &--image {
+  }
   // right: 0;
   position: sticky;
   // left: 50%;
@@ -73,6 +93,7 @@ export default {
   &__author-profile {
   }
   &__images {
+    // background-color: black !important;
   }
   &__table-of-content {
     height: 100%;
