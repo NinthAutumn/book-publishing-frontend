@@ -21,10 +21,10 @@
         <span
           @click="bookmarkBook"
           class="book-content__buttons__item button button--shadow button--big"
-          :class="{'button--secondary': book.bookmarked, 'button--secondary--open': !book.bookmarked}"
+          :class="{'button--secondary': bookmarked, 'button--secondary--open': !bookmarked}"
         >
           <fa class style="font-size:15px;" icon="bookmark"></fa>
-          <span style="font-size:13px;" v-if="!book.bookmarked">ブックマーク</span>
+          <span style="font-size:13px;" v-if="!bookmarked">ブックマーク</span>
           <span style="font-size:13px;" v-else>ブックマーク済み</span>
         </span>
       </div>
@@ -38,7 +38,9 @@ export default {
     // book: Object
   },
   data() {
-    return {};
+    return {
+      bookmarked: this.$store.state.book.book.bookmarked
+    };
   },
   computed: {
     bookSynopsis() {
@@ -54,21 +56,25 @@ export default {
         storeType: "bookmark",
         bookId: this.$store.state.book.book._id
       };
-      await this.$store
-        .dispatch("library/addStore", store)
-        .then(() => {
-          this.$store.commit("library/BOOKMARK");
-          this.$message({
-            message: "ブックマークに入りました！",
-            type: "success"
+      if (this.bookmarked) {
+      } else {
+        this.bookmarked = true;
+        await this.$store
+          .dispatch("library/addStore", store)
+          .then(async () => {
+            this.$store.commit("book/BOOKMARK");
+            this.$message({
+              message: "ブックマークに入りました！",
+              type: "success"
+            });
+          })
+          .catch(e => {
+            this.$message({
+              message: `ブックマークを失敗しました`,
+              type: "error"
+            });
           });
-        })
-        .catch(e => {
-          this.$message({
-            message: `ブックマークを失敗しました`,
-            type: "error"
-          });
-        });
+      }
     }
   },
   created() {}

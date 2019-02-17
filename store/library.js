@@ -21,6 +21,9 @@ export const mutations = {
   },
   GET_READ_LATER(state, read_later) {
     state.read_later = read_later
+  },
+  PUSH_BOOKMARK(state, bookmark) {
+    state.bookmarks.push(bookmark)
   }
 }
 

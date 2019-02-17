@@ -144,15 +144,15 @@ export const mutations = {
     state.bookSynopsis = true
   },
   SYNOPSIS_FALSE(state) {
-
     state.bookSynopsis = false
-
   },
   BOOKMARKED(state, bookmark) {
     if (bookmark.store) {
       bookmark.store.forEach((store) => {
         if (store.bookId === state.book._id) {
           state.book.bookmarked = true
+        } else {
+          state.book.bookmarked = false
         }
       })
     }

@@ -33,7 +33,6 @@ export const mutations = {
       if (book.ratings) {
         book.ratings = +book.ratings.toFixed(2)
       }
-
     })
   }
 }

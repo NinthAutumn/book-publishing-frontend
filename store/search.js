@@ -27,6 +27,7 @@ export const getters = {
 export const mutations = {
   QUERIED_BOOKS(state, books) {
     state.books = books
+    console.log(state.books);
   },
   LOADING: (state) => {
     state.isLoading = true

@@ -16,10 +16,16 @@
             class="Book-TOC__item flex flex--between flex--align"
             :to="{path: `${ $route.params.id}/${chapter.index}`}"
           >
-            <p class="Book-TOC__text Book-TOC__text--title">{{chapter.index}}話: {{chapter.title}}</p>
-            <p
-              class="Book-TOC__text Book-TOC__text--date"
-            >{{$moment(chapter.createdAt).startOf('hour').fromNow()}}</p>
+            <div class="flex-divider">
+              <p class="Book-TOC__text Book-TOC__text--title">{{chapter.index}}話: {{chapter.title}}</p>
+            </div>
+            <div class="flex-divider flex flex--align">
+              <p
+                class="Book-TOC__text Book-TOC__text--date"
+              >{{$moment(chapter.createdAt).startOf('hour').fromNow()}}</p>
+
+              <fa class="Book-TOC__text Book-TOC__text--icon" icon="lock" v-if="chapter.price"></fa>
+            </div>
           </nuxt-link>
         </div>
       </li>
@@ -121,6 +127,10 @@ export default {
     background-color: #fcefff;
   }
   &__text {
+    font-size: 16px;
+    &--icon {
+      margin-left: 10px;
+    }
   }
 }
 

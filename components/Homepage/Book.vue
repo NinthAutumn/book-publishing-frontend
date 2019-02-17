@@ -67,7 +67,7 @@ export default {
   },
   filters: {
     truncate: (string, number) => {
-      if (string.length > 8) {
+      if (string.length > 17) {
         return (string || "").substring(0, number) + "…";
       } else {
         return string;
