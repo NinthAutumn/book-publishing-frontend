@@ -56,31 +56,36 @@ export default {
         storeType: "bookmark",
         bookId: this.$store.state.book.book._id
       };
-      if (!this.$store.state.loggedIn) {
+      if (this.$store.state.loggedIn === false) {
         this.$message({
           message: `ブックマークをするにはログインかアカウント作成が必要です`,
           type: "error"
         });
         return this.$store.commit("LOGIN_STATE");
-      }
-      if (this.bookmarked) {
       } else {
-        this.bookmarked = true;
-        await this.$store
-          .dispatch("library/addStore", store)
-          .then(async () => {
-            this.$store.commit("book/BOOKMARK");
-            this.$message({
-              message: "ブックマークに入りました！",
-              type: "success"
-            });
-          })
-          .catch(e => {
-            this.$message({
-              message: `ブックマークを失敗しました`,
-              type: "error"
-            });
+        if (this.bookmarked) {
+          this.$message({
+            message: `ブックマークを失敗しました`,
+            type: "error"
           });
+        } else {
+          this.bookmarked = true;
+          await this.$store
+            .dispatch("library/addStore", store)
+            .then(async () => {
+              this.$store.commit("book/BOOKMARK");
+              this.$message({
+                message: "ブックマークに入りました！",
+                type: "success"
+              });
+            })
+            .catch(e => {
+              this.$message({
+                message: `ブックマークを失敗しました`,
+                type: "error"
+              });
+            });
+        }
       }
     }
   },
