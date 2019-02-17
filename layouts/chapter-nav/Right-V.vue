@@ -8,6 +8,11 @@
         </div>
         <div class="nav-icon" @click="images">
           <fa class="nav-icon__item nav-icon__item--image" icon="image"></fa>
+          <span
+            class="image-count"
+            v-if="$store.state.chapter.chapter.extra.drawings.length"
+            v-text="$store.state.chapter.chapter.extra.drawings.length"
+          ></span>
         </div>
         <div class="nav-icon" @click="table">
           <fa class="nav-icon__item" icon="list-ul"></fa>
@@ -66,12 +71,29 @@ export default {
   }
   .nav-icon {
     // margin-bottom: 20px;
+    position: relative;
     height: 40px;
     display: flex;
     align-items: center;
     width: 100%;
     justify-content: space-around;
     margin-bottom: 5px;
+    .image-count {
+      position: absolute;
+      font-size: 10px;
+      color: white;
+      font-weight: bold;
+      // padding: 10px;
+      border-radius: 10px;
+      height: 15px;
+      width: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      background-color: rgb(255, 0, 0);
+      top: 0px;
+      right: 2px;
+    }
     &:hover {
       background-color: $primary;
       color: white;

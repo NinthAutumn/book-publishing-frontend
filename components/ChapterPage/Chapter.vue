@@ -7,9 +7,11 @@
       class="chapter-announcement chapter-announcement--header"
       v-if="$store.state.chapter.chapter.extra.announcement"
     >
-      <h4>告知・メッセージ・上書き</h4>
+      <h4>
+        <fa style="margin-right:10px;" icon="envelope"></fa>告知・メッセージ・上書き
+      </h4>
       <p v-text="$store.state.chapter.chapter.extra.announcement.header"></p>
-      <fa class="announcement-pin" icon="thumbtack"></fa>
+      <fa class="announcement-pin" icon="quote-right"></fa>
     </div>
     <article
       class="chapter-content"
@@ -21,9 +23,11 @@
       class="chapter-announcement chapter-announcement--footer"
       v-if="$store.state.chapter.chapter.extra.announcement"
     >
-      <h4>告知・メッセージ・下書き</h4>
+      <h4>
+        <fa style="margin-right:10px;" icon="envelope"></fa>告知・メッセージ・下書き
+      </h4>
       <p v-text="$store.state.chapter.chapter.extra.announcement.footer"></p>
-      <fa class="announcement-pin" icon="thumbtack"></fa>
+      <fa class="announcement-pin" icon="quote-right"></fa>
     </div>
   </section>
 </template>
@@ -45,10 +49,14 @@ export default {
 .chapter-announcement {
   position: relative;
   // background-color: ;
-  padding: 10px;
-  border-radius: 5px;
+  padding: 20px;
+  padding-top: 10px;
+  // padding-bottom: 20px;
+  // border-radius: 5px;
   // color: rgb(0, 31, 78);
-  box-shadow: 1px 1px 5px 0px rgb(207, 207, 207);
+  // color: $primary-black;
+  // color: $primary;
+  box-shadow: 1px 1px 10px 0px rgb(207, 207, 207);
   font-family: "Noto Sans JP" !important;
 
   &--header {
@@ -58,15 +66,16 @@ export default {
     margin-top: 10px;
     margin-bottom: 10px;
   }
+
   .announcement-pin {
-    font-size: 30px;
+    font-size: 40px;
     position: absolute;
-    top: 7px;
+    top: 5px;
 
     // font-family: "Noto Serif Sans" !important;
-    right: 10px;
+    right: 5px;
     color: $primary-lighter;
-    transform: rotate(40deg);
+    // transform: rotate(45deg);
   }
 
   h4 {

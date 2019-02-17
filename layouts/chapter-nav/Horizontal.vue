@@ -4,9 +4,8 @@
       <div class="left-menu">
         <i class="el-icon-menu" :class="$store.state.menuState" @click="menuDrawer"></i>
       </div>
-      <!-- <SearchBar class="searchbar"></SearchBar> -->
-      <span v-click-outside="dropOff" v-if="loggedIn" style="z-index:3000;" id="prof">
-        <img @click="stateDropChange" class="profile-pic" :src="user.avatar">
+      <span v-if="loggedIn" style="z-index:3000;" id="prof" v-click-outside="dropOff">
+        <img @click="stateDropChange" class="profile-pic" style="width: 40px;" :src="user.avatar">
         <div :class="$store.state.dropdownState">
           <div class="dropdown-menu">
             <div class="profile-info" @click="userProfile">
@@ -23,29 +22,31 @@
         </div>
       </span>
       <div class="not-loggedin" v-else>
-        <span class="signup">
-          <nuxt-link to="/auth/signup">Sign up</nuxt-link>
-        </span>
-        <span>|</span>
-        <span class="login">
-          <nuxt-link to="/auth/login">Log in</nuxt-link>
-        </span>
+        <img class="not-loggedin__img text--link" src="~/assets/profile.png" @click="loginInState">
       </div>
     </nav>
+    <transition name="grow-shrink">
+      <div class="loginform" v-if="loginState">
+        <AuthModal></AuthModal>
+      </div>
+    </transition>
   </div>
 </template>
 <script>
-import SearchBar from "@/components/Navigation/SearchBar";
+import SignUpForm from "@/components/Navigation/SignUpFrom";
+import LoginForm from "@/components/Navigation/LoginForm";
+import AuthModal from "@/components/Navigation/AuthModal";
 
 export default {
   name: "Horizontal",
   data() {
     return {
       menuStates: "menu-inactive"
+      // signUpForm: ""
     };
   },
   components: {
-    SearchBar
+    AuthModal
   },
   computed: {
     user() {
@@ -55,12 +56,11 @@ export default {
     loggedIn() {
       return this.$store.state.auth.loggedIn;
     },
-    signState() {
-      return this.$store.state.signUpForm;
+    loginState() {
+      return this.$store.state.loginForm;
     }
   },
   methods: {
-    //menu
     menuDrawer() {
       this.$store.commit("menuStateChange");
     },
@@ -77,12 +77,51 @@ export default {
     },
     userProfile() {
       this.$router.push("/dashboard");
+    },
+    loginInState() {
+      this.$store.commit("LOGIN_STATE");
     }
   }
 };
 </script>
 <style lang="scss" scoped>
+.loginform {
+  width: 30%;
+  margin: auto;
+}
+.signupform {
+  // display: flex;
+  // position: absolute;
+  // top: 70px;
+  // width: 100%;
+  width: 30%;
+  margin: auto;
+  // height: 50%;
+  // left: 50%;
+  // margin-left: -50%;
+  // margin-right: -50%;
+  // right: 50%;
+  // top: 50%;
+  // margin-top: -50px;
+  // justify-content: space-around;
+}
 .not-loggedin {
+  &__img {
+    width: 40px;
+    border-radius: 100px;
+    box-shadow: 1px 1px 5px 0px rgb(201, 200, 200);
+    transition: 300ms;
+    margin-right: 5px;
+    &:hover {
+      transform: scale(1.1);
+      box-shadow: 3px 3px 5px 0px rgb(184, 182, 182);
+      transition: 300ms;
+    }
+    &:active {
+      box-shadow: 1px 1px 5px 0px rgb(201, 200, 200);
+      transition: 300ms;
+    }
+  }
   margin-right: 10px;
   // font-size: 16px;
   span {
