@@ -1,11 +1,15 @@
 <template>
-  <div class="setting-modal" :class="{'setting-modal--black':theme === 'black'}">
+  <div
+    class="setting-modal"
+    :class="{'setting-modal--black':theme === 'black','setting-modal--tan':theme === 'tan'}"
+  >
     <header>設定</header>
     <div class="theme-main">
       <h4 v-text="'テーマ'"></h4>
       <div class="themes-list flex">
         <div class="theme__item theme__item--white" @click="updateTheme('default')"></div>
         <div class="theme__item theme__item--black" @click="updateTheme('black')"></div>
+        <div class="theme__item theme__item--tan" @click="updateTheme('tan')"></div>
         <!-- <div class="theme__item"></div> -->
       </div>
     </div>
@@ -81,6 +85,10 @@ export default {
       &--black {
         background-color: rgb(53, 53, 53);
         border: 1px solid black;
+      }
+      &--tan {
+        background: url("../../../assets/noise-tan-container.png");
+        border: 1px solid #eed368;
       }
     }
   }

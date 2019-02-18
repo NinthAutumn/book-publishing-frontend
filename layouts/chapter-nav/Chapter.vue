@@ -1,5 +1,8 @@
 <template>
-  <div class="chapter-page" :class="{'chapter-page--black':theme === 'black'}">
+  <div
+    class="chapter-page"
+    :class="{'chapter-page--black':theme === 'black','chapter-page--tan':theme === 'tan'}"
+  >
     <Horizontal></Horizontal>
     <LeftV></LeftV>
     <RightV></RightV>
@@ -28,7 +31,7 @@
           <div
             class="chapters-modal"
             v-if="modal"
-            :class="{'chapters-modal--black':theme === 'black'}"
+            :class="{'chapters-modal--black':theme === 'black','chapters-modal--tan':theme === 'tan'}"
           >
             <div class="chapters-modal__author-profile" v-if="modal === 'profile'">
               <Profile></Profile>
@@ -93,9 +96,13 @@ export default {
 }
 .chapters-modal {
   &--black {
-    background-color: black;
-    border-right: 1px solid rgb(63, 63, 63);
+    background-color: rgb(63, 63, 63);
+    // border-right: 1px solid rgb(63, 63, 63);
     color: rgb(215, 218, 220);
+  }
+  &--tan {
+    background: url("../../assets/noise-tan-container.png");
+    color: #2b352f;
   }
   &--image {
   }
@@ -144,6 +151,16 @@ export default {
       background-color: rgb(26, 26, 27) !important;
       color: rgb(215, 218, 220);
       border: 1px solid rgb(71, 71, 71) !important;
+    }
+  }
+  &--tan {
+    // background-color: #e7dfbd;
+    background: url("../../assets/noise-tan-all.png");
+    .chapter-container {
+      color: #2b352f !important;
+      // background-color: #eed368 !important;
+      background: url("../../assets/noise-tan-container.png");
+      border: 1px solid #e7dfbd !important;
     }
   }
 }
