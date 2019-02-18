@@ -1,5 +1,5 @@
 <template>
-  <div class="chapter-page">
+  <div class="chapter-page" :class="{'chapter-page--black':theme === 'black'}">
     <Horizontal></Horizontal>
     <LeftV></LeftV>
     <RightV></RightV>
@@ -25,7 +25,11 @@
           <fa icon="angle-right"></fa>
         </nuxt-link>
         <transition name="chapter-modal">
-          <div class="chapters-modal" v-if="modal" :class="'chapter-modal--'+modal">
+          <div
+            class="chapters-modal"
+            v-if="modal"
+            :class="{'chapters-modal--black':theme === 'black'}"
+          >
             <div class="chapters-modal__author-profile" v-if="modal === 'profile'">
               <Profile></Profile>
             </div>
@@ -55,6 +59,11 @@ import Setting from "@/components/ChapterPage/Modal/Setting";
 import Images from "@/components/ChapterPage/Modal/Images";
 
 export default {
+  data() {
+    return {
+      blackTheme: this.$store.state.user.settings.theme === "black"
+    };
+  },
   components: {
     Horizontal,
     LeftV,
@@ -67,6 +76,9 @@ export default {
   computed: {
     modal() {
       return this.$store.state.chapter.modal;
+    },
+    theme() {
+      return this.$store.state.user.theme;
     }
   }
 };
@@ -80,6 +92,11 @@ export default {
   background-color: black !important;
 }
 .chapters-modal {
+  &--black {
+    background-color: black;
+    border-right: 1px solid rgb(63, 63, 63);
+    color: rgb(215, 218, 220);
+  }
   &--image {
   }
   // right: 0;
@@ -121,5 +138,13 @@ export default {
   margin-top: 50px;
   margin-right: 50px;
   background-color: #dae0e6;
+  &--black {
+    background-color: #030303 !important;
+    .chapter-container {
+      background-color: rgb(26, 26, 27) !important;
+      color: rgb(215, 218, 220);
+      border: 1px solid rgb(71, 71, 71) !important;
+    }
+  }
 }
 </style>

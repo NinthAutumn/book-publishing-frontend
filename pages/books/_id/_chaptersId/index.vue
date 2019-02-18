@@ -63,6 +63,8 @@ export default {
         index: index,
         userId: store.state.auth.user._id
       });
+      console.log("dog");
+      await store.dispatch("user/getSettings");
     } else {
       await store.dispatch("chapter/nextChapter", {
         bookId: params.id,

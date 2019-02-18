@@ -1,6 +1,7 @@
 export const state = () => ({
   books: [],
-  settings: {}
+  settings: {},
+  theme: 'default'
 })
 
 export const getters = {
@@ -19,6 +20,10 @@ export const mutations = {
   },
   USER_SETTINGS: (state, settings) => {
     state.settings = settings
+    // console.log(settings);
+  },
+  SET_THEME: (state, theme) => {
+    state.theme = theme
   }
 }
 export const actions = {
@@ -35,6 +40,16 @@ export const actions = {
   }) {
     await this.$axios.get(process.env.baseUrl + '/users/settings').then((res) => {
       commit('USER_SETTINGS', res.data)
+      commit('SET_THEME', res.data.theme)
+      // console.log(res.data);
     })
+  },
+  async setSetting({
+    commit
+  }, setting) {
+    await this.$axios.patch(process.env.baseUrl + '/users/settings', setting).then((res) => {
+      commit('USER_SETTINGS', res.data)
+    })
+
   }
 }
