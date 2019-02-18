@@ -1,5 +1,8 @@
 <template>
-  <div class="h-nav">
+  <div
+    class="h-nav"
+    :class="{'h-nav--tan':theme === 'tan', 'h-nav--black':theme==='black','h-nav--ruby':theme==='ruby'}"
+  >
     <nav>
       <div class="left-menu">
         <i class="el-icon-menu" :class="$store.state.menuState" @click="menuDrawer"></i>
@@ -58,6 +61,9 @@ export default {
     },
     loginState() {
       return this.$store.state.loginForm;
+    },
+    theme() {
+      return this.$store.state.user.theme;
     }
   },
   methods: {
@@ -165,6 +171,22 @@ export default {
 }
 
 .h-nav {
+  &--tan {
+    background: url("../../assets/noise-tan-container.png");
+    box-shadow: none;
+    border-bottom: 1px solid #d8ceb3;
+  }
+  &--black {
+    background-color: #1a1a1b;
+    box-shadow: none;
+    border-bottom: 1px solid black;
+  }
+  &--ruby {
+    background: url("../../assets/noise-ruby-container.png");
+    box-shadow: none;
+    border-bottom: 1px solid #e0115f;
+  }
+
   height: 50px;
   width: 100%;
   position: fixed;

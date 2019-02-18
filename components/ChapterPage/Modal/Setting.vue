@@ -10,6 +10,7 @@
         <div class="theme__item theme__item--white" @click="updateTheme('default')"></div>
         <div class="theme__item theme__item--black" @click="updateTheme('black')"></div>
         <div class="theme__item theme__item--tan" @click="updateTheme('tan')"></div>
+        <div class="theme__item theme__item--ruby" @click="updateTheme('ruby')"></div>
         <!-- <div class="theme__item"></div> -->
       </div>
     </div>
@@ -89,6 +90,10 @@ export default {
       &--tan {
         background: url("../../../assets/noise-tan-container.png");
         border: 1px solid #eed368;
+      }
+      &--ruby {
+        background: url("../../../assets/noise-ruby-container.png");
+        border: 1px solid red;
       }
     }
   }

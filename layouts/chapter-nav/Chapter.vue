@@ -1,7 +1,7 @@
 <template>
   <div
     class="chapter-page"
-    :class="{'chapter-page--black':theme === 'black','chapter-page--tan':theme === 'tan'}"
+    :class="{'chapter-page--black':theme === 'black','chapter-page--tan':theme === 'tan','chapter-page--ruby':theme === 'ruby'}"
   >
     <Horizontal></Horizontal>
     <LeftV></LeftV>
@@ -31,7 +31,7 @@
           <div
             class="chapters-modal"
             v-if="modal"
-            :class="{'chapters-modal--black':theme === 'black','chapters-modal--tan':theme === 'tan'}"
+            :class="{'chapters-modal--black':theme === 'black','chapters-modal--tan':theme === 'tan','chapters-modal--ruby':theme === 'ruby'}"
           >
             <div class="chapters-modal__author-profile" v-if="modal === 'profile'">
               <Profile></Profile>
@@ -104,6 +104,10 @@ export default {
     background: url("../../assets/noise-tan-container.png");
     color: #2b352f;
   }
+  &--ruby {
+    background: url("../../assets/noise-ruby-container.png");
+    color: #f7bfd4;
+  }
   &--image {
   }
   // right: 0;
@@ -161,6 +165,14 @@ export default {
       // background-color: #eed368 !important;
       background: url("../../assets/noise-tan-container.png");
       border: 1px solid #e7dfbd !important;
+    }
+  }
+  &--ruby {
+    background: url("../../assets/noise-ruby-all.png");
+    .chapter-container {
+      background: url("../../assets/noise-ruby-container.png");
+      color: #fdd4e4;
+      border: 1px solid red;
     }
   }
 }
