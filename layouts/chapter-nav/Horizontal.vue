@@ -172,7 +172,7 @@ export default {
 
 .h-nav {
   &--tan {
-    background: url("../../assets/noise-tan-container.png");
+    background: url("../../assets/noise/noise-tan-container.png");
     box-shadow: none;
     border-bottom: 1px solid #d8ceb3;
   }
@@ -182,7 +182,7 @@ export default {
     border-bottom: 1px solid black;
   }
   &--ruby {
-    background: url("../../assets/noise-ruby-container.png");
+    background: url("../../assets/noise/noise-ruby-container.png");
     box-shadow: none;
     border-bottom: 1px solid #e0115f;
   }

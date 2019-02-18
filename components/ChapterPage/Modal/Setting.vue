@@ -88,11 +88,11 @@ export default {
         border: 1px solid black;
       }
       &--tan {
-        background: url("../../../assets/noise-tan-container.png");
+        background: url("../../../assets/noise/noise-tan-container.png");
         border: 1px solid #eed368;
       }
       &--ruby {
-        background: url("../../../assets/noise-ruby-container.png");
+        background: url("../../../assets/noise/noise-ruby-container.png");
         border: 1px solid red;
       }
     }
