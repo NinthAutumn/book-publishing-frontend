@@ -1,15 +1,34 @@
 <template>
   <section class="search-books">
     <div class="book-container flex-row flex-row--betweeen">
-      <div class="book-cover">
-        <nuxt-link :to="{path: `books/${book._id}`}">
-          <img
-            class="book-cover-img"
-            :src="'https://storage.googleapis.com/theta-images/' + book.cover"
-            alt
-          >
-        </nuxt-link>
+      <div class="divider flex flex-column">
+        <div class="book-cover">
+          <nuxt-link :to="{path: `books/${book._id}`}">
+            <img
+              class="book-cover-img"
+              :src="'https://storage.googleapis.com/theta-images/' + book.cover"
+              alt
+            >
+          </nuxt-link>
+        </div>
+        <div class="book-rating">
+          <no-ssr>
+            <star-rating
+              v-model="book.ratings"
+              :star-size="18"
+              :read-only="true"
+              inactive-color="#D8D7D5"
+              active-color="#FFB727"
+              :increment="0.01"
+              :round-start-rating="false"
+              border-color="#FFB727"
+              :glow="1"
+              class="star-rating"
+            ></star-rating>
+          </no-ssr>
+        </div>
       </div>
+
       <div class="book-info flex-column" :class="readMore">
         <div class="book-title">
           <nuxt-link :to="{path: `books/${book._id}`}">
@@ -29,24 +48,7 @@
             </li>
           </ul>
         </div>
-        <div class="book-header flex-row flex-row--between">
-          <div class="book-rating">
-            <no-ssr>
-              <star-rating
-                v-model="book.ratings"
-                :star-size="20"
-                :read-only="true"
-                inactive-color="#D8D7D5"
-                active-color="#FFB727"
-                :increment="0.01"
-                :round-start-rating="false"
-                border-color="#FFB727"
-                :glow="1"
-                class="star-rating"
-              ></star-rating>
-            </no-ssr>
-          </div>
-        </div>
+        <div class="book-header flex-row flex-row--between"></div>
         <div class="book-synopsis">
           <p class="synopsis" :class="readMore">{{book.synopsis}}</p>
           <div class="divider" v-if="readMore">
@@ -105,7 +107,7 @@ export default {
 .book-cover-img {
   width: 119px;
   height: 175px;
-  border-radius: 10px;
+  border-radius: 5px;
   margin-right: 10px;
 }
 .book-container {
@@ -124,7 +126,7 @@ export default {
     overflow: visible;
     transition: 300ms;
   }
-  box-shadow: 1px 1px 5px 0px #d6d1d1;
+  // box-shadow: 1px 1px 5px 0px #d6d1d1;
   .book-header {
     // height: 100%;
   }

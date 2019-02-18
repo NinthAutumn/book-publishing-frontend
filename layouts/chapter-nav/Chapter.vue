@@ -1,7 +1,7 @@
 <template>
   <div
     class="chapter-page"
-    :class="{'chapter-page--black':theme === 'black','chapter-page--tan':theme === 'tan','chapter-page--ruby':theme === 'ruby', 'chapter-page--default':(theme === 'default')||!theme}"
+    :class="{'chapter-page--black':theme === 'black','chapter-page--tan':theme === 'tan','chapter-page--ruby':theme === 'ruby', 'chapter-page--default':(theme === 'default')}"
   >
     <Horizontal></Horizontal>
     <LeftV></LeftV>
@@ -31,7 +31,7 @@
           <div
             class="chapters-modal"
             v-if="modal"
-            :class="{'chapters-modal--black':theme === 'black','chapters-modal--tan':theme === 'tan','chapters-modal--ruby':theme === 'ruby','chapter-page--default':theme === 'default'}"
+            :class="{'chapters-modal--black':theme === 'black','chapters-modal--tan':theme === 'tan','chapters-modal--ruby':theme === 'ruby','chapters-modal--default':theme === 'default'}"
           >
             <div class="chapters-modal__author-profile" v-if="modal === 'profile'">
               <Profile></Profile>
@@ -95,12 +95,13 @@ export default {
   background-color: black !important;
 }
 .chapters-modal {
+  background-color: white;
   &--default {
     background: url("../../assets/noise/noise-default-container.png");
+    color: black;
   }
   &--black {
-    background-color: rgb(63, 63, 63);
-    background: none;
+    background-color: #1a1a1b;
     // border-right: 1px solid rgb(63, 63, 63);
     color: rgb(215, 218, 220);
   }
@@ -152,7 +153,8 @@ export default {
   // position: relative !important;
   margin-top: 50px;
   margin-right: 50px;
-
+  background-color: #dae0e6;
+  // .chapter-container
   &--default {
     background: url("../../assets/noise/noise-default-all.png");
     .chapter-container {
@@ -182,7 +184,7 @@ export default {
     .chapter-container {
       background: url("../../assets/noise/noise-ruby-container.png");
       color: #fdd4e4;
-      border: 1px solid red;
+      border: 1px solid red !important;
     }
   }
 }

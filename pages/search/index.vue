@@ -23,9 +23,7 @@ export default {
     return {};
   },
   methods: {},
-  created() {
-    console.log(this.$store.state.search.books[0]);
-  },
+  created() {},
   auth: false
 };
 </script>

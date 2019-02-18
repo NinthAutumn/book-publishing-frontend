@@ -7,8 +7,10 @@
     <div class="theme-main">
       <h4 v-text="'テーマ'"></h4>
       <div class="themes-list flex">
-        <div class="theme__item theme__item--white" @click="updateTheme('default')"></div>
+        <div class="theme__item" @click="updateTheme('')"></div>
         <div class="theme__item theme__item--black" @click="updateTheme('black')"></div>
+
+        <div class="theme__item theme__item--white" @click="updateTheme('default')"></div>
         <div class="theme__item theme__item--tan" @click="updateTheme('tan')"></div>
         <div class="theme__item theme__item--ruby" @click="updateTheme('ruby')"></div>
         <!-- <div class="theme__item"></div> -->
@@ -78,9 +80,11 @@ export default {
       border-radius: 100px;
       position: relative;
       margin-right: 10px;
+      background-color: white;
+      border: 1px solid #dae0e6;
       box-shadow: 1px 1px 5px 0 rgb(212, 212, 212);
       &--white {
-        background-color: #fff;
+        background: url("../../../assets/noise/noise-default-container.png");
         border: 1px solid #dae0e6;
       }
       &--black {
