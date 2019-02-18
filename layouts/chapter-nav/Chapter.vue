@@ -1,7 +1,7 @@
 <template>
   <div
     class="chapter-page"
-    :class="{'chapter-page--black':theme === 'black','chapter-page--tan':theme === 'tan','chapter-page--ruby':theme === 'ruby', 'chapter-page--default':(theme === 'default')}"
+    :class="{'chapter-page--black':theme === 'black','chapter-page--tan':theme === 'tan','chapter-page--ruby':theme === 'ruby', 'chapter-page--default':(theme === 'default'),'chapter-page--sapphire':theme === 'sapphire'}"
   >
     <Horizontal></Horizontal>
     <LeftV></LeftV>
@@ -20,6 +20,10 @@
           v-if="$store.state.chapter.chapter.index === 1"
         ></div>
         <nuxt class="yikes"></nuxt>
+        <div
+          class="navigation-prev-cont flex flex-column flex--center flex--align"
+          v-if="!$store.state.chapter.chapter.next"
+        ></div>
         <nuxt-link
           class="navigation-next flex flex-column flex--center flex--align"
           v-if="$store.state.chapter.chapter.next"
@@ -31,7 +35,7 @@
           <div
             class="chapters-modal"
             v-if="modal"
-            :class="{'chapters-modal--black':theme === 'black','chapters-modal--tan':theme === 'tan','chapters-modal--ruby':theme === 'ruby','chapters-modal--default':theme === 'default'}"
+            :class="{'chapters-modal--black':theme === 'black','chapters-modal--tan':theme === 'tan','chapters-modal--ruby':theme === 'ruby','chapters-modal--default':theme === 'default','chapters-modal--sapphire':theme === 'sapphire'}"
           >
             <div class="chapters-modal__author-profile" v-if="modal === 'profile'">
               <Profile></Profile>
@@ -113,6 +117,10 @@ export default {
     background: url("../../assets/noise/noise-ruby-container.png");
     color: #f7bfd4;
   }
+  &--sapphire {
+    background: url("../../assets/noise/noise-sapphire-container.png");
+    color: #d4e6fd;
+  }
   &--image {
   }
   // right: 0;
@@ -185,6 +193,14 @@ export default {
       background: url("../../assets/noise/noise-ruby-container.png");
       color: #fdd4e4;
       border: 1px solid red !important;
+    }
+  }
+  &--sapphire {
+    background: url("../../assets/noise/noise-sapphire-all.png");
+    .chapter-container {
+      background: url("../../assets/noise/noise-sapphire-container.png");
+      color: #d4e6fd;
+      border: 1px solid blue !important;
     }
   }
 }

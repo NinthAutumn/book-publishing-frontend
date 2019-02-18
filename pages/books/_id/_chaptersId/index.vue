@@ -188,6 +188,10 @@ body {
         line-height: 28px;
         font-weight: 400;
         margin-bottom: 12px;
+
+        display: flex;
+        flex-direction: row;
+        // flex-direction:
       }
       // align-items: center;
       // justify-content: space-around;

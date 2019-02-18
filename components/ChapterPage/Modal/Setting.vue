@@ -13,6 +13,7 @@
         <div class="theme__item theme__item--white" @click="updateTheme('default')"></div>
         <div class="theme__item theme__item--tan" @click="updateTheme('tan')"></div>
         <div class="theme__item theme__item--ruby" @click="updateTheme('ruby')"></div>
+        <div class="theme__item theme__item--sapphire" @click="updateTheme('sapphire')"></div>
         <!-- <div class="theme__item"></div> -->
       </div>
     </div>
@@ -98,6 +99,10 @@ export default {
       &--ruby {
         background: url("../../../assets/noise/noise-ruby-container.png");
         border: 1px solid red;
+      }
+      &--sapphire {
+        background: url("../../../assets/noise/noise-sapphire-container.png");
+        border: 1px solid blue;
       }
     }
   }
