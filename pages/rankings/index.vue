@@ -22,7 +22,7 @@
         <div class="sub-header">高評価</div>
         <div class="select-time"></div>
       </div>
-      <BooksList :weirdBook="false" :books="$store.state.ranking.ratings"></BooksList>
+      <BooksList :weirdBook="true" :books="$store.state.ranking.ratings.total"></BooksList>
     </section>
     <section>
       <div class="flex-divider flex flex--between">

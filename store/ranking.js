@@ -29,10 +29,8 @@ export const mutations = {
     })
   },
   RATING_RATING(state) {
-    state.ratings.forEach(async (book) => {
-      if (book.ratings) {
-        book.ratings = +book.ratings.toFixed(2)
-      }
+    state.ratings.total.forEach(async (book) => {
+      book._id.book[0].ratings = +book._id.book[0].ratings.toFixed(2)
     })
   }
 }
@@ -58,7 +56,8 @@ export const actions = {
     commit
   }) {
     await this.$axios.get(process.env.baseUrl + '/ranking/rating').then((res) => {
-      commit('SET_RATING', res.data)
+      commit('SET_RATING', res.data[0])
+      // console.log(res.data[0]);
       commit('RATING_RATING')
       // console.log(res.data);
     })
