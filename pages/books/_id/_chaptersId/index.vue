@@ -150,6 +150,7 @@ body {
   // margin-top: 50px;
   display: flex;
   justify-content: space-around;
+
   // height: 100vh;
   // background: black;
   // color: white;
@@ -165,6 +166,7 @@ body {
     .chapter-container {
       background-color: white;
       position: relative;
+      border: 1px solid #cecece;
       // height: 100vh;
       .chapter-title {
         margin-top: 10px;

@@ -2,7 +2,7 @@
   <div class="images-modal">
     <ul>
       <li>
-        <img :src alt>
+        <!-- <img :src alt> -->
       </li>
     </ul>
   </div>

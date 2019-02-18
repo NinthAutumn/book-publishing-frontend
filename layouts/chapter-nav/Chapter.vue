@@ -91,14 +91,17 @@ export default {
   background-color: white;
   // top: 50px;
   &__author-profile {
+    height: 100%;
   }
   &__images {
     // background-color: black !important;
+    height: 100%;
   }
   &__table-of-content {
     height: 100%;
   }
   &__user-setting {
+    height: 100%;
   }
 }
 .yikes {
