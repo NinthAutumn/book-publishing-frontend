@@ -1,16 +1,15 @@
 FROM node:10.13.0
 
 # Create app directory
-RUN mkdir -p /usr/src/app
-WORKDIR /usr/src/app
+WORKDIR /code/NinthAutumn/projects/startup/app
 
 # Install app dependencies
 
-ONBUILD COPY . /usr/src/app/
-ONBUILD RUN npm install
+COPY . .
+RUN npm install
 
 # Build app
-ONBUILD RUN npm run build
+RUN npm run build
 
 ENV HOST 0.0.0.0
 EXPOSE 3000
