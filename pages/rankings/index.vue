@@ -29,7 +29,7 @@
         <div class="sub-header">ブックマーク数</div>
         <div class="select-time"></div>
       </div>
-      <!-- <BooksList :books="$store.state.book.books.highestrated"></BooksList> -->
+      <BooksList :weirdBook="true" :books="$store.state.ranking.bookmark.total"></BooksList>
     </section>
   </div>
 </template>
@@ -44,6 +44,7 @@ export default {
     await store.dispatch("ranking/genreRanking");
     await store.dispatch("ranking/viewRanking");
     await store.dispatch("ranking/ratingRanking");
+    await store.dispatch("ranking/bookmarkRanking");
   },
   components: {
     BooksList,

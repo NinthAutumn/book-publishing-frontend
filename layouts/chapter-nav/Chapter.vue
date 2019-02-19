@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="chapter-page"
-    :class="{'chapter-page--black':theme === 'black','chapter-page--tan':theme === 'tan','chapter-page--ruby':theme === 'ruby', 'chapter-page--default':(theme === 'default'),'chapter-page--sapphire':theme === 'sapphire'}"
-  >
+  <div class="chapter-page" :class="'chapter-page--' + theme">
     <Horizontal></Horizontal>
     <LeftV></LeftV>
     <RightV></RightV>
