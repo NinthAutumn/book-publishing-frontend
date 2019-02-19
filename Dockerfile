@@ -5,7 +5,6 @@ RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
 # Install app dependencies
-RUN apk update && apk upgrade && apk add git
 
 ONBUILD COPY . /usr/src/app/
 ONBUILD RUN npm install
