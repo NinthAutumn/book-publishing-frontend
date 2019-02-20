@@ -10,7 +10,8 @@ export const getters = {
 const filterParent = function (items, id = undefined) {
   return items.filter((item) => {
     return item.parent === id
-  }).map((filteredItem) => ({ ...filteredItem,
+  }).map((filteredItem) => ({
+    ...filteredItem,
     children: filterParent(items, filteredItem._id)
   }))
 }
@@ -29,10 +30,9 @@ export const actions = {
   async getComments({
     commit
   }, {
-    chapterIndex,
-    bookId
+    chapterId
   }) {
-    await this.$axios.get(process.env.baseUrl + '/comments/show?bookId=' + bookId + '&chapterIndex=' + chapterIndex).then(async (res) => {
+    await this.$axios.get(process.env.baseUrl + '/comments/show?chapterId=' + chapterId).then(async (res) => {
       commit('GET_COMMENTS', res.data)
     })
   },

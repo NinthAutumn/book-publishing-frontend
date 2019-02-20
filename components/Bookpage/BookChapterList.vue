@@ -14,7 +14,7 @@
         <div class="Book-TOC__list" v-for="(chapter, index) in volume" :key="index">
           <nuxt-link
             class="Book-TOC__item flex flex--between flex--align"
-            :to="{path: `${ $route.params.id}/${chapter.index}`}"
+            :to="{path: `${ $route.params.id}/${chapter._id}`}"
           >
             <div class="flex-divider">
               <p class="Book-TOC__text Book-TOC__text--title">{{chapter.index}}話: {{chapter.title}}</p>

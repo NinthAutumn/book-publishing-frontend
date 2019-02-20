@@ -59,8 +59,7 @@ export default {
     const index = params.chaptersId;
     if (store.state.auth.loggedIn) {
       await store.dispatch("chapter/nextChapter", {
-        bookId: params.id,
-        index: index,
+        chapterId: params.chaptersId,
         userId: store.state.auth.user._id
       });
       console.log("dog");

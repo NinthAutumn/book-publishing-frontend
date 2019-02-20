@@ -74,12 +74,11 @@ export const actions = {
   async nextChapter({
     commit
   }, {
-    bookId,
-    index,
+    chapterId,
     userId
   }) {
     // const nextindex = index
-    await this.$axios.get(process.env.baseUrl + '/chapters/direct?id=' + bookId + '&' + 'index=' + index + '&user=' + userId).then((res) => {
+    await this.$axios.get(process.env.baseUrl + '/chapters/direct?chapterId=' + chapterId + '&user=' + userId).then((res) => {
       commit('infiniteNext', res.data)
     })
   },
