@@ -195,7 +195,6 @@ export default {
   border-bottom-right-radius: 10px; */
     .book-title {
       margin: 0;
-      color: black;
       font-weight: 400;
       /* text-align: center; */
       /* margin-top: 10px; */

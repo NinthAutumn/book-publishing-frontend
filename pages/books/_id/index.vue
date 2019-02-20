@@ -232,7 +232,6 @@ export default {
   display: flex;
   margin-left: 5px;
   margin-top: 5px;
-  border-bottom: 2px solid white;
   .tab-list__item {
     font-size: 19px;
     height: 40px;

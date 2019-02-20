@@ -152,7 +152,6 @@ export const mutations = {
       bookmark.store.forEach((store) => {
         if (store.bookId === state.book._id) {
           state.book.bookmarked = true
-          console.log(state.book);
         }
       })
     }

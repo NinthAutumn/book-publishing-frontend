@@ -131,7 +131,6 @@ export default {
   // border-radius: 10px;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
-  color: #796477;
 }
 .review-form {
   display: flex;
@@ -145,7 +144,6 @@ export default {
     border: 2px solid $review-color;
     // border-radius: 5px;
     box-sizing: border-box;
-    color: black;
     margin-bottom: 10px;
   }
   &__content-editor {

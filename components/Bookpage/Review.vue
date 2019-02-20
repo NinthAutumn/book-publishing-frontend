@@ -43,7 +43,6 @@
             :text="review.content"
           ></truncate>
         </no-ssr>
-
         <!-- <div
           class="reviews-content-text--html"
           v-html="review.content"
@@ -146,14 +145,12 @@ export default {
   span {
     font-size: 16px;
     font-weight: 400;
-    color: #2e2635;
     text-align: left;
     line-height: 28px;
   }
   p {
     font-size: 16px;
     font-weight: 400;
-    color: #2e2635;
     text-align: left;
     line-height: 28px;
     // font-weight: 300;
@@ -170,6 +167,10 @@ export default {
   }
 }
 .reviews {
+  hr {
+    color: black;
+    background-color: black;
+  }
   a {
     color: $primary;
     font-weight: bold;
@@ -185,11 +186,11 @@ export default {
 
   width: 100%;
   display: flex;
-  border: 2px solid #c1c9e4;
+  // border: 2px solid #c1c9e4;
   // border-radius: 10px;
-  -webkit-box-shadow: 0px 4px 4px rgba(139, 139, 139, 0.25);
-  -moz-box-shadow: 0px 4px 4px rgba(139, 139, 139, 0.25);
-  box-shadow: 0px 4px 4px rgba(139, 139, 139, 0.25);
+  // -webkit-box-shadow: 0px 4px 4px rgba(139, 139, 139, 0.25);
+  // -moz-box-shadow: 0px 4px 4px rgba(139, 139, 139, 0.25);
+  // box-shadow: 0px 4px 4px rgba(139, 139, 139, 0.25);
   // -webkit-box-shadow: 0px 2px 5px 0px rgb(233, 218, 233);
   // -moz-box-shadow: 0px 2px 5px 0px rgb(233, 218, 233);
   // box-shadow: 0px 2px 5px 0px rgb(233, 218, 233);
@@ -198,6 +199,7 @@ export default {
   margin-bottom: 10px;
   padding: 10px 5px;
   padding-bottom: 0 !important;
+  // border-bottom: 1px solid $review-color;
   box-sizing: border-box;
   // height: 183px;
   overflow: hidden;
@@ -226,7 +228,6 @@ export default {
     width: 100%;
     box-sizing: border-box;
     // height: 150px;
-    color: #444444;
     // justify-content: space-between;
     .flex-row {
       font-size: 16px;
@@ -249,7 +250,6 @@ export default {
       // margin-left: 10px;
       // font-weight: 500;
       // line-height: 28.8px;
-      color: #444444;
       font-family: "メイリオ", "Meiryo", "Lucida Grande", "sans-serif";
     }
     .buts {
@@ -262,7 +262,6 @@ export default {
     }
 
     .collapsed {
-      color: #444444;
       // height: 150px;
       // padding: 10px;
       // margin-left: 10px;
@@ -275,7 +274,6 @@ export default {
         font-size: 16px;
         line-height: 28px;
         font-weight: 300;
-        color: #2e2635;
         text-align: left;
         overflow: hidden;
         height: 100% !important;

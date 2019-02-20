@@ -1,5 +1,5 @@
 <template>
-  <div class="h-nav">
+  <div class="h-nav" :class="'h-nav--'">
     <nav>
       <div class="left-menu">
         <i class="el-icon-menu" :class="$store.state.menuState" @click="menuDrawer"></i>
@@ -168,6 +168,12 @@ export default {
 }
 
 .h-nav {
+  &--black {
+    background-color: #1a1a1b;
+    -webkit-box-shadow: 0px 2px 3px 0px #464646;
+    -moz-box-shadow: 0px 2px 3px 0px #464646;
+    box-shadow: 0px 2px 3px 0px #464646;
+  }
   height: 50px;
   width: 100%;
   position: fixed;

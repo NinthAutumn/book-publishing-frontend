@@ -119,19 +119,15 @@ export default {
     resize: none;
     margin-bottom: 5px;
     font-size: 13px;
-    color: black;
     height: 100px;
     padding: 5px;
     transition: 300ms;
     &:focus {
       outline: none;
       box-shadow: 1px 1px 5px 0px rgb(214, 214, 214);
-      transform: scaleY(1.05);
-      transition: 300ms;
     }
     border-radius: 5px;
     border: 2px solid #b4b7b9;
-    background-color: #f7f7f7;
   }
   &__item {
     // padding-top: 10px;

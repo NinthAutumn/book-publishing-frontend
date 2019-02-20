@@ -37,21 +37,26 @@ export default {
 //   background-color: white;
 // }
 
-.permanent {
-}
+// .permanent {
+//   background-color: black;
+//   color: rgb(215, 218, 220);
+//   .review-card {
+//     background-color: #1a1a1b;
+//   }
+// }
 
 .nuxt-pages .menu-active {
   margin-left: 240px;
-  margin-top: 6.6rem;
+  margin-top: 50px;
   padding: 1rem 5rem;
   transition: 300ms;
   position: relative !important;
 }
 .nuxt-pages .menu-inactive {
-  padding: 1rem 7rem;
+  padding: 10px 50px;
   transition: 300ms;
   position: relative !important;
-  margin-top: 6.6rem;
+  margin-top: 50px;
 }
 
 /* body {

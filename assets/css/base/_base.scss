@@ -21,6 +21,18 @@ a:visited {
   color: $primary;
 }
 
+body {
+  // color: white;
+  // background: black;
+}
 
+@media (prefers-color-scheme: dark) {
+
+  /* Overrides for Dark Mode. */
+  body {
+    color: white;
+    background: black;
+  }
+}
 
 //transition animation

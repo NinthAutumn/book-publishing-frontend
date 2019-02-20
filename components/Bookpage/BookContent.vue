@@ -152,7 +152,6 @@ export default {
         font-size: 16px;
         line-height: 30px;
         font-weight: 300;
-        color: rgb(46, 38, 53);
         text-align: left;
       }
     }
@@ -165,7 +164,6 @@ export default {
         font-size: 16px;
         line-height: 28px;
         font-weight: 300;
-        color: rgb(46, 38, 53);
       }
 
       &--title {

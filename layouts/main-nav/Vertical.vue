@@ -182,13 +182,18 @@ export default {
   color: $primary;
 }
 .v-nav {
+  // margin: 0 !important;
+  &--black {
+    background-color: #1a1a1b;
+    color: white;
+  }
   background-color: white;
   /* display: none; */
   width: 240px;
   height: 100vh;
   position: fixed;
   top: 50px;
-  left: 0.1rem;
+  left: 0;
   /* -webkit-box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.36);
   -moz-box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.36);
   box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.36); */

@@ -5,12 +5,20 @@
         <div class="comment-modal__rate flex flex-column flex--align flex--left">
           <div class="rate-up">
             <no-ssr>
-              <Zondicon class="comment-like" icon="arrow-thick-up"></Zondicon>
+              <Zondicon
+                :class="'comment-like--' + theme"
+                class="comment-like"
+                icon="arrow-thick-up"
+              ></Zondicon>
             </no-ssr>
           </div>
           <div class="rate-down">
             <no-ssr>
-              <Zondicon class="comment-dislike" icon="arrow-thick-down"></Zondicon>
+              <Zondicon
+                :class="'comment-dislike--' + theme"
+                class="comment-dislike"
+                icon="arrow-thick-down"
+              ></Zondicon>
             </no-ssr>
           </div>
         </div>
@@ -117,6 +125,9 @@ export default {
     },
     blue() {
       return this.comment.likes < 1;
+    },
+    theme() {
+      return this.$store.state.user.theme;
     }
   },
   methods: {
@@ -183,12 +194,18 @@ export default {
   font: inherit;
 }
 .comment-like {
+  &--black {
+    fill: rgb(215, 218, 220);
+  }
   &:hover {
     fill: rgb(218, 76, 76);
     cursor: pointer;
   }
 }
 .comment-dislike {
+  &--black {
+    fill: rgb(215, 218, 220);
+  }
   &:hover {
     fill: rgb(98, 98, 240);
     cursor: pointer;
