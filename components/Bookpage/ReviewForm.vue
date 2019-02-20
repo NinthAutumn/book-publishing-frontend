@@ -9,7 +9,7 @@
         v-model="review.title"
         name="title"
         placeholder="タイトル"
-        max="100"
+        max="50"
       >
       <div class="form-control">
         <label for="rating" class="rating-label">評価</label>
@@ -39,7 +39,9 @@
           ></star-rating>
         </no-ssr>
       </div>
-      <no-ssr>
+      <text-editor class="review-form__content" v-model="review.content"></text-editor>
+      <!-- <p v-text="review.content"></p> -->
+      <!-- <no-ssr>
         <vue-editor
           :editorToolbar="customToolbar"
           class="review-form__content-editor"
@@ -48,7 +50,7 @@
           v-model="review.content"
           placeholder="本についての感想文"
         ></vue-editor>
-      </no-ssr>
+      </no-ssr>-->
       <div class="divider flex flex--right">
         <button type="submit" class="review-submit">投稿</button>
       </div>
@@ -62,6 +64,7 @@
 </template>
 
 <script>
+import TextEditor from "@/components/TextEditor";
 export default {
   props: ["value"],
   data() {
@@ -81,6 +84,9 @@ export default {
         ["clean"]
       ]
     };
+  },
+  components: {
+    TextEditor
   },
   methods: {
     async addReview() {
@@ -132,29 +138,29 @@ export default {
   flex-direction: column;
   &__title {
     height: 50px;
-    font-size: 15px;
+    font-size: 18px;
     // width: 410px;
     width: 100%;
     padding: 5px;
     border: 2px solid $review-color;
     // border-radius: 5px;
     box-sizing: border-box;
-    color: $primary-black;
+    color: black;
     margin-bottom: 10px;
   }
   &__content-editor {
     margin-bottom: 10px;
   }
   &__content {
-    height: 150px;
-    padding: 5px;
-    width: 100%;
+    height: 300px;
+    // padding: 5px;
+    // width: 100%;
 
-    border: 2px solid $review-color;
+    // border: 2px solid $review-color;
     // border-radius: 5px;
-    box-sizing: border-box;
-    resize: none;
-    font-size: 14px;
+    // box-sizing: border-box;
+    // resize: none;
+    // font-size: 14px;
     &:focus {
       outline: none;
     }

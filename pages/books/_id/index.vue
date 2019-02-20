@@ -101,6 +101,8 @@
         <button @click="reviewOpen" class="review-open button">レビューを書く</button>
       </div>
       <hr>
+
+      <!-- <text-editor></text-editor> -->
       <ReviewsList></ReviewsList>
     </section>
     <div class="divider">
@@ -124,6 +126,7 @@ import BookContent from "@/components/Bookpage/BookContent";
 import BookChapterList from "@/components/Bookpage/BookChapterList";
 import ReviewsList from "@/components/Bookpage/ReviewsList";
 import ReviewsForm from "@/components/Bookpage/ReviewForm";
+// import TextEditor from "@/components/Pell";
 
 export default {
   auth: false,
@@ -173,6 +176,7 @@ export default {
     BookChapterList,
     ReviewsList,
     ReviewsForm
+    // TextEditor
   },
   created() {},
   scrollToTop: false
