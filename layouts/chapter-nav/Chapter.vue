@@ -7,14 +7,14 @@
       <div class="chapter-wrapper flex">
         <nuxt-link
           class="navigation-prev flex flex-column flex--center flex--align"
-          v-if="$store.state.chapter.chapter.index !== 1"
-          :to="{path: `${$store.state.chapter.chapter.index-1}`}"
+          v-if="$store.state.chapter.chapter.prev"
+          :to="{path: `${$store.state.chapter.chapter.prev.chapterId}`}"
         >
           <fa icon="angle-left"></fa>
         </nuxt-link>
         <div
           class="navigation-prev-cont flex flex-column flex--center flex--align"
-          v-if="$store.state.chapter.chapter.index === 1"
+          v-if="!$store.state.chapter.chapter.prev"
         ></div>
         <nuxt class="yikes"></nuxt>
         <div
@@ -24,7 +24,7 @@
         <nuxt-link
           class="navigation-next flex flex-column flex--center flex--align"
           v-if="$store.state.chapter.chapter.next"
-          :to="{path: `${$store.state.chapter.chapter.index+1}`}"
+          :to="{path: `${$store.state.chapter.chapter.next.chapterId}`}"
         >
           <fa icon="angle-right"></fa>
         </nuxt-link>
@@ -84,6 +84,9 @@ export default {
     theme() {
       return this.$store.state.user.theme;
     }
+  },
+  created() {
+    console.log(this.$store.state.chapter.chapter);
   }
 };
 </script>

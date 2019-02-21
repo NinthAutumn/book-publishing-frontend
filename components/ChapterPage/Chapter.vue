@@ -20,7 +20,7 @@
     ></article>
     <div
       class="chapter-payblock flex flex--align flex-column"
-      v-if="$store.state.chapter.chapter.blocked"
+      v-if="$store.state.chapter.chapter.locked"
     >
       <div class="payblock-price">{{$store.state.chapter.chapter.price}}</div>
       <div class="payblock-buy button button--primary">読む</div>

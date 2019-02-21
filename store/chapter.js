@@ -84,8 +84,12 @@ export const actions = {
   },
   async previousChapter({
     commit
+  }, {
+    index,
+    bookId
   }) {
-
+    const chapter = await this.$axios.get(process.env.baseUrl + '/chapters/previous?index=' + index + '&bookId=' + bookId)
+    commit('infiniteNext', chapter.data)
   },
   async tableOfContent({
     commit,
