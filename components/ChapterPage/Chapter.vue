@@ -5,7 +5,7 @@
     </div>
     <div
       class="chapter-announcement chapter-announcement--header"
-      v-if="$store.state.chapter.chapter.extra.announcement.header"
+      v-if="$store.state.chapter.chapter.extra.announcement"
     >
       <h4>
         <fa style="margin-right:10px;" icon="envelope"></fa>告知・メッセージ・上書き
@@ -19,16 +19,16 @@
       style="flex-direction:column;"
     ></article>
     <div
-      class="chapter-payblock flex flex--align flex--center flex-column"
+      class="chapter-payblock flex flex--align flex-column"
       v-if="$store.state.chapter.chapter.blocked"
     >
       <div class="payblock-price">{{$store.state.chapter.chapter.price}}</div>
-      <div class="payblock-buy button button--primary">買う</div>
+      <div class="payblock-buy button button--primary">読む</div>
     </div>
 
     <div
       class="chapter-announcement chapter-announcement--footer"
-      v-if="$store.state.chapter.chapter.extra.announcement.footer"
+      v-if="$store.state.chapter.chapter.extra.announcement"
     >
       <h4>
         <fa style="margin-right:10px;" icon="envelope"></fa>告知・メッセージ・下書き
@@ -100,7 +100,7 @@ export default {
 
 .chapter-payblock {
   .payblock-price {
-    // margin-top: 50px;
+    margin-top: 120px;
     margin-bottom: 10px;
     // margin-bottom: 0 !important;
     font-size: 20px;
@@ -111,9 +111,9 @@ export default {
     font-size: 20px;
     // margin-bottom: 20px;
   }
-  margin-bottom: 50px;
+  // margin-bottom: 50px;
   box-sizing: border-box;
-  height: 250px;
+  height: 400px;
   width: 100%;
 }
 
