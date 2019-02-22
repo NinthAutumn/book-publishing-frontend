@@ -4,10 +4,10 @@
     <form action class="flex flex-column chapter-new" @submit.prevent="createChapter">
       <!-- <h3></h3> -->
       <!-- <fa icon="plus"></fa> -->
-      <el-steps :active="progress">
-        <el-step title="ステップ１" icon="el-icon-upload"></el-step>
-        <el-step title="ステップ２" icon=" el-icon-edit"></el-step>
-        <el-step title="ステップ３" icon="el-icon-picture"></el-step>
+      <el-steps :active="progress" simple>
+        <el-step @click="progress = 1" title="ステップ１" icon="el-icon-upload"></el-step>
+        <el-step @click="progress = 2" title="ステップ２" icon=" el-icon-edit"></el-step>
+        <el-step @click="progress = 3" title="ステップ３" icon="el-icon-picture"></el-step>
       </el-steps>
       <div class="chapter-form__navigation flex flex--between" style="margin-top:10px;">
         <div
@@ -78,9 +78,9 @@
             <el-switch v-model="form.locked"></el-switch>
           </div>
           <div class="lock-method" v-if="form.locked">
-            <p>ブロンズ作者の場合: 字数 x 1 ゴールド</p>
-            <p>シルバー作者の場合: 字数 x 2 ゴールド</p>
-            <p>シルバー作者の場合: 字数 x 3 ゴールド</p>
+            <p>ブロンズ作者の場合: 字数 x 0.00303 ゴールド</p>
+            <p>シルバー作者の場合: 字数 x 0.00404 ゴールド</p>
+            <p>ゴールド作者の場合: 字数 x 0.00505 ゴールド</p>
           </div>
           <div class="form-control flex flex--align">
             <label for="schedule" style="margin-right:10px;">投稿する時間を指定する</label>

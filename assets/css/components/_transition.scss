@@ -72,10 +72,12 @@
 
 @keyframes downUp {
   from {
+    opacity: 0;
     transform: scaleY(1) translateY(40px) translateX(10px);
   }
 
   to {
+    opacity: 1;
     transform: scaleY(1) translateY(0px) translateX(0px);
   }
 }
