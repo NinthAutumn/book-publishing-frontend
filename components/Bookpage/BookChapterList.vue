@@ -24,7 +24,7 @@
                 class="Book-TOC__text Book-TOC__text--date"
               >{{$moment(chapter.createdAt).startOf('hour').fromNow()}}</p>
 
-              <fa class="Book-TOC__text Book-TOC__text--icon" icon="lock" v-if="chapter.price"></fa>
+              <fa class="Book-TOC__text Book-TOC__text--icon" icon="lock" v-if="chapter.locked"></fa>
             </div>
           </nuxt-link>
         </div>
