@@ -44,8 +44,13 @@
       <transition name="slide-fade">
         <div class="chapter-form__announcement" v-if="progress === 1">
           <div class="form-control flex-column">
+            <transition name="placeholder-up">
+              <label for="header" v-if="!upPlaceHolder">上書き</label>
+            </transition>
             <textarea
-              placeholder="前書き"
+              @focus="textAreaFocus(true)"
+              @blur="textAreaBlur(true)"
+              :placeholder="upPlaceHolder"
               name="header"
               v-model="form.extra.announcement.header"
               id
@@ -53,13 +58,22 @@
             ></textarea>
           </div>
           <div class="form-control flex-column">
+            <transition name="placeholder-up">
+              <label for="footer" v-if="!downPlaceHolder">下書き</label>
+            </transition>
             <textarea
-              placeholder="後書き"
+              @focus="textAreaFocus(false)"
+              @blur="textAreaBlur(false)"
+              :placeholder="downPlaceHolder"
               name="footer"
               v-model="form.extra.announcement.footer"
               id
               rows="5"
             ></textarea>
+          </div>
+          <div class="form-control flex flex--align">
+            <label for="locked" style="margin-right:10px;">有料</label>
+            <el-switch v-model="form.locked"></el-switch>
           </div>
           <div class="form-control flex flex--align">
             <label for="schedule" style="margin-right:10px;">投稿する時間を指定する</label>
@@ -90,13 +104,16 @@
               v-model="form.title"
             >
           </div>
-          <div class="form-control" style="height:500px;">
-            <vue-editor
+          <div class="form-control">
+            <!-- <TextEditor
               class="chapter-content-new"
               :editorToolbar="customToolbar"
               v-model="form.content"
               placeholder="本文"
-            ></vue-editor>
+            ></TextEditor>
+            -->
+            <froala class="chapter-content-new" :config="config" v-model="form.content">Init text</froala>
+            <!-- <div v-text="form.wordCount"></div> -->
           </div>
         </div>
       </transition>
@@ -163,9 +180,15 @@
 </template>
 
 <script>
+import TextEditor from "@/components/TextEditor";
 export default {
+  components: {
+    TextEditor
+  },
   data() {
     return {
+      upPlaceHolder: "上書き",
+      downPlaceHolder: "下書き",
       progress: 1,
       fileList: [],
       schedule: false,
@@ -173,6 +196,8 @@ export default {
         title: "",
         content: "",
         date: "",
+        wordCount: 0,
+        locked: false,
         extra: {
           announcement: {
             header: "",
@@ -181,12 +206,30 @@ export default {
           drawings: []
         }
       },
-      customToolbar: [
-        ["bold", "italic", "underline", "strike"],
-        [{ list: "ordered" }, { list: "bullet" }],
-        ["blockquote"],
-        ["clean"]
-      ],
+      config: {
+        placeholderText: "本文!",
+        charCounterCount: true,
+        events: {
+          "froalaEditor.initialized": function() {
+            // console.log();
+            // this.wordCount = $(".selector").froalaEditor("charCounter.count");
+          }
+        },
+        toolbarButtons: [
+          "bold",
+          "italic",
+          "underline",
+          "quote",
+          "specialCharacters"
+        ],
+        height: 300,
+        quickInsertButtons: ["hr", "table"],
+        fontSize: ["16"],
+        language: "jp",
+        // theme: "dark",
+        fontSizeDefaultSelection: "16",
+        shortcutsEnabled: ["bold", "italic", "undo", "redo"]
+      },
       lang: {
         days: ["日", "月", "火", "水", "木", "金", "土"],
         months: [
@@ -217,11 +260,33 @@ export default {
     };
   },
   methods: {
+    textAreaFocus(up) {
+      if (up) {
+        this.upPlaceHolder = "";
+      } else {
+        this.downPlaceHolder = "";
+      }
+    },
+    textAreaBlur(up) {
+      if (up) {
+        this.upPlaceHolder = "上書き";
+      } else {
+        this.downPlaceHolder = "下書き";
+      }
+    },
     front() {
       this.progress++;
+      const counter = document.querySelector(".fr-counter");
+      if (counter) {
+        this.form.wordCount = counter.innerText;
+      }
     },
     back() {
       this.progress--;
+      // const counter = document.querySelector(".fr-counter");
+      // if (counter) {
+      //   this.wordCount = counter.innerText;
+      // }
     },
     handleRemove(file, fileList) {
       console.log(file, fileList);
@@ -233,9 +298,29 @@ export default {
       this.form.extra.drawings.push(file.raw);
     },
     async createChapter() {
-      this.form.extra.drawings.forEach(async image => {
-        await this.$store.dispatch("upload/image", image);
-      });
+      if (this.form.extra.drawings) {
+        this.form.extra.drawings.forEach(async image => {
+          await this.$store.dispatch("upload/multiImage", image);
+        });
+      }
+      const counter = document.querySelector(".fr-counter");
+      console.log(counter);
+      const chapter = {
+        title: this.form.title,
+        content: this.form.content,
+        date: "",
+        wordCount: this.form.wordCount,
+        locked: this.form.locked,
+        extra: {
+          announcement: {
+            header: this.form.extra.announcement.header,
+            footer: this.form.extra.announcement.footer
+          },
+          drawings: this.$store.state.upload.urls
+        }
+      };
+      console.log(chapter);
+      // await this.$store.dispatch();
     },
     handleExceed(files, fileList) {
       this.$message.warning(
@@ -252,6 +337,27 @@ export default {
 </script>
 
 <style lang="scss">
+.fr-wrapper {
+  font-size: 16px !important;
+  color: #444444;
+}
+.fr-box {
+  font-family: inherit;
+  font-size: 16px !important;
+  color: #444444;
+}
+.fr-view {
+  font-family: inherit;
+  font-size: 16px !important;
+  color: #444444;
+  p {
+  }
+  * {
+    font-size: 16px !important;
+    line-height: 20px;
+    color: rgb(179, 179, 179);
+  }
+}
 .el-button--mini,
 .el-button--small span {
   font-size: 13px;
@@ -267,6 +373,11 @@ export default {
 }
 .ql-snow * {
   font-size: 16px;
+}
+.fr-box.fr-basic .fr-element {
+  p {
+    // font-size: 16px;
+  }
 }
 .el-step__line {
   font-size: 16px !important;
@@ -314,6 +425,7 @@ export default {
   //
 }
 .chapter-form {
+  transition: 300ms;
   .el-step__title {
     font-size: 14px;
     line-height: 1;
@@ -368,6 +480,7 @@ export default {
   }
   label {
     font-size: 16px;
+    // transition: 300ms;
   }
   .form-control {
     margin-top: 10px;
@@ -380,15 +493,18 @@ export default {
     resize: none;
     font-size: 16px;
     padding: 10px;
-    // box-shadow: 1px 1px 5px 0px rgb(209, 209, 209);
+    box-shadow: 1px 1px 5px 0px rgb(209, 209, 209);
     margin-bottom: 10px;
     color: #a3a3a3;
-    border: 1px solid $review-color !important;
+    border: 0px solid $review-color !important;
     border-radius: 5px;
     line-height: 20px;
+    transition: 300ms;
 
     &:focus {
       outline: none;
+      // transform: translateY(10px);
+      // transition: 300ms;
     }
   }
   .chapter-title {
@@ -398,7 +514,7 @@ export default {
     border: none;
     padding: 12px 12px !important;
     border: 1px solid rgb(202, 202, 202);
-    border-radius: 5px;
+    // border-radius: 5px;
     // box-sizing: bord !important;
     // box-shadow: 1px 1px 5px 0px rgb(209, 209, 209);
     // margin-bottom: 10px;

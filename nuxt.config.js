@@ -1,4 +1,5 @@
 const pkg = require('./package')
+const webpack = require('webpack')
 // var FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 // const webpack = require('webpack');
 // var webpackConfig = {
@@ -35,6 +36,9 @@ module.exports = {
       type: 'image/x-icon',
       href: '/favicon.ico'
 
+    }, {
+      rel: 'stylesheet',
+      href: 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'
     }]
   },
 
@@ -96,6 +100,9 @@ module.exports = {
       ssr: false
     }, {
       src: '@/plugins/pell',
+      ssr: false
+    }, {
+      src: '@/plugins/froala',
       ssr: false
     }
   ],
@@ -215,7 +222,11 @@ module.exports = {
         grid: true
       })
     ],
-    plugins: []
+    plugins: [new webpack.ProvidePlugin({
+      $: 'jquery',
+      jQuery: 'jquery',
+      'window.jQuery': 'jquery'
+    })]
   },
   env: {
     baseUrl: process.env.BASE_URL || 'http://0.0.0.0:5000'

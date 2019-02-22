@@ -58,6 +58,29 @@
   animation-fill-mode: backwards;
 }
 
+.placeholder-up-enter-active {
+  animation: downUp 300ms ease-out;
+  // animation-direction: reverse;
+  animation-fill-mode: backwards;
+}
+
+.placeholder-up-leave-active {
+  animation: downUp 300ms ease-out;
+  animation-direction: reverse;
+  animation-fill-mode: backwards;
+}
+
+@keyframes downUp {
+  from {
+    transform: scaleY(1) translateY(40px) translateX(10px);
+  }
+
+  to {
+    transform: scaleY(1) translateY(0px) translateX(0px);
+  }
+}
+
+
 .grow-shrink-enter {}
 
 .slide-fade-leave-to {}

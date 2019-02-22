@@ -9,7 +9,7 @@
       v-model="text"
       @select="selectEvent"
     ></textarea>
-    <!-- <p v-text="tempText"></p> -->
+    <p class="text-editor__count" v-text="text.length"></p>
   </div>
 </template>
 
@@ -95,6 +95,8 @@ export default {
   // font-size: inherit;
   height: 100%;
   width: 100%;
+  position: relative;
+
   textarea {
     border: 2px solid $review-color;
     height: 300px;
@@ -103,12 +105,19 @@ export default {
     overflow: scroll;
     font-size: 16px;
     line-height: 20px;
-    padding: 5px;
+    padding: 10px;
+    padding-bottom: 20px !important;
     box-sizing: border-box;
     &:focus {
       outline: none;
       -ms-outline: none;
     }
+  }
+  &__count {
+    font-size: 16px;
+    position: absolute;
+    right: 10px;
+    bottom: 15px;
   }
 }
 </style>
