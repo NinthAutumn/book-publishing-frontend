@@ -314,7 +314,7 @@ export default {
         .replace(/<[^>]+>/gm, "")
         .replace(/\s/, "");
 
-      this.form.wordCount = this.form.wordCount.replace(/^(&nbsp;|<br>)+/, "");
+      // this.form.wordCount = this.form.wordCount.replace(/^(&nbsp;|<br>)+/, "");
 
       console.log(this.form.wordCount.length);
       const chapter = {
