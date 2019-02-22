@@ -5,11 +5,13 @@
       @blur="changes"
       @keydown="changes"
       @keypress="changes"
+      @keyup="changes"
       @mouseleave="changes"
       v-model="text"
       @select="selectEvent"
     ></textarea>
-    <p class="text-editor__count" v-text="text.length"></p>
+    <p class="text-editor__count" v-text="textLength"></p>
+    <!-- <div v-html="tempText"></div> -->
   </div>
 </template>
 
@@ -33,6 +35,9 @@ export default {
       set(value) {
         this.$emit("update:value", value);
       }
+    },
+    textLength() {
+      return this.text.replace(/\s/g, "").length;
     }
   },
   methods: {
@@ -44,11 +49,24 @@ export default {
     changes() {
       this.text = this.text.replace(/(<([^>]+)>)/gi, "");
       this.textArray = this.text.split(/\n/);
+      let br = 0;
       this.realArray = this.textArray
+        .filter((value, index) => {
+          if (value) {
+            br = 0;
+            return true;
+          } else if (br > 0) {
+            return false;
+          } else {
+            br++;
+            return true;
+          }
+        })
         // .filter(value => value)
         .map((value, index) => {
           // console.log(value );
           if (value) {
+            br = 0;
             return `<p>${value}</p>`;
           } else if (index === this.textArray.length - 1) {
             return "";

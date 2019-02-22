@@ -77,6 +77,11 @@
             <label for="locked" style="margin-right:10px;">有料</label>
             <el-switch v-model="form.locked"></el-switch>
           </div>
+          <div class="lock-method" v-if="form.locked">
+            <p>ブロンズ作者の場合: 字数 x 1 ゴールド</p>
+            <p>シルバー作者の場合: 字数 x 2 ゴールド</p>
+            <p>シルバー作者の場合: 字数 x 3 ゴールド</p>
+          </div>
           <div class="form-control flex flex--align">
             <label for="schedule" style="margin-right:10px;">投稿する時間を指定する</label>
             <el-switch v-model="schedule"></el-switch>
@@ -198,7 +203,7 @@ export default {
         title: "",
         content: "",
         date: "",
-        wordCount: 0,
+        wordCount: "",
         locked: false,
         extra: {
           announcement: {
@@ -217,13 +222,7 @@ export default {
             // this.wordCount = $(".selector").froalaEditor("charCounter.count");
           }
         },
-        toolbarButtons: [
-          "bold",
-          "italic",
-          "underline",
-          "quote",
-          "specialCharacters"
-        ],
+        toolbarButtons: ["bold", "italic", "underline"],
         height: 300,
         quickInsertButtons: ["hr", "table"],
         fontSize: ["16"],
@@ -278,10 +277,10 @@ export default {
     },
     front() {
       this.progress++;
-      const counter = document.querySelector(".fr-counter");
-      if (counter) {
-        this.form.wordCount = counter.innerText;
-      }
+      // const counter = document.querySelector(".fr-view");
+      // if (counter) {
+      //   this.form.wordCount = counter.innerText;
+      // }
     },
     back() {
       this.progress--;
@@ -305,8 +304,19 @@ export default {
           await this.$store.dispatch("upload/multiImage", image);
         });
       }
-      const counter = document.querySelector(".fr-counter");
-      console.log(counter);
+
+      // const counter = document.querySelector(".fr-counter");
+      // console.log(counter);
+
+      this.form.wordCount = this.form.content
+        .replace(/(\s*)?&nbsp;(\s*)?/, "")
+
+        .replace(/<[^>]+>/gm, "")
+        .replace(/\s/, "");
+
+      this.form.wordCount = this.form.wordCount.replace(/^(&nbsp;|<br>)+/, "");
+
+      console.log(this.form.wordCount.length);
       const chapter = {
         title: this.form.title,
         content: this.form.content,
