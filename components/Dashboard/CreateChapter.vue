@@ -45,9 +45,10 @@
         <div class="chapter-form__announcement" v-if="progress === 1">
           <div class="form-control flex-column">
             <transition name="placeholder-up">
-              <label for="header" v-if="!upPlaceHolder">上書き</label>
+              <div class="label-animation" for="header" v-if="!upPlaceHolder">上書き</div>
             </transition>
             <textarea
+              maxlength="280"
               @focus="textAreaFocus(true)"
               @blur="textAreaBlur(true)"
               :placeholder="upPlaceHolder"
@@ -59,9 +60,10 @@
           </div>
           <div class="form-control flex-column">
             <transition name="placeholder-up">
-              <label for="footer" v-if="!downPlaceHolder">下書き</label>
+              <div class="label-animation" for="footer" v-if="!downPlaceHolder">下書き</div>
             </transition>
             <textarea
+              maxlength="280"
               @focus="textAreaFocus(false)"
               @blur="textAreaBlur(false)"
               :placeholder="downPlaceHolder"
@@ -481,8 +483,17 @@ export default {
   label {
     font-size: 16px;
     // transition: 300ms;
+    // top: -25px;
+    // position: absolute;
+  }
+  .label-animation {
+    font-size: 16px;
+    // transition: 300ms;
+    top: -25px;
+    position: absolute;
   }
   .form-control {
+    position: relative;
     margin-top: 10px;
   }
   .draft-checkbox {
@@ -494,7 +505,7 @@ export default {
     font-size: 16px;
     padding: 10px;
     box-shadow: 1px 1px 5px 0px rgb(209, 209, 209);
-    margin-bottom: 10px;
+    margin-bottom: 25px;
     color: #a3a3a3;
     border: 0px solid $review-color !important;
     border-radius: 5px;
