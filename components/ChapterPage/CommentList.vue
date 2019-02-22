@@ -65,12 +65,12 @@ export default {
   methods: {
     async addComment() {
       const bookId = this.$route.params.id;
-      const chapterIndex = this.$route.params.chaptersId;
+      const chapterId = this.$route.params.chaptersId;
       const content = this.newComment.content;
       this.$store
         .dispatch("comment/addParentlessComment", {
           bookId,
-          chapterIndex,
+          chapterId,
           content
         })
         .then(() => {

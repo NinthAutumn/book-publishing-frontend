@@ -146,13 +146,13 @@ export default {
     },
     async addComment() {
       const bookId = this.$route.params.id;
-      const chapterIndex = this.$route.params.chaptersId;
+      const chapterId = this.$route.params.chaptersId;
       const content = this.content;
       const parent = this.comment._id;
       await this.$store
         .dispatch("comment/addComment", {
           bookId,
-          chapterIndex,
+          chapterId,
           content,
           parent
         })
@@ -165,7 +165,7 @@ export default {
         .catch(() => {
           this.$message({
             message: "返信の投稿に成功しました",
-            type: "success"
+            type: "error"
           });
         });
     }

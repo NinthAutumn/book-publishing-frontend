@@ -71,8 +71,8 @@ export default {
     }
 
     await store.dispatch("comment/getComments", {
-      chapterIndex: index,
-      bookId: params.id
+      chapterId: params.chaptersId
+      // bookId: params.id
     });
   },
   layout: "chapter-nav/Chapter",

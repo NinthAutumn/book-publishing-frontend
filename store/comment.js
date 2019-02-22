@@ -40,13 +40,13 @@ export const actions = {
     commit
   }, {
     bookId,
-    chapterIndex,
+    chapterId,
     content,
     parent
   }) {
     await this.$axios.post(process.env.baseUrl + '/comments/add', {
       bookId,
-      chapterIndex,
+      chapterId,
       content,
       parent
     })
@@ -55,12 +55,12 @@ export const actions = {
     commit
   }, {
     bookId,
-    chapterIndex,
+    chapterId,
     content
   }) {
     await this.$axios.post(process.env.baseUrl + '/comments/add', {
       bookId,
-      chapterIndex,
+      chapterId,
       content
     })
   }
