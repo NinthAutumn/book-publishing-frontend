@@ -92,6 +92,10 @@ export default {
   async fetch({ store }) {
     await store.dispatch("book/allBooks");
     await store.dispatch("review/mostLiked");
+    await store.dispatch("ranking/bookAnalysisHomeRanking", {
+      storeType: "bookmark",
+      limit: 3
+    });
   },
   created() {},
   auth: false

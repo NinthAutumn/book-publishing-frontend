@@ -8,10 +8,19 @@
           <div class="tab-ranking__tab">一ヶ月</div>
           <div class="tab-ranking__tab">一年</div>
         </div>
-        <div class="tab-ranking__main">
-          <div class="tab-ranking__book tab-ranking__book--first"></div>
-          <div class="tab-ranking__book tab-ranking__book--second"></div>
-          <div class="tab-ranking__book tab-ranking__book--third"></div>
+        <div class="tab-ranking__main" v-for="(book, index) in books" :key="index">
+          <div
+            class="tab-ranking__book"
+            :class="{'tab-ranking__book--first': index === 0,'tab-ranking__book--second': index === 1,'tab-ranking__book--third':index===2}"
+          >
+            <div class="tab-ranking__item" v-if="index === 0">
+              <div class="tab-ranking__item__cover"></div>
+              <div class="tab-ranking__item__info">
+                <div class="tab-ranking__title"></div>
+                <div class="tab-ranking__synopsis"></div>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="tab-ranking__footer"></div>
       </div>
@@ -20,12 +29,19 @@
 </template>
 
 <script>
-export default {};
+export default {
+  computed: {
+    books() {
+      return this.$store.state.ranking.home.total;
+    }
+  }
+};
 </script>
 
 <style lang="scss">
 .tab-ranking {
   margin-top: 10px;
+
   &__tab {
     font-size: 18px;
     padding: 10px;
