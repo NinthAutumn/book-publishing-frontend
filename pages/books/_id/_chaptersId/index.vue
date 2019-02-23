@@ -93,59 +93,6 @@ body {
   // background-color: black;
 }
 
-.navigation-next {
-  position: sticky !important;
-  height: 100vh;
-  width: 50px;
-  font-size: 30px;
-  top: 0;
-  &:hover {
-    background-color: $secondary;
-    cursor: pointer;
-    color: white;
-    transition: 300ms;
-  }
-}
-.navigation-prev {
-  position: sticky !important;
-  height: 100vh;
-  width: 50px;
-  font-size: 30px;
-  top: 0;
-  &:hover {
-    background-color: $primary;
-    cursor: pointer;
-    color: white;
-    transition: 300ms;
-  }
-}
-.navigation-prev-cont {
-  position: sticky !important;
-  height: 100vh;
-  width: 50px;
-  font-size: 30px;
-  top: 0;
-  // &:hover {
-  //   background-color: $primary;
-  //   cursor: pointer;
-  //   color: white;
-  //   transition: 300ms;
-  // }
-}
-
-.left-vertical-nav {
-  position: fixed;
-  // top: 60px;
-  // left: 12rem;
-  left: 14.4rem;
-  // left: 0;
-  .book-cover {
-    height: 16.8rem;
-    width: 11rem;
-    border-radius: 10px;
-  }
-}
-
 .chapter {
   // margin-top: 50px;
   display: flex;

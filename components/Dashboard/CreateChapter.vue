@@ -48,6 +48,7 @@
               <div class="label-animation" for="header" v-if="!upPlaceHolder">上書き</div>
             </transition>
             <textarea
+              style="margin-bottom: 25px;"
               maxlength="280"
               @focus="textAreaFocus(true)"
               @blur="textAreaBlur(true)"
@@ -63,6 +64,7 @@
               <div class="label-animation" for="footer" v-if="!downPlaceHolder">下書き</div>
             </transition>
             <textarea
+              style="margin-bottom: 25px;"
               maxlength="280"
               @focus="textAreaFocus(false)"
               @blur="textAreaBlur(false)"
@@ -112,14 +114,13 @@
             >
           </div>
           <div class="form-control">
-            <!-- <TextEditor
+            <TextEditor
               class="chapter-content-new"
-              :editorToolbar="customToolbar"
               v-model="form.content"
-              placeholder="本文"
+              :placeholder="contentHolder"
             ></TextEditor>
-            -->
-            <froala class="chapter-content-new" :config="config" v-model="form.content">Init text</froala>
+
+            <!-- <froala class="chapter-content-new" :config="config" v-model="form.content">Init text</froala> -->
             <!-- <div v-text="form.wordCount"></div> -->
           </div>
         </div>
@@ -196,6 +197,7 @@ export default {
     return {
       upPlaceHolder: "上書き",
       downPlaceHolder: "下書き",
+      contentHolder: "本文",
       progress: 1,
       fileList: [],
       schedule: false,
@@ -267,6 +269,12 @@ export default {
       } else {
         this.downPlaceHolder = "";
       }
+    },
+    contentFocus() {
+      this.contentHolder = "";
+    },
+    contentBlur() {
+      this.contentHolder = "本文";
     },
     textAreaBlur(up) {
       if (up) {
@@ -515,7 +523,7 @@ export default {
     font-size: 16px;
     padding: 10px;
     box-shadow: 1px 1px 5px 0px rgb(209, 209, 209);
-    margin-bottom: 25px;
+    // margin-bottom: 25px;
     color: #a3a3a3;
     border: 0px solid $review-color !important;
     border-radius: 5px;
@@ -534,19 +542,21 @@ export default {
     width: 100%;
     border: none;
     padding: 12px 12px !important;
-    border: 1px solid rgb(202, 202, 202);
-    // border-radius: 5px;
+    // border: 1px solid rgb(202, 202, 202);
+
+    text-align: left;
+    border-radius: 5px;
     // box-sizing: bord !important;
-    // box-shadow: 1px 1px 5px 0px rgb(209, 209, 209);
+    box-shadow: 1px 1px 5px 0px rgb(209, 209, 209);
     // margin-bottom: 10px;
     &:focus {
       outline: none;
     }
   }
   .chapter-content-new {
-    margin-bottom: 10px;
+    // margin-bottom: 10px;
     // height: 100vh;
-    height: 88%;
+    // height: 88%;
   }
 }
 </style>

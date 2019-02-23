@@ -5,6 +5,11 @@
     <RightV></RightV>
     <div class="chapter">
       <div class="chapter-wrapper flex">
+        <div
+          v-if="$store.state.chapter.chapter.prev"
+          class="next-chapter-title flex flex-column flex--center flex--align"
+          v-text="$store.state.chapter.chapter.prev.title"
+        ></div>
         <nuxt-link
           class="navigation-prev flex flex-column flex--center flex--align"
           v-if="$store.state.chapter.chapter.prev"
@@ -28,6 +33,11 @@
         >
           <fa icon="angle-right"></fa>
         </nuxt-link>
+        <div
+          v-if="$store.state.chapter.chapter.next"
+          class="next-chapter-title flex flex-column flex--center flex--align"
+          v-text="$store.state.chapter.chapter.next.title"
+        ></div>
         <transition name="chapter-modal">
           <div
             class="chapters-modal"
@@ -97,6 +107,72 @@ export default {
 // }
 .chapter-modal--image {
   background-color: black !important;
+}
+.navigation-next {
+  position: sticky !important;
+  height: 100vh;
+  width: 50px;
+  font-size: 30px;
+  top: 0;
+  &:hover {
+    background-color: $secondary;
+    cursor: pointer;
+    color: white;
+    transition: 300ms;
+  }
+}
+.navigation-prev {
+  position: sticky !important;
+  height: 100vh;
+  width: 50px;
+  font-size: 30px;
+  top: 0;
+  &:hover {
+    background-color: $primary;
+    cursor: pointer;
+    color: white;
+    transition: 300ms;
+  }
+}
+.navigation-prev-cont {
+  position: sticky !important;
+  height: 100vh;
+  width: 50px;
+  font-size: 30px;
+  top: 0;
+  // &:hover {
+  //   background-color: $primary;
+  //   cursor: pointer;
+  //   color: white;
+  //   transition: 300ms;
+  // }
+}
+
+.left-vertical-nav {
+  position: fixed;
+  // top: 60px;
+  // left: 12rem;
+  left: 14.4rem;
+  // left: 0;
+  .book-cover {
+    height: 16.8rem;
+    width: 11rem;
+    border-radius: 10px;
+  }
+}
+.next-chapter-title {
+  position: sticky !important;
+  height: 100vh;
+  // width: 50px;
+  -webkit-text-orientation: upright;
+  text-orientation: upright;
+  font-size: 16px;
+  top: 0;
+  -ms-writing-mode: tb-rl;
+  writing-mode: vertical-rl;
+  // text-combine-upright: all;
+  // -webkit-text-combine: horizontal;
+  // -ms-text-combine-horizontal: all;
 }
 .chapters-modal {
   background-color: white;

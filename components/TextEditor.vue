@@ -1,8 +1,14 @@
 <template>
   <div class="text-editor">
+    <transition name="text-editor-up">
+      <div class="text-editor__title" v-text="placeholder" v-if="!placehold"></div>
+    </transition>
+
     <textarea
-      placeholder="本文"
-      @blur="changes"
+      :class="{'text-editor__disappear': !placehold}"
+      :placeholder="placehold"
+      @focus="contentFocus"
+      @blur="contentBlur"
       @keydown="changes"
       @keypress="changes"
       @keyup="changes"
@@ -17,14 +23,15 @@
 
 <script>
 export default {
-  props: ["value"],
+  props: ["value", "placeholder"],
   data() {
     return {
       text: "",
       textArray: [],
       tempText: "",
       realArray: [],
-      selectedText: ""
+      selectedText: "",
+      placehold: this.placeholder
     };
   },
   computed: {
@@ -45,6 +52,12 @@ export default {
       this.selectedText = window.getSelection().toString();
 
       console.log(this.tempText);
+    },
+    contentFocus() {
+      this.placehold = "";
+    },
+    contentBlur() {
+      this.placehold = this.placeholder;
     },
     changes() {
       this.text = this.text.replace(/(<([^>]+)>)/gi, "");
@@ -114,8 +127,18 @@ export default {
   height: 100%;
   width: 100%;
   position: relative;
-
+  &__title {
+    position: absolute;
+    top: 0;
+    left: 10px;
+    font-size: 16px;
+  }
+  &__disappear {
+    padding-top: 20px !important;
+    transition: 300ms;
+  }
   textarea {
+    transition: 300ms;
     border: 2px solid $review-color;
     height: 300px;
     width: 100%;
