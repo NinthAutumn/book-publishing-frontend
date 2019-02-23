@@ -16,6 +16,7 @@
         <h3>今急上昇中の小説</h3>
       </div>
       <BooksList :trendings="$store.state.book.books.trending"></BooksList>
+      <Ranking></Ranking>
     </div>
   </div>
 </template>
@@ -23,10 +24,13 @@
 <script>
 import BooksList from "@/components/Homepage/BooksList";
 import ReviewList from "@/components/Homepage/ReviewList";
+import Ranking from "@/components/Homepage/Ranking";
+
 export default {
   components: {
     BooksList,
-    ReviewList
+    ReviewList,
+    Ranking
   },
   // data() {
   //   return {

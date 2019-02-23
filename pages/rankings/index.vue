@@ -43,8 +43,8 @@ export default {
   async fetch({ store }) {
     await store.dispatch("ranking/genreRanking");
     await store.dispatch("ranking/viewRanking");
-    await store.dispatch("ranking/ratingRanking");
-    await store.dispatch("ranking/bookmarkRanking");
+    await store.dispatch("ranking/bookAnalysisRanking", "ranking");
+    await store.dispatch("ranking/bookAnalysisRanking", "bookmark");
   },
   components: {
     BooksList,

@@ -60,24 +60,31 @@ export const actions = {
       commit('VIEW_RATING')
     })
   },
-  async ratingRanking({
+  async bookAnalysisRanking({
     commit
-  }) {
-    await this.$axios.get(process.env.baseUrl + '/ranking/rating').then((res) => {
-      commit('SET_RATING', res.data[0])
+  }, storeType) {
+    await this.$axios.get(process.env.baseUrl + '/ranking/bookanalysis?store=' + storeType).then((res) => {
+      if (storeType === 'rating') {
+        commit('SET_RATING', res.data[0])
+        commit('RATING_RATING')
+      } else if (storeType === 'bookmark') {
+        commit('SET_BOOKMARK', res.data[0])
+        commit('BOOKMARK_RATING')
+      }
+
       // console.log(res.data[0]);
-      commit('RATING_RATING')
+
       // console.log(res.data);
     })
   },
-  async bookmarkRanking({
-    commit
-  }) {
-    await this.$axios.get(process.env.baseUrl + '/ranking/bookmark').then((res) => {
-      commit('SET_BOOKMARK', res.data[0])
-      // console.log(res.data[0]);
-      commit('RATING_RATING')
-      // console.log(res.data);
-    })
-  }
+  // async bookmarkRanking({
+  //   commit
+  // }) {
+  //   await this.$axios.get(process.env.baseUrl + '/ranking/bookmark').then((res) => {
+  //     commit('SET_BOOKMARK', res.data[0])
+  //     // console.log(res.data[0]);
+  //     commit('RATING_RATING')
+  //     // console.log(res.data);
+  //   })
+  // }
 }

@@ -17,15 +17,9 @@
         >
           <fa icon="angle-left"></fa>
         </nuxt-link>
-        <div
-          class="navigation-prev-cont flex flex-column flex--center flex--align"
-          v-if="!$store.state.chapter.chapter.prev"
-        ></div>
+        <div class="navigation-prev-cont" v-if="!$store.state.chapter.chapter.prev"></div>
         <nuxt class="yikes"></nuxt>
-        <div
-          class="navigation-prev-cont flex flex-column flex--center flex--align"
-          v-if="!$store.state.chapter.chapter.next"
-        ></div>
+        <div class="navigation-prev-cont" v-if="!$store.state.chapter.chapter.next"></div>
         <nuxt-link
           class="navigation-next flex flex-column flex--center flex--align"
           v-if="$store.state.chapter.chapter.next"
@@ -137,7 +131,7 @@ export default {
 .navigation-prev-cont {
   position: sticky !important;
   height: 100vh;
-  width: 50px;
+  width: 74px;
   font-size: 30px;
   top: 0;
   // &:hover {
