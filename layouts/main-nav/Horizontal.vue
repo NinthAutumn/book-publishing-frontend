@@ -199,7 +199,7 @@ ul {
 }
 .el-icon-menu {
   font-size: 32px;
-  color: #c9b1f5;
+  color: $primary;
 }
 .el-icon-menu:hover {
   cursor: pointer;

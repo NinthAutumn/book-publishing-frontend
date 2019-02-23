@@ -122,6 +122,7 @@ export default {
     p {
       font-size: 16px;
       // color: white;
+      color: $primary;
     }
     height: 50px;
     background-color: #fcefff;

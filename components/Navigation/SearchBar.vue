@@ -56,12 +56,12 @@ export default {
   height: 100%;
   width: 100%;
   border: none;
-  border-radius: 14px;
+  // border-radius: 14px;
   font-size: 14px;
   background: url("");
   /* margin-left: 10px; */
   padding: 10px;
-  color: #a16dff;
+  color: $primary;
   font-weight: 500;
   transition: 200ms;
   &:focus,
@@ -73,7 +73,7 @@ export default {
 
 .search-form {
   height: 32px;
-  border-radius: 10px;
+  // border-radius: 10px;
   /* padding: 0 2px; */
   display: flex;
   align-items: center;
@@ -224,12 +224,12 @@ input:focus {
 .btn {
   width: 8rem;
   height: 100%;
-  border-top-right-radius: 0.8rem;
-  border-bottom-right-radius: 0.8rem;
+  // border-top-right-radius: 0.8rem;
+  // border-bottom-right-radius: 0.8rem;
   /* padding: 10px; */
   color: white;
-  background-color: #e7daff;
-  border: 2px solid #e7daff;
+  background-color: $primary;
+  border: 2px solid $primary;
   /* font-weight: bold; */
   font-size: 14px;
 }

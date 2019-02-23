@@ -271,7 +271,7 @@ input[type="number"]::-webkit-outer-spin-button {
     &__img {
       width: 30.8rem;
       height: 45.9rem;
-      border-radius: 10px;
+      // border-radius: 10px;
     }
   }
 

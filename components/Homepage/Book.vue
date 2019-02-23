@@ -80,7 +80,7 @@ export default {
 #book-card {
   display: flex;
   flex-direction: column;
-  border-radius: 5px;
+  // border-radius: 5px;
   margin-right: 2rem;
   width: 142px;
   /* height: 245px; */
@@ -94,7 +94,7 @@ export default {
     -webkit-box-shadow: 1px 1px 1px 0px rgba(153, 153, 153, 0.75);
     -moz-box-shadow: 1px 1px 1px 0px rgba(153, 153, 153, 0.75);
     box-shadow: 1px 1px 1px 0px rgba(153, 153, 153, 0.75);
-    border-radius: 5px;
+    // border-radius: 5px;
     &:hover {
       cursor: pointer;
       &::after {
@@ -111,7 +111,7 @@ export default {
         animation-fill-mode: reverse;
         width: 100%;
         height: 100%;
-        border-radius: 1rem;
+        // border-radius: 1rem;
       }
     }
 
@@ -121,7 +121,7 @@ export default {
       position: relative;
       /* border-radius: 10px; */
 
-      border-radius: 5px;
+      // border-radius: 5px;
       /* border-top-left-radius: 10px;
   border-top-right-radius: 10px; */
     }

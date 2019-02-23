@@ -14,7 +14,7 @@
       </div>
       <div class="review-card__info__content" v-html="review._id.review[0].content"></div>
     </div>
-    <div class="review-card__book flex-column flex--center">
+    <div class="review-card__book flex-column flex--center flex--around">
       <div class="review-card__info__rating">
         <no-ssr>
           <star-rating
@@ -131,7 +131,7 @@ export default {
       &__item {
         height: 11.9rem;
         width: 8.1rem;
-        border-radius: 10px;
+        // border-radius: 10px;
       }
     }
   }
