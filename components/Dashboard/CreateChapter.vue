@@ -111,6 +111,8 @@
               type="text"
               class="chapter-title form-input"
               v-model="form.title"
+              required
+              maxlength="100"
             >
           </div>
           <div class="form-control">
@@ -118,6 +120,7 @@
               class="chapter-content-new"
               v-model="form.content"
               :placeholder="contentHolder"
+              required
             ></TextEditor>
 
             <!-- <froala class="chapter-content-new" :config="config" v-model="form.content">Init text</froala> -->
@@ -201,6 +204,10 @@ export default {
       progress: 1,
       fileList: [],
       schedule: false,
+      error: {
+        content: false,
+        title: false
+      },
       form: {
         title: "",
         content: "",
@@ -214,24 +221,6 @@ export default {
           },
           drawings: []
         }
-      },
-      config: {
-        placeholderText: "本文!",
-        charCounterCount: true,
-        events: {
-          "froalaEditor.initialized": function() {
-            // console.log();
-            // this.wordCount = $(".selector").froalaEditor("charCounter.count");
-          }
-        },
-        toolbarButtons: ["bold", "italic", "underline"],
-        height: 300,
-        quickInsertButtons: ["hr", "table"],
-        fontSize: ["16"],
-        language: "jp",
-        // theme: "dark",
-        fontSizeDefaultSelection: "16",
-        shortcutsEnabled: ["bold", "italic", "undo", "redo"]
       },
       lang: {
         days: ["日", "月", "火", "水", "木", "金", "土"],
@@ -256,8 +245,7 @@ export default {
           "previous 30 days"
         ],
         placeholder: {
-          date: "日にちを選ぶ",
-          dateRange: "Select Date Range"
+          date: "日にちを選ぶ"
         }
       }
     };
@@ -320,16 +308,19 @@ export default {
         .replace(/(\s*)?&nbsp;(\s*)?/, "")
 
         .replace(/<[^>]+>/gm, "")
-        .replace(/\s/, "");
+        .replace(/\s/g, "");
 
       // this.form.wordCount = this.form.wordCount.replace(/^(&nbsp;|<br>)+/, "");
+      if (!this.form.content || !this.form.title) {
+        return (this.progress = 2);
+      }
 
       console.log(this.form.wordCount.length);
       const chapter = {
         title: this.form.title,
         content: this.form.content,
         date: "",
-        wordCount: this.form.wordCount,
+        wordCount: this.form.wordCount.length,
         locked: this.form.locked,
         extra: {
           announcement: {
@@ -384,6 +375,14 @@ export default {
 }
 .chapter-new-submit {
   margin-bottom: 10px;
+  border-radius: 0;
+  transition: 300ms;
+  &:hover {
+    background-color: #fff;
+    border: 1px solid $primary;
+    color: $primary;
+    transition: 300ms;
+  }
 }
 .ql-editor {
   padding: 0 15px !important;

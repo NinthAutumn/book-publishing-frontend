@@ -103,7 +103,7 @@ export default {
       limit: 3
     });
   },
-  created() {},
+  async mounted() {},
   auth: false
 };
 </script>
