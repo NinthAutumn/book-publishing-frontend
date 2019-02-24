@@ -23,9 +23,9 @@
           class="book-content__buttons__item button button--shadow button--big"
           :class="{'button--secondary': bookmarked, 'button--secondary--open': !bookmarked}"
         >
-          <fa class style="font-size:15px;" icon="bookmark"></fa>
-          <span style="font-size:13px;" v-if="!bookmarked">ブックマーク</span>
-          <span style="font-size:13px;" v-else>ブックマーク済み</span>
+          <fa class="book-content__buttons__item__icon" style="font-size:15px;" icon="bookmark"></fa>
+          <span style="font-size:13px;" v-text="bookmarkedText"></span>
+          <!-- <span style="font-size:13px;" v-else>ブックマーク済み</span> -->
         </span>
       </div>
     </div>
@@ -48,6 +48,13 @@ export default {
     },
     book() {
       return this.$store.state.book.book;
+    },
+    bookmarkedText() {
+      if (!this.bookmarked) {
+        return "ブックマーク";
+      } else {
+        return "ブックマーク済み";
+      }
     }
   },
   methods: {
@@ -71,6 +78,7 @@ export default {
           this.bookmarked = false;
         } else {
           this.bookmarked = true;
+          this.bookmarked = "ブックマーク済";
           await this.$store
             .dispatch("library/addStore", store)
             .then(async () => {
@@ -126,6 +134,9 @@ export default {
       // height: 25px;
       width: 140px;
       margin-left: 10px;
+      &__icon {
+        margin-right: 5px;
+      }
     }
   }
   &__left {
