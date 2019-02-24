@@ -34,9 +34,13 @@
                   :class="{'tab-ranking__index--second': index === 1, 'tab-ranking__index--third': index === 2, 'tab-ranking__index--other':index >2}"
                   v-text="index + 1"
                 ></div>
-                <div class="tab-ranking__meta flex flex--align">
+                <nuxt-link
+                  class="tab-ranking__meta flex flex--align"
+                  tag="div"
+                  :to="`/books/${book._id.book[0]._id}`"
+                >
                   <div class="tab-ranking__title flex flex--align" v-text="book._id.book[0].title"></div>
-                </div>
+                </nuxt-link>
               </div>
             </div>
           </div>
@@ -75,7 +79,6 @@ export default {
       width: 80px;
     }
     // margin-top: 10px;
-    margin-right: 5px;
   }
   &__main {
     box-shadow: 1px 1px 5px 0px rgb(240, 240, 240);
@@ -92,9 +95,20 @@ export default {
     width: 100%;
   }
   &__meta {
+    padding-left: 5px;
     // height: 118px;
     // overflow: hidden;
-
+    background: linear-gradient(to right, rgb(248, 248, 248) 50%, white 50%);
+    background-size: 200% 100%;
+    background-position: right bottom;
+    transition: all 300ms ease;
+    height: 100%;
+    width: 100%;
+    &:hover {
+      cursor: pointer;
+      // color: white;
+      background-position: left bottom;
+    }
     // margin-top: 10px;
   }
   &__index {
@@ -102,7 +116,7 @@ export default {
     height: 100%;
     font-size: 14px;
     font-weight: bold;
-    margin-right: 5px;
+    // margin-right: 5px;
     &--second {
       background-color: $silver;
       opacity: 0.9;
@@ -134,7 +148,7 @@ export default {
     // margin-top: 10px;
     position: relative;
     padding: 10px;
-
+    // overflow: hidden;
     &__index {
       position: absolute;
       height: 32px;
@@ -162,12 +176,15 @@ export default {
     &__info {
       width: 300px;
       height: 243px;
+      overflow: hidden;
     }
     &__title {
       font-size: 18px;
     }
     &__synopsis {
       font-size: 16px;
+      overflow: hidden;
+      height: 100%;
     }
   }
 }

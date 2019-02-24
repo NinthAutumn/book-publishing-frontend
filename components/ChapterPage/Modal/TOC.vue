@@ -1,8 +1,13 @@
 <template>
   <div class="table-of-content">
-    <ul>
-      <li v-for="(chapter, index) in toc" :key="index">{{chapter.title}}</li>
-    </ul>
+    <v-wait for="my list is to load">
+      <template slot="waiting">
+        <div class="loading-animation">Loading the list...</div>
+      </template>
+      <ul>
+        <li v-for="(chapter, index) in toc" :key="index">{{chapter.title}}</li>
+      </ul>
+    </v-wait>
   </div>
 </template>
 

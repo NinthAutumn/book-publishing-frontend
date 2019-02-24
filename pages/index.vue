@@ -100,7 +100,7 @@ export default {
     await store.dispatch("review/mostLiked");
     await store.dispatch("ranking/bookAnalysisHomeRanking", {
       storeType: "bookmark",
-      limit: 3
+      limit: 10
     });
   },
   async mounted() {},

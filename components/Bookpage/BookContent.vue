@@ -64,10 +64,11 @@ export default {
         return this.$store.commit("LOGIN_STATE");
       } else {
         if (this.bookmarked) {
-          this.$message({
-            message: `ブックマークを失敗しました`,
-            type: "error"
-          });
+          const remove = await this.$store.dispatch(
+            "library/removeStore",
+            store
+          );
+          this.bookmarked = false;
         } else {
           this.bookmarked = true;
           await this.$store

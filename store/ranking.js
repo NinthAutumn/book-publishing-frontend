@@ -77,7 +77,7 @@ export const actions = {
     commit
   }, {
     storeType,
-    limit
+    limit = 10
   }) {
     await this.$axios.get(process.env.baseUrl + '/ranking/bookanalysis?store=' + storeType + '&limit=' + limit).then((res) => {
       if (storeType === 'rating') {
@@ -97,7 +97,7 @@ export const actions = {
     commit
   }, {
     storeType,
-    limit
+    limit = 10
   }) {
     await this.$axios.get(process.env.baseUrl + '/ranking/bookanalysis?store=' + storeType + '&limit=' + limit).then((res) => {
       commit('SET_HOME', res.data[0])

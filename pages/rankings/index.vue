@@ -44,7 +44,7 @@ export default {
     await store.dispatch("ranking/genreRanking");
     await store.dispatch("ranking/viewRanking");
     await store.dispatch("ranking/bookAnalysisRanking", {
-      storeType: "ranking"
+      storeType: "rating"
     });
     await store.dispatch("ranking/bookAnalysisRanking", {
       storeType: "bookmark"
