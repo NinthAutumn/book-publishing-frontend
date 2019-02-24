@@ -98,7 +98,8 @@
           </no-ssr>
         </div>
         <!-- <button v-if="">レビューを編集する</button> -->
-        <button @click="reviewOpen" class="review-open button">レビューを書く</button>
+        <button v-if="reviewed" @click="reviewOpen" class="review-open button">レビューを書く</button>
+        <button v-else @click="reviewOpen" class="review-open button">レビューを編集</button>
       </div>
       <hr>
 
@@ -139,6 +140,7 @@ export default {
       await store.dispatch("library/getBookmark").then(() => {
         store.commit("book/BOOKMARKED", store.state.library.bookmarks);
       });
+      await store.dispatch("review/reviewedStatus");
     }
 
     // await
@@ -179,7 +181,12 @@ export default {
     // TextEditor
   },
   created() {},
-  scrollToTop: false
+  scrollToTop: false,
+  computed: {
+    reviewed() {
+      return this.$store.state.review.reviewed;
+    }
+  }
 };
 </script>
 
