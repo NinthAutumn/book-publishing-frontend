@@ -145,6 +145,7 @@ export default {
     font-size: 12px;
   }
   &__first {
+    width: 100%;
     // margin-top: 10px;
     position: relative;
     padding: 10px;
@@ -174,7 +175,8 @@ export default {
       }
     }
     &__info {
-      width: 300px;
+      // width: 300px;
+      width: 100%;
       height: 243px;
       overflow: hidden;
     }
