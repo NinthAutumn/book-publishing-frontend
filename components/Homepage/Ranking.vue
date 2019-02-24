@@ -22,28 +22,20 @@
               <div class="tab-ranking__first__synopsis" v-text="books[0]._id.book[0].synopsis"></div>
             </div>
           </div>
-          <div class="flex-divider tab-ranking__divider flex flex-column flex--align flex--center">
+          <div class="flex-divider tab-ranking__divider">
             <div
-              class="tab-ranking__book"
               :class="{'tab-ranking__book--second': index === 1}"
               v-for="(book, index) in books"
               :key="index"
             >
-              <div class="tab-ranking__item" v-if="index === 0"></div>
-              <div class="tab-ranking__item flex flex--align" v-else>
+              <div class="tab-ranking__item flex flex--align" v-if="index !== 0">
                 <div
                   class="tab-ranking__index flex flex--align flex--around"
-                  :class="{'tab-ranking__index--second': index === 1,'tab-ranking__index--third':index===2}"
+                  :class="{'tab-ranking__index--second': index === 1, 'tab-ranking__index--third': index === 2, 'tab-ranking__index--other':index >2}"
                   v-text="index + 1"
                 ></div>
-                <div class="tab-ranking__cover">
-                  <img
-                    :src="`https://storage.googleapis.com/theta-images/${book._id.book[0].cover}`"
-                  >
-                </div>
-                <div class="tab-ranking__meta flex flex-column">
-                  <div class="tab-ranking__title" v-text="book._id.book[0].title"></div>
-                  <div class="tab-ranking__synopsis" v-text="book._id.book[0].synopsis"></div>
+                <div class="tab-ranking__meta flex flex--align">
+                  <div class="tab-ranking__title flex flex--align" v-text="book._id.book[0].title"></div>
                 </div>
               </div>
             </div>
@@ -88,38 +80,46 @@ export default {
   &__main {
     box-shadow: 1px 1px 5px 0px rgb(240, 240, 240);
   }
+  &__item {
+    box-shadow: 1px 1px 5px 0px rgb(238, 238, 238);
+    // padding: 5px;
+    height: 35px;
+    box-sizing: border-box;
+    margin-bottom: 5px;
+  }
   &__divider {
     padding: 10px;
+    width: 100%;
   }
   &__meta {
-    height: 118px;
-    overflow: hidden;
+    // height: 118px;
+    // overflow: hidden;
 
     // margin-top: 10px;
   }
   &__index {
-    position: absolute;
-    height: 25px;
-    width: 25px;
-    top: -5px;
-    left: -5px;
-    font-size: 12px;
-    opacity: 0.9;
+    width: 35px;
+    height: 100%;
+    font-size: 14px;
     font-weight: bold;
+    margin-right: 5px;
     &--second {
       background-color: $silver;
+      opacity: 0.9;
     }
     &--third {
       background-color: $bronze;
+      opacity: 0.9;
     }
     // background-color: black;
   }
   &__book {
     position: relative;
-    padding: 5px;
     // padding: 5px;
-    box-shadow: 1px 1px 5px 0px rgb(238, 238, 238);
-    margin-bottom: 5px;
+    // padding: 5px;
+
+    // margin-bottom: 5px;
+    // width: 100%;
     &--second {
       // margin-bottom: 5px;
     }

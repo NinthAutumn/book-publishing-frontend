@@ -1,10 +1,10 @@
 <template>
   <div class="home-page">
     <div class="head-banner">
-      <img
+      <!-- <img
         src="http://gonakedselling.com/wp-content/uploads/2014/04/book-web-banner.jpg"
         style="width:100%;"
-      >
+      >-->
     </div>
     <div class="main-books">
       <div class="card-title">

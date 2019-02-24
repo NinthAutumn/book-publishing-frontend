@@ -118,6 +118,9 @@ module.exports = {
 
     '@nuxtjs/pwa',
     'nuxt-device-detect',
+    ['vue-wait/nuxt', {
+      useVuex: true
+    }],
     'nuxt-webfontloader',
     // Doc: https://github.com/nuxt-community/axios-module#usage
     '@nuxtjs/axios',
