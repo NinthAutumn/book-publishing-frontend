@@ -9,7 +9,7 @@
           <div class="tab-ranking__tab">一年</div>
         </div>
         <div class="tab-ranking__main flex">
-          <div class="tab-ranking__first flex">
+          <div class="tab-ranking__first flex flex--align">
             <div class="tab-ranking__first__cover">
               <div class="tab-ranking__first__index flex flex--align flex--around">1</div>
               <img
@@ -23,7 +23,12 @@
             </div>
           </div>
           <div class="flex-divider tab-ranking__divider flex flex-column flex--align flex--center">
-            <div class="tab-ranking__book" v-for="(book, index) in books" :key="index">
+            <div
+              class="tab-ranking__book"
+              :class="{'tab-ranking__book--second': index === 1}"
+              v-for="(book, index) in books"
+              :key="index"
+            >
               <div class="tab-ranking__item" v-if="index === 0"></div>
               <div class="tab-ranking__item flex flex--align" v-else>
                 <div
@@ -77,20 +82,26 @@ export default {
       height: 118px;
       width: 80px;
     }
-    margin-top: 10px;
+    // margin-top: 10px;
+    margin-right: 5px;
+  }
+  &__main {
+    box-shadow: 1px 1px 5px 0px rgb(240, 240, 240);
   }
   &__divider {
     padding: 10px;
   }
   &__meta {
     height: 118px;
-    margin-top: 10px;
+    overflow: hidden;
+
+    // margin-top: 10px;
   }
   &__index {
     position: absolute;
-    height: 20px;
-    width: 20px;
-    top: 3px;
+    height: 25px;
+    width: 25px;
+    top: -5px;
     left: -5px;
     font-size: 12px;
     opacity: 0.9;
@@ -105,9 +116,22 @@ export default {
   }
   &__book {
     position: relative;
+    padding: 5px;
+    // padding: 5px;
+    box-shadow: 1px 1px 5px 0px rgb(238, 238, 238);
+    margin-bottom: 5px;
+    &--second {
+      // margin-bottom: 5px;
+    }
+  }
+  &__title {
+    font-size: 14px;
+  }
+  &__synopsis {
+    font-size: 12px;
   }
   &__first {
-    margin-top: 10px;
+    // margin-top: 10px;
     position: relative;
     padding: 10px;
 
@@ -116,8 +140,8 @@ export default {
       height: 32px;
       width: 32px;
       background-color: $gold;
-      top: -2px;
-      left: 0px;
+      top: 15px;
+      left: -5px;
       opacity: 0.9;
       font-size: 16px;
       font-weight: bold;
@@ -137,6 +161,7 @@ export default {
     }
     &__info {
       width: 300px;
+      height: 243px;
     }
     &__title {
       font-size: 18px;
