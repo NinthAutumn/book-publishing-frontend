@@ -2,6 +2,7 @@ export const state = () => ({
   chapters: [],
   chapter: {},
   chapterCover: "",
+  loading: false,
   toc: '',
   modal: '',
   cToc: '',
@@ -35,6 +36,9 @@ export const mutations = {
   },
   TOC(state, toc) {
     state.toc = toc
+
+  },
+  TOC_MODAL(state) {
     state.modal = 'table'
   },
   IMAGE(state) {
@@ -60,6 +64,12 @@ export const mutations = {
   },
   P_TOC(state, toc) {
     state.pTOC = toc
+  },
+  LOADING(state) {
+    state.loading = true
+  },
+  LOADING_FALSE(state) {
+    state.loading = false
   }
 }
 export const actions = {
@@ -95,12 +105,17 @@ export const actions = {
     commit,
     state
   }, bookId) {
+    commit('LOADING')
     if (state.modal === 'table') {
       return commit('MODAL_CLOSE')
     }
+    commit('TOC_MODAL')
     await this.$axios.get(process.env.baseUrl + '/chapters/toc?bookId=' + bookId).then((res) => {
       commit('TOC', res.data)
+
     })
+    commit('LOADING_FALSE')
+
   },
   async TOCBook({
     commit

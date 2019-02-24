@@ -38,7 +38,11 @@
           :src="'https://storage.googleapis.com/theta-images/' + review._id.book[0].cover"
         >
       </div>
-      <div class="review-card__button button button--small button--primary--open">Read</div>
+      <nuxt-link
+        :to="'/books/' + review._id.book[0]._id"
+        tag="div"
+        class="review-card__button button button--small button--primary--open"
+      >Read</nuxt-link>
     </div>
   </div>
 </template>

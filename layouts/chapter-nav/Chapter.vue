@@ -89,9 +89,7 @@ export default {
       return this.$store.state.user.theme;
     }
   },
-  created() {
-    console.log(this.$store.state.chapter.chapter);
-  }
+  created() {}
 };
 </script>
 
