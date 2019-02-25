@@ -89,7 +89,10 @@ export default {
     likedReview() {
       if (this.liked) {
         this.liked = "";
-        this.$store.dispatch("review/unLikeReview", this.review._id);
+        this.$store.dispatch("review/unLikeReview", {
+          reviewId: this.review._id,
+          type: "like"
+        });
       } else {
         this.liked = "liked";
         this.disliked = "";

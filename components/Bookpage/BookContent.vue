@@ -2,12 +2,12 @@
   <div class="book-content">
     <div class="book-content__left flex flex-column divider">
       <div class="book-content--text">
-        <transition name="fade">
+        <transition name="slide-fade" mode="out-in">
           <div v-show="bookSynopsis" class="book-content--text__summary">
             <p class="book-content--text__summary--text">{{book.synopsis}}</p>
           </div>
         </transition>
-        <transition name="slide-fade">
+        <transition name="slide-fade" mode="out-in">
           <div v-show="!bookSynopsis" class="book-content--text__statistics">
             <span class="book-content--text__statistics--title">視聴者</span>
             <p>探なゃたむ間国民ラれい母細すょ立聞ルフる娯洋ヒラタ念今どざご務軒ス了近っ引質景メ投戦モヲサウ介無著もむかよ及客レア成完撃平侑べずへ。覚ヒセ昨果オイワ堂器わぐ下載スオヘ要敦ぜ育与レヌオア禁福ノホトタ上89強総シオ法木辛ドょぴぽ転期省べぶ。39仏げく代勤べみす健映拭暮42妨ぼる極東レこ向田ロウ呉増ア就主アテ品77浜負件中6人げけへや級権ご人首じ文塚モラセヱ書納動と遅乗にぎょ。</p>

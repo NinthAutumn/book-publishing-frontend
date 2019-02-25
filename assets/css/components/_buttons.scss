@@ -80,6 +80,12 @@
     background-color: $secondary;
     border: none;
 
+    &:hover {
+      background-color: white;
+      color: $secondary;
+      border: 1px solid $secondary;
+    }
+
     &--light {
       color: white;
       background-color: $secondary-light;

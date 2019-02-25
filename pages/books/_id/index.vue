@@ -98,7 +98,7 @@
           </no-ssr>
         </div>
         <!-- <button v-if="">レビューを編集する</button> -->
-        <button v-if="reviewed" @click="reviewOpen" class="review-open button">レビューを書く</button>
+        <button v-if="!reviewed" @click="reviewOpen" class="review-open button">レビューを書く</button>
         <button v-else @click="reviewOpen" class="review-open button">レビューを編集</button>
       </div>
       <hr>
