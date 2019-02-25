@@ -137,10 +137,8 @@ export default {
     await store.dispatch("review/showAll", params.id);
     await store.dispatch("chapter/publishedTOC", params.id);
     if (store.state.auth.loggedIn) {
-      await store.dispatch("library/getBookmark").then(() => {
-        store.commit("book/BOOKMARKED", store.state.library.bookmarks);
-      });
-      await store.dispatch("review/reviewedStatus");
+      await store.dispatch("review/reviewedStatus", params.id);
+      await store.dispatch("library/checkBookmark", params.id);
     }
 
     // await

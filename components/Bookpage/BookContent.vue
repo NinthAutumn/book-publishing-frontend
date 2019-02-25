@@ -39,7 +39,7 @@ export default {
   },
   data() {
     return {
-      bookmarked: this.$store.state.book.book.bookmarked
+      // bookmarked: this.$store.state.book.book.bookmarked
     };
   },
   computed: {
@@ -49,8 +49,11 @@ export default {
     book() {
       return this.$store.state.book.book;
     },
+    bookmarked() {
+      return this.$store.state.library.bookmarked;
+    },
     bookmarkedText() {
-      if (!this.bookmarked) {
+      if (!this.$store.state.library.bookmarked) {
         return "ブックマーク";
       } else {
         return "ブックマーク済み";
@@ -71,29 +74,38 @@ export default {
         return this.$store.commit("LOGIN_STATE");
       } else {
         if (this.bookmarked) {
-          const remove = await this.$store.dispatch(
-            "library/removeStore",
-            store
-          );
-          this.bookmarked = false;
-        } else {
-          this.bookmarked = true;
-          this.bookmarked = "ブックマーク済";
-          await this.$store
-            .dispatch("library/addStore", store)
-            .then(async () => {
-              this.$store.commit("book/BOOKMARK");
-              this.$message({
-                message: "ブックマークに入りました！",
-                type: "success"
-              });
-            })
-            .catch(e => {
-              this.$message({
-                message: `ブックマークを失敗しました`,
-                type: "error"
-              });
+          try {
+            const remove = await this.$store.dispatch(
+              "library/removeStore",
+              store
+            );
+          } catch (error) {
+            // throw err
+            this.$message({
+              message: `ブックマーク解除に失敗しました`,
+              type: "error"
             });
+          }
+          await this.$store.dispatch(
+            "library/checkBookmark",
+            this.$route.params.id
+          );
+        } else {
+          try {
+            const addStore = await this.$store.dispatch(
+              "library/addStore",
+              store
+            );
+          } catch (error) {
+            this.$message({
+              message: `ブックマークを失敗しました`,
+              type: "error"
+            });
+          }
+          const library = await this.$store.dispatch(
+            "library/checkBookmark",
+            this.$route.params.id
+          );
         }
       }
     }

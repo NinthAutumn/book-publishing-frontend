@@ -139,7 +139,7 @@ export const actions = {
   async reviewedStatus({
     commit
   }, bookId) {
-    const status = await this.$axios.get(process.env.baseUrl + '/reviews/check?bookId' + bookId)
+    const status = await this.$axios.get(process.env.baseUrl + '/reviews/check?bookId=' + bookId)
     commit('GET_REVIEWED', status.data.checked)
   }
 }

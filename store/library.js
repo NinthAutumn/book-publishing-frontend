@@ -25,10 +25,24 @@ export const mutations = {
   },
   PUSH_BOOKMARK(state, bookmark) {
     state.bookmarks.push(bookmark)
+  },
+  BOOKMARK_STATUS(state, bookmarked) {
+    state.bookmarked = bookmarked
   }
 }
 
 export const actions = {
+  async checkBookmark({
+    commit
+  }, bookId) {
+    try {
+      const status = await this.$axios.get(process.env.baseUrl + '/library/check?bookId=' + bookId)
+      commit('BOOKMARK_STATUS', status.data.bookmarked)
+    } catch (error) {
+      throw error
+    }
+
+  },
   async getBookmark({
     commit
   }) {
