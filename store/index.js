@@ -59,14 +59,10 @@ export const mutations = {
     }
   },
   DROPDOWN_STATE(state) {
-    if (state.dropdownState !== "dropdown-active") {
-      state.dropdownState = "dropdown-active"
-    } else {
-      state.dropdownState = "dropdown-inactive"
-    }
+    state.dropdownState = !state.dropdownState
   },
   DROPDOWN_FALSE(state) {
-    state.dropdownState = "dropdown-inactive"
+    state.dropdownState = false
   },
   DASHBOARD_MENU_STATE_CHANGE(state) {
     if (state.dashboardMenuState === "dashboard-active") {

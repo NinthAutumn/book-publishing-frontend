@@ -7,9 +7,12 @@
       <SearchBar class="searchbar"></SearchBar>
       <span v-if="loggedIn" style="z-index:3000;" id="prof" v-click-outside="dropOff">
         <img @click="stateDropChange" class="profile-pic" style="width: 40px;" :src="user.avatar">
-        <div :class="$store.state.dropdownState">
-          <div class="dropdown-menu">
-            <div class="profile-info" @click="userProfile">
+        <div class="dropdown-menu">
+          <transition name="grow-shrink">
+            <Dropdown v-if="$store.state.dropdownState"></Dropdown>
+          </transition>
+
+          <!-- <div class="profile-info" @click="userProfile">
               <img class="dropdown-profile-pic" :src="user.avatar">
               <div class="profile-text">
                 <span class="profile-name">{{user.username}}</span>
@@ -18,8 +21,7 @@
             </div>
             <div class="dropdown-menu__item">
               <a @click="logOut">Logout</a>
-            </div>
-          </div>
+          </div>-->
         </div>
       </span>
       <div class="not-loggedin" v-else>
@@ -37,6 +39,8 @@
 import SearchBar from "@/components/Navigation/SearchBar";
 import SignUpForm from "@/components/Navigation/SignUpFrom";
 import LoginForm from "@/components/Navigation/LoginForm";
+import Dropdown from "@/components/Navigation/Dropdown";
+
 import AuthModal from "@/components/Navigation/AuthModal";
 
 export default {
@@ -49,7 +53,8 @@ export default {
   },
   components: {
     SearchBar,
-    AuthModal
+    AuthModal,
+    Dropdown
   },
   computed: {
     user() {
@@ -151,21 +156,21 @@ export default {
   // width: 0;
   // background-image: url("http://placehold.jp/45x45.png");
 }
-.dropdown-active {
-  position: fixed;
-  width: 300px;
-  height: 500px;
-  background-color: #c8b0f5;
-  right: 5px;
-  z-index: 2200;
-  // top: 55px;
-  transition: 300ms;
-  -webkit-box-shadow: 0px 2px 12px 3px rgba(191, 191, 191, 1);
-  -moz-box-shadow: 0px 2px 12px 3px rgba(191, 191, 191, 1);
-  box-shadow: 0px 2px 12px 3px rgba(191, 191, 191, 1);
-  border-radius: 10px;
-  background-image: none;
-}
+// .dropdown-active {
+//   position: fixed;
+//   width: 300px;
+//   height: 500px;
+//   background-color: #c8b0f5;
+//   right: 5px;
+//   z-index: 2200;
+//   // top: 55px;
+//   transition: 300ms;
+//   -webkit-box-shadow: 0px 2px 12px 3px rgba(191, 191, 191, 1);
+//   -moz-box-shadow: 0px 2px 12px 3px rgba(191, 191, 191, 1);
+//   box-shadow: 0px 2px 12px 3px rgba(191, 191, 191, 1);
+//   border-radius: 10px;
+//   background-image: none;
+// }
 
 .h-nav {
   &--black {
@@ -191,12 +196,12 @@ nav {
   justify-content: space-between;
   height: 50px;
 }
-ul {
-  list-style: none;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
+// ul {
+//   list-style: none;
+//   display: flex;
+//   align-items: center;
+//   justify-content: space-between;
+// }
 .el-icon-menu {
   font-size: 32px;
   color: $primary;
@@ -241,18 +246,18 @@ ul {
     box-shadow: 0px 0px 4px 0px rgba(217, 217, 217, 1);
   }
 }
-.dropdown-menu {
-  display: flex;
-  -ms-flex-direction: column;
-  -webkit-flex-direction: column;
-  flex-direction: column;
-  width: 300px;
-  padding: 0;
-  background-color: black;
-  color: white !important;
-  border-radius: 10px;
-  // padding: 0 10px;
-}
+// .dropdown-menu {
+//   display: flex;
+//   -ms-flex-direction: column;
+//   -webkit-flex-direction: column;
+//   flex-direction: column;
+//   width: 300px;
+//   padding: 0;
+//   background-color: black;
+//   color: white !important;
+//   border-radius: 10px;
+//   // padding: 0 10px;
+// }
 
 .dropdown-menu__item:hover {
   color: black;
