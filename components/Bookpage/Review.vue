@@ -94,6 +94,7 @@ export default {
           reviewId: this.review._id,
           type: "like"
         });
+        this.likeNumber = this.likeNumber - 1;
       } else {
         this.liked = true;
         this.disliked = false;
@@ -102,26 +103,27 @@ export default {
             reviewId: this.review._id,
             type: "dislike"
           });
+          this.likeNumber++;
         }
         await this.$store.dispatch("review/likeReview", {
           reviewId: this.review._id,
           type: "like"
         });
-
+        this.likeNumber++;
         // this.review.like++;
       }
     },
-    dislikedReview() {
+    async dislikedReview() {
       if (this.disliked) {
         this.disliked = "";
         await this.$store.dispatch("review/unLikeReview", {
-            reviewId: this.review._id,
-            type: "dislike"
-          });
+          reviewId: this.review._id,
+          type: "dislike"
+        });
       } else {
         this.liked = "";
         this.disliked = true;
-        this.$store.dispatch("review/likeReview", {
+        await this.$store.dispatch("review/likeReview", {
           reviewId: this.review._id,
           type: "dislike"
         });

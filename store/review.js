@@ -54,7 +54,7 @@ export const mutations = {
       if (review.ratedBy) {
         review.ratedBy.forEach((rate) => {
           if (rate.userId === userId) {
-            if (rate.type === 'liked') {
+            if (rate.type === 'like') {
               review.liked = true
             } else {
               review.disliked = true
