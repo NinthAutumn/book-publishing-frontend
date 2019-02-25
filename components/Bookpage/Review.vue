@@ -74,8 +74,8 @@ export default {
   data() {
     return {
       readMore: false,
-      liked: "",
-      disliked: "",
+      liked: this.review.liked,
+      disliked: this.review.disliked,
       likeNumber: this.review.like
     };
   },
@@ -103,7 +103,6 @@ export default {
             type: "dislike"
           });
         }
-
         await this.$store.dispatch("review/likeReview", {
           reviewId: this.review._id,
           type: "like"
@@ -115,6 +114,10 @@ export default {
     dislikedReview() {
       if (this.disliked) {
         this.disliked = "";
+        await this.$store.dispatch("review/unLikeReview", {
+            reviewId: this.review._id,
+            type: "dislike"
+          });
       } else {
         this.liked = "";
         this.disliked = true;
