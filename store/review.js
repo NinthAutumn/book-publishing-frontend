@@ -49,13 +49,20 @@ export const mutations = {
       }
     })
   },
-  USER_LIKED_REVIEWS(state, likedReviews) {
+  USER_LIKED_REVIEWS(state, userId) {
     state.reviews.forEach((review) => {
-      likedReviews.forEach((reviewId) => {
-        if (review._id === reviewId) {
-          review.liked = true
-        }
-      })
+      if (review.ratedBy) {
+        review.ratedBy.forEach((rate) => {
+          if (rate.userId === userId) {
+            if (rate.type === 'liked') {
+              review.liked = true
+            } else {
+              review.disliked = true
+            }
+          }
+        })
+      }
+
     })
   },
   GET_GOOD_REVIEWS(state, goodReviews) {
@@ -75,7 +82,7 @@ export const actions = {
       // commit('USER_LIKED_REVIEWS', rootState.auth.user)
       if (rootState.auth.loggedIn) {
         await this.$axios.get(process.env.baseUrl + '/users/liked').then((res) => {
-          commit('USER_LIKED_REVIEWS', res.data.reviews)
+          commit('USER_LIKED_REVIEWS', rootState.auth.user._id)
         })
       }
     })

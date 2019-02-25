@@ -1,9 +1,9 @@
 <template>
   <div class="reviews">
     <div class="reviews-like">
-      <ArrowUp class="reviews-like-up" :class="liked" @click="likedReview"></ArrowUp>
-      <p>{{reviewLikes.like}}</p>
-      <ArrowDown class="reviews-like-down" :class="disliked" @click="dislikedReview"></ArrowDown>
+      <ArrowUp class="reviews-like-up" :class="{liked: liked}" @click="likedReview"></ArrowUp>
+      <p v-text="likeNumber"></p>
+      <ArrowDown class="reviews-like-down" :class="{disliked: disliked}" @click="dislikedReview"></ArrowDown>
     </div>
 
     <div class="reviews-rating"></div>
@@ -75,7 +75,8 @@ export default {
     return {
       readMore: false,
       liked: "",
-      disliked: ""
+      disliked: "",
+      likeNumber: this.review.like
     };
   },
   components: {
@@ -86,17 +87,28 @@ export default {
     toggleCollapse() {
       this.readMore = !this.readMore;
     },
-    likedReview() {
+    async likedReview() {
       if (this.liked) {
-        this.liked = "";
+        this.liked = false;
         this.$store.dispatch("review/unLikeReview", {
           reviewId: this.review._id,
           type: "like"
         });
       } else {
-        this.liked = "liked";
-        this.disliked = "";
-        this.$store.dispatch("review/likeReview", this.review._id);
+        this.liked = true;
+        this.disliked = false;
+        if (this.disliked) {
+          await this.$store.dispatch("review/unLikeReview", {
+            reviewId: this.review._id,
+            type: "dislike"
+          });
+        }
+
+        await this.$store.dispatch("review/likeReview", {
+          reviewId: this.review._id,
+          type: "like"
+        });
+
         // this.review.like++;
       }
     },
@@ -105,7 +117,11 @@ export default {
         this.disliked = "";
       } else {
         this.liked = "";
-        this.disliked = "disliked";
+        this.disliked = true;
+        this.$store.dispatch("review/likeReview", {
+          reviewId: this.review._id,
+          type: "dislike"
+        });
       }
     }
   },
@@ -125,12 +141,6 @@ export default {
   },
   created() {
     // console.log(this.review.content.length);
-
-    if (this.$store.state.auth.loggedIn) {
-      if (this.review.liked) {
-        this.liked = "liked";
-      }
-    }
   }
 };
 </script>
