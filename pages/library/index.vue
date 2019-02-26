@@ -1,6 +1,6 @@
 <template>
   <div class="library">
-    <BookList :books="$store.state.book.books.highestrated"></BookList>
+    <BookList :trendings="true" :books="$store.state.ranking.ratings.total"></BookList>
   </div>
 </template>
 

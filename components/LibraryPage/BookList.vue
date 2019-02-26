@@ -1,10 +1,10 @@
 <template>
   <div class="library-booklist">
-    <div v-if="trendings" class="library-booklist__list">
-      <div class="library-booklist__item" v-for="book in trendings" :key="book.id">
-        <Book :book="book._id.book[0]" :size="size = 'big'"></Book>
-      </div>
-    </div>
+    <ul v-if="trendings" class="library-booklist__list">
+      <li class="library-booklist__item" v-for="book in books" :key="book.id">
+        <Book :book="book._id.book[0]"></Book>
+      </li>
+    </ul>
     <ul class="library-booklist__list">
       <li class="library-booklist__item" v-for="book in books" :key="book.id">
         <Book :book="book" :size="size = 'big'"></Book>
@@ -17,7 +17,7 @@ import Book from "./Book";
 export default {
   props: {
     books: Array,
-    trendings: Array
+    trendings: Boolean
   },
   data() {
     return {};
