@@ -1,5 +1,5 @@
 <template>
-  <div class="book-library" v-if="book.title">
+  <div class="book-library">
     <div id="book-library__container" @click="linkTo">
       <div class="book-library__cover">
         <span class="star-rating"></span>

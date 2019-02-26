@@ -1,11 +1,11 @@
 <template>
   <div class="library-booklist">
-    <ul v-if="trendings" class="library-booklist__list">
+    <ul class="library-booklist__list" v-if="trendings">
       <li class="library-booklist__item" v-for="book in books" :key="book.id">
         <Book :book="book._id.book[0]"></Book>
       </li>
     </ul>
-    <ul class="library-booklist__list">
+    <ul class="library-booklist__list" v-else>
       <li class="library-booklist__item" v-for="book in books" :key="book.id">
         <Book :book="book" :size="size = 'big'"></Book>
       </li>
@@ -35,7 +35,7 @@ export default {
   // grid-template-rows:
   &__list {
     display: grid;
-    grid-template-columns: 135px 135px 135px 135px;
+    grid-template-columns: repeat(5, 135px);
     grid-gap: 5px;
     #{$self}__item {
       grid-column: auto;
