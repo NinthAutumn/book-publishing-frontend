@@ -13,15 +13,15 @@
           <header class="book__info__title">{{$store.getters['book/showbook'].title}}</header>
           <div class="book-meta flex">
             <div class="book-genre pill pill-secondary-light">
-              <div class="book-genre-icon pill-text">
+              <div class="book-genre-icon pill-text pill--icon">
                 <fa icon="fist-raised"></fa>
               </div>
-              <div class="book-genre-text pill-text">
+              <div class="book-genre-text pill-text pill--icon">
                 <p>{{$store.getters['book/showbook'].genres[0]}}</p>
               </div>
             </div>
             <div class="book-chapterCount pill pill-secondary">
-              <div class="book-chapter-count-icon pill-text">
+              <div class="book-chapter-count-icon pill-text pill--icon">
                 <fa icon="scroll"></fa>
               </div>
               <div class="book-chapter-count-text pill-text">
@@ -29,7 +29,7 @@
               </div>
             </div>
             <div class="book-views pill pill-primary">
-              <div class="book-views-icon pill-text">
+              <div class="book-views-icon pill-text pill--icon">
                 <fa icon="eye"></fa>
               </div>
               <div class="book-views-icon pill-text">
