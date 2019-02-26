@@ -35,7 +35,7 @@ export default {
   // grid-template-rows:
   &__list {
     display: grid;
-    grid-template-columns: repeat(5, 135px);
+    grid-template-columns: repeat(6, 135px);
     grid-gap: 5px;
     #{$self}__item {
       grid-column: auto;
