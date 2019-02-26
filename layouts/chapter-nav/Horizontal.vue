@@ -10,17 +10,10 @@
       <span v-if="loggedIn" style="z-index:3000;" id="prof" v-click-outside="dropOff">
         <img @click="stateDropChange" class="profile-pic" style="width: 40px;" :src="user.avatar">
         <div :class="$store.state.dropdownState">
-          <div class="dropdown-menu">
-            <div class="profile-info" @click="userProfile">
-              <img class="dropdown-profile-pic" :src="user.avatar">
-              <div class="profile-text">
-                <span class="profile-name">{{user.username}}</span>
-                <span class="profile-profession">Author</span>
-              </div>
-            </div>
-            <div class="dropdown-menu__item">
-              <a @click="logOut">Logout</a>
-            </div>
+          <div>
+            <transition name="grow-shrink">
+              <Dropdown v-if="$store.state.dropdownState"></Dropdown>
+            </transition>
           </div>
         </div>
       </span>
@@ -39,7 +32,7 @@
 import SignUpForm from "@/components/Navigation/SignUpFrom";
 import LoginForm from "@/components/Navigation/LoginForm";
 import AuthModal from "@/components/Navigation/AuthModal";
-
+import Dropdown from "@/components/Navigation/Dropdown";
 export default {
   name: "Horizontal",
   data() {
@@ -49,7 +42,8 @@ export default {
     };
   },
   components: {
-    AuthModal
+    AuthModal,
+    Dropdown
   },
   computed: {
     user() {
@@ -254,30 +248,30 @@ ul {
     box-shadow: 0px 0px 4px 0px rgba(217, 217, 217, 1);
   }
 }
-.dropdown-menu {
-  display: flex;
-  -ms-flex-direction: column;
-  -webkit-flex-direction: column;
-  flex-direction: column;
-  width: 300px;
-  padding: 0;
-  background-color: black;
-  color: white !important;
-  border-radius: 10px;
-  // padding: 0 10px;
-}
+// .dropdown-menu {
+//   display: flex;
+//   -ms-flex-direction: column;
+//   -webkit-flex-direction: column;
+//   flex-direction: column;
+//   width: 300px;
+//   padding: 0;
+//   background-color: black;
+//   color: white !important;
+//   border-radius: 10px;
+//   // padding: 0 10px;
+// }
 
-.dropdown-menu__item:hover {
-  color: black;
-  background-color: white;
-}
+// .dropdown-menu__item:hover {
+//   color: black;
+//   background-color: white;
+// }
 
-.dropdown-menu__item {
-  width: 100%;
-  padding: 0;
-  text-align: center;
-  color: white;
-}
+// .dropdown-menu__item {
+//   width: 100%;
+//   padding: 0;
+//   text-align: center;
+//   color: white;
+// }
 .profile-info {
   display: flex;
   // justify-content: space-between;

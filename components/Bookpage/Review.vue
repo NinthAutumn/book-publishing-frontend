@@ -36,9 +36,9 @@
         <no-ssr>
           <truncate
             action-class="customClass"
-            clamp="Show more"
+            clamp="詳細"
             :length="90"
-            less="Show Less"
+            less="一部を表示"
             type="html"
             :text="review.content"
           ></truncate>
@@ -99,7 +99,6 @@ export default {
         this.liked = true;
         if (this.disliked) {
           this.disliked = false;
-
           await this.$store.dispatch("review/unLikeReview", {
             reviewId: this.review._id,
             type: "dislike"
@@ -165,6 +164,7 @@ export default {
 <style  lang="scss" >
 // @import "../../assets/css/main.scss";
 .reviews-content-text {
+  width: 100%;
   .customClass {
     display: flex;
     justify-content: center;
@@ -196,6 +196,7 @@ export default {
   .reviews-content-text-more {
   }
 }
+
 .reviews {
   hr {
     color: black;

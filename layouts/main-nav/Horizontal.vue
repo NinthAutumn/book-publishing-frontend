@@ -7,7 +7,7 @@
       <SearchBar class="searchbar"></SearchBar>
       <span v-if="loggedIn" style="z-index:3000;" id="prof" v-click-outside="dropOff">
         <img @click="stateDropChange" class="profile-pic" style="width: 40px;" :src="user.avatar">
-        <div class="dropdown-menu">
+        <div class>
           <transition name="grow-shrink">
             <Dropdown v-if="$store.state.dropdownState"></Dropdown>
           </transition>

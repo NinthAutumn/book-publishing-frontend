@@ -21,10 +21,12 @@
         <span
           @click="bookmarkBook"
           class="book-content__buttons__item button button--shadow button--big"
+          @mouseenter="bookmarkHover"
+          @mouseleave="bookmarkLeave"
           :class="{'button--secondary': bookmarked, 'button--secondary--open': !bookmarked}"
         >
           <fa class="book-content__buttons__item__icon" style="font-size:15px;" icon="bookmark"></fa>
-          <span style="font-size:13px;" v-text="bookmarkedText"></span>
+          <span style="font-size:13px;" v-text="text"></span>
           <!-- <span style="font-size:13px;" v-else>ブックマーク済み</span> -->
         </span>
       </div>
@@ -39,7 +41,7 @@ export default {
   },
   data() {
     return {
-      // bookmarked: this.$store.state.book.book.bookmarked
+      text: ""
     };
   },
   computed: {
@@ -52,15 +54,40 @@ export default {
     bookmarked() {
       return this.$store.state.library.bookmarked;
     },
-    bookmarkedText() {
-      if (!this.$store.state.library.bookmarked) {
-        return "ブックマーク";
-      } else {
-        return "ブックマーク済み";
+    bookmarkedText: {
+      get: function() {
+        if (!this.$store.state.library.bookmarked) {
+          return "ブックマーク";
+        } else {
+          return "ブックマーク済み";
+        }
+      },
+      set: function(newValue) {
+        return newValue;
       }
     }
   },
   methods: {
+    async bookmarkHover() {
+      if (!this.bookmarked) {
+        this.text = "ブックマークする";
+        // return this.bookmarkedText();
+      } else {
+        this.text = "ブックマーク解除";
+
+        // return this.bookmarkedText();
+      }
+    },
+    async bookmarkLeave() {
+      if (!this.bookmarked) {
+        this.text = "ブックマーク";
+        // return this.bookmarkedText();
+      } else {
+        this.text = "ブックマーク済み";
+
+        // return this.bookmarkedText();
+      }
+    },
     async bookmarkBook() {
       const store = {
         storeType: "bookmark",
@@ -110,7 +137,9 @@ export default {
       }
     }
   },
-  created() {}
+  created() {
+    this.text = this.bookmarkedText;
+  }
 };
 </script>
 
