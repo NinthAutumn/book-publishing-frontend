@@ -67,7 +67,22 @@
         <div class="book__stats__buttons"></div>
       </div>
     </section>
+
     <div class="book__chapters">
+      <div class="book__tags">
+        <p class="text--medium text--center">作品のタグ</p>
+        <ul class="flex flex--center">
+          <li
+            class="pill pill-secondary-open pill-round"
+            v-for="(tag, index) in $store.state.book.book.tags"
+            :key="index"
+          >
+            <div class="pill-text">
+              <p>{{tag}}</p>
+            </div>
+          </li>
+        </ul>
+      </div>
       <BookChapterList></BookChapterList>
     </div>
     <section class="book__reviews">

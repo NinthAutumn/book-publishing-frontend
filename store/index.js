@@ -16,7 +16,7 @@ export const state = () => ({
   menuState: "menu-active",
   dashboardMenuState: "dashboard-active",
   slidesPerView: 6.5,
-  dropdownState: "dropdown-inactive",
+  dropdownState: false,
   authed: 0,
   loginForm: false
 })

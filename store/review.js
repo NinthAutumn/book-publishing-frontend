@@ -131,9 +131,13 @@ export const actions = {
   },
   async unLikeReview({
     commit
-  }, reviewId) {
+  }, {
+    reviewId,
+    type
+  }) {
     await this.$axios.patch(process.env.baseUrl + '/reviews/unlike', {
-      id: reviewId
+      id: reviewId,
+      type: type
     }).then((res) => {
       commit('UNLIKED_REVIEWS', reviewId)
     }).catch((e) => {
