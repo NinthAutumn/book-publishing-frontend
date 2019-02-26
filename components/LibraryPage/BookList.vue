@@ -1,31 +1,15 @@
 <template>
-  <div class="swiping-page">
-    <div v-if="trendings" v-swiper:mySwiper="swiperOption">
-      <div class="swiper-wrapper">
-        <div class="swiper-slide" v-for="book in trendings" :key="book.id">
-          <Book :book="book._id.book[0]" :size="size = 'big'"></Book>
-        </div>
-      </div>
-      <div class="background">
-        <div class="swiper-button-prev swiper-button-black" slot="button-prev"></div>
-      </div>
-      <div class="background">
-        <div class="swiper-button-next swiper-button-black" slot="button-next"></div>
+  <div class="library-booklist">
+    <div v-if="trendings" class="library-booklist__list">
+      <div class="library-booklist__item" v-for="book in trendings" :key="book.id">
+        <Book :book="book._id.book[0]" :size="size = 'big'"></Book>
       </div>
     </div>
-    <div v-swiper:mySwiper="swiperOption">
-      <div class="swiper-wrapper">
-        <div class="swiper-slide" v-for="book in books" :key="book.id">
-          <Book :book="book" :size="size = 'big'"></Book>
-        </div>
-      </div>
-      <div class="background">
-        <div class="swiper-button-prev swiper-button-black" slot="button-prev"></div>
-      </div>
-      <div class="background">
-        <div class="swiper-button-next swiper-button-black" slot="button-next"></div>
-      </div>
-    </div>
+    <ul class="library-booklist__list">
+      <li class="library-booklist__item" v-for="book in books" :key="book.id">
+        <Book :book="book" :size="size = 'big'"></Book>
+      </li>
+    </ul>
   </div>
 </template>
 <script>
@@ -36,67 +20,7 @@ export default {
     trendings: Array
   },
   data() {
-    return {
-      // slidesNumber: 7,
-      swiperOption: {
-        // loop: true,
-        slidesPerView: 9,
-        // centeredSlides: true,
-        // spaceBetween: 15,
-        // effect: "coverflow",
-        freeMode: true,
-        mousewheel: {
-          invert: true,
-          sensitivity: 1,
-          forceToAxis: true
-        },
-        navigation: {
-          nextEl: ".swiper-button-next",
-          prevEl: ".swiper-button-prev"
-        },
-        on: {
-          slideChange() {
-            // console.log("onSlideChangeEnd", this);
-          },
-          tap() {
-            // console.log("onTap", this);
-          }
-        },
-        breakpoints: {
-          1090: {
-            slidesPerView: 5.5
-          },
-          1024: {
-            slidesPerView: 5
-            // spaceBetween: 40
-          },
-          878: {
-            slidesPerView: 4.5
-          },
-          802: {
-            slidesPerView: 4
-          },
-          734: {
-            slidesPerView: 3.5
-          },
-          664: {
-            slidesPerView: 3.2
-            // spaceBetween: 30
-          },
-          640: {
-            slidesPerView: 3
-            // spaceBetween: 20
-          },
-          575: {
-            slidesPerView: 2.5
-            // spaceBetween: 10
-          },
-          375: {
-            slidesPerView: 1.5
-          }
-        }
-      }
-    };
+    return {};
   },
   components: {
     Book
@@ -105,68 +29,18 @@ export default {
 };
 </script>
 <style lang="scss">
-.swiper-wrapper {
-  // z-index: -10;
-}
-.main-books {
-  width: 100%;
-  // display: flex;
-  // justify-content: space-around;
-  // align-content: center;
-}
-.my-swiper {
-  height: 300px;
-  // width: 80% !important;
-  .swiper-slide {
-    text-align: center;
-    font-size: 38px;
-    font-weight: 700;
-    background-color: rgb(238, 238, 238);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  .swiper-pagination {
-    > .swiper-pagination-bullet {
-      background-color: red;
+.library-booklist {
+  $self: &;
+
+  // grid-template-rows:
+  &__list {
+    display: grid;
+    grid-template-columns: 135px 135px 135px 135px;
+    grid-gap: 5px;
+    #{$self}__item {
+      grid-column: auto;
+      grid-row: auto;
     }
   }
-}
-.swiper-button-next,
-.swiper-button-prev {
-  // position: relative;
-  height: 100%;
-  top: 21px;
-  width: 50px;
-  background-color: rgba(255, 255, 255, 0.945);
-
-  // filter: blur(1px);
-  // -webkit-box-shadow: 0px 0px 54px 0px rgba(219, 219, 219, 1);
-  // -moz-box-shadow: 0px 0px 54px 0px rgba(219, 219, 219, 1);
-  // box-shadow: 0px 0px 54px 0px rgba(219, 219, 219, 1);
-}
-
-.swiper-button-disabled {
-  // display: none;
-  // background-image: "";
-  opacity: 0 !important;
-  transition: 500ms;
-}
-.swiper-button-prev {
-  left: 0;
-  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2027%2044'%3E%3Cpath%20d%3D'M0%2C22L22%2C0l2.1%2C2.1L4.2%2C22l19.9%2C19.9L22%2C44L0%2C22L0%2C22L0%2C22z'%20fill%3D'%238860D0'%2F%3E%3C%2Fsvg%3E") !important;
-  transition: 500ms;
-}
-.swiper-button-next {
-  right: 0;
-  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2027%2044'%3E%3Cpath%20d%3D'M27%2C22L27%2C22L5%2C44l-2.1-2.1L22.8%2C22L2.9%2C2.1L5%2C0L27%2C22L27%2C22z'%20fill%3D'%238860D0'%2F%3E%3C%2Fsvg%3E") !important;
-  transition: 500ms;
-}
-
-.swiping-page {
-  // margin-left: 24rem;
-  // margin-top: 5rem;
-  // padding: 1rem 5rem;
-  position: relative;
 }
 </style>
