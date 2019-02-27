@@ -8,10 +8,7 @@ export const state = () => ({
   token: Cookies.get('token') || '',
   status: "",
   user: {},
-  loggedIn: false,
-  // library:
-  // username: "admin1",
-  // password: "admin1"
+  loggedIn: false
 })
 
 export const getters = {
@@ -40,10 +37,7 @@ export const mutations = {
     // state.userId = userId
 
   },
-  AUTH_SUCCESS_USER(state, user) {
-
-    // state.menus[4].link = "/library/?id=" + state.user._id
-  },
+  AUTH_SUCCESS_USER(state, user) {},
   AUTH_ERROR(state) {
     state.status = 'error'
   },
@@ -64,9 +58,6 @@ export const actions = {
       username: user.username,
       password: user.password
     }).then((res) => {
-      // commit("AUTH_SUCCESS_USER", {
-      //   user: res.data
-      // });
       const token = res.headers.authorization
       this.$axios.defaults.headers.common['Authorization'] = token
       Cookies.set("token", token)
@@ -74,17 +65,12 @@ export const actions = {
         token: token,
         user: res.data
       });
-
-      // Cookies.set('user', res.data)
-
     })
 
   },
   async logOut({
     commit
   }) {
-    // console.log();
-    // this.$axios.defaults.headers.common['Authorization'] = Cookies.get('token')
     await this.$axios.delete(process.env.baseUrl + '/users/logout').then((res) => {
       Cookies.remove('token')
       delete this.$axios.defaults.headers.common['Authorization']
@@ -108,7 +94,6 @@ export const actions = {
         token: token,
         user: res.data
       });
-      // commit("AUTH_SUCCESS_USER", )
     })
   }
 }

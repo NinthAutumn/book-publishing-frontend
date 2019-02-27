@@ -136,7 +136,6 @@ export const actions = {
   }, bookId) {
     await this.$axios.get(process.env.baseUrl + '/chapters/dashboard?bookId=' + bookId).then((res) => {
       commit('D_TOC', res.data)
-      // console.log(res.data.undefined);
     })
   },
   async publishedTOC({
@@ -144,8 +143,6 @@ export const actions = {
   }, bookId) {
     await this.$axios.get(process.env.baseUrl + '/chapters/published?bookId=' + bookId).then((res) => {
       commit('P_TOC', res.data)
-      // console.log(res.data.undefined);
-
     })
   }
 

@@ -20,7 +20,6 @@ export const mutations = {
   },
   USER_SETTINGS: (state, settings) => {
     state.settings = settings
-    // console.log(settings);
   },
   SET_THEME: (state, theme) => {
     state.theme = theme
@@ -41,7 +40,6 @@ export const actions = {
     await this.$axios.get(process.env.baseUrl + '/users/settings').then((res) => {
       commit('USER_SETTINGS', res.data)
       commit('SET_THEME', res.data.theme)
-      // console.log(res.data);
     })
   },
   async setSetting({

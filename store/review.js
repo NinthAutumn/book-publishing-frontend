@@ -5,16 +5,6 @@ export const state = () => ({
   reviewed: ''
 })
 export const getters = {
-  // truncate: (state) => {
-  //   const review = state.reviews.map((review) => {
-  //     if (review.content.length > 350) {
-  //       review.content = review.content.substring(0, 350) + '...'
-  //     }
-  //     return review
-  //   })
-
-  //   return review
-  // }
   allReviews: (
     state
   ) => {

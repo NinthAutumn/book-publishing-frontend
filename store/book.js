@@ -96,7 +96,6 @@ export const mutations = {
     books.forEach(async (book) => {
       book.ratings = +book.ratings.toFixed(2)
     })
-    // books.ratings = Math.round(books.ratings)
     state.books.highestrated = books
   },
   TRENDING(state, books) {
@@ -125,19 +124,10 @@ export const mutations = {
   BOOK_VIEW(state, view) {
     state.view = view
   },
-  ASC_CHAP(state) {
-    // state.book.chapters = state.book.chapters.reverse()
-  },
+  ASC_CHAP(state) {},
   FORMAT_DATE(state) {
     state.book.chapters.forEach((chapter) => {
-      // let createdAt = new Date(chapter.createdAt);
-      // console.log(createdAt - Date.now())
-      // const day = createdAt.toLocaleDateString("en-US");
-      // console.log(moment(createdAt, 'YYYY-MM-DDYYYY-MM-DDTHH:mm:ss.SSSZ').isValid());
-      // const kiss = 
-      // console.log(kiss);
-      // chapter.createdAt = moment(createdAt, 'YYYY-MM-DDYYYY-MM-DDTHH:mm:ss.SSSZ').isValid();
-      // console.log(chapter.createdAt);
+
     })
   },
   SYNOPSIS_TRUE(state) {
@@ -148,7 +138,6 @@ export const mutations = {
   },
   BOOKMARKED(state, bookmark) {
     if (bookmark.store) {
-      // console.log(bookmark.store);
       bookmark.store.forEach((store) => {
         if (store.bookId === state.book._id) {
           state.book.bookmarked = true
