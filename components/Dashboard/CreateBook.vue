@@ -150,7 +150,7 @@ export default {
                 message: "本の投稿に成功しました",
                 type: "success"
               });
-              this.form = {};
+              this.$router.push("/dashboard/books");
             })
             .catch(e => {
               this.$message({

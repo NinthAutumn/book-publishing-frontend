@@ -10,12 +10,14 @@
         class="library__nav__item"
       >ブックマーク</div>
       <div @mouseenter="navLine('readingList')" class="library__nav__item">再生リスト</div>
+      <div @mouseenter="navLine('review')" class="library__nav__item">レビュー</div>
       <div @mouseenter="navLine('bought')" class="library__nav__item">購入済み</div>
       <div
         @click="navSelect('history')"
         @mouseenter="navLine('history')"
         class="library__nav__item"
       >歴史</div>
+
       <i class="i__line" :style="line"></i>
     </div>
     <div class="flex-divider flex flex-row flex--between">
@@ -83,17 +85,24 @@ export default {
           };
           this.selectedTabName = "readingList";
           break;
-        case "bought":
+        case "review":
           this.selectedTab = {
             width: "64px",
             left: "196px"
+          };
+          this.selectedTabName = "review";
+          break;
+        case "bought":
+          this.selectedTab = {
+            width: "64px",
+            left: "270px"
           };
           this.selectedTabName = "bought";
           break;
         case "history":
           this.selectedTab = {
             width: "32px",
-            left: "270px"
+            left: "344px"
           };
           this.selectedTabName = "history";
           await this.$store.dispatch("library/getHistory");
@@ -115,16 +124,22 @@ export default {
           };
 
           break;
-        case "bought":
+        case "review":
           this.line = {
             width: "64px",
             left: "196px"
           };
           break;
+        case "bought":
+          this.line = {
+            width: "64px",
+            left: "270px"
+          };
+          break;
         case "history":
           this.line = {
             width: "32px",
-            left: "270px"
+            left: "344px"
           };
           break;
       }
