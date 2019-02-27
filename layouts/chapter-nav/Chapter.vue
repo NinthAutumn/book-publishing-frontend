@@ -94,9 +94,6 @@ export default {
 </script>
 
 <style lang="scss">
-// .chapters-modal .image {
-//   background-color: black !important;
-// }
 .chapter-modal--image {
   background-color: black !important;
 }

@@ -72,9 +72,7 @@ export default {
     menuDrawer() {
       this.$store.commit("menuStateChange");
     },
-    logOut() {
-      this.$store.dispatch("auth/logOut");
-    },
+
     stateDropChange() {
       this.$store.commit("DROPDOWN_STATE");
       // console.log("yes");

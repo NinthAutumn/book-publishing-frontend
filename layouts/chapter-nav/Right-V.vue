@@ -54,8 +54,6 @@ export default {
 
 <style lang="scss">
 .right-vertical-nav {
-  // box-shadow: 1px 1px 5px 0 grey;
-  // position: relative;
   .nav-container {
     // height: 100vh;
     position: fixed;

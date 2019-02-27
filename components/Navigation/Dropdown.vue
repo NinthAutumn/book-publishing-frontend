@@ -17,7 +17,14 @@
             v-for="(item, index) in navList"
             :key="index"
           >
+            <div
+              v-if="item.title === 'ログアウト'"
+              @click="logOut"
+              class="profile-dropdown__nav-link flex flex--align"
+              v-text="item.title"
+            ></div>
             <nuxt-link
+              v-else
               :to="item.link"
               tag="div"
               class="profile-dropdown__nav-link flex flex--align"
@@ -45,6 +52,11 @@ export default {
   computed: {
     user() {
       return this.$store.state.auth.user;
+    }
+  },
+  methods: {
+    logOut() {
+      this.$store.dispatch("auth/logOut");
     }
   }
 };
