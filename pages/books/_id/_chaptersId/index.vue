@@ -65,8 +65,7 @@ export default {
       await store.dispatch("user/getSettings");
     } else {
       await store.dispatch("chapter/nextChapter", {
-        bookId: params.id,
-        index: index
+        chapterId: params.chaptersId
       });
     }
 

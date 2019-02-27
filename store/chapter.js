@@ -88,9 +88,16 @@ export const actions = {
     userId
   }) {
     // const nextindex = index
-    await this.$axios.get(process.env.baseUrl + '/chapters/direct?chapterId=' + chapterId + '&user=' + userId).then((res) => {
-      commit('infiniteNext', res.data)
-    })
+    if (userId) {
+      await this.$axios.get(process.env.baseUrl + '/chapters/direct?chapterId=' + chapterId + '&user=' + userId).then((res) => {
+        commit('infiniteNext', res.data)
+      })
+    } else {
+      await this.$axios.get(process.env.baseUrl + '/chapters/direct?chapterId=' + chapterId).then((res) => {
+        commit('infiniteNext', res.data)
+      })
+    }
+
   },
   async previousChapter({
     commit

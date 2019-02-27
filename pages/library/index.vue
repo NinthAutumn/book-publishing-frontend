@@ -97,7 +97,6 @@ export default {
         position: absolute;
         top: 100%;
         content: "";
-        display: block;
         border-top: 2px solid $primary;
         transition: 300ms;
         &:hover {

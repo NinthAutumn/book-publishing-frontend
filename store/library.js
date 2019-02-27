@@ -2,7 +2,8 @@ export const state = () => ({
   bookmarks: [],
   favorites: [],
   reading: [],
-  read_later: []
+  read_later: [],
+  history: []
 })
 
 export const getters = {
@@ -28,6 +29,9 @@ export const mutations = {
   },
   BOOKMARK_STATUS(state, bookmarked) {
     state.bookmarked = bookmarked
+  },
+  GET_HISTORY(state, history) {
+    state.history = history
   }
 }
 
@@ -63,6 +67,13 @@ export const actions = {
   }) {
     await this.$axios.get(process.env.baseUrl + '/library/show?type=reading').then((res) => {
       commit('GET_READING', res.data)
+    })
+  },
+  async getHistory({
+    commit
+  }) {
+    await this.$axios.get(process.baseUrl + '/library/history').then((res) => {
+      commit('GET_HISTORY', res.data)
     })
   },
   async getRead_Later({
