@@ -5,11 +5,11 @@
         <i class="el-icon-menu" :class="$store.state.menuState" @click="menuDrawer"></i>
       </div>
       <SearchBar class="searchbar"></SearchBar>
-      <span v-if="loggedIn" style="z-index:3000;" id="prof" v-click-outside="dropOff">
+      <span v-if="loggedIn" style="z-index:3000;" id="prof">
         <img @click="stateDropChange" class="profile-pic" style="width: 40px;" :src="user.avatar">
         <div class>
           <transition name="grow-shrink">
-            <Dropdown v-if="$store.state.dropdownState"></Dropdown>
+            <Dropdown v-click-outside="dropOff" v-if="$store.state.dropdownState"></Dropdown>
           </transition>
 
           <!-- <div class="profile-info" @click="userProfile">

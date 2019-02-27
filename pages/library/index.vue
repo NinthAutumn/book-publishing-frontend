@@ -12,7 +12,7 @@
     </div>
     <div class="flex-divider flex flex-row flex--between">
       <div class="library-bookmark">
-        <BookList :trendings="true" :books="$store.state.ranking.ratings.total"></BookList>
+        <BookList :trendings="true" :books="bookmarks"></BookList>
       </div>
       <div class="library-profile">
         <Profile></Profile>
@@ -40,6 +40,11 @@ export default {
         left: "0px"
       }
     };
+  },
+  computed: {
+    bookmarks() {
+      return this.$store.state.library.bookmarks;
+    }
   },
   methods: {
     sortSelect(type) {},
@@ -75,7 +80,7 @@ export default {
     }
   },
   async fetch({ store }) {
-    // await store.dispatch("book/getBook", params.id);
+    await store.dispatch("library/getBookmark");
   }
 };
 </script>

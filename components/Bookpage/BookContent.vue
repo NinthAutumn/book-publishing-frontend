@@ -54,16 +54,11 @@ export default {
     bookmarked() {
       return this.$store.state.library.bookmarked;
     },
-    bookmarkedText: {
-      get: function() {
-        if (!this.$store.state.library.bookmarked) {
-          return "ブックマーク";
-        } else {
-          return "ブックマーク済み";
-        }
-      },
-      set: function(newValue) {
-        return newValue;
+    bookmarkedText() {
+      if (!this.$store.state.library.bookmarked) {
+        return "ブックマーク";
+      } else {
+        return "ブックマーク済み";
       }
     }
   },

@@ -11,9 +11,12 @@
         >{{$moment($store.state.auth.user.createdAt).year()}} 年から</div>
       </div>
       <ul class="library-up__data__list">
-        <li class="library-up__data__item flex flex--align">
+        <li class="library-up__data__item flex flex--align flex--between">
           <label class="library-up__data__header">ブックマーク数</label>
-          <label class="library-up__data__stats"></label>
+          <label
+            class="library-up__data__stats"
+            v-text="this.$store.state.library.bookmarks.length + '個'"
+          ></label>
         </li>
         <li class="library-up__data__item flex flex--align">
           <label class="library-up__data__header">レビュー数</label>
@@ -73,6 +76,10 @@ export default {};
       border-top: 1px solid rgb(228, 228, 228);
     }
     &__list {
+    }
+    &__stats {
+      font-size: 12px;
+      margin-right: 5px;
     }
   }
 }

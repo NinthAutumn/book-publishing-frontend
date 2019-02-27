@@ -36,7 +36,7 @@
     </div>
     <ul class="library-booklist__list" v-if="trendings">
       <li class="library-booklist__item" v-for="book in books" :key="book.id">
-        <Book :book="book._id.book[0]"></Book>
+        <Book :book="book.bookId"></Book>
       </li>
     </ul>
     <ul class="library-booklist__list" v-else>

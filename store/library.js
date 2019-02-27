@@ -47,7 +47,7 @@ export const actions = {
     commit
   }) {
     await this.$axios.get(process.env.baseUrl + '/library/bookmarks').then((res) => {
-      commit('GET_BOOKMARK', res.data)
+      commit('GET_BOOKMARK', res.data.store)
       // console.log(res.data);
     })
   },
