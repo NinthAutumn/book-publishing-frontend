@@ -196,7 +196,6 @@ export default {
 }
 .review-form-modal {
   position: fixed;
-  // margin: auto;
   background-color: white;
   top: 60px;
   width: 500px;
@@ -222,7 +221,6 @@ export default {
 }
 .book__rating__all {
   .star-rating {
-    // margin-bottom: 10px;
     .vue-star-rating-rating-text {
       font-size: 20px;
       margin: 0;
@@ -262,7 +260,6 @@ input[type="number"]::-webkit-outer-spin-button {
     box-sizing: border-box;
     font-size: 16px;
   }
-  // margin-top: 6.6rem !important;
   display: grid;
   grid-template-columns: 30.8rem auto auto;
   grid-template-areas:
@@ -276,24 +273,20 @@ input[type="number"]::-webkit-outer-spin-button {
     &__img {
       width: 30.8rem;
       height: 45.9rem;
-      // border-radius: 10px;
     }
   }
 
   &__info {
-    // display: flex;
     grid-area: info;
     &__title {
       font-size: 22px;
     }
     &__meta {
       display: flex;
-      // justify-content: center;/
       &__genre {
         color: white;
         display: flex;
         align-items: center;
-        // height: 32px;
         margin-right: 10px;
         justify-content: center;
         border-radius: 5px;
@@ -314,10 +307,7 @@ input[type="number"]::-webkit-outer-spin-button {
         color: white;
         display: flex;
         margin-right: 10px;
-
         align-items: center;
-        // height: 32px;
-        // width: 150px;
         border-radius: 5px;
         background-color: $secondary;
         justify-content: center;
@@ -336,14 +326,11 @@ input[type="number"]::-webkit-outer-spin-button {
         margin-right: 10px;
 
         align-items: center;
-        // height: 32px;
         justify-content: center;
-        // width: 150px;
         width: 100px;
         border-radius: 5px;
         background-color: $primary;
         &__icon {
-          // color: black;
           font-size: 18px;
           margin-right: 5px;
         }

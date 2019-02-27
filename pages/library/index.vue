@@ -172,7 +172,6 @@ export default {
     }
     &__item {
       font-size: 16px;
-      // margin-right: 10px;
       margin-right: 10px;
     }
   }
@@ -188,7 +187,6 @@ export default {
     }
   }
   &-bookmark {
-    // width: 50%;
     margin-right: 10px;
     flex-grow: 1;
     &__header {

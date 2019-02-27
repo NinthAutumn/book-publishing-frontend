@@ -11,7 +11,6 @@
 import Chapter from "@/components/ChapterPage/Chapter";
 import CommentList from "@/components/ChapterPage/CommentList";
 
-// import
 export default {
   data() {
     return {
@@ -69,20 +68,13 @@ export default {
 
 <style lang="scss">
 body {
-  // background-color: black;
 }
 
 .chapter {
-  // margin-top: 50px;
   display: flex;
   justify-content: space-around;
-
-  // height: 100vh;
-  // background: black;
-  // color: white;
   .chapter-wrapper {
     position: relative;
-    // height: 100vh;
     .chapter-navigation__next {
       text-align: center;
     }
@@ -93,17 +85,14 @@ body {
       background-color: white;
       position: relative;
       border: 1px solid #cecece;
-      // height: 100vh;
       .chapter-title {
         margin-top: 10px;
         header {
           font-size: 24px;
-          // font-weight: bold;
           margin-bottom: 14px;
           margin-top: 12px;
         }
       }
-      // padding: 0px 50px;
       width: 700px;
       display: flex;
       flex-direction: column;
@@ -112,13 +101,9 @@ body {
         line-height: 28px;
         font-weight: 400;
         margin-bottom: 12px;
-
         display: flex;
         flex-direction: row;
-        // flex-direction:
       }
-      // align-items: center;
-      // justify-content: space-around;
     }
   }
 }
