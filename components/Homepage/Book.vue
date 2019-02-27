@@ -25,7 +25,7 @@
             :round-start-rating="false"
             border-color="#FFB727"
             :glow="1"
-            class="star-rating"
+            class="star-rating flex flex--center"
           ></star-rating>
         </no-ssr>
       </div>
@@ -128,7 +128,7 @@ export default {
   }
   .text-info {
     display: flex;
-    align-items: center;
+    // align-items: center;
     flex-direction: column;
     /* background: white; */
     // position: relative;
@@ -155,8 +155,8 @@ export default {
       /* margin-top: 10px; */
       // color: black !important;
       padding: 0;
-      text-align: center;
-      width: 95%;
+      text-align: left !important;
+      // width: 95%;
       /* height: 5rem; */
       // overflow: hidden;
       // text-overflow: ellipsis;
