@@ -3,7 +3,7 @@
     <div class="library__header-wrapper flex flex--align">
       <header class="library__header">ライブラリー</header>
     </div>
-    <div class="library__nav flex">
+    <div class="library__nav flex" @mouseleave="navLineOut">
       <div @mouseenter="navLine('Bookmark')" class="library__nav__item">ブックマーク</div>
       <div @mouseenter="navLine('readingList')" class="library__nav__item">再生リスト</div>
       <div @mouseenter="navLine('bought')" class="library__nav__item">購入済み</div>
@@ -34,11 +34,18 @@ export default {
       line: {
         width: "96px",
         left: "0px"
+      },
+      selectedTab: {
+        width: "96px",
+        left: "0px"
       }
     };
   },
   methods: {
     sortSelect(type) {},
+    navLineOut() {
+      this.line = this.selectedTab;
+    },
     navLine(item) {
       switch (item) {
         case "Bookmark":

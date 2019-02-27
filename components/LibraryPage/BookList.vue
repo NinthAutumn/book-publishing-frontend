@@ -25,12 +25,11 @@
 
             <div
               class="library-booklist__sort__options__item flex flex--align flex--center"
-              @click="selectedOrder('最近読んだ順')"
-            >最近読んだ順</div>
-            <div
-              class="library-booklist__sort__options__item flex flex--align flex--center"
-              @click="selectedOrder('入れた順')"
-            >入れた順</div>
+              @click="selectedOrder(item)"
+              v-for="(item, index) in sortTypes"
+              :key="index"
+              v-text="item"
+            ></div>
           </div>
         </transition>
       </div>
@@ -58,7 +57,8 @@ export default {
     return {
       sortSelect: false,
       itemSelected: false,
-      selected: "並び替え"
+      selected: "並び替え",
+      sortTypes: ["最近読んだ順", "入れた順", "名前順"]
     };
   },
   components: {
