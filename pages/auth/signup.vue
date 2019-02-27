@@ -52,9 +52,7 @@ export default {
   auth: false,
   methods: {
     async signUp() {
-      // const isValid = await this.$refs.observer.validate();
       await this.$validator.validateAll();
-      console.log("test");
       if (!this.errors.any()) {
         const user = {
           username: this.formUsername,
@@ -97,7 +95,6 @@ export default {
   display: flex;
   align-items: center;
   padding: 10px;
-  // width: 50%;
   .signup-title {
     height: 50px;
     display: flex;
@@ -109,23 +106,18 @@ export default {
     background-color: white;
     display: flex;
     flex-direction: column;
-    // grid-area: main;
     -webkit-box-shadow: 1px 1px 13px 0px rgba(171, 171, 171, 1);
     -moz-box-shadow: 1px 1px 13px 0px rgba(171, 171, 171, 1);
     box-shadow: 1px 1px 13px 0px rgba(171, 171, 171, 1);
     height: 100%;
     padding: 10px;
     width: 100%;
-    // grid-column-start: 2;
-    // grid-row-start: 2;
     input {
       padding-left: 5px;
       font-size: 16px;
       height: 30px;
       border: 1px solid grey;
       margin-bottom: 10px;
-
-      // box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
       border-radius: 10px;
     }
     label {
