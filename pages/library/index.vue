@@ -4,16 +4,28 @@
       <header class="library__header">ライブラリー</header>
     </div>
     <div class="library__nav flex" @mouseleave="navLineOut">
-      <div @mouseenter="navLine('Bookmark')" class="library__nav__item">ブックマーク</div>
+      <div
+        @click="navSelect('Bookmark')"
+        @mouseenter="navLine('Bookmark')"
+        class="library__nav__item"
+      >ブックマーク</div>
       <div @mouseenter="navLine('readingList')" class="library__nav__item">再生リスト</div>
       <div @mouseenter="navLine('bought')" class="library__nav__item">購入済み</div>
-      <div @mouseenter="navLine('history')" class="library__nav__item">歴史</div>
+      <div
+        @click="navSelect('history')"
+        @mouseenter="navLine('history')"
+        class="library__nav__item"
+      >歴史</div>
       <i class="i__line" :style="line"></i>
     </div>
     <div class="flex-divider flex flex-row flex--between">
-      <div class="library-bookmark">
+      <div v-if="selectedTabName === 'bookmark'" class="library-bookmark">
         <BookList :trendings="true" :books="bookmarks"></BookList>
       </div>
+      <div class="library-history" v-if="selectedTabName=== 'history'">
+        <BookList :history="true" :books="history"></BookList>
+      </div>
+
       <div class="library-profile">
         <Profile></Profile>
       </div>
@@ -38,18 +50,55 @@ export default {
       selectedTab: {
         width: "96px",
         left: "0px"
-      }
+      },
+      selectedTabName: "bookmark"
     };
   },
   computed: {
     bookmarks() {
       return this.$store.state.library.bookmarks;
+    },
+    history() {
+      return this.$store.state.library.history;
     }
   },
   methods: {
     sortSelect(type) {},
     navLineOut() {
       this.line = this.selectedTab;
+    },
+    async navSelect(item) {
+      switch (item) {
+        case "Bookmark":
+          this.selectedTab = {
+            width: "96px",
+            left: "0px"
+          };
+          this.selectedTabName = "bookmark";
+          break;
+        case "readingList":
+          this.selectedTab = {
+            width: "80px",
+            left: "106px"
+          };
+          this.selectedTabName = "readingList";
+          break;
+        case "bought":
+          this.selectedTab = {
+            width: "64px",
+            left: "196px"
+          };
+          this.selectedTabName = "bought";
+          break;
+        case "history":
+          this.selectedTab = {
+            width: "32px",
+            left: "270px"
+          };
+          this.selectedTabName = "history";
+          await this.$store.dispatch("library/getHistory");
+          break;
+      }
     },
     navLine(item) {
       switch (item) {
@@ -64,6 +113,7 @@ export default {
             width: "80px",
             left: "106px"
           };
+
           break;
         case "bought":
           this.line = {
@@ -76,6 +126,7 @@ export default {
             width: "32px",
             left: "270px"
           };
+          break;
       }
     }
   },
@@ -114,6 +165,13 @@ export default {
     width: 180px;
   }
   $self: &;
+  &-history {
+    margin-right: 10px;
+    flex-grow: 1;
+    &__header {
+      font-size: 16px !important;
+    }
+  }
   &-bookmark {
     // width: 50%;
     margin-right: 10px;

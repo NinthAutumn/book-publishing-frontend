@@ -39,9 +39,9 @@
         <Book :book="book.bookId"></Book>
       </li>
     </ul>
-    <ul class="library-booklist__list" v-else>
+    <ul v-if="history" class="library-booklist__list">
       <li class="library-booklist__item" v-for="book in books" :key="book.id">
-        <Book :book="book" :size="size = 'big'"></Book>
+        <Book :book="book.bookId" :size="size = 'big'"></Book>
       </li>
     </ul>
   </div>
@@ -51,7 +51,8 @@ import Book from "./Book";
 export default {
   props: {
     books: Array,
-    trendings: Boolean
+    trendings: Boolean,
+    history: Boolean
   },
   data() {
     return {

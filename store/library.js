@@ -72,7 +72,7 @@ export const actions = {
   async getHistory({
     commit
   }) {
-    await this.$axios.get(process.baseUrl + '/library/history').then((res) => {
+    await this.$axios.get(process.env.baseUrl + '/library/history').then((res) => {
       commit('GET_HISTORY', res.data)
     })
   },
