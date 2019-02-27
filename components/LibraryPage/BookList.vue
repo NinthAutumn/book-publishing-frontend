@@ -84,18 +84,15 @@ export default {
 .library-booklist {
   $self: &;
   &__sort {
-    // background-color:;
     .flex-divider {
       height: 100%;
     }
     box-shadow: 1px 1px 5px 0px rgb(233, 233, 233);
-    // border-radius: 5px;
     width: 120px;
     height: 30px;
     position: relative;
     color: grey;
     .selected {
-      // color: #b68d98;
       color: black;
     }
     &__options {
@@ -106,7 +103,6 @@ export default {
       box-shadow: 0px 8px 24px rgb(233, 233, 233);
       .disabled {
         color: #f4648a;
-        // margin-left: 10px;
         font-size: 13px;
       }
       &__item {
@@ -119,7 +115,6 @@ export default {
           color: #f4648a;
           transition: color 100ms;
         }
-        // width: 100%;
       }
     }
     &:hover {
@@ -135,7 +130,6 @@ export default {
       font-size: 14px;
     }
   }
-  // grid-template-rows:
   &__list {
     display: grid;
     grid-template-columns: repeat(auto-fill, 135px);

@@ -31,7 +31,6 @@ export default {
 <style lang="scss">
 .user-dashboard {
   position: relative;
-  /* background-color: grey; */
   height: 100vh;
   &__header {
     header {
@@ -52,8 +51,6 @@ export default {
       font-size: 20px;
     }
     td {
-      // display: flex;
-      // justify-content: center;
       text-align: center;
       font-size: 16px;
     }

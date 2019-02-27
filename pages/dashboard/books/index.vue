@@ -65,7 +65,6 @@ export default {
       width: 150px;
       font-size: 16px;
     }
-    // margin-top: 10px;
   }
   &__cover {
     height: 11.9rem;
@@ -76,7 +75,6 @@ export default {
   &__books-list {
     width: 100%;
     margin-top: 20px;
-    // border-radi
     background-color: white;
     padding: 10px;
     th,

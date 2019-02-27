@@ -64,13 +64,7 @@ export default {
   props: {
     review: Object
   },
-  watch: {
-    // likedWatch() {
-    //   if (this.liked) {
-    //     this.$store.commit("review/LIKED_REVIEW", this.review._id);
-    //   }
-    // }
-  },
+  watch: {},
   data() {
     return {
       readMore: false,
@@ -110,7 +104,6 @@ export default {
           type: "like"
         });
         this.likeNumber++;
-        // this.review.like++;
       }
     },
     async dislikedReview() {
@@ -155,14 +148,11 @@ export default {
       }
     }
   },
-  created() {
-    // console.log(this.review.content.length);
-  }
+  created() {}
 };
 </script>
 
 <style  lang="scss" >
-// @import "../../assets/css/main.scss";
 .reviews-content-text {
   width: 100%;
   .customClass {

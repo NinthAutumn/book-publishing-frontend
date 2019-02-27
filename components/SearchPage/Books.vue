@@ -88,7 +88,6 @@ export default {
   created() {
     if (this.book.synopsis.length > 340) {
       this.readMore = "open";
-      // this.read = "open";
     } else {
       this.readMore = "";
     }
@@ -112,13 +111,11 @@ export default {
 }
 .book-container {
   padding: 5px 7px;
-  // padding-top: 5px;
   .vue-star-rating-rating-text {
     margin: 0 !important;
     font-size: 15px;
   }
   .book-info {
-    // height: 164px;
   }
   .book-info .open {
     height: none;
@@ -126,9 +123,7 @@ export default {
     overflow: visible;
     transition: 300ms;
   }
-  // box-shadow: 1px 1px 5px 0px #d6d1d1;
   .book-header {
-    // height: 100%;
   }
   .book-synopsis {
     overflow: hidden;
@@ -139,21 +134,13 @@ export default {
       font-weight: 300;
       height: 70px;
       overflow: hidden;
-      // transition: 300ms;
     }
     p .open {
       font-size: 16.5px;
       font-weight: 300;
-      // height: 70px;
       overflow: visible;
-      // transition: 300ms;
     }
   }
-}
-
-.vue-star-rating {
-  // margin-bottom: 10px;
-  // heihgt:1
 }
 
 .book-title {
@@ -169,20 +156,14 @@ export default {
 
 .genre-list {
   &--item {
-    // align-items: center;
-    // padding: 5px;
     height: 25px;
     p {
       font-size: 13px;
       color: $secondary;
-
-      // height: 20px;
-      // font-weight: bold;
     }
 
     border-radius: 5px;
     border: 1.4px solid $secondary;
-    // width: 85px;
     padding: 0px 7px;
     margin-left: 2px;
 
@@ -190,7 +171,6 @@ export default {
       background-color: $secondary;
       p {
         color: white;
-        // font-weight: bold;
       }
       cursor: pointer;
     }

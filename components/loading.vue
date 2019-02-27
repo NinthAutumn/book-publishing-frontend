@@ -26,9 +26,6 @@ export default {
 .loading-component {
   width: 100%;
   height: 100%;
-  // position: relative;
-  // background-color: black;
-  // background-image: url("https://i.redd.it/8ijp26bcwqd21.jpg");
   z-index: 1000;
   .loading-spinner {
     position: fixed;

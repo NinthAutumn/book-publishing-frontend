@@ -27,12 +27,9 @@
   </div>
 </template>
 <script>
-// import StarRating from "vue-star-rating";
 export default {
   name: "book-card",
-  comonents: {
-    // StarRating
-  },
+  comonents: {},
   props: {
     book: Object,
     size: String,
@@ -53,12 +50,8 @@ export default {
     }
   },
   computated: {
-    round() {
-      // book.ratings = Math.round(book.ratings);
-    },
-    roundT() {
-      // book._id.book[0] = Mo
-    }
+    round() {},
+    roundT() {}
   },
   filters: {
     truncate: (string, number) => {
@@ -94,7 +87,6 @@ export default {
         top: 0;
         left: 0;
         content: "";
-
         opacity: 0.2;
         display: block;
         animation: gradualAppearance 200ms ease-out;
@@ -113,21 +105,17 @@ export default {
     margin: 0;
     a {
       font-size: 14px;
-      // width: 135px;
       font-weight: 500;
     }
     padding: 0;
     text-align: left;
     width: 95%;
-
     transition: 300ms;
     &:hover {
       cursor: pointer;
-
       transition: 200ms;
     }
   }
-
   &__more-info {
   }
   &__author {

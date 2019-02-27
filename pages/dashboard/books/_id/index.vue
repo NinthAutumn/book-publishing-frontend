@@ -33,17 +33,11 @@ export default {
   layout: "user-nav/User",
   components: {},
   async fetch({ store, params }) {
-    // await store.dispatch("chapter/TOCBook", params.id);
     await store.dispatch("chapter/dashboardTOC", params.id);
     await store.dispatch("chapter/publishedTOC", params.id);
-    // await store.dispatch('')
     await store.dispatch("book/getBook", params.id);
-    // console.log(store.state.auth);
   },
-  created() {
-    // console.log(this.$store.getters['chapter/published']);
-    // console.log(this.$route.name);
-  },
+  created() {},
   computed: {
     toc() {
       return this.$store.state.chapter.dToc;
@@ -62,7 +56,6 @@ export default {
 .book-show-dashboard {
   height: 100vh;
   .book-show {
-    // height: 105px;
     padding: 5px 0;
     &__cover {
       height: 103px;
@@ -73,10 +66,6 @@ export default {
 
     &__title {
       font-size: 25px;
-      // padding: 0 5px;
-      // height: 100%;
-
-      //
     }
   }
   .book-tab {
@@ -87,19 +76,16 @@ export default {
       &__text {
         color: black;
         font-size: 20px;
-        // margin-bottom: 10px;
         &:visited {
           color: black;
         }
         &:hover {
           border-bottom: 2px solid rgb(230, 230, 230);
         }
-        // margin-bottom: 2px;
         padding-bottom: 4px;
       }
       .nuxt-link-exact-active {
         border-bottom: 2px solid $secondary;
-        // transition: border-color 100ms;
       }
     }
   }
