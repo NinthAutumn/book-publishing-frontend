@@ -36,12 +36,12 @@
     </div>
     <ul class="library-booklist__list" v-if="trendings">
       <li class="library-booklist__item" v-for="book in books" :key="book.id">
-        <Book :book="book.bookId"></Book>
+        <Book :progress="book.history" :book="book.bookId"></Book>
       </li>
     </ul>
     <ul v-if="history" class="library-booklist__list">
       <li class="library-booklist__item" v-for="book in books" :key="book.id">
-        <Book :book="book.bookId" :size="size = 'big'"></Book>
+        <Book :progress="{index: book.index, chapterId: book.chapterId}" :book="book.bookId"></Book>
       </li>
     </ul>
   </div>
@@ -139,7 +139,7 @@ export default {
   &__list {
     display: grid;
     grid-template-columns: repeat(auto-fill, 135px);
-    grid-gap: 5px;
+    grid-gap: 15px;
     #{$self}__item {
       grid-column: auto;
       grid-row: auto;

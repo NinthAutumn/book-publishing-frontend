@@ -13,7 +13,15 @@
         <p class="book-library__book-title full" ref="texting">
           <a class>{{book.title | truncate(17)}}</a>
         </p>
-        <span class="p-ending"></span>
+        <div class="book-library__more-info flex flex--align">
+          <!-- <div class="book-library__author">{{book.author}}</div> -->
+          <span
+            class="book-library__progress"
+            v-if="progress"
+            v-text="'栞: '+progress.index + '/' + book.chapters.length"
+          ></span>
+          <span class="book-library__progress" v-else v-text="'栞: '+0+ '/' + book.chapters.length"></span>
+        </div>
       </div>
     </div>
   </div>
@@ -28,7 +36,8 @@ export default {
   props: {
     book: Object,
     size: String,
-    trending: Object
+    trending: Object,
+    progress: Object
   },
   data() {
     return {
@@ -102,13 +111,13 @@ export default {
   }
   &__book-title {
     margin: 0;
-    font-weight: 400;
     a {
-      font-size: 13px;
+      font-size: 14px;
       // width: 135px;
+      font-weight: 500;
     }
     padding: 0;
-    text-align: center;
+    text-align: left;
     width: 95%;
 
     transition: 300ms;
@@ -117,6 +126,16 @@ export default {
 
       transition: 200ms;
     }
+  }
+
+  &__more-info {
+  }
+  &__author {
+    font-size: 12px;
+  }
+  &__progress {
+    font-size: 13px;
+    color: #83848f;
   }
 }
 
