@@ -24,13 +24,6 @@ export default {
     CommentList
   },
   methods: {
-    // bottomVisible() {
-    //   const scrollY = window.scrollY;
-    //   const visible = document.documentElement.clientHeight;
-    //   const pageHeight = document.documentElement.scrollHeight;
-    //   const bottomOfPage = visible + scrollY >= pageHeight;
-    //   return bottomOfPage || pageHeight < visible;
-    // },
     nextPage() {
       if (this.bottomVisible()) {
         if (
@@ -48,13 +41,7 @@ export default {
     }
   },
   auth: false,
-  // watch: {
-  //   bottom(bottom) {
-  //     if (bottom) {
-  //       this.nextPage();
-  //     }
-  //   }
-  // },
+
   async fetch({ store, params }) {
     const index = params.chaptersId;
     if (store.state.auth.loggedIn) {
@@ -71,17 +58,10 @@ export default {
 
     await store.dispatch("comment/getComments", {
       chapterId: params.chaptersId
-      // bookId: params.id
     });
   },
   layout: "chapter-nav/Chapter",
-  created() {
-    // if (process.client) {
-    //   window.addEventListener("scroll", () => {
-    //     this.bottom = this.bottomVisible();
-    //   });
-    // }
-  },
+  created() {},
   scrollToTop: false,
   transition: "none"
 };

@@ -86,12 +86,6 @@
       <BookChapterList></BookChapterList>
     </div>
     <section class="book__reviews">
-      <!-- <label for="title">Title</label> -->
-      <!-- <froala :tag="'textarea'" :config="config" v-model="content"></froala> -->
-      <!-- <no-ssr>
-        <vue-editor v-model="content" :editorOptions="config"></vue-editor>
-      </no-ssr>-->
-      <!-- <div v-html="content"></div> -->
       <div class="book__reviews__divider flex flex--align flex--between">
         <div class="book__rating__all flex flex--align">
           <header class="reviews__title">レビュー({{$store.state.review.reviews.length}})</header>
@@ -112,13 +106,10 @@
             ></star-rating>
           </no-ssr>
         </div>
-        <!-- <button v-if="">レビューを編集する</button> -->
         <button v-if="!reviewed" @click="reviewOpen" class="review-open button">レビューを書く</button>
         <button v-else @click="reviewOpen" class="review-open button">レビューを編集</button>
       </div>
       <hr>
-
-      <!-- <text-editor></text-editor> -->
       <ReviewsList></ReviewsList>
     </section>
     <div class="divider">
@@ -142,7 +133,6 @@ import BookContent from "@/components/Bookpage/BookContent";
 import BookChapterList from "@/components/Bookpage/BookChapterList";
 import ReviewsList from "@/components/Bookpage/ReviewsList";
 import ReviewsForm from "@/components/Bookpage/ReviewForm";
-// import TextEditor from "@/components/Pell";
 
 export default {
   auth: false,
@@ -155,9 +145,6 @@ export default {
       await store.dispatch("review/reviewedStatus", params.id);
       await store.dispatch("library/checkBookmark", params.id);
     }
-
-    // await
-    // const john = JSON.stringify();
   },
   data() {
     return {
@@ -173,8 +160,6 @@ export default {
       reviewState: false
     };
   },
-  // transition: "fade",
-
   methods: {
     allReviews: function(state, change) {
       return state;
