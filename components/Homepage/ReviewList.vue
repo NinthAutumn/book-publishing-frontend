@@ -5,7 +5,7 @@
     <div v-swiper:mySwiper="swiperOption">
       <div class="swiper-wrapper">
         <div class="swiper-slide" v-for="review in reviews" :key="review.id">
-          <Review :review="review"></Review>
+          <Review v-if="review.Likes > 1" :review="review"></Review>
         </div>
       </div>
       <div class="background">
@@ -60,7 +60,10 @@ export default {
   components: {
     Review
   },
-  methods: {}
+  methods: {},
+  created() {
+    console.log(this.$store.state.review.goodReviews);
+  }
 };
 </script>
 <style lang="scss">

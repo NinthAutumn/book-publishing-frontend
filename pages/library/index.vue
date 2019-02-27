@@ -3,7 +3,12 @@
     <div class="library__header-wrapper flex flex--align">
       <header class="library__header">ライブラリー</header>
     </div>
-    <div class="library-bookmark__header">ブックマーク</div>
+    <div class="library__nav flex">
+      <div class="library__nav__item">ブックマーク</div>
+      <div class="library__nav__item">リーディングリスト</div>
+      <div class="library__nav__item">購入済み</div>
+      <div class="library__nav__item">歴史</div>
+    </div>
     <div class="flex-divider flex flex-row flex--between">
       <div class="library-bookmark">
         <BookList :trendings="true" :books="$store.state.ranking.ratings.total"></BookList>
@@ -34,6 +39,12 @@ export default {
 
 <style lang="scss">
 .library {
+  &__nav {
+    &__item {
+      font-size: 16px;
+      margin-right: 10px;
+    }
+  }
   &-profile {
     width: 180px;
   }
@@ -41,7 +52,7 @@ export default {
   &-bookmark {
     // width: 50%;
     margin-right: 10px;
-
+    flex-grow: 1;
     &__header {
       font-size: 16px !important;
     }

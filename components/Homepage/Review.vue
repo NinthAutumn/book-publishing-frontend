@@ -2,7 +2,7 @@
   <div class="review-card flex flex-row--between">
     <div class="review-card__profile flex-column">
       <div class="divider">
-        <img class="review-card__profile__pic" :src="this.review._id.user[0].avatar" alt>
+        <img class="review-card__profile__pic" :src="review._id.user[0].avatar" alt>
       </div>
       <div class="divider">
         <p class="review-card__profile__username">{{review._id.review[0].author}}</p>

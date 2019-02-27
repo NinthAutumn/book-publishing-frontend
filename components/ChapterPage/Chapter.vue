@@ -129,6 +129,7 @@ export default {
   // font-family: "Meiryo", "Lucida Grande", "sans-serif";
 
   p {
+    user-select: none;
     // white-space: pre-wrap;
     font-size: 16px !important;
     // font-weight: 300;
