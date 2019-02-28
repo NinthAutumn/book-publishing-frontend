@@ -58,6 +58,5 @@ export const actions = {
   }) {
     const update = await this.$axios.get(process.env.baseUrl + '/users/bookupdate')
     commit('GET_BOOKMARK_UPDATE', update)
-
   }
 }

@@ -147,6 +147,7 @@ export default {
   },
   async fetch({ store }) {
     await store.dispatch("library/getBookmark");
+    await store.dispatch("review/userReviews");
   }
 };
 </script>

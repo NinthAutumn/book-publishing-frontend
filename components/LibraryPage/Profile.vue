@@ -18,9 +18,12 @@
             v-text="this.$store.state.library.bookmarks.length + '個'"
           ></label>
         </li>
-        <li class="library-up__data__item flex flex--align">
+        <li class="library-up__data__item flex flex--between flex--align">
           <label class="library-up__data__header">レビュー数</label>
-          <label class="library-up__data__stats"></label>
+          <label
+            class="library-up__data__stats"
+            v-text="this.$store.state.review.myReviews.length + '個'"
+          ></label>
         </li>
         <li class="library-up__data__item flex flex--align">
           <label class="library-up__data__header">リスト数</label>
