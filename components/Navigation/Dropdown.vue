@@ -67,22 +67,23 @@ export default {
   position: absolute;
   top: 60px;
   right: 10px;
-  width: 250px;
+  width: 300px;
   box-sizing: border-box;
   background-color: white;
-  box-shadow: 1px 1px 5px 0px rgb(228, 228, 228);
-  // border-radius: 5px;
+  box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14),
+    0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.4);
   ul {
   }
   &__user-info {
-    padding: 20px 30px;
+    padding: 16px;
     height: 100%;
     color: black;
+    background-color: rgb(240, 240, 240);
   }
   &__profile-pic {
     margin-right: 10px;
     img {
-      width: 60px;
+      width: 50px;
       border-radius: 100px;
     }
   }
@@ -92,7 +93,6 @@ export default {
     width: 100%;
   }
   &__username {
-    margin-top: 10px;
     font-size: 18px;
   }
   &__wallet {
@@ -101,7 +101,7 @@ export default {
     position: relative;
     &::after {
       position: absolute;
-      box-shadow: 1px 1px 5px rgb(236, 236, 236);
+      box-shadow: 1px 1px 5px rgb(247, 247, 247);
       content: "";
       height: 10px;
       width: 10px;
@@ -115,8 +115,7 @@ export default {
       transition: 100ms;
       color: black;
       &:hover {
-        background-color: white;
-        color: $secondary;
+        background-color: rgb(235, 235, 235);
         cursor: pointer;
         transition: 100ms;
       }

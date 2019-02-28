@@ -7,7 +7,13 @@
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {};
+  },
+  methods: {},
+  computed: {}
+};
 </script>
 
 <style lang="scss">
