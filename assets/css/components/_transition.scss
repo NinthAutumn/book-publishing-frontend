@@ -62,9 +62,35 @@
 }
 
 .chapter-enter {
+  transition: transform 300s;
+}
+
+.list-complete-item {
+  transition: all 1s;
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.list-complete-move {
+  transition: transform 1s;
+}
+
+.list-complete-enter,
+.list-complete-leave-to
+
+/* .list-complete-leave-active below version 2.1.8 */
+  {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.list-complete-leave-active {
+  position: absolute;
+}
+
+.chapter-move {
   opacity: 0;
   transform: translateX(100px);
-  // display: none;
 }
 
 .chapter-leave-to {

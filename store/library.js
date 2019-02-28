@@ -35,7 +35,10 @@ export const mutations = {
     state.history = history
   },
   SORT_BY_DATE(state) {
-    state.bookmarks.sort((d1, d2) => new Date(d1.insertedDate).getTime() - new Date(d2.insertedDate).getTime());
+    state.bookmarks = _.orderBy(state.bookmarks, function (item) {
+      return item.insertedDate
+    }, 'desc')
+
   },
   SORT_BY_NAME(state) {
     // state.bookmarks.sort((d1, d2) => new Date(d2.insertedDate).getTime() - new Date(d1.insertedDate).getTime());

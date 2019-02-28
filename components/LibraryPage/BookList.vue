@@ -34,16 +34,16 @@
         </transition>
       </div>
     </div>
-    <ul class="library-booklist__list" v-if="trendings">
-      <li class="library-booklist__item" v-for="book in books" :key="book.id">
+    <transition-group tag="ul" class="library-booklist__list" v-if="trendings">
+      <li class="library-booklist__item" v-for="(book, index) in books" :key="index">
         <Book :progress="book.history" :book="book.bookId"></Book>
       </li>
-    </ul>
-    <ul v-if="history" class="library-booklist__list">
-      <li class="library-booklist__item" v-for="book in books" :key="book.id">
+    </transition-group>
+    <transition-group tag="ul" v-if="history" class="library-booklist__list">
+      <li class="library-booklist__item" v-for="(book, index) in books" :key="index">
         <Book :progress="{index: book.index, chapterId: book.chapterId}" :book="book.bookId"></Book>
       </li>
-    </ul>
+    </transition-group>
   </div>
 </template>
 <script>
