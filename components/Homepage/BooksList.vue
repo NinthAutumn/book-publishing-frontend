@@ -40,9 +40,9 @@ export default {
       // slidesNumber: 7,
       swiperOption: {
         // loop: true,
-        slidesPerView: this.$store.state.slidesPerView,
+        slidesPerView: "auto",
         // centeredSlides: true,
-        // spaceBetween: 15,
+        spaceBetween: 15,
         // effect: "coverflow",
         freeMode: true,
         mousewheel: {
@@ -62,39 +62,7 @@ export default {
             // console.log("onTap", this);
           }
         },
-        breakpoints: {
-          1090: {
-            slidesPerView: 5.5
-          },
-          1024: {
-            slidesPerView: 5
-            // spaceBetween: 40
-          },
-          878: {
-            slidesPerView: 4.5
-          },
-          802: {
-            slidesPerView: 4
-          },
-          734: {
-            slidesPerView: 3.5
-          },
-          664: {
-            slidesPerView: 3.2
-            // spaceBetween: 30
-          },
-          640: {
-            slidesPerView: 3
-            // spaceBetween: 20
-          },
-          575: {
-            slidesPerView: 2.5
-            // spaceBetween: 10
-          },
-          375: {
-            slidesPerView: 1.5
-          }
-        }
+        breakpoints: {}
       }
     };
   },
@@ -107,6 +75,9 @@ export default {
 <style lang="scss">
 .swiper-wrapper {
   // z-index: -10;
+}
+.swiper-slide {
+  width: 150px;
 }
 .main-books {
   width: 100%;

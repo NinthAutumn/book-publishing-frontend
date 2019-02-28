@@ -69,15 +69,15 @@ export default {
   right: 5px;
   width: 300px;
   box-sizing: border-box;
-  background-color: $secondary;
+  background-color: white;
   box-shadow: 1px 1px 5px 0px rgb(228, 228, 228);
-  border-radius: 5px;
+  // border-radius: 5px;
   ul {
   }
   &__user-info {
-    padding: 10px;
+    padding: 20px 30px;
     height: 100%;
-    color: white;
+    color: black;
   }
   &__profile-pic {
     margin-right: 10px;
@@ -101,10 +101,11 @@ export default {
     position: relative;
     &::after {
       position: absolute;
+      box-shadow: 1px 1px 5px rgb(236, 236, 236);
       content: "";
       height: 10px;
       width: 10px;
-      background-color: $secondary;
+      background-color: white;
       top: -10px;
       right: 20px;
       clip-path: polygon(50% 30%, 0% 100%, 100% 100%);
@@ -112,7 +113,7 @@ export default {
     height: 100%;
     &__item {
       transition: 100ms;
-      color: white;
+      color: black;
       &:hover {
         background-color: white;
         color: $secondary;

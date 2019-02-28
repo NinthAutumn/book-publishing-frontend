@@ -62,7 +62,7 @@ export default {
   },
   methods: {},
   created() {
-    console.log(this.$store.state.review.goodReviews);
+    // console.log(this.$store.state.review.goodReviews);
   }
 };
 </script>

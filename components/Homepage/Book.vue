@@ -81,7 +81,7 @@ export default {
   display: flex;
   flex-direction: column;
   // border-radius: 5px;
-  margin-right: 2rem;
+  // margin-right: 2rem;
   width: 142px;
   /* height: 245px; */
   position: relative;
