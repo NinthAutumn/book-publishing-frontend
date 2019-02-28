@@ -103,21 +103,22 @@ export default {
     width: 100%;
     // color: white;
   }
+  color: white;
   .one {
     background-color: $gold;
-    opacity: 0.9;
+    opacity: 0.99;
   }
   .two {
     background-color: $silver;
-    opacity: 0.9;
+    opacity: 0.99;
   }
   .three {
     background-color: $bronze;
-    opacity: 0.9;
+    opacity: 0.99;
   }
   .other {
     background-color: $secondary;
-    opacity: 0.9;
+    opacity: 0.99;
   }
 }
 #book-card {

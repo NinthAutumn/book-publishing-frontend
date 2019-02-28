@@ -99,7 +99,7 @@ export default {
     position: relative;
     color: grey;
     .selected {
-      color: black;
+      color: rgb(71, 71, 71);
     }
     &__options {
       position: absolute;
