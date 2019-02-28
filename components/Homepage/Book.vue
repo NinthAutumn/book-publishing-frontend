@@ -1,15 +1,27 @@
 <template>
   <div class="book-homepage">
-    <div id="book-card" class="big" @click="linkTo">
+    <div @mouseenter="menuOpen" @mouseleave="menuClose" id="book-card" class="big">
       <div class="book-cover">
         <span class="star-rating"></span>
-        <img
-          :src=" 'https://storage.googleapis.com/theta-images/'+ book.cover"
-          class="book-img"
-          alt="Book cover"
-        >
+        <nuxt-link class="book-img-div" tag="div" :to="'/books/' + book._id">
+          <img
+            :src=" 'https://storage.googleapis.com/theta-images/'+ book.cover"
+            class="book-img"
+            alt="Book cover"
+          >
+        </nuxt-link>
+        <div @click="menu_modal=true" v-if="menu" class="book-menu">
+          <fa icon="ellipsis-v"></fa>
+        </div>
+        <transition name="grow-shrink">
+          <div class="book-menu__modal" v-if="menu_modal" v-click-outside="menuModalClose">
+            <div class="book-menu__modal__options flex--center flex flex--align">ブックマーク</div>
+            <div class="book-menu__modal__options flex--center flex flex--align">再読列記に保存</div>
+            <div class="book-menu__modal__options flex--center flex flex--align">後で読むに保存</div>
+          </div>
+        </transition>
       </div>
-      <div class="text-info">
+      <nuxt-link tag="div" :to="'/books/' + book._id" class="text-info">
         <p class="book-title full" ref="texting">
           <a class="animated-link">{{book.title | truncate(17)}}</a>
         </p>
@@ -28,7 +40,7 @@
             class="star-rating flex flex--center"
           ></star-rating>
         </no-ssr>
-      </div>
+      </nuxt-link>
     </div>
   </div>
 </template>
@@ -46,7 +58,9 @@ export default {
   },
   data() {
     return {
-      rating: 3.5
+      rating: 3.5,
+      menu: false,
+      menu_modal: false
     };
   },
   methods: {
@@ -54,7 +68,16 @@ export default {
       this.$router.push("/books/" + this.book._id);
     },
     linkToT() {
-      this.$router.push("/books/" + this.book._id.book[0]._id);
+      this.$router.push();
+    },
+    menuOpen() {
+      this.menu = true;
+    },
+    menuClose() {
+      this.menu = false;
+    },
+    menuModalClose() {
+      this.menu_modal = false;
     }
   },
   computated: {
@@ -73,6 +96,9 @@ export default {
         return string;
       }
     }
+  },
+  created() {
+    // console.log(this.book);
   }
 };
 </script>
@@ -85,6 +111,38 @@ export default {
   width: 142px;
   /* height: 245px; */
   position: relative;
+  .book-menu {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    font-size: 20px;
+    z-index: 1000;
+    transition: 300ms;
+    color: rgb(255, 255, 255);
+    text-shadow: 1px 1px 10px 5px rgb(211, 211, 211);
+    &__modal {
+      position: absolute;
+      right: 15px;
+      top: 5px;
+      background-color: white;
+      z-index: 2000;
+      width: 120px;
+      box-shadow: 1px 1px 5px 0px rgb(219, 219, 219);
+      &__options {
+        &:hover {
+          background-color: rgb(247, 247, 247);
+          cursor: pointer;
+        }
+        font-size: 14px;
+        height: 30px;
+      }
+    }
+    &:hover {
+      cursor: pointer;
+      transform: scale(1.2);
+      transition: 300ms;
+    }
+  }
   .book-cover {
     width: 142px;
     height: 209px;
@@ -95,30 +153,31 @@ export default {
     -moz-box-shadow: 1px 1px 1px 0px rgba(153, 153, 153, 0.75);
     box-shadow: 1px 1px 1px 0px rgba(153, 153, 153, 0.75);
     // border-radius: 5px;
-    &:hover {
-      cursor: pointer;
-      &::after {
-        position: absolute;
-        background: black;
-        top: 0;
-        left: 0;
-        content: "";
-        /* z-index: -1; */
-        /* border-radius: 10px; */
-        opacity: 0.2;
-        display: block;
-        animation: gradualAppearance 200ms ease-out;
-        animation-fill-mode: reverse;
-        width: 100%;
-        height: 100%;
-        // border-radius: 1rem;
+    .book-img-div {
+      &:hover {
+        cursor: pointer;
+        &::after {
+          position: absolute;
+          background: black;
+          top: 0;
+          left: 0;
+          content: "";
+          /* z-index: -1; */
+          /* border-radius: 10px; */
+          opacity: 0.2;
+          display: block;
+          animation: gradualAppearance 200ms ease-out;
+          animation-fill-mode: reverse;
+          width: 100%;
+          height: 100%;
+          // border-radius: 1rem;
+        }
       }
     }
-
     .book-img {
       width: 142px;
       height: 209px;
-      position: relative;
+
       /* border-radius: 10px; */
 
       // border-radius: 5px;
@@ -156,19 +215,6 @@ export default {
       // color: black !important;
       padding: 0;
       text-align: left !important;
-      // width: 95%;
-      /* height: 5rem; */
-      // overflow: hidden;
-      // text-overflow: ellipsis;
-      // position: relative;
-      /* line-clamp: 2; */
-      // white-space: nowrap;
-      /* display: -webkit-box;
-  white-space: normal;
-  word-wrap: break-word;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 1; */
-      // color: black;
       transition: 300ms;
       &:hover {
         // overflow: visible;
@@ -180,43 +226,6 @@ export default {
     }
   }
 }
-
-/* .book-title::after {
-  position: absolute;
-  content: "...";
-  right: 0;
-  bottom: 0;
-} */
-
-/* .book-card::after {
-  position: absolute;
-  height: 18px;
-  width: 18px;
-  background-color: #fec936;
-  background: #fec936c4;
-  top: -6px;
-  left: -6px;
-  content: "1";
-  display: flex;
-  justify-content: center;
-  align-content: center;
-  font-size: 14px;
-  font-weight: bold;
-} */
-
-/* .p-ending {
-  position: absolute;
-  height: 10%;
-  width: 30%; */
-/* top: 0; */
-/* right: 0; */
-/* background: linear-gradient(to left, white, transparent); */
-/* } */
-
-// .big {
-//   width: 16.5rem;
-//   /* height: 245px; */
-// }
 
 .medium {
   width: 14.5rem;
