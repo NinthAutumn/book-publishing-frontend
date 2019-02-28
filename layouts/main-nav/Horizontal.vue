@@ -5,27 +5,25 @@
         <i class="el-icon-menu" :class="$store.state.menuState" @click="menuDrawer"></i>
       </div>
       <SearchBar class="searchbar"></SearchBar>
-      <span v-if="loggedIn" style="z-index:3000;" id="prof">
-        <img @click="stateDropChange" class="profile-pic" style="width: 40px;" :src="user.avatar">
-        <div class>
-          <transition name="grow-shrink">
-            <Dropdown v-click-outside="dropOff" v-if="$store.state.dropdownState"></Dropdown>
-          </transition>
-
-          <!-- <div class="profile-info" @click="userProfile">
-              <img class="dropdown-profile-pic" :src="user.avatar">
-              <div class="profile-text">
-                <span class="profile-name">{{user.username}}</span>
-                <span class="profile-profession">Author</span>
-              </div>
-            </div>
-            <div class="dropdown-menu__item">
-              <a @click="logOut">Logout</a>
-          </div>-->
+      <div class="user-nav flex flex--align">
+        <div class="inbox-icon">
+          <fa icon="bell"></fa>
         </div>
-      </span>
-      <div class="not-loggedin" v-else>
-        <img class="not-loggedin__img text--link" src="~/assets/profile.png" @click="loginInState">
+        <div v-if="loggedIn" style="z-index:3000;" id="prof">
+          <img @click="stateDropChange" class="profile-pic" style="width: 40px;" :src="user.avatar">
+          <div class>
+            <transition name="grow-shrink">
+              <Dropdown v-click-outside="dropOff" v-if="$store.state.dropdownState"></Dropdown>
+            </transition>
+          </div>
+        </div>
+        <div class="not-loggedin" v-else>
+          <img
+            class="not-loggedin__img text--link"
+            src="~/assets/profile.png"
+            @click="loginInState"
+          >
+        </div>
       </div>
     </nav>
     <transition name="grow-shrink">
@@ -91,6 +89,14 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.inbox-icon {
+  font-size: 20px;
+  margin-right: 20px;
+  color: rgb(202, 202, 202);
+  &:hover {
+    cursor: pointer;
+  }
+}
 .loginform {
   width: 30%;
   margin: auto;
