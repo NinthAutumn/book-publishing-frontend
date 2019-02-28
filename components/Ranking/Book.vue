@@ -1,6 +1,6 @@
 <template>
   <div class="book-homepage">
-    <div id="book-card" class="big" @click="linkTo">
+    <div id="book-card" class="big" @mouseenter="menuOpen" @mouseleave="menuClose">
       <div class="book-rank__container">
         <div
           class="book-rank__index flex flex--align flex--around"
@@ -8,14 +8,25 @@
         >{{ranking + 1}}</div>
       </div>
       <div class="book-cover">
-        <span class="star-rating"></span>
-        <img
-          :src=" 'https://storage.googleapis.com/theta-images/'+ book.cover"
-          class="book-img"
-          alt="Book cover"
-        >
+        <nuxt-link class="book-img-div" tag="div" :to="'/books/' + book._id">
+          <img
+            :src=" 'https://storage.googleapis.com/theta-images/'+ book.cover"
+            class="book-img"
+            alt="Book cover"
+          >
+        </nuxt-link>
+        <div @click="menu_modal=true" v-if="menu" class="book-menu">
+          <fa icon="ellipsis-v"></fa>
+        </div>
+        <transition name="grow-shrink">
+          <div class="book-menu__modal" v-if="menu_modal" v-click-outside="menuModalClose">
+            <div class="book-menu__modal__options flex--center flex flex--align">ブックマーク</div>
+            <div class="book-menu__modal__options flex--center flex flex--align">再読列記に保存</div>
+            <div class="book-menu__modal__options flex--center flex flex--align">後で読むに保存</div>
+          </div>
+        </transition>
       </div>
-      <div class="text-info">
+      <nuxt-link tag="div" :to="'/books/' + book._id" class="text-info">
         <p class="book-title full" ref="texting">
           <a class="animated-link">{{book.title | truncate(17)}}</a>
         </p>
@@ -31,10 +42,10 @@
             :round-start-rating="false"
             border-color="#FFB727"
             :glow="1"
-            class="star-rating"
+            class="star-rating flex flex--center"
           ></star-rating>
         </no-ssr>
-      </div>
+      </nuxt-link>
     </div>
   </div>
 </template>
@@ -57,7 +68,9 @@ export default {
       numberOne: this.ranking === 0,
       numberTwo: this.ranking === 1,
       numberThree: this.ranking === 2,
-      other: this.ranking > 2
+      other: this.ranking > 2,
+      menu: false,
+      menu_modal: false
     };
   },
   methods: {
@@ -66,6 +79,15 @@ export default {
     },
     linkToT() {
       this.$router.push("/books/" + this.book._id.book[0]._id);
+    },
+    menuOpen() {
+      this.menu = true;
+    },
+    menuClose() {
+      this.menu = false;
+    },
+    menuModalClose() {
+      this.menu_modal = false;
     }
   },
   computated: {
@@ -95,7 +117,7 @@ export default {
   top: -10px;
   left: -10px;
 
-  z-index: 10000;
+  z-index: 1000;
   .book-rank__index {
     font-size: 16px;
     font-weight: bold;
@@ -131,16 +153,39 @@ export default {
   margin-top: 10px;
   /* height: 245px; */
   position: relative;
-  .book-cover {
-    width: 142px;
-    height: 209px;
-    // width: 16.5rem;
-    // height: 24.5rem;
-    position: relative;
-    -webkit-box-shadow: 1px 1px 1px 0px rgba(153, 153, 153, 0.75);
-    -moz-box-shadow: 1px 1px 1px 0px rgba(153, 153, 153, 0.75);
-    box-shadow: 1px 1px 1px 0px rgba(153, 153, 153, 0.75);
-    // border-radius: 5px;
+  .book-menu {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    font-size: 20px;
+    z-index: 10000;
+    transition: 300ms;
+    color: rgb(255, 255, 255);
+    text-shadow: 1px 1px 10px 5px rgb(211, 211, 211);
+    &__modal {
+      position: absolute;
+      right: 15px;
+      top: 5px;
+      background-color: white;
+      z-index: 2000;
+      width: 120px;
+      box-shadow: 1px 1px 5px 0px rgb(219, 219, 219);
+      &__options {
+        &:hover {
+          background-color: rgb(247, 247, 247);
+          cursor: pointer;
+        }
+        font-size: 14px;
+        height: 30px;
+      }
+    }
+    &:hover {
+      cursor: pointer;
+      transform: scale(1.2);
+      transition: 300ms;
+    }
+  }
+  .book-img-div {
     &:hover {
       cursor: pointer;
       &::after {
@@ -160,16 +205,22 @@ export default {
         // border-radius: 1rem;
       }
     }
+  }
+  .book-cover {
+    width: 142px;
+    height: 209px;
+    // width: 16.5rem;
+    // height: 24.5rem;
+    position: relative;
+    -webkit-box-shadow: 1px 1px 1px 0px rgba(153, 153, 153, 0.75);
+    -moz-box-shadow: 1px 1px 1px 0px rgba(153, 153, 153, 0.75);
+    box-shadow: 1px 1px 1px 0px rgba(153, 153, 153, 0.75);
+    // border-radius: 5px;
 
     .book-img {
       width: 142px;
       height: 209px;
       position: relative;
-      /* border-radius: 10px; */
-
-      // border-radius: 5px;
-      /* border-top-left-radius: 10px;
-  border-top-right-radius: 10px; */
     }
   }
   .text-info {
@@ -185,84 +236,22 @@ export default {
       // position: absolute;
       // right: 0;
       margin: 0 !important;
-      // margin-bottom: 5px !important;
-      // margin-left: 2px !important;
-      // height: 16px;
     }
-    /* width: 100%; */
-    /* padding-left: 5px; */
-
-    /* border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px; */
     .book-title {
       margin: 0;
       font-weight: 400;
-      /* text-align: center; */
-      /* margin-top: 10px; */
-      // color: black !important;
       padding: 0;
       text-align: center;
       width: 95%;
-      /* height: 5rem; */
-      // overflow: hidden;
-      // text-overflow: ellipsis;
-      // position: relative;
-      /* line-clamp: 2; */
-      // white-space: nowrap;
-      /* display: -webkit-box;
-  white-space: normal;
-  word-wrap: break-word;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 1; */
-      // color: black;
       transition: 300ms;
       &:hover {
         // overflow: visible;
         cursor: pointer;
-        // white-space: normal;
-        /* transition: overflow 500ms; */
         transition: 200ms;
       }
     }
   }
 }
-
-/* .book-title::after {
-  position: absolute;
-  content: "...";
-  right: 0;
-  bottom: 0;
-} */
-
-/* .book-card::after {
-  position: absolute;
-  height: 18px;
-  width: 18px;
-  background-color: #fec936;
-  background: #fec936c4;
-  top: -6px;
-  left: -6px;
-  content: "1";
-  display: flex;
-  justify-content: center;
-  align-content: center;
-  font-size: 14px;
-  font-weight: bold;
-} */
-
-/* .p-ending {
-  position: absolute;
-  height: 10%;
-  width: 30%; */
-/* top: 0; */
-/* right: 0; */
-/* background: linear-gradient(to left, white, transparent); */
-/* } */
-
-// .big {
-//   width: 16.5rem;
-//   /* height: 245px; */
-// }
 
 .medium {
   width: 14.5rem;
