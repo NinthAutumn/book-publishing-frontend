@@ -66,8 +66,8 @@ export default {
 .profile-dropdown {
   position: absolute;
   top: 60px;
-  right: 5px;
-  width: 300px;
+  right: 10px;
+  width: 250px;
   box-sizing: border-box;
   background-color: white;
   box-shadow: 1px 1px 5px 0px rgb(228, 228, 228);
