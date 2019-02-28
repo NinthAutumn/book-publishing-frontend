@@ -74,6 +74,12 @@ export default {
     },
     selectedOrder(order) {
       this.selected = order;
+      if (order === "入れた順") {
+        this.$store.commit("library/SORT_BY_DATE");
+      } else if (order === "最近読んだ順") {
+      } else {
+        this.$store.commit("library/SORT_BY_NAME");
+      }
       this.itemSelected = true;
       this.sortSelect = false;
     }
