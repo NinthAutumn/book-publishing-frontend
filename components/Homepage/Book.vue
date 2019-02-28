@@ -122,8 +122,8 @@ export default {
     text-shadow: 1px 1px 10px 5px rgb(211, 211, 211);
     &__modal {
       position: absolute;
-      right: 15px;
-      top: 5px;
+      right: -118px;
+      top: 0px;
       background-color: white;
       z-index: 2000;
       width: 120px;

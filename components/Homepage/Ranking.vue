@@ -19,7 +19,31 @@
             </div>
             <div class="tab-ranking__first__info">
               <div class="tab-ranking__first__title" v-text="books[0]._id.book[0].title"></div>
-              <div class="tab-ranking__first__synopsis" v-text="books[0]._id.book[0].synopsis"></div>
+              <p>ジャンル</p>
+              <ul class="tab-ranking__first__tags flex">
+                <li
+                  class="pill pill-primary-open"
+                  v-for="(tag, index) in books[0]._id.book[0].genres"
+                  :key="index"
+                >
+                  <div class="pill-text">
+                    <p>{{tag}}</p>
+                  </div>
+                </li>
+              </ul>
+              <p>タグ</p>
+              <ul class="tab-ranking__first__tags flex">
+                <li
+                  class="pill pill-secondary-open"
+                  v-for="(tag, index) in books[0]._id.book[0].tags"
+                  :key="index"
+                >
+                  <div class="pill-text">
+                    <p>{{tag}}</p>
+                  </div>
+                </li>
+              </ul>
+              <!-- <div class="tab-ranking__first__synopsis" v-text=".synopsis"></div> -->
             </div>
           </div>
           <div class="flex-divider tab-ranking__divider">
@@ -182,6 +206,7 @@ export default {
     }
     &__title {
       font-size: 18px;
+      margin-bottom: 5px;
     }
     &__synopsis {
       font-size: 16px;

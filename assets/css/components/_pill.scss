@@ -46,7 +46,18 @@
   &-primary {
     background-color: $primary;
     color: white;
-    line-height: 0;
+
+    &-open {
+      background-color: white;
+      color: $primary;
+      border: 1px solid $primary;
+
+      &:hover {
+        background-color: $primary;
+        color: white;
+        cursor: pointer;
+      }
+    }
   }
 
 }
