@@ -1,7 +1,8 @@
 export const state = () => ({
   books: [],
   settings: {},
-  theme: 'default'
+  theme: 'default',
+  bookmarkInbox: []
 })
 
 export const getters = {
@@ -23,6 +24,9 @@ export const mutations = {
   },
   SET_THEME: (state, theme) => {
     state.theme = theme
+  },
+  GET_BOOKMARK_UPDATE: (state, update) => {
+    state.bookmarkInbox = update
   }
 }
 export const actions = {
@@ -48,6 +52,12 @@ export const actions = {
     await this.$axios.patch(process.env.baseUrl + '/users/settings', setting).then((res) => {
       commit('USER_SETTINGS', res.data)
     })
+  },
+  async getBookUpdate({
+    commit
+  }) {
+    const update = await this.$axios.get(process.env.baseUrl + '/users/bookupdate')
+    commit('GET_BOOKMARK_UPDATE', update)
 
   }
 }

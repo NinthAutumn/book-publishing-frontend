@@ -61,7 +61,7 @@
       </li>
     </ul>
     <hr>
-    <ul class="update-list">
+    <ul class="update-list" v-if="loggedIn">
       <p>ブックマーク</p>
       <li v-for="update in updates" :key="update.index" class="update">
         <div class="update-title">
@@ -72,8 +72,8 @@
           <span class="update-time">{{update.time}}</span>
         </div>
       </li>
+      <hr>
     </ul>
-    <hr>
   </nav>
 </template>
 <script>
@@ -154,6 +154,11 @@ export default {
     // fetchUserId: function() {
     //   ;
     // }
+  },
+  computed: {
+    loggedIn() {
+      return this.$store.state.auth.loggedIn;
+    }
   },
   methods: {
     dropOff() {
