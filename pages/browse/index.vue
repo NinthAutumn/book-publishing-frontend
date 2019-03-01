@@ -3,7 +3,26 @@
     <div class="browse-page__header flex flex--align">
       <blob class="header-blob"></blob>
       <header>作品を探す</header>
-      <div class="browse-page__sorting-list"></div>
+    </div>
+    <div class="browse-page__sorting-list flex">
+      <div class="browse-page__sort-type">
+        <div
+          v-for="(item, index) in sort_type"
+          :key="index"
+          class="browse-page__sort-type__option"
+          v-text="item"
+        ></div>
+      </div>
+      <div class="browse-page__sort-type browse-page__sort-type--direction">
+        <div
+          v-for="(item, index) in sort_directions"
+          :key="index"
+          class="browse-page__sort-type__option"
+          v-text="item"
+        ></div>
+      </div>
+      <div class="browse-page__filter-genre"></div>
+      <div class="browse-page__filter-bookstate"></div>
     </div>
     <div class="browse-page__content"></div>
   </div>
@@ -15,6 +34,40 @@ export default {
   auth: false,
   components: {
     Blob
+  },
+  data() {
+    return {
+      sort_type: ["人気", "視聴回数", "評価", "ブックマーク数"],
+      sort_directions: ["上り", "下り"],
+      genre_list: [
+        "ファンタジー",
+        "恋愛",
+        "文学",
+        "異世界",
+        "空想科学",
+        "SF",
+        "武術",
+        "ミステリー",
+        "サスペンス",
+        "冒険",
+        "アクション",
+        "ノンフィクション",
+        "ホラー",
+        "オカルト",
+        "時代",
+        "歴史",
+        "コメディ",
+        "政治",
+        "スポーツ",
+        "武俠",
+        "経済",
+        "推理",
+        "青春",
+        "学園",
+        "ボーイズラブ",
+        "少女愛"
+      ]
+    };
   }
 };
 </script>
@@ -31,8 +84,10 @@ export default {
   .header-blob {
     position: absolute;
     z-index: -1;
+    top: -50px;
     left: -5px;
     opacity: 0.5;
+    transform: rotate(-20deg);
   }
 }
 </style>

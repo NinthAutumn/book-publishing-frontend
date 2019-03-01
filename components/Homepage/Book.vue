@@ -214,6 +214,12 @@ export default {
       /* margin-top: 10px; */
       // color: black !important;
       padding: 0;
+      a {
+        color: black;
+        &:hover {
+          color: $primary;
+        }
+      }
       text-align: left !important;
       transition: 300ms;
       &:hover {
