@@ -28,7 +28,13 @@
         </div>
       </div>
       <div class="browse-page__filter-genre">
-        <Select v-model="selected_genre" :multiple="true" :data="genre_list" :name="'ジャンル'"></Select>
+        <Select
+          v-model="selected_genre"
+          :transition="'grow-shrink'"
+          :multiple="true"
+          :data="genre_list"
+          :name="'ジャンル'"
+        ></Select>
         <div class="items" v-for="(item, index) in selected_genre" :key="index" v-text="item"></div>
       </div>
       <div class="browse-page__filter-bookstate"></div>
