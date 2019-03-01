@@ -76,7 +76,7 @@ export const actions = {
 
   },
   async allBooks({
-    commit
+    commit,
   }) {
     await this.$axios.get(process.env.baseUrl + '/homepage/highestrated').then((res) => {
       commit('HIGHEST_RATED', res.data)

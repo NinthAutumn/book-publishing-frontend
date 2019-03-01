@@ -8,7 +8,7 @@
           </div>
           <div class="profile-dropdown__user-text">
             <div class="profile-dropdown__username" v-text="user.username"></div>
-            <div class="profile-dropdown__wallet"></div>
+            <div class="profile-dropdown__wallet">{{user.email}}</div>
           </div>
         </div>
         <transition-group tag="ul" name="list-complete" appear>

@@ -14,6 +14,7 @@ export const getters = {
 }
 
 
+
 export const mutations = {
   GET_REVIEWS(state, reviews) {
     state.reviews = reviews
@@ -142,7 +143,7 @@ export const actions = {
     commit
   }) {
     await this.$axios.get(process.env.baseUrl + '/reviews/mostLikedToday').then((res) => {
-      commit('GET_GOOD_REVIEWS', res.data)
+      // commit('GET_GOOD_REVIEWS', res.data)
     })
   },
   async reviewedStatus({

@@ -12,6 +12,7 @@ export const getters = {
 
 }
 
+
 export const mutations = {
   GET_BOOKMARK(state, bookmarked) {
     state.bookmarks = bookmarked
