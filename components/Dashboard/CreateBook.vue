@@ -118,21 +118,9 @@ export default {
     handleAvatarSuccess(res, file) {
       this.form.avatar = file.raw;
       this.imageUrl = URL.createObjectURL(file.raw);
-      console.log(file.raw);
     },
-    beforeAvatarUpload(file) {
-      // const isJPG = file.type === "image/jpeg";
-      // const isLt2M = file.size / 1024 / 1024 < 2;
-      // if (!isJPG) {
-      //   this.$message.error("Avatar picture must be JPG format!");
-      // }
-      // if (!isLt2M) {
-      //   this.$message.error("Avatar picture size can not exceed 2MB!");
-      // }
-      // return isJPG && isLt2M;
-    },
+    beforeAvatarUpload(file) {},
     async postBook() {
-      // delete this.#a
       await this.$store
         .dispatch("upload/image", this.form.avatar)
         .then(async () => {
@@ -159,13 +147,6 @@ export default {
               });
             });
         });
-      // const data = new FormData();
-      // data.append("avatar", this.form.avatar);
-      // // await thi
-      // data.append("synopsis", this.form.synopsis);
-      // data.append("title", this.form.title);
-      // data.append("tags", this.form.tags);
-      // data.append("genre", this.form.genre);
     }
   }
 };

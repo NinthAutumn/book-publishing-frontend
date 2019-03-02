@@ -55,12 +55,8 @@ export default {
           prevEl: ".swiper-button-prev"
         },
         on: {
-          slideChange() {
-            // console.log("onSlideChangeEnd", this);
-          },
-          tap() {
-            // console.log("onTap", this);
-          }
+          slideChange() {},
+          tap() {}
         },
         breakpoints: {}
       }
@@ -81,9 +77,6 @@ export default {
 }
 .main-books {
   width: 100%;
-  // display: flex;
-  // justify-content: space-around;
-  // align-content: center;
 }
 .my-swiper {
   height: 300px;

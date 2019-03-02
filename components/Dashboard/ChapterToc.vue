@@ -3,17 +3,6 @@
   <div class="table-list-component">
     <div class="divider" v-if="!published">
       <table class="dashboard-toc">
-        <!-- <thead class="dashboard-toc__header">
-      <tr class="dashboard-toc__header__row">
-        <th
-          class="dashboard-toc__header__row__item dashboard-toc__header__row__item--index"
-          v-if="published"
-        >目次</th>
-        <th class="dashboard-toc__header__row__item">タイトル</th>
-        <th class="dashboard-toc__header__row__item">制作日</th>
-        <th class="dashboard-toc__header__row__item"></th>
-      </tr>
-        </thead>-->
         <tbody class="dashboard-toc__body">
           <chapter-toc-item :chapter="chapter" v-for="(chapter, index) in toc" :key="index"></chapter-toc-item>
         </tbody>

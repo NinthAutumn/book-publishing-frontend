@@ -2,8 +2,6 @@
 <template>
   <div class="chapter-form">
     <form action class="flex flex-column chapter-new" @submit.prevent="createChapter">
-      <!-- <h3></h3> -->
-      <!-- <fa icon="plus"></fa> -->
       <div class="chapter-form__navigation flex flex--between" style="margin-top:10px;">
         <div
           @click="back"
@@ -94,7 +92,6 @@
                 :lang="lang"
                 v-model="form.date"
               ></date-picker>
-              <!-- <input type="time" name id> -->
             </div>
           </transition>
         </div>
@@ -118,9 +115,6 @@
               :placeholder="contentHolder"
               required
             ></TextEditor>
-
-            <!-- <froala class="chapter-content-new" :config="config" v-model="form.content">Init text</froala> -->
-            <!-- <div v-text="form.wordCount"></div> -->
           </div>
         </div>
       </transition>
@@ -296,22 +290,14 @@ export default {
           await this.$store.dispatch("upload/multiImage", image);
         });
       }
-
-      // const counter = document.querySelector(".fr-counter");
-      // console.log(counter);
-
       this.form.wordCount = this.form.content
         .replace(/(\s*)?&nbsp;(\s*)?/, "")
-
         .replace(/<[^>]+>/gm, "")
         .replace(/\s/g, "");
-
-      // this.form.wordCount = this.form.wordCount.replace(/^(&nbsp;|<br>)+/, "");
       if (!this.form.content || !this.form.title) {
         return (this.progress = 2);
       }
 
-      console.log(this.form.wordCount.length);
       const chapter = {
         title: this.form.title,
         content: this.form.content,
@@ -326,7 +312,6 @@ export default {
           drawings: this.$store.state.upload.urls
         }
       };
-      console.log(chapter);
       // await this.$store.dispatch();
     },
     handleExceed(files, fileList) {

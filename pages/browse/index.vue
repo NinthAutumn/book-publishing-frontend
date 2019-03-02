@@ -4,6 +4,21 @@
       <blob class="header-blob"></blob>
       <header>作品を探す</header>
     </div>
+    <div class="browse-page__filter" v-if="selected_genre">
+      <div class="browse-page__filter-title">フィルター</div>
+      <transition-group
+        tag="ul"
+        name="list-complete"
+        class="browse-page__filter-list flex flex--align"
+      >
+        <li
+          class="browse-page__filter-list browse-page__filter-list__item flex flex--align"
+          v-for="(genre, index) in selected_genre"
+          :key="index"
+          v-text="genre"
+        ></li>
+      </transition-group>
+    </div>
     <div class="browse-page__sorting-list flex">
       <div class="browse-page__sort-type">
         <Select
@@ -31,7 +46,6 @@
           :data="genre_list"
           :name="'ジャンル'"
         ></Select>
-        <div class="items" v-for="(item, index) in selected_genre" :key="index" v-text="item"></div>
       </div>
       <div class="browse-page__filter-bookstate"></div>
     </div>
@@ -137,6 +151,30 @@ export default {
       .selected {
       }
     }
+  }
+  &__filter-title {
+    font-size: 16px;
+    // height: 50px;
+    margin-right: 10px;
+  }
+  &__filter-list {
+    background-color: rgb(252, 252, 252);
+    padding: 5px;
+    flex-wrap: wrap;
+    &__item {
+      margin-bottom: 5px;
+      height: 35px;
+      font-size: 14px;
+      margin-right: 5px;
+      // background-color: $secondary-light;
+      box-shadow: 1px 1px 5px rgb(240, 240, 240);
+      color: white;
+      padding: 5px;
+      box-sizing: border-box;
+      background-color: #f4648a;
+    }
+  }
+  &__filter {
   }
 }
 </style>
