@@ -1,10 +1,15 @@
 <template>
-  <div class="select-component">
+  <div class="select-component" :style="{width: width+'px'}">
     <div
       class="select-component__name flex flex--align flex--center"
       @click="openModal"
-      v-if="!multiple"
+      v-if="!multiple&&!selectD"
     >{{name}}</div>
+    <div
+      class="select-component__name flex flex--align flex--center"
+      @click="openModal"
+      v-if="!multiple&&selectD"
+    >{{selectD}}</div>
     <div
       class="select-component__name select-component__name--multiple flex flex--align flex--center"
       @click="openModal"
@@ -16,10 +21,15 @@
     <transition class="select-component__modal" :name="transition">
       <div class="select-component__list" v-if="!multiple && modal" v-click-outside="closeModal">
         <div
-          class="select-component__option"
-          v-for="(item, index) in data"
+          class="select-component__option select-component__option--name flex flex--align flex--around"
+        >{{name}}</div>
+        <div
+          @click="select(index)"
+          class="select-component__option select-component__option flex flex--align flex--around"
+          v-for="(item, index) in multiData"
           :key="index"
-          v-text="item"
+          v-text="item.name"
+          :class="{selected:item.selected}"
         ></div>
       </div>
 
@@ -58,6 +68,7 @@ export default {
   data() {
     return {
       multiData: [],
+      selectD: "",
       selectedData: [],
       modal: false,
       gridSetting: {
@@ -87,6 +98,21 @@ export default {
     },
     closeModal: function() {
       this.modal = false;
+    },
+    select: function(index) {
+      this.multiData.forEach((e, n) => {
+        if (n === index) {
+          if (e.selected) {
+            this.selectD = "";
+          } else {
+            this.selectD = e.name;
+          }
+          e.selected = !e.selected;
+          this.$emit("input", e.name);
+        } else {
+          e.selected = false;
+        }
+      });
     }
   },
   created() {
@@ -100,16 +126,18 @@ export default {
 <style lang="scss">
 .select-component {
   $self: &;
-  // width: 100px;
+
+  // width: 100%;
   width: 100px;
   height: 35px;
   position: relative;
-
+  margin: 0 5px;
   &__name {
     color: grey;
     font-size: 14px;
     width: 100px;
     height: 30px;
+
     &--multiple {
       width: 120px;
     }
@@ -130,6 +158,7 @@ export default {
     width: 100%;
     position: absolute;
     top: 0;
+    box-sizing: border-box;
     // left: 105px;
     &--multiple {
       // height: 500px;
@@ -166,13 +195,29 @@ export default {
       }
     }
   }
+  .selected {
+    color: #f4648a;
+  }
   &__option {
     font-size: 14px;
+
+    &--name {
+      color: #f4648a;
+      &:hover {
+        cursor: default !important;
+        user-select: none;
+      }
+      &:active {
+        background-color: white;
+      }
+    }
     &:active {
       background-color: rgb(241, 241, 241);
     }
+    height: 35px;
     &:hover {
       cursor: pointer;
+      user-select: none;
       color: #f4648a;
     }
   }

@@ -6,26 +6,22 @@
     </div>
     <div class="browse-page__sorting-list flex">
       <div class="browse-page__sort-type">
-        <div class="browse-page__sort-type__name">詳細条件</div>
-        <div class="browse-page__sort-type__modal" v-if="type">
-          <div
-            v-text="item"
-            class="browse-page__sort-type__option"
-            v-for="(item, index) in sort_type"
-            :key="index"
-          ></div>
-        </div>
+        <Select
+          :width="100"
+          v-model="type"
+          :name="'詳細条件'"
+          :data="sort_type"
+          :transition="'grow-shrink'"
+        ></Select>
       </div>
       <div class="browse-page__sort-type browse-page__sort-type--direction">
-        <div class="browse-page__sort-type__name">方向</div>
-        <div class="browse-page__sort-type__modal" v-if="direction">
-          <div
-            class="browse-page__sort-type__option"
-            v-for="(item, index) in sort_directions"
-            :key="index"
-            v-text="item"
-          ></div>
-        </div>
+        <Select
+          :width="100"
+          v-model="direction"
+          :name="'方向'"
+          :data="sort_directions"
+          :transition="'grow-shrink'"
+        ></Select>
       </div>
       <div class="browse-page__filter-genre">
         <Select
@@ -58,7 +54,7 @@ export default {
       direction: false,
       genre: false,
       selected_genre: [],
-      sort_type: ["人気", "視聴回数", "評価", "ブックマーク数"],
+      sort_type: ["人気", "視聴回数", "評価", "栞数"],
       sort_directions: ["上り", "下り"],
       genre_list: [
         "ファンタジー",
@@ -117,8 +113,8 @@ export default {
     transform: rotate(-20deg);
   }
   &__sort-type {
-    height: 30px;
-    width: 100px;
+    // height: 30px;
+    // width: 100px;
     &__name {
       font-size: 16px;
     }
@@ -129,8 +125,8 @@ export default {
     }
   }
   &__filter-genre {
-    height: 30px;
-    width: 100px;
+    // height: 30px;
+    // width: 100px;
     &__name {
       font-size: 16px;
     }
