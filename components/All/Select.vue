@@ -106,6 +106,7 @@ export default {
             this.selectD = "";
           } else {
             this.selectD = e.name;
+            this.modal = false;
           }
           e.selected = !e.selected;
           this.$emit("input", e.name);

@@ -11,27 +11,25 @@
             <div class="profile-dropdown__wallet">{{user.email}}</div>
           </div>
         </div>
-        <transition-group tag="ul" name="list-complete" appear>
-          <li
-            class="profile-dropdown__list__item flex flex-column flex--align flex--center"
-            v-for="(item, index) in navList"
-            :key="index"
-          >
-            <div
-              v-if="item.title === 'ログアウト'"
-              @click="logOut"
-              class="profile-dropdown__nav-link flex flex--align"
-              v-text="item.title"
-            ></div>
-            <nuxt-link
-              v-else
-              :to="item.link"
-              tag="div"
-              class="profile-dropdown__nav-link flex flex--align"
-              v-text="item.title"
-            ></nuxt-link>
-          </li>
-        </transition-group>
+        <li
+          class="profile-dropdown__list__item flex flex-column flex--align flex--center"
+          v-for="(item, index) in navList"
+          :key="index"
+        >
+          <div
+            v-if="item.title === 'ログアウト'"
+            @click="logOut"
+            class="profile-dropdown__nav-link flex flex--align"
+            v-text="item.title"
+          ></div>
+          <nuxt-link
+            v-else
+            :to="item.link"
+            tag="div"
+            class="profile-dropdown__nav-link flex flex--align"
+            v-text="item.title"
+          ></nuxt-link>
+        </li>
       </div>
     </transition>
   </div>
