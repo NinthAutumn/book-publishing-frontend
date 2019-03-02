@@ -47,18 +47,27 @@
       </div>
       <div class="browse-page__filter-bookstate"></div>
     </div>
-    <div class="browse-page__content"></div>
+    <div class="browse-page__content">
+      <BookList :books="books"></BookList>
+    </div>
   </div>
 </template>
 
 <script>
 import Blob from "@/assets/svg/blob2.svg";
 import Select from "@/components/All/Select";
+import BookList from "@/components/Browse/BookList";
 export default {
   auth: false,
   components: {
     Blob,
-    Select
+    Select,
+    BookList
+  },
+  computed: {
+    books() {
+      return this.$store.state.book.browse;
+    }
   },
   async fetch({ store }) {
     await store.dispatch("book/browseBooks", {

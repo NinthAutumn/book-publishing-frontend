@@ -133,6 +133,7 @@ export default {
   height: 35px;
   position: relative;
   margin: 0 5px;
+  z-index: 1000;
   &__name {
     color: grey;
     font-size: 14px;
