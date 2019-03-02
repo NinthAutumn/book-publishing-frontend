@@ -60,6 +60,13 @@ export default {
     Blob,
     Select
   },
+  async fetch({ store }) {
+    await store.dispatch("book/browseBooks", {
+      type: 2,
+      direction: "asc",
+      genres: []
+    });
+  },
   data() {
     return {
       type: "",

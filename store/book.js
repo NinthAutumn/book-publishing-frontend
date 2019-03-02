@@ -60,10 +60,17 @@ export const actions = {
     await this.$axios.post(process.env.baseUrl + '/books/add', book)
     // console.log("why?????");
   },
-  async uploadCover({
+  async browseBooks({
     commit
-  }, formData) {
-
+  }, {
+    type,
+    direction,
+    genres
+  }) {
+    const books = await this.$axios.patch(process.env.baseUrl + '/books/browse?direction=' + direction + '&type=' + type, {
+      genres
+    })
+    console.log(books.data);
   },
   async editBook({
     commit

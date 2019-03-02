@@ -3,10 +3,16 @@
     display: inline-block;
     margin-right: 10px;
     transition: 300ms;
+    position: absolute;
   }
 
   &-enter-active {
     transition: 300ms;
+  }
+
+  &-leave-active {
+    transition: 300ms;
+    position: absolute;
   }
 
   &-enter {
@@ -18,6 +24,7 @@
     opacity: 0;
     // transform: translateY(10px);
   }
+
 }
 
 
