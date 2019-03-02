@@ -4,13 +4,9 @@
       <blob class="header-blob"></blob>
       <header>作品を探す</header>
     </div>
-    <div class="browse-page__filter" v-if="selected_genre">
+    <div class="browse-page__filter" v-show="selected_genre">
       <div class="browse-page__filter-title">フィルター</div>
-      <transition-group
-        tag="ul"
-        name="list-complete"
-        class="browse-page__filter-list flex flex--align"
-      >
+      <transition-group tag="ul" name="list" class="browse-page__filter-list flex flex--align">
         <li
           class="browse-page__filter-list browse-page__filter-list__item flex flex--align"
           v-for="(genre, index) in selected_genre"
