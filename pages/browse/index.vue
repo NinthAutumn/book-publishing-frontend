@@ -4,17 +4,19 @@
       <blob class="header-blob"></blob>
       <header>作品を探す</header>
     </div>
-    <div class="browse-page__filter" v-show="selected_genre">
-      <div class="browse-page__filter-title">フィルター</div>
-      <transition-group tag="ul" name="list" class="browse-page__filter-list flex flex--align">
-        <li
-          class="browse-page__filter-list browse-page__filter-list__item flex flex--align"
-          v-for="(genre, index) in selected_genre"
-          :key="index"
-          v-text="genre"
-        ></li>
-      </transition-group>
-    </div>
+    <transition name="grow-shrink">
+      <div class="browse-page__filter" v-if="selected_genre.length > 0">
+        <div class="browse-page__filter-title">フィルター</div>
+        <transition-group tag="ul" name="list" class="browse-page__filter-list flex flex--align">
+          <li
+            class="browse-page__filter-list browse-page__filter-list__item flex flex--align"
+            v-for="(genre, index) in selected_genre"
+            :key="index"
+            v-text="genre"
+          ></li>
+        </transition-group>
+      </div>
+    </transition>
     <div class="browse-page__sorting-list flex">
       <div class="browse-page__sort-type">
         <Select
