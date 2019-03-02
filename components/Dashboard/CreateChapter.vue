@@ -4,41 +4,37 @@
     <form action class="flex flex-column chapter-new" @submit.prevent="createChapter">
       <!-- <h3></h3> -->
       <!-- <fa icon="plus"></fa> -->
-      <el-steps :active="progress" simple>
-        <el-step @click="progress = 1" title="ステップ１" icon="el-icon-upload"></el-step>
-        <el-step @click="progress = 2" title="ステップ２" icon=" el-icon-edit"></el-step>
-        <el-step @click="progress = 3" title="ステップ３" icon="el-icon-picture"></el-step>
-      </el-steps>
       <div class="chapter-form__navigation flex flex--between" style="margin-top:10px;">
         <div
+          @click="back"
           class="divider chapter-form__navigation__button chapter-form__navigation__button--back"
+          v-if="progress > 1"
         >
-          <div @click="back" class="flex flex--align" v-if="progress > 1">
-            <fa
-              class="chapter-form__navigation__item chapter-form__navigation__item--icon"
-              style
-              icon="chevron-left"
-            ></fa>
-            <p
-              class="chapter-form__navigation__item chapter-form__navigation__item--text"
-              style="margin-left:2px;"
-            >戻ろ</p>
-          </div>
+          <fa
+            class="chapter-form__navigation__item chapter-form__navigation__item--icon"
+            style
+            icon="chevron-left"
+          ></fa>
+          <p
+            class="chapter-form__navigation__item chapter-form__navigation__item--text"
+            style="margin-left:2px;"
+          >戻ろ</p>
         </div>
+        <div class="back" style="width:50px;" v-if="progress === 1"></div>
         <div
+          @click="front"
+          v-if="progress < 3"
           class="divider chapter-form__navigation__button chapter-form__navigation__button--front"
         >
-          <div @click="front" class="flex flex--align" v-if="progress < 3">
-            <p
-              class="chapter-form__navigation__item chapter-form__navigation__item--text"
-              style="margin-right:2px;"
-            >進む</p>
-            <fa
-              class="chapter-form__navigation__item chapter-form__navigation__item--icon"
-              style
-              icon="chevron-right"
-            ></fa>
-          </div>
+          <p
+            class="chapter-form__navigation__item chapter-form__navigation__item--text"
+            style="margin-right:2px;"
+          >進む</p>
+          <fa
+            class="chapter-form__navigation__item chapter-form__navigation__item--icon"
+            style
+            icon="chevron-right"
+          ></fa>
         </div>
       </div>
       <transition name="slide-fade">
@@ -148,34 +144,34 @@
       </transition>
       <div class="chapter-form__navigation flex flex--between">
         <div
+          v-if="progress > 1"
           class="divider chapter-form__navigation__button chapter-form__navigation__button--back"
         >
-          <div @click="back" class="flex flex--align" v-if="progress > 1">
-            <fa
-              class="chapter-form__navigation__item chapter-form__navigation__item--icon"
-              style
-              icon="chevron-left"
-            ></fa>
-            <p
-              class="chapter-form__navigation__item chapter-form__navigation__item--text"
-              style="margin-left:2px;"
-            >戻る</p>
-          </div>
+          <fa
+            class="chapter-form__navigation__item chapter-form__navigation__item--icon"
+            style
+            icon="chevron-left"
+          ></fa>
+          <p
+            class="chapter-form__navigation__item chapter-form__navigation__item--text"
+            style="margin-left:2px;"
+          >戻る</p>
         </div>
+        <div class="back" style="width:50px;" v-if="progress === 1"></div>
         <div
           class="divider chapter-form__navigation__button chapter-form__navigation__button--front"
+          v-if="progress < 3"
+          @click="front"
         >
-          <div @click="front" class="flex flex--align" v-if="progress < 3">
-            <p
-              class="chapter-form__navigation__item chapter-form__navigation__item--text"
-              style="margin-right:2px;"
-            >進む</p>
-            <fa
-              class="chapter-form__navigation__item chapter-form__navigation__item--icon"
-              style
-              icon="chevron-right"
-            ></fa>
-          </div>
+          <p
+            class="chapter-form__navigation__item chapter-form__navigation__item--text"
+            style="margin-right:2px;"
+          >進む</p>
+          <fa
+            class="chapter-form__navigation__item chapter-form__navigation__item--icon"
+            style
+            icon="chevron-right"
+          ></fa>
         </div>
       </div>
 
@@ -451,18 +447,32 @@ export default {
   }
   &__navigation {
     &__button {
-      height: 30px;
-      // width: 70px;
-
+      // margin: 0 10px;
+      height: 35px;
+      width: 70px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 1px 1px 5px rgb(240, 240, 240);
       transition: 300ms;
+      border: 1px solid $primary;
       &:hover {
-        transform: scale(1.2);
+        // transform: scale(1.2);
+        background-color: $primary;
+        color: white;
         transition: 300ms;
       }
       &--back {
         display: flex;
         align-items: center;
         color: $secondary;
+        border: 1px solid $secondary;
+        &:hover {
+          // transform: scale(1.2);
+          background-color: $secondary;
+          color: white;
+          transition: 300ms;
+        }
         // font-si
       }
       &--front {
@@ -480,12 +490,6 @@ export default {
       line-height: 0;
       font-size: 16px;
       // &--icon {
-      //   &:hover {
-      //     transform: translateX(100px);
-      //   }
-      // }
-      // display: flex;
-      // align-items: center;
     }
   }
   &__extra {
@@ -499,9 +503,6 @@ export default {
   }
   label {
     font-size: 16px;
-    // transition: 300ms;
-    // top: -25px;
-    // position: absolute;
   }
   .label-animation {
     font-size: 16px;

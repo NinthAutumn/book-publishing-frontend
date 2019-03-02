@@ -50,11 +50,11 @@ export default {
   },
   data() {
     return {
-      type: false,
-      direction: false,
-      genre: false,
+      type: "",
+      direction: "",
+      genre: "",
       selected_genre: [],
-      sort_type: ["人気", "視聴回数", "評価", "栞数"],
+      sort_type: ["視聴回数", "評価", "栞数", "字数"],
       sort_directions: ["上り", "下り"],
       genre_list: [
         "ファンタジー",

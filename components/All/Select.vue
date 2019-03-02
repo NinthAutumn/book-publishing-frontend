@@ -127,7 +127,7 @@ export default {
 <style lang="scss">
 .select-component {
   $self: &;
-
+  user-select: none;
   // width: 100%;
   width: 100px;
   height: 35px;
