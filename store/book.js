@@ -17,7 +17,8 @@ export const state = () => ({
   view: "",
   bookSynopsis: true,
   book: {},
-  loading: false
+  loading: false,
+  browse: []
 })
 
 export const getters = {
@@ -65,12 +66,13 @@ export const actions = {
   }, {
     type,
     direction,
-    genres
+    genres,
+    page
   }) {
-    const books = await this.$axios.patch(process.env.baseUrl + '/books/browse?direction=' + direction + '&type=' + type, {
+    const books = await this.$axios.patch(process.env.baseUrl + '/books/browse?direction=' + direction + '&type=' + type + '&page=' + page, {
       genres
     })
-    console.log(books.data);
+    commit('BROWSE_BOOKS', books.data)
   },
   async editBook({
     commit
@@ -118,6 +120,9 @@ export const mutations = {
   },
   EDIT() {
 
+  },
+  BROWSE_BOOKS(state, books) {
+    state.browse = books
   },
   UPDATE() {
 

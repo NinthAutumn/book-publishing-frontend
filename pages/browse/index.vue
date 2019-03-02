@@ -63,7 +63,7 @@ export default {
   async fetch({ store }) {
     await store.dispatch("book/browseBooks", {
       type: 2,
-      direction: "asc",
+      direction: "desc",
       genres: []
     });
   },
