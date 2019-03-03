@@ -100,8 +100,8 @@ export default {
   .login__header {
   }
   // color: #8dadb7;
-  // height: 500px;
-  padding: 10px;
+  height: 600px;
+  // padding: 30px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -112,6 +112,7 @@ export default {
   justify-content: space-around;
   padding: 10px;
   width: 100%;
+  width: 440px;
   &__item {
     // border-radius: 10px;
     background-color: white;
@@ -125,7 +126,7 @@ export default {
     -webkit-box-shadow: 1px 1px 13px 0px #ababab;
     box-shadow: 1px 1px 13px 0px #ababab;
     height: 100%;
-    padding: 10px;
+    padding: 30px;
     width: 100%;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
