@@ -1,57 +1,60 @@
 <template>
   <div class="select-component" :style="{width: width+'px'}">
-    <div
-      class="select-component__name flex flex--align flex--center"
-      @click="openModal"
-      v-if="!multiple&&!selectD"
-    >{{name}}</div>
-    <div
-      class="select-component__name flex flex--align flex--center"
-      @click="openModal"
-      v-if="!multiple&&selectD"
-    >{{selectD}}</div>
-    <div
-      class="select-component__name select-component__name--multiple flex flex--align flex--center"
-      @click="openModal"
-      v-if="multiple"
-    >
-      <fa class="select-component__name__icon" icon="filter"></fa>
-      {{name}}
-    </div>
-    <transition class="select-component__modal" :name="transition">
-      <div class="select-component__list" v-if="!multiple && modal" v-click-outside="closeModal">
-        <div
-          class="select-component__option select-component__option--name flex flex--align flex--around"
-        >{{name}}</div>
-        <div
-          @click="select(index)"
-          class="select-component__option select-component__option flex flex--align flex--around"
-          v-for="(item, index) in multiData"
-          :key="index"
-          v-text="item.name"
-          :class="{selected:item.selected}"
-        ></div>
-      </div>
-
+    <div class="object-data"></div>
+    <div class="normal-data" v-if="!object">
       <div
-        class="select-component__list select-component__list--multiple"
-        v-if="multiple && modal"
-        :style="gridSetting"
-        v-click-outside="closeModal"
+        class="select-component__name flex flex--align flex--center"
+        @click="openModal"
+        v-if="!multiple&&!selectD"
+      >{{name}}</div>
+      <div
+        class="select-component__name flex flex--align flex--center"
+        @click="openModal"
+        v-if="!multiple&&selectD"
+      >{{selectD}}</div>
+      <div
+        class="select-component__name select-component__name--multiple flex flex--align flex--center"
+        @click="openModal"
+        v-if="multiple"
       >
-        <div
-          class="select-component__option select-component__option--title flex flex--align flex--center"
-        >{{name}}</div>
-        <div
-          class="select-component__option flex flex--align flex--around"
-          :class="{selected: item.selected}"
-          v-for="(item, index) in multiData"
-          :key="index"
-          v-text="item.name"
-          @click="selected(index)"
-        ></div>
+        <fa class="select-component__name__icon" icon="filter"></fa>
+        {{name}}
       </div>
-    </transition>
+      <transition class="select-component__modal" :name="transition">
+        <div class="select-component__list" v-if="!multiple && modal" v-click-outside="closeModal">
+          <div
+            class="select-component__option select-component__option--name flex flex--align flex--around"
+          >{{name}}</div>
+          <div
+            @click="select(index)"
+            class="select-component__option select-component__option flex flex--align flex--around"
+            v-for="(item, index) in multiData"
+            :key="index"
+            v-text="item.name"
+            :class="{selected:item.selected}"
+          ></div>
+        </div>
+
+        <div
+          class="select-component__list select-component__list--multiple"
+          v-if="multiple && modal"
+          :style="gridSetting"
+          v-click-outside="closeModal"
+        >
+          <div
+            class="select-component__option select-component__option--title flex flex--align flex--center"
+          >{{name}}</div>
+          <div
+            class="select-component__option flex flex--align flex--around"
+            :class="{selected: item.selected}"
+            v-for="(item, index) in multiData"
+            :key="index"
+            v-text="item.name"
+            @click="selected(index)"
+          ></div>
+        </div>
+      </transition>
+    </div>
   </div>
 </template>
 
@@ -63,7 +66,8 @@ export default {
     name: String,
     column: Number,
     width: Number,
-    transition: String
+    transition: String,
+    object: Object
   },
   data() {
     return {

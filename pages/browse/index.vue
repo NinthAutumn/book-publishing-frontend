@@ -69,11 +69,34 @@ export default {
       return this.$store.state.book.browse;
     }
   },
+  methods: {
+    async refresh() {
+      await this.$store.dispatch("book/browseBooks", {
+        type: this.type,
+        direction: this.direction,
+        genres: this.selected_genre,
+        page: 1
+      });
+    }
+  },
+  created() {},
+  watch: {
+    selected_genre: function(val) {
+      this.refresh();
+    },
+    type: function(val) {
+      this.refresh();
+    },
+    direction: function(val) {
+      this.refresh();
+    }
+  },
   async fetch({ store }) {
     await store.dispatch("book/browseBooks", {
-      type: 2,
-      direction: "desc",
-      genres: []
+      type: 4,
+      direction: "下り",
+      genres: [],
+      page: 1
     });
   },
   data() {
@@ -82,7 +105,7 @@ export default {
       direction: "",
       genre: "",
       selected_genre: [],
-      sort_type: ["視聴回数", "評価", "栞数", "字数"],
+      sort_type: ["視聴回数", "評価", "栞数", "字数", "話数"],
       sort_directions: ["上り", "下り"],
       genre_list: [
         "ファンタジー",
