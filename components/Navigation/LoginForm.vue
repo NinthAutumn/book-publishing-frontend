@@ -113,7 +113,7 @@ export default {
   padding: 10px;
   width: 100%;
   &__item {
-    border-radius: 10px;
+    // border-radius: 10px;
     background-color: white;
     display: -webkit-box;
     display: -ms-flexbox;

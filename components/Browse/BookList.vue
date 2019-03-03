@@ -16,12 +16,7 @@ export default {
     history: Boolean
   },
   data() {
-    return {
-      sortSelect: false,
-      itemSelected: false,
-      selected: "並び替え",
-      sortTypes: ["最近読んだ順", "入れた順", "名前順"]
-    };
+    return {};
   },
   components: {
     Book
