@@ -23,7 +23,7 @@
           :width="100"
           v-model="type"
           :name="'詳細条件'"
-          :data="sort_type"
+          :object="sort_type"
           :transition="'grow-shrink'"
         ></Select>
       </div>
@@ -32,7 +32,7 @@
           :width="100"
           v-model="direction"
           :name="'方向'"
-          :data="sort_directions"
+          :object="sort_directions"
           :transition="'grow-shrink'"
         ></Select>
       </div>
@@ -105,8 +105,17 @@ export default {
       direction: "",
       genre: "",
       selected_genre: [],
-      sort_type: ["視聴回数", "評価", "栞数", "字数", "話数"],
-      sort_directions: ["上り", "下り"],
+      sort_type: [
+        { key: "視聴回数", value: 0 },
+        { key: "栞数", value: 1 },
+        { key: "話数", value: 2 },
+        { key: "字数", value: 3 },
+        { key: "評価", value: 4 }
+      ],
+      sort_directions: [
+        { key: "上り", value: "asc" },
+        { key: "下り", value: "desc" }
+      ],
       genre_list: [
         "ファンタジー",
         "恋愛",

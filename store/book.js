@@ -69,11 +69,7 @@ export const actions = {
     genres,
     page
   }) {
-    if (direction === '上り') {
-      direction = 'asc'
-    } else {
-      direction = 'desc'
-    }
+
     const books = await this.$axios.patch(process.env.baseUrl + '/books/browse?direction=' + direction + '&type=' + type + '&page=' + page, {
       genres
     })

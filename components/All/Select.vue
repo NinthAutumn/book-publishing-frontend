@@ -1,6 +1,58 @@
 <template>
   <div class="select-component" :style="{width: width+'px'}">
-    <div class="object-data"></div>
+    <div class="object-data" v-if="object">
+      <div
+        class="select-component__name flex flex--align flex--center"
+        @click="openModal"
+        v-if="!multiple&&!selectD"
+      >{{name}}</div>
+      <div
+        class="select-component__name flex flex--align flex--center"
+        @click="openModal"
+        v-if="!multiple&&selectD"
+      >{{selectD}}</div>
+      <div
+        class="select-component__name select-component__name--multiple flex flex--align flex--center"
+        @click="openModal"
+        v-if="multiple"
+      >
+        <fa class="select-component__name__icon" icon="filter"></fa>
+        {{name}}
+      </div>
+      <transition class="select-component__modal" :name="transition">
+        <div class="select-component__list" v-if="!multiple && modal" v-click-outside="closeModal">
+          <div
+            class="select-component__option select-component__option--name flex flex--align flex--around"
+          >{{name}}</div>
+          <div
+            @click="select(index)"
+            class="select-component__option select-component__option flex flex--align flex--around"
+            v-for="(item, index) in multiData"
+            :key="index"
+            v-text="item.key"
+            :class="{selected:item.selected}"
+          ></div>
+        </div>
+        <div
+          class="select-component__list select-component__list--multiple"
+          v-if="multiple && modal"
+          :style="gridSetting"
+          v-click-outside="closeModal"
+        >
+          <div
+            class="select-component__option select-component__option--title flex flex--align flex--center"
+          >{{name}}</div>
+          <div
+            class="select-component__option flex flex--align flex--around"
+            :class="{selected: item.selected}"
+            v-for="(item, index) in multiData"
+            :key="index"
+            v-text="item.key"
+            @click="selected(index)"
+          ></div>
+        </div>
+      </transition>
+    </div>
     <div class="normal-data" v-if="!object">
       <div
         class="select-component__name flex flex--align flex--center"
@@ -30,7 +82,7 @@
             class="select-component__option select-component__option flex flex--align flex--around"
             v-for="(item, index) in multiData"
             :key="index"
-            v-text="item.name"
+            v-text="item.key"
             :class="{selected:item.selected}"
           ></div>
         </div>
@@ -49,7 +101,7 @@
             :class="{selected: item.selected}"
             v-for="(item, index) in multiData"
             :key="index"
-            v-text="item.name"
+            v-text="item.key"
             @click="selected(index)"
           ></div>
         </div>
@@ -67,7 +119,7 @@ export default {
     column: Number,
     width: Number,
     transition: String,
-    object: Object
+    object: Array
   },
   data() {
     return {
@@ -87,10 +139,10 @@ export default {
         if (n === index) {
           item.selected = !item.selected;
           if (item.selected) {
-            this.selectedData.push(item.name);
+            this.selectedData.push(item.key);
           } else {
             this.selectedData = this.selectedData.filter(
-              element => element !== item.name
+              element => element !== item.key
             );
           }
         }
@@ -104,26 +156,53 @@ export default {
       this.modal = false;
     },
     select: function(index) {
-      this.multiData.forEach((e, n) => {
-        if (n === index) {
-          if (e.selected) {
-            this.selectD = "";
+      if (this.object) {
+        this.multiData.forEach((e, n) => {
+          if (n === index) {
+            if (e.selected) {
+              this.selectD = "";
+            } else {
+              this.selectD = e.key;
+              this.modal = false;
+            }
+            e.selected = !e.selected;
+            this.$emit("input", e.value);
           } else {
-            this.selectD = e.name;
-            this.modal = false;
+            e.selected = false;
           }
-          e.selected = !e.selected;
-          this.$emit("input", e.name);
-        } else {
-          e.selected = false;
-        }
-      });
+        });
+      } else {
+        this.multiData.forEach((e, n) => {
+          if (n === index) {
+            if (e.selected) {
+              this.selectD = "";
+            } else {
+              this.selectD = e.key;
+              this.modal = false;
+            }
+            e.selected = !e.selected;
+            this.$emit("input", e.key);
+          } else {
+            e.selected = false;
+          }
+        });
+      }
     }
   },
   created() {
-    this.data.map(item => {
-      this.multiData.push({ name: item, selected: false });
-    });
+    if (!this.object) {
+      this.data.forEach(item => {
+        this.multiData.push({ key: item, selected: false });
+      });
+    } else {
+      this.object.forEach(item => {
+        this.multiData.push({
+          key: item.key,
+          value: item.value,
+          selected: false
+        });
+      });
+    }
   }
 };
 </script>
