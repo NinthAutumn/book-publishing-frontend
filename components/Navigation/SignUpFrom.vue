@@ -140,7 +140,8 @@ export default {
   align-items: center;
   justify-content: space-around;
   padding: 10px;
-  width: 100%;
+  width: 440px;
+  height: 600px;
   .help {
     color: red;
     font-size: 16px;
@@ -155,7 +156,6 @@ export default {
     font-size: 20px;
   }
   .signup-form {
-    border-radius: 10px;
     background-color: white;
     display: flex;
     flex-direction: column;
@@ -164,7 +164,7 @@ export default {
     -moz-box-shadow: 1px 1px 13px 0px rgba(171, 171, 171, 1);
     box-shadow: 1px 1px 13px 0px rgba(171, 171, 171, 1);
     height: 100%;
-    padding: 10px;
+    padding: 30px;
     width: 100%;
     box-sizing: border-box;
     // grid-column-start: 2;

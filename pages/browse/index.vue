@@ -45,7 +45,16 @@
           :name="'ジャンル'"
         ></Select>
       </div>
-      <div class="browse-page__filter-bookstate"></div>
+      <div class="browse-page__filter-tag"></div>
+      <div class="browse-page__filter-bookstate">
+        <Select
+          v-model="selected_genre"
+          :transition="'grow-shrink'"
+          :multiple="true"
+          :data="genre_list"
+          :name="'ジャンル'"
+        ></Select>
+      </div>
     </div>
     <div class="browse-page__content">
       <BookList :books="books"></BookList>

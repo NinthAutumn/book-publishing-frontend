@@ -106,11 +106,11 @@ export default {
   }
 }
 .loginform {
-  width: 30%;
+  width: 440px;
   margin: auto;
 }
 .signupform {
-  width: 30%;
+  width: 440px;
   margin: auto;
 }
 .not-loggedin {

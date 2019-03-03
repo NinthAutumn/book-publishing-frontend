@@ -159,11 +159,11 @@ export default {
   $self: &;
   user-select: none;
   // width: 100%;
-  width: 100px;
+  width: 100%;
   height: 35px;
   position: relative;
   margin: 0 5px;
-  z-index: 1000;
+  // z-index: 1;
   &__name {
     color: grey;
     font-size: 14px;
@@ -184,6 +184,7 @@ export default {
     box-shadow: 1px 1px 5px rgb(238, 238, 238);
   }
   &__list {
+    z-index: 10000;
     background-color: #fff;
     box-shadow: 1px 1px 5px 0px rgb(235, 235, 235);
     padding: 5px;
@@ -201,11 +202,13 @@ export default {
       display: grid;
       // grid-auto-rows: 30px;
       #{$self}__option {
+        z-index: 10000;
         width: 100%;
         height: 35px;
         &--title {
           grid-column: span 3;
           color: #f4648a;
+          background-color: white;
           &:hover {
             cursor: default;
             user-select: none;
@@ -232,7 +235,7 @@ export default {
   }
   &__option {
     font-size: 14px;
-
+    z-index: 10000;
     &--name {
       color: #f4648a;
       &:hover {
