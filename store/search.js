@@ -46,7 +46,12 @@ export const actions = {
   }, query) {
     commit('LOADING')
     await this.$axios.get(process.env.baseUrl + '/searchBooks?query=' + query).then((res) => {
-      commit('QUERIED_BOOKS', res.data)
+      if (res.data.genre) {
+        commit('QUERIED_BOOKS', res.data.genre)
+      } else {
+        commit('QUERIED_BOOKS', res.data.books)
+      }
+
       commit('RATING_FIX')
       commit('LOADING_FIN')
     })
