@@ -64,7 +64,7 @@
           <BookList :books="books"></BookList>
         </div>
       </div>
-      <TagList></TagList>
+      <TagList v-model="tag_list"></TagList>
     </div>
   </div>
 </template>

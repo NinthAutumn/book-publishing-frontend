@@ -78,6 +78,7 @@ export default {
         }
 
         this.tags.push(this.tag);
+        this.$emit("input", this.tags);
         this.tag = "";
         return;
       }

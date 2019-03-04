@@ -45,6 +45,9 @@
           :style="gridSetting"
           v-click-outside="closeModal"
         >
+          <div class="select-component__refresh" @click="reset">
+            <fa icon="sync-alt"></fa>
+          </div>
           <div
             class="select-component__option select-component__option--title flex flex--align flex--center"
           >{{name}}</div>
@@ -107,6 +110,13 @@ export default {
     },
     closeModal: function() {
       this.modal = false;
+    },
+    reset: function() {
+      this.mutliData = this.multiData.forEach(element => {
+        element.selected = false;
+      });
+      this.selectedData = [];
+      this.$emit("input", []);
     },
     select: function(index) {
       if (this.object) {
@@ -199,8 +209,23 @@ export default {
     top: 0;
     box-sizing: border-box;
     // left: 105px;
+    #{$self}__refresh {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      z-index: 100000;
+      font-size: 14px;
+      color: #8fb0ff;
+      transition: 300ms;
+      &:hover {
+        cursor: pointer;
+        transform: rotate(180deg);
+        transition: 300ms;
+      }
+    }
     &--multiple {
       // height: 500px;
+
       grid-gap: 2px;
       // width: 200px;
       #{$self}__modal {
