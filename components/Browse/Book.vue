@@ -1,18 +1,22 @@
 <template>
-  <div class="book-library">
-    <div id="book-library__container" @click="linkTo">
-      <div class="book-library__cover">
-        <span class="star-rating"></span>
+  <div class="book-browse">
+    <div id="book-browse__container" @click="linkTo">
+      <div class="book-browse__cover">
+        <div class="book-browse__rating flex flex--align flex--center">
+          {{book.ratings}}
+          <fa class="book-browse__rating__icon" icon="star"></fa>
+        </div>
         <img
           :src=" 'https://storage.googleapis.com/theta-images/'+ book.cover"
-          class="book-library__book-img"
+          class="book-browse__book-img"
           alt="Book cover"
         >
       </div>
-      <div class="book-library__text-info">
-        <p class="book-library__book-title full" ref="texting">
+      <div class="book-browse__text-info">
+        <p class="book-browse__book-title full" ref="texting">
           <a class>{{book.title | truncate(17)}}</a>
         </p>
+        <p class="book-browse__author">{{book.author}}</p>
       </div>
     </div>
   </div>
@@ -56,20 +60,41 @@ export default {
 };
 </script>
 <style lang="scss">
-.book-library {
+.book-browse {
   width: 135px;
   &__container {
     width: 135px;
     position: relative;
+  }
+  &__author {
+    color: rgb(82, 82, 82);
+  }
+  &__rating {
+    position: absolute;
+    z-index: 100;
+    // width: 100\\px;
+    font-size: 9px;
+    width: 40px;
+    height: 19px;
+    // border-radius: 100px;
+    // border-top-right-radius: 100px;
+    // border-bottom-right-radius: 100px;
+    // box-shadow: 1px 1px 5px rgb(54, 54, 54);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    &__icon {
+      color: #fbbd08;
+      margin-left: 2px;
+    }
   }
   &__cover {
     margin: 0 !important;
     width: 135px;
     height: 199px;
     position: relative;
-    -webkit-box-shadow: 1px 1px 1px 0px rgba(153, 153, 153, 0.75);
-    -moz-box-shadow: 1px 1px 1px 0px rgba(153, 153, 153, 0.75);
-    box-shadow: 1px 1px 1px 0px rgba(153, 153, 153, 0.75);
+    // -webkit-box-shadow: 1px 1px 1px 0px rgba(153, 153, 153, 0.75);
+    // -moz-box-shadow: 1px 1px 1px 0px rgba(153, 153, 153, 0.75);
+    // box-shadow: 1px 1px 1px 0px rgba(153, 153, 153, 0.75);
     &:hover {
       cursor: pointer;
       &::after {
@@ -100,8 +125,8 @@ export default {
     }
     padding: 0;
     text-align: left;
-    width: 95%;
     transition: 300ms;
+    color: black;
     &:hover {
       cursor: pointer;
       transition: 200ms;

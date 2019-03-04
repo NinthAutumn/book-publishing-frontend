@@ -66,7 +66,7 @@ export const actions = {
     commit
   }, {
     type,
-    direction,
+    direction = 'desc',
     genres,
     page
   }) {

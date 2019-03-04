@@ -9,7 +9,7 @@
       <div
         class="select-component__name flex flex--align flex--center"
         @click="openModal"
-        v-if="!multiple&&def"
+        v-if="!multiple&&def&&!selectD"
       >{{def}}</div>
       <div
         class="select-component__name flex flex--align flex--center"

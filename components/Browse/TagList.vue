@@ -139,7 +139,8 @@ export default {
       width: 80px;
       font-size: 13px;
       padding: 0 5px;
-      border: 1px solid $secondary;
+      border: 1px solid white;
+      box-shadow: 1px 1px 5px rgb(240, 240, 240);
       color: $secondary;
     }
     margin-right: 5px;
