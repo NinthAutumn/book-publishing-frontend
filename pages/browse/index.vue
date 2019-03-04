@@ -37,18 +37,19 @@
                 :multiple="true"
                 :data="genre_list"
                 :name="'ジャンル'"
+                :modalD="modalDirection"
               ></Select>
             </div>
             <button
               class="browse-page__open-tags flex flex--align flex--center"
-              @click="tag_search = !tag_search"
+              @click="openTag"
               v-if="!tag_search"
             >
               <fa class="browse-page__open-tags__icon" icon="expand"></fa>タグで探す
             </button>
             <button
               class="browse-page__open-tags flex flex--align flex--center"
-              @click="tag_search = !tag_search"
+              @click="openTag"
               v-if="tag_search"
             >
               <fa class="browse-page__open-tags__icon" icon="expand"></fa>タグをしまう
@@ -112,6 +113,14 @@ export default {
         genres: this.selected_genre,
         page: 1
       });
+    },
+    openTag() {
+      this.tag_search = !this.tag_search;
+      if (this.tag_search) {
+        this.modalDirection = "left";
+      } else {
+        this.modalDirection = "right";
+      }
     }
   },
   created() {},
@@ -139,6 +148,7 @@ export default {
       type: "",
       direction: "",
       genre: "",
+      modalDirection: "right",
       selected_genre: [],
       sort_type: [
         { key: "視聴回数", value: 0 },

@@ -41,6 +41,7 @@
 
         <div
           class="select-component__list select-component__list--multiple"
+          :class="{modalDR: modalD === 'right',modalDL: modalD !== 'right' }"
           v-if="multiple && modal"
           :style="gridSetting"
           v-click-outside="closeModal"
@@ -75,7 +76,8 @@ export default {
     width: Number,
     transition: String,
     object: Array,
-    def: String
+    def: String,
+    modalD: String
   },
   data() {
     return {
@@ -171,6 +173,12 @@ export default {
 </script>
 
 <style lang="scss">
+.modalDR {
+  right: 0px !important;
+}
+.modalDL {
+  left: 0px;
+}
 .select-component {
   $self: &;
   user-select: none;
@@ -205,8 +213,10 @@ export default {
     box-shadow: 1px 1px 5px 0px rgb(235, 235, 235);
     padding: 5px;
     width: 100%;
+    top: -30px;
+
     position: absolute;
-    top: 0;
+    // top: 0;
     box-sizing: border-box;
     // left: 105px;
     #{$self}__refresh {
@@ -223,10 +233,12 @@ export default {
         transition: 300ms;
       }
     }
+
     &--multiple {
       // height: 500px;
-
+      top: 0;
       grid-gap: 2px;
+
       // width: 200px;
       #{$self}__modal {
       }
