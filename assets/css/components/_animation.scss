@@ -27,6 +27,31 @@
 
 }
 
+.tag-summon {
+  &-enter-active {
+    animation: erotoright 300ms;
+    animation-fill-mode: backwards;
+    // animation-direction:reverse;
+  }
+
+  &-leave-active {
+    animation: erotoright 300ms;
+    animation-fill-mode: backwards;
+    animation-direction: reverse;
+  }
+
+  @keyframes erotoright {
+    from {
+      transform: translateX(0px) translateY(-100px);
+    }
+
+    to {
+      transform: translateX(0) translateY(0px);
+      // height: 100%;
+    }
+  }
+}
+
 .form-right {
   &-enter-active {
     animation: zerotoright 100ms ease-out;

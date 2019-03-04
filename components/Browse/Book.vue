@@ -67,7 +67,7 @@ export default {
     position: relative;
   }
   &__author {
-    color: rgb(82, 82, 82);
+    color: grey;
   }
   &__rating {
     position: absolute;

@@ -39,6 +39,20 @@
                 :name="'ジャンル'"
               ></Select>
             </div>
+            <button
+              class="browse-page__open-tags flex flex--align flex--center"
+              @click="tag_search = !tag_search"
+              v-if="!tag_search"
+            >
+              <fa class="browse-page__open-tags__icon" icon="expand"></fa>タグで探す
+            </button>
+            <button
+              class="browse-page__open-tags flex flex--align flex--center"
+              @click="tag_search = !tag_search"
+              v-if="tag_search"
+            >
+              <fa class="browse-page__open-tags__icon" icon="expand"></fa>タグをしまう
+            </button>
           </div>
 
           <div class="browse-page__filter-tag"></div>
@@ -64,7 +78,9 @@
           <BookList :books="books"></BookList>
         </div>
       </div>
-      <TagList v-model="tag_list"></TagList>
+      <transition name="tag-summon">
+        <TagList v-if="tag_search" v-model="tag_list"></TagList>
+      </transition>
     </div>
   </div>
 </template>
@@ -136,6 +152,7 @@ export default {
         { key: "下り", value: "desc" }
       ],
       tag_list: [],
+      tag_search: false,
       genre_list: [
         "ファンタジー",
         "恋愛",
@@ -192,6 +209,37 @@ export default {
   }
   header {
     font-size: 20px;
+  }
+  &__open-tags {
+    &:active {
+      transition: 100ms;
+      background-color: rgb(240, 240, 240);
+      border: 0px;
+      outline: none;
+    }
+    &:focus {
+      // transition: 100ms;
+      // background-color: rgb(240, 240, 240);
+      border: 0px;
+      outline: none;
+    }
+    transition: 100ms;
+    height: 30px;
+    width: 120px;
+    box-shadow: 1px 1px 5px rgb(236, 236, 236);
+    margin-right: 5px;
+    user-select: none;
+    font-size: 14px;
+    color: grey;
+    background-color: #fff;
+    border: 0px;
+    &__icon {
+      margin-right: 5px;
+    }
+    &:hover {
+      cursor: pointer;
+      background-color: rgb(247, 247, 247);
+    }
   }
   .header-blob {
     position: absolute;
