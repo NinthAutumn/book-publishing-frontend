@@ -51,8 +51,8 @@
           v-model="selected_genre"
           :transition="'grow-shrink'"
           :multiple="true"
-          :data="genre_list"
-          :name="'ジャンル'"
+          :data="tag_list"
+          :name="'タグ'"
         ></Select>
       </div>
     </div>
@@ -125,6 +125,7 @@ export default {
         { key: "上り", value: "asc" },
         { key: "下り", value: "desc" }
       ],
+      tag_list: [],
       genre_list: [
         "ファンタジー",
         "恋愛",

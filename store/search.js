@@ -51,7 +51,6 @@ export const actions = {
       } else {
         commit('QUERIED_BOOKS', res.data.books)
       }
-
       commit('RATING_FIX')
       commit('LOADING_FIN')
     })
