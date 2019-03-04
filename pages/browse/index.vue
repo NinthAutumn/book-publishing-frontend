@@ -4,60 +4,67 @@
       <blob class="header-blob"></blob>
       <header>作品を探す</header>
     </div>
-    <transition name="grow-shrink">
-      <div class="browse-page__filter" v-if="selected_genre.length > 0">
-        <div class="browse-page__filter-title">フィルター</div>
-        <transition-group tag="ul" name="list" class="browse-page__filter-list flex flex--align">
-          <li
-            class="browse-page__filter-list browse-page__filter-list__item flex flex--align"
-            v-for="(genre, index) in selected_genre"
-            :key="index"
-            v-text="genre"
-          ></li>
-        </transition-group>
+    <div class="flex-divider browse-page__section flex">
+      <div class="flex-divider" style="flex-grow:1;">
+        <div class="browse-page__sorting-list flex">
+          <div class="flex-divider flex">
+            <div class="browse-page__sort-type">
+              <Select
+                :width="100"
+                v-model="type"
+                :name="'詳細条件'"
+                :object="sort_type"
+                :transition="'grow-shrink'"
+                def="視聴回数"
+              ></Select>
+            </div>
+            <div class="browse-page__sort-type browse-page__sort-type--direction">
+              <Select
+                :width="100"
+                v-model="direction"
+                :name="'方向'"
+                :object="sort_directions"
+                :transition="'grow-shrink'"
+                def="下り"
+              ></Select>
+            </div>
+          </div>
+          <div class="flex-divider flex flex--right" style="width:100%;">
+            <div class="browse-page__filter-genre">
+              <Select
+                v-model="selected_genre"
+                :transition="'grow-shrink'"
+                :multiple="true"
+                :data="genre_list"
+                :name="'ジャンル'"
+              ></Select>
+            </div>
+          </div>
+
+          <div class="browse-page__filter-tag"></div>
+          <div class="browse-page__filter-bookstate"></div>
+        </div>
+        <transition name="grow-shrink">
+          <div class="browse-page__filter" v-if="selected_genre.length > 0">
+            <transition-group
+              tag="ul"
+              name="list"
+              class="browse-page__filter-list flex flex--align"
+            >
+              <li
+                class="browse-page__filter-list browse-page__filter-list__item flex flex--align"
+                v-for="(genre, index) in selected_genre"
+                :key="index"
+                v-text="genre"
+              ></li>
+            </transition-group>
+          </div>
+        </transition>
+        <div class="browse-page__content flex">
+          <BookList :books="books"></BookList>
+        </div>
       </div>
-    </transition>
-    <div class="browse-page__sorting-list flex">
-      <div class="browse-page__sort-type">
-        <Select
-          :width="100"
-          v-model="type"
-          :name="'詳細条件'"
-          :object="sort_type"
-          :transition="'grow-shrink'"
-        ></Select>
-      </div>
-      <div class="browse-page__sort-type browse-page__sort-type--direction">
-        <Select
-          :width="100"
-          v-model="direction"
-          :name="'方向'"
-          :object="sort_directions"
-          :transition="'grow-shrink'"
-        ></Select>
-      </div>
-      <div class="browse-page__filter-genre">
-        <Select
-          v-model="selected_genre"
-          :transition="'grow-shrink'"
-          :multiple="true"
-          :data="genre_list"
-          :name="'ジャンル'"
-        ></Select>
-      </div>
-      <div class="browse-page__filter-tag"></div>
-      <div class="browse-page__filter-bookstate">
-        <Select
-          v-model="selected_genre"
-          :transition="'grow-shrink'"
-          :multiple="true"
-          :data="tag_list"
-          :name="'タグ'"
-        ></Select>
-      </div>
-    </div>
-    <div class="browse-page__content">
-      <BookList :books="books"></BookList>
+      <TagList></TagList>
     </div>
   </div>
 </template>
@@ -66,12 +73,15 @@
 import Blob from "@/assets/svg/blob2.svg";
 import Select from "@/components/All/Select";
 import BookList from "@/components/Browse/BookList";
+import TagList from "@/components/Browse/TagList";
+
 export default {
   auth: false,
   components: {
     Blob,
     Select,
-    BookList
+    BookList,
+    TagList
   },
   computed: {
     books() {
@@ -168,6 +178,15 @@ export default {
 <style lang="scss">
 .browse-page {
   position: relative;
+  .library-booklist {
+    flex-grow: 1;
+  }
+  &__section {
+    // position: absolute;
+    top: 200px;
+    width: 100%;
+    transition: 300ms;
+  }
   &__header {
     height: 100px;
   }
@@ -219,6 +238,7 @@ export default {
     flex-wrap: wrap;
     &__item {
       margin-bottom: 5px;
+      margin-top: 5px;
       height: 35px;
       font-size: 14px;
       margin-right: 5px;

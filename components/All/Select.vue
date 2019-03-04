@@ -4,8 +4,13 @@
       <div
         class="select-component__name flex flex--align flex--center"
         @click="openModal"
-        v-if="!multiple&&!selectD"
+        v-if="!multiple&&!selectD&&!def"
       >{{name}}</div>
+      <div
+        class="select-component__name flex flex--align flex--center"
+        @click="openModal"
+        v-if="!multiple&&def"
+      >{{def}}</div>
       <div
         class="select-component__name flex flex--align flex--center"
         @click="openModal"
@@ -66,7 +71,8 @@ export default {
     column: Number,
     width: Number,
     transition: String,
-    object: Array
+    object: Array,
+    def: String
   },
   data() {
     return {

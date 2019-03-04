@@ -18,7 +18,8 @@ export const state = () => ({
   bookSynopsis: true,
   book: {},
   loading: false,
-  browse: []
+  browse: [],
+  tagList: []
 })
 
 export const getters = {
@@ -80,6 +81,15 @@ export const actions = {
   }) {
 
   },
+  async tagList({
+    commit
+  }, {
+    page = 1,
+    limit = 10
+  }) {
+    const taglist = await this.$axios.get(process.env.baseUrl + '/books/tags?limit=' + limit + '&page=' + page)
+    commit('TAG_LIST', taglist.data)
+  },
   async deleteBook({
     commit
   }) {
@@ -125,8 +135,8 @@ export const mutations = {
   BROWSE_BOOKS(state, books) {
     state.browse = books
   },
-  UPDATE() {
-
+  TAG_LIST(state, tags) {
+    state.tagList = tags
   },
   URL_GOOGLE() {
     const url = "https://storage.googleapis.com/theta-images/"

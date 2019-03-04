@@ -27,6 +27,34 @@
 
 }
 
+.form-right {
+  &-enter-active {
+    animation: zerotoright 100ms ease-out;
+    animation-fill-mode: backwards;
+    // animation-direction:reverse;
+  }
+
+  &-leave-active {
+    animation: zerotoright 100ms ease-out;
+    animation-fill-mode: backwards;
+    animation-direction: reverse;
+  }
+
+  @keyframes zerotoright {
+    from {
+      width: 0;
+      transform: scaleX(0);
+    }
+
+    to {
+      width: 80px;
+      transform: scaleX(1);
+    }
+  }
+}
+
+
+
 
 
 .list-enter,
