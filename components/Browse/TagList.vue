@@ -1,14 +1,21 @@
 <template>
   <div class="tag-list">
     <div class="tag-list__container">
-      <div class="tag-list__title flex flex--align flex--center">
-        <fa icon="tags"></fa>
-        <header>タグリスト</header>
-        <fa class="tag-list__help" icon="question-circle"></fa>
-      </div>
-      <div class="tag-list__nav flex flex--align flex--center">
-        <div class="tag-list__nav__item tag-list__nav__item--search">検索</div>
-        <div class="tag-list__nav__item tag-list__nav__item--filter">除外</div>
+      <div class="tag-list__title flex flex--align flex--center"></div>
+      <fa class="tag-list__icon" icon="tags"></fa>
+      <fa class="tag-list__help" icon="question-circle"></fa>
+      <div class="tag-list__nav flex flex--align flex--center" @mouseleave="navLineOut">
+        <div
+          @mouseenter="moveline(1)"
+          @click="navClick(1)"
+          class="tag-list__nav__item flex flex--align tag-list__nav__item--search"
+        >検索</div>
+        <div
+          @click="navClick(2)"
+          @mouseenter="moveline(2)"
+          class="tag-list__nav__item flex flex--align tag-list__nav__item--filter"
+        >除外</div>
+        <i class="tag-list__nav__line" :style="line"></i>
       </div>
 
       <ul class="tag-list__list flex" v-if="tags.length > 0">
@@ -19,10 +26,7 @@
           @click="removeItem(tag)"
           @mouseenter="batsuState"
           @mouseleave="batsuState"
-        >
-          {{tag}}
-          <!-- <fa style="margin-left:4px;" icon="times" v-if="batsu"></fa> -->
-        </li>
+        >{{tag}}</li>
       </ul>
       <div class="tag-add__form flex flex--align">
         <transition name="form-right">
@@ -60,6 +64,22 @@ export default {
     // }
   },
   methods: {
+    navLineOut() {
+      this.line = this.selectedTab;
+    },
+    navClick(index) {
+      if (index === 1) {
+        this.selectedTab = {
+          width: "32px",
+          left: "64px"
+        };
+      } else {
+        this.selectedTab = {
+          width: "32px",
+          left: "104px"
+        };
+      }
+    },
     showForm() {
       if (this.tag) {
         let tagExists = this.tags.filter(ele => ele === this.tag);
@@ -85,6 +105,19 @@ export default {
     },
     batsuState() {
       this.batsu = !this.batsu;
+    },
+    moveline(index) {
+      if (index === 1) {
+        this.line = {
+          width: "32px",
+          left: "64px"
+        };
+      } else {
+        this.line = {
+          width: "32px",
+          left: "104px"
+        };
+      }
     }
   },
   data() {
@@ -94,6 +127,14 @@ export default {
       form: false,
       batsu: false,
       selected_type: "",
+      line: {
+        width: "32px",
+        left: "64px"
+      },
+      selectedTab: {
+        width: "32px",
+        left: "64px"
+      },
       type: [{ key: "検索", value: "in" }, { key: "除外", value: "all" }]
     };
   }
@@ -102,6 +143,7 @@ export default {
 
 <style lang="scss">
 .tag-list {
+  position: relative;
   &__title {
     font-size: 17px;
   }
@@ -117,6 +159,9 @@ export default {
   }
   &__help {
     font-size: 12px;
+    position: absolute;
+    top: 10px;
+    right: 40px;
     &:hover {
       color: green;
       cursor: pointer;
@@ -139,12 +184,28 @@ export default {
     margin-right: 5px;
   }
   &__nav {
+    position: relative;
+    margin-bottom: 5px;
     &__item {
       height: 35px;
-      font-size: 14px;
-      &--search {
-        margin-right: 5px;
+      font-size: 16px;
+      position: relative;
+      user-select: none;
+
+      &:hover {
+        cursor: pointer;
       }
+
+      &--search {
+        margin-right: 10px;
+      }
+    }
+    &__line {
+      position: absolute;
+      top: 100%;
+      content: "";
+      border-top: 2px solid $primary;
+      transition: 300ms;
     }
   }
   &__add {
@@ -163,6 +224,14 @@ export default {
         transition: 300ms;
       }
     }
+  }
+  &__icon {
+    position: absolute;
+    font-size: 20px;
+    top: 10px;
+    right: 5px;
+    color: $primary;
+    transform: rotate(45deg);
   }
   &__item {
     font-size: 13px;
