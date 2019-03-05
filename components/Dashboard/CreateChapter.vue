@@ -356,7 +356,6 @@ export default {
 }
 .chapter-new-submit {
   margin-bottom: 10px;
-  border-radius: 0;
   transition: 300ms;
   &:hover {
     background-color: #fff;
@@ -425,6 +424,9 @@ export default {
   //
 }
 .chapter-form {
+  .el-button {
+    border-radius: 0 !important;
+  }
   transition: 300ms;
   .el-step__title {
     font-size: 14px;
@@ -511,7 +513,6 @@ export default {
     // margin-bottom: 25px;
     color: #a3a3a3;
     border: 0px solid $review-color !important;
-    border-radius: 5px;
     line-height: 20px;
     transition: 300ms;
 
@@ -530,7 +531,6 @@ export default {
     // border: 1px solid rgb(202, 202, 202);
 
     text-align: left;
-    border-radius: 5px;
     // box-sizing: bord !important;
     box-shadow: 1px 1px 5px 0px rgb(209, 209, 209);
     // margin-bottom: 10px;

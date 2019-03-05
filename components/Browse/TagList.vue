@@ -30,7 +30,7 @@
       </ul>
       <ul class="tag-list__list flex" v-if="tags.exclude.length > 0&&index !== 1">
         <li
-          class="tag-list__item flex flex--align"
+          class="tag-list__item tag-list__item--exclude flex flex--align"
           v-for="(tag, index) in tags.exclude"
           :key="index"
           @click="removeItem(tag)"
@@ -48,7 +48,7 @@
               ref="taginput"
               type="text"
               @keypress.enter="showForm"
-              placeholder="タグ"
+              placeholder="タグをたす"
             >
           </div>
         </transition>
@@ -255,7 +255,7 @@ export default {
     .fa-plus {
       // transform: scale(1.1);
       transition: 300ms;
-      font-size: 16px;
+      font-size: 20px;
     }
     &:hover {
       cursor: pointer;
@@ -283,6 +283,10 @@ export default {
     border: 1px solid $secondary;
     margin-bottom: 5px;
     transition: 100ms;
+    &--exclude {
+      color: $primary;
+      border: 1px solid $primary;
+    }
     &:hover {
       transition: 100ms;
       cursor: pointer;

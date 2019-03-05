@@ -2,7 +2,7 @@
   <div class="book-form">
     <h3 class="book-form__title">本の情報</h3>
     <form ref="form" @submit.prevent="postBook" class="flex flex-column">
-      <div class="divider flex">
+      <div class="divider">
         <div class="divider" style="margin-right:10px;">
           <label for="avatar-uploader">本のカバー</label>
           <el-upload
@@ -182,8 +182,8 @@ export default {
     margin: 0;
   }
   .el-upload-dragger {
-    width: 30.8rem;
-    height: 45.9rem;
+    width: 130px;
+    height: 191px;
     display: flex;
     border: none;
     &:hover {
@@ -193,7 +193,7 @@ export default {
   .avatar-uploader .el-upload {
     border: 2px solid;
     border-color: $primary-lighter;
-    border-radius: 6px;
+    // border-radius: 6px;
     cursor: pointer;
     position: relative;
     overflow: hidden;
@@ -279,7 +279,7 @@ export default {
   // box-shadow: 1px 1px 5px 0px rgb(199, 198, 198);
   overflow: scroll;
   // height: 80vh;
-  width: 800px;
+  width: 440px;
   &__title {
     font-size: 25px;
     margin-top: 0;
@@ -306,13 +306,13 @@ export default {
   }
   &--textarea {
     line-height: 20px;
+    height: 200px;
     resize: none;
     font-size: 16px;
     border: 0px solid;
     color: #a3a3a3;
     border-bottom-width: 2px;
     border-style: solid;
-    height: 100%;
     border-bottom-color: $primary;
     padding: 5px;
     margin-bottom: 20px;
