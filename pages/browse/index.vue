@@ -52,7 +52,7 @@
               @click="openTag"
               v-if="tag_search"
             >
-              <fa class="browse-page__open-tags__icon" icon="expand"></fa>タグをしまう
+              <fa class="browse-page__open-tags__icon" icon="compress"></fa>タグをしまう
             </button>
           </div>
 

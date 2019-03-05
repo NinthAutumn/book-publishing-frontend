@@ -68,11 +68,17 @@ export const actions = {
     type,
     direction = 'desc',
     genres,
-    page
+    page,
+    gfilter = true,
+    tags = [],
+    tfilter = true
   }) {
 
     const books = await this.$axios.patch(process.env.baseUrl + '/books/browse?direction=' + direction + '&type=' + type + '&page=' + page, {
-      genres
+      genres,
+      gfilter,
+      tfilter,
+      tags
     })
     commit('BROWSE_BOOKS', books.data)
   },

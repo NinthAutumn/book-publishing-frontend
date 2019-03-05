@@ -6,16 +6,9 @@
         <header>タグリスト</header>
         <fa class="tag-list__help" icon="question-circle"></fa>
       </div>
-      <div class="flex-divider flex flex--right" style="width:100%;">
-        <div class="tag-list__select">
-          <Select
-            def="排外的"
-            transition="grow-shrink"
-            :name="'傾向'"
-            :object="type"
-            v-model="selected_type"
-          ></Select>
-        </div>
+      <div class="tag-list__nav flex flex--align flex--center">
+        <div class="tag-list__nav__item tag-list__nav__item--search">検索</div>
+        <div class="tag-list__nav__item tag-list__nav__item--filter">除外</div>
       </div>
 
       <ul class="tag-list__list flex" v-if="tags.length > 0">
@@ -101,7 +94,7 @@ export default {
       form: false,
       batsu: false,
       selected_type: "",
-      type: [{ key: "包含的", value: "in" }, { key: "排外的", value: "all" }]
+      type: [{ key: "検索", value: "in" }, { key: "除外", value: "all" }]
     };
   }
 };
@@ -144,6 +137,15 @@ export default {
       color: $secondary;
     }
     margin-right: 5px;
+  }
+  &__nav {
+    &__item {
+      height: 35px;
+      font-size: 14px;
+      &--search {
+        margin-right: 5px;
+      }
+    }
   }
   &__add {
     font-size: 14px;
