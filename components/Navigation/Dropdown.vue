@@ -63,7 +63,7 @@ export default {
 <style lang="scss">
 .profile-dropdown {
   position: absolute;
-  top: 60px;
+  top: 55px;
   right: 10px;
   width: 300px;
   box-sizing: border-box;
@@ -94,20 +94,12 @@ export default {
     font-size: 18px;
   }
   &__wallet {
+    margin-top: 5px;
+    font-size: 15px;
+    color: rgb(46, 46, 46);
   }
   &__list {
     position: relative;
-    &::after {
-      position: absolute;
-      box-shadow: 1px 1px 5px rgb(247, 247, 247);
-      content: "";
-      height: 10px;
-      width: 10px;
-      background-color: white;
-      top: -10px;
-      right: 20px;
-      clip-path: polygon(50% 30%, 0% 100%, 100% 100%);
-    }
     height: 100%;
     &__item {
       transition: 100ms;

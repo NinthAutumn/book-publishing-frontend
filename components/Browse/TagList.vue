@@ -18,16 +18,27 @@
         <i class="tag-list__nav__line" :style="line"></i>
       </div>
 
-      <ul class="tag-list__list flex" v-if="tags.length > 0">
+      <ul class="tag-list__list flex" v-if="tags.include.length > 0&&index === 1">
         <li
           class="tag-list__item flex flex--align"
-          v-for="(tag, index) in tags"
+          v-for="(tag, index) in tags.include"
           :key="index"
           @click="removeItem(tag)"
           @mouseenter="batsuState"
           @mouseleave="batsuState"
         >{{tag}}</li>
       </ul>
+      <ul class="tag-list__list flex" v-if="tags.exclude.length > 0&&index !== 1">
+        <li
+          class="tag-list__item flex flex--align"
+          v-for="(tag, index) in tags.exclude"
+          :key="index"
+          @click="removeItem(tag)"
+          @mouseenter="batsuState"
+          @mouseleave="batsuState"
+        >{{tag}}</li>
+      </ul>
+
       <div class="tag-add__form flex flex--align">
         <transition name="form-right">
           <div class="tag-list__add-input" v-if="form">
@@ -69,11 +80,13 @@ export default {
     },
     navClick(index) {
       if (index === 1) {
+        this.index = 1;
         this.selectedTab = {
           width: "32px",
           left: "64px"
         };
       } else {
+        this.index = 2;
         this.selectedTab = {
           width: "32px",
           left: "104px"
@@ -81,27 +94,50 @@ export default {
       }
     },
     showForm() {
-      if (this.tag) {
-        let tagExists = this.tags.filter(ele => ele === this.tag);
-        if (tagExists.length > 0) {
-          return this.$message({
-            message: "タグがもう存在してっしょ",
-            type: "error"
-          });
+      if (this.index === 1) {
+        if (this.tag) {
+          let tagExistsi = this.tags.include.filter(ele => ele === this.tag);
+          let tagExistse = this.tags.exclude.filter(ele => ele === this.tag);
+          if (tagExistsi.length > 0 || tagExistse.length > 0) {
+            return this.$message({
+              message: "タグがもう存在してっしょ",
+              type: "error"
+            });
+          }
+          this.tags.include.push(this.tag);
+          this.$emit("input", this.tags);
+          this.tag = "";
+          return;
         }
+      } else {
+        if (this.tag) {
+          let tagExistsi = this.tags.include.filter(ele => ele === this.tag);
+          let tagExistse = this.tags.exclude.filter(ele => ele === this.tag);
+          if (tagExistsi.length > 0 || tagExistse.length > 0) {
+            return this.$message({
+              message: "タグがもう存在してっしょ",
+              type: "error"
+            });
+          }
 
-        this.tags.push(this.tag);
-        this.$emit("input", this.tags);
-        this.tag = "";
-        return;
+          this.tags.exclude.push(this.tag);
+          this.$emit("input", this.tags);
+          this.tag = "";
+          return;
+        }
       }
+
       this.form = !this.form;
       if (this.form) {
         this.$refs.taginput.focus();
       }
     },
     removeItem(tag) {
-      this.tags = this.tags.filter(t => t !== tag);
+      if (this.index === 1) {
+        this.tags.include = this.tags.include.filter(t => t !== tag);
+      } else {
+        this.tags.exclude = this.tags.exclude.filter(t => t !== tag);
+      }
     },
     batsuState() {
       this.batsu = !this.batsu;
@@ -122,10 +158,14 @@ export default {
   },
   data() {
     return {
-      tags: [],
+      tags: {
+        include: [],
+        exclude: []
+      },
       tag: "",
       form: false,
       batsu: false,
+      index: 1,
       selected_type: "",
       line: {
         width: "32px",
@@ -215,6 +255,7 @@ export default {
     .fa-plus {
       // transform: scale(1.1);
       transition: 300ms;
+      font-size: 16px;
     }
     &:hover {
       cursor: pointer;
