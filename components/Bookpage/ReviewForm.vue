@@ -39,7 +39,7 @@
           ></star-rating>
         </no-ssr>
       </div>
-      <text-editor class="review-form__content" v-model="review.content"></text-editor>
+      <text-editor :content="pcontent" class="review-form__content" v-model="review.content"></text-editor>
       <!-- <p v-text="review.content"></p> -->
       <!-- <no-ssr>
         <vue-editor
@@ -66,14 +66,19 @@
 <script>
 import TextEditor from "@/components/TextEditor";
 export default {
-  props: ["value"],
+  props: {
+    ptitle: String,
+    pcontent: String,
+    prating: Number,
+    reviewed: Boolean
+  },
   data() {
     return {
       review: {
-        title: "",
+        title: this.ptitle,
         content: "",
         rating: {
-          total: 5
+          total: this.prating
         }
       },
       state: this.value,
@@ -90,26 +95,31 @@ export default {
   },
   methods: {
     async addReview() {
-      const username = this.$store.state.auth.user.username;
-      await this.$store
-        .dispatch("review/addReview", {
-          review: this.review,
-          bookId: this.$route.params.id,
-          username: username
-        })
-        .then(() => {
-          this.$message({
-            message: "レビューの投稿に成功しました",
-            type: "success"
+      if (this.reviewed) {
+      } else {
+        const username = this.$store.state.auth.user.username;
+
+        await this.$store
+          .dispatch("review/addReview", {
+            review: this.review,
+            bookId: this.$route.params.id,
+            username: username
+          })
+          .then(() => {
+            this.$message({
+              message: "レビューの投稿に成功しました",
+              type: "success"
+            });
+            this.$emit("input", false);
+          })
+          .catch(() => {
+            this.$message({
+              message: "レビューの投稿に失敗しました",
+              type: "error"
+            });
           });
-          this.$emit("input", false);
-        })
-        .catch(() => {
-          this.$message({
-            message: "レビューの投稿に失敗しました",
-            type: "error"
-          });
-        });
+      }
+
       // console.log(this.$route.params.id);
     }
   }

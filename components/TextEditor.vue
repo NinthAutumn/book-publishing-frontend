@@ -23,10 +23,10 @@
 
 <script>
 export default {
-  props: ["value", "placeholder"],
+  props: ["value", "placeholder", "content"],
   data() {
     return {
-      text: "",
+      text: this.content,
       textArray: [],
       tempText: "",
       realArray: [],
@@ -45,6 +45,42 @@ export default {
     },
     textLength() {
       return this.text.replace(/\s/g, "").length;
+    }
+  },
+  created() {
+    if (this.content) {
+      this.text = this.text.replace(/(<([^>]+)>)/gi, "");
+      this.textArray = this.text.split(/\n/);
+      let br = 0;
+      this.realArray = this.textArray
+        .filter((value, index) => {
+          if (value) {
+            br = 0;
+            return true;
+          } else if (br > 0) {
+            return false;
+          } else {
+            br++;
+            return true;
+          }
+        })
+        // .filter(value => value)
+        .map((value, index) => {
+          // console.log(value );
+          if (value) {
+            br = 0;
+            return `<p>${value}</p>`;
+          } else if (index === this.textArray.length - 1) {
+            return "";
+          } else {
+            return `<p><br></p>`;
+          }
+
+          // value + "dog";
+        });
+      this.tempText = this.realArray.join("");
+      // console.log(this.tempText);
+      this.$emit("input", this.tempText);
     }
   },
   methods: {

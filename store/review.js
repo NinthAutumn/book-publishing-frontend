@@ -3,7 +3,8 @@ export const state = () => ({
   reviews: [],
   goodReviews: [],
   reviewed: '',
-  myReviews: []
+  myReviews: [],
+  myReview: {}
 })
 export const getters = {
   allReviews: (
@@ -65,6 +66,9 @@ export const mutations = {
   },
   GET_MYREVIEWS(state, reviews) {
     state.myReviews = reviews
+  },
+  GET_USER_REVIEW(state, review) {
+    state.myReview = review
   }
 }
 export const actions = {
@@ -157,5 +161,13 @@ export const actions = {
   }) {
     const reviews = await this.$axios.get(process.env.baseUrl + '/reviews/myreviews')
     commit('GET_MYREVIEWS', reviews.data)
+  },
+  async myReview({
+    commit
+  }, {
+    bookId
+  }) {
+    const review = await this.$axios.get(process.env.baseUrl + '/reviews/myreview?bookId=' + bookId)
+    commit('GET_USER_REVIEW', review.data)
   }
 }

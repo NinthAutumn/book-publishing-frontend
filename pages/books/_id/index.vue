@@ -120,7 +120,15 @@
           v-if="reviewState"
           :class="{center: $store.state.menuState === 'menu-inactive'}"
         >
-          <ReviewsForm v-model="reviewState"></ReviewsForm>
+          <ReviewsForm v-if="!reviewed" v-model="reviewState"></ReviewsForm>
+          <ReviewsForm
+            v-else
+            :pcontent="$store.state.review.myReview.content"
+            :ptitle="$store.state.review.myReview.title"
+            :prating="$store.state.review.myReview.rating.total"
+            :reviewed="reviewed"
+            v-model="reviewState"
+          ></ReviewsForm>
         </div>
       </transition>
     </div>
@@ -164,8 +172,16 @@ export default {
     allReviews: function(state, change) {
       return state;
     },
-    reviewOpen() {
-      this.reviewState = !this.reviewState;
+    async reviewOpen() {
+      if (this.reviewed) {
+        console.log(this.$route.params.id);
+        await this.$store.dispatch("review/myReview", {
+          bookId: this.$route.params.id
+        });
+        this.reviewState = !this.reviewState;
+      } else {
+        this.reviewState = !this.reviewState;
+      }
     },
     reviewClose() {
       this.reviewState = false;
