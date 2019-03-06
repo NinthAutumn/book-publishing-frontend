@@ -8,7 +8,9 @@
           </div>
           <div class="profile-dropdown__user-text">
             <div class="profile-dropdown__username" v-text="user.username"></div>
-            <div class="profile-dropdown__wallet">{{user.email}}</div>
+            <div class="profile-dropdown__wallet">
+              <Currency amount="50"></Currency>
+            </div>
           </div>
         </div>
         <li
@@ -36,7 +38,11 @@
 </template>
 
 <script>
+import Currency from "@/components/All/Currency";
 export default {
+  components: {
+    Currency
+  },
   data() {
     return {
       navList: [

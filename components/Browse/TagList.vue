@@ -15,7 +15,11 @@
           @mouseenter="moveline(2)"
           class="tag-list__nav__item flex flex--align tag-list__nav__item--filter"
         >除外</div>
-        <i class="tag-list__nav__line" :style="line"></i>
+        <i
+          class="tag-list__nav__line"
+          :class="{'tag-list__nav__line--include': index ===1}"
+          :style="line"
+        ></i>
       </div>
 
       <ul class="tag-list__list flex" v-if="tags.include.length > 0&&index === 1">
@@ -58,8 +62,29 @@
             >
           </div>
         </transition>
-        <div class="tag-list__add" @click="showForm">
+        <div
+          class="tag-list__add"
+          :class="{'tag-list__add--exclude':index!==1}"
+          @click="showForm"
+          v-if="!form"
+        >
           <fa icon="plus"></fa>
+        </div>
+        <div
+          class="tag-list__add"
+          :class="{'tag-list__add--exclude': index!==1}"
+          @click="showForm"
+          v-if="form&&tag"
+        >
+          <fa icon="plus"></fa>
+        </div>
+        <div
+          class="tag-list__add"
+          :class="{'tag-list__add--exclude':index!==1}"
+          @click="showForm"
+          v-if="form&&!tag"
+        >
+          <fa icon="minus"></fa>
         </div>
       </div>
     </div>
@@ -250,14 +275,20 @@ export default {
       position: absolute;
       top: 100%;
       content: "";
-      border-top: 2px solid $primary;
+      border-top: 3px solid $primary;
       transition: 300ms;
+      &--include {
+        border-top: 3px solid $secondary;
+      }
     }
   }
   &__add {
     font-size: 14px;
     color: $secondary;
     transition: 300ms;
+    &--exclude {
+      color: $primary;
+    }
     .fa-plus {
       // transform: scale(1.1);
       transition: 300ms;
