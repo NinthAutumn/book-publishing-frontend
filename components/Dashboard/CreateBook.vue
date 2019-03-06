@@ -212,8 +212,8 @@ export default {
     margin: auto;
   }
   .avatar {
-    width: 30.8rem;
-    height: 45.9rem;
+    width: 130px;
+    height: 191px;
     display: block;
   }
 }

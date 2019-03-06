@@ -26,7 +26,10 @@
           @click="removeItem(tag)"
           @mouseenter="batsuState"
           @mouseleave="batsuState"
-        >{{tag}}</li>
+        >
+          {{tag}}
+          <fa style="margin-left:5px;" icon="times"></fa>
+        </li>
       </ul>
       <ul class="tag-list__list flex" v-if="tags.exclude.length > 0&&index !== 1">
         <li
@@ -36,7 +39,10 @@
           @click="removeItem(tag)"
           @mouseenter="batsuState"
           @mouseleave="batsuState"
-        >{{tag}}</li>
+        >
+          {{tag}}
+          <fa style="margin-left:5px;" icon="times"></fa>
+        </li>
       </ul>
 
       <div class="tag-add__form flex flex--align">
@@ -286,6 +292,13 @@ export default {
     &--exclude {
       color: $primary;
       border: 1px solid $primary;
+      &:hover {
+        transition: 100ms;
+        cursor: pointer;
+        user-select: none;
+        color: white;
+        background-color: $primary !important;
+      }
     }
     &:hover {
       transition: 100ms;

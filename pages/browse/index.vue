@@ -12,9 +12,9 @@
               <Select
                 :width="100"
                 v-model="type"
-                :name="'詳細条件'"
+                name="詳細条件"
                 :object="sort_type"
-                :transition="'grow-shrink'"
+                transition="grow-shrink"
                 def="視聴回数"
               ></Select>
             </div>
@@ -22,9 +22,9 @@
               <Select
                 :width="100"
                 v-model="direction"
-                :name="'方向'"
+                name="方向"
                 :object="sort_directions"
-                :transition="'grow-shrink'"
+                transition="grow-shrink"
                 def="下り"
               ></Select>
             </div>
@@ -33,10 +33,10 @@
             <div class="browse-page__filter-genre">
               <Select
                 v-model="selected_genre"
-                :transition="'grow-shrink'"
+                transition="grow-shrink"
                 :multiple="true"
                 :data="genre_list"
-                :name="'ジャンル'"
+                name="ジャンル"
                 :modalD="modalDirection"
               ></Select>
             </div>
