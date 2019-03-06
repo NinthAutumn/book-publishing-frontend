@@ -8,8 +8,9 @@
           </div>
           <div class="profile-dropdown__user-text">
             <div class="profile-dropdown__username" v-text="user.username"></div>
-            <div class="profile-dropdown__wallet">
+            <div class="profile-dropdown__wallet flex flex--align flex--between">
               <Currency amount="50"></Currency>
+              <div class="profile-dropdown__wallet__buy-more">買う</div>
             </div>
           </div>
         </div>
@@ -82,13 +83,14 @@ export default {
     padding: 16px;
     height: 100%;
     color: black;
-    background-color: rgb(240, 240, 240);
+    // background-color: black;
   }
   &__profile-pic {
     margin-right: 10px;
     img {
       width: 50px;
       border-radius: 100px;
+      box-shadow: 1px 1px 5px rgb(233, 233, 233);
     }
   }
 
@@ -100,9 +102,29 @@ export default {
     font-size: 18px;
   }
   &__wallet {
-    margin-top: 5px;
     font-size: 15px;
     color: rgb(46, 46, 46);
+    &__buy-more {
+      margin-left: 10px;
+      // height: 2px
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      // padding: 10px;
+      user-select: none;
+      border-radius: 2px;
+      &:hover {
+        cursor: pointer;
+        background-color: $primary;
+        color: white;
+      }
+      height: 30px;
+      width: 100px;
+      background-color: white;
+      border: 1px solid $primary;
+      color: $primary;
+    }
   }
   &__list {
     position: relative;

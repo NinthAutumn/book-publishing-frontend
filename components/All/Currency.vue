@@ -23,21 +23,20 @@ export default {
 
 <style lang="scss">
 .currency {
-  position: relative;
   &__number {
     // font-family: Kameron;
-    font-size: 16px;
+    font-size: 17px;
     color: black;
     // font-weight: bold;
   }
   &__type {
-    height: 20px;
-    width: 20px;
+    height: 23px;
+    width: 23px;
     position: relative;
     margin-left: 5px;
   }
-  perspective: 400px;
-  perspective-origin: 100% 100%;
+  // perspective: 400px;
+  // perspective-origin: 100% 100%;
   // perspective-origin-y: 100%;
   // perspective-origin-x: 10%;
 
@@ -45,33 +44,33 @@ export default {
     position: absolute;
     fill: $secondary;
     font-weight: bold;
-    width: 20px;
-    height: 20px;
+    width: 23px;
+    height: 23px;
     // margin-left: 15px;
 
     transition: 300ms;
     // left: 24px;
-    transform: rotate3d(0, 1, 0, 40deg);
+    // transform: rotate3d(0, 1, 0, 40deg);
     z-index: 1;
     top: 1px;
     &--back {
       top: 1px;
-      transform: rotate3d(0, 1, 0, 40deg);
+      // transform: rotate3d(0, 1, 0, 40deg);
       left: 1px;
       position: absolute;
-      height: 20px;
-      width: 20px;
+      height: 23px;
+      width: 23px;
       background-color: $secondary;
       // box-shadow: 1px 1px 5px grey;
-      border-radius: 100px;
+      border-radius: 1000px;
       transition: 300ms;
     }
 
-    // box-shadow: inset 1px 1px 5px rgb(253, 225, 225),
+    // box-shadow: inset 1px 1px 5px rgb(253, 225, 225);
     //   1px 1px 5px rgb(255, 241, 241);
     // box-shadow: 1px 1px 5px grey;
-    border-radius: 100px;
-    background-color: #ffffff;
+    // border-radius: 25000px;
+    // background-color: #ffffff;
   }
 }
 </style>
