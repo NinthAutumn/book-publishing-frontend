@@ -25,7 +25,7 @@ export default {
 .currency {
   &__number {
     // font-family: Kameron;
-    font-size: 17px;
+    font-size: 16px;
     color: black;
     // font-weight: bold;
   }
@@ -44,8 +44,8 @@ export default {
     position: absolute;
     fill: $secondary;
     font-weight: bold;
-    width: 23px;
-    height: 23px;
+    width: 22px;
+    height: 22px;
     // margin-left: 15px;
 
     transition: 300ms;
@@ -58,8 +58,8 @@ export default {
       // transform: rotate3d(0, 1, 0, 40deg);
       left: 1px;
       position: absolute;
-      height: 23px;
-      width: 23px;
+      height: 22px;
+      width: 22px;
       background-color: $secondary;
       // box-shadow: 1px 1px 5px grey;
       border-radius: 1000px;

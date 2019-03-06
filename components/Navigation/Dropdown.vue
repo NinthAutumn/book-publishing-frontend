@@ -70,8 +70,8 @@ export default {
 <style lang="scss">
 .profile-dropdown {
   position: absolute;
-  top: 55px;
-  right: 10px;
+  top: 50px;
+  right: 20px;
   width: 300px;
   box-sizing: border-box;
   background-color: white;
@@ -83,7 +83,7 @@ export default {
     padding: 16px;
     height: 100%;
     color: black;
-    // background-color: black;
+    background-color: rgb(243, 243, 243);
   }
   &__profile-pic {
     margin-right: 10px;
@@ -133,7 +133,7 @@ export default {
       transition: 100ms;
       color: black;
       &:hover {
-        background-color: rgb(235, 235, 235);
+        background-color: rgb(248, 248, 248);
         cursor: pointer;
         transition: 100ms;
       }
