@@ -169,5 +169,15 @@ export const actions = {
   }) {
     const review = await this.$axios.get(process.env.baseUrl + '/reviews/myreview?bookId=' + bookId)
     commit('GET_USER_REVIEW', review.data)
+  },
+  async updateReview({
+    commit
+  }, {
+    id,
+    review
+  }) {
+    const update = await this.$axios.patch(process.env.baseUrl + '/reviews/review?id=' + id, {
+      review
+    })
   }
 }

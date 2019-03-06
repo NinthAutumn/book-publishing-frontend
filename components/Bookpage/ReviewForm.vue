@@ -96,6 +96,11 @@ export default {
   methods: {
     async addReview() {
       if (this.reviewed) {
+        await this.$store.dispatch("review/updateReview", {
+          id: this.$store.state.review.myReview._id,
+          review: this.review
+        });
+        await this.$store.dispatch("review/showAll", this.$route.params.id);
       } else {
         const username = this.$store.state.auth.user.username;
 
