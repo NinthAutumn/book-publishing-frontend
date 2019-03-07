@@ -193,7 +193,7 @@ export default {
   $self: &;
   user-select: none;
   // width: 100%;
-  width: 100%;
+  // width: 100%;
   height: 35px;
   position: relative;
   margin: 0 5px;

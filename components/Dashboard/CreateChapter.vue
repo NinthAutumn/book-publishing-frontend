@@ -9,7 +9,10 @@
       </div>
       <div class="chapter-form__options flex">
         <Select name="章を選ぶ" icon="archive" :data="volumes"></Select>
-        <Select v-model="form.locked" def="無料" icon="yen-sign" name="有料" :object="locked"></Select>
+        <Select v-model="form.locked" def="無料" icon="yen-sign" name="時価" :object="locked"></Select>
+        <div class="chapter-form__options__user-news flex flex--align flex--center">
+          <fa class="chapter-form__options__user-news__icon" icon="newspaper"></fa>告知
+        </div>
       </div>
 
       <transition name="slide-fade">
@@ -86,15 +89,7 @@
               rows="5"
             ></textarea>
           </div>
-          <div class="form-control flex flex--align">
-            <label for="locked" style="margin-right:10px;">有料</label>
-            <el-switch v-model="form.locked"></el-switch>
-          </div>
-          <div class="lock-method" v-if="form.locked">
-            <p>ブロンズ作者の場合: 字数 x 0.00303 ゴールド</p>
-            <p>シルバー作者の場合: 字数 x 0.00404 ゴールド</p>
-            <p>ゴールド作者の場合: 字数 x 0.00505 ゴールド</p>
-          </div>
+
           <div class="form-control flex flex--align">
             <label for="schedule" style="margin-right:10px;">投稿する時間を指定する</label>
             <el-switch v-model="schedule"></el-switch>
@@ -390,8 +385,27 @@ export default {
   //
 }
 .chapter-form {
+  position: relative;
   &__options {
-    width: 220px;
+    &__user-news {
+      height: 30px;
+      width: 100px;
+      font-size: 14px;
+      box-shadow: 1px 1px 5px rgb(235, 235, 235);
+      color: $primary;
+      // border: 1px solid rgb(241, 241, 241);
+      transition: 200ms;
+      &:hover {
+        cursor: pointer;
+        user-select: none;
+        background-color: rgb(247, 247, 247);
+        transition: 200ms;
+      }
+
+      &__icon {
+        margin-right: 5px;
+      }
+    }
   }
   &__save-draft {
     &__button {
