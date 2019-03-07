@@ -2,6 +2,11 @@
 <template>
   <div class="chapter-form">
     <form action class="flex flex-column chapter-new" @submit.prevent="createChapter">
+      <div class="chapter-form__save-draft flex flex--align flex--right">
+        <div class="chapter-form__save-draft__button flex flex--align flex--center">
+          <fa class="chapter-form__save-draft__icon" icon="save"></fa>保存
+        </div>
+      </div>
       <div class="chapter-form__navigation flex flex--between" style="margin-top:10px;">
         <div
           @click="back"
@@ -204,6 +209,7 @@ export default {
         content: "",
         date: "",
         wordCount: "",
+        volume: this.$route.params.id,
         locked: false,
         extra: {
           announcement: {
@@ -298,13 +304,19 @@ export default {
       if (!this.form.content || !this.form.title) {
         return (this.progress = 2);
       }
+      let state = "published";
+      if (this.form.date) {
+        state = "scheduled";
+      }
 
       const chapter = {
         title: this.form.title,
         content: this.form.content,
-        date: "",
+        schedule: this.form.date,
         wordCount: this.form.wordCount.length,
         locked: this.form.locked,
+        voluem: this.form.volume,
+        state,
         extra: {
           announcement: {
             header: this.form.extra.announcement.header,
@@ -358,6 +370,7 @@ export default {
 .chapter-new-submit {
   margin-bottom: 10px;
   transition: 300ms;
+  border-radius: 0;
   &:hover {
     background-color: #fff;
     border: 1px solid $primary;
@@ -425,6 +438,27 @@ export default {
   //
 }
 .chapter-form {
+  &__save-draft {
+    &__button {
+      font-size: 15px;
+      background-color: white;
+      border: 1px solid $secondary-light;
+      width: 80px;
+      color: $secondary-light;
+      height: 35px;
+      transition: 100ms;
+      &:hover {
+        background-color: $secondary-light;
+        color: white;
+        cursor: pointer;
+        transition: 100ms;
+      }
+    }
+
+    &__icon {
+      margin-right: 5px;
+    }
+  }
   .el-button {
     border-radius: 0 !important;
   }
@@ -436,6 +470,7 @@ export default {
   &__navigation {
     &__button {
       // margin: 0 10px;
+      border-radius: 100px;
       height: 35px;
       width: 70px;
       display: flex;

@@ -144,6 +144,16 @@ export const actions = {
     await this.$axios.get(process.env.baseUrl + '/chapters/published?bookId=' + bookId).then((res) => {
       commit('P_TOC', res.data)
     })
+  },
+  async createChapter({
+    commit
+  }, {
+    chapter,
+    bookId
+  }) {
+    await this.$axios.post(process.env.baseUrl + '/chapters/add?id=' + bookId,
+      chapter
+    )
   }
 
 }
