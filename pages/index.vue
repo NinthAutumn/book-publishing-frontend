@@ -9,13 +9,11 @@
     <div class="main-books">
       <div class="card-title flex flex--align">
         <h3>今日のおすすめ</h3>
-        <!-- <BlobOne></BlobOne> -->
-        <!-- <blob-two class="blob-back"></blob-two> -->
       </div>
       <BooksList :books="$store.state.book.books.highestrated"></BooksList>
       <ReviewList></ReviewList>
       <div class="card-title">
-        <h3>今急上昇中の小説</h3>
+        <h3>今人気急上昇中の作品</h3>
       </div>
       <BooksList :trendings="$store.state.book.books.trending"></BooksList>
       <Ranking></Ranking>
@@ -38,72 +36,16 @@ export default {
     BlobOne,
     BlobTwo
   },
-  // data() {
-  //   return {
-  //     books: [
-  //       {
-  //         title: "神達に拾われた男",
-  //         cover: require("~/assets/bookcover.png"),
-  //         rating: 5
-  //       },
-  //       {
-  //         title: "この素晴らしい世界に祝福を!",
-  //         cover: require("~/assets/book1.jpeg"),
-  //         rating: 4.3
-  //       },
-  //       {
-  //         title:
-  //           "(´・ω・`)最強勇者はお払い箱→魔王になったらずっと俺の無双ターン",
-  //         cover: require("~/assets/book2.jpeg"),
-  //         rating: 2.5
-  //       },
-  //       {
-  //         title: "神達に拾われた男",
-  //         cover: require("~/assets/bookcover.png"),
-  //         rating: 3.4
-  //       },
-  //       {
-  //         title: "神達に拾われた男",
-  //         cover: require("~/assets/book1.jpeg"),
-  //         rating: 1.2
-  //       },
-  //       {
-  //         title: "神達に拾われた男",
-  //         cover: require("~/assets/book2.jpeg"),
-  //         rating: 4.5
-  //       },
-  //       {
-  //         title: "この素晴らしい世界に祝福を!",
-  //         cover: require("~/assets/book1.jpeg")
-  //       },
-  //       {
-  //         title:
-  //           "(´・ω・`)最強勇者はお払い箱→魔王になったらずっと俺の無双ターン",
-  //         cover: require("~/assets/book2.jpeg")
-  //       },
-  //       {
-  //         title: "この素晴らしい世界に祝福を!",
-  //         cover: require("~/assets/book1.jpeg")
-  //       },
-  //       {
-  //         title:
-  //           "(´・ω・`)最強勇者はお払い箱→魔王になったらずっと俺の無双ターン",
-  //         cover: require("~/assets/book2.jpeg")
-  //       }
-  //     ],
-  //     size: null
-  //   };
-  // },
   methods: {},
   async fetch({ store }) {
     await store.dispatch("book/allBooks");
     await store.dispatch("review/mostLiked");
     await store.dispatch("ranking/bookAnalysisHomeRanking", {
       storeType: "bookmark",
-      limit: 10
+      limit: 7
     });
   },
-  async mounted() {},
+  async created() {},
   auth: false
 };
 </script>

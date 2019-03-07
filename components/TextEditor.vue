@@ -23,10 +23,14 @@
 
 <script>
 export default {
-  props: ["value", "placeholder", "content"],
+  props: {
+    value: String,
+    content: String,
+    placeholder: String
+  },
   data() {
     return {
-      text: this.content,
+      text: "",
       textArray: [],
       tempText: "",
       realArray: [],
@@ -49,6 +53,7 @@ export default {
   },
   created() {
     if (this.content) {
+      this.text = this.content;
       this.text = this.text.replace(/(<([^>]+)>)/gi, "");
       this.textArray = this.text.split(/\n/);
       let br = 0;

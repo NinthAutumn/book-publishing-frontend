@@ -136,10 +136,11 @@
           </el-upload>
         </div>
       </transition>
-      <div class="chapter-form__navigation flex flex--between">
+      <div class="chapter-form__navigation flex flex--between" style="margin-top:10px;">
         <div
           v-if="progress > 1"
           class="divider chapter-form__navigation__button chapter-form__navigation__button--back"
+          @click="back"
         >
           <fa
             class="chapter-form__navigation__item chapter-form__navigation__item--icon"

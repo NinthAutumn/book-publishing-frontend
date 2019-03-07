@@ -41,6 +41,7 @@ export default {
   &__title {
     font-size: 16px;
     width: 120px;
+    // color: grey;
   }
   &__content {
     font-size: 16px;
