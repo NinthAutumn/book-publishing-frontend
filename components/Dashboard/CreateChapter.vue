@@ -7,41 +7,53 @@
           <fa class="chapter-form__save-draft__icon" icon="save"></fa>保存
         </div>
       </div>
-      <div class="chapter-form__navigation flex flex--between" style="margin-top:10px;">
-        <div
-          @click="back"
-          class="divider chapter-form__navigation__button chapter-form__navigation__button--back"
-          v-if="progress > 1"
-        >
-          <fa
-            class="chapter-form__navigation__item chapter-form__navigation__item--icon"
-            style
-            icon="chevron-left"
-          ></fa>
-          <p
-            class="chapter-form__navigation__item chapter-form__navigation__item--text"
-            style="margin-left:2px;"
-          >戻ろ</p>
-        </div>
-        <div class="back" style="width:50px;" v-if="progress === 1"></div>
-        <div
-          @click="front"
-          v-if="progress < 3"
-          class="divider chapter-form__navigation__button chapter-form__navigation__button--front"
-        >
-          <p
-            class="chapter-form__navigation__item chapter-form__navigation__item--text"
-            style="margin-right:2px;"
-          >進む</p>
-          <fa
-            class="chapter-form__navigation__item chapter-form__navigation__item--icon"
-            style
-            icon="chevron-right"
-          ></fa>
-        </div>
+      <div class="chapter-form__options flex">
+        <Select name="章を選ぶ" icon="archive" :data="volumes"></Select>
+        <Select v-model="form.locked" def="無料" icon="yen-sign" name="有料" :object="locked"></Select>
       </div>
+
       <transition name="slide-fade">
-        <div class="chapter-form__announcement" v-if="progress === 1">
+        <div class="chapter-form__content-subject">
+          <div class="form-control">
+            <input
+              placeholder="タイトル"
+              type="text"
+              class="chapter-title form-input"
+              v-model="form.title"
+              required
+              maxlength="100"
+            >
+          </div>
+          <div class="form-control">
+            <TextEditor
+              class="chapter-content-new"
+              v-model="form.content"
+              :placeholder="contentHolder"
+              required
+            ></TextEditor>
+          </div>
+        </div>
+      </transition>
+      <transition name="slide-fade">
+        <div class="chapter-form__extra">
+          <el-upload
+            class="upload-demo"
+            action
+            :on-preview="handlePreview"
+            :on-remove="handleRemove"
+            :on-success="successPhoto"
+            list-type="picture"
+            :limit="3"
+            :on-exceed="handleExceed"
+            accept="image/*"
+          >
+            <el-button size="small" type="primary">絵など写真の投稿</el-button>
+            <div slot="tip" class="el-upload__tip">jpeg などイメージフォーマットでお願いします</div>
+          </el-upload>
+        </div>
+      </transition>
+      <transition name="slide-fade">
+        <div class="chapter-form__announcement">
           <div class="form-control flex-column">
             <transition name="placeholder-up">
               <div class="label-animation" for="header" v-if="!upPlaceHolder">上書き</div>
@@ -101,81 +113,7 @@
           </transition>
         </div>
       </transition>
-      <transition name="slide-fade">
-        <div class="chapter-form__content-subject" v-if="progress === 2">
-          <div class="form-control">
-            <input
-              placeholder="タイトル"
-              type="text"
-              class="chapter-title form-input"
-              v-model="form.title"
-              required
-              maxlength="100"
-            >
-          </div>
-          <div class="form-control">
-            <TextEditor
-              class="chapter-content-new"
-              v-model="form.content"
-              :placeholder="contentHolder"
-              required
-            ></TextEditor>
-          </div>
-        </div>
-      </transition>
-      <transition name="slide-fade">
-        <div class="chapter-form__extra" v-if="progress === 3">
-          <el-upload
-            class="upload-demo"
-            action
-            :on-preview="handlePreview"
-            :on-remove="handleRemove"
-            :on-success="successPhoto"
-            list-type="picture"
-            :limit="3"
-            :on-exceed="handleExceed"
-            accept="image/*"
-          >
-            <el-button size="small" type="primary">絵など写真の投稿</el-button>
-            <div slot="tip" class="el-upload__tip">jpeg などイメージフォーマットでお願いします</div>
-          </el-upload>
-        </div>
-      </transition>
-      <div class="chapter-form__navigation flex flex--between" style="margin-top:10px;">
-        <div
-          v-if="progress > 1"
-          class="divider chapter-form__navigation__button chapter-form__navigation__button--back"
-          @click="back"
-        >
-          <fa
-            class="chapter-form__navigation__item chapter-form__navigation__item--icon"
-            style
-            icon="chevron-left"
-          ></fa>
-          <p
-            class="chapter-form__navigation__item chapter-form__navigation__item--text"
-            style="margin-left:2px;"
-          >戻る</p>
-        </div>
-        <div class="back" style="width:50px;" v-if="progress === 1"></div>
-        <div
-          class="divider chapter-form__navigation__button chapter-form__navigation__button--front"
-          v-if="progress < 3"
-          @click="front"
-        >
-          <p
-            class="chapter-form__navigation__item chapter-form__navigation__item--text"
-            style="margin-right:2px;"
-          >進む</p>
-          <fa
-            class="chapter-form__navigation__item chapter-form__navigation__item--icon"
-            style
-            icon="chevron-right"
-          ></fa>
-        </div>
-      </div>
-
-      <div class="flex flex--right" v-if="progress === 3">
+      <div class="flex flex--right">
         <input
           type="submit"
           class="form-submit form-submit--primary chapter-new-submit"
@@ -188,12 +126,25 @@
 
 <script>
 import TextEditor from "@/components/TextEditor";
+import Select from "@/components/All/Select";
 export default {
   components: {
-    TextEditor
+    TextEditor,
+    Select
   },
   data() {
     return {
+      volumes: ["設定", "001", "002"],
+      locked: [
+        {
+          key: "無料",
+          value: false
+        },
+        {
+          key: "有料",
+          value: true
+        }
+      ],
       upPlaceHolder: "上書き",
       downPlaceHolder: "下書き",
       contentHolder: "本文",
@@ -439,6 +390,9 @@ export default {
   //
 }
 .chapter-form {
+  &__options {
+    width: 220px;
+  }
   &__save-draft {
     &__button {
       font-size: 15px;
@@ -471,8 +425,10 @@ export default {
   &__navigation {
     &__button {
       // margin: 0 10px;
+
       border-radius: 100px;
-      height: 35px;
+
+      height: 30px;
       width: 70px;
       display: flex;
       justify-content: center;
@@ -512,7 +468,7 @@ export default {
     }
     &__item {
       line-height: 0;
-      font-size: 16px;
+      font-size: 14px;
       // &--icon {
     }
   }

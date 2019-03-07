@@ -5,17 +5,26 @@
         class="select-component__name flex flex--align flex--center"
         @click="openModal"
         v-if="!multiple&&!selectD&&!def"
-      >{{name}}</div>
+      >
+        <fa v-if="icon" class="select-component__icon" :icon="icon"></fa>
+        {{name}}
+      </div>
       <div
         class="select-component__name flex flex--align flex--center"
         @click="openModal"
         v-if="!multiple&&def&&!selectD"
-      >{{def}}</div>
+      >
+        <fa v-if="icon" class="select-component__icon" :icon="icon"></fa>
+        {{def}}
+      </div>
       <div
         class="select-component__name flex flex--align flex--center"
         @click="openModal"
         v-if="!multiple&&selectD"
-      >{{selectD}}</div>
+      >
+        <fa v-if="icon" class="select-component__icon" :icon="icon"></fa>
+        {{selectD}}
+      </div>
       <div
         class="select-component__name select-component__name--multiple flex flex--align flex--center"
         @click="openModal"
@@ -77,7 +86,8 @@ export default {
     transition: String,
     object: Array,
     def: String,
-    modalD: String
+    modalD: String,
+    icon: String
   },
   data() {
     return {
@@ -188,6 +198,9 @@ export default {
   position: relative;
   margin: 0 5px;
   // z-index: 1;
+  &__icon {
+    margin-right: 5px;
+  }
   &__name {
     color: grey;
     font-size: 14px;
