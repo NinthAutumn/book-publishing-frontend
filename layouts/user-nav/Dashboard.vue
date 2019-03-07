@@ -13,7 +13,7 @@
         <nuxt-link
           v-if="$route.name ==='dashboard-books-id-index-draft'||$route.name ==='dashboard-books-id-index-published'||$route.name ==='dashboard-books-id-index'||$route.name ==='dashboard-books-id-index-deleted'||$route.name ==='dashboard-books-id-new-chapter'"
           class="write-chapter button--shadow button button--secondary--open"
-          to="new-chapter"
+          :to="{path: `new-chapter`}"
         >
           <fa icon="pen-nib" style="margin-right:5px;"></fa>新しい話を書く
         </nuxt-link>

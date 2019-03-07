@@ -12,12 +12,27 @@
 <script>
 import CreateChapter from "@/components/Dashboard/CreateChapter";
 export default {
+  name: "new-chapter",
   layout: "user-nav/User",
+  data() {
+    return {
+      chapter: {}
+    };
+  },
   components: {
     CreateChapter
   },
   created() {
-    // console.log(this.$route.name);
+    console.log();
+    this.chapter = this.$store.state.chapter.pTOC[
+      this.$store.state.chapter.pTOC.length - 1
+    ][
+      this.$store.state.chapter.pTOC[this.$store.state.chapter.pTOC.length - 1]
+        .length - 1
+    ];
+  },
+  async fetch({ store, params }) {
+    await store.dispatch("chapter/publishedTOC", params.id);
   }
 };
 </script>

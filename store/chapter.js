@@ -73,14 +73,6 @@ export const mutations = {
   }
 }
 export const actions = {
-  async getChapter({
-    commit
-  }, chapterId) {
-    await this.$axios.get(process.env.baseUrl + '/chapters/show?id=' + chapterId).then((res) => {
-      commit('SHOW', res.data)
-    })
-
-  },
   async nextChapter({
     commit
   }, {
@@ -99,15 +91,6 @@ export const actions = {
     }
 
   },
-  async previousChapter({
-    commit
-  }, {
-    index,
-    bookId
-  }) {
-    const chapter = await this.$axios.get(process.env.baseUrl + '/chapters/previous?index=' + index + '&bookId=' + bookId)
-    commit('infiniteNext', chapter.data)
-  },
   async tableOfContent({
     commit,
     state
@@ -123,13 +106,6 @@ export const actions = {
     })
     commit('LOADING_FALSE')
 
-  },
-  async TOCBook({
-    commit
-  }, bookId) {
-    await this.$axios.get(process.env.baseUrl + '/chapters/toc?bookId=' + bookId).then((res) => {
-      commit('TOC_BOOK', res.data)
-    })
   },
   async dashboardTOC({
     commit

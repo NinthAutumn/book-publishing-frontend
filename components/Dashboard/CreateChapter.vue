@@ -209,7 +209,8 @@ export default {
         content: "",
         date: "",
         wordCount: "",
-        volume: this.$route.params.id,
+        volume: "",
+        bookId: this.$route.params.id,
         locked: false,
         extra: {
           announcement: {
@@ -305,7 +306,7 @@ export default {
         return (this.progress = 2);
       }
       let state = "published";
-      if (this.form.date) {
+      if (this.schedule) {
         state = "scheduled";
       }
 
@@ -325,7 +326,7 @@ export default {
           drawings: this.$store.state.upload.urls
         }
       };
-      // await this.$store.dispatch();
+      await this.$store.dispatch("chapter/createchapter", { bookId, chapter });
     },
     handleExceed(files, fileList) {
       this.$message.warning(
