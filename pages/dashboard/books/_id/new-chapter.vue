@@ -23,7 +23,6 @@ export default {
     CreateChapter
   },
   created() {
-    console.log();
     this.chapter = this.$store.state.chapter.pTOC[
       this.$store.state.chapter.pTOC.length - 1
     ][
