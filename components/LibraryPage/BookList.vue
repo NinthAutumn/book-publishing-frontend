@@ -1,39 +1,5 @@
 <template>
   <div class="library-booklist">
-    <div class="flex-divider flex flex--right">
-      <div class="library-booklist__sort">
-        <div
-          @click="showSelect"
-          class="flex-divider flex flex--center flex--align"
-          :class="{selected: itemSelected}"
-        >
-          <div class="library-booklist__sort__icon">
-            <fa icon="sort"></fa>
-          </div>
-          <div class="library-booklist__sort__text" v-text="selected"></div>
-        </div>
-
-        <transition name="grow-shrink">
-          <div
-            v-if="sortSelect"
-            v-click-outside="hideSelect"
-            class="library-booklist__sort__options flex flex-column flex--center"
-          >
-            <div
-              class="library-booklist__sort__options__item disabled flex flex--align flex--center"
-            >選ぶ</div>
-
-            <div
-              class="library-booklist__sort__options__item flex flex--align flex--center"
-              @click="selectedOrder(item)"
-              v-for="(item, index) in sortTypes"
-              :key="index"
-              v-text="item"
-            ></div>
-          </div>
-        </transition>
-      </div>
-    </div>
     <transition-group tag="ul" class="library-booklist__list" v-if="trendings">
       <li class="library-booklist__item" v-for="(book, index) in books" :key="index">
         <Book :progress="book.history" :book="book.bookId"></Book>
@@ -74,12 +40,7 @@ export default {
     },
     selectedOrder(order) {
       this.selected = order;
-      if (order === "入れた順") {
-        this.$store.commit("library/SORT_BY_DATE");
-      } else if (order === "最近読んだ順") {
-      } else {
-        this.$store.commit("library/SORT_BY_NAME");
-      }
+
       this.itemSelected = true;
       this.sortSelect = false;
     }

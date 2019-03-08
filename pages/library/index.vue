@@ -22,6 +22,16 @@
     </div>
     <div class="flex-divider flex flex-row flex--between">
       <div v-if="selectedTabName === 'bookmark'" class="library-bookmark">
+        <div class="library-bookmark__select flex flex--align flex--right">
+          <Select
+            v-model="order"
+            def="入れた順"
+            transition="grow-shrink"
+            icon="sort"
+            name="並び替え"
+            :data="sortTypes"
+          ></Select>
+        </div>
         <BookList :trendings="true" :books="bookmarks"></BookList>
       </div>
       <div class="library-history" v-if="selectedTabName=== 'history'">
@@ -38,10 +48,12 @@
 <script>
 import BookList from "@/components/LibraryPage/BookList";
 import Profile from "@/components/LibraryPage/Profile";
+import Select from "@/components/All/Select";
 export default {
   components: {
     BookList,
-    Profile
+    Profile,
+    Select
   },
   data() {
     return {
@@ -53,8 +65,20 @@ export default {
         width: "96px",
         left: "0px"
       },
-      selectedTabName: "bookmark"
+      selectedTabName: "bookmark",
+      sortTypes: ["最近読んだ順", "入れた順", "名前順"],
+      order: "入れた順"
     };
+  },
+  watch: {
+    order: function(e) {
+      if (e === "入れた順") {
+        this.$store.commit("library/SORT_BY_DATE");
+      } else if (e === "最近読んだ順") {
+      } else {
+        this.$store.commit("library/SORT_BY_NAME");
+      }
+    }
   },
   computed: {
     bookmarks() {
@@ -65,7 +89,7 @@ export default {
     }
   },
   methods: {
-    sortSelect(type) {},
+    sortSelect() {},
     navLineOut() {
       this.line = this.selectedTab;
     },
