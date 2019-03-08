@@ -10,8 +10,17 @@
       <div class="chapter-form__options flex">
         <Select name="章を選ぶ" icon="archive" :data="volumes"></Select>
         <Select v-model="form.locked" def="無料" icon="yen-sign" name="時価" :object="locked"></Select>
-        <div class="chapter-form__options__user-news flex flex--align flex--center">
+        <div
+          class="chapter-form__options__user-news flex flex--align flex--center"
+          @click="announcementOpen"
+        >
           <fa class="chapter-form__options__user-news__icon" icon="newspaper"></fa>告知
+        </div>
+        <div
+          class="chapter-form__options__picture-upload flex flex--align flex--center"
+          @click="pictureOpen"
+        >
+          <fa class="chapter-form__options__picture-upload__icon" icon="images"></fa>絵を投稿
         </div>
       </div>
 
@@ -37,75 +46,86 @@
           </div>
         </div>
       </transition>
-      <transition name="slide-fade">
-        <div class="chapter-form__extra">
-          <el-upload
-            class="upload-demo"
-            action
-            :on-preview="handlePreview"
-            :on-remove="handleRemove"
-            :on-success="successPhoto"
-            list-type="picture"
-            :limit="3"
-            :on-exceed="handleExceed"
-            accept="image/*"
-          >
-            <el-button size="small" type="primary">絵など写真の投稿</el-button>
-            <div slot="tip" class="el-upload__tip">jpeg などイメージフォーマットでお願いします</div>
-          </el-upload>
-        </div>
-      </transition>
-      <transition name="slide-fade">
-        <div class="chapter-form__announcement">
-          <div class="form-control flex-column">
-            <transition name="placeholder-up">
-              <div class="label-animation" for="header" v-if="!upPlaceHolder">上書き</div>
-            </transition>
-            <textarea
-              style="margin-bottom: 25px;"
-              maxlength="280"
-              @focus="textAreaFocus(true)"
-              @blur="textAreaBlur(true)"
-              :placeholder="upPlaceHolder"
-              name="header"
-              v-model="form.extra.announcement.header"
-              id
-              rows="5"
-            ></textarea>
+      <dialog class="chapter-form__upload-img" open v-if="picture" v-click-outside="pictureOpen">
+        <transition name="slide-fade">
+          <div class="chapter-form__extra">
+            <el-upload
+              class="upload-demo"
+              action
+              :on-preview="handlePreview"
+              :on-remove="handleRemove"
+              :on-success="successPhoto"
+              list-type="picture"
+              :limit="3"
+              :on-exceed="handleExceed"
+              accept="image/*"
+            >
+              <el-button size="small" type="primary">絵など写真の投稿</el-button>
+              <div slot="tip" class="el-upload__tip">jpeg などイメージフォーマットでお願いします</div>
+            </el-upload>
           </div>
-          <div class="form-control flex-column">
-            <transition name="placeholder-up">
-              <div class="label-animation" for="footer" v-if="!downPlaceHolder">下書き</div>
-            </transition>
-            <textarea
-              style="margin-bottom: 25px;"
-              maxlength="280"
-              @focus="textAreaFocus(false)"
-              @blur="textAreaBlur(false)"
-              :placeholder="downPlaceHolder"
-              name="footer"
-              v-model="form.extra.announcement.footer"
-              id
-              rows="5"
-            ></textarea>
-          </div>
-
-          <div class="form-control flex flex--align">
-            <label for="schedule" style="margin-right:10px;">投稿する時間を指定する</label>
-            <el-switch v-model="schedule"></el-switch>
-          </div>
-          <transition name="grow-shrink">
-            <div class="form-control" v-if="schedule">
-              <date-picker
-                type="datetime"
-                format="DD/MM/YYYY HH:mm"
-                :not-before="$moment()"
-                :minute-step="1"
-                :lang="lang"
-                v-model="form.date"
-              ></date-picker>
-            </div>
+        </transition>
+      </dialog>
+      <dialog
+        open
+        class="chapter-form__announcement"
+        v-if="announcement"
+        v-click-outside="announcementOpen"
+      >
+        <header>告知・広告・思考</header>
+        <div class="form-control flex-column">
+          <transition name="placeholder-up">
+            <div class="label-animation" for="header" v-if="!upPlaceHolder">上書き</div>
           </transition>
+          <textarea
+            style="margin-bottom: 25px;"
+            maxlength="280"
+            @focus="textAreaFocus(true)"
+            @blur="textAreaBlur(true)"
+            :placeholder="upPlaceHolder"
+            name="header"
+            v-model="form.extra.announcement.header"
+            id
+            rows="5"
+          ></textarea>
+        </div>
+        <div class="form-control flex-column">
+          <transition name="placeholder-up">
+            <div class="label-animation" for="footer" v-if="!downPlaceHolder">下書き</div>
+          </transition>
+          <textarea
+            style="margin-bottom: 25px;"
+            maxlength="280"
+            @focus="textAreaFocus(false)"
+            @blur="textAreaBlur(false)"
+            :placeholder="downPlaceHolder"
+            name="footer"
+            v-model="form.extra.announcement.footer"
+            id
+            rows="5"
+          ></textarea>
+        </div>
+        <div class="chapter-form__announcement__decision flex flex--right">
+          <div
+            class="chapter-form__announcement__button flex flex--align flex--center"
+            @click="announcementOpen"
+          >決定</div>
+        </div>
+      </dialog>
+      <div class="form-control flex flex--align">
+        <label for="schedule" style="margin-right:10px;">投稿する時間を指定する</label>
+        <el-switch v-model="schedule"></el-switch>
+      </div>
+      <transition name="grow-shrink">
+        <div class="form-control" v-if="schedule">
+          <date-picker
+            type="datetime"
+            format="DD/MM/YYYY HH:mm"
+            :not-before="$moment()"
+            :minute-step="1"
+            :lang="lang"
+            v-model="form.date"
+          ></date-picker>
         </div>
       </transition>
       <div class="flex flex--right">
@@ -144,6 +164,8 @@ export default {
       downPlaceHolder: "下書き",
       contentHolder: "本文",
       progress: 1,
+      announcement: false,
+      picture: false,
       fileList: [],
       schedule: false,
       error: {
@@ -215,6 +237,13 @@ export default {
         this.downPlaceHolder = "下書き";
       }
     },
+    announcementOpen() {
+      this.announcement = !this.announcement;
+    },
+    pictureOpen() {
+      this.picture = !this.picture;
+    },
+
     front() {
       this.progress++;
       // const counter = document.querySelector(".fr-view");
@@ -289,6 +318,9 @@ export default {
 </script>
 
 <style lang="scss">
+dialog {
+  border: 0px;
+}
 .fr-wrapper {
   font-size: 16px !important;
   color: #444444;
@@ -386,6 +418,47 @@ export default {
 }
 .chapter-form {
   position: relative;
+  &__upload-img {
+    padding: 10px;
+    box-shadow: 1px 1px 5px 2px rgb(238, 238, 238);
+    width: 300px;
+  }
+  &__announcement {
+    &__decision {
+      width: 100%;
+    }
+    &__button {
+      height: 35px;
+      width: 100px;
+      background-color: rgb(240, 240, 240);
+      font-size: 15px;
+      transition: 300ms;
+
+      user-select: none;
+      &:hover {
+        box-shadow: 1px 1px 5px 2px rgb(250, 250, 250);
+        transform: translateY(-2px);
+        transition: 300ms;
+        cursor: pointer;
+      }
+      &:active {
+        transition: 300ms;
+        cursor: pointer;
+        box-shadow: 1px 1px 5px 2px rgb(250, 250, 250);
+        transform: translateY(1px);
+      }
+    }
+    header {
+      font-size: 20px;
+      text-align: center;
+      margin-bottom: 15px;
+    }
+    width: 600px;
+    background-color: #fff;
+    padding: 20px 10px;
+    border: 0px;
+    box-shadow: 1px 1px 5px rgb(223, 223, 223);
+  }
   &__options {
     &__user-news {
       height: 30px;
@@ -393,6 +466,26 @@ export default {
       font-size: 14px;
       box-shadow: 1px 1px 5px rgb(235, 235, 235);
       color: $primary;
+      // border: 1px solid rgb(241, 241, 241);
+      transition: 200ms;
+      margin-right: 5px;
+      &:hover {
+        cursor: pointer;
+        user-select: none;
+        background-color: rgb(247, 247, 247);
+        transition: 200ms;
+      }
+
+      &__icon {
+        margin-right: 5px;
+      }
+    }
+    &__picture-upload {
+      height: 30px;
+      width: 100px;
+      font-size: 14px;
+      box-shadow: 1px 1px 5px rgb(235, 235, 235);
+      color: $secondary;
       // border: 1px solid rgb(241, 241, 241);
       transition: 200ms;
       &:hover {
