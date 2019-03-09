@@ -45,9 +45,7 @@ export default {
       limit: 7
     });
   },
-  async created() {
-    console.log(this.$store.state.review.goodReviews);
-  },
+  async created() {},
   auth: false
 };
 </script>

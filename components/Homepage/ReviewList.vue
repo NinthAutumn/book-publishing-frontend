@@ -1,11 +1,10 @@
 <template>
   <div class="swiping-page">
-    <!-- <h3>Hi</h3> -->
     <span style="font-size:16px;">評価が高いレビュー</span>
     <div v-swiper:mySwiper="swiperOption">
       <div class="swiper-wrapper">
-        <div class="swiper-slide" v-for="review in reviews" :key="review.id">
-          <Review v-if="review.Likes > 1" :review="review"></Review>
+        <div class="swiper-slide" v-for="(review,index) in reviews" :key="index">
+          <Review :review="review"></Review>
         </div>
       </div>
       <div class="background">
@@ -21,7 +20,10 @@
 import Review from "./Review";
 export default {
   props: {},
-  created() {},
+  created() {
+    console.log("this shi ti si fucked up");
+    console.log();
+  },
   computed: {
     reviews() {
       return this.$store.state.review.goodReviews;
