@@ -30,7 +30,7 @@
         @click="openModal"
         v-if="multiple"
       >
-        <fa class="select-component__name__icon" icon="filter"></fa>
+        <fa class="select-component__name__icon" :icon="icon"></fa>
         {{name}}
       </div>
       <transition class="select-component__modal" :name="transition">
@@ -50,7 +50,7 @@
 
         <div
           class="select-component__list select-component__list--multiple"
-          :class="{modalDR: modalD === 'right',modalDL: modalD !== 'right' }"
+          :class="{modalDR: modalD === 'right',modalDL: modalD !== 'right',top: top, bottom: bottom }"
           v-if="multiple && modal"
           :style="gridSetting"
           v-click-outside="closeModal"
@@ -87,7 +87,9 @@ export default {
     object: Array,
     def: String,
     modalD: String,
-    icon: String
+    icon: String,
+    top: Boolean,
+    bottom: Boolean
   },
   data() {
     return {
@@ -220,6 +222,9 @@ export default {
     }
     box-shadow: 1px 1px 5px rgb(238, 238, 238);
   }
+  .top {
+    top: -400px;
+  }
   &__list {
     z-index: 10000;
     background-color: #fff;
@@ -229,9 +234,7 @@ export default {
     top: -30px;
 
     position: absolute;
-    // top: 0;
     box-sizing: border-box;
-    // left: 105px;
     #{$self}__refresh {
       position: absolute;
       top: 10px;

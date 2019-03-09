@@ -4,6 +4,7 @@
     <form ref="form" @submit.prevent="postBook" class="flex flex-column">
       <div class="divider">
         <div class="divider" style="margin-right:10px;">
+          <Select transition="grow-shrink" name="ジャンル" multiple :data="list" icon="location-arrow"></Select>
           <label for="avatar-uploader">本のカバー</label>
           <el-upload
             class="avatar-uploader flex"
@@ -37,14 +38,6 @@
           ></textarea>
         </div>
       </div>
-      <label for="mgenre">メインジャンル</label>
-      <el-select v-model="form.mgenre" filterable placeholder="Select">
-        <el-option v-for="item in list" :key="item" :label="item" :value="item"></el-option>
-      </el-select>
-      <label for="genre">ジャンル</label>
-      <el-select v-model="form.genre" multiple filterable placeholder="Select">
-        <el-option v-for="item in list" :key="item" :label="item" :value="item"></el-option>
-      </el-select>
 
       <label for>タグ</label>
       <el-select
@@ -65,6 +58,7 @@
 </template>
 
 <script>
+import Select from "@/components/All/Select";
 export default {
   data() {
     return {
@@ -109,10 +103,21 @@ export default {
         "経済",
         "推理",
         "青春",
-        "学園"
+        "学園",
+        "ボーイズラブ",
+        "少女愛",
+        "メカ",
+        "少年",
+        "青年",
+        "音楽",
+        "日常",
+        "ゲーム"
       ],
       tags: ["最強", "最弱"]
     };
+  },
+  components: {
+    Select
   },
   methods: {
     handleAvatarSuccess(res, file) {

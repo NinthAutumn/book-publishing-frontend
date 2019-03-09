@@ -12,8 +12,9 @@
           >
         </div>
         <div class="user-books__meta-info">
-          <div class="user-books__title">
-            <p>{{book.title|truncate(17)}}</p>
+          <div class="user-books__title flex flex--align flex--between">
+            <nuxt-link tag="p" :to="{path: `/books/${book._id}`}">{{book.title|truncate(17)}}</nuxt-link>
+            <fa class="user-books__title__icon" icon="cog"></fa>
           </div>
           <div class="user-books__content">
             <div class="user-books__latest-chapter flex flex--align">第3話: これが最新の話なのか</div>
@@ -23,15 +24,19 @@
             </div>
             <div class="user-books__bookmark flex-column flex--center flex--align">
               <div class="user-books__bookmark__title flex flex--align flex--center">ブックマーク数</div>
-              <div class="user-books__bookmark__stat flex flex--align flex--center">234</div>
+              <div
+                class="user-books__bookmark__stat flex flex--align flex--center"
+              >{{book.bookmarkCount}}</div>
             </div>
             <div class="user-books__view flex-column flex--center flex--align">
               <div class="user-books__view__title flex flex--align flex--center">視聴回数</div>
-              <div class="user-books__view__stat flex flex--align flex--center">1000</div>
+              <div class="user-books__view__stat flex flex--align flex--center">{{book.views}}</div>
             </div>
             <div class="user-books__review flex-column flex--center flex--align">
               <div class="user-books__review__title flex flex--align flex--center">レビュー数</div>
-              <div class="user-books__review__stat flex flex--align flex--center">43</div>
+              <div
+                class="user-books__review__stat flex flex--align flex--center"
+              >{{book.reviewsCount}}</div>
             </div>
             <nuxt-link
               :to="{path: `/dashboard/books/${book._id}/new-chapter`}"
@@ -39,30 +44,13 @@
               class="user-books__create flex flex--align flex--center"
             >話を投稿する</nuxt-link>
             <nuxt-link
-              :to="{path: `/dashboard/books/${book._id}`}"
+              :to="{path: `/dashboard/books/${book._id}/published`}"
               tag="div"
               class="user-books__toc flex flex--align flex--center"
             >作品の目次</nuxt-link>
           </div>
         </div>
       </div>
-
-      <!-- <tbody>
-        <tr>
-          <td>
-            <img class="user-books__cover" alt>
-          </td>
-          <td></td>
-          <td>連載中</td>
-          <td>{{book.views}}</td>
-          <td>15</td>
-          <td>
-            <nuxt-link :to="`books/${book._id}/published`">
-              <div class="button button--primary book-list-button">投稿</div>
-            </nuxt-link>
-          </td>
-        </tr>
-      </tbody>-->
     </div>
   </div>
 </template>
@@ -127,7 +115,7 @@ export default {
           grid-area: state;
           box-shadow: 1px 1px 5px rgb(243, 243, 243);
           height: 50px;
-          color: #7968ee;
+          color: $primary;
           &__title {
             font-size: 11px;
             font-weight: bold;
@@ -140,7 +128,7 @@ export default {
           height: 50px;
           grid-area: bookmark;
           box-shadow: 1px 1px 5px rgb(243, 243, 243);
-          color: #cf68ee;
+          color: $primary;
           &__title {
             font-size: 11px;
             font-weight: bold;
@@ -153,7 +141,7 @@ export default {
           box-shadow: 1px 1px 5px rgb(243, 243, 243);
           height: 50px;
           grid-area: view;
-          color: $secondary-light;
+          color: $primary;
           &__title {
             font-size: 11px;
             font-weight: bold;
@@ -166,7 +154,7 @@ export default {
           box-shadow: 1px 1px 5px rgb(243, 243, 243);
           height: 50px;
           grid-area: review;
-          color: $review-color;
+          color: $primary;
           &__title {
             font-size: 11px;
             font-weight: bold;
@@ -207,10 +195,24 @@ export default {
         }
       }
       #{$self}__title {
+        &__icon {
+          font-size: 18px;
+          color: $secondary;
+          transition: 200ms;
+          &:hover {
+            cursor: pointer;
+            transform: rotate(360deg);
+            transition: 200ms;
+          }
+        }
         p {
           font-size: 16px;
           width: 100%;
           height: 24px;
+          &:hover {
+            cursor: pointer;
+            color: grey;
+          }
         }
         overflow: hidden;
         width: 350px;
