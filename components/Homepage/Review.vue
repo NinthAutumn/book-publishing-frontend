@@ -52,9 +52,7 @@ export default {
   props: {
     review: Object
   },
-  created() {
-    console.log(this.review._id.user[0].avatar);
-  },
+  created() {},
   filters: {
     truncate: (string, number) => {
       if (string.length > 8) {

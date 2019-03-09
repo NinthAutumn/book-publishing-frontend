@@ -10,27 +10,25 @@
       </div>
 
       <div style="margin-bottom:5px;" class="divider" v-if="$store.state.auth.loggedIn">
-        <form @submit.prevent="addComment" class="flex flex-column">
-          <textarea
-            required
-            v-model="newComment.content"
-            class="form-input content-textarea"
-            placeholder="コメントを書く"
-          ></textarea>
-          <div class="divider flex flex--right">
-            <input
-              type="submit"
-              class="form-submit form-submit--secondary comment-form__submit flex flex--center"
-              value="投稿"
-            >
-          </div>
-        </form>
+        <div class="comment-list__error" v-if="error">
+          <p>コメントは何か書かないと投稿できません！</p>
+        </div>
+        <textarea
+          required
+          v-model="newComment.content"
+          class="form-input content-textarea"
+          placeholder="コメントを書く"
+        ></textarea>
+
+        <div class="divider flex flex--right">
+          <div @click="addComment" class="comment-form__submit flex flex--align flex--center">投稿</div>
+        </div>
       </div>
       <div class="comment-not" v-else>
-        <button>Sign in or Sign up!</button>
+        <button>ログインまたはアカウント作成</button>
       </div>
-      <div class="comment-unordered-list">
-        <div class="comment-list__select flex flex--right flex--align">
+      <div class="comment-unordered-list" v-if="comments.length > 0">
+        <div class="comment-list__select flex flex--align" v-if="comments.length > 1">
           <Select def="いいね数" transition="grow-shrink" name="並び替え" :object="sort_list"></Select>
         </div>
         <li v-for="(comment, index) in comments" :key="index">
@@ -64,7 +62,8 @@ export default {
       ],
       newComment: {
         content: ""
-      }
+      },
+      error: false
     };
   },
   async mounted() {
@@ -77,25 +76,26 @@ export default {
       const bookId = this.$route.params.id;
       const chapterId = this.$route.params.chaptersId;
       const content = this.newComment.content;
+      if (!this.newComment.comment) {
+        return (this.error = true);
+      }
       this.$store
         .dispatch("comment/addParentlessComment", {
           bookId,
           chapterId,
           content
         })
-        .then(() => {
+        .then(async () => {
           this.$message({
             message: "コメントの投稿に成功！",
             type: "success"
           });
+          await this.$store.dispatch("comment/getComments", {
+            chapterId: this.$route.params.chaptersId
+          });
           this.newComment.content = "";
         })
-        .catch(e => {
-          this.$message({
-            message: `${e}`,
-            type: "error"
-          });
-        });
+        .catch(e => {});
     }
   }
 };
@@ -107,14 +107,35 @@ export default {
     // align-items:lef/
     width: 100px;
     // text-align: center;
-    height: 30px;
+    height: 35px;
+    border-radius: 0;
+
     box-sizing: border-box;
     font-size: 12px !important;
     margin-top: 0;
+    color: white;
+    background-color: $secondary-light;
+    padding: 10px;
+    transition: 200ms;
+    &:hover {
+      transition: 200ms;
+      color: $secondary-light;
+      background-color: #fff;
+      border: 1px solid $secondary-light;
+      user-select: none;
+      cursor: pointer;
+    }
   }
   .comment-header-icon {
     font-size: 16px;
     color: $secondary;
+  }
+  &__error {
+    color: red;
+    p {
+      font-size: 16px;
+      margin: 0 !important;
+    }
   }
   .comment-header {
     color: $secondary;
@@ -122,21 +143,19 @@ export default {
   .comment-submit {
     height: 35px !important;
     margin-bottom: 10px;
-    // background-color: $secondary !important;
-    // font
   }
   .content-textarea {
     resize: none;
+    width: 100%;
     margin-bottom: 5px;
     font-size: 13px;
     height: 100px;
-    padding: 5px;
+    padding: 10px;
     transition: 300ms;
     &:focus {
       outline: none;
       box-shadow: 1px 1px 5px 0px rgb(214, 214, 214);
     }
-    border-radius: 5px;
     border: 2px solid #b4b7b9;
   }
   &__item {
