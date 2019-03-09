@@ -93,7 +93,7 @@
           <no-ssr class>
             <star-rating
               name="rating"
-              v-model="review.rating.total"
+              v-model="$store.state.book.book.ratings"
               :star-size="23"
               :read-only="true"
               inactive-color="#D8D7D5"

@@ -54,10 +54,6 @@ export default {
         chapterId: params.chaptersId
       });
     }
-
-    await store.dispatch("comment/getComments", {
-      chapterId: params.chaptersId
-    });
   },
   layout: "chapter-nav/Chapter",
   created() {},

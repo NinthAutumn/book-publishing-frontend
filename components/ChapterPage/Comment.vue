@@ -156,11 +156,16 @@ export default {
           content,
           parent
         })
-        .then(() => {
+        .then(async () => {
           this.$message({
             message: "返信の投稿に成功しました",
             type: "success"
           });
+          await this.$store.dispatch("comment/getComments", {
+            chapterId: this.$route.params.chaptersId
+          });
+          this.replyForm = false;
+          this.content = "";
         })
         .catch(() => {
           this.$message({
@@ -213,7 +218,7 @@ export default {
 }
 .hide-content {
   margin-left: 5px;
-  font-size: 15px;
+  font-size: 14px;
   color: $secondary;
   &:hover {
     cursor: pointer;

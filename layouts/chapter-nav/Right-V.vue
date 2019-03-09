@@ -14,9 +14,14 @@
             v-text="$store.state.chapter.chapter.extra.drawings.length"
           ></span>
         </div>
+        <!-- ユーザーの意見を聞いて　アップデートする -->
+        <!-- <div class="nav-icon" @click="comments">
+          <fa class="nav-icon__item nav-icon__item--comment" icon="comment"></fa>
+        </div>-->
         <div class="nav-icon" @click="table">
           <fa class="nav-icon__item" icon="list-ul"></fa>
         </div>
+
         <div class="nav-icon" @click="setting">
           <fa class="nav-icon__item nav-icon__item--cog" icon="cog"></fa>
         </div>
@@ -33,6 +38,13 @@ export default {
         "chapter/tableOfContent",
         this.$route.params.id
       );
+    },
+    async comments() {
+      if (this.$store.state.chapter.modal === "comment") {
+        await this.$store.commit("chapter/MODAL_CLOSE");
+      } else {
+        await this.$store.commit("chapter/COMMENT");
+      }
     },
     async setting() {
       if (this.$store.state.chapter.modal === "setting") {

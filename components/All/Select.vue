@@ -200,10 +200,12 @@ export default {
   position: relative;
   margin: 0 5px;
   // z-index: 1;
+
   &__icon {
     margin-right: 5px;
   }
   &__name {
+    background-color: #fff;
     color: grey;
     font-size: 14px;
     width: 100px;

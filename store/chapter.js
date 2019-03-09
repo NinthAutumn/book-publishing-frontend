@@ -47,6 +47,9 @@ export const mutations = {
   SETTING(state) {
     state.modal = 'setting'
   },
+  COMMENT(state) {
+    state.modal = 'comment'
+  },
   MODAL_CLOSE(state) {
     state.modal = ''
   },

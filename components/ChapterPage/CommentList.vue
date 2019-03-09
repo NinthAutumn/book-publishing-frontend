@@ -8,7 +8,8 @@
         <fa icon="comments" class="comment-header-icon"></fa>
         <h3 class="comment-header" style>コメント欄</h3>
       </div>
-      <div class="divider" v-if="$store.state.auth.loggedIn">
+
+      <div style="margin-bottom:5px;" class="divider" v-if="$store.state.auth.loggedIn">
         <form @submit.prevent="addComment" class="flex flex-column">
           <textarea
             required
@@ -29,6 +30,9 @@
         <button>Sign in or Sign up!</button>
       </div>
       <div class="comment-unordered-list">
+        <div class="comment-list__select flex flex--right flex--align">
+          <Select def="いいね数" transition="grow-shrink" name="並び替え" :object="sort_list"></Select>
+        </div>
         <li v-for="(comment, index) in comments" :key="index">
           <Comment :comment="comment" :depth="0" :children="comment.children"></Comment>
         </li>
@@ -39,6 +43,7 @@
 
 <script>
 import Comment from "@/components/ChapterPage/Comment";
+import Select from "@/components/All/Select";
 export default {
   computed: {
     comments() {
@@ -46,21 +51,26 @@ export default {
     }
   },
   components: {
-    Comment
+    Comment,
+    Select
   },
 
   data() {
     return {
-      customToolbar: [
-        ["bold", "italic", "underline", "strike"],
-        [{ list: "ordered" }, { list: "bullet" }],
-        ["blockquote"],
-        ["clean"]
+      sort_list: [
+        { key: "いいね数", value: "likes" },
+        { key: "最新順", value: "latest" },
+        { key: "古い順", value: "oldest" }
       ],
       newComment: {
         content: ""
       }
     };
+  },
+  async mounted() {
+    await this.$store.dispatch("comment/getComments", {
+      chapterId: this.$route.params.chaptersId
+    });
   },
   methods: {
     async addComment() {
