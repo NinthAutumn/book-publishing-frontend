@@ -20,10 +20,12 @@
     ></article>
     <div
       class="chapter-payblock flex flex--align flex-column"
-      v-if="$store.state.chapter.chapter.locked"
+      v-if="!$store.state.chapter.chapter.content"
     >
-      <div class="payblock-price">{{$store.state.chapter.chapter.price}}</div>
-      <div class="payblock-buy button button--primary">読む</div>
+      <div class="payblock-price">
+        <Currency size="large" :amount="$store.state.chapter.chapter.price"></Currency>
+      </div>
+      <div class="payblock-buy button button--primary" @click="purchase">ロック解除</div>
     </div>
 
     <div
@@ -40,9 +42,28 @@
 </template>
 
 <script>
+import Currency from "@/components/All/Currency";
 export default {
-  created() {
-    // console.log(this.$store.state.chapter.chapter);
+  components: {
+    Currency
+  },
+  created() {},
+  methods: {
+    purchase: async function() {
+      try {
+        await this.$store.dispatch("wallet/buyChapter", {
+          bookId: this.$route.params.id,
+          chapterId: this.$route.params.chaptersId,
+          price: this.$store.state.chapter.chapter.price
+        });
+        await this.$store.dispatch("chapter/nextChapter", {
+          chapterId: this.$route.params.chaptersId,
+          userId: this.$store.state.auth.user._id
+        });
+      } catch (error) {
+        alert(error);
+      }
+    }
   }
 };
 </script>
@@ -107,7 +128,7 @@ export default {
   }
   .payblock-buy {
     // height: 50px;
-    width: 100px;
+    width: 130px;
     font-size: 20px;
     // margin-bottom: 20px;
   }

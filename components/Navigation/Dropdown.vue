@@ -9,7 +9,7 @@
           <div class="profile-dropdown__user-text">
             <div class="profile-dropdown__username" v-text="user.username"></div>
             <div class="profile-dropdown__wallet flex flex--align flex--between">
-              <Currency amount="50"></Currency>
+              <Currency :amount="$store.state.wallet.wealth"></Currency>
               <div class="profile-dropdown__wallet__buy-more">買う</div>
             </div>
           </div>
@@ -43,6 +43,9 @@ import Currency from "@/components/All/Currency";
 export default {
   components: {
     Currency
+  },
+  async mounted() {
+    this.$store.dispatch("wallet/wealth");
   },
   data() {
     return {
