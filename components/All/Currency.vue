@@ -26,6 +26,7 @@ export default {
 
 <style lang="scss">
 .currency {
+  height: 100%;
   &--large {
     display: flex;
     align-items: center;
@@ -43,8 +44,8 @@ export default {
     }
   }
   &__type {
-    height: 23px;
-    width: 23px;
+    height: 25px;
+    width: 25px;
     &--large {
       width: 45px;
       height: 45px;

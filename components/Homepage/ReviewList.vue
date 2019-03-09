@@ -21,6 +21,7 @@
 import Review from "./Review";
 export default {
   props: {},
+  created() {},
   computed: {
     reviews() {
       return this.$store.state.review.goodReviews;
