@@ -3,6 +3,19 @@
     <Horizontal></Horizontal>
     <LeftV></LeftV>
     <RightV></RightV>
+    <div
+      v-if="$store.state.neutral.openImage"
+      class="images-modal__dialog flex flex--align flex--center"
+    >
+      <div class="images-modal__dialog__container" v-click-outside="closeImageDialog">
+        <div class="images-modal__dialog__close">
+          <fa class="images-modal__dialog__close__icon" icon="times" @click="closeImageDialog"></fa>
+        </div>
+        <div class="images-modal__dialog__content flex flex--align flex--center">
+          <img :src="$store.state.neutral.imageUrl" alt>
+        </div>
+      </div>
+    </div>
     <div class="chapter">
       <div class="chapter-wrapper flex">
         <div
@@ -87,6 +100,11 @@ export default {
     },
     theme() {
       return this.$store.state.user.theme;
+    }
+  },
+  methods: {
+    closeImageDialog() {
+      this.$store.commit("neutral/IMAGE_CLOSE");
     }
   },
   created() {}

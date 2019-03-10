@@ -2,10 +2,6 @@
   <div class="currency flex flex--align" :class="{'currency--large':size === 'large'}">
     <div class="currency__number" :class="{'currency__number--large':size === 'large'}">{{amount}}</div>
     <div class="currency__type" :class="{'currency__type--large':size === 'large'}">
-      <div
-        class="currency__icon currency__icon--back"
-        :class="{'currency__icon--large':size === 'large'}"
-      ></div>
       <Crown class="currency__icon" :class="{'currency__icon--large':size === 'large'}"></Crown>
     </div>
   </div>
@@ -46,13 +42,14 @@ export default {
   &__type {
     height: 25px;
     width: 25px;
+    transform-style: preserve-3d;
+    transform: perspective(500px);
     &--large {
       width: 45px;
       height: 45px;
       margin: 0;
       margin-bottom: 10px;
     }
-    position: relative;
     margin-left: 5px;
   }
   // perspective: 400px;
@@ -61,7 +58,8 @@ export default {
   // perspective-origin-x: 10%;
 
   &__icon {
-    position: absolute;
+    transform-style: preserve-3d;
+    position: relative;
     fill: $secondary;
     font-weight: bold;
     width: 22px;
@@ -73,10 +71,14 @@ export default {
     // left: 24px;
     // transform: rotate3d(0, 1, 0, 40deg);
     z-index: 1;
-    top: 1px;
     &--large {
       width: 45px;
       height: 45px;
+    }
+
+    &:hover {
+      transform: scale(1.1) translateY(-2px);
+      transition: 300ms;
     }
     &--back {
       // top: 1px;

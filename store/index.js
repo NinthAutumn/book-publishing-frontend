@@ -14,7 +14,8 @@ export const state = () => ({
   slidesPerView: 6.5,
   dropdownState: false,
   authed: 0,
-  loginForm: false
+  loginForm: false,
+
 })
 
 export const getters = {
@@ -28,6 +29,7 @@ export const mutations = {
   SIGNUP_STATE(state) {
     state.authed = 1;
   },
+
   START(state) {
     state.authed = 0
   },
