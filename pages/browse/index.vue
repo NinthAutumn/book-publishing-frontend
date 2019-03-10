@@ -36,6 +36,7 @@
                 transition="grow-shrink"
                 :multiple="true"
                 :data="genre_list"
+                icon="filter"
                 name="ジャンル"
                 :modalD="modalDirection"
               ></Select>

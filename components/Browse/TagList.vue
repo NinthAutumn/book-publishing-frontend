@@ -54,7 +54,6 @@
           <div class="tag-list__add-input" v-if="form">
             <input
               v-model="tag"
-              name="taginput"
               ref="taginput"
               type="text"
               @keypress.enter="showForm"
@@ -160,7 +159,8 @@ export default {
 
       this.form = !this.form;
       if (this.form) {
-        this.$refs.taginput.focus();
+        // console.log(this.$refs.taginput.clientWidth);
+        // this.$refs.taginput.focus();
       }
     },
     removeItem(tag) {

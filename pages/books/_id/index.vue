@@ -67,29 +67,23 @@
         <div class="book__stats__buttons"></div>
       </div>
     </section>
-
-    <div class="book__chapters">
-      <div class="book__tags">
-        <p class="text--medium text--center">作品のタグ</p>
-        <ul class="flex flex--center">
-          <li
-            class="pill pill-secondary-open pill-round"
-            v-for="(tag, index) in $store.state.book.book.tags"
-            :key="index"
-          >
-            <div class="pill-text">
-              <p>{{tag}}</p>
-            </div>
-          </li>
-        </ul>
+    <div class="book__tags">
+      <Tags></Tags>
+      <div class="book__content-nav　flex flex-row">
+        <div
+          ref="review"
+          class="book__content-nav__item book__content-nav__item--review"
+        >レビュー({{$store.state.review.reviews.length}})</div>
+        <div ref="toc" class="book__content-nav__item">目次</div>
+        <i class="book__content-nav__line"></i>
       </div>
+    </div>
+    <div class="book__chapters">
       <BookChapterList></BookChapterList>
     </div>
     <section class="book__reviews">
       <div class="book__reviews__divider flex flex--align flex--between">
         <div class="book__rating__all flex flex--align">
-          <header class="reviews__title">レビュー({{$store.state.review.reviews.length}})</header>
-
           <no-ssr class>
             <star-rating
               name="rating"
@@ -141,6 +135,7 @@ import BookContent from "@/components/Bookpage/BookContent";
 import BookChapterList from "@/components/Bookpage/BookChapterList";
 import ReviewsList from "@/components/Bookpage/ReviewsList";
 import ReviewsForm from "@/components/Bookpage/ReviewForm";
+import Tags from "@/components/Bookpage/Tags";
 
 export default {
   auth: false,
@@ -158,6 +153,10 @@ export default {
     return {
       book: {},
       reviews: [],
+      tabs: {
+        review: "",
+        toc: ""
+      },
       review: {
         title: "",
         content: "",
@@ -191,10 +190,16 @@ export default {
     BookContent,
     BookChapterList,
     ReviewsList,
-    ReviewsForm
+    ReviewsForm,
+    Tags
     // TextEditor
   },
-  created() {},
+  mounted() {
+    this.tabs.review = this.$refs.review.clientWidth;
+    this.tabs.toc = this.$refs.toc.clientWidth;
+
+    console.log(this.$refs.review.clientWidth);
+  },
   scrollToTop: false,
   computed: {
     reviewed() {
@@ -270,6 +275,20 @@ input[type="number"]::-webkit-outer-spin-button {
   margin: 0;
 }
 .book {
+  &__content-nav {
+    &__line {
+    }
+    &__item {
+      user-select: none;
+      &:hover {
+        cursor: pointer;
+      }
+      &--review {
+        margin-right: 10px;
+      }
+      font-size: 20px;
+    }
+  }
   .ql-snow,
   .ql-snow * {
     -webkit-box-sizing: border-box;
@@ -280,6 +299,7 @@ input[type="number"]::-webkit-outer-spin-button {
   grid-template-columns: 30.8rem auto auto;
   grid-template-areas:
     "cover info info"
+    "tags tags tags"
     "chapters chapters chapters"
     "reviews reviews reviews";
   grid-gap: 10px;
@@ -362,6 +382,9 @@ input[type="number"]::-webkit-outer-spin-button {
   }
   &__reviews {
     grid-area: reviews;
+  }
+  &__tags {
+    grid-area: tags;
   }
 }
 </style>
