@@ -11,7 +11,6 @@ export const state = () => ({
   counter: 0,
   menuState: "menu-active",
   dashboardMenuState: "dashboard-active",
-  slidesPerView: 6.5,
   dropdownState: false,
   authed: 0,
   loginForm: false,

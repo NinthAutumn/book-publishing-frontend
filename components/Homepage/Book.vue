@@ -97,9 +97,7 @@ export default {
       }
     }
   },
-  created() {
-    // console.log(this.book);
-  }
+  created() {}
 };
 </script>
 <style lang="scss">

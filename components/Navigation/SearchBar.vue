@@ -32,7 +32,6 @@ export default {
         .then(() => {
           this.$router.push("/search?query=" + this.searchItem);
         });
-      console.log(this.searchItem);
     },
     clickedSearch() {
       this.inputclicked = !this.inputclicked;

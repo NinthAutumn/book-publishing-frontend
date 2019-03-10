@@ -1,7 +1,4 @@
 import Cookies from 'js-cookie';
-import {
-  userInfo
-} from 'os';
 
 export const state = () => ({
   userId: "",

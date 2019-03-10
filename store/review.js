@@ -7,11 +7,7 @@ export const state = () => ({
   myReview: {}
 })
 export const getters = {
-  allReviews: (
-    state
-  ) => {
-    return state.reviews
-  }
+
 }
 
 

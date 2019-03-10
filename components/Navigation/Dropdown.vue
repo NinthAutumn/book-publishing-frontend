@@ -45,7 +45,7 @@ export default {
     Currency
   },
   async mounted() {
-    this.$store.dispatch("wallet/wealth");
+    await this.$store.dispatch("wallet/wealth");
   },
   data() {
     return {

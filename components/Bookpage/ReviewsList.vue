@@ -18,7 +18,7 @@ export default {
   },
   computed: {
     reviews() {
-      return this.$store.getters["review/allReviews"];
+      return this.$store.state.review.reviews;
     }
   },
   watch: {
@@ -37,7 +37,6 @@ export default {
 
 <style lang="scss" >
 hr {
-  // background: red;
   border: 0.5px solid #c2bac3;
 }
 

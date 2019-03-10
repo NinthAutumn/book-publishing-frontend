@@ -69,14 +69,14 @@
     </section>
     <div class="book__tags">
       <Tags></Tags>
-      <div class="book__content-nav　flex flex-row">
-        <div
-          ref="review"
-          class="book__content-nav__item book__content-nav__item--review"
-        >レビュー({{$store.state.review.reviews.length}})</div>
-        <div ref="toc" class="book__content-nav__item">目次</div>
-        <i class="book__content-nav__line"></i>
-      </div>
+    </div>
+    <div class="book__content-nav　flex">
+      <div
+        ref="review"
+        class="book__content-nav__item book__content-nav__item--review"
+      >レビュー({{$store.state.review.reviews.length}})</div>
+      <div ref="toc" class="book__content-nav__item">目次</div>
+      <div :style="tabs.position" class="book__content-nav__line"></div>
     </div>
     <div class="book__chapters">
       <BookChapterList></BookChapterList>
@@ -155,7 +155,11 @@ export default {
       reviews: [],
       tabs: {
         review: "",
-        toc: ""
+        toc: "",
+        position: {
+          width: "",
+          left: 0
+        }
       },
       review: {
         title: "",
@@ -168,12 +172,21 @@ export default {
     };
   },
   methods: {
-    allReviews: function(state, change) {
-      return state;
+    navLine(index) {
+      if (index) {
+        this.tabs.position = {
+          width: this.tabs.review + "px",
+          left: 0
+        };
+      } else {
+        this.tabs.position = {
+          width: this.tabs.toc + "px",
+          left: `${this.tabs.review + 10}px`
+        };
+      }
     },
     async reviewOpen() {
       if (this.reviewed) {
-        console.log(this.$route.params.id);
         await this.$store.dispatch("review/myReview", {
           bookId: this.$route.params.id
         });
@@ -197,8 +210,10 @@ export default {
   mounted() {
     this.tabs.review = this.$refs.review.clientWidth;
     this.tabs.toc = this.$refs.toc.clientWidth;
-
-    console.log(this.$refs.review.clientWidth);
+    this.tabs.position = {
+      width: `${this.tabs.review}px`,
+      left: 0
+    };
   },
   scrollToTop: false,
   computed: {
@@ -210,6 +225,9 @@ export default {
 </script>
 
 <style lang="scss">
+.book__content-nav {
+  display: flex;
+}
 .center {
   left: 50% !important;
   transform: translate(-50%, -50%) !important;
@@ -275,20 +293,7 @@ input[type="number"]::-webkit-outer-spin-button {
   margin: 0;
 }
 .book {
-  &__content-nav {
-    &__line {
-    }
-    &__item {
-      user-select: none;
-      &:hover {
-        cursor: pointer;
-      }
-      &--review {
-        margin-right: 10px;
-      }
-      font-size: 20px;
-    }
-  }
+  $self: &;
   .ql-snow,
   .ql-snow * {
     -webkit-box-sizing: border-box;
@@ -385,6 +390,26 @@ input[type="number"]::-webkit-outer-spin-button {
   }
   &__tags {
     grid-area: tags;
+    // #{$self}
+  }
+  &__content-nav {
+    position: relative;
+    background-color: red;
+    &__line {
+      border: 2px solid $primary;
+      position: absolute;
+      top: 0;
+    }
+    &__item {
+      user-select: none;
+      &:hover {
+        cursor: pointer;
+      }
+      &--review {
+        margin-right: 10px;
+      }
+      font-size: 20px;
+    }
   }
 }
 </style>

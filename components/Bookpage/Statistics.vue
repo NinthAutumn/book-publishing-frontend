@@ -32,6 +32,9 @@ export default {
         { title: "話数", content: "全12部分" }
       ]
     };
+  },
+  mounted() {
+    // this.
   }
 };
 </script>

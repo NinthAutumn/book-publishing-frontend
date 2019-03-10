@@ -20,10 +20,7 @@
 import Review from "./Review";
 export default {
   props: {},
-  created() {
-    console.log("this shi ti si fucked up");
-    console.log();
-  },
+  created() {},
   computed: {
     reviews() {
       return this.$store.state.review.goodReviews;
@@ -35,9 +32,6 @@ export default {
       swiperOption: {
         // loop: true,
         slidesPerView: 2,
-        // centeredSlides: true,
-        // spaceBetween: 15,
-        // effect: "coverflow",
         freeMode: true,
         mousewheel: {
           invert: true,
@@ -48,14 +42,7 @@ export default {
           nextEl: ".swiper-button-next",
           prevEl: ".swiper-button-prev"
         },
-        on: {
-          slideChange() {
-            // console.log("onSlideChangeEnd", this);
-          },
-          tap() {
-            // console.log("onTap", this);
-          }
-        },
+        on: {},
         breakpoints: {}
       }
     };
@@ -64,9 +51,7 @@ export default {
     Review
   },
   methods: {},
-  created() {
-    // console.log(this.$store.state.review.goodReviews);
-  }
+  created() {}
 };
 </script>
 <style lang="scss">

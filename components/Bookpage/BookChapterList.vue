@@ -23,7 +23,6 @@
               <p
                 class="Book-TOC__text Book-TOC__text--date"
               >{{$moment(chapter.createdAt).startOf('hour').fromNow()}}</p>
-
               <fa class="Book-TOC__text Book-TOC__text--icon" icon="lock" v-if="chapter.locked"></fa>
             </div>
           </nuxt-link>
@@ -49,29 +48,16 @@ export default {
     };
   },
   methods: {
-    async formatDate(date) {
-      // this.createdAt =
-    },
-    // rowCounts(index) {
-    //   if (index % 2 === 1) {
-    //     this.rowCount++;
-    //   }
-    //   // console.log(this.rowCount);
-    // },
     async asc() {
       this.$store.commit("chapter/TOC_REVERSE");
       this.ascending = !this.ascending;
     }
   },
-  async created() {
-    // this.$store.commit("book/FORMAT_DATE");
-  },
   computed: {
     chap: function() {
       return this.$store.state.chapter.pTOC;
     }
-  },
-  asyncData() {}
+  }
 };
 </script>
 

@@ -61,8 +61,6 @@ export default {
       this.$store.commit("SIGNUP_STATE");
     },
     async login() {
-      // console.log("dog");
-
       const user = {
         username: this.form.username,
         password: this.form.password

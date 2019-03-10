@@ -13,16 +13,6 @@
       >
       <div class="form-control">
         <label for="rating" class="rating-label">評価</label>
-        <!-- <input
-          type="Number"
-          placeholder="5"
-          v-model="review.rating.total"
-          class="rating-input"
-          v-validate="'max:5'"
-          name="reviewRating"
-          step=".01"
-        >-->
-        <!-- <span class="help is-danger">{{ errors.first('reviewRating') }}</span> -->
         <no-ssr>
           <star-rating
             name="rating"
@@ -40,26 +30,10 @@
         </no-ssr>
       </div>
       <text-editor :content="pcontent" class="review-form__content" v-model="review.content"></text-editor>
-      <!-- <p v-text="review.content"></p> -->
-      <!-- <no-ssr>
-        <vue-editor
-          :editorToolbar="customToolbar"
-          class="review-form__content-editor"
-          required
-          name="content"
-          v-model="review.content"
-          placeholder="本についての感想文"
-        ></vue-editor>
-      </no-ssr>-->
       <div class="divider flex flex--right">
         <button type="submit" class="review-submit">投稿</button>
       </div>
     </form>
-    <!-- <froala :tag="'textarea'" :config="config" v-model="content"></froala> -->
-    <!-- <no-ssr>
-        <vue-editor v-model="content" :editorOptions="config"></vue-editor>
-    </no-ssr>-->
-    <!-- <div v-html="content"></div> -->
   </div>
 </template>
 
@@ -81,13 +55,7 @@ export default {
           total: this.prating
         }
       },
-      state: this.value,
-      customToolbar: [
-        ["bold", "italic", "underline", "strike"],
-        [{ list: "ordered" }, { list: "bullet" }],
-        ["blockquote"],
-        ["clean"]
-      ]
+      state: this.value
     };
   },
   components: {
@@ -124,8 +92,6 @@ export default {
             });
           });
       }
-
-      // console.log(this.$route.params.id);
     }
   }
 };

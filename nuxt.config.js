@@ -102,12 +102,6 @@ module.exports = {
     }, {
       src: '@/plugins/vuelineclamp',
       ssr: false
-    }, {
-      src: '@/plugins/pell',
-      ssr: false
-    }, {
-      src: '@/plugins/froala',
-      ssr: false
     }
   ],
 

@@ -57,14 +57,7 @@ export default {
           nextEl: ".swiper-button-next",
           prevEl: ".swiper-button-prev"
         },
-        on: {
-          slideChange() {
-            // console.log("onSlideChangeEnd", this);
-          },
-          tap() {
-            // console.log("onTap", this);
-          }
-        }
+        on: {}
       }
     };
   },
