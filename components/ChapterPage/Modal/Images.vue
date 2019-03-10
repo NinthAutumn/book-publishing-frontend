@@ -48,33 +48,34 @@ export default {
   &__dialog {
     height: 100vh !important;
     border: 0;
-    background-color: rgba(0, 0, 0, 0.185);
+    background-color: rgba(0, 0, 0, 0.5);
     width: 100%;
     z-index: 10000;
     overflow: hidden;
     position: fixed;
     // scroll-behavior: smooth;
     top: 0 !important;
+
     img {
       max-width: 800px;
-      box-shadow: 1px 1px 5px rgb(236, 236, 236);
+      box-shadow: 1px 1px 5px rgb(238, 236, 236);
     }
     &__container {
       position: relative;
     }
     &__close {
       position: absolute;
-      top: 1px;
-      right: 5px;
+      top: -35px;
+      right: -30px;
 
       &__icon {
-        color: grey;
-        font-size: 20px;
+        color: rgb(226, 226, 226);
+        font-size: 30px;
         transition: 300ms;
         &:hover {
           cursor: pointer;
-          transform: scale(1.1) rotate(180deg);
           transition: 300ms;
+          color: white;
         }
       }
     }
@@ -85,6 +86,7 @@ export default {
     &:hover {
       transform: scale(1.05);
       transition: 300ms;
+      cursor: pointer;
     }
   }
 }

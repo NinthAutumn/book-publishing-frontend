@@ -1,5 +1,25 @@
 <template>
   <nav class="right-vertical-nav">
+    <transition name="chapter-modal">
+      <div
+        class="chapters-modal"
+        v-if="modal"
+        :class="{'chapters-modal--black':theme === 'black','chapters-modal--tan':theme === 'tan','chapters-modal--ruby':theme === 'ruby','chapters-modal--default':theme === 'default','chapters-modal--sapphire':theme === 'sapphire'}"
+      >
+        <div class="chapters-modal__author-profile" v-if="modal === 'profile'">
+          <Profile></Profile>
+        </div>
+        <div class="chapters-modal__images" v-else-if="modal === 'image'">
+          <Images></Images>
+        </div>
+        <div class="chapters-modal__table-of-content" v-else-if="modal === 'table'">
+          <TOC></TOC>
+        </div>
+        <div class="chapters-modal__user-setting" v-else-if="modal === 'setting'">
+          <Setting></Setting>
+        </div>
+      </div>
+    </transition>
     <div class="comments-modal"></div>
     <div class="nav-container flex flex-column flex--align flex--center">
       <div class="nav-icons">
@@ -31,7 +51,25 @@
 </template>
 
 <script>
+import TOC from "@/components/ChapterPage/Modal/TOC";
+import Profile from "@/components/ChapterPage/Modal/Profile";
+import Setting from "@/components/ChapterPage/Modal/Setting";
+import Images from "@/components/ChapterPage/Modal/Images";
 export default {
+  computed: {
+    modal() {
+      return this.$store.state.chapter.modal;
+    },
+    theme() {
+      return this.$store.state.user.theme;
+    }
+  },
+  components: {
+    TOC,
+    Profile,
+    Setting,
+    Images
+  },
   methods: {
     async table() {
       await this.$store.dispatch(
@@ -65,6 +103,57 @@ export default {
 </script>
 
 <style lang="scss">
+.chapters-modal {
+  background-color: white;
+  &--default {
+    background: url("../../assets/noise/noise-default-container.png");
+    color: black;
+  }
+  &--black {
+    background-color: #1a1a1b;
+    // border-right: 1px solid rgb(63, 63, 63);
+    color: rgb(215, 218, 220);
+  }
+  &--tan {
+    background: url("../../assets/noise/noise-tan-container.png");
+    color: #2b352f;
+  }
+  &--ruby {
+    background: url("../../assets/noise/noise-ruby-container.png");
+    color: #f7bfd4;
+  }
+  &--sapphire {
+    background: url("../../assets/noise/noise-sapphire-container.png");
+    color: #d4e6fd;
+  }
+  &--image {
+  }
+  // right: 0;
+  position: fixed;
+  // left: 50%;
+  top: 51px;
+  right: 65px;
+  height: 100vh;
+  width: 400px;
+  z-index: 2;
+  // box-shadow: 1px 1px
+
+  // background-color: white;
+  // top: 50px;
+  &__author-profile {
+    height: 100%;
+  }
+  &__images {
+    // background-color: black !important;
+    height: 100%;
+  }
+  &__table-of-content {
+    height: 100%;
+  }
+  &__user-setting {
+    height: 100%;
+  }
+}
 .right-vertical-nav {
   .nav-container {
     // height: 100vh;

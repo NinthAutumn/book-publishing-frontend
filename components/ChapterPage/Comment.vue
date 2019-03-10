@@ -107,7 +107,7 @@
 <script>
 export default {
   name: "comment-modal",
-  props: ["children", "comment", "depth"],
+  props: { children: Array, comment: Object, depth: Number },
   data() {
     return {
       showChildren: true,

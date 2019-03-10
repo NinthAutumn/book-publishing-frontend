@@ -23,9 +23,8 @@ export default {
 
 <style>
 .table-of-content {
-  top: 50px;
-  position: sticky;
-  width: 400px;
+  /* position: sticky; */
+  width: 100%;
   padding: 10px;
   box-sizing: border-box;
   /* height: 100vh; */
