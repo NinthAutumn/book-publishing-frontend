@@ -1,131 +1,96 @@
 <template>
   <main class="book">
-    <div class="book__cover">
-      <img
-        class="book__cover__img"
-        :src="'https://storage.googleapis.com/theta-images/' + $store.getters['book/showbook'].cover"
-        alt
-      >
-    </div>
-    <section class="book__info">
-      <div class="divider flex-row flex--align flex--between">
-        <div class="divider flex-column flex--between">
-          <header class="book__info__title">{{$store.getters['book/showbook'].title}}</header>
-          <div class="book-meta flex">
-            <div class="book-genre pill pill-secondary-light">
-              <div class="book-genre-icon pill-text pill--icon">
-                <fa icon="fist-raised"></fa>
-              </div>
-              <div class="book-genre-text pill-text pill--icon">
-                <p>{{$store.getters['book/showbook'].genres[0]}}</p>
-              </div>
-            </div>
-            <div class="book-chapterCount pill pill-secondary">
-              <div class="book-chapter-count-icon pill-text pill--icon">
-                <fa icon="scroll"></fa>
-              </div>
-              <div class="book-chapter-count-text pill-text">
-                <p>{{$store.getters['book/showbook'].chapters.length}} 話</p>
-              </div>
-            </div>
-            <div class="book-views pill pill-primary">
-              <div class="book-views-icon pill-text pill--icon">
-                <fa icon="eye"></fa>
-              </div>
-              <div class="book-views-icon pill-text">
-                <p>{{$store.state.book.view}}</p>
-              </div>
-            </div>
-          </div>
-          <div class="tab-container">
-            <div
-              class="tab-list__item"
-              :class="{navActive: $store.state.book.bookSynopsis}"
-              @click="$store.commit('book/SYNOPSIS_TRUE')"
-            >あらすじ</div>
-            <div
-              class="tab-list__item"
-              :class="{navActive: !$store.state.book.bookSynopsis}"
-              @click="$store.commit('book/SYNOPSIS_FALSE')"
-            >情報</div>
-          </div>
-        </div>
-        <div class="book-info">
-          <img
-            class="book-author"
-            :src="$store.state.book.book.authorId.avatar"
-            alt="author avatar"
-          >
-        </div>
+    <div class="flex-divider flex">
+      <div class="book__cover">
+        <img
+          class="book__cover__img"
+          :src="'https://storage.googleapis.com/theta-images/' + $store.getters['book/showbook'].cover"
+          alt
+        >
       </div>
+      <section class="book__info">
+        <div class="divider flex-row flex--align flex--between">
+          <div class="divider flex-column flex--between">
+            <header class="book__info__title">{{$store.getters['book/showbook'].title}}</header>
+            <div class="book-meta flex">
+              <div class="book-genre pill pill-secondary-light">
+                <div class="book-genre-icon pill-text pill--icon">
+                  <fa icon="fist-raised"></fa>
+                </div>
+                <div class="book-genre-text pill-text pill--icon">
+                  <p>{{$store.getters['book/showbook'].genres[0]}}</p>
+                </div>
+              </div>
+              <div class="book-chapterCount pill pill-secondary">
+                <div class="book-chapter-count-icon pill-text pill--icon">
+                  <fa icon="scroll"></fa>
+                </div>
+                <div class="book-chapter-count-text pill-text">
+                  <p>{{$store.getters['book/showbook'].chapters.length}} 話</p>
+                </div>
+              </div>
+              <div class="book-views pill pill-primary">
+                <div class="book-views-icon pill-text pill--icon">
+                  <fa icon="eye"></fa>
+                </div>
+                <div class="book-views-icon pill-text">
+                  <p>{{$store.state.book.view}}</p>
+                </div>
+              </div>
+            </div>
+            <div class="tab-container">
+              <div
+                class="tab-list__item"
+                :class="{navActive: $store.state.book.bookSynopsis}"
+                @click="$store.commit('book/SYNOPSIS_TRUE')"
+              >あらすじ</div>
+              <div
+                class="tab-list__item"
+                :class="{navActive: !$store.state.book.bookSynopsis}"
+                @click="$store.commit('book/SYNOPSIS_FALSE')"
+              >情報</div>
+            </div>
+          </div>
+          <div class="book-info">
+            <img
+              class="book-author"
+              :src="$store.state.book.book.authorId.avatar"
+              alt="author avatar"
+            >
+          </div>
+        </div>
 
-      <div class="book__stats">
-        <div class="book__stats__meta"></div>
-        <div class="book__stats__text">
-          <BookContent :book="$store.getters['book/showbook']"></BookContent>
+        <div class="book__stats">
+          <div class="book__stats__meta"></div>
+          <div class="book__stats__text">
+            <BookContent :book="$store.getters['book/showbook']"></BookContent>
+          </div>
+          <div class="book__stats__buttons"></div>
         </div>
-        <div class="book__stats__buttons"></div>
-      </div>
-    </section>
-    <div class="book__tags">
-      <Tags></Tags>
+      </section>
     </div>
-    <div class="book__content-nav　flex">
+
+    <Tags></Tags>
+    <div @mouseleave="navLeave" class="book__content-nav book-showtab　flex flex-row">
       <div
+        @mouseenter="navLine(1)"
         ref="review"
         class="book__content-nav__item book__content-nav__item--review"
+        @click="navSelect('review')"
       >レビュー({{$store.state.review.reviews.length}})</div>
-      <div ref="toc" class="book__content-nav__item">目次</div>
+      <div
+        @click="navSelect('toc')"
+        @mouseenter="navLine(2)"
+        ref="toc"
+        class="book__content-nav__item"
+      >目次</div>
       <div :style="tabs.position" class="book__content-nav__line"></div>
     </div>
-    <div class="book__chapters">
-      <BookChapterList></BookChapterList>
-    </div>
-    <section class="book__reviews">
-      <div class="book__reviews__divider flex flex--align flex--between">
-        <div class="book__rating__all flex flex--align">
-          <no-ssr class>
-            <star-rating
-              name="rating"
-              v-model="$store.state.book.book.ratings"
-              :star-size="23"
-              :read-only="true"
-              inactive-color="#D8D7D5"
-              active-color="#FFB727"
-              :increment="0.01"
-              :round-start-rating="false"
-              border-color="#FFB727"
-              :glow="1"
-              class="star-rating"
-            ></star-rating>
-          </no-ssr>
-        </div>
-        <button v-if="!reviewed" @click="reviewOpen" class="review-open button">レビューを書く</button>
-        <button v-else @click="reviewOpen" class="review-open button">レビューを編集</button>
-      </div>
-      <hr>
+
+    <BookChapterList v-if="tabs.open ==='toc'"></BookChapterList>
+    <section class="book__reviews" v-else-if="tabs.open === 'review'">
       <ReviewsList></ReviewsList>
     </section>
-    <div class="divider">
-      <transition name="fade">
-        <div
-          class="divider review-form-modal"
-          v-click-outside="reviewClose"
-          v-if="reviewState"
-          :class="{center: $store.state.menuState === 'menu-inactive'}"
-        >
-          <ReviewsForm v-if="!reviewed" v-model="reviewState"></ReviewsForm>
-          <ReviewsForm
-            v-else
-            :pcontent="$store.state.review.myReview.content"
-            :ptitle="$store.state.review.myReview.title"
-            :prating="$store.state.review.myReview.rating.total"
-            :reviewed="reviewed"
-            v-model="reviewState"
-          ></ReviewsForm>
-        </div>
-      </transition>
-    </div>
   </main>
 </template>
 
@@ -159,7 +124,9 @@ export default {
         position: {
           width: "",
           left: 0
-        }
+        },
+        selected: {},
+        open: "review"
       },
       review: {
         title: "",
@@ -173,30 +140,42 @@ export default {
   },
   methods: {
     navLine(index) {
-      if (index) {
+      if (index === 1) {
         this.tabs.position = {
-          width: this.tabs.review + "px",
+          width: `${this.tabs.review}px`,
           left: 0
         };
       } else {
         this.tabs.position = {
-          width: this.tabs.toc + "px",
-          left: `${this.tabs.review + 10}px`
+          width: `${this.tabs.toc}px`,
+          left: `${this.tabs.review + 30}px`
         };
       }
     },
-    async reviewOpen() {
-      if (this.reviewed) {
-        await this.$store.dispatch("review/myReview", {
-          bookId: this.$route.params.id
-        });
-        this.reviewState = !this.reviewState;
-      } else {
-        this.reviewState = !this.reviewState;
-      }
+    navLeave() {
+      this.tabs.position = this.tabs.selected;
     },
-    reviewClose() {
-      this.reviewState = false;
+    navSelect(name) {
+      this.tabs.open = name;
+      if (name === "toc") {
+        this.tabs.position = {
+          width: `${this.tabs.toc}px`,
+          left: `${this.tabs.review + 30}px`
+        };
+        this.tabs.selected = {
+          width: `${this.tabs.toc}px`,
+          left: `${this.tabs.review + 30}px`
+        };
+      } else {
+        this.tabs.position = {
+          width: `${this.tabs.review}px`,
+          left: 0
+        };
+        this.tabs.selected = {
+          width: `${this.tabs.review}px`,
+          left: 0
+        };
+      }
     }
   },
   components: {
@@ -214,17 +193,20 @@ export default {
       width: `${this.tabs.review}px`,
       left: 0
     };
+    this.tabs.selected = {
+      width: `${this.tabs.review}px`,
+      left: 0
+    };
   },
   scrollToTop: false,
-  computed: {
-    reviewed() {
-      return this.$store.state.review.reviewed;
-    }
-  }
+  computed: {}
 };
 </script>
 
 <style lang="scss">
+.book-showtab {
+  position: relative;
+}
 .book__content-nav {
   display: flex;
 }
@@ -300,17 +282,9 @@ input[type="number"]::-webkit-outer-spin-button {
     box-sizing: border-box;
     font-size: 16px;
   }
-  display: grid;
-  grid-template-columns: 30.8rem auto auto;
-  grid-template-areas:
-    "cover info info"
-    "tags tags tags"
-    "chapters chapters chapters"
-    "reviews reviews reviews";
-  grid-gap: 10px;
-  grid-template-columns: 3;
+
   &__cover {
-    grid-area: cover;
+    margin-right: 10px;
     &__img {
       width: 30.8rem;
       height: 45.9rem;
@@ -318,7 +292,7 @@ input[type="number"]::-webkit-outer-spin-button {
   }
 
   &__info {
-    grid-area: info;
+    width: 100%;
     &__title {
       font-size: 22px;
     }
@@ -394,11 +368,12 @@ input[type="number"]::-webkit-outer-spin-button {
   }
   &__content-nav {
     position: relative;
-    background-color: red;
+    // color: red;
     &__line {
       border: 2px solid $primary;
       position: absolute;
-      top: 0;
+      top: 100%;
+      transition: 300ms;
     }
     &__item {
       user-select: none;
@@ -406,8 +381,20 @@ input[type="number"]::-webkit-outer-spin-button {
         cursor: pointer;
       }
       &--review {
-        margin-right: 10px;
+        margin-right: 30px;
+        position: relative;
+        &:after {
+          content: "";
+          width: 2px;
+          height: 80%;
+          background-color: rgb(235, 235, 235);
+          top: 5px;
+          z-index: 2;
+          right: -15px;
+          position: absolute;
+        }
       }
+
       font-size: 20px;
     }
   }

@@ -28,8 +28,7 @@ export default {
           title: "レビュー数",
           content: this.$store.state.book.book.reviewsCount + "個"
         },
-        { title: "状況", content: "連載中" },
-        { title: "話数", content: "全12部分" }
+        { title: "状況", content: "連載中" }
       ]
     };
   },
