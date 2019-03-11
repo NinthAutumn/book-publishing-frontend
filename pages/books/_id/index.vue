@@ -92,7 +92,7 @@
         ref="review"
         class="book__content-nav__item book__content-nav__item--review"
         @click="navSelect('review')"
-      >レビュー({{$store.state.review.reviews.length}})</div>
+      >レビュー({{$store.state.book.book.reviewsCount}})</div>
       <div
         @click="navSelect('toc')"
         @mouseenter="navLine(2)"

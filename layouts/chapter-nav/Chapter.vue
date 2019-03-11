@@ -176,6 +176,9 @@ export default {
   .move-left {
     transform: translateX(0);
   }
+  .chapters-modal {
+    right: 50px;
+  }
 }
 .chapter-page {
   // padding: 1rem 0rem;
