@@ -43,6 +43,14 @@
     </div>
     <hr>
     <ul class="list">
+      <Select
+        transition="grow-shrink"
+        icon="sort"
+        :width="120"
+        def="良いね順"
+        　name="並び替え"
+        :object="sort_type"
+      ></Select>
       <li class="show" v-for="(review, index) in reviews" :key="index">
         <Review :review="review"></Review>
         <hr>
@@ -54,6 +62,7 @@
 <script>
 import Review from "./Review";
 import ReviewsForm from "@/components/Bookpage/ReviewForm";
+import Select from "@/components/All/Select";
 
 export default {
   props: {
@@ -61,7 +70,12 @@ export default {
   },
   data() {
     return {
-      reviewState: false
+      reviewState: false,
+      sort_type: [
+        { key: "良いね順", value: 0 },
+        { key: "問題的論順", value: 1 },
+        { key: "最新順", value: 2 }
+      ]
     };
   },
   computed: {
@@ -82,7 +96,8 @@ export default {
   },
   components: {
     Review,
-    ReviewsForm
+    ReviewsForm,
+    Select
   },
   methods: {
     async reviewOpen() {

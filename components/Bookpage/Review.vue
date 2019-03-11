@@ -37,7 +37,7 @@
           <truncate
             action-class="customClass"
             clamp="詳細"
-            :length="90"
+            :length="300"
             less="一部を表示"
             type="html"
             :text="review.content"
@@ -154,10 +154,11 @@ export default {
 
 <style  lang="scss" >
 .reviews-content-text {
-  width: 100%;
+  // width: 100%;
   .customClass {
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
+    // margin-right: 50px;
   }
   &--html {
     height: 140px;
@@ -218,7 +219,7 @@ export default {
   // justify-content: space-around;
   // height: 200px;
   margin-bottom: 10px;
-  padding: 10px 5px;
+  padding: 10px 10px;
   padding-bottom: 0 !important;
   // border-bottom: 1px solid $review-color;
   box-sizing: border-box;

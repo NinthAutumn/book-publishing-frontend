@@ -14,22 +14,6 @@
           </div>
         </transition>
       </div>
-      <div class="book-content__buttons">
-        <span
-          class="book-content__buttons__item button button--primary--open button--shadow button--big"
-        >登録</span>
-        <span
-          @click="bookmarkBook"
-          class="book-content__buttons__item button button--shadow button--big"
-          @mouseenter="bookmarkHover"
-          @mouseleave="bookmarkLeave"
-          :class="{'button--secondary': bookmarked, 'button--secondary--open': !bookmarked}"
-        >
-          <fa class="book-content__buttons__item__icon" style="font-size:15px;" icon="bookmark"></fa>
-          <span style="font-size:13px;" v-text="text"></span>
-          <!-- <span style="font-size:13px;" v-else>ブックマーク済み</span> -->
-        </span>
-      </div>
     </div>
   </div>
 </template>
@@ -54,88 +38,9 @@ export default {
     },
     book() {
       return this.$store.state.book.book;
-    },
-    bookmarked() {
-      return this.$store.state.library.bookmarked;
-    },
-    bookmarkedText() {
-      if (!this.$store.state.library.bookmarked) {
-        return "ブックマーク";
-      } else {
-        return "ブックマーク済み";
-      }
     }
   },
-  methods: {
-    async bookmarkHover() {
-      if (!this.bookmarked) {
-        this.text = "ブックマークする";
-        // return this.bookmarkedText();
-      } else {
-        this.text = "ブックマーク解除";
-
-        // return this.bookmarkedText();
-      }
-    },
-    async bookmarkLeave() {
-      if (!this.bookmarked) {
-        this.text = "ブックマーク";
-        // return this.bookmarkedText();
-      } else {
-        this.text = "ブックマーク済み";
-
-        // return this.bookmarkedText();
-      }
-    },
-    async bookmarkBook() {
-      const store = {
-        storeType: "bookmark",
-        bookId: this.$store.state.book.book._id
-      };
-      if (this.$store.state.loggedIn === false) {
-        this.$message({
-          message: `ブックマークをするにはログインかアカウント作成が必要です`,
-          type: "error"
-        });
-        return this.$store.commit("LOGIN_STATE");
-      } else {
-        if (this.bookmarked) {
-          try {
-            const remove = await this.$store.dispatch(
-              "library/removeStore",
-              store
-            );
-          } catch (error) {
-            // throw err
-            this.$message({
-              message: `ブックマーク解除に失敗しました`,
-              type: "error"
-            });
-          }
-          await this.$store.dispatch(
-            "library/checkBookmark",
-            this.$route.params.id
-          );
-        } else {
-          try {
-            const addStore = await this.$store.dispatch(
-              "library/addStore",
-              store
-            );
-          } catch (error) {
-            this.$message({
-              message: `ブックマークを失敗しました`,
-              type: "error"
-            });
-          }
-          const library = await this.$store.dispatch(
-            "library/checkBookmark",
-            this.$route.params.id
-          );
-        }
-      }
-    }
-  },
+  methods: {},
   created() {
     this.text = this.bookmarkedText;
   }

@@ -8,7 +8,7 @@
           alt
         >
       </div>
-      <section class="book__info">
+      <section class="book__info flex flex-column flex--between">
         <div class="divider flex-row flex--align flex--between">
           <div class="divider flex-column flex--between">
             <header class="book__info__title">{{$store.getters['book/showbook'].title}}</header>
@@ -65,7 +65,22 @@
           <div class="book__stats__text">
             <BookContent :book="$store.getters['book/showbook']"></BookContent>
           </div>
-          <div class="book__stats__buttons"></div>
+        </div>
+        <div class="book-content__buttons">
+          <span
+            class="book-content__buttons__item button button--primary--open button--shadow button--big"
+          >登録</span>
+          <span
+            @click="bookmarkBook"
+            class="book-content__buttons__item button button--shadow button--big"
+            @mouseenter="bookmarkHover"
+            @mouseleave="bookmarkLeave"
+            :class="{'button--secondary': bookmarked, 'button--secondary--open': !bookmarked}"
+          >
+            <fa class="book-content__buttons__item__icon" style="font-size:15px;" icon="bookmark"></fa>
+            <span style="font-size:13px;" v-text="text"></span>
+            <!-- <span style="font-size:13px;" v-else>ブックマーク済み</span> -->
+          </span>
         </div>
       </section>
     </div>
@@ -87,8 +102,8 @@
       <div :style="tabs.position" class="book__content-nav__line"></div>
     </div>
 
-    <BookChapterList v-if="tabs.open ==='toc'"></BookChapterList>
-    <section class="book__reviews" v-else-if="tabs.open === 'review'">
+    <BookChapterList v-show="tabs.open ==='toc'"></BookChapterList>
+    <section class="book__reviews" v-show="tabs.open === 'review'">
       <ReviewsList></ReviewsList>
     </section>
   </main>
@@ -135,6 +150,7 @@ export default {
           total: 5
         }
       },
+      text: "",
       reviewState: false
     };
   },
@@ -176,6 +192,74 @@ export default {
           left: 0
         };
       }
+    },
+    async bookmarkHover() {
+      if (!this.bookmarked) {
+        this.text = "ブックマークする";
+        // return this.bookmarkedText();
+      } else {
+        this.text = "ブックマーク解除";
+
+        // return this.bookmarkedText();
+      }
+    },
+    async bookmarkLeave() {
+      if (!this.bookmarked) {
+        this.text = "ブックマーク";
+        // return this.bookmarkedText();
+      } else {
+        this.text = "ブックマーク済み";
+
+        // return this.bookmarkedText();
+      }
+    },
+    async bookmarkBook() {
+      const store = {
+        storeType: "bookmark",
+        bookId: this.$store.state.book.book._id
+      };
+      if (this.$store.state.loggedIn === false) {
+        this.$message({
+          message: `ブックマークをするにはログインかアカウント作成が必要です`,
+          type: "error"
+        });
+        return this.$store.commit("LOGIN_STATE");
+      } else {
+        if (this.bookmarked) {
+          try {
+            const remove = await this.$store.dispatch(
+              "library/removeStore",
+              store
+            );
+          } catch (error) {
+            // throw err
+            this.$message({
+              message: `ブックマーク解除に失敗しました`,
+              type: "error"
+            });
+          }
+          await this.$store.dispatch(
+            "library/checkBookmark",
+            this.$route.params.id
+          );
+        } else {
+          try {
+            const addStore = await this.$store.dispatch(
+              "library/addStore",
+              store
+            );
+          } catch (error) {
+            this.$message({
+              message: `ブックマークを失敗しました`,
+              type: "error"
+            });
+          }
+          const library = await this.$store.dispatch(
+            "library/checkBookmark",
+            this.$route.params.id
+          );
+        }
+      }
     }
   },
   components: {
@@ -197,9 +281,21 @@ export default {
       width: `${this.tabs.review}px`,
       left: 0
     };
+    this.text = this.bookmarkedText;
   },
   scrollToTop: false,
-  computed: {}
+  computed: {
+    bookmarked() {
+      return this.$store.state.library.bookmarked;
+    },
+    bookmarkedText() {
+      if (!this.$store.state.library.bookmarked) {
+        return "ブックマーク";
+      } else {
+        return "ブックマーク済み";
+      }
+    }
+  }
 };
 </script>
 

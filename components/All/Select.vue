@@ -2,6 +2,7 @@
   <div class="select-component" :style="{width: width+'px'}">
     <div class="normal-data">
       <div
+        :style="{width: width+'px'}"
         class="select-component__name flex flex--align flex--center"
         @click="openModal"
         v-if="!multiple&&!selectD&&!def"
@@ -10,6 +11,7 @@
         {{name}}
       </div>
       <div
+        :style="{width: width+'px'}"
         class="select-component__name flex flex--align flex--center"
         @click="openModal"
         v-if="!multiple&&def&&!selectD"
@@ -18,6 +20,7 @@
         {{def}}
       </div>
       <div
+        :style="{width: width+'px'}"
         class="select-component__name flex flex--align flex--center"
         @click="openModal"
         v-if="!multiple&&selectD"
