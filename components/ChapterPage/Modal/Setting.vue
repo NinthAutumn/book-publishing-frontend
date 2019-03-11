@@ -9,7 +9,6 @@
       <div class="themes-list flex">
         <div class="theme__item" @click="updateTheme('')"></div>
         <div class="theme__item theme__item--black" @click="updateTheme('black')"></div>
-
         <div class="theme__item theme__item--white" @click="updateTheme('default')"></div>
         <div class="theme__item theme__item--tan" @click="updateTheme('tan')"></div>
         <div class="theme__item theme__item--ruby" @click="updateTheme('ruby')"></div>

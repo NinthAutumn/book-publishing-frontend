@@ -5,7 +5,7 @@
     </div>
     <div
       class="chapter-announcement chapter-announcement--header"
-      v-if="$store.state.chapter.chapter.extra.announcement.header"
+      v-if="$store.state.chapter.chapter.extra.announcement != null"
     >
       <h4>
         <fa style="margin-right:10px;" icon="envelope"></fa>告知・メッセージ・上書き
@@ -30,7 +30,7 @@
 
     <div
       class="chapter-announcement chapter-announcement--footer"
-      v-if="$store.state.chapter.chapter.extra.announcement.footer"
+      v-if="$store.state.chapter.chapter.extra.announcement"
     >
       <h4>
         <fa style="margin-right:10px;" icon="envelope"></fa>告知・メッセージ・下書き

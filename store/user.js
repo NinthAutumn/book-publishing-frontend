@@ -1,7 +1,7 @@
 export const state = () => ({
   books: [],
   settings: {},
-  theme: 'default',
+  theme: '',
   bookmarkInbox: []
 })
 

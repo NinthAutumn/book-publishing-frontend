@@ -22,29 +22,29 @@
     <div class="chapter" :class="{'move-left': modal}">
       <div class="chapter-wrapper flex">
         <div
-          v-if="$store.state.chapter.chapter.prev.index"
+          v-if="$store.state.chapter.chapter.prev"
           class="next-chapter-title flex flex-column flex--center flex--align"
           v-text="$store.state.chapter.chapter.prev.title"
         ></div>
         <nuxt-link
           class="navigation-prev flex flex-column flex--center flex--align"
-          v-if="$store.state.chapter.chapter.prev.index"
+          v-if="$store.state.chapter.chapter.prev"
           :to="{path: `${$store.state.chapter.chapter.prev.chapterId}`}"
         >
           <fa icon="angle-left"></fa>
         </nuxt-link>
-        <div class="navigation-prev-cont" v-if="!$store.state.chapter.chapter.prev.index"></div>
+        <div class="navigation-prev-cont" v-if="!$store.state.chapter.chapter.prev"></div>
         <nuxt class="yikes"></nuxt>
-        <div class="navigation-prev-cont" v-if="!$store.state.chapter.chapter.next.index"></div>
+        <div class="navigation-prev-cont" v-if="!$store.state.chapter.chapter.next"></div>
         <nuxt-link
           class="navigation-next flex flex-column flex--center flex--align"
-          v-if="$store.state.chapter.chapter.next.index"
+          v-if="$store.state.chapter.chapter.next"
           :to="{path: `${$store.state.chapter.chapter.next.chapterId}`}"
         >
           <fa icon="angle-right"></fa>
         </nuxt-link>
         <div
-          v-if="$store.state.chapter.chapter.next.index"
+          v-if="$store.state.chapter.chapter.next"
           class="next-chapter-title flex flex-column flex--center flex--align"
           v-text="$store.state.chapter.chapter.next.title"
         ></div>
