@@ -47,6 +47,8 @@
         transition="grow-shrink"
         icon="sort"
         :width="120"
+        :height="35"
+        :fontSize="15"
         def="良いね順"
         　name="並び替え"
         :object="sort_type"

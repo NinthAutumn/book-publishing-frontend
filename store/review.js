@@ -21,7 +21,6 @@ export const mutations = {
       reviews
     }
   ) {
-
     state.reviews.unshift(reviews)
   },
   LIKED_REVIEWS(state, reviewId) {

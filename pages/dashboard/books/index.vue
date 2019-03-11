@@ -113,9 +113,10 @@ export default {
         }
         #{$self}__state {
           grid-area: state;
-          box-shadow: 1px 1px 5px rgb(243, 243, 243);
+          // box-shadow: 1px 1px 5px rgb(243, 243, 243);
           height: 50px;
-          color: $primary;
+          color: #888582;
+          background-color: #f5f6f5;
           &__title {
             font-size: 11px;
             font-weight: bold;
@@ -127,8 +128,9 @@ export default {
         #{$self}__bookmark {
           height: 50px;
           grid-area: bookmark;
-          box-shadow: 1px 1px 5px rgb(243, 243, 243);
-          color: $primary;
+          // box-shadow: 1px 1px 5px rgb(243, 243, 243);
+          background-color: #f5f6f5;
+          color: #888582;
           &__title {
             font-size: 11px;
             font-weight: bold;
@@ -138,10 +140,11 @@ export default {
           }
         }
         #{$self}__view {
-          box-shadow: 1px 1px 5px rgb(243, 243, 243);
+          // box-shadow: 1px 1px 5px rgb(243, 243, 243);
           height: 50px;
           grid-area: view;
-          color: $primary;
+          background-color: #f5f6f5;
+          color: #888582;
           &__title {
             font-size: 11px;
             font-weight: bold;
@@ -151,10 +154,11 @@ export default {
           }
         }
         #{$self}__review {
-          box-shadow: 1px 1px 5px rgb(243, 243, 243);
+          // box-shadow: 1px 1px 5px rgb(243, 243, 243);
           height: 50px;
           grid-area: review;
-          color: $primary;
+          background-color: #f5f6f5;
+          color: #888582;
           &__title {
             font-size: 11px;
             font-weight: bold;

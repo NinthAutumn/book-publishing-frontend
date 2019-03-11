@@ -3,19 +3,19 @@
     <article class="comment-modal__container" v-if="showChildren">
       <div :style="indent" class="divider flex">
         <div class="comment-modal__rate flex flex-column flex--align flex--left">
-          <div class="rate-up">
+          <div class="rate-up" @click="likedComment">
             <no-ssr>
               <Zondicon
-                :class="'comment-like--' + theme"
+                :class="{'comment-like--black': theme==='black', 'comment-like--liked': liked}"
                 class="comment-like"
                 icon="arrow-thick-up"
               ></Zondicon>
             </no-ssr>
           </div>
-          <div class="rate-down">
+          <div class="rate-down" @click="dislikedComment">
             <no-ssr>
               <Zondicon
-                :class="'comment-dislike--' + theme"
+                :class="{'comment-dislike--black': theme==='black','comment-dislike--disliked': disliked}"
                 class="comment-dislike"
                 icon="arrow-thick-down"
               ></Zondicon>
@@ -34,7 +34,7 @@
                 class="comment-modal__author"
                 v-if="$store.state.book.author === comment.userId.username"
               ></div>
-              <div class="comment-modal__likes" :class="{blue: blue}">{{comment.likes}}</div>
+              <div class="comment-modal__likes" :class="{blue: blue}">{{likeNumber}}</div>
               <div
                 class="comment-modal__createdAt"
                 @click="toggleChildren"
@@ -113,7 +113,10 @@ export default {
       showChildren: true,
       hideContent: true,
       content: "",
-      replyForm: false
+      replyForm: false,
+      liked: this.comment.liked,
+      disliked: this.comment.disliked,
+      likeNumber: this.comment.likes
     };
   },
   computed: {
@@ -173,6 +176,59 @@ export default {
             type: "error"
           });
         });
+    },
+    async likedComment() {
+      console.log(this.comment._id);
+      if (this.liked) {
+        this.liked = false;
+        this.$store.dispatch("comment/unLikeComment", {
+          commentId: this.comment._id,
+          type: "like"
+        });
+        this.likeNumber = this.comment - 1;
+      } else {
+        this.liked = true;
+        if (this.disliked) {
+          this.disliked = false;
+          await this.$store.dispatch("comment/unLikeComment", {
+            commentId: this.comment._id,
+            type: "dislike"
+          });
+          this.likeNumber++;
+        }
+        await this.$store.dispatch("comment/likeComment", {
+          commentId: this.comment._id,
+          type: "like"
+        });
+        this.likeNumber++;
+      }
+    },
+    async dislikedComment() {
+      if (this.disliked) {
+        this.disliked = false;
+
+        await this.$store.dispatch("review/unLikeComment", {
+          commentId: this.comment._id,
+          type: "dislike"
+        });
+        this.likeNumber++;
+      } else {
+        this.disliked = true;
+
+        if (this.liked) {
+          this.liked = false;
+          await this.$store.dispatch("review/unLikeComment", {
+            commentId: this.comment._id,
+            type: "like"
+          });
+          this.likeNumber--;
+        }
+        await this.$store.dispatch("review/likeComment", {
+          commentId: this.comment._id,
+          type: "dislike"
+        });
+        this.likeNumber--;
+      }
     }
   }
 };
@@ -199,6 +255,9 @@ export default {
   font: inherit;
 }
 .comment-like {
+  &--liked {
+    fill: orangered;
+  }
   &--black {
     fill: rgb(215, 218, 220);
   }
@@ -208,6 +267,9 @@ export default {
   }
 }
 .comment-dislike {
+  &--disliked {
+    fill: #7193ff;
+  }
   &--black {
     fill: rgb(215, 218, 220);
   }

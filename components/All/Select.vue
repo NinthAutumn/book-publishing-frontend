@@ -1,8 +1,11 @@
 <template>
-  <div class="select-component" :style="{width: width+'px'}">
+  <div
+    class="select-component"
+    :style="{width: width+'px',height: height+'px','font-size': fontSize + 'px'}"
+  >
     <div class="normal-data">
       <div
-        :style="{width: width+'px'}"
+        :style="{width: width+'px',height: height+'px','font-size': fontSize + 'px'}"
         class="select-component__name flex flex--align flex--center"
         @click="openModal"
         v-if="!multiple&&!selectD&&!def"
@@ -11,7 +14,7 @@
         {{name}}
       </div>
       <div
-        :style="{width: width+'px'}"
+        :style="{width: width+'px',height: height+'px','font-size': fontSize + 'px'}"
         class="select-component__name flex flex--align flex--center"
         @click="openModal"
         v-if="!multiple&&def&&!selectD"
@@ -20,7 +23,7 @@
         {{def}}
       </div>
       <div
-        :style="{width: width+'px'}"
+        :style="{width: width+'px',height: height+'px','font-size': fontSize + 'px'}"
         class="select-component__name flex flex--align flex--center"
         @click="openModal"
         v-if="!multiple&&selectD"
@@ -36,9 +39,19 @@
         <fa class="select-component__name__icon" :icon="icon"></fa>
         {{name}}
       </div>
-      <transition class="select-component__modal" :name="transition">
-        <div class="select-component__list" v-if="!multiple && modal" v-click-outside="closeModal">
+      <transition
+        class="select-component__modal"
+        :name="transition"
+        :style="{width: width+'px','font-size': fontSize + 'px'}"
+      >
+        <div
+          :style="{width: width+'px','font-size': fontSize + 'px'}"
+          class="select-component__list"
+          v-if="!multiple && modal"
+          v-click-outside="closeModal"
+        >
           <div
+            :style="{'font-size': fontSize + 'px'}"
             class="select-component__option select-component__option--name flex flex--align flex--around"
           >{{name}}</div>
           <div
@@ -46,6 +59,7 @@
             class="select-component__option select-component__option flex flex--align flex--around"
             v-for="(item, index) in multiData"
             :key="index"
+            :style="{'font-size': fontSize + 'px'}"
             v-text="item.key"
             :class="{selected:item.selected}"
           ></div>
@@ -86,13 +100,15 @@ export default {
     name: String,
     column: Number,
     width: Number,
+    height: Number,
     transition: String,
     object: Array,
     def: String,
     modalD: String,
     icon: String,
     top: Boolean,
-    bottom: Boolean
+    bottom: Boolean,
+    fontSize: Number
   },
   data() {
     return {
