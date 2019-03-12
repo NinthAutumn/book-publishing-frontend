@@ -15,7 +15,7 @@
             alt="Book cover"
           >
         </nuxt-link>
-        <div @click="menu_modal=true" v-if="menu" class="book-menu">
+        <div @click="menu_modal=true" v-if="menu" class="book-menu flex flex--align flex--center">
           <fa icon="ellipsis-v"></fa>
         </div>
         <transition name="grow-shrink">
@@ -33,7 +33,7 @@
         <span class="p-ending"></span>
         <no-ssr>
           <star-rating
-            v-model="book.ratings"
+            :rating="+book.ratings.toFixed(2)"
             :star-size="18"
             :read-only="true"
             inactive-color="#D8D7D5"
@@ -156,7 +156,7 @@ export default {
   .book-menu {
     position: absolute;
     top: 5px;
-    right: 5px;
+    right: 0;
     font-size: 20px;
     z-index: 10000;
     transition: 300ms;
@@ -181,7 +181,6 @@ export default {
     }
     &:hover {
       cursor: pointer;
-      transform: scale(1.2);
       transition: 300ms;
     }
   }
@@ -212,9 +211,7 @@ export default {
     // width: 16.5rem;
     // height: 24.5rem;
     position: relative;
-    -webkit-box-shadow: 1px 1px 1px 0px rgba(153, 153, 153, 0.75);
-    -moz-box-shadow: 1px 1px 1px 0px rgba(153, 153, 153, 0.75);
-    box-shadow: 1px 1px 1px 0px rgba(153, 153, 153, 0.75);
+
     // border-radius: 5px;
 
     .book-img {

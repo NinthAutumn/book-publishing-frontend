@@ -119,17 +119,11 @@ export const mutations = {
     state.books.push(book)
   },
   HIGHEST_RATED(state, books) {
-    books.forEach(async (book) => {
-      book.ratings = +book.ratings.toFixed(2)
-    })
+
     state.books.highestrated = books
   },
   TRENDING(state, books) {
-    books.forEach(async (book) => {
-      if (book._id.book[0].ratings) {
-        book._id.book[0].ratings = +book._id.book[0].ratings.toFixed(2)
-      }
-    })
+
     state.books.trending = books
   },
   SHOW(state, book) {

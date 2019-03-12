@@ -46,72 +46,76 @@
           </div>
         </div>
       </transition>
-      <dialog class="chapter-form__upload-img" open v-if="picture" v-click-outside="pictureOpen">
-        <transition name="slide-fade">
-          <div class="chapter-form__extra">
-            <el-upload
-              class="upload-demo"
-              action
-              :on-preview="handlePreview"
-              :on-remove="handleRemove"
-              :on-success="successPhoto"
-              list-type="picture"
-              :limit="3"
-              :on-exceed="handleExceed"
-              accept="image/*"
-            >
-              <el-button size="small" type="primary">絵など写真の投稿</el-button>
-              <div slot="tip" class="el-upload__tip">jpeg などイメージフォーマットでお願いします</div>
-            </el-upload>
+      <transition name="grow-shrink">
+        <dialog class="chapter-form__upload-img" open v-if="picture" v-click-outside="pictureOpen">
+          <transition name="slide-fade">
+            <div class="chapter-form__extra">
+              <el-upload
+                class="upload-demo"
+                action
+                :on-preview="handlePreview"
+                :on-remove="handleRemove"
+                :on-success="successPhoto"
+                list-type="picture"
+                :limit="3"
+                :on-exceed="handleExceed"
+                accept="image/*"
+              >
+                <el-button size="small" type="primary">絵など写真の投稿</el-button>
+                <div slot="tip" class="el-upload__tip">jpeg などイメージフォーマットでお願いします</div>
+              </el-upload>
+            </div>
+          </transition>
+        </dialog>
+      </transition>
+      <transition name="grow-shrink">
+        <dialog
+          open
+          class="chapter-form__announcement"
+          v-if="announcement"
+          v-click-outside="announcementOpen"
+        >
+          <header>告知・広告・思考</header>
+          <div class="form-control flex-column">
+            <transition name="placeholder-up">
+              <div class="label-animation" for="header" v-if="!upPlaceHolder">上書き</div>
+            </transition>
+            <textarea
+              style="margin-bottom: 25px;"
+              maxlength="280"
+              @focus="textAreaFocus(true)"
+              @blur="textAreaBlur(true)"
+              :placeholder="upPlaceHolder"
+              name="header"
+              v-model="form.extra.announcement.header"
+              id
+              rows="5"
+            ></textarea>
           </div>
-        </transition>
-      </dialog>
-      <dialog
-        open
-        class="chapter-form__announcement"
-        v-if="announcement"
-        v-click-outside="announcementOpen"
-      >
-        <header>告知・広告・思考</header>
-        <div class="form-control flex-column">
-          <transition name="placeholder-up">
-            <div class="label-animation" for="header" v-if="!upPlaceHolder">上書き</div>
-          </transition>
-          <textarea
-            style="margin-bottom: 25px;"
-            maxlength="280"
-            @focus="textAreaFocus(true)"
-            @blur="textAreaBlur(true)"
-            :placeholder="upPlaceHolder"
-            name="header"
-            v-model="form.extra.announcement.header"
-            id
-            rows="5"
-          ></textarea>
-        </div>
-        <div class="form-control flex-column">
-          <transition name="placeholder-up">
-            <div class="label-animation" for="footer" v-if="!downPlaceHolder">下書き</div>
-          </transition>
-          <textarea
-            style="margin-bottom: 25px;"
-            maxlength="280"
-            @focus="textAreaFocus(false)"
-            @blur="textAreaBlur(false)"
-            :placeholder="downPlaceHolder"
-            name="footer"
-            v-model="form.extra.announcement.footer"
-            id
-            rows="5"
-          ></textarea>
-        </div>
-        <div class="chapter-form__announcement__decision flex flex--right">
-          <div
-            class="chapter-form__announcement__button flex flex--align flex--center"
-            @click="announcementOpen"
-          >決定</div>
-        </div>
-      </dialog>
+          <div class="form-control flex-column">
+            <transition name="placeholder-up">
+              <div class="label-animation" for="footer" v-if="!downPlaceHolder">下書き</div>
+            </transition>
+            <textarea
+              style="margin-bottom: 25px;"
+              maxlength="280"
+              @focus="textAreaFocus(false)"
+              @blur="textAreaBlur(false)"
+              :placeholder="downPlaceHolder"
+              name="footer"
+              v-model="form.extra.announcement.footer"
+              id
+              rows="5"
+            ></textarea>
+          </div>
+          <div class="chapter-form__announcement__decision flex flex--right">
+            <div
+              class="chapter-form__announcement__button flex flex--align flex--center"
+              @click="announcementOpen"
+            >決定</div>
+          </div>
+        </dialog>
+      </transition>
       <div class="form-control flex flex--align">
         <label for="schedule" style="margin-right:10px;">投稿する時間を指定する</label>
         <el-switch v-model="schedule"></el-switch>

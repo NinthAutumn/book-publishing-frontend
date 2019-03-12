@@ -45,7 +45,7 @@
         :style="{width: width+'px','font-size': fontSize + 'px'}"
       >
         <div
-          :style="{width: width+'px','font-size': fontSize + 'px'}"
+          :style="{width: width+'px',height: mheight+'px','font-size': fontSize + 'px'}"
           class="select-component__list"
           v-if="!multiple && modal"
           v-click-outside="closeModal"
@@ -101,6 +101,7 @@ export default {
     column: Number,
     width: Number,
     height: Number,
+    mheight: Number,
     transition: String,
     object: Array,
     def: String,
@@ -253,7 +254,7 @@ export default {
     padding: 5px;
     width: 100%;
     top: -30px;
-
+    overflow: scroll;
     position: absolute;
     box-sizing: border-box;
     #{$self}__refresh {

@@ -3,28 +3,15 @@
     <div class="user-dashboard__header flex flex--align flex--between">
       <header>ダッシュボード</header>
     </div>
-    <div class="user-analytics">
-      <table class="analytics-overview">
-        <tr>
-          <th>現在の視聴回数</th>
-          <th>現在のブックマーク数</th>
-          <th>現在のコメント数</th>
-        </tr>
-        <tr>
-          <td>99</td>
-          <td>10</td>
-          <td>232</td>
-        </tr>
-      </table>
-      <div class="card"></div>
-    </div>
+    <Analytics></Analytics>
   </div>
 </template>
 
 <script>
+import Analytics from "@/components/Dashboard/Analytics";
 export default {
   layout: "user-nav/User",
-  components: {}
+  components: { Analytics }
 };
 </script>
 
