@@ -74,7 +74,6 @@ export default {
     transition: 300ms;
   }
   // background-color: $review-color;
-  border: 2px solid $review-color;
   margin: 10px 5px;
   margin-left: 1px;
   margin-right: 10px;
@@ -97,6 +96,9 @@ export default {
     &__pic {
       width: 100px;
       border-radius: 100px;
+      -webkit-box-shadow: 1px 1px 5px 0px rgba(186, 186, 186, 1);
+      -moz-box-shadow: 1px 1px 5px 0px rgba(186, 186, 186, 1);
+      box-shadow: 1px 1px 5px 0px rgba(186, 186, 186, 1);
     }
     &__username {
       // text-align: center;
@@ -118,10 +120,16 @@ export default {
       }
     }
     &__content {
+      p {
+        font-size: 13px;
+        span {
+          font-size: 13px;
+        }
+      }
       overflow: hidden;
-      font-size: 15px;
+
       line-height: 28px;
-      height: 20vh;
+      height: 180px;
       // width: 70%;
       // text-overflow: ellipsis;
     }

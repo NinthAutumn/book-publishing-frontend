@@ -10,7 +10,7 @@
             alt="Book cover"
           >
         </nuxt-link>
-        <div @click="menu_modal=true" v-if="menu" class="book-menu">
+        <div @click="menu_modal=true" v-if="menu" class="book-menu flex flex--align flex--center">
           <fa icon="ellipsis-v"></fa>
         </div>
         <transition name="grow-shrink">
@@ -112,12 +112,14 @@ export default {
   .book-menu {
     position: absolute;
     top: 5px;
-    right: 5px;
+    right: 0;
     font-size: 20px;
     z-index: 1000;
     transition: 300ms;
     color: rgb(255, 255, 255);
     text-shadow: 1px 1px 10px 5px rgb(211, 211, 211);
+    width: 25px;
+    height: 25px;
     &__modal {
       position: absolute;
       right: -118px;
@@ -125,6 +127,7 @@ export default {
       background-color: white;
       z-index: 2000;
       width: 120px;
+
       box-shadow: 1px 1px 5px 0px rgb(219, 219, 219);
       &__options {
         &:hover {
@@ -137,8 +140,9 @@ export default {
     }
     &:hover {
       cursor: pointer;
-      transform: scale(1.2);
       transition: 300ms;
+      background-color: rgba(70, 70, 70, 0.432);
+      border-radius: 100px;
     }
   }
   .book-cover {
@@ -147,9 +151,9 @@ export default {
     // width: 16.5rem;
     // height: 24.5rem;
     position: relative;
-    -webkit-box-shadow: 1px 1px 1px 0px rgba(153, 153, 153, 0.75);
-    -moz-box-shadow: 1px 1px 1px 0px rgba(153, 153, 153, 0.75);
-    box-shadow: 1px 1px 1px 0px rgba(153, 153, 153, 0.75);
+    // -webkit-box-shadow: 1px 1px 1px 0px rgba(153, 153, 153, 0.75);
+    // -moz-box-shadow: 1px 1px 1px 0px rgba(153, 153, 153, 0.75);
+    // box-shadow: 1px 1px 1px 0px rgba(153, 153, 153, 0.75);
     // border-radius: 5px;
     .book-img-div {
       &:hover {
@@ -185,32 +189,16 @@ export default {
   }
   .text-info {
     display: flex;
-    // align-items: center;
     flex-direction: column;
-    /* background: white; */
-    // position: relative;
-    /* height: 7rem; */
-    // padding: 0.5rem;
+
     .vue-star-rating-rating-text {
       font-size: 1.6rem;
-      // position: absolute;
-      // right: 0;
-      margin: 0 !important;
-      // margin-bottom: 5px !important;
-      // margin-left: 2px !important;
-      // height: 16px;
-    }
-    /* width: 100%; */
-    /* padding-left: 5px; */
 
-    /* border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px; */
+      margin: 0 !important;
+    }
     .book-title {
       margin: 0;
       font-weight: 400;
-      /* text-align: center; */
-      /* margin-top: 10px; */
-      // color: black !important;
       padding: 0;
       a {
         color: black;
@@ -221,10 +209,8 @@ export default {
       text-align: left !important;
       transition: 300ms;
       &:hover {
-        // overflow: visible;
         cursor: pointer;
-        // white-space: normal;
-        /* transition: overflow 500ms; */
+
         transition: 200ms;
       }
     }

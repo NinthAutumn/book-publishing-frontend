@@ -70,10 +70,14 @@ export const actions = {
   async showAll({
     commit,
     rootState
-  }, bookId) {
-    await this.$axios.get(process.env.baseUrl + "/reviews/book?id=" + bookId).then(async (res) => {
+  }, {
+    bookId,
+    limit = 10,
+    page = 1
+  }) {
+    await this.$axios.get(`${process.env.baseUrl}/reviews/book?id=${bookId}&limit=${limit}&page=${page}`).then(async (res) => {
       commit('GET_REVIEWS', res.data)
-      // commit('USER_LIKED_REVIEWS', rootState.auth.user)
+
       if (rootState.auth.loggedIn) {
         await this.$axios.get(process.env.baseUrl + '/users/liked').then((res) => {
           commit('USER_LIKED_REVIEWS', rootState.auth.user._id)

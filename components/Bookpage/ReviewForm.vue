@@ -68,7 +68,9 @@ export default {
           id: this.$store.state.review.myReview._id,
           review: this.review
         });
-        await this.$store.dispatch("review/showAll", this.$route.params.id);
+        await this.$store.dispatch("review/showAll", {
+          bookId: this.$route.params.id
+        });
       } else {
         const username = this.$store.state.auth.user.username;
 
