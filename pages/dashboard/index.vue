@@ -15,7 +15,9 @@ import Analytics from "@/components/Dashboard/Analytics";
 import ViewBarGraph from "@/components/Dashboard/Graphs/Views";
 export default {
   layout: "user-nav/User",
-  async fetch({ store, params }) {},
+  async fetch({ store, params }) {
+    await store.dispatch("dashboard/fetchTotalViews");
+  },
   components: { Analytics, ViewBarGraph },
   created() {
     console.log();

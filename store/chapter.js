@@ -130,9 +130,7 @@ export const actions = {
     chapter,
     bookId
   }) {
-    await this.$axios.post(process.env.baseUrl + '/chapters/add?id=' + bookId,
-      chapter
-    )
+    await this.$axios.post(process.env.baseUrl + '/chapters/add?id=' + bookId, chapter)
   }
 
 }

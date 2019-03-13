@@ -9,8 +9,7 @@
 <script>
 export default {
   props: ["height"],
-  async mounted() {
-    await this.$store.dispatch("dashboard/fetchTotalViews");
+  async created() {
     this.$store.getters["dashboard/getTotalViews"].forEach(stat => {
       if (this.chartData.columns.indexOf(stat._id.book[0]) === -1) {
         this.chartData.columns.push(stat._id.book[0]);

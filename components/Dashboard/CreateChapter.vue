@@ -247,21 +247,6 @@ export default {
     pictureOpen() {
       this.picture = !this.picture;
     },
-
-    front() {
-      this.progress++;
-      // const counter = document.querySelector(".fr-view");
-      // if (counter) {
-      //   this.form.wordCount = counter.innerText;
-      // }
-    },
-    back() {
-      this.progress--;
-      // const counter = document.querySelector(".fr-counter");
-      // if (counter) {
-      //   this.wordCount = counter.innerText;
-      // }
-    },
     handleRemove(file, fileList) {
       console.log(file, fileList);
     },
@@ -295,7 +280,10 @@ export default {
         schedule: this.form.date,
         wordCount: this.form.wordCount.length,
         locked: this.form.locked,
-        voluem: this.form.volume,
+        volume: {
+          index: 1
+        },
+        index: 1,
         state,
         extra: {
           announcement: {
@@ -305,7 +293,8 @@ export default {
           drawings: this.$store.state.upload.urls
         }
       };
-      await this.$store.dispatch("chapter/createchapter", { bookId, chapter });
+      const bookId = this.$route.params.id;
+      await this.$store.dispatch("chapter/createChapter", { bookId, chapter });
     },
     handleExceed(files, fileList) {
       this.$message.warning(

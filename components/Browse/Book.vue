@@ -3,7 +3,7 @@
     <div id="book-browse__container" @click="linkTo">
       <div class="book-browse__cover">
         <div class="book-browse__rating flex flex--align flex--center">
-          {{book.ratings.toFixed(2)}}
+          {{book.ratings}}
           <fa class="book-browse__rating__icon" icon="star"></fa>
         </div>
         <img
