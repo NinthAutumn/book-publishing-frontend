@@ -1,7 +1,7 @@
 <template>
   <div class="user-analytics">
     <div class="main-analytics">
-      <div class="main-analytics__list flex flex--around">
+      <div class="main-analytics__list flex flex--between">
         <div
           v-for="(value, key,index) in mainAnalytics"
           :key="index"

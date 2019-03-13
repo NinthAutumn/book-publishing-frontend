@@ -4,8 +4,12 @@
       <header>ダッシュボード</header>
     </div>
     <Analytics></Analytics>
-    <div class="graph">
-      <ve-line :settings="chartSetting" :data="chartData"></ve-line>
+    <div class="graphs flex flex--right">
+      <div class="graph">
+        <no-ssr>
+          <ve-histogram height="300px" :settings="chartSetting" :data="chartData"></ve-histogram>
+        </no-ssr>
+      </div>
     </div>
   </div>
 </template>
@@ -14,23 +18,31 @@
 import Analytics from "@/components/Dashboard/Analytics";
 export default {
   layout: "user-nav/User",
+  async fetch({ store, params }) {
+    await store.dispatch("dashboard/fetchTotalViews");
+  },
   components: { Analytics },
+  created() {
+    console.log();
+  },
+  mounted() {
+    this.$store.getters["dashboard/getTotalViews"].forEach(stat => {
+      if (this.chartData.columns.indexOf(stat._id.book[0]) === -1) {
+        this.chartData.columns.push(stat._id.book[0]);
+      }
+
+      this.chartData.rows.push({
+        date: stat._id.day,
+        [stat._id.book[0]]: stat.sum
+      });
+    });
+  },
   data() {
     return {
-      chartSetting: {
-        area: true
-        // xAxisType: "value"
-      },
+      chartSetting: {},
       chartData: {
-        columns: ["date", "sales"],
-        rows: [
-          { date: "1月1日", sales: 123 },
-          { date: "1月2日", sales: 1223 },
-          { date: "1月3日", sales: 2123 },
-          { date: "1月4日", sales: 4123 },
-          { date: "1月5日", sales: 3123 },
-          { date: "1月6日", sales: 7123 }
-        ]
+        columns: ["date"],
+        rows: []
       }
     };
   }
@@ -64,6 +76,15 @@ export default {
       font-size: 16px;
     }
   }
+}
+.graph {
+  // overflow: hidden;
+  padding: 10px;
+  width: 500px;
+  margin-top: 30px;
+  background-color: #fff;
+  box-shadow: 1px 1px 5px rgb(233, 233, 233);
+  border-radius: 5px;
 }
 #line-chart {
 }
