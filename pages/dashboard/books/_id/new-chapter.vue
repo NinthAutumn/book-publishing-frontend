@@ -31,7 +31,7 @@ export default {
     // ];
   },
   async fetch({ store, params }) {
-    await store.dispatch("chapter/publishedTOC", params.id);
+    await store.dispatch("chapter/fetchPublishedTOC", params.id);
   }
 };
 </script>

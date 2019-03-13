@@ -198,8 +198,11 @@ export default {
   &__count {
     font-size: 16px;
     position: absolute;
-    right: 10px;
-    bottom: 15px;
+    // right: 10px;
+    right: 0;
+    bottom: 0;
+    background-color: #fff;
+    padding: 5px;
   }
 }
 </style>

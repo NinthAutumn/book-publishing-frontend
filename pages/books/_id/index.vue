@@ -123,7 +123,7 @@ export default {
   async fetch({ store, params }) {
     await store.dispatch("book/getBook", params.id);
     await store.dispatch("review/showAll", { bookId: params.id });
-    await store.dispatch("chapter/publishedTOC", params.id);
+    await store.dispatch("chapter/fetchPublishedTOC", params.id);
     if (store.state.auth.loggedIn) {
       await store.dispatch("review/reviewedStatus", params.id);
       await store.dispatch("library/checkBookmark", params.id);

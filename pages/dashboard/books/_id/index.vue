@@ -33,8 +33,8 @@ export default {
   layout: "user-nav/User",
   components: {},
   async fetch({ store, params }) {
-    await store.dispatch("chapter/dashboardTOC", params.id);
-    await store.dispatch("chapter/publishedTOC", params.id);
+    await store.dispatch("chapter/fetchAllTOC", params.id);
+    await store.dispatch("chapter/fetchPublishedTOC", params.id);
     await store.dispatch("book/getBook", params.id);
   },
   created() {},

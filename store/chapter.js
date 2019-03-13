@@ -110,14 +110,14 @@ export const actions = {
     commit('LOADING_FALSE')
 
   },
-  async dashboardTOC({
+  async fetchAllTOC({
     commit
   }, bookId) {
     await this.$axios.get(process.env.baseUrl + '/chapters/dashboard?bookId=' + bookId).then((res) => {
       commit('D_TOC', res.data)
     })
   },
-  async publishedTOC({
+  async fetchPublishedTOC({
     commit
   }, bookId) {
     await this.$axios.get(process.env.baseUrl + '/chapters/published?bookId=' + bookId).then((res) => {

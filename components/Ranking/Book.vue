@@ -33,7 +33,21 @@
         <span class="p-ending"></span>
         <no-ssr>
           <star-rating
+            v-if="book.ratings"
             :rating="+book.ratings.toFixed(2)"
+            :star-size="18"
+            :read-only="true"
+            inactive-color="#D8D7D5"
+            active-color="#FFB727"
+            :increment="0.01"
+            :round-start-rating="false"
+            border-color="#FFB727"
+            :glow="1"
+            class="star-rating flex flex--center"
+          ></star-rating>
+          <star-rating
+            v-else
+            :rating="0"
             :star-size="18"
             :read-only="true"
             inactive-color="#D8D7D5"

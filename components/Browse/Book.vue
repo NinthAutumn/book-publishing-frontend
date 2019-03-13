@@ -2,8 +2,11 @@
   <div class="book-browse">
     <div id="book-browse__container" @click="linkTo">
       <div class="book-browse__cover">
-        <div class="book-browse__rating flex flex--align flex--center">
-          {{book.ratings}}
+        <div class="book-browse__rating flex flex--align flex--center" v-if="book.ratings">
+          {{book.ratings.toFixed(2)}}
+          <fa class="book-browse__rating__icon" icon="star"></fa>
+        </div>
+        <div class="book-browse__rating flex flex--align flex--center" v-else>
           <fa class="book-browse__rating__icon" icon="star"></fa>
         </div>
         <img
