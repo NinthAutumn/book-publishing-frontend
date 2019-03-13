@@ -102,6 +102,12 @@ module.exports = {
     }, {
       src: '@/plugins/vuelineclamp',
       ssr: false
+    }, {
+      src: '@/plugins/bar',
+      ssr: false
+    }, {
+      src: '@/plugins/graphs',
+      ssr: false
     }
   ],
 

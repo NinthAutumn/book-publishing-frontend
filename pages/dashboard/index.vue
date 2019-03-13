@@ -4,6 +4,9 @@
       <header>ダッシュボード</header>
     </div>
     <Analytics></Analytics>
+    <div class="graph">
+      <ve-line :settings="chartSetting" :data="chartData"></ve-line>
+    </div>
   </div>
 </template>
 
@@ -11,7 +14,26 @@
 import Analytics from "@/components/Dashboard/Analytics";
 export default {
   layout: "user-nav/User",
-  components: { Analytics }
+  components: { Analytics },
+  data() {
+    return {
+      chartSetting: {
+        area: true
+        // xAxisType: "value"
+      },
+      chartData: {
+        columns: ["date", "sales"],
+        rows: [
+          { date: "1月1日", sales: 123 },
+          { date: "1月2日", sales: 1223 },
+          { date: "1月3日", sales: 2123 },
+          { date: "1月4日", sales: 4123 },
+          { date: "1月5日", sales: 3123 },
+          { date: "1月6日", sales: 7123 }
+        ]
+      }
+    };
+  }
 };
 </script>
 
@@ -42,5 +64,7 @@ export default {
       font-size: 16px;
     }
   }
+}
+#line-chart {
 }
 </style>
