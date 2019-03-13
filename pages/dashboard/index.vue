@@ -5,46 +5,24 @@
     </div>
     <Analytics></Analytics>
     <div class="graphs flex flex--right">
-      <div class="graph">
-        <no-ssr>
-          <ve-histogram height="300px" :settings="chartSetting" :data="chartData"></ve-histogram>
-        </no-ssr>
-      </div>
+      <ViewBarGraph height="300px"></ViewBarGraph>
     </div>
   </div>
 </template>
 
 <script>
 import Analytics from "@/components/Dashboard/Analytics";
+import ViewBarGraph from "@/components/Dashboard/Graphs/Views";
 export default {
   layout: "user-nav/User",
-  async fetch({ store, params }) {
-    await store.dispatch("dashboard/fetchTotalViews");
-  },
-  components: { Analytics },
+  async fetch({ store, params }) {},
+  components: { Analytics, ViewBarGraph },
   created() {
     console.log();
   },
-  mounted() {
-    this.$store.getters["dashboard/getTotalViews"].forEach(stat => {
-      if (this.chartData.columns.indexOf(stat._id.book[0]) === -1) {
-        this.chartData.columns.push(stat._id.book[0]);
-      }
-
-      this.chartData.rows.push({
-        date: stat._id.day,
-        [stat._id.book[0]]: stat.sum
-      });
-    });
-  },
+  mounted() {},
   data() {
-    return {
-      chartSetting: {},
-      chartData: {
-        columns: ["date"],
-        rows: []
-      }
-    };
+    return {};
   }
 };
 </script>

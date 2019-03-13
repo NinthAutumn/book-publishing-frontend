@@ -1,5 +1,5 @@
 export const state = () => ({
-  wealth: Number
+  wealth: 0
 })
 
 export const getters = {
@@ -30,8 +30,9 @@ export const actions = {
     commit
   }, ) {
 
-    const wealth = await this.$axios.get(process.env.baseUrl + '/users/wealth')
-    commit('SET_WEALTH', wealth.data.wealth)
+    const res = await this.$axios.get(process.env.baseUrl + '/users/wealth')
+    console.log(typeof res.data.wealth);
+    commit('SET_WEALTH', res.data.wealth)
   }
 
 }
