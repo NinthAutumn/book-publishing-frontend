@@ -4,6 +4,7 @@ export const state = () => ({
   chapterCover: "",
   loading: false,
   toc: '',
+  volumeList: [],
   modal: '',
   cToc: '',
   dTOC: [], //chapters that aren't published
@@ -23,6 +24,9 @@ export const getters = {
     return state.dTOC.filter((chapter) => {
       return chapter.state === 'draft'
     })
+  },
+  getVolumeList: (state) => {
+    return state.volumeList
   }
 }
 
@@ -73,6 +77,9 @@ export const mutations = {
   },
   LOADING_FALSE(state) {
     state.loading = false
+  },
+  SET_VOLUME_LIST(state, list) {
+    state.volumeList = list
   }
 }
 export const actions = {
@@ -123,6 +130,12 @@ export const actions = {
     await this.$axios.get(process.env.baseUrl + '/chapters/published?bookId=' + bookId).then((res) => {
       commit('P_TOC', res.data)
     })
+  },
+  async fetchVolumeList({
+    commit
+  }, bookId) {
+    const res = await this.$axios.get(process.env.baseUrl + '/chapters/volume/list?bookId=' + bookId)
+    commit('SET_VOLUME_LIST', res.data)
   },
   async createChapter({
     commit

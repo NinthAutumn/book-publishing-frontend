@@ -8,7 +8,7 @@
         </div>
       </div>
       <div class="chapter-form__options flex">
-        <Select name="章を選ぶ" icon="archive" :data="volumes"></Select>
+        <Select name="章を選ぶ" icon="archive" :object="volumes"></Select>
         <Select v-model="form.locked" def="無料" icon="yen-sign" name="時価" :object="locked"></Select>
         <div
           class="chapter-form__options__user-news flex flex--align flex--center"
@@ -151,9 +151,24 @@ export default {
     TextEditor,
     Select
   },
+  created() {
+    this.$store.getters["chapter/getVolumeList"].forEach((volume, index) => {
+      if (index === 0) {
+        this.volumes.push({ key: volume.title, value: volume.index });
+      } else {
+        if (volume.index < 10) {
+          this.volumes.push({ key: `00${volume.index}`, value: volume.index });
+        } else if (volume.index < 100) {
+          this.volumes.push({ key: `0${volume.index}`, value: volume.index });
+        } else {
+          this.volumes.push({ key: `${volume.index}`, value: volume.index });
+        }
+      }
+    });
+  },
   data() {
     return {
-      volumes: ["設定", "001", "002"],
+      volumes: [],
       locked: [
         {
           key: "無料",
@@ -303,9 +318,6 @@ export default {
         } files this time, add up to ${files.length + fileList.length} totally`
       );
     }
-    // move(e){
-    //   if(e === )
-    // }
   }
 };
 </script>

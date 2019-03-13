@@ -22,16 +22,10 @@ export default {
   components: {
     CreateChapter
   },
-  created() {
-    // this.chapter = this.$store.state.chapter.pTOC[
-    //   this.$store.state.chapter.pTOC.length - 1
-    // ][
-    //   this.$store.state.chapter.pTOC[this.$store.state.chapter.pTOC.length - 1]
-    //     .length - 1
-    // ];
-  },
+  created() {},
   async fetch({ store, params }) {
     await store.dispatch("chapter/fetchPublishedTOC", params.id);
+    await store.dispatch("chapter/fetchVolumeList", params.id);
   }
 };
 </script>
