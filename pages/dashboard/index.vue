@@ -4,7 +4,7 @@
       <header>ダッシュボード</header>
     </div>
     <Analytics></Analytics>
-    <div class="graphs">
+    <div class="graphs flex flex--right">
       <ViewBarGraph height="300px"></ViewBarGraph>
     </div>
   </div>
@@ -19,9 +19,7 @@ export default {
     await store.dispatch("dashboard/fetchTotalViews");
   },
   components: { Analytics, ViewBarGraph },
-  created() {
-    console.log();
-  },
+  created() {},
   mounted() {},
   data() {
     return {};
@@ -59,12 +57,6 @@ export default {
 }
 .graph {
   // overflow: hidden;
-  padding: 10px;
-  width: 500px;
-  margin-top: 30px;
-  background-color: #fff;
-  box-shadow: 1px 1px 5px rgb(233, 233, 233);
-  border-radius: 5px;
 }
 #line-chart {
 }

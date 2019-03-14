@@ -34,4 +34,12 @@ export default {
 </script>
 
 <style lang="scss">
+.views-bargraph {
+  padding: 10px;
+  width: 500px;
+  margin-top: 30px;
+  background-color: #fff;
+  box-shadow: 1px 1px 5px rgb(233, 233, 233);
+  border-radius: 5px;
+}
 </style>
