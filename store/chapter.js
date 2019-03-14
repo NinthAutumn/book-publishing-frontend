@@ -60,7 +60,7 @@ export const mutations = {
   TOC_REVERSE(state) {
     state.pTOC = state.pTOC.reverse()
     state.pTOC.forEach((volume) => {
-      volume.reverse()
+      volume.chapters.reverse()
     })
   },
   TOC_BOOK(state, toc) {

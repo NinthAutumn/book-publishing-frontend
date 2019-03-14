@@ -8,7 +8,7 @@
         </div>
       </div>
       <div class="chapter-form__options flex">
-        <Select name="章を選ぶ" icon="archive" :object="volumes"></Select>
+        <Select v-model="form.volume" name="章を選ぶ" icon="archive" :object="volumes"></Select>
         <Select v-model="form.locked" def="無料" icon="yen-sign" name="時価" :object="locked"></Select>
         <div
           class="chapter-form__options__user-news flex flex--align flex--center"
@@ -295,10 +295,8 @@ export default {
         schedule: this.form.date,
         wordCount: this.form.wordCount.length,
         locked: this.form.locked,
-        volume: {
-          index: 1
-        },
-        index: 1,
+        volume: this.form.volume,
+        index: 2,
         state,
         extra: {
           announcement: {

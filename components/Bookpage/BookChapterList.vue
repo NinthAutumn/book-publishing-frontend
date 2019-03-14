@@ -9,15 +9,21 @@
       ></fa>
     </div>
     <transition-group name="list-complete" tag="ul" class="Book-TOC__content">
-      <li v-for="(volume, index) in chap" :key="index" class="Book-TOC__all">
-        <div class="volume-title">第{{volume[0].volume.index}}章</div>
-        <div class="Book-TOC__list" v-for="(chapter, index) in volume" :key="index">
+      <li v-for="(volume, index) in volumes" :key="index" class="Book-TOC__all">
+        <div
+          v-if="volume.chapters.length> 0"
+          class="volume-title"
+        >{{volume.title || `第${volume.index}章`}}</div>
+
+        <div class="Book-TOC__list" v-for="(chapter, index) in volume.chapters" :key="index">
           <nuxt-link
             class="Book-TOC__item flex flex--between flex--align"
             :to="{path: `/books/${ $route.params.id}/${chapter._id}`}"
           >
-            <div class="flex-divider">
-              <p class="Book-TOC__text Book-TOC__text--title">{{chapter.index}}話: {{chapter.title}}</p>
+            <div class="flex-divider flex Book-TOC__text Book-TOC__text--title">
+              <p
+                class="Book-TOC__text Book-TOC__text--title"
+              >{{chapter.index}}話:{{chapter.title | truncate(23)}}</p>
             </div>
             <div class="flex-divider flex flex--align">
               <p
@@ -54,8 +60,17 @@ export default {
     }
   },
   computed: {
-    chap: function() {
+    volumes: function() {
       return this.$store.state.chapter.pTOC;
+    }
+  },
+  filters: {
+    truncate: (string, number) => {
+      if (string.length > 17) {
+        return (string || "").substring(0, number) + "…";
+      } else {
+        return string;
+      }
     }
   }
 };
