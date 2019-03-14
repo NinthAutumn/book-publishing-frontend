@@ -15,19 +15,22 @@ export default {
       chartData: {
         columns: ["date"],
         rows: []
-      }
+      },
+      object: {}
     };
   },
   async mounted() {
-    console.log(this.$store.getters["dashboard/getTotalViews"]);
-    this.$store.getters["dashboard/getTotalViews"].forEach(stat => {
-      if (this.chartData.columns.indexOf(stat._id.book[0]) === -1) {
-        this.chartData.columns.push(stat._id.book[0]);
-      }
-      this.chartData.rows.push({
-        date: stat._id.day,
-        [stat._id.book[0]]: stat.sum
+    this.$store.getters["dashboard/getTotalViews"].forEach(day => {
+      this.object = {
+        date: day._id.day
+      };
+      day.views.forEach(book => {
+        if (this.chartData.columns.indexOf(book.book[0]) === -1) {
+          this.chartData.columns.push(book.book[0]);
+        }
+        this.object[book.book[0]] = book.view;
       });
+      this.chartData.rows.push(this.object);
     });
   }
 };
