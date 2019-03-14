@@ -20,7 +20,6 @@ export const actions = {
     try {
       const res = await this.$axios.get(`${process.env.baseUrl}/analytics/totalviews`)
       commit('SET_TOTAL_VIEWS', res.data)
-      console.log(res.data);
       return Promise.resolve()
     } catch (error) {
       return Promise.reject(error)

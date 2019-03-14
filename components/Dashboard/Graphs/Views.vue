@@ -9,7 +9,17 @@
 <script>
 export default {
   props: ["height"],
-  async created() {
+  data() {
+    return {
+      chartSetting: {},
+      chartData: {
+        columns: ["date"],
+        rows: []
+      }
+    };
+  },
+  async mounted() {
+    console.log(this.$store.getters["dashboard/getTotalViews"]);
     this.$store.getters["dashboard/getTotalViews"].forEach(stat => {
       if (this.chartData.columns.indexOf(stat._id.book[0]) === -1) {
         this.chartData.columns.push(stat._id.book[0]);
@@ -19,15 +29,6 @@ export default {
         [stat._id.book[0]]: stat.sum
       });
     });
-  },
-  data() {
-    return {
-      chartSetting: {},
-      chartData: {
-        columns: ["date"],
-        rows: []
-      }
-    };
   }
 };
 </script>

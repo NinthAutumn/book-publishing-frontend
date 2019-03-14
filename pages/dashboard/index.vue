@@ -4,7 +4,7 @@
       <header>ダッシュボード</header>
     </div>
     <Analytics></Analytics>
-    <div class="graphs flex flex--right">
+    <div class="graphs">
       <ViewBarGraph height="300px"></ViewBarGraph>
     </div>
   </div>

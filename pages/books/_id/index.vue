@@ -119,6 +119,7 @@ import Tags from "@/components/Bookpage/Tags";
 
 export default {
   auth: false,
+
   async asyncData({ params, store }) {},
   async fetch({ store, params }) {
     await store.dispatch("book/getBook", params.id);
@@ -271,6 +272,9 @@ export default {
     // TextEditor
   },
   mounted() {
+    // while (1) {
+    //   alert("なぜそれが");
+    // }
     this.tabs.review = this.$refs.review.clientWidth;
     this.tabs.toc = this.$refs.toc.clientWidth;
     this.tabs.position = {
