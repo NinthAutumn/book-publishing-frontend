@@ -51,13 +51,16 @@ export const actions = {
     commit,
     state
   }, user) {
+    const thirty = 1 / 48
     await this.$axios.post(process.env.baseUrl + '/users/login', {
       username: user.username,
       password: user.password
     }).then((res) => {
       const token = res.headers.authorization
       this.$axios.defaults.headers.common['Authorization'] = token
-      Cookies.set("token", token)
+      Cookies.set("token", token, {
+        expires: thirty
+      })
       commit("AUTH_SUCCESS", {
         token: token,
         user: res.data
