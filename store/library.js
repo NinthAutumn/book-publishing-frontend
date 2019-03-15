@@ -63,7 +63,7 @@ export const actions = {
     commit
   }, bookId) {
     try {
-      const status = await this.$axios.get(process.env.baseUrl + '/library/check?bookId=' + bookId)
+      const status = await this.$axios.get(process.env.baseUrl + '/users/library/check?bookId=' + bookId)
       commit('BOOKMARK_STATUS', status.data.bookmarked)
     } catch (error) {
       throw error
@@ -73,49 +73,49 @@ export const actions = {
   async getBookmark({
     commit
   }) {
-    await this.$axios.get(process.env.baseUrl + '/library/bookmarks').then((res) => {
+    await this.$axios.get(process.env.baseUrl + '/users/library/bookmarks').then((res) => {
       commit('GET_BOOKMARK', res.data.store)
     })
   },
   async getFavorites({
     commit
   }) {
-    await this.$axios.get(process.env.baseUrl + '/library/show?type=favorite').then((res) => {
+    await this.$axios.get(process.env.baseUrl + '/users/library/show?type=favorite').then((res) => {
       commit('GET_FAVORITE', res.data)
     })
   },
   async getReading({
     commit
   }) {
-    await this.$axios.get(process.env.baseUrl + '/library/show?type=reading').then((res) => {
+    await this.$axios.get(process.env.baseUrl + '/users/library/show?type=reading').then((res) => {
       commit('GET_READING', res.data)
     })
   },
   async getHistory({
     commit
   }) {
-    await this.$axios.get(process.env.baseUrl + '/library/history').then((res) => {
+    await this.$axios.get(process.env.baseUrl + '/users/library/history').then((res) => {
       commit('GET_HISTORY', res.data)
     })
   },
   async getRead_Later({
     commit
   }) {
-    await this.$axios.get(process.env.baseUrl + '/library/show?type=readLater').then((res) => {
+    await this.$axios.get(process.env.baseUrl + '/users/library/show?type=readLater').then((res) => {
       commit('GET_READ_LATER', res.data)
     })
   },
   async addStore({
     commit
   }, store) {
-    await this.$axios.patch(process.env.baseUrl + '/library/updateLibrary', {
+    await this.$axios.patch(process.env.baseUrl + '/users/library/updateLibrary', {
       store
     })
   },
   async removeStore({
     commit
   }, store) {
-    await this.$axios.patch(process.env.baseUrl + '/library/updateDeleteLibrary', {
+    await this.$axios.patch(process.env.baseUrl + '/users/library/updateDeleteLibrary', {
       store
     })
   },
@@ -124,7 +124,7 @@ export const actions = {
   }) {
 
     try {
-      const res = await this.$axios.get(process.env.baseUrl + '/library/show/chapters')
+      const res = await this.$axios.get(process.env.baseUrl + '/users/library/show/chapters')
       const {
         chapters
       } = res.data

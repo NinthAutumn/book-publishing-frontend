@@ -38,8 +38,6 @@ export default {
 
 <style lang="scss">
 .images-modal {
-  top: 50px;
-  position: sticky;
   width: 400px;
   padding: 10px;
   box-sizing: border-box;

@@ -131,7 +131,9 @@ export default {
   // right: 0;
   position: fixed;
   // left: 50%;
-  top: 51px;
+  top: 0;
+  padding-top: 50px;
+  box-sizing: border-box;
   right: 65px;
   height: 100vh;
   width: 400px;

@@ -51,8 +51,6 @@ export default {
   &--black {
     // background-color: black;
   }
-  top: 50px;
-  position: sticky;
   width: 400px;
   padding: 10px;
   box-sizing: border-box;

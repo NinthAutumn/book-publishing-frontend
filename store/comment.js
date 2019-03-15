@@ -52,7 +52,7 @@ export const actions = {
   }, {
     chapterId
   }) {
-    await this.$axios.get(process.env.baseUrl + '/comments/show?chapterId=' + chapterId).then(async (res) => {
+    await this.$axios.get(process.env.baseUrl + '/books/chapters/comments/show?chapterId=' + chapterId).then(async (res) => {
       commit('GET_COMMENTS', res.data)
       if (rootState.auth.loggedIn) {
         commit('USER_LIKED_COMMENTS', rootState.auth.user._id)
@@ -69,7 +69,7 @@ export const actions = {
     content,
     parent
   }) {
-    await this.$axios.post(process.env.baseUrl + '/comments/add', {
+    await this.$axios.post(process.env.baseUrl + '/books/chapters/comments/add', {
       bookId,
       chapterId,
       content,
@@ -83,7 +83,7 @@ export const actions = {
     chapterId,
     content
   }) {
-    await this.$axios.post(process.env.baseUrl + '/comments/add', {
+    await this.$axios.post(process.env.baseUrl + '/books/chapters/comments/add', {
       bookId,
       chapterId,
       content
@@ -96,7 +96,7 @@ export const actions = {
     type
   }) {
     try {
-      await this.$axios.patch(process.env.baseUrl + '/comments/like', {
+      await this.$axios.patch(process.env.baseUrl + '/books/chapters/comments/like', {
         id: commentId,
         type: type
       })
@@ -113,7 +113,7 @@ export const actions = {
     commentId,
     type
   }) {
-    await this.$axios.patch(process.env.baseUrl + '/comments/unlike', {
+    await this.$axios.patch(process.env.baseUrl + '/books/chapters/comments/unlike', {
       id: commentId,
       type: type
     }).then((res) => {

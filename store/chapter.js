@@ -109,7 +109,7 @@ export const actions = {
   }) {
     // const nextindex = index
     if (userId) {
-      await this.$axios.get(process.env.baseUrl + '/chapters/direct?chapterId=' + chapterId + '&user=' + userId).then((res) => {
+      await this.$axios.get(process.env.baseUrl + '/books/chapters/direct?chapterId=' + chapterId + '&user=' + userId).then((res) => {
         const {
           next,
           prev,
@@ -122,7 +122,7 @@ export const actions = {
         })
       })
     } else {
-      await this.$axios.get(process.env.baseUrl + '/chapters/direct?chapterId=' + chapterId).then((res) => {
+      await this.$axios.get(process.env.baseUrl + '/books/chapters/direct?chapterId=' + chapterId).then((res) => {
         const {
           next,
           prev,
@@ -146,7 +146,7 @@ export const actions = {
       return commit('MODAL_CLOSE')
     }
     commit('TOC_MODAL')
-    await this.$axios.get(process.env.baseUrl + '/chapters/toc?bookId=' + bookId).then((res) => {
+    await this.$axios.get(process.env.baseUrl + '/books/chapters/toc?bookId=' + bookId).then((res) => {
       commit('TOC', res.data)
 
     })
@@ -156,21 +156,21 @@ export const actions = {
   async fetchAllTOC({
     commit
   }, bookId) {
-    await this.$axios.get(process.env.baseUrl + '/chapters/dashboard?bookId=' + bookId).then((res) => {
+    await this.$axios.get(process.env.baseUrl + '/books/chapters/dashboard?bookId=' + bookId).then((res) => {
       commit('D_TOC', res.data)
     })
   },
   async fetchPublishedTOC({
     commit
   }, bookId) {
-    await this.$axios.get(process.env.baseUrl + '/chapters/published?bookId=' + bookId).then((res) => {
+    await this.$axios.get(process.env.baseUrl + '/books/chapters/published?bookId=' + bookId).then((res) => {
       commit('P_TOC', res.data)
     })
   },
   async fetchVolumeList({
     commit
   }, bookId) {
-    const res = await this.$axios.get(process.env.baseUrl + '/chapters/volume/list?bookId=' + bookId)
+    const res = await this.$axios.get(process.env.baseUrl + '/books/chapters/volume/list?bookId=' + bookId)
     commit('SET_VOLUME_LIST', res.data)
   },
   async createChapter({
@@ -179,7 +179,7 @@ export const actions = {
     chapter,
     bookId
   }) {
-    await this.$axios.post(process.env.baseUrl + '/chapters/add?id=' + bookId, chapter)
+    await this.$axios.post(process.env.baseUrl + '/books/chapters/add?id=' + bookId, chapter)
   },
   async fetchLatestIndex({
     commit
@@ -187,7 +187,7 @@ export const actions = {
     bookId
   }) {
     try {
-      const res = await this.$axios.get(process.env.baseUrl + '/chapters/latestindex?bookId=' + bookId)
+      const res = await this.$axios.get(process.env.baseUrl + '/books/chapters/latestindex?bookId=' + bookId)
       const {
         index
       } = res.data
