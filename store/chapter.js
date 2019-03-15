@@ -7,6 +7,9 @@ export const state = () => ({
   volumeList: [],
   modal: '',
   cToc: '',
+  navigation: {
+
+  },
   dTOC: [], //chapters that aren't published
   pTOC: [] //chapters that are published shown in dashbaord of the user
 })
@@ -25,6 +28,12 @@ export const getters = {
       return chapter.state === 'draft'
     })
   },
+  getNextChapter: (state) => {
+    return state.navigation.next
+  },
+  getPrevChapter: (state) => {
+    return state.navigation.prev
+  },
   getVolumeList: (state) => {
     return state.volumeList
   }
@@ -35,12 +44,20 @@ export const mutations = {
     state.chapter = chapter
     state.chapterCover = chapter.bookId.cover
   },
-  infiniteNext(state, chapter) {
+  SET_CHAPTER(state, chapter) {
     state.chapter = chapter
+  },
+  SET_NAVIGATION(state, {
+    next,
+    prev
+  }) {
+    state.navigation = {
+      next,
+      prev
+    }
   },
   TOC(state, toc) {
     state.toc = toc
-
   },
   TOC_MODAL(state) {
     state.modal = 'table'
@@ -83,7 +100,7 @@ export const mutations = {
   }
 }
 export const actions = {
-  async nextChapter({
+  async fetchChapter({
     commit
   }, {
     chapterId,
@@ -92,11 +109,29 @@ export const actions = {
     // const nextindex = index
     if (userId) {
       await this.$axios.get(process.env.baseUrl + '/chapters/direct?chapterId=' + chapterId + '&user=' + userId).then((res) => {
-        commit('infiniteNext', res.data)
+        const {
+          next,
+          prev,
+          chapter
+        } = res.data
+        commit('SET_CHAPTER', chapter)
+        commit('SET_NAVIGATION', {
+          next,
+          prev
+        })
       })
     } else {
       await this.$axios.get(process.env.baseUrl + '/chapters/direct?chapterId=' + chapterId).then((res) => {
-        commit('infiniteNext', res.data)
+        const {
+          next,
+          prev,
+          chapter
+        } = res.data
+        commit('SET_CHAPTER', chapter)
+        commit('SET_NAVIGATION', {
+          next,
+          prev
+        })
       })
     }
 

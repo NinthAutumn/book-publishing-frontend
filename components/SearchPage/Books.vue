@@ -14,6 +14,7 @@
         <div class="book-rating">
           <no-ssr>
             <star-rating
+              v-if="book.ratings"
               :rating="book.ratings.toFixed(2)"
               :star-size="18"
               :read-only="true"

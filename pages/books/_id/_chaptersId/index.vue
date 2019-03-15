@@ -44,13 +44,13 @@ export default {
   async fetch({ store, params }) {
     const index = params.chaptersId;
     if (store.state.auth.loggedIn) {
-      await store.dispatch("chapter/nextChapter", {
+      await store.dispatch("chapter/fetchChapter", {
         chapterId: params.chaptersId,
         userId: store.state.auth.user._id
       });
       await store.dispatch("user/getSettings");
     } else {
-      await store.dispatch("chapter/nextChapter", {
+      await store.dispatch("chapter/fetchChapter", {
         chapterId: params.chaptersId
       });
     }

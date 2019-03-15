@@ -263,10 +263,10 @@ export default {
       this.picture = !this.picture;
     },
     handleRemove(file, fileList) {
-      console.log(file, fileList);
+      // console.log(file, fileList);
     },
     handlePreview(file) {
-      console.log(file);
+      // console.log(file);
     },
     successPhoto(res, file) {
       this.form.extra.drawings.push(file.raw);
@@ -288,15 +288,15 @@ export default {
       if (this.schedule) {
         state = "scheduled";
       }
-
-      const chapter = {
+      // console.log(this.$store.state.upload.urls, "dog so nad");
+      let chapter = {
         title: this.form.title,
         content: this.form.content,
         schedule: this.form.date,
         wordCount: this.form.wordCount.length,
         locked: this.form.locked,
         volume: this.form.volume,
-        index: 2,
+        index: 3,
         state,
         extra: {
           announcement: {
@@ -306,6 +306,8 @@ export default {
           drawings: this.$store.state.upload.urls
         }
       };
+      // chapter.extra.drawings = this.$store.state.upload.urls;
+      console.log(chapter);
       const bookId = this.$route.params.id;
       await this.$store.dispatch("chapter/createChapter", { bookId, chapter });
     },
