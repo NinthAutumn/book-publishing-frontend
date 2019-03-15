@@ -32,7 +32,6 @@ export const mutations = {
   },
   SET_RATING(state, rating) {
     state.ratings = rating
-    // console.log(view);
   }
 }
 
@@ -73,7 +72,6 @@ export const actions = {
   }) {
     await this.$axios.get(process.env.baseUrl + '/ranking/bookanalysis?store=' + storeType + '&limit=' + limit).then((res) => {
       commit('SET_HOME', res.data[0])
-
     })
   }
 }

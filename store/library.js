@@ -46,7 +46,6 @@ export const mutations = {
 
   },
   SORT_BY_NAME(state) {
-    // state.bookmarks.sort((d1, d2) => new Date(d2.insertedDate).getTime() - new Date(d1.insertedDate).getTime());
     state.bookmarks = _.orderBy(state.bookmarks, function (item) {
       return item.bookId.title
     }, 'desc')
@@ -122,7 +121,6 @@ export const actions = {
   async fetchLatestChapters({
     commit
   }) {
-
     try {
       const res = await this.$axios.get(process.env.baseUrl + '/users/library/show/chapters')
       const {
@@ -133,7 +131,8 @@ export const actions = {
         chapters
       })
     } catch (error) {
-      console.log(error);
+      console.log(error.status);
+      throw error
     }
 
   }

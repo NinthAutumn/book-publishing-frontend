@@ -102,6 +102,8 @@ export const actions = {
           console.log(e)
         })
 
+      } else {
+        commit('auth/AUTH_LOGOUT')
       }
     }
 

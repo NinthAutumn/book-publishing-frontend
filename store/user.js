@@ -34,9 +34,14 @@ export const actions = {
     commit
   }, query) {
     commit('LOADING')
-    await this.$axios.get(process.env.baseUrl + '/users/books').then((res) => {
+    try {
+      const res = await this.$axios.get(process.env.baseUrl + '/users/books')
       commit('USERS_BOOKS', res.data)
-    })
+    } catch (error) {
+      if (error.status) {
+        console.log("dog");
+      }
+    }
   },
   async getSettings({
     commit
@@ -56,7 +61,12 @@ export const actions = {
   async getBookUpdate({
     commit
   }) {
-    const update = await this.$axios.get(process.env.baseUrl + '/users/bookupdate')
-    commit('GET_BOOKMARK_UPDATE', update)
+    try {
+      const update = await this.$axios.get(process.env.baseUrl + '/users/bookupdate')
+      commit('GET_BOOKMARK_UPDATE', update)
+    } catch (error) {
+
+    }
+
   }
 }

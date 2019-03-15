@@ -10,7 +10,6 @@ export const mutations = {
   SET_WEALTH(state, wealth) {
     state.wealth = wealth
   }
-
 }
 export const actions = {
   async buyChapter({
@@ -25,14 +24,19 @@ export const actions = {
       chapterId,
       price
     })
+
   },
   async wealth({
     commit
   }, ) {
+    try {
+      const res = await this.$axios.get(process.env.baseUrl + '/users/wealth')
+      commit('SET_WEALTH', res.data.wealth)
+    } catch (error) {
+      console.log(error.status);
+      throw error
+    }
 
-    const res = await this.$axios.get(process.env.baseUrl + '/users/wealth')
-    console.log(typeof res.data.wealth);
-    commit('SET_WEALTH', res.data.wealth)
   }
 
 }
