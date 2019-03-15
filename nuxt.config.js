@@ -67,6 +67,7 @@ module.exports = {
    */
   plugins: [
     '@/plugins/element-ui',
+    '@/plugins/intercept',
     {
       src: '~plugins/vue-star-rating',
       ssr: false
@@ -108,7 +109,7 @@ module.exports = {
     }, {
       src: '@/plugins/graphs',
       ssr: false
-    }
+    },
   ],
 
   /*

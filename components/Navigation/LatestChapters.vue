@@ -16,12 +16,7 @@
 
 <script>
 export default {
-  async mounted() {
-    if (this.$store.state.auth.loggedIn) {
-      await this.$store.dispatch("library/fetchLatestChapters");
-      console.log(this.$store.state.auth.loggedIn);
-    }
-  },
+  async mounted() {},
   computed: {
     chapters() {
       return this.$store.getters["library/getLatestChapters"];

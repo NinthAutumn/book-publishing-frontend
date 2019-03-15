@@ -179,7 +179,12 @@ export const actions = {
     chapter,
     bookId
   }) {
-    await this.$axios.post(process.env.baseUrl + '/books/chapters/add?id=' + bookId, chapter)
+    try {
+      await this.$axios.post(process.env.baseUrl + '/books/chapters/add?id=' + bookId, chapter)
+      return Promise.resolve()
+    } catch (error) {
+      return Promise.reject(error)
+    }
   },
   async fetchLatestIndex({
     commit

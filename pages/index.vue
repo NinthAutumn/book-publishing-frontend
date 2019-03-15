@@ -45,9 +45,14 @@ export default {
       limit: 7
     });
     if (store.state.auth.loggedIn) {
+      await store.dispatch("library/fetchLatestChapters");
     }
   },
   async created() {},
+  async mounted() {
+    if (this.$store.state.auth.loggedIn) {
+    }
+  },
   auth: false
 };
 </script>
