@@ -28,7 +28,7 @@
             <div class="flex-divider flex flex--align">
               <p
                 class="Book-TOC__text Book-TOC__text--date"
-              >{{$moment(chapter.createdAt).startOf('hour').fromNow()}}</p>
+              >{{$moment(chapter.createdAt).startOf('minute').fromNow()}}</p>
               <fa class="Book-TOC__text Book-TOC__text--icon" icon="lock" v-if="chapter.locked"></fa>
             </div>
           </nuxt-link>

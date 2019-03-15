@@ -44,6 +44,8 @@ export default {
       storeType: "bookmark",
       limit: 7
     });
+    if (store.state.auth.loggedIn) {
+    }
   },
   async created() {},
   auth: false

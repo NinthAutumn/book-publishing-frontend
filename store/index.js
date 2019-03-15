@@ -93,7 +93,6 @@ export const actions = {
 
       if (token) {
         this.$axios.defaults.headers.common['Authorization'] = token;
-
         await this.$axios.get(process.env.baseUrl + '/users/show').then((res) => {
           commit('auth/AUTH_SUCCESS', {
             token: token,

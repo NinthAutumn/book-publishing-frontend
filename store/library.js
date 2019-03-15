@@ -1,15 +1,19 @@
 import _ from 'lodash'
+import Cookies from 'js-cookie';
 
 export const state = () => ({
   bookmarks: [],
   favorites: [],
   reading: [],
   read_later: [],
-  history: []
+  history: [],
+  latestChapters: []
 })
 
 export const getters = {
-
+  getLatestChapters: (state) => {
+    return state.latestChapters
+  }
 }
 
 
@@ -46,6 +50,11 @@ export const mutations = {
     state.bookmarks = _.orderBy(state.bookmarks, function (item) {
       return item.bookId.title
     }, 'desc')
+  },
+  SET_LATEST_CHAPTERS(state, {
+    chapters
+  }) {
+    state.latestChapters = chapters
   }
 }
 
@@ -109,5 +118,23 @@ export const actions = {
     await this.$axios.patch(process.env.baseUrl + '/library/updateDeleteLibrary', {
       store
     })
+  },
+  async fetchLatestChapters({
+    commit
+  }) {
+
+    try {
+      const res = await this.$axios.get(process.env.baseUrl + '/library/show/chapters')
+      const {
+        chapters
+      } = res.data
+
+      commit('SET_LATEST_CHAPTERS', {
+        chapters
+      })
+    } catch (error) {
+      console.log(error);
+    }
+
   }
 }

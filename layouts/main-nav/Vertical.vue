@@ -63,25 +63,16 @@
     <hr>
     <ul class="update-list" v-if="loggedIn">
       <p>ブックマーク</p>
-      <li v-for="update in updates" :key="update.index" class="update">
-        <div class="update-title">
-          <span class="update-title-text">{{update.title}}</span>
-        </div>
-        <div class="update-info">
-          <span class="update-chapter">{{update.chapter}}</span>
-          <span class="update-time">{{update.time}}</span>
-        </div>
-      </li>
+      <LatestChapters></LatestChapters>
       <hr>
     </ul>
   </nav>
 </template>
 <script>
-import HomeIcon from "../../assets/home-icon";
-var moment = require("moment");
+import HomeIcon from "@/assets/home-icon";
 // import { fas } from "@fortawesome/free-solid-svg-icons";
 // import { faGithub } from '@fortawesome/free-brands-svg-icons'
-
+import LatestChapters from "@/components/Navigation/LatestChapters";
 export default {
   name: "Vertical",
   props: {
@@ -91,28 +82,6 @@ export default {
     return {
       userId: "",
       draw: null,
-      updates: [
-        {
-          title: "スライムになった件",
-          time: moment().format("LTS"),
-          chapter: "10c"
-        },
-        {
-          title: "スライムにならなかった件",
-          time: moment().format("LTS"),
-          chapter: "90c"
-        },
-        {
-          title: "スライムになった件",
-          time: moment().format("LTS"),
-          chapter: "40c"
-        },
-        {
-          title: "スライムになった件",
-          time: moment().format("LTS"),
-          chapter: "46c"
-        }
-      ],
       menus: [
         {
           title: "ホーム",
@@ -148,7 +117,8 @@ export default {
     };
   },
   components: {
-    HomeIcon
+    HomeIcon,
+    LatestChapters
   },
   watch: {
     // fetchUserId: function() {
