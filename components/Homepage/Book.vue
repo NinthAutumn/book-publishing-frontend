@@ -42,6 +42,7 @@
           ></star-rating>
           <star-rating
             v-else
+            :show-rating="false"
             :rating="0"
             :star-size="18"
             :read-only="true"

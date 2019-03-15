@@ -119,19 +119,15 @@ export const mutations = {
     state.books.push(book)
   },
   HIGHEST_RATED(state, books) {
-
     state.books.highestrated = books
   },
   TRENDING(state, books) {
-
     state.books.trending = books
   },
   SHOW(state, book) {
     state.book = book
   },
-  EDIT() {
-
-  },
+  EDIT() {},
   BROWSE_BOOKS(state, books) {
     state.browse = books
   },
@@ -147,12 +143,6 @@ export const mutations = {
   BOOK_VIEW(state, view) {
     state.view = view
   },
-  ASC_CHAP(state) {},
-  FORMAT_DATE(state) {
-    state.book.chapters.forEach((chapter) => {
-
-    })
-  },
   SYNOPSIS_TRUE(state) {
     state.bookSynopsis = true
   },
@@ -167,7 +157,6 @@ export const mutations = {
         }
       })
     }
-
   },
   BOOKMARK(state) {
     state.book.bookmarked = true

@@ -2,7 +2,7 @@
   <div class="views-bargraph">
     <div class="views-bargraph__title">作品の視聴回数</div>
     <no-ssr>
-      <ve-histogram :height="height" :settings="chartSetting" :data="chartData"></ve-histogram>
+      <ve-line :height="height" :settings="chartSetting" :data="chartData"></ve-line>
     </no-ssr>
   </div>
 </template>
@@ -12,7 +12,11 @@ export default {
   props: ["height"],
   data() {
     return {
-      chartSetting: {},
+      chartSetting: {
+        nullAddZero: true
+        // area: true
+        // scale: [true, true]
+      },
       chartData: {
         columns: ["date"],
         rows: []

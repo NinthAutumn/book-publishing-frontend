@@ -18,7 +18,7 @@
       <div class="review-card__info__rating">
         <no-ssr>
           <star-rating
-            v-model="review._id.review[0].rating.total"
+            :rating="review._id.review[0].rating.total"
             :star-size="17"
             :read-only="true"
             :show-rating="false"
