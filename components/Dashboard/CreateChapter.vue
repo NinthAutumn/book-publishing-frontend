@@ -26,7 +26,8 @@
 
       <transition name="slide-fade">
         <div class="chapter-form__content-subject">
-          <div class="form-control">
+          <div class="form-control flex flex--align">
+            <p class="chapter-index">第{{this.$store.getters["chapter/getNewIndex"]}}話</p>
             <input
               placeholder="タイトル"
               type="text"
@@ -296,7 +297,7 @@ export default {
         wordCount: this.form.wordCount.length,
         locked: this.form.locked,
         volume: this.form.volume,
-        index: 3,
+        index: this.$store.getters["chapter/getNewIndex"],
         state,
         extra: {
           announcement: {
@@ -427,6 +428,20 @@ dialog {
     padding: 10px;
     box-shadow: 1px 1px 5px 2px rgb(238, 238, 238);
     width: 300px;
+  }
+  .chapter-index {
+    font-size: 18px;
+    height: 50px;
+
+    &:hover {
+      user-select: none;
+    }
+    background-color: rgb(247, 247, 247);
+    width: 120px;
+    box-shadow: 1px 1px 5px 0px #d1d1d1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   &__announcement {
     &__decision {

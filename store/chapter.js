@@ -6,10 +6,8 @@ export const state = () => ({
   toc: '',
   volumeList: [],
   modal: '',
-  cToc: '',
-  navigation: {
-
-  },
+  navigation: {},
+  latestIndex: 0,
   dTOC: [], //chapters that aren't published
   pTOC: [] //chapters that are published shown in dashbaord of the user
 })
@@ -36,6 +34,9 @@ export const getters = {
   },
   getVolumeList: (state) => {
     return state.volumeList
+  },
+  getNewIndex: (state) => {
+    return state.latestIndex + 1
   }
 }
 
@@ -80,9 +81,6 @@ export const mutations = {
       volume.chapters.reverse()
     })
   },
-  TOC_BOOK(state, toc) {
-    state.cToc = toc
-  },
   D_TOC(state, toc) {
     state.dTOC = toc
   },
@@ -97,6 +95,9 @@ export const mutations = {
   },
   SET_VOLUME_LIST(state, list) {
     state.volumeList = list
+  },
+  SET_LATEST_INDEX(state, index) {
+    state.latestIndex = index
   }
 }
 export const actions = {
@@ -179,6 +180,23 @@ export const actions = {
     bookId
   }) {
     await this.$axios.post(process.env.baseUrl + '/chapters/add?id=' + bookId, chapter)
+  },
+  async fetchLatestIndex({
+    commit
+  }, {
+    bookId
+  }) {
+    try {
+      const res = await this.$axios.get(process.env.baseUrl + '/chapters/latestindex?bookId=' + bookId)
+      const {
+        index
+      } = res.data
+      commit('SET_LATEST_INDEX', index)
+      return Promise.resolve()
+    } catch (error) {
+      return Promise.reject(error)
+    }
+
   }
 
 }

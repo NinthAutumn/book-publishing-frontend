@@ -39,7 +39,7 @@
               >{{book.reviewsCount}}</div>
             </div>
             <nuxt-link
-              :to="{path: `/dashboard/books/${book._id}/new-chapter`}"
+              :to="{path: `/dashboard/books/${book._id}/new`}"
               tag="div"
               class="user-books__create flex flex--align flex--center"
             >話を投稿する</nuxt-link>

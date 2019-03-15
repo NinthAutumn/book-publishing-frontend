@@ -1,5 +1,6 @@
 <template>
   <div class="views-bargraph">
+    <div class="views-bargraph__title">作品の視聴回数</div>
     <no-ssr>
       <ve-histogram :height="height" :settings="chartSetting" :data="chartData"></ve-histogram>
     </no-ssr>
@@ -44,5 +45,10 @@ export default {
   background-color: #fff;
   box-shadow: 1px 1px 5px rgb(233, 233, 233);
   border-radius: 5px;
+  &__title {
+    font-size: 16px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+  }
 }
 </style>

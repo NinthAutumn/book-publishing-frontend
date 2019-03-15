@@ -26,6 +26,7 @@ export default {
   async fetch({ store, params }) {
     await store.dispatch("chapter/fetchPublishedTOC", params.id);
     await store.dispatch("chapter/fetchVolumeList", params.id);
+    await store.dispatch("chapter/fetchLatestIndex", { bookId: params.id });
   }
 };
 </script>
