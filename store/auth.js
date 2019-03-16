@@ -57,10 +57,13 @@ export const actions = {
       password: user.password
     }).then((res) => {
       const token = res.headers.authorization
+      const refresh = res.headers.refresh
       this.$axios.defaults.headers.common['Authorization'] = token
+      this.$axios.defaults.headers.common['refresh'] = refresh
       Cookies.set("token", token, {
         expires: thirty
       })
+      Cookies.set("refresh", refresh)
       commit("AUTH_SUCCESS", {
         token: token,
         user: res.data
