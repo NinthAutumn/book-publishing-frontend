@@ -135,5 +135,19 @@ export const actions = {
       throw error
     }
 
+  },
+  async patchLatestChapters({
+    dispatch
+  }, {
+    chapterId
+  }) {
+    try {
+      const res = await this.$axios.patch(process.env.baseUrl + '/users/library/update/chapters?chapterId=' + chapterId)
+      dispatch('fetchLatestChapters')
+    } catch (error) {
+      console.log(error);
+      throw error
+    }
+
   }
 }
