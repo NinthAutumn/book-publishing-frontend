@@ -14,6 +14,9 @@ export const getters = {
   },
   authStatus: (state) => {
     return state.status
+  },
+  getToken: (state) => {
+    return state.token
   }
 }
 
@@ -56,18 +59,22 @@ export const actions = {
       username: user.username,
       password: user.password
     }).then((res) => {
-      const token = res.headers.authorization
-      const refresh = res.headers.refresh
-      this.$axios.defaults.headers.common['Authorization'] = token
-      this.$axios.defaults.headers.common['refresh'] = refresh
-      Cookies.set("token", token, {
-        expires: thirty
-      })
-      Cookies.set("refresh", refresh)
-      commit("AUTH_SUCCESS", {
-        token: token,
-        user: res.data
-      });
+      try {
+        const token = res.headers.authorization
+        const refresh = res.headers.refresh
+        this.$axios.defaults.headers.common['Authorization'] = token
+        this.$axios.defaults.headers.common['refresh'] = refresh
+        Cookies.set("token", token)
+        Cookies.set("refresh", refresh)
+        commit("AUTH_SUCCESS", {
+          token: token,
+          user: res.data
+        });
+        return res.data
+      } catch (error) {
+        return null
+      }
+
     })
 
   },
@@ -99,5 +106,32 @@ export const actions = {
         user: res.data
       });
     })
+  },
+  async refresh({
+    commit,
+    state,
+    dispatch
+  }) {
+    try {
+      const res = await this.$axios.get(process.env.baseUrl + '/api/auth/token')
+      const token = res.headers.authorization
+      const refresh = res.headers.refresh
+      if (token && refresh) {
+        this.$axios.defaults.headers.common['Authorization'] = token
+        this.$axios.defaults.headers.common['refresh'] = refresh
+        Cookies.set("token", token)
+        Cookies.set("refresh", refresh)
+        commit("AUTH_SUCCESS", {
+          token: token,
+          user: res.data
+        });
+
+      } else {
+        dispatch('logOut')
+      }
+
+    } catch (error) {
+      console.log(error);
+    }
   }
 }
