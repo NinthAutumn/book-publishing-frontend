@@ -22,7 +22,7 @@ export const actions = {
   async image({
     commit
   }, file) {
-    const uploadConfig = await this.$axios.get(process.env.baseUrl + '/upload/cover')
+    const uploadConfig = await this.$axios.get(process.env.baseUrl + '/api/upload/cover')
     delete this.$axios.defaults.headers.common['Authorization'];
     delete this.$axios.defaults.headers.common['TrackId'];
     console.log(uploadConfig.data);

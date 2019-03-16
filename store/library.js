@@ -62,7 +62,7 @@ export const actions = {
     commit
   }, bookId) {
     try {
-      const status = await this.$axios.get(process.env.baseUrl + '/users/library/check?bookId=' + bookId)
+      const status = await this.$axios.get(process.env.baseUrl + '/api/library/check?bookId=' + bookId)
       commit('BOOKMARK_STATUS', status.data.bookmarked)
     } catch (error) {
       throw error
@@ -72,49 +72,49 @@ export const actions = {
   async getBookmark({
     commit
   }) {
-    await this.$axios.get(process.env.baseUrl + '/users/library/bookmarks').then((res) => {
+    await this.$axios.get(process.env.baseUrl + '/api/library/bookmarks').then((res) => {
       commit('GET_BOOKMARK', res.data.store)
     })
   },
   async getFavorites({
     commit
   }) {
-    await this.$axios.get(process.env.baseUrl + '/users/library/show?type=favorite').then((res) => {
+    await this.$axios.get(process.env.baseUrl + '/api/library/show?type=favorite').then((res) => {
       commit('GET_FAVORITE', res.data)
     })
   },
   async getReading({
     commit
   }) {
-    await this.$axios.get(process.env.baseUrl + '/users/library/show?type=reading').then((res) => {
+    await this.$axios.get(process.env.baseUrl + '/api/library/show?type=reading').then((res) => {
       commit('GET_READING', res.data)
     })
   },
   async getHistory({
     commit
   }) {
-    await this.$axios.get(process.env.baseUrl + '/users/library/history').then((res) => {
+    await this.$axios.get(process.env.baseUrl + '/api/library/history').then((res) => {
       commit('GET_HISTORY', res.data)
     })
   },
   async getRead_Later({
     commit
   }) {
-    await this.$axios.get(process.env.baseUrl + '/users/library/show?type=readLater').then((res) => {
+    await this.$axios.get(process.env.baseUrl + '/api/library/show?type=readLater').then((res) => {
       commit('GET_READ_LATER', res.data)
     })
   },
   async addStore({
     commit
   }, store) {
-    await this.$axios.patch(process.env.baseUrl + '/users/library/updateLibrary', {
+    await this.$axios.patch(process.env.baseUrl + '/api/library/updateLibrary', {
       store
     })
   },
   async removeStore({
     commit
   }, store) {
-    await this.$axios.patch(process.env.baseUrl + '/users/library/updateDeleteLibrary', {
+    await this.$axios.patch(process.env.baseUrl + '/api/library/updateDeleteLibrary', {
       store
     })
   },
@@ -122,7 +122,7 @@ export const actions = {
     commit
   }) {
     try {
-      const res = await this.$axios.get(process.env.baseUrl + '/users/library/show/chapters')
+      const res = await this.$axios.get(process.env.baseUrl + '/api/library/show/chapters')
       const {
         chapters
       } = res.data
@@ -142,7 +142,7 @@ export const actions = {
     chapterId
   }) {
     try {
-      const res = await this.$axios.patch(process.env.baseUrl + '/users/library/update/chapters?chapterId=' + chapterId)
+      const res = await this.$axios.patch(process.env.baseUrl + '/api/library/update/chapters?chapterId=' + chapterId)
       dispatch('fetchLatestChapters')
     } catch (error) {
       console.log(error);

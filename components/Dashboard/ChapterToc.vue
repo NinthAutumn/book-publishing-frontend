@@ -12,7 +12,7 @@
       <div class="table-volume">
         <div class="table-header flex flex--align">
           <div class="volume-title">
-            <h3>第{{index + 1}}章</h3>
+            <h3>{{volume.title || `第${volume.index}章`}}</h3>
           </div>
         </div>
       </div>
@@ -21,7 +21,7 @@
           <chapter-toc-item
             :published="published"
             :chapter="chapter"
-            v-for="(chapter, index) in volume"
+            v-for="(chapter, index) in volume.chapters"
             :key="index"
           ></chapter-toc-item>
         </tbody>

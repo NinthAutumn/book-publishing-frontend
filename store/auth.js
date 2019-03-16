@@ -52,7 +52,7 @@ export const actions = {
     state
   }, user) {
     const thirty = 1 / 48
-    await this.$axios.post(process.env.baseUrl + '/users/login', {
+    await this.$axios.post(process.env.baseUrl + '/api/auth/login', {
       username: user.username,
       password: user.password
     }).then((res) => {
@@ -71,18 +71,19 @@ export const actions = {
   async logOut({
     commit
   }) {
-    await this.$axios.delete(process.env.baseUrl + '/users/logout').then((res) => {
-      Cookies.remove('token')
-      delete this.$axios.defaults.headers.common['Authorization']
-      commit("AUTH_LOGOUT");
-    }).catch((e) => {
-      console.log(e);
-    })
+    Cookies.remove('token')
+    delete this.$axios.defaults.headers.common['Authorization']
+    commit("AUTH_LOGOUT");
+    // await this.$axios.delete(process.env.baseUrl + '/users/logout').then((res) => {
+
+    // }).catch((e) => {
+    //   console.log(e);
+    // })
   },
   async signUp({
     commit
   }, user) {
-    await this.$axios.post(process.env.baseUrl + '/users/signup', {
+    await this.$axios.post(process.env.baseUrl + '/api/auth/signup', {
       username: user.username,
       email: user.email,
       password: user.password

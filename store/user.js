@@ -35,7 +35,7 @@ export const actions = {
   }, query) {
     commit('LOADING')
     try {
-      const res = await this.$axios.get(process.env.baseUrl + '/users/books')
+      const res = await this.$axios.get(process.env.baseUrl + '/api/user/books')
       commit('USERS_BOOKS', res.data)
     } catch (error) {
       if (error.status) {
@@ -46,7 +46,7 @@ export const actions = {
   async getSettings({
     commit
   }) {
-    await this.$axios.get(process.env.baseUrl + '/users/settings').then((res) => {
+    await this.$axios.get(process.env.baseUrl + '/api/user/settings').then((res) => {
       commit('USER_SETTINGS', res.data)
       commit('SET_THEME', res.data.theme)
     })
@@ -54,7 +54,7 @@ export const actions = {
   async setSetting({
     commit
   }, setting) {
-    await this.$axios.patch(process.env.baseUrl + '/users/settings', setting).then((res) => {
+    await this.$axios.patch(process.env.baseUrl + '/api/user/settings', setting).then((res) => {
       commit('USER_SETTINGS', res.data)
     })
   },
@@ -62,7 +62,7 @@ export const actions = {
     commit
   }) {
     try {
-      const update = await this.$axios.get(process.env.baseUrl + '/users/bookupdate')
+      const update = await this.$axios.get(process.env.baseUrl + '/api/user/bookupdate')
       commit('GET_BOOKMARK_UPDATE', update)
     } catch (error) {
 

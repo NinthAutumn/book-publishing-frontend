@@ -75,11 +75,11 @@ export const actions = {
     limit = 10,
     page = 1
   }) {
-    await this.$axios.get(`${process.env.baseUrl}/reviews/book?id=${bookId}&limit=${limit}&page=${page}`).then(async (res) => {
+    await this.$axios.get(`${process.env.baseUrl}/api/review/book?id=${bookId}&limit=${limit}&page=${page}`).then(async (res) => {
       commit('GET_REVIEWS', res.data)
 
       if (rootState.auth.loggedIn) {
-        await this.$axios.get(process.env.baseUrl + '/users/liked').then((res) => {
+        await this.$axios.get(process.env.baseUrl + '/api/user/liked').then((res) => {
           commit('USER_LIKED_REVIEWS', rootState.auth.user._id)
         })
       }
@@ -97,7 +97,7 @@ export const actions = {
     if (review.rating > 3) {
       recommended = true
     }
-    await this.$axios.post(process.env.baseUrl + '/reviews/add', {
+    await this.$axios.post(process.env.baseUrl + '/api/review/add', {
       title: review.title,
       content: review.content,
       bookId: bookId,
@@ -118,7 +118,7 @@ export const actions = {
     reviewId,
     type
   }) {
-    await this.$axios.patch(process.env.baseUrl + '/reviews/like', {
+    await this.$axios.patch(process.env.baseUrl + '/api/review/like', {
       id: reviewId,
       type: type
     }).then((res) => {
@@ -133,7 +133,7 @@ export const actions = {
     reviewId,
     type
   }) {
-    await this.$axios.patch(process.env.baseUrl + '/reviews/unlike', {
+    await this.$axios.patch(process.env.baseUrl + '/api/review/unlike', {
       id: reviewId,
       type: type
     }).then((res) => {
@@ -145,20 +145,20 @@ export const actions = {
   async mostLiked({
     commit
   }) {
-    await this.$axios.get(process.env.baseUrl + '/reviews/mostLikedToday').then((res) => {
+    await this.$axios.get(process.env.baseUrl + '/api/review/mostLikedToday').then((res) => {
       commit('GET_GOOD_REVIEWS', res.data)
     })
   },
   async reviewedStatus({
     commit
   }, bookId) {
-    const status = await this.$axios.get(process.env.baseUrl + '/reviews/check?bookId=' + bookId)
+    const status = await this.$axios.get(process.env.baseUrl + '/api/review/check?bookId=' + bookId)
     commit('GET_REVIEWED', status.data.checked)
   },
   async userReviews({
     commit
   }) {
-    const reviews = await this.$axios.get(process.env.baseUrl + '/reviews/myreviews')
+    const reviews = await this.$axios.get(process.env.baseUrl + '/api/review/myreviews')
     commit('GET_MYREVIEWS', reviews.data)
   },
   async myReview({
@@ -166,7 +166,7 @@ export const actions = {
   }, {
     bookId
   }) {
-    const review = await this.$axios.get(process.env.baseUrl + '/reviews/myreview?bookId=' + bookId)
+    const review = await this.$axios.get(process.env.baseUrl + '/api/review/myreview?bookId=' + bookId)
     commit('GET_USER_REVIEW', review.data)
   },
   async updateReview({
@@ -175,7 +175,7 @@ export const actions = {
     id,
     review
   }) {
-    const update = await this.$axios.patch(process.env.baseUrl + '/reviews/review?id=' + id, {
+    const update = await this.$axios.patch(process.env.baseUrl + '/api/review/review?id=' + id, {
       review
     })
   }

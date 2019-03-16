@@ -45,7 +45,7 @@ export const actions = {
     commit
   }, query) {
     commit('LOADING')
-    await this.$axios.get(process.env.baseUrl + '/searchBooks?query=' + query).then((res) => {
+    await this.$axios.get(process.env.baseUrl + '/api/search/searchBooks?query=' + query).then((res) => {
       if (res.data.genre) {
         commit('QUERIED_BOOKS', res.data.genre)
       } else {

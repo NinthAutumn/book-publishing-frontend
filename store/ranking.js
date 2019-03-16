@@ -39,14 +39,14 @@ export const actions = {
   async genreRanking({
     commit
   }, genre) {
-    await this.$axios.get(process.env.baseUrl + '/books/ranking/genre?genre=' + genre).then((res) => {
+    await this.$axios.get(process.env.baseUrl + '/api/ranking/genre?genre=' + genre).then((res) => {
       commit('SET_GENRE', res.data[0])
     })
   },
   async viewRanking({
     commit
   }) {
-    await this.$axios.get(process.env.baseUrl + '/books/ranking/view').then((res) => {
+    await this.$axios.get(process.env.baseUrl + '/api/ranking/view').then((res) => {
       commit('SET_VIEW', res.data[0])
     })
   },
@@ -56,7 +56,7 @@ export const actions = {
     storeType,
     limit = 10
   }) {
-    await this.$axios.get(process.env.baseUrl + '/books/ranking/bookanalysis?store=' + storeType + '&limit=' + limit).then((res) => {
+    await this.$axios.get(process.env.baseUrl + '/api/ranking/bookanalysis?store=' + storeType + '&limit=' + limit).then((res) => {
       if (storeType === 'rating') {
         commit('SET_RATING', res.data[0])
       } else if (storeType === 'bookmark') {
@@ -70,7 +70,7 @@ export const actions = {
     storeType,
     limit = 10
   }) {
-    await this.$axios.get(process.env.baseUrl + '/books/ranking/bookanalysis?store=' + storeType + '&limit=' + limit).then((res) => {
+    await this.$axios.get(process.env.baseUrl + '/api/ranking/bookanalysis?store=' + storeType + '&limit=' + limit).then((res) => {
       commit('SET_HOME', res.data[0])
     })
   }

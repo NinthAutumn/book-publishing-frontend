@@ -35,7 +35,6 @@ export default {
   },
   methods: {
     async removeInbox(chapterId, bookId) {
-      console.log("this aint it busd");
       await this.$store.dispatch("library/patchLatestChapters", { chapterId });
       this.$router.push("/books/" + bookId + "/" + chapterId);
     }
