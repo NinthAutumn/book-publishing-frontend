@@ -47,10 +47,10 @@ export default {
   },
   computed: {
     user() {
-      return this.$store.state.auth.user;
+      return this.$store.getters.loggedInUser;
     },
     loggedIn() {
-      return this.$store.state.auth.loggedIn;
+      return this.$store.getters.isAuthenticated;
     },
     loginState() {
       return this.$store.state.loginForm;
