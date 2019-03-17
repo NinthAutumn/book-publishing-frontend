@@ -7,18 +7,18 @@ export default function ({
   redirect,
   route
 }) {
-  if (routeOption(route, 'auth', false)) {
-    return
-  }
-  if (route.query.id) {
-    return
-  }
-  if (store.state.auth.loggedIn) {
-    return
-  }
-  // If the user is not authenticated
-  if (!Cookies.get('token')) {
-    return redirect('/auth/login')
-  }
+  // if (routeOption(route, 'auth', false)) {
+  //   return
+  // }
+  // if (route.query.id) {
+  //   return
+  // }
+  // if (store.state.auth.loggedIn) {
+  //   return
+  // }
+  // // If the user is not authenticated
+  // if (!Cookies.get('token')) {
+  //   return redirect('/auth/login')
+  // }
 
 }

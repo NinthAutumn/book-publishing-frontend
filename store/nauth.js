@@ -55,26 +55,20 @@ export const actions = {
     state
   }, user) {
     const thirty = 1 / 48
-    await this.$axios.post(process.env.baseUrl + '/api/auth/login', {
+    await this.$axios.post('/auth/login', {
       username: user.username,
       password: user.password
     }).then((res) => {
       try {
-        const token = res.headers.authorization
-        const refresh = res.headers.refresh
-        this.$axios.defaults.headers.common['Authorization'] = token
-        this.$axios.defaults.headers.common['refresh'] = refresh
-        Cookies.set("token", token)
-        Cookies.set("refresh", refresh)
-        commit("AUTH_SUCCESS", {
-          token: token,
-          user: res.data
-        });
+        // commit("AUTH_SUCCESS", {
+        //   token: token,
+        //   user: res.data
+        // });
+
         return res.data
       } catch (error) {
         return null
       }
-
     })
 
   },
@@ -93,7 +87,7 @@ export const actions = {
   async signUp({
     commit
   }, user) {
-    await this.$axios.post(process.env.baseUrl + '/api/auth/signup', {
+    await this.$axios.post('/auth/signup', {
       username: user.username,
       email: user.email,
       password: user.password
@@ -113,7 +107,7 @@ export const actions = {
     dispatch
   }) {
     try {
-      const res = await this.$axios.get(process.env.baseUrl + '/api/auth/token')
+      const res = await this.$axios.get('/auth/token')
       const token = res.headers.authorization
       if (token) {
         this.$axios.defaults.headers.common['Authorization'] = token

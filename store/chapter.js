@@ -109,7 +109,7 @@ export const actions = {
   }) {
     // const nextindex = index
     if (userId) {
-      await this.$axios.get(process.env.baseUrl + '/api/chapter/direct?chapterId=' + chapterId + '&user=' + userId).then((res) => {
+      await this.$axios.get('/chapter/direct?chapterId=' + chapterId + '&user=' + userId).then((res) => {
         const {
           next,
           prev,
@@ -122,7 +122,7 @@ export const actions = {
         })
       })
     } else {
-      await this.$axios.get(process.env.baseUrl + '/api/chapter/direct?chapterId=' + chapterId).then((res) => {
+      await this.$axios.get('/chapter/direct?chapterId=' + chapterId).then((res) => {
         const {
           next,
           prev,
@@ -146,7 +146,7 @@ export const actions = {
       return commit('MODAL_CLOSE')
     }
     commit('TOC_MODAL')
-    await this.$axios.get(process.env.baseUrl + '/api/chapter/toc?bookId=' + bookId).then((res) => {
+    await this.$axios.get('chapter/toc?bookId=' + bookId).then((res) => {
       commit('TOC', res.data)
 
     })
@@ -156,21 +156,21 @@ export const actions = {
   async fetchAllTOC({
     commit
   }, bookId) {
-    await this.$axios.get(process.env.baseUrl + '/api/chapter/dashboard?bookId=' + bookId).then((res) => {
+    await this.$axios.get('/chapter/dashboard?bookId=' + bookId).then((res) => {
       commit('D_TOC', res.data)
     })
   },
   async fetchPublishedTOC({
     commit
   }, bookId) {
-    await this.$axios.get(process.env.baseUrl + '/api/chapter/published?bookId=' + bookId).then((res) => {
+    await this.$axios.get('/chapter/published?bookId=' + bookId).then((res) => {
       commit('P_TOC', res.data)
     })
   },
   async fetchVolumeList({
     commit
   }, bookId) {
-    const res = await this.$axios.get(process.env.baseUrl + '/api/chapter/volume/list?bookId=' + bookId)
+    const res = await this.$axios.get('/chapter/volume/list?bookId=' + bookId)
     commit('SET_VOLUME_LIST', res.data)
   },
   async createChapter({
@@ -180,7 +180,7 @@ export const actions = {
     bookId
   }) {
     try {
-      await this.$axios.post(process.env.baseUrl + '/api/chapter/add?id=' + bookId, chapter)
+      await this.$axios.post('/chapter/add?id=' + bookId, chapter)
       return Promise.resolve()
     } catch (error) {
       return Promise.reject(error)
@@ -192,7 +192,7 @@ export const actions = {
     bookId
   }) {
     try {
-      const res = await this.$axios.get(process.env.baseUrl + '/api/chapter/latestindex?bookId=' + bookId)
+      const res = await this.$axios.get('/chapter/latestindex?bookId=' + bookId)
       const {
         index
       } = res.data

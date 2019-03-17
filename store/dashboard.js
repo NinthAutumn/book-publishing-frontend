@@ -18,7 +18,7 @@ export const actions = {
     commit
   }) {
     try {
-      const res = await this.$axios.get(`${process.env.baseUrl}/api/data/totalviews`)
+      const res = await this.$axios.get(`/data/totalviews`)
       commit('SET_TOTAL_VIEWS', res.data)
       return Promise.resolve()
     } catch (error) {

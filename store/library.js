@@ -62,7 +62,7 @@ export const actions = {
     commit
   }, bookId) {
     try {
-      const status = await this.$axios.get(process.env.baseUrl + '/api/library/check?bookId=' + bookId)
+      const status = await this.$axios.get('/library/check?bookId=' + bookId)
       commit('BOOKMARK_STATUS', status.data.bookmarked)
     } catch (error) {
       throw error
@@ -72,7 +72,7 @@ export const actions = {
   async getBookmark({
     commit
   }) {
-    await this.$axios.get(process.env.baseUrl + '/api/library/bookmarks').then((res) => {
+    await this.$axios.get('/library/bookmarks').then((res) => {
       if (res) {
         commit('GET_BOOKMARK', res.data.store)
       }
@@ -82,7 +82,7 @@ export const actions = {
   async getFavorites({
     commit
   }) {
-    await this.$axios.get(process.env.baseUrl + '/api/library/show?type=favorite').then((res) => {
+    await this.$axios.get('/library/show?type=favorite').then((res) => {
       if (res) {
         commit('GET_FAVORITE', res.data)
       }
@@ -92,7 +92,7 @@ export const actions = {
   async getReading({
     commit
   }) {
-    await this.$axios.get(process.env.baseUrl + '/api/library/show?type=reading').then((res) => {
+    await this.$axios.get('/library/show?type=reading').then((res) => {
       if (res) {
         commit('GET_READING', res.data)
       }
@@ -102,7 +102,7 @@ export const actions = {
   async getHistory({
     commit
   }) {
-    await this.$axios.get(process.env.baseUrl + '/api/library/history').then((res) => {
+    await this.$axios.get('/library/history').then((res) => {
       if (res) {
         commit('GET_HISTORY', res.data)
       }
@@ -112,21 +112,21 @@ export const actions = {
   async getRead_Later({
     commit
   }) {
-    await this.$axios.get(process.env.baseUrl + '/api/library/show?type=readLater').then((res) => {
+    await this.$axios.get('/library/show?type=readLater').then((res) => {
       commit('GET_READ_LATER', res.data)
     })
   },
   async addStore({
     commit
   }, store) {
-    await this.$axios.patch(process.env.baseUrl + '/api/library/updateLibrary', {
+    await this.$axios.patch('/library/updateLibrary', {
       store
     })
   },
   async removeStore({
     commit
   }, store) {
-    await this.$axios.patch(process.env.baseUrl + '/api/library/updateDeleteLibrary', {
+    await this.$axios.patch('/library/updateDeleteLibrary', {
       store
     })
   },
@@ -134,7 +134,7 @@ export const actions = {
     commit
   }) {
     try {
-      const res = await this.$axios.get(process.env.baseUrl + '/api/library/show/chapters')
+      const res = await this.$axios.get('/library/show/chapters')
       if (res) {
         const {
           chapters
@@ -157,7 +157,7 @@ export const actions = {
     chapterId
   }) {
     try {
-      const res = await this.$axios.patch(process.env.baseUrl + '/api/library/update/chapters?chapterId=' + chapterId)
+      const res = await this.$axios.patch('/library/update/chapters?chapterId=' + chapterId)
       dispatch('fetchLatestChapters')
     } catch (error) {
       console.log(error);

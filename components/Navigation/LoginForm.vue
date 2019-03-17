@@ -65,20 +65,25 @@ export default {
         username: this.form.username,
         password: this.form.password
       };
-
-      await this.$store
-        .dispatch("auth/login", user)
-        .then(() => {
-          this.$store.commit("DROPDOWN_FALSE");
-          // this.$router.go(-1);
-          this.$store.commit("LOGIN_FALSE");
-        })
-        .catch(e => {
-          this.$message({
-            message: "パスワードまたはユーザ名が間違っています",
-            type: "error"
-          });
-        });
+      await this.$auth.loginWith("local", {
+        data: {
+          username: this.form.username,
+          password: this.form.password
+        }
+      });
+      // await this.$store
+      //   .dispatch("nauth/login", user)
+      //   .then(() => {
+      //     this.$store.commit("DROPDOWN_FALSE");
+      //     // this.$router.go(-1);
+      //     this.$store.commit("LOGIN_FALSE");
+      //   })
+      //   .catch(e => {
+      //     this.$message({
+      //       message: "パスワードまたはユーザ名が間違っています",
+      //       type: "error"
+      //     });
+      //   });
       // await this.$auth
       //   .loginWith("local", {
       //     data: {

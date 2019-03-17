@@ -37,10 +37,10 @@ export const actions = {
   async getBook({
     commit
   }, id) {
-    await this.$axios.get(process.env.baseUrl + '/api/book/show?id=' + id).then((res) => {
+    await this.$axios.get('book/show?id=' + id).then((res) => {
       commit('SHOW', res.data.book)
     })
-    await this.$axios.get(process.env.baseUrl + "/api/book/bookview?id=" + id).then((res) => {
+    await this.$axios.get("/book/bookview?id=" + id).then((res) => {
       commit('BOOK_VIEW', res.data)
     })
   },
@@ -48,7 +48,7 @@ export const actions = {
     commit
   }, book) {
 
-    await this.$axios.post(process.env.baseUrl + '/api/book/add', book)
+    await this.$axios.post('/book/add', book)
   },
   async browseBooks({
     commit
@@ -62,7 +62,7 @@ export const actions = {
     tfilter = true
   }) {
 
-    const books = await this.$axios.patch(process.env.baseUrl + '/api/book/browse?direction=' + direction + '&type=' + type + '&page=' + page, {
+    const books = await this.$axios.patch('/book/browse?direction=' + direction + '&type=' + type + '&page=' + page, {
       genres,
       gfilter,
       tfilter,
@@ -81,7 +81,7 @@ export const actions = {
     page = 1,
     limit = 10
   }) {
-    const taglist = await this.$axios.get(process.env.baseUrl + '/api/book/tags?limit=' + limit + '&page=' + page)
+    const taglist = await this.$axios.get('/book/tags?limit=' + limit + '&page=' + page)
     commit('TAG_LIST', taglist.data)
   },
   async deleteBook({
@@ -92,10 +92,10 @@ export const actions = {
   async allBooks({
     commit,
   }) {
-    await this.$axios.get(process.env.baseUrl + '/api/data/homepage/highestrated').then((res) => {
+    await this.$axios.get('/data/homepage/highestrated').then((res) => {
       commit('HIGHEST_RATED', res.data)
     })
-    await this.$axios.get(process.env.baseUrl + '/api/data/homepage/trending').then((res) => {
+    await this.$axios.get('/data/homepage/trending').then((res) => {
       commit('TRENDING', res.data)
     })
 

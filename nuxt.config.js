@@ -76,10 +76,11 @@ module.exports = {
       src: '~/plugins/swiper',
       ssr: false
     },
+    // {
+    //   ssr: false,
+    //   src: '~plugins/auth'
+    // }, 
     {
-      ssr: false,
-      src: '~plugins/auth'
-    }, {
       ssr: false,
       src: "~plugins/clickOutside"
     }, {
@@ -119,9 +120,7 @@ module.exports = {
 
     '@nuxtjs/pwa',
     'nuxt-device-detect',
-
     'nuxt-webfontloader',
-    // Doc: https://github.com/nuxt-community/axios-module#usage
     '@nuxtjs/axios',
     ['@nuxtjs/moment', {
       locales: ['ja'],
@@ -130,7 +129,7 @@ module.exports = {
     ['@nuxtjs/component-cache', {
       maxAge: 1000 * 60 * 60
     }],
-    // "@nuxtjs/auth",
+    "@nuxtjs/auth",
     'cookie-universal-nuxt',
     'nuxt-svg-loader',
     ['nuxt-fontawesome', {
@@ -152,45 +151,35 @@ module.exports = {
    ** Axios module configuration
    */
   axios: {
-
-    // proxyHeaders: false
-
+    baseURL: 'http://0.0.0.0:5000/api'
   },
-  // auth: {
-  //   strategies: {
-  //     'api.provider': {
-  //       _scheme: 'api',
-  //       authorization_endpoints: {
-  //         login: {
-  //           url: 'http://0.0.0.0:5000/users/login',
-  //           method: 'post',
-  //           propertyName: 'token'
-  //         },
-  //         logout: {
-  //           url: 'http://0.0.0.0:5000/users/logout',
-  //           method: 'post'
-  //         },
-  //         user: {
-  //           url: 'http://0.0.0.0:5000/users/show',
-  //           method: 'get',
-  //           propertyName: "user"
-  //         }
-  //       },
-  //       tokenRequired: true,
-  //       tokenType: 'Bearer',
-  //       // decodeJWT: false,
-  //       // tokenName: "x-auth"
-  //     }
-  //   },
-  // redirect: {
-  //   login: '/auth/login',
-  //   logout: '/',
-  //   callback: '/auth/login',
-  //   home: '/'
-  // }
-  // },
+  auth: {
+    strategies: {
+      local: {
+        endpoints: {
+          login: {
+            url: 'auth/login',
+            method: 'post',
+            propertyName: false
+          },
+          user: {
+            url: 'user/show',
+            method: 'get',
+            propertyName: false
+          },
+          logout: false
+        }
+      }
+    },
+    redirect: {
+      login: '/auth/login',
+      logout: '/',
+      callback: '/auth/login',
+      home: '/'
+    }
+  },
   router: {
-    middleware: ['logged'],
+    middleware: ['auth'],
     linkActiveClass: 'active-link'
   },
   webfontloader: {

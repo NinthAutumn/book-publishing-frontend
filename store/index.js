@@ -20,6 +20,12 @@ export const state = () => ({
 export const getters = {
   getMenuState(state) {
     return state.menuState
+  },
+  isAuthenticated: (state) => {
+    return state.auth.loggedIn
+  },
+  loggedInUser: (state) => {
+    return state.auth.user
   }
 }
 
@@ -81,35 +87,35 @@ export const actions = {
     req,
     res
   }) {
-    if (req.headers.cookie) {
-      const token = cookie.parse(req.headers.cookie).token
-      const refresh = cookie.parse(req.headers.cookie).refresh
-      const track_id = cookie.parse(req.headers.cookie).track_id
-      if (!track_id) {
-        const id = uuid()
-        res.setHeader('Set-Cookie', [serialize('track_id', id)])
-        this.$axios.defaults.headers.common['TrackId'] = id
-      } else {
-        this.$axios.defaults.headers.common['TrackId'] = track_id
-      }
-      // if (refresh) {
-      //   return await dispatch('auth/refresh')
-      // }
-      if (token) {
-        this.$axios.defaults.headers.common['Authorization'] = token;
-        await this.$axios.get(process.env.baseUrl + '/api/user/show').then((res) => {
-          commit('auth/AUTH_SUCCESS', {
-            token: token,
-            user: res.data
-          });
-        }).catch((e) => {
-          console.log(e)
-        })
+    // if (req.headers.cookie) {
+    //   const token = cookie.parse(req.headers.cookie).token
+    //   const refresh = cookie.parse(req.headers.cookie).refresh
+    //   const track_id = cookie.parse(req.headers.cookie).track_id
+    //   if (!track_id) {
+    //     const id = uuid()
+    //     res.setHeader('Set-Cookie', [serialize('track_id', id)])
+    //     this.$axios.defaults.headers.common['TrackId'] = id
+    //   } else {
+    //     this.$axios.defaults.headers.common['TrackId'] = track_id
+    //   }
+    //   // if (refresh) {
+    //   //   return await dispatch('auth/refresh')
+    //   // }
+    //   if (token) {
+    //     this.$axios.defaults.headers.common['Authorization'] = token;
+    //     await this.$axios.get('/user/show').then((res) => {
+    //       commit('auth/AUTH_SUCCESS', {
+    //         token: token,
+    //         user: res.data
+    //       });
+    //     }).catch((e) => {
+    //       console.log(e)
+    //     })
 
-      } else {
-        commit('auth/AUTH_LOGOUT')
-      }
-    }
+    //   } else {
+    //     commit('auth/AUTH_LOGOUT')
+    //   }
+    // }
 
   }
 }

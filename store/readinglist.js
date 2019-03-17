@@ -26,17 +26,17 @@ export const actions = {
   createList: async ({
     commit
   }, readinglist) => {
-    const create = await this.$axios.post(process.env.baseUrl + '/api/readinglist/new', readinglist)
+    const create = await this.$axios.post('/readinglist/new', readinglist)
   },
   addBook: async ({
     commit
   }, readinglist) => {
-    const add = await this.$axios.patch(process.env.baseUrl + '/api/readinglist/addbook', readinglist)
+    const add = await this.$axios.patch('/readinglist/addbook', readinglist)
   },
   removeBook: async ({
     commit
   }) => {
-    const remove = await this.$axios.patch(process.env.baseUrl + '/api/readinglist/removebook', readinglist)
+    const remove = await this.$axios.patch('/readinglist/removebook', readinglist)
   },
   followList: async ({
     commit

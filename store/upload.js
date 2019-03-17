@@ -22,7 +22,7 @@ export const actions = {
   async image({
     commit
   }, file) {
-    const uploadConfig = await this.$axios.get(process.env.baseUrl + '/api/upload/cover')
+    const uploadConfig = await this.$axios.get('/upload/cover')
     delete this.$axios.defaults.headers.common['Authorization'];
     delete this.$axios.defaults.headers.common['TrackId'];
     console.log(uploadConfig.data);
@@ -49,7 +49,7 @@ export const actions = {
     console.log("this is gract");
     delete this.$axios.defaults.headers.common['Authorization'];
     delete this.$axios.defaults.headers.common['TrackId'];
-    const uploadConfig = await this.$axios.get(process.env.baseUrl + '/upload/cover')
+    const uploadConfig = await this.$axios.get('/upload/cover')
     console.log(uploadConfig.data);
     await this.$axios.put(uploadConfig.data.url, file, {
       headers: {
