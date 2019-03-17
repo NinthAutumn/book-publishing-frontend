@@ -127,7 +127,7 @@ export default {
   },
   computed: {
     loggedIn() {
-      return this.$store.state.auth.loggedIn;
+      return this.$store.getters.isAuthenticated;
     }
   },
   methods: {

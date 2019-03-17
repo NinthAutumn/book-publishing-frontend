@@ -59,12 +59,12 @@ export default {
   },
   computed: {
     user() {
-      return this.$store.state.auth.user;
+      return this.$store.getters.loggedInUser;
     }
   },
   methods: {
-    logOut() {
-      this.$store.dispatch("auth/logOut");
+    async logOut() {
+      await this.$auth.logout();
     }
   }
 };

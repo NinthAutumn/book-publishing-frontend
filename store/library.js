@@ -3,6 +3,7 @@ import Cookies from 'js-cookie';
 
 export const state = () => ({
   bookmarks: [],
+  bookmarked: false,
   favorites: [],
   reading: [],
   read_later: [],
@@ -13,6 +14,9 @@ export const state = () => ({
 export const getters = {
   getLatestChapters: (state) => {
     return state.latestChapters
+  },
+  isBookmarked: (state) => {
+    return state.bookmarked
   }
 }
 

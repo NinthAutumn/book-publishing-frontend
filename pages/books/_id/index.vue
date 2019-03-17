@@ -130,6 +130,18 @@ export default {
       await store.dispatch("library/checkBookmark", params.id);
     }
   },
+  computed: {
+    bookmarked() {
+      return this.$store.getters["library/isBookmarked"];
+    },
+    bookmarkedText() {
+      if (!this.bookmarked) {
+        return "ブックマーク";
+      } else {
+        return "ブックマーク済み";
+      }
+    }
+  },
   data() {
     return {
       book: {},
@@ -287,19 +299,7 @@ export default {
     };
     this.text = this.bookmarkedText;
   },
-  scrollToTop: false,
-  computed: {
-    bookmarked() {
-      return this.$store.state.library.bookmarked;
-    },
-    bookmarkedText() {
-      if (!this.$store.state.library.bookmarked) {
-        return "ブックマーク";
-      } else {
-        return "ブックマーク済み";
-      }
-    }
-  }
+  scrollToTop: false
 };
 </script>
 
