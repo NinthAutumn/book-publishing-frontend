@@ -115,8 +115,7 @@ export const actions = {
     try {
       const res = await this.$axios.get(process.env.baseUrl + '/api/auth/token')
       const token = res.headers.authorization
-      const refresh = res.headers.refresh
-      if (token && refresh) {
+      if (token) {
         this.$axios.defaults.headers.common['Authorization'] = token
         this.$axios.defaults.headers.common['refresh'] = refresh
         Cookies.set("token", token)
@@ -125,7 +124,6 @@ export const actions = {
           token: token,
           user: res.data
         });
-
       } else {
         dispatch('logOut')
       }

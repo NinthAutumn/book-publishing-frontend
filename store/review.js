@@ -153,12 +153,18 @@ export const actions = {
     commit
   }, bookId) {
     const status = await this.$axios.get(process.env.baseUrl + '/api/review/check?bookId=' + bookId)
+    if (!status) {
+      return
+    }
     commit('GET_REVIEWED', status.data.checked)
   },
   async userReviews({
     commit
   }) {
     const reviews = await this.$axios.get(process.env.baseUrl + '/api/review/myreviews')
+    if (!reviews) {
+      return
+    }
     commit('GET_MYREVIEWS', reviews.data)
   },
   async myReview({
@@ -167,6 +173,9 @@ export const actions = {
     bookId
   }) {
     const review = await this.$axios.get(process.env.baseUrl + '/api/review/myreview?bookId=' + bookId)
+    if (!review) {
+      return
+    }
     commit('GET_USER_REVIEW', review.data)
   },
   async updateReview({

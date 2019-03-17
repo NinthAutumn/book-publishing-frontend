@@ -75,13 +75,15 @@ export const mutations = {
 export const actions = {
   async nuxtServerInit({
     commit,
-    state
+    state,
+    dispatch
   }, {
     req,
     res
   }) {
     if (req.headers.cookie) {
       const token = cookie.parse(req.headers.cookie).token
+      const refresh = cookie.parse(req.headers.cookie).refresh
       const track_id = cookie.parse(req.headers.cookie).track_id
       if (!track_id) {
         const id = uuid()
@@ -90,7 +92,9 @@ export const actions = {
       } else {
         this.$axios.defaults.headers.common['TrackId'] = track_id
       }
-
+      // if (refresh) {
+      //   return await dispatch('auth/refresh')
+      // }
       if (token) {
         this.$axios.defaults.headers.common['Authorization'] = token;
         await this.$axios.get(process.env.baseUrl + '/api/user/show').then((res) => {

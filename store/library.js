@@ -73,28 +73,40 @@ export const actions = {
     commit
   }) {
     await this.$axios.get(process.env.baseUrl + '/api/library/bookmarks').then((res) => {
-      commit('GET_BOOKMARK', res.data.store)
+      if (res) {
+        commit('GET_BOOKMARK', res.data.store)
+      }
+
     })
   },
   async getFavorites({
     commit
   }) {
     await this.$axios.get(process.env.baseUrl + '/api/library/show?type=favorite').then((res) => {
-      commit('GET_FAVORITE', res.data)
+      if (res) {
+        commit('GET_FAVORITE', res.data)
+      }
+
     })
   },
   async getReading({
     commit
   }) {
     await this.$axios.get(process.env.baseUrl + '/api/library/show?type=reading').then((res) => {
-      commit('GET_READING', res.data)
+      if (res) {
+        commit('GET_READING', res.data)
+      }
+
     })
   },
   async getHistory({
     commit
   }) {
     await this.$axios.get(process.env.baseUrl + '/api/library/history').then((res) => {
-      commit('GET_HISTORY', res.data)
+      if (res) {
+        commit('GET_HISTORY', res.data)
+      }
+
     })
   },
   async getRead_Later({
@@ -123,13 +135,16 @@ export const actions = {
   }) {
     try {
       const res = await this.$axios.get(process.env.baseUrl + '/api/library/show/chapters')
-      const {
-        chapters
-      } = res.data
+      if (res) {
+        const {
+          chapters
+        } = res.data
 
-      commit('SET_LATEST_CHAPTERS', {
-        chapters
-      })
+        commit('SET_LATEST_CHAPTERS', {
+          chapters
+        })
+      }
+
     } catch (error) {
       console.log(error.status);
       throw error
