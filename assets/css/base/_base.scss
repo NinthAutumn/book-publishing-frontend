@@ -29,9 +29,6 @@ a:visited {
   &:hover {
     user-select: none;
     cursor: pointer;
-    border: 2px solid $primary;
-    color: $primary;
-    transition: 300ms;
   }
 
   color:$secondary;

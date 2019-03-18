@@ -1,23 +1,26 @@
 import Cookies from 'js-cookie';
 
-export default async function ({
-  $axios,
-  redirect,
+export default function ({
   store,
-  $auth
+  $axios,
+  app
 }) {
+  const {
+    $auth
+  } = app
+  // console.log($auth.loggedIn);
 
-  $axios.onError(async error => {
-    if (error.config && error.response && error.response.status === 401) {
-      let token = store.getters['auth/getToken']
-      if (token) {
-        await store.dispatch('nauth/refresh').then(() => {
-          $auth.setRefreshToken = store.getters['auth/getToken']
-          return $axios(error.config)
-        }).catch(async (err) => {})
-      }
-    }
-  })
+  // $axios.onError(async error => {
+  //   if (error.config && error.response && error.response.status === 401) {
+  //     let token = store.getters['auth/getToken']
+  //     if (token) {
+  //       await store.dispatch('nauth/refresh').then(() => {
+  //         $auth.setRefreshToken = store.getters['auth/getToken']
+  //         return $axios(error.config)
+  //       }).catch(async (err) => {})
+  //     }
+  //   }
+  // })
 
   // $axios.onResponse(async response => {
   //   console.log('suka suka suka suka suka');

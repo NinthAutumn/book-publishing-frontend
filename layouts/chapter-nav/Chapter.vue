@@ -203,6 +203,15 @@ export default {
   }
   &--black {
     background-color: #030303 !important;
+    .next-chapter-title {
+      color: white !important;
+    }
+    .navigation-prev {
+      color: white !important;
+    }
+    .navigation-next {
+      color: white !important;
+    }
     .chapter-container {
       background-color: rgb(26, 26, 27) !important;
       color: rgb(215, 218, 220);

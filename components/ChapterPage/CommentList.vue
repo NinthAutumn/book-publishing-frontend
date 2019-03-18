@@ -28,7 +28,6 @@
       <div class="comment-not" v-else>
         <button>ログインまたはアカウント作成</button>
       </div>
-      <div class="comment-list__loading" v-if="loading">ローディングー中</div>
       <div class="comment-unordered-list" v-if="comments.length > 0">
         <div class="comment-list__select flex flex--align" v-if="comments.length > 1">
           <Select def="いいね数" transition="grow-shrink" name="並び替え" :object="sort_list"></Select>

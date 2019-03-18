@@ -122,6 +122,7 @@ module.exports = {
     'nuxt-device-detect',
     'nuxt-webfontloader',
     '@nuxtjs/axios',
+
     ['@nuxtjs/moment', {
       locales: ['ja'],
       defaultLocale: 'ja'
@@ -153,9 +154,11 @@ module.exports = {
   axios: {
     baseURL: 'http://0.0.0.0:5000/api'
   },
+
   auth: {
     strategies: {
       local: {
+        _scheme: '~/auth/local.js',
         endpoints: {
           login: {
             url: 'auth/login',
@@ -176,7 +179,8 @@ module.exports = {
       logout: '/',
       callback: '/auth/login',
       home: '/'
-    }
+    },
+    plugins: ['~/plugins/auth.js']
   },
   router: {
     middleware: ['auth'],

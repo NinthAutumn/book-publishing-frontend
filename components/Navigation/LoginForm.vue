@@ -153,6 +153,13 @@ export default {
   }
   .login__submit {
     // background-color: #;
+    border-radius: 0;
+    margin: 10px 0;
+    transition: 300ms;
+    &:hover {
+      box-shadow: 1px 1px 5px grey;
+      transition: 300ms;
+    }
   }
 }
 </style>

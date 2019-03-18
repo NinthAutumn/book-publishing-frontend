@@ -150,7 +150,11 @@ export default {
   background-color: rgb(227, 236, 245);
 }
 .menu-inactive {
-  left: -240px !important;
+  transform: translateX(-240px);
+  transition: 300ms;
+}
+.menu-active {
+  transform: translateX(0px);
   transition: 300ms;
 }
 .v-nav-title__item {
@@ -188,6 +192,7 @@ export default {
   overflow: auto;
   /* animation: content-enter 1s;
   animation-fill-mode: forwards; */
+  // transform: translateX(1px);
   transition: 300ms;
   // animation: appearSlides 300ms;
   // color: #5bb8eb;

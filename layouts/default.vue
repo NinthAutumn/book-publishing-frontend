@@ -49,7 +49,7 @@ export default {
   margin-left: 240px;
   margin-top: 50px;
   padding: 1rem 5rem;
-  transition: 300ms;
+  transition: margin 300ms;
   position: relative !important;
 }
 .nuxt-pages .menu-inactive {
