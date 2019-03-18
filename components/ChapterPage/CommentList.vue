@@ -3,6 +3,7 @@
     <div class="divider flex chapter-hr">
       <fa class="chapter-end-hr" icon="book-open"></fa>
     </div>
+
     <div class="comment-list__item" style="padding: 0 10px;">
       <div class="divider flex flex--align">
         <fa icon="comments" class="comment-header-icon"></fa>
@@ -15,7 +16,7 @@
         </div>
         <textarea
           required
-          v-model="newComment.content"
+          v-model="content"
           class="form-input content-textarea"
           placeholder="コメントを書く"
         ></textarea>
@@ -27,6 +28,7 @@
       <div class="comment-not" v-else>
         <button>ログインまたはアカウント作成</button>
       </div>
+      <div class="comment-list__loading" v-if="loading">ローディングー中</div>
       <div class="comment-unordered-list" v-if="comments.length > 0">
         <div class="comment-list__select flex flex--align" v-if="comments.length > 1">
           <Select def="いいね数" transition="grow-shrink" name="並び替え" :object="sort_list"></Select>
@@ -60,12 +62,11 @@ export default {
         { key: "最新順", value: "latest" },
         { key: "古い順", value: "oldest" }
       ],
-      newComment: {
-        content: ""
-      },
+      content: "",
       error: false
     };
   },
+  async created() {},
   async mounted() {
     await this.$store.dispatch("comment/getComments", {
       chapterId: this.$route.params.chaptersId
@@ -75,15 +76,14 @@ export default {
     async addComment() {
       const bookId = this.$route.params.id;
       const chapterId = this.$route.params.chaptersId;
-      const content = this.newComment.content;
-      if (!this.newComment.comment) {
+      if (!this.content) {
         return (this.error = true);
       }
       this.$store
         .dispatch("comment/addParentlessComment", {
           bookId,
           chapterId,
-          content
+          content: this.content
         })
         .then(async () => {
           this.$message({

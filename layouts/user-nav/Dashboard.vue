@@ -2,13 +2,11 @@
   <div class="d-nav-all">
     <div class="d-nav-h" style="z-index:1000;">
       <div class="dashboard-h-menu flex flex--between">
-        <div class="divider flex">
+        <div class="divider flex flex--align">
           <div class="dashboard-icon">
             <i class="el-icon-menu" @click="menuDrawer"></i>
           </div>
-          <div class="dashboard-logo">
-            <img class="dashboard-logo-img" src="http://placehold.jp/80x32.png">
-          </div>
+          <nuxt-link tag="div" to="/" class="site-logo">ノーブル</nuxt-link>
         </div>
         <nuxt-link
           v-if="$route.name ==='dashboard-books-id-index-draft'||$route.name ==='dashboard-books-id-index-published'||$route.name ==='dashboard-books-id-index'||$route.name ==='dashboard-books-id-index-deleted'||$route.name ==='dashboard-books-id-new'"

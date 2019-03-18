@@ -35,9 +35,9 @@
           ></span>
         </div>
         <!-- ユーザーの意見を聞いて　アップデートする -->
-        <div class="nav-icon" @click="comments">
+        <!-- <div class="nav-icon" @click="comments">
           <fa class="nav-icon__item nav-icon__item--comment" icon="comment"></fa>
-        </div>
+        </div>-->
         <div class="nav-icon" @click="table">
           <fa class="nav-icon__item" icon="list-ul"></fa>
         </div>

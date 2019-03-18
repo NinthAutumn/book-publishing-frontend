@@ -18,7 +18,29 @@ a {
 
 a:link,
 a:visited {
-  color: $primary;
+  color: rgb(51, 51, 51);
+}
+
+.site-logo {
+  padding: 2px 8px;
+  font-size: 18px;
+  height: 100%;
+
+  &:hover {
+    user-select: none;
+    cursor: pointer;
+    border: 2px solid $primary;
+    color: $primary;
+    transition: 300ms;
+  }
+
+  color:$secondary;
+  transition:300ms;
+  border:2px solid $secondary;
+  margin-left: 10px;
+  font-family: Snigglet;
+  // background-color: $secondary;
+  font-weight:bold;
 }
 
 body {

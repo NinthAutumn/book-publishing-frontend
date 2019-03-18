@@ -184,7 +184,7 @@ module.exports = {
   },
   webfontloader: {
     google: {
-      families: ['IBM Plex Sans:300,400,700', 'Noto Sans JP:400,500'] //Loads Lato font with weights 400 and 700
+      families: ['IBM Plex Sans:300,400,700', 'Noto Sans JP:400,500', 'Sniglet:400,800'] //Loads Lato font with weights 400 and 700
     }
   },
   /*

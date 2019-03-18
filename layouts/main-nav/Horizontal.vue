@@ -1,8 +1,11 @@
 <template>
   <div class="h-nav" :class="'h-nav--'">
     <nav>
-      <div class="left-menu">
+      <div class="left-menu flex flex--align">
         <i class="el-icon-menu" :class="$store.state.menuState" @click="menuDrawer"></i>
+        <nuxt-link tag="div" to="/" class="site-logo">
+          <fa icon="pen"></fa>ノーブル
+        </nuxt-link>
       </div>
       <SearchBar class="searchbar"></SearchBar>
       <div class="user-nav flex flex--align">
@@ -201,6 +204,7 @@ nav {
   /* animation: forwards; */
 }
 .left-menu {
+  // height: 100%;
   margin-left: 10px;
 }
 .profile-pic {

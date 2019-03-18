@@ -4,8 +4,9 @@
     :class="{'h-nav--tan':theme === 'tan', 'h-nav--black':theme==='black','h-nav--ruby':theme==='ruby'}"
   >
     <nav>
-      <div class="left-menu">
+      <div class="left-menu flex flex--align">
         <i class="el-icon-menu" :class="$store.state.menuState" @click="menuDrawer"></i>
+        <nuxt-link tag="div" to="/" class="site-logo">ノーブル</nuxt-link>
       </div>
       <span v-if="loggedIn" style="z-index:3000;" id="prof" v-click-outside="dropOff">
         <img @click="stateDropChange" class="profile-pic" style="width: 40px;" :src="user.avatar">

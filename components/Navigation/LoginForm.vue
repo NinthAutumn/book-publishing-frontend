@@ -65,12 +65,18 @@ export default {
         username: this.form.username,
         password: this.form.password
       };
-      await this.$auth.loginWith("local", {
-        data: {
-          username: this.form.username,
-          password: this.form.password
-        }
-      });
+      await this.$auth
+        .loginWith("local", {
+          data: {
+            username: this.form.username,
+            password: this.form.password
+          }
+        })
+        .then(res => {
+          console.log(res);
+          this.$store.commit("LOGIN_FALSE");
+          window.location.reload(true);
+        });
       // await this.$store
       //   .dispatch("nauth/login", user)
       //   .then(() => {

@@ -156,6 +156,12 @@ export default {
 .v-nav-title__item {
   color: $primary;
 }
+.v-nav-icon {
+  color: grey !important;
+}
+.v-nav-icons {
+  color: grey !important;
+}
 .v-nav {
   // margin: 0 !important;
   &--black {

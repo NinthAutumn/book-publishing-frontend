@@ -3,15 +3,16 @@ import Cookies from 'js-cookie';
 export default async function ({
   $axios,
   redirect,
-  store
+  store,
+  $auth
 }) {
 
   $axios.onError(async error => {
     if (error.config && error.response && error.response.status === 401) {
       let token = store.getters['auth/getToken']
       if (token) {
-        await store.dispatch('auth/refresh').then(() => {
-          error.config.headers.authorization = store.getters['auth/getToken']
+        await store.dispatch('nauth/refresh').then(() => {
+          $auth.setRefreshToken = store.getters['auth/getToken']
           return $axios(error.config)
         }).catch(async (err) => {})
       }
