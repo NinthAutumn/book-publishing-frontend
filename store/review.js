@@ -4,7 +4,8 @@ export const state = () => ({
   goodReviews: [],
   reviewed: '',
   myReviews: [],
-  myReview: {}
+  myReview: {},
+  nextChapterLength: 0
 })
 export const getters = {
 
@@ -13,6 +14,9 @@ export const getters = {
 
 
 export const mutations = {
+  SET_NEXT_REVIEWS(state, review) {
+    state.reviews.push(review)
+  },
   GET_REVIEWS(state, reviews) {
     state.reviews = reviews
   },
@@ -64,9 +68,34 @@ export const mutations = {
   },
   GET_USER_REVIEW(state, review) {
     state.myReview = review
+  },
+  SET_NEXT_REVIEW_LENGTH(state, count) {
+    state.nextChapterLength = count
   }
 }
 export const actions = {
+  async fetchNextReviews({
+    commit,
+    rootState
+  }, {
+    bookId,
+    limit = 10,
+    page = 2
+  }) {
+    await this.$axios.get(`/review/book?id=${bookId}&limit=${limit}&page=${page}`).then(async (res) => {
+
+      res.data.forEach((review) => {
+        commit('SET_NEXT_REVIEWS', review)
+      })
+      commit('SET_NEXT_REVIEW_LENGTH', res.data.length)
+      if (rootState.auth.loggedIn) {
+        await this.$axios.get('/user/liked').then((res) => {
+          commit('USER_LIKED_REVIEWS', rootState.auth.user._id)
+        })
+      }
+
+    })
+  },
   async showAll({
     commit,
     rootState
@@ -77,7 +106,6 @@ export const actions = {
   }) {
     await this.$axios.get(`/review/book?id=${bookId}&limit=${limit}&page=${page}`).then(async (res) => {
       commit('GET_REVIEWS', res.data)
-
       if (rootState.auth.loggedIn) {
         await this.$axios.get('/user/liked').then((res) => {
           commit('USER_LIKED_REVIEWS', rootState.auth.user._id)

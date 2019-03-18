@@ -8,7 +8,9 @@
         v-for="(chapter,index) in chapters"
         :key="index"
       >
-        <div class="latest-chapters__chapter-title flex flex--between">{{chapter.title}}</div>
+        <div
+          class="latest-chapters__chapter-title flex flex--between"
+        >{{chapter.bookId.title|truncate(17)}}</div>
         <div class="latest-chapters__chapter-meta flex flex--between">
           <div class="latest-chapters__chapter-index">第{{chapter.index}}話</div>
           <div
@@ -37,6 +39,15 @@ export default {
     async removeInbox(chapterId, bookId) {
       await this.$store.dispatch("library/patchLatestChapters", { chapterId });
       this.$router.push("/books/" + bookId + "/" + chapterId);
+    }
+  },
+  filters: {
+    truncate: (string, number) => {
+      if (string.length > 17) {
+        return (string || "").substring(0, number) + "…";
+      } else {
+        return string;
+      }
     }
   }
 };

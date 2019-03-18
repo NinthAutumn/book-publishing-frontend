@@ -254,7 +254,7 @@ export default {
     padding: 5px;
     width: 100%;
     top: -30px;
-    overflow: scroll;
+    overflow: auto;
     position: absolute;
     box-sizing: border-box;
     #{$self}__refresh {

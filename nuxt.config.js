@@ -110,6 +110,9 @@ module.exports = {
     }, {
       src: '@/plugins/graphs',
       ssr: false
+    }, {
+      src: '@/plugins/infinite',
+      ssr: false
     },
   ],
 

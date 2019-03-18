@@ -3,16 +3,19 @@
     <div class="chapter-title">
       <header>{{$store.state.chapter.chapter.title}}</header>
     </div>
-    <div
-      class="chapter-announcement chapter-announcement--header"
-      v-if="$store.state.chapter.chapter.extra.announcement.header"
-    >
-      <h4>
-        <fa style="margin-right:10px;" icon="envelope"></fa>告知・メッセージ・上書き
-      </h4>
-      <p v-text="$store.state.chapter.chapter.extra.announcement.header"></p>
-      <fa class="announcement-pin" icon="quote-right"></fa>
+    <div class="divider" v-if="$store.state.chapter.chapter.extra">
+      <div
+        class="chapter-announcement chapter-announcement--header"
+        v-if="$store.state.chapter.chapter.extra.announcement"
+      >
+        <h4>
+          <fa style="margin-right:10px;" icon="envelope"></fa>告知・メッセージ・上書き
+        </h4>
+        <p v-text="$store.state.chapter.chapter.extra.announcement.header"></p>
+        <fa class="announcement-pin" icon="quote-right"></fa>
+      </div>
     </div>
+
     <article
       class="chapter-content"
       v-html="$store.state.chapter.chapter.content"
@@ -27,16 +30,17 @@
       </div>
       <div class="payblock-buy button button--primary" @click="purchase">ロック解除</div>
     </div>
-
-    <div
-      class="chapter-announcement chapter-announcement--footer"
-      v-if="$store.state.chapter.chapter.extra.announcement.footer"
-    >
-      <h4>
-        <fa style="margin-right:10px;" icon="envelope"></fa>告知・メッセージ・下書き
-      </h4>
-      <p v-text="$store.state.chapter.chapter.extra.announcement.footer"></p>
-      <fa class="announcement-pin" icon="quote-right"></fa>
+    <div class="divider" v-if="$store.state.chapter.chapter.extra.announcement">
+      <div
+        class="chapter-announcement chapter-announcement--footer"
+        v-if="$store.state.chapter.chapter.extra.announcement.footer"
+      >
+        <h4>
+          <fa style="margin-right:10px;" icon="envelope"></fa>告知・メッセージ・下書き
+        </h4>
+        <p v-text="$store.state.chapter.chapter.extra.announcement.footer"></p>
+        <fa class="announcement-pin" icon="quote-right"></fa>
+      </div>
     </div>
   </section>
 </template>

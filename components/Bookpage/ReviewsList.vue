@@ -57,6 +57,9 @@
         <Review :review="review"></Review>
         <hr>
       </li>
+      <no-ssr>
+        <infinite-loading @infinite="infiniteHandler"></infinite-loading>
+      </no-ssr>
     </ul>
   </div>
 </template>
@@ -77,7 +80,9 @@ export default {
         { key: "良いね順", value: 0 },
         { key: "問題的論順", value: 1 },
         { key: "最新順", value: 2 }
-      ]
+      ],
+      limit: 10,
+      page: 1
     };
   },
   computed: {
@@ -114,6 +119,20 @@ export default {
     },
     reviewClose() {
       this.reviewState = false;
+    },
+    async infiniteHandler($state) {
+      await this.$store
+        .dispatch("review/fetchNextReviews", {
+          bookId: this.$route.params.id,
+          page: this.page++
+        })
+        .then(review => {
+          if (this.$store.state.review.nextChapterLength) {
+            $state.loaded();
+          } else {
+            $state.complete();
+          }
+        });
     }
   }
 };
