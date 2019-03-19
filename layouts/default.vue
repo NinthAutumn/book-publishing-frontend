@@ -18,6 +18,9 @@ export default {
     Horizontal,
     Vertical
   },
+  mounted() {
+    document.addEventListener("touchstart", { passive: true });
+  },
   data() {
     return {};
   },

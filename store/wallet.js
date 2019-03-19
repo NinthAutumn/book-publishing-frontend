@@ -31,7 +31,10 @@ export const actions = {
   }, ) {
     try {
       const res = await this.$axios.get('/user/wealth')
-      commit('SET_WEALTH', res.data.wealth)
+      if (res) {
+        commit('SET_WEALTH', res.data.wealth)
+      }
+
     } catch (error) {
       console.log(error.status);
       throw error
