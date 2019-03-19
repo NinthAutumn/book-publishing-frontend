@@ -88,7 +88,7 @@
               @blur="textAreaBlur(true)"
               :placeholder="upPlaceHolder"
               name="header"
-              v-model="form.extra.announcement.header"
+              v-model="form.header"
               id
               rows="5"
             ></textarea>
@@ -104,7 +104,7 @@
               @blur="textAreaBlur(false)"
               :placeholder="downPlaceHolder"
               name="footer"
-              v-model="form.extra.announcement.footer"
+              v-model="form.footer"
               id
               rows="5"
             ></textarea>
@@ -200,13 +200,9 @@ export default {
         volume: "",
         bookId: this.$route.params.id,
         locked: false,
-        extra: {
-          announcement: {
-            header: "",
-            footer: ""
-          },
-          drawings: []
-        }
+        drawings: [],
+        header: "",
+        footer: ""
       },
       lang: {
         days: ["日", "月", "火", "水", "木", "金", "土"],
@@ -273,8 +269,8 @@ export default {
       this.form.extra.drawings.push(file.raw);
     },
     async createChapter() {
-      if (this.form.extra.drawings) {
-        this.form.extra.drawings.forEach(async image => {
+      if (this.form.drawings) {
+        this.form.drawings.forEach(async image => {
           await this.$store.dispatch("upload/multiImage", image);
         });
       }
@@ -299,16 +295,11 @@ export default {
         volume: this.form.volume,
         index: this.$store.getters["chapter/getNewIndex"],
         state,
-        extra: {
-          announcement: {
-            header: this.form.extra.announcement.header,
-            footer: this.form.extra.announcement.footer
-          },
-          drawings: this.$store.state.upload.urls
-        }
+        header: this.form.header,
+        footer: this.form.footer,
+        drawings: this.$store.state.upload.urls
       };
       // chapter.extra.drawings = this.$store.state.upload.urls;
-      console.log(chapter);
       const bookId = this.$route.params.id;
       await this.$store.dispatch("chapter/createChapter", { bookId, chapter });
     },

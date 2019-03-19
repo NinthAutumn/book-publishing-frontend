@@ -19,7 +19,8 @@ export const state = () => ({
   book: {},
   loading: false,
   browse: [],
-  tagList: []
+  tagList: [],
+  chapterCount: 0,
 })
 
 export const getters = {
@@ -30,18 +31,35 @@ export const getters = {
   chapAsc: (state) => {
 
   },
-  showbook: state => state.book
+  getBook: state => state.book,
+  getBookView: state => state.view,
+  getBookChapterCount: state => state.chapterCount
 }
 
 export const actions = {
-  async getBook({
-    commit
+  async fetchBook({
+    commit,
+    dispatch
   }, id) {
     await this.$axios.get('book/show?id=' + id).then((res) => {
-      commit('SHOW', res.data.book)
+      commit('SET_BOOK', res.data.book)
     })
-    await this.$axios.get("/book/bookview?id=" + id).then((res) => {
-      commit('BOOK_VIEW', res.data)
+    await dispatch('fetchBookView', id)
+    await dispatch('fetchBookChapterCount', id)
+
+  },
+  async fetchBookView({
+    commit
+  }, id) {
+    await this.$axios.get("/book/view?id=" + id).then((res) => {
+      commit('SET_BOOK_VIEW', res.data)
+    })
+  },
+  async fetchBookChapterCount({
+    commit
+  }, id) {
+    await this.$axios.get("/book/chapterCount?bookId=" + id).then((res) => {
+      commit('SET_BOOK_CHAPTER_COUNT', res.data.count)
     })
   },
   async addBook({
@@ -112,7 +130,7 @@ export const mutations = {
   TRENDING(state, books) {
     state.books.trending = books
   },
-  SHOW(state, book) {
+  SET_BOOK(state, book) {
     state.book = book
   },
   EDIT() {},
@@ -125,11 +143,11 @@ export const mutations = {
   URL_GOOGLE() {
     const url = "https://storage.googleapis.com/theta-images/"
   },
-  DELETE() {
-
-  },
-  BOOK_VIEW(state, view) {
+  SET_BOOK_VIEW(state, view) {
     state.view = view
+  },
+  SET_BOOK_CHAPTER_COUNT(state, chapterCount) {
+    state.chapterCount = chapterCount
   },
   SYNOPSIS_TRUE(state) {
     state.bookSynopsis = true

@@ -4,21 +4,21 @@
       <div class="book__cover">
         <img
           class="book__cover__img"
-          :src="'https://storage.googleapis.com/theta-images/' + $store.getters['book/showbook'].cover"
+          :src="'https://storage.googleapis.com/theta-images/' + book.cover"
           alt
         >
       </div>
       <section class="book__info flex flex-column flex--between">
         <div class="divider flex-row flex--align flex--between">
           <div class="divider flex-column flex--between">
-            <header class="book__info__title">{{$store.getters['book/showbook'].title}}</header>
+            <header class="book__info__title">{{book.title}}</header>
             <div class="book-meta flex">
               <div class="book-genre pill pill-secondary-light">
                 <div class="book-genre-icon pill-text pill--icon">
                   <fa icon="fist-raised"></fa>
                 </div>
                 <div class="book-genre-text pill-text pill--icon">
-                  <p>{{$store.getters['book/showbook'].genres[0]}}</p>
+                  <p>{{book.genres[0]}}</p>
                 </div>
               </div>
               <div class="book-chapterCount pill pill-secondary">
@@ -26,7 +26,7 @@
                   <fa icon="scroll"></fa>
                 </div>
                 <div class="book-chapter-count-text pill-text">
-                  <p>{{$store.getters['book/showbook'].chapters.length}} 話</p>
+                  <p>{{chapterCount}}話</p>
                 </div>
               </div>
               <div class="book-views pill pill-primary">
@@ -34,7 +34,7 @@
                   <fa icon="eye"></fa>
                 </div>
                 <div class="book-views-icon pill-text">
-                  <p>{{$store.state.book.view}}</p>
+                  <p>{{view}}</p>
                 </div>
               </div>
             </div>
@@ -63,7 +63,7 @@
         <div class="book__stats">
           <div class="book__stats__meta"></div>
           <div class="book__stats__text">
-            <BookContent :book="$store.getters['book/showbook']"></BookContent>
+            <BookContent :book="book"></BookContent>
           </div>
         </div>
         <div class="book-content__buttons">
@@ -92,7 +92,7 @@
         ref="review"
         class="book__content-nav__item book__content-nav__item--review"
         @click="navSelect('review')"
-      >レビュー({{$store.state.book.book.reviewsCount|| 0}})</div>
+      >レビュー({{book.reviewsCount|| 0}})</div>
       <div
         @click="navSelect('toc')"
         @mouseenter="navLine(2)"
@@ -119,11 +119,16 @@ import Tags from "@/components/Bookpage/Tags";
 
 export default {
   auth: false,
-
   async asyncData({ params, store }) {},
+  async created() {
+    // await this.$store.dispatch("book/fetchBookView", this.$route.params.id);
+    // await this.$store.dispatch(
+    //   "book/fetchBookChapterCount",
+    //   this.$route.params.id
+    // );
+  },
   async fetch({ store, params }) {
-    await store.dispatch("book/getBook", params.id);
-    await store.dispatch("review/showAll", { bookId: params.id });
+    await store.dispatch("book/fetchBook", params.id);
     await store.dispatch("chapter/fetchPublishedTOC", params.id);
     if (store.state.auth.loggedIn) {
       await store.dispatch("review/reviewedStatus", params.id);
@@ -131,6 +136,7 @@ export default {
     }
   },
   computed: {
+    // ...MapGetters({})
     bookmarked() {
       return this.$store.getters["library/isBookmarked"];
     },
@@ -140,11 +146,19 @@ export default {
       } else {
         return "ブックマーク済み";
       }
+    },
+    book() {
+      return this.$store.getters["book/getBook"];
+    },
+    view() {
+      return this.$store.getters["book/getBookView"];
+    },
+    chapterCount() {
+      return this.$store.getters["book/getBookChapterCount"];
     }
   },
   data() {
     return {
-      book: {},
       reviews: [],
       tabs: {
         review: "",
@@ -283,10 +297,14 @@ export default {
     Tags
     // TextEditor
   },
-  mounted() {
+  transition: false,
+  async mounted() {
     // while (1) {
     //   alert("なぜそれが");
     // }
+    await this.$store.dispatch("review/showAll", {
+      bookId: this.$route.params.id
+    });
     this.tabs.review = this.$refs.review.clientWidth;
     this.tabs.toc = this.$refs.toc.clientWidth;
     this.tabs.position = {
@@ -298,8 +316,7 @@ export default {
       left: 0
     };
     this.text = this.bookmarkedText;
-  },
-  scrollToTop: false
+  }
 };
 </script>
 

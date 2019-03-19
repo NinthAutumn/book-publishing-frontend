@@ -82,7 +82,7 @@ export default {
         { key: "最新順", value: 2 }
       ],
       limit: 10,
-      page: 1
+      page: 2
     };
   },
   computed: {

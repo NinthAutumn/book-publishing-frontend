@@ -147,7 +147,10 @@ module.exports = {
       ]
     }],
     ['@nuxtjs/google-analytics', {
-      id: 'UA-119733183-2'
+      id: 'UA-119733183-2',
+      autoTracking: {
+        page: false
+      }
     }]
 
   ],
