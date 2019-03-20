@@ -148,7 +148,7 @@ export default {
   data() {
     return {
       type: "",
-      direction: "",
+      direction: "desc",
       genre: "",
       modalDirection: "right",
       selected_genre: [],

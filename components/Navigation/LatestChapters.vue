@@ -8,9 +8,9 @@
         v-for="(chapter,index) in chapters"
         :key="index"
       >
-        <div
-          class="latest-chapters__chapter-title flex flex--between"
-        >{{chapter.bookId.title|truncate(17)}}</div>
+        <div class="latest-chapters__chapter-title flex flex--between">
+          <p v-text="chapter.bookId.title"></p>
+        </div>
         <div class="latest-chapters__chapter-meta flex flex--between">
           <div class="latest-chapters__chapter-index">第{{chapter.index}}話</div>
           <div
@@ -87,8 +87,16 @@ export default {
       right: 5px;
     }
     #{$self}__chapter-title {
+      width: 90%;
       font-size: 13px;
       margin-bottom: 5px;
+      // width: 200px;
+
+      p {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
     }
     #{$self}__chapter-index {
       font-size: 12px;
