@@ -1,18 +1,15 @@
 <template>
   <div class="text-editor">
-    <transition name="text-editor-up">
+    <button v-if="ruby" class="text-editor__ruby-button" @click.prevent="createRuby">ルビを作る</button>
+    <!-- <transition name="text-editor-up">
       <div class="text-editor__title" v-text="placeholder" v-if="!placehold"></div>
-    </transition>
-
+    </transition>-->
     <textarea
       :class="{'text-editor__disappear': !placehold}"
+      ref="text"
       :placeholder="placehold"
       @focus="contentFocus"
       @blur="contentBlur"
-      @keydown="changes"
-      @keypress="changes"
-      @keyup="changes"
-      @mouseleave="changes"
       v-model="text"
       @select="selectEvent"
     ></textarea>
@@ -26,7 +23,8 @@ export default {
   props: {
     value: String,
     content: String,
-    placeholder: String
+    placeholder: String,
+    ruby: Boolean
   },
   data() {
     return {
@@ -35,8 +33,14 @@ export default {
       tempText: "",
       realArray: [],
       selectedText: "",
+      activeE: "",
       placehold: this.placeholder
     };
+  },
+  watch: {
+    text: function(val) {
+      this.changes();
+    }
   },
   computed: {
     propModel: {
@@ -48,7 +52,11 @@ export default {
       }
     },
     textLength() {
-      return this.text.replace(/\s/g, "").length;
+      return this.text
+        .replace(/\s/g, "")
+        .replace(/[|]/, "")
+        .replace(/[》]/, "")
+        .replace(/[《]/, "").length;
     }
   },
   created() {
@@ -56,6 +64,11 @@ export default {
       this.text = this.content;
       this.text = this.text.replace(/(<([^>]+)>)/gi, "");
       this.textArray = this.text.split(/\n/);
+      this.textArray.forEach(text => {
+        text = text.replace(/[|]/, "<ruby>");
+        text = text.replace(/[》]/, "</rt></ruby>");
+        text = text.replace(/[《]/, "<rt>");
+      });
       let br = 0;
       this.realArray = this.textArray
         .filter((value, index) => {
@@ -89,10 +102,33 @@ export default {
     }
   },
   methods: {
-    bold() {
-      this.selectedText = window.getSelection().toString();
+    createRuby() {
+      let rubyText = " |ルビをつける字《ルビ》";
+      if (!this.activeE || this.activeE.tagName.toUpperCase() !== "TEXTAREA") {
+        this.text = this.text + rubyText;
+        return;
+      }
+      let start = this.activeE.selectionStart;
+      let end = this.activeE.selectionEnd;
+      let rubyK = [];
+      this.text.split("").forEach((item, index) => {
+        if (end > index && index >= start) {
+          rubyK.push(item);
+        }
+      });
 
-      console.log(this.tempText);
+      if (!rubyK.length) {
+        this.text = this.text + rubyText;
+        return;
+      }
+
+      rubyText = ` |${rubyK.join("")}《ルビ》`;
+
+      let selectionStart = this.activeE.selectionStart,
+        value = this.$refs.text.value;
+
+      this.text = value.substr(0, start - 1) + rubyText + value.substr(end);
+      this.$refs.text.setSelectionRange(start + 1, end);
     },
     contentFocus() {
       this.placehold = "";
@@ -103,6 +139,13 @@ export default {
     changes() {
       this.text = this.text.replace(/(<([^>]+)>)/gi, "");
       this.textArray = this.text.split(/\n/);
+      let temp = [];
+      this.textArray.forEach((text, index) => {
+        this.textArray[index] = text
+          .replace(/[|]/, "<ruby>")
+          .replace(/[》]/, "</rt></ruby>")
+          .replace(/[《]/, "<rt>");
+      });
       let br = 0;
       this.realArray = this.textArray
         .filter((value, index) => {
@@ -119,6 +162,7 @@ export default {
         // .filter(value => value)
         .map((value, index) => {
           // console.log(value );
+          value.replace(/[|]/, "<ruby>");
           if (value) {
             br = 0;
             return `<p>${value}</p>`;
@@ -131,32 +175,11 @@ export default {
           // value + "dog";
         });
       this.tempText = this.realArray.join("");
-      // console.log(this.tempText);
-      this.$emit("input", this.tempText);
-    },
-    enter() {
-      this.text = this.text.replace(/(<([^>]+)>)/gi, "");
-      this.textArray = this.text.split(/\n/);
-      this.realArray = this.textArray
-        // .filter(value => value)
-        .map((value, index) => {
-          // console.log(value );
-          if (value) {
-            return `<p>${value}</p>`;
-          } else if (index === this.textArray.length - 1) {
-            return "";
-          } else {
-            return `<p><br></p>`;
-          }
-
-          // value + "dog";
-        });
-      this.tempText = this.realArray.join("");
-      // console.log(this.tempText);
-      this.$emit("input", this.tempText);
-    },
-    selectEvent() {
       console.log(this.tempText);
+      this.$emit("input", this.tempText);
+    },
+    selectEvent(event) {
+      this.activeE = event.target;
     }
   }
 };
@@ -168,16 +191,36 @@ export default {
   height: 100%;
   width: 100%;
   position: relative;
+  &__ruby-button {
+    height: 30px;
+    background-color: #fff;
+    border: 1px solid grey;
+    font-size: 13px;
+    margin-bottom: 5px;
+    transition: 200ms;
+    &:active,
+    &:focus {
+      outline: none;
+    }
+    &:hover {
+      cursor: pointer;
+      background-color: black;
+      color: white;
+      transition: 200ms;
+    }
+  }
+  &-up {
+  }
   &__title {
     position: absolute;
     top: 0;
     left: 10px;
     font-size: 16px;
   }
-  &__disappear {
-    padding-top: 20px !important;
-    transition: 300ms;
-  }
+  // &__disappear {
+  //   padding-top: 20px !important;
+  //   transition: 300ms;
+  // }
   textarea {
     transition: 300ms;
     border: 2px solid $review-color;
@@ -199,8 +242,8 @@ export default {
     font-size: 16px;
     position: absolute;
     // right: 10px;
-    right: 0;
-    bottom: 0;
+    right: 2px;
+    bottom: 2px;
     background-color: #fff;
     padding: 5px;
   }

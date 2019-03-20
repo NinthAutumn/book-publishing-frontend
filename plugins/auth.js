@@ -9,19 +9,11 @@ export default function ({
     $auth,
     $axios
   } = app
-
-  if (!$auth.loggedIn || !$auth.strategies[strategy])
-    return
-
-  const options = $auth.strategies.local.options
-  let token = $auth.getToken(strategy)
-  let refreshToken = $auth.getRefreshToken(strategy)
   $axios.onResponse(async response => {
-    console.log(response.status);
-    const originalRequest = response.config
-    originalRequest.baseURL = ''
-    originalRequest._retry = true
     if (response.status === 266) {
+      const originalRequest = response.config
+      originalRequest.baseURL = ''
+      originalRequest._retry = true
       $axios.patch('/auth/token', {
         refresh: $auth.getRefreshToken('local')
       }).then((res) => {

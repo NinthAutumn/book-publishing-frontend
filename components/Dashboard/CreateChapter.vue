@@ -42,6 +42,7 @@
               class="chapter-content-new"
               v-model="form.content"
               :placeholder="contentHolder"
+              ruby
               required
             ></TextEditor>
           </div>
@@ -653,6 +654,9 @@ dialog {
     // margin-bottom: 10px;
     // height: 100vh;
     // height: 88%;
+    textarea {
+      height: 400px;
+    }
   }
 }
 </style>

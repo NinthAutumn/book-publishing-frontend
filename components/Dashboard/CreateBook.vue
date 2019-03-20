@@ -38,18 +38,6 @@
           ></textarea>
         </div>
       </div>
-
-      <label for>タグ</label>
-      <el-select
-        v-model="form.tags"
-        multiple
-        allow-create
-        default-first-option
-        filterable
-        placeholder="タグを作る"
-      >
-        <el-option v-for="item in tags" :key="item" :label="item" :value="item"></el-option>
-      </el-select>
       <div class="divider flex flex--center">
         <input type="submit" class="form-submit form-submit--primary book-form__submit" value="投稿">
       </div>
@@ -63,11 +51,6 @@ export default {
   data() {
     return {
       content: "",
-      customToolbar: [
-        ["bold", "italic", "underline"],
-        [{ list: "ordered" }, { list: "bullet" }],
-        ["image", "code-block"]
-      ],
       imageUrl: "",
       form: {
         synopsis: "",
@@ -77,7 +60,6 @@ export default {
         genre: [],
         avatar: {}
       },
-
       selected: [],
       list: [
         "ファンタジー",
@@ -112,8 +94,7 @@ export default {
         "音楽",
         "日常",
         "ゲーム"
-      ],
-      tags: ["最強", "最弱"]
+      ]
     };
   },
   components: {

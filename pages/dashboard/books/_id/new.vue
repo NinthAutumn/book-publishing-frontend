@@ -42,7 +42,7 @@ export default {
 }
 .chapter-new-title {
   margin: 0;
-  font-size: 25px;
+  font-size: 20px;
   font-weight: 400;
   // font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
   // background-color: rgb(199, 199, 199);
@@ -50,7 +50,7 @@ export default {
 .chapter-title__wrapper {
   background-color: rgb(248, 246, 246);
   // width: 100%;
-  height: 85px;
+  height: 50px;
   padding: 0px 45px;
 }
 .title-icon {

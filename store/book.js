@@ -33,7 +33,8 @@ export const getters = {
   },
   getBook: state => state.book,
   getBookView: state => state.view,
-  getBookChapterCount: state => state.chapterCount
+  getBookChapterCount: state => state.chapterCount,
+  getTagList: state => state.tagList
 }
 
 export const actions = {
@@ -93,14 +94,24 @@ export const actions = {
   }) {
 
   },
-  async tagList({
+  async fetchTagList({
     commit
   }, {
     page = 1,
     limit = 10
   }) {
     const taglist = await this.$axios.get('/book/tags?limit=' + limit + '&page=' + page)
-    commit('TAG_LIST', taglist.data)
+    commit('SET_TAG_LIST', taglist.data)
+  },
+  async searchTags({
+    commit
+  }, {
+    search,
+    page,
+    limit
+  }) {
+    const res = await this.$axios.get(`/book/searchtag?search=${search}&limit=${limit}&page=${page}`)
+    commit('SET_TAG_LIST', res.data)
   },
   async deleteBook({
     commit
@@ -137,7 +148,7 @@ export const mutations = {
   BROWSE_BOOKS(state, books) {
     state.browse = books
   },
-  TAG_LIST(state, tags) {
+  SET_TAG_LIST(state, tags) {
     state.tagList = tags
   },
   URL_GOOGLE() {

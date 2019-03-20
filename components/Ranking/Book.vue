@@ -1,6 +1,6 @@
 <template>
   <div class="book-homepage">
-    <div id="book-card" class="big" @mouseenter="menuOpen" @mouseleave="menuClose">
+    <div id="book-card" class="big ranking-book" @mouseenter="menuOpen" @mouseleave="menuClose">
       <div class="book-rank__container">
         <div
           class="book-rank__index flex flex--align flex--around"
@@ -157,8 +157,10 @@ export default {
     opacity: 0.99;
   }
 }
-#book-card {
+.ranking-book {
   margin-left: 10px;
+}
+#book-card {
   display: flex;
   flex-direction: column;
   border-radius: 5px;
