@@ -10,7 +10,8 @@
       <div class="book-cover">
         <nuxt-link class="book-img-div" tag="div" :to="'/books/' + book._id">
           <img
-            :src=" 'https://storage.googleapis.com/theta-images/'+ book.cover"
+            v-lazyload
+            :data-src="`https://storage.googleapis.com/theta-images/${book.cover}`"
             class="book-img"
             alt="Book cover"
           >

@@ -4,7 +4,8 @@
       <div class="book__cover">
         <img
           class="book__cover__img"
-          :src="'https://storage.googleapis.com/theta-images/' + book.cover"
+          v-lazyload
+          :data-src="`https://storage.googleapis.com/theta-images/${book.cover}`"
           alt
         >
       </div>

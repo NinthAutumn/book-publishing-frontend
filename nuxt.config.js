@@ -113,6 +113,9 @@ module.exports = {
     }, {
       src: '@/plugins/infinite',
       ssr: false
+    }, {
+      src: '@/plugins/lazy-load',
+      ssr: false
     },
   ],
 

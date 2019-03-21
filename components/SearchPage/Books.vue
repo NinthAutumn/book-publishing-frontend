@@ -6,7 +6,8 @@
           <nuxt-link :to="{path: `books/${book._id}`}">
             <img
               class="book-cover-img"
-              :src="'https://storage.googleapis.com/theta-images/' + book.cover"
+              v-lazyload
+              :data-src="`https://storage.googleapis.com/theta-images/${book.cover}`"
               alt
             >
           </nuxt-link>

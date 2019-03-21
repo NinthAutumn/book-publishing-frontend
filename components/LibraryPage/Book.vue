@@ -4,7 +4,8 @@
       <div class="book-library__cover">
         <span class="star-rating"></span>
         <img
-          :src=" 'https://storage.googleapis.com/theta-images/'+ book.cover"
+          v-lazyload
+          :data-src="`https://storage.googleapis.com/theta-images/${book.cover}`"
           class="book-library__book-img"
           alt="Book cover"
         >

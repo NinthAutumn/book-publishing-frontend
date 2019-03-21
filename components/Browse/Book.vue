@@ -10,7 +10,9 @@
           <fa class="book-browse__rating__icon" icon="star"></fa>
         </div>
         <img
-          :src=" 'https://storage.googleapis.com/theta-images/'+ book.cover"
+          v-lazyload
+          :data-src="`https://storage.googleapis.com/theta-images/${book.cover}`"
+          :src="`https://storage.googleapis.com/theta-images/${book.cover}`"
           class="book-browse__book-img"
           alt="Book cover"
         >

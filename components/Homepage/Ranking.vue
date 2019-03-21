@@ -13,7 +13,8 @@
             <div class="tab-ranking__first__cover">
               <div class="tab-ranking__first__index flex flex--align flex--around">1</div>
               <img
-                :src="`https://storage.googleapis.com/theta-images/${books[0]._id.book[0].cover}`"
+                v-lazyload
+                :data-src="`https://storage.googleapis.com/theta-images/${books[0]._id.book[0].cover}`"
                 alt
               >
             </div>
