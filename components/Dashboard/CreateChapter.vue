@@ -118,29 +118,68 @@
           </div>
         </dialog>
       </transition>
-      <div class="form-control flex flex--align">
-        <label for="schedule" style="margin-right:10px;">投稿する時間を指定する</label>
-        <el-switch v-model="schedule"></el-switch>
+
+      <div class="flex flex--right">
+        <button
+          @click.prevent="submitForm = !submitForm"
+          class="form-submit form-submit--primary chapter-new-submit"
+        >話を投稿</button>
       </div>
       <transition name="grow-shrink">
-        <div class="form-control" v-if="schedule">
-          <date-picker
-            type="datetime"
-            format="DD/MM/YYYY HH:mm"
-            :not-before="$moment()"
-            :minute-step="1"
-            :lang="lang"
-            v-model="form.date"
-          ></date-picker>
-        </div>
+        <dialog class="chapter-form__submit-form" open v-if="submitForm">
+          <div class="chapter-form__submit-form__title flex flex--align flex--between">
+            <h3>話を公開する</h3>
+            <fa class="close-icon" icon="times" @click="submitForm = !submitForm"></fa>
+          </div>
+          <div class="chapter-form__submit-form__container">
+            <div class="chapter-form__submit-form__chapter-title">
+              <span class="chapter-title__placeholder">話のタイトル</span>
+              <span class="chapter-title__content">{{form.title}}</span>
+            </div>
+            <div class="form-control flex flex--between">
+              <div class="chapter-form__submit-form__chapter-title" style="margin-top:10px;">
+                <span class="chapter-title__placeholder">話の章</span>
+                <span class="chapter-title__content">第{{form.volume}}章</span>
+              </div>
+              <div class="chapter-form__submit-form__chapter-title" style="margin-top:10px;">
+                <span class="chapter-title__placeholder">話の字数</span>
+                <span class="chapter-title__content">{{form.wordCount.length}}</span>
+              </div>
+              <div
+                class="chapter-form__submit-form__chapter-title"
+                v-if="form.locked"
+                style="margin-top:10px;"
+              >
+                <span class="chapter-title__placeholder">有料</span>
+                
+                <span class="chapter-title__content">
+                  <Currency :amount="form.wordCount.length*0.0303"></Currency>
+                </span>
+              </div>
+            </div>
+
+            <div class="form-control flex flex--align flex--between">
+              <label for="schedule" style="margin-right:10px;font-size:14px;color: #949499;">予約公開する</label>
+              <el-switch v-model="schedule"></el-switch>
+            </div>
+            <transition name="grow-shrink">
+              <div class="form-control" v-if="schedule">
+                <date-picker
+                  type="datetime"
+                  format="DD/MM/YYYY HH:mm"
+                  :not-before="$moment()"
+                  :minute-step="1"
+                  :lang="lang"
+                  v-model="form.date"
+                ></date-picker>
+              </div>
+            </transition>
+            <div class="form-control flex flex--align flex--right">
+              <div class="chapter-final-submit" @click="createChapter">公開</div>
+            </div>
+          </div>
+        </dialog>
       </transition>
-      <div class="flex flex--right">
-        <input
-          type="submit"
-          class="form-submit form-submit--primary chapter-new-submit"
-          value="話を投稿する"
-        >
-      </div>
     </form>
   </div>
 </template>
@@ -148,10 +187,12 @@
 <script>
 import TextEditor from "@/components/TextEditor";
 import Select from "@/components/All/Select";
+import Currency from "@/components/All/Currency";
 export default {
   components: {
     TextEditor,
-    Select
+    Select,
+    Currency
   },
   created() {
     this.$store.getters["chapter/getVolumeList"].forEach((volume, index) => {
@@ -167,6 +208,15 @@ export default {
         }
       }
     });
+    this.form.volume = this.volumes[this.volumes.length - 1].value;
+  },
+  watch: {
+    "form.content": function(val) {
+      this.form.wordCount = this.form.content
+        .replace(/(\s*)?&nbsp;(\s*)?/, "")
+        .replace(/<[^>]+>/gm, "")
+        .replace(/\s/g, "");
+    }
   },
   data() {
     return {
@@ -193,6 +243,7 @@ export default {
         content: false,
         title: false
       },
+      submitForm: false,
       form: {
         title: "",
         content: "",
@@ -275,10 +326,7 @@ export default {
           await this.$store.dispatch("upload/multiImage", image);
         });
       }
-      this.form.wordCount = this.form.content
-        .replace(/(\s*)?&nbsp;(\s*)?/, "")
-        .replace(/<[^>]+>/gm, "")
-        .replace(/\s/g, "");
+
       if (!this.form.content || !this.form.title) {
         return (this.progress = 2);
       }
@@ -354,6 +402,10 @@ dialog {
     color: $primary;
     transition: 300ms;
   }
+  &:active,
+  &:focus {
+    outline: none;
+  }
 }
 .ql-editor {
   padding: 0 15px !important;
@@ -420,6 +472,53 @@ dialog {
     padding: 10px;
     box-shadow: 1px 1px 5px 2px rgb(238, 238, 238);
     width: 300px;
+  }
+  &__submit-form {
+    padding: 0;
+    // height: 300px;
+    width: 500px;
+    box-shadow: 1px 1px 5px rgb(240, 240, 240);
+    &__container {
+      padding: 20px 20px;
+    }
+    &__chapter-title {
+      display: flex;
+      flex-direction: column;
+
+      .chapter-title__placeholder {
+        color: #949499;
+        font-size: 14px;
+      }
+      .chapter-title__content {
+        font-size: 16px;
+      }
+      span {
+      }
+    }
+    &__title {
+      user-select: none;
+      .close-icon {
+        color: #949499;
+        transition: 300ms;
+        &:hover {
+          color: #666669;
+          transition: 300ms;
+          cursor: pointer;
+        }
+      }
+      h3 {
+        color: #949499;
+        font-size: 14px;
+        font-weight: 400;
+        margin: 0;
+      }
+      padding: 0 15px;
+      height: 40px;
+      font-size: 17px;
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid #ededf1;
+    }
   }
   .chapter-index {
     font-size: 18px;
@@ -656,6 +755,24 @@ dialog {
     // height: 88%;
     textarea {
       height: 400px;
+    }
+  }
+  .chapter-final-submit {
+    height: 30px;
+    width: 100px;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $secondary;
+    border: 1px solid $secondary;
+    transition: 300ms;
+    &:hover {
+      user-select: none;
+      cursor: pointer;
+      color: white;
+      background-color: $secondary;
+      transition: 300ms;
     }
   }
 }

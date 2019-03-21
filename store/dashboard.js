@@ -19,6 +19,9 @@ export const actions = {
   }) {
     try {
       const res = await this.$axios.get(`/data/totalviews`)
+      if (!res) {
+        return
+      }
       commit('SET_TOTAL_VIEWS', res.data)
       return Promise.resolve()
     } catch (error) {

@@ -23,6 +23,7 @@ export default function ({
         originalRequest.headers['Authorization'] = `Bearer ${token}`
         $auth.setToken('Bearer ' + token)
         $auth.setToken('local', 'Bearer ' + token)
+        window.location.reload(true);
         return $axios(originalRequest)
       })
     } else {

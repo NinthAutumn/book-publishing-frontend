@@ -38,7 +38,7 @@
           ></textarea>
         </div>
       </div>
-      <div class="divider flex flex--center">
+      <div class="divider flex flex--right">
         <input type="submit" class="form-submit form-submit--primary book-form__submit" value="投稿">
       </div>
     </form>
@@ -289,6 +289,18 @@ export default {
 
   &__submit {
     width: 140px;
+    border-radius: 0;
+    transition: 300ms;
+    &:focus,
+    &:active {
+      outline: none;
+    }
+    &:hover {
+      color: $primary;
+      border: 1px solid $primary;
+      transition: 300ms;
+      background-color: white;
+    }
   }
   &--textarea {
     line-height: 20px;

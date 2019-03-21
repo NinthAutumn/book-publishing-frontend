@@ -104,14 +104,17 @@ export default {
   background-color: #fff;
   overflow: auto;
   $self: &;
+  &__header {
+    font-size: 17px;
+  }
   .selected {
     // border: 1px solid $secondary;
-    background-color: $secondary;
     color: white !important;
+    background-color: grey !important;
     &:hover {
       cursor: pointer;
-      color: $secondary;
-      background-color: white;
+      color: grey;
+      border: 1px solid grey;
       transition: 200ms;
     }
   }
@@ -120,17 +123,18 @@ export default {
     flex-wrap: wrap;
     #{$self}__item {
       padding: 5px;
-      color: $secondary;
+      color: grey;
       font-size: 12px;
-      border: 1px solid $secondary;
+      border: 1px solid grey;
       margin-right: 5px;
       margin-bottom: 5px;
       user-select: none;
       transition: 200ms;
+      border-radius: 100px;
       &:hover {
         cursor: pointer;
         color: white;
-        background-color: $secondary;
+        background-color: grey;
         transition: 200ms;
       }
     }

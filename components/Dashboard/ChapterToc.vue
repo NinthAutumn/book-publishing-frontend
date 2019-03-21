@@ -9,7 +9,7 @@
       </table>
     </div>
     <div class="table" v-else v-for="(volume, index) in toc" :key="index">
-      <div class="table-volume">
+      <div class="table-volume" v-if="volume.chapters.length > 0">
         <div class="table-header flex flex--align">
           <div class="volume-title">
             <h3>{{volume.title || `第${volume.index}章`}}</h3>

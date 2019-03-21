@@ -67,6 +67,9 @@ export const actions = {
   }, bookId) {
     try {
       const status = await this.$axios.get('/library/check?bookId=' + bookId)
+      if (!status) {
+        return
+      }
       commit('BOOKMARK_STATUS', status.data.bookmarked)
     } catch (error) {
       throw error
@@ -117,6 +120,9 @@ export const actions = {
     commit
   }) {
     await this.$axios.get('/library/show?type=readLater').then((res) => {
+      if (!res) {
+        return
+      }
       commit('GET_READ_LATER', res.data)
     })
   },
