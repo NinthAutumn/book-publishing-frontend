@@ -1,6 +1,6 @@
 <template>
   <div class="images-modal">
-    <ul class="images-modal__list" v-if="modal === 'image'">
+    <ul class="images-modal__list" v-if="modal === 'image'&&chapters.extra">
       <li
         class="images-modal__item"
         v-for="(drawing, index) in chapters.extra.drawings"

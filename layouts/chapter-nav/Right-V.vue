@@ -28,11 +28,7 @@
         </div>
         <div class="nav-icon" @click="images">
           <fa class="nav-icon__item nav-icon__item--image" icon="image"></fa>
-          <span
-            class="image-count"
-            v-if="$store.state.chapter.chapter.extra.drawings.length"
-            v-text="$store.state.chapter.chapter.extra.drawings.length"
-          ></span>
+          <span class="image-count" v-text="$store.state.chapter.chapter.drawings.length"></span>
         </div>
         <!-- ユーザーの意見を聞いて　アップデートする -->
         <!-- <div class="nav-icon" @click="comments">
