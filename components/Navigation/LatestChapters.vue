@@ -3,7 +3,7 @@
     <ul class="latest-chapters__list">
       <li
         tag="li"
-        @click="removeInbox(chapter._id, chapter.bookId)"
+        @click="removeInbox(chapter._id, chapter.bookId._id)"
         class="latest-chapters__item"
         v-for="(chapter,index) in chapters"
         :key="index"
@@ -57,6 +57,8 @@ export default {
 .latest-chapters {
   width: 100%;
   $self: &;
+  height: 300px;
+  overflow: auto;
   &__list {
     width: inherit;
   }
@@ -68,6 +70,7 @@ export default {
     box-sizing: border-box;
     background-color: rgb(245, 245, 245);
     transition: 300ms;
+    margin-bottom: 5px;
     &:hover {
       user-select: none;
       cursor: pointer;
