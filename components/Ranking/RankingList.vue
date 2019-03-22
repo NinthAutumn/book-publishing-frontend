@@ -1,9 +1,10 @@
 <template>
   <div id="ranking-list">
     <ul class="book-list">
+      <Select name="時間" def="日間" :object="sort_type" :mheight="125" transition="grow-shrink"></Select>
       <ranking-item
-        :class="{'top-ranked':index <= 2, 'first': index === 0, 'second': index ===1, 'third': index === 2, 'others':index > 2}"
         :index="index"
+        :score="book.sum"
         :book="book.book[0]"
         v-for="(book, index) in list"
         :key="index"
@@ -14,8 +15,21 @@
 
 <script>
 import RankingItem from "./RankingItem";
+import Select from "@/components/All/Select";
+
 export default {
-  components: { RankingItem },
+  components: { RankingItem, Select },
+  data() {
+    return {
+      sort_type: [
+        { key: "日間", value: 0 },
+        { key: "週間", value: 1 },
+        { key: "月間", value: 2 },
+        { key: "年間", value: 3 },
+        { key: "総合", value: 4 }
+      ]
+    };
+  },
   computed: {
     list() {
       return this.$store.getters["ranking/getRankingList"];
