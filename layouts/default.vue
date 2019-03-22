@@ -59,7 +59,34 @@ export default {
   position: relative !important;
   margin-top: 50px;
 }
-
+@media screen and (max-width: 1136px) {
+  .nuxt-pages .menu-active {
+    padding: 10px 50px !important;
+    /* transition: 300ms !important; */
+    /* position: relative !important; */
+    margin: 10px 50px !important;
+    transition: 300ms;
+    position: relative !important;
+  }
+  .nuxt-pages .menu-inactive {
+    margin: 10px 50px !important;
+    padding: 10px 50px !important;
+  }
+  .v-nav {
+    position: absolute !important;
+    /* display: none; */
+    z-index: 10000 !important;
+    -webkit-box-shadow: inset 0px 0px 0px 0px rgba(122, 122, 122, 1) !important;
+    -moz-box-shadow: inset 0px 0px 0px 0px rgba(122, 122, 122, 1) !important;
+    box-shadow: inset 0px 0px 0px 0px rgba(122, 122, 122, 1) !important;
+    -webkit-box-shadow: 1px 1px 13px 0px rgba(145, 145, 145, 1) !important;
+    -moz-box-shadow: 1px 1px 13px 0px rgba(145, 145, 145, 1) !important;
+    box-shadow: 1px 1px 13px 0px rgba(145, 145, 145, 1) !important;
+  }
+  .site-logo {
+    display: none;
+  }
+}
 /* body {
   margin: 0;
 }

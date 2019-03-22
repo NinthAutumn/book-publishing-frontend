@@ -94,8 +94,8 @@ export default {
   }
   &__cover {
     margin: 0 !important;
-    width: 135px;
-    height: 199px;
+    width: 140px;
+    height: 210px;
     position: relative;
     // -webkit-box-shadow: 1px 1px 1px 0px rgba(153, 153, 153, 0.75);
     // -moz-box-shadow: 1px 1px 1px 0px rgba(153, 153, 153, 0.75);
@@ -118,8 +118,8 @@ export default {
     }
   }
   &__book-img {
-    width: 135px;
-    height: 199px;
+    width: 140px;
+    height: 210px;
     position: relative;
   }
   &__book-title {

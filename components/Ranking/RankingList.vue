@@ -55,11 +55,11 @@ export default {
       ],
       selected_ranking_type: 0,
       sort_type: [
-        { key: "日間", value: 0 },
-        { key: "週間", value: 1 },
-        { key: "月間", value: 2 },
-        { key: "年間", value: 3 },
-        { key: "総合", value: 4 }
+        { key: "日間", value: 1 },
+        { key: "週間", value: 7 },
+        { key: "月間", value: 31 },
+        { key: "年間", value: 365 },
+        { key: "総合", value: "whole" }
       ],
       time_day: 0
     };
@@ -83,41 +83,17 @@ export default {
   },
   methods: {
     async composite_time() {
-      switch (this.time_day) {
-        case 0:
-          await this.$store.dispatch("ranking/fetchRanking", {
-            days: 1,
-            limit: 10,
-            page: 1
-          });
-          break;
-        case 1:
-          await this.$store.dispatch("ranking/fetchRanking", {
-            days: 7,
-            limit: 10,
-            page: 1
-          });
-          break;
-        case 2:
-          await this.$store.dispatch("ranking/fetchRanking", {
-            days: 31,
-            limit: 10,
-            page: 1
-          });
-          break;
-        case 3:
-          await this.$store.dispatch("ranking/fetchRanking", {
-            days: 365,
-            limit: 10,
-            page: 1
-          });
-          break;
-        case 4:
-          await this.$store.dispatch("ranking/fetchRanking", {
-            limit: 10,
-            page: 1
-          });
-          break;
+      if (this.time_day !== "whole") {
+        await this.$store.dispatch("ranking/fetchRanking", {
+          days: this.time_day,
+          limit: 10,
+          page: 1
+        });
+      } else {
+        await this.$store.dispatch("ranking/fetchRanking", {
+          limit: 10,
+          page: 1
+        });
       }
     },
     select_menu(key, index) {
@@ -147,6 +123,7 @@ export default {
     // width: 1010px;
   }
   .ranking-select {
+    user-select: none;
     &__icon {
       margin-right: 5px;
     }
@@ -174,7 +151,7 @@ export default {
     }
     &__item {
       height: 100%;
-      width: 150px;
+      width: 120px;
       font-size: 16px;
       display: flex;
       align-items: center;
