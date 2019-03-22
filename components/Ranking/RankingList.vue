@@ -2,7 +2,7 @@
   <div id="ranking-list">
     <div class="ranking-select">
       <ul class="ranking-select__list">
-        <div class="ranking-select__container">
+        <transition-group name="list" class="ranking-select__container">
           <li
             v-for="(type, index) in ranking_type"
             :key="index"
@@ -13,12 +13,19 @@
             <fa class="ranking-select__icon" :icon="type.icon"></fa>
             {{type.key}}
           </li>
-        </div>
+        </transition-group>
       </ul>
     </div>
     <div class="ranking-select__options">
       <div class="ranking-date" v-if="selected_ranking_type === 0|| selected_ranking_type=== 2">
-        <Select name="時間" def="日間" :object="sort_type" :mheight="125" transition="grow-shrink"></Select>
+        <Select
+          v-model="time_day"
+          name="時間"
+          def="日間"
+          :object="sort_type"
+          :mheight="125"
+          transition="grow-shrink"
+        ></Select>
       </div>
     </div>
     <ul class="book-list">
@@ -53,7 +60,8 @@ export default {
         { key: "月間", value: 2 },
         { key: "年間", value: 3 },
         { key: "総合", value: 4 }
-      ]
+      ],
+      time_day: 0
     };
   },
   computed: {
@@ -62,9 +70,56 @@ export default {
     }
   },
   async mounted() {
-    await this.$store.dispatch("ranking/fetchRanking");
+    await this.$store.dispatch("ranking/fetchRanking", {
+      limit: 10,
+      page: 1,
+      days: 1
+    });
+  },
+  watch: {
+    time_day: function(val) {
+      this.composite_time();
+    }
   },
   methods: {
+    async composite_time() {
+      switch (this.time_day) {
+        case 0:
+          await this.$store.dispatch("ranking/fetchRanking", {
+            days: 1,
+            limit: 10,
+            page: 1
+          });
+          break;
+        case 1:
+          await this.$store.dispatch("ranking/fetchRanking", {
+            days: 7,
+            limit: 10,
+            page: 1
+          });
+          break;
+        case 2:
+          await this.$store.dispatch("ranking/fetchRanking", {
+            days: 31,
+            limit: 10,
+            page: 1
+          });
+          break;
+        case 3:
+          await this.$store.dispatch("ranking/fetchRanking", {
+            days: 365,
+            limit: 10,
+            page: 1
+          });
+          break;
+        case 4:
+          await this.$store.dispatch("ranking/fetchRanking", {
+            limit: 10,
+            page: 1
+          });
+          break;
+      }
+    },
     select_menu(key, index) {
       this.ranking_type.forEach(type => {
         if (type.key === key) {

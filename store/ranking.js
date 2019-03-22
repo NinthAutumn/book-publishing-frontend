@@ -23,8 +23,13 @@ export const mutations = {
 export const actions = {
   async fetchRanking({
     commit
+  }, {
+    days,
+    limit,
+    page
   }) {
-    await this.$axios.get('/ranking/total').then((res) => {
+
+    await this.$axios.get(`/ranking/total?days=${days}&limit=${limit}&page=${page}`).then((res) => {
       commit('SET_RANKING_LIST', res.data)
     })
   }
