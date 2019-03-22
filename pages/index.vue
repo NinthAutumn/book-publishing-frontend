@@ -1,11 +1,6 @@
 <template>
   <div class="home-page">
-    <div class="head-banner">
-      <img
-        src="http://gonakedselling.com/wp-content/uploads/2014/04/book-web-banner.jpg"
-        style="width:100%;"
-      >
-    </div>
+    <div class="head-banner"></div>
     <div class="main-books">
       <div class="card-title flex flex--align">
         <h3>今日のおすすめ</h3>

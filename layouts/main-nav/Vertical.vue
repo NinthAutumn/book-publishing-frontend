@@ -62,7 +62,7 @@
     </ul>
     <hr>
     <ul class="update-list" v-if="loggedIn">
-      <p>ブックマーク</p>
+      <p>ブックマーク・ニュース</p>
       <LatestChapters></LatestChapters>
       <hr>
     </ul>
@@ -173,6 +173,7 @@ export default {
     color: white;
   }
   background-color: white;
+  z-index: 3;
   /* display: none; */
   width: 240px;
   height: 100vh;
