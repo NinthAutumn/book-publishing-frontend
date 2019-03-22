@@ -3,7 +3,7 @@
     class="select-component"
     :style="{width: width+'px',height: height+'px','font-size': fontSize + 'px'}"
   >
-    <div class="normal-data">
+    <div class="normal-data" :class="theme">
       <div
         :style="{width: width+'px',height: height+'px','font-size': fontSize + 'px'}"
         class="select-component__name flex flex--align flex--center"
@@ -109,7 +109,8 @@ export default {
     icon: String,
     top: Boolean,
     bottom: Boolean,
-    fontSize: Number
+    fontSize: Number,
+    theme: String
   },
   data() {
     return {
@@ -211,6 +212,7 @@ export default {
 .modalDL {
   left: 0px;
 }
+
 .select-component {
   $self: &;
   user-select: none;

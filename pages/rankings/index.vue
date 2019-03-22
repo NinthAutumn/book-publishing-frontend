@@ -14,9 +14,7 @@ import RankingList from "@/components/Ranking/RankingList";
 
 export default {
   auth: false,
-  async fetch({ store }) {
-    await store.dispatch("ranking/fetchRanking");
-  },
+  async fetch({ store }) {},
   components: {
     RankingList
   }
