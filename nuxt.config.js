@@ -116,6 +116,9 @@ module.exports = {
     }, {
       src: '@/plugins/lazy-load',
       ssr: false
+    }, {
+      src: '@/plugins/watchMedia',
+      ssr: false
     },
   ],
 

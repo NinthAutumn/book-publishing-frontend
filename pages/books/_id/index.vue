@@ -9,7 +9,7 @@
           alt
         >
       </div>
-      <section class="book__info flex flex-column flex--between">
+      <section class="book__info flex flex-column">
         <div class="divider flex-row flex--align flex--between">
           <div class="divider flex-column flex--between">
             <header class="book__info__title">{{book.title}}</header>
@@ -40,16 +40,7 @@
               </div>
             </div>
             <div class="tab-container">
-              <div
-                class="tab-list__item"
-                :class="{navActive: $store.state.book.bookSynopsis}"
-                @click="$store.commit('book/SYNOPSIS_TRUE')"
-              >あらすじ</div>
-              <div
-                class="tab-list__item"
-                :class="{navActive: !$store.state.book.bookSynopsis}"
-                @click="$store.commit('book/SYNOPSIS_FALSE')"
-              >情報</div>
+              <div class="tab-list__item">あらすじ</div>
             </div>
           </div>
           <div class="book-info">
@@ -497,6 +488,7 @@ input[type="number"]::-webkit-outer-spin-button {
       user-select: none;
       &:hover {
         cursor: pointer;
+        user-select: none;
       }
       &--review {
         margin-right: 30px;

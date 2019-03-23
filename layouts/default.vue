@@ -83,9 +83,6 @@ export default {
     -moz-box-shadow: 1px 1px 13px 0px rgba(145, 145, 145, 1) !important;
     box-shadow: 1px 1px 13px 0px rgba(145, 145, 145, 1) !important;
   }
-  .site-logo {
-    display: none;
-  }
 }
 /* body {
   margin: 0;

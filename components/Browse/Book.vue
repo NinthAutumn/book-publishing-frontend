@@ -3,7 +3,7 @@
     <div id="book-browse__container" @click="linkTo">
       <div class="book-browse__cover">
         <div class="book-browse__rating flex flex--align flex--center" v-if="book.ratings">
-          {{book.ratings.toFixed(2)}}
+          {{book.ratings.toFixed(2)|| '未定'}}
           <fa class="book-browse__rating__icon" icon="star"></fa>
         </div>
         <div class="book-browse__rating flex flex--align flex--center" v-else>
@@ -66,9 +66,9 @@ export default {
 </script>
 <style lang="scss">
 .book-browse {
-  width: 135px;
+  width: 13.5rem;
   &__container {
-    width: 135px;
+    width: 13.5rem;
     position: relative;
   }
   &__author {
@@ -78,9 +78,9 @@ export default {
     position: absolute;
     z-index: 100;
     // width: 100\\px;
-    font-size: 9px;
-    width: 40px;
-    height: 19px;
+    font-size: 0.9rem;
+    width: 4rem;
+    height: 1.9rem;
     // border-radius: 100px;
     // border-top-right-radius: 100px;
     // border-bottom-right-radius: 100px;
@@ -94,8 +94,8 @@ export default {
   }
   &__cover {
     margin: 0 !important;
-    width: 140px;
-    height: 210px;
+    width: 14rem;
+    height: 21rem;
     position: relative;
     // -webkit-box-shadow: 1px 1px 1px 0px rgba(153, 153, 153, 0.75);
     // -moz-box-shadow: 1px 1px 1px 0px rgba(153, 153, 153, 0.75);

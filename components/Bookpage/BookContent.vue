@@ -4,6 +4,7 @@
       <div class="book-content--text">
         <transition name="slide-fade" mode="out-in">
           <div v-show="bookSynopsis" class="book-content--text__summary">
+            <!-- <h4>あらすじ</h4> -->
             <p class="book-content--text__summary--text">{{book.synopsis}}</p>
           </div>
         </transition>
@@ -104,6 +105,10 @@ export default {
     /* line-clamp: 2; */
     // white-space: nowrap;
     &__summary {
+      h4 {
+        margin: 0;
+        font-size: 16px;
+      }
       &--text {
         // display: none;
         font-size: 16px;

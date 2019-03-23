@@ -122,20 +122,20 @@ export default {
   flex-direction: column;
   // border-radius: 5px;
   // margin-right: 2rem;
-  width: 142px;
+  width: 140px;
   /* height: 245px; */
   position: relative;
   .book-menu {
     position: absolute;
     top: 5px;
     right: 0;
-    font-size: 20px;
+    font-size: 2rem;
     z-index: 1000;
     transition: 300ms;
     color: rgb(255, 255, 255);
     text-shadow: 1px 1px 10px 5px rgb(211, 211, 211);
-    width: 25px;
-    height: 25px;
+    width: 2.5rem;
+    height: 2.5rem;
     &__modal {
       position: absolute;
       right: -118px;
@@ -162,8 +162,8 @@ export default {
     }
   }
   .book-cover {
-    width: 142px;
-    height: 209px;
+    width: 140px;
+    height: 210px;
     // width: 16.5rem;
     // height: 24.5rem;
     position: relative;
@@ -193,8 +193,8 @@ export default {
       }
     }
     .book-img {
-      width: 142px;
-      height: 209px;
+      width: 140px;
+      height: 210px;
 
       /* border-radius: 10px; */
 
@@ -217,6 +217,7 @@ export default {
       font-weight: 400;
       padding: 0;
       a {
+        font-size: 1.4rem;
         color: black;
         &:hover {
           color: $primary;
