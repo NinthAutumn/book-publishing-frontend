@@ -81,18 +81,18 @@ export default {
   }
 
   .book-cover {
-    border-radius: 5px;
-    width: 100px !important;
-    height: 150px !important;
+    border-radius: 3px;
+    width: 10rem !important;
+    height: 15rem !important;
   }
   .book-homepage {
-    width: 100px !important;
-    height: 200px !important;
+    width: 30rem !important;
+    height: 20rem !important;
   }
   .book-img {
-    border-radius: 5px;
-    width: 100px !important;
-    height: 150px !important;
+    border-radius: 3px;
+    width: 10rem !important;
+    height: 15rem !important;
   }
 }
 .swiper-wrapper {

@@ -12,7 +12,7 @@
       <transition name="slide-right">
         <VerticalRightMobile v-touch:swipe.left="swipeLeft" v-if="mvLeft"></VerticalRightMobile>
       </transition>
-      <nuxt v-touch:swipe.right="swipeRight"></nuxt>
+      <nuxt class="mobile-nuxt" v-touch:swipe.right="swipeRight"></nuxt>
     </div>
   </div>
 </template>
@@ -65,6 +65,9 @@ export default {
 //     background-color: #1a1a1b;
 //   }
 // }
+.mobile-nuxt {
+  padding: 0 10px;
+}
 
 .nuxt-pages .menu-active {
   margin-left: 240px;

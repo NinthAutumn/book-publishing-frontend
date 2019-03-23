@@ -1,5 +1,5 @@
 <template>
-  <div class="review-card flex flex-row--between">
+  <div class="review-card flex flex-row--between" :class="{'review-card--mobile':mobile}">
     <div class="review-card__profile flex-column">
       <div class="divider">
         <img class="review-card__profile__pic" :src="review._id.user[0].avatar" alt>
@@ -13,6 +13,10 @@
         <div class="review-card__info__title">{{review._id.review[0].title}}</div>
       </div>
       <div class="review-card__info__content" v-html="review._id.review[0].content"></div>
+      <div class="mobile" v-if="$device.isMobile">
+        <hr>
+        <div class="review-author">{{review._id.review[0].author}}</div>
+      </div>
     </div>
     <div class="review-card__book flex-column flex--center flex--around">
       <div class="review-card__info__rating">
@@ -50,7 +54,8 @@
 <script>
 export default {
   props: {
-    review: Object
+    review: Object,
+    mobile: Boolean
   },
   created() {},
   filters: {
@@ -67,6 +72,29 @@ export default {
 
 <style lang="scss">
 .review-card {
+  &--mobile {
+    width: 80vw;
+    height: 150px !important;
+    // background-color: $secondary;
+    // color: white;
+    hr {
+      margin: 0;
+      border: 0.5px solid grey;
+    }
+    .review-author {
+      display: block;
+      text-align: right;
+      color: grey;
+    }
+    border-radius: 5px;
+    .review-card__info__title {
+      font-size: 14px !important;
+      height: 18px !important;
+    }
+    .review-card__profile {
+      display: none;
+    }
+  }
   // transform: rotateX(0deg) rotateY(0deg);
   // transform: rotateX(-100deg);
   transition: 300ms;
@@ -108,6 +136,7 @@ export default {
     width: 60%;
     &__title {
       font-size: 18px;
+
       overflow: hidden;
       white-space: nowrap;
       height: 25px;

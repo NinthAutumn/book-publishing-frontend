@@ -28,12 +28,22 @@
         ></Select>
       </div>
     </div>
-    <ul class="book-list">
+    <ul class="book-list" v-if="selected_ranking_type === 0">
       <ranking-item
         :index="index"
         :score="book.sum"
         :book="book.book[0]"
         v-for="(book, index) in list"
+        :key="index"
+      ></ranking-item>
+    </ul>
+    <ul class="book-list" v-if="selected_ranking_type === 1">
+      <ranking-item
+        :index="index"
+        trending
+        :score="book.sum"
+        :book="book._id.book[0]"
+        v-for="(book, index) in trending"
         :key="index"
       ></ranking-item>
     </ul>
@@ -67,6 +77,9 @@ export default {
   computed: {
     list() {
       return this.$store.getters["ranking/getRankingList"];
+    },
+    trending() {
+      return this.$store.getters["ranking/getTrendingList"];
     }
   },
   async mounted() {
@@ -79,9 +92,25 @@ export default {
   watch: {
     time_day: function(val) {
       this.composite_time();
+    },
+    selected_ranking_type: function(val) {
+      this.changeListType();
     }
   },
   methods: {
+    async changeListType() {
+      if (this.selected_ranking_type === 0) {
+      } else if (this.selected_ranking_type === 1) {
+        if (this.trending.length > 0) {
+          return;
+        }
+        await this.$store.dispatch("ranking/fetchTrending", {
+          days: this.time_day,
+          limit: 10,
+          page: 1
+        });
+      }
+    },
     async composite_time() {
       if (this.time_day !== "whole") {
         await this.$store.dispatch("ranking/fetchRanking", {

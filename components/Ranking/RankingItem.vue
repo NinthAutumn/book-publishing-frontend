@@ -36,6 +36,18 @@
               class="star-rating"
             ></star-rating>
             <star-rating
+              v-else-if="book.ratings"
+              :rating="+book.ratings.toFixed(2)"
+              :star-size="18"
+              :read-only="true"
+              inactive-color="#D8D7D5"
+              active-color="#FFB727"
+              :increment="0.01"
+              :round-start-rating="false"
+              border-color="#FFB727"
+              class="star-rating"
+            ></star-rating>
+            <star-rating
               v-else
               :show-rating="false"
               :rating="0"
@@ -51,7 +63,7 @@
           </no-ssr>
         </div>
       </div>
-      <div class="book-score">{{score}}</div>
+      <div v-if="!trending" class="book-score">{{score}}</div>
     </div>
   </div>
 </template>
@@ -62,7 +74,8 @@ export default {
   props: {
     book: Object,
     index: Number,
-    score: Number
+    score: Number,
+    trending: Boolean
   },
   components: {
     Select

@@ -1,7 +1,7 @@
 <template>
   <div class="swiping-page">
     <span style="font-size:16px;">評価が高いレビュー</span>
-    <div v-swiper:mySwiper="swiperOption">
+    <div v-swiper:mySwiper="swiperOption" v-if="!$device.isMobile">
       <div class="swiper-wrapper">
         <div class="swiper-slide" v-for="(review,index) in reviews" :key="index">
           <Review :review="review"></Review>
@@ -12,6 +12,13 @@
       </div>
       <div class="background">
         <div class="swiper-button-next swiper-button-black" slot="button-next"></div>
+      </div>
+    </div>
+    <div class="mobile-swiper--review" v-swiper:mySwiper="mobileOption" v-else>
+      <div class="swiper-wrapper">
+        <div class="swiper-slide" v-for="(review,index) in reviews" :key="index">
+          <Review mobile :review="review"></Review>
+        </div>
       </div>
     </div>
   </div>
@@ -29,6 +36,19 @@ export default {
   data() {
     return {
       // slidesNumber: 2,
+      mobileOption: {
+        // loop: true,
+        slidesPerView: 1.1,
+        freeMode: true,
+        mousewheel: {
+          invert: true,
+          sensitivity: 1,
+          forceToAxis: true
+        },
+        navigation: {},
+        on: {},
+        breakpoints: {}
+      },
       swiperOption: {
         // loop: true,
         slidesPerView: 2,
@@ -63,6 +83,8 @@ export default {
   // display: flex;
   // justify-content: space-around;
   // align-content: center;
+}
+.mobile-swiper--review {
 }
 
 .my-swiper {
