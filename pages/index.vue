@@ -32,6 +32,7 @@ export default {
     BlobTwo
   },
   methods: {},
+
   async fetch({ store }) {
     await store.dispatch("book/allBooks");
     await store.dispatch("review/mostLiked");

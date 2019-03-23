@@ -3,6 +3,37 @@
   transition: opacity .5s;
 }
 
+@keyframes appearRight {
+  from {
+    transform: translateX(-300px)
+  }
+
+  to {
+    transform: translateX(0)
+  }
+}
+
+.slide-right {
+  &-enter {
+
+    &-active {
+      animation: appearRight 200ms ease-out;
+      animation-fill-mode: backwards;
+    }
+  }
+
+  &-leave {
+    &-active {
+      animation: appearRight 200ms ease-out;
+      animation-fill-mode: backwards;
+      animation-direction: reverse;
+    }
+
+    &-to {}
+  }
+
+}
+
 .fade {
   &-enter {
     opacity: 0;

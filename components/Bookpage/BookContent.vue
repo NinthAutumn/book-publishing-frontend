@@ -4,7 +4,7 @@
       <div class="book-content--text">
         <transition name="slide-fade" mode="out-in">
           <div v-show="bookSynopsis" class="book-content--text__summary">
-            <!-- <h4>あらすじ</h4> -->
+            <h4>あらすじ</h4>
             <p class="book-content--text__summary--text">{{book.synopsis}}</p>
           </div>
         </transition>
@@ -60,9 +60,9 @@ export default {
 }
 .book-content {
   width: 100%;
-
   padding: 5px;
-  height: 100%;
+  height: 19rem;
+  overflow: hidden;
   box-sizing: border-box;
   position: relative;
   &__buttons {
@@ -71,13 +71,7 @@ export default {
     // justify-content: ;
     align-items: center;
     justify-content: flex-end;
-
-    // float: left;
-    // right: 20px;
-    // bottom: -5px;
-    // z-index: 2000;
     &__item {
-      // height: 25px;
       width: 140px;
       margin-left: 10px;
       &__icon {
@@ -95,7 +89,6 @@ export default {
     // -moz-box-shadow: 0px 2px 5px 0px rgb(233, 218, 233);
     // box-shadow: 0px 2px 5px 0px rgb(233, 218, 233);
     // width: 802.812px;
-    height: 240px;
     overflow: hidden;
     flex-grow: 1;
     line-height: 30px;

@@ -1,34 +1,52 @@
 <template>
   <div>
-    <Horizontal></Horizontal>
-    <Vertical></Vertical>
-    <div class="nuxt-pages">
-      <div class="dropdown"></div>
-      <nuxt :class="$store.state.menuState" class="permanent"></nuxt>
+    <div class="not-mobile" v-if="!$device.isMobile">
+      <Horizontal></Horizontal>
+      <Vertical></Vertical>
+      <div class="nuxt-pages">
+        <div class="dropdown"></div>
+        <nuxt :class="$store.state.menuState" class="permanent"></nuxt>
+      </div>
+    </div>
+    <div class="is-mobile" v-else>
+      <transition name="slide-right">
+        <VerticalRightMobile v-touch:swipe.left="swipeLeft" v-if="mvLeft"></VerticalRightMobile>
+      </transition>
+      <nuxt v-touch:swipe.right="swipeRight"></nuxt>
     </div>
   </div>
 </template>
 <script>
 import Horizontal from "./main-nav/Horizontal";
 import Vertical from "./main-nav/Vertical";
+import VerticalRightMobile from "./mobile-nav/Vertical-right";
 // import "~/assets/css/typography.css";
 
 export default {
   components: {
     Horizontal,
-    Vertical
+    Vertical,
+    VerticalRightMobile
   },
   mounted() {
     document.addEventListener("touchstart", { passive: true });
   },
   data() {
-    return {};
+    return {
+      mvLeft: false
+    };
   },
   computed: {},
   watch: {},
   methods: {
     dropOff() {
       this.$store.commit("DROPDOWN_FALSE");
+    },
+    swipeRight() {
+      this.mvLeft = true;
+    },
+    swipeLeft() {
+      this.mvLeft = false;
     }
   }
 };
@@ -52,11 +70,11 @@ export default {
   margin-left: 240px;
   margin-top: 50px;
   padding: 10px 50px;
-  position: relative !important;
+  position: relative;
 }
 .nuxt-pages .menu-inactive {
   padding: 10px 60px;
-  position: relative !important;
+  position: relative;
   margin-top: 50px;
 }
 @media screen and (max-width: 1136px) {

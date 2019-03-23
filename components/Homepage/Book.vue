@@ -24,10 +24,11 @@
       </div>
       <nuxt-link tag="div" :to="'/books/' + book._id" class="text-info">
         <p class="book-title full" ref="texting">
-          <a class="animated-link">{{book.title | truncate(17)}}</a>
+          <a class="animated-link" v-if="!$device.isMobile">{{book.title | truncate(17)}}</a>
+          <a class v-if="$device.isMobile">{{book.title | truncate(13)}}</a>
         </p>
         <span class="p-ending"></span>
-        <no-ssr>
+        <no-ssr v-if="!$device.isMobile">
           <star-rating
             v-if="book.ratings"
             :rating="+book.ratings.toFixed(2)"

@@ -14,11 +14,7 @@
       <fa class="announcement-pin" icon="quote-right"></fa>
     </div>
 
-    <article
-      class="chapter-content"
-      v-html="$store.state.chapter.chapter.content"
-      style="flex-direction:column;"
-    ></article>
+    <article class="chapter-content" v-html="$store.state.chapter.chapter.content"></article>
     <div
       class="chapter-payblock flex flex--align flex-column"
       v-if="!$store.state.chapter.chapter.content"
@@ -146,17 +142,19 @@ export default {
   // width:
   // padding: 5px;
   // text-align: center;
-  display: flex;
-  justify-content: space-around;
+
   line-height: 30px;
   // font-family: "Meiryo", "Lucida Grande", "sans-serif";
 
   p {
     user-select: none;
     // white-space: pre-wrap;
+    display: block !important;
+    ruby {
+      font-size: 16px !important;
+    }
     font-size: 16px !important;
     // font-weight: 300;
-    text-align: left;
     line-height: 30px !important;
     margin-bottom: 15px !important;
   }

@@ -1,15 +1,15 @@
 <template>
-  <div class="swiping-page">
+  <div class="swiping-page" :class="{'swiping-page--mobile': $device.isMobile}">
     <div v-if="trendings" v-swiper:mySwiper="swiperOption">
       <div class="swiper-wrapper">
         <div class="swiper-slide" v-for="book in trendings" :key="book.id">
           <Book :book="book._id.book[0]" :size="size = 'big'"></Book>
         </div>
       </div>
-      <div class="background">
+      <div class="background" v-if="!$device.isMobile">
         <div class="swiper-button-prev swiper-button-black" slot="button-prev"></div>
       </div>
-      <div class="background">
+      <div class="background" v-if="!$device.isMobile">
         <div class="swiper-button-next swiper-button-black" slot="button-next"></div>
       </div>
     </div>
@@ -19,10 +19,10 @@
           <Book :book="book" :size="size = 'big'"></Book>
         </div>
       </div>
-      <div class="background">
+      <div class="background" v-if="!$device.isMobile">
         <div class="swiper-button-prev swiper-button-black" slot="button-prev"></div>
       </div>
-      <div class="background">
+      <div class="background" v-if="!$device.isMobile">
         <div class="swiper-button-next swiper-button-black" slot="button-next"></div>
       </div>
     </div>
@@ -66,6 +66,35 @@ export default {
 };
 </script>
 <style lang="scss">
+.swiping-page--mobile {
+  .swiper-slide {
+    width: 100px !important;
+  }
+  #book-card {
+    width: 100px !important;
+  }
+  .book-title {
+    a {
+      font-size: 12px;
+      font-weight: bold;
+    }
+  }
+
+  .book-cover {
+    border-radius: 5px;
+    width: 100px !important;
+    height: 150px !important;
+  }
+  .book-homepage {
+    width: 100px !important;
+    height: 200px !important;
+  }
+  .book-img {
+    border-radius: 5px;
+    width: 100px !important;
+    height: 150px !important;
+  }
+}
 .swiper-wrapper {
   // z-index: -10;
 }

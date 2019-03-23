@@ -1,64 +1,36 @@
 <template>
   <main class="book">
-    <div class="flex-divider flex">
-      <div class="book__cover">
-        <img
-          class="book__cover__img"
-          v-lazyload
-          :data-src="`https://storage.googleapis.com/theta-images/${book.cover}`"
-          alt
-        >
+    <div class="book__container">
+      <img
+        class="book__cover"
+        v-lazyload
+        :data-src="`https://storage.googleapis.com/theta-images/${book.cover}`"
+        alt
+      >
+      <div class="book__info flex flex-column flex--around">
+        <header class="book__title">{{book.title}}</header>
+        <div class="book__meta flex">
+          <div
+            class="book__meta__item"
+            :class="'book__meta__item--' +item.type"
+            v-for="(item, index) in meta"
+            :key="index"
+          >
+            <fa class="book__meta__icon" :icon="item.icon"></fa>
+            <p>{{item.key}}</p>
+          </div>
+        </div>
       </div>
-      <section class="book__info flex flex-column">
-        <div class="divider flex-row flex--align flex--between">
-          <div class="divider flex-column flex--between">
-            <header class="book__info__title">{{book.title}}</header>
-            <div class="book-meta flex">
-              <div class="book-genre pill pill-secondary-light">
-                <div class="book-genre-icon pill-text pill--icon">
-                  <fa icon="fist-raised"></fa>
-                </div>
-                <div class="book-genre-text pill-text pill--icon">
-                  <p>{{book.genres[0]}}</p>
-                </div>
-              </div>
-              <div class="book-chapterCount pill pill-secondary">
-                <div class="book-chapter-count-icon pill-text pill--icon">
-                  <fa icon="scroll"></fa>
-                </div>
-                <div class="book-chapter-count-text pill-text">
-                  <p>{{chapterCount}}話</p>
-                </div>
-              </div>
-              <div class="book-views pill pill-primary">
-                <div class="book-views-icon pill-text pill--icon">
-                  <fa icon="eye"></fa>
-                </div>
-                <div class="book-views-icon pill-text">
-                  <p>{{view}}</p>
-                </div>
-              </div>
-            </div>
-            <div class="tab-container">
-              <div class="tab-list__item">あらすじ</div>
-            </div>
-          </div>
-          <div class="book-info">
-            <img
-              class="book-author"
-              :src="$store.state.book.book.authorId.avatar"
-              alt="author avatar"
-            >
-          </div>
-        </div>
 
-        <div class="book__stats">
-          <div class="book__stats__meta"></div>
-          <div class="book__stats__text">
-            <BookContent :book="book"></BookContent>
-          </div>
-        </div>
-        <div class="book-content__buttons">
+      <div class="book__avatar">
+        <img class="book-author" :src="$store.state.book.book.authorId.avatar" alt="author avatar">
+      </div>
+      <div class="book__synopsis">
+        <BookContent :book="book"></BookContent>
+      </div>
+      <div class="book__all">
+        <div class="book__information"></div>
+        <div class="book__buttons">
           <span
             class="book-content__buttons__item button button--primary--open button--shadow button--big"
           >登録</span>
@@ -71,10 +43,9 @@
           >
             <fa class="book-content__buttons__item__icon" style="font-size:15px;" icon="bookmark"></fa>
             <span style="font-size:13px;" v-text="text"></span>
-            <!-- <span style="font-size:13px;" v-else>ブックマーク済み</span> -->
           </span>
         </div>
-      </section>
+      </div>
     </div>
 
     <Tags></Tags>
@@ -162,6 +133,23 @@ export default {
         selected: {},
         open: "review"
       },
+      meta: [
+        {
+          key: this.$store.getters["book/getBook"].genres[0],
+          icon: "landmark",
+          type: "genre"
+        },
+        {
+          key: this.$store.getters["book/getBookChapterCount"] + "話",
+          icon: "scroll",
+          type: "chapter"
+        },
+        {
+          key: this.$store.getters["book/getBookView"],
+          icon: "eye",
+          type: "view"
+        }
+      ],
       review: {
         title: "",
         content: "",
@@ -392,76 +380,72 @@ input[type="number"]::-webkit-outer-spin-button {
     font-size: 16px;
   }
 
-  &__cover {
-    margin-right: 10px;
-    &__img {
-      width: 30.8rem;
-      height: 45.9rem;
-    }
+  &__container {
+    // padding: 10px;
+    display: grid;
+    grid-template-columns: 20rem 1fr 1fr 10rem;
+    grid-template-rows: 75px 1fr 19rem;
+    grid-template-areas:
+      "cover title title avatar"
+      "cover meta meta meta"
+      "summary summary summary summary ";
+    // "summary summary summary summary";
   }
 
+  &__buttons {
+    display: flex;
+  }
+  &__synopsis {
+    grid-area: summary;
+  }
+  &__title {
+    font-size: 22px;
+  }
+  &__avatar {
+    grid-area: avatar;
+    justify-self: end;
+  }
+  &__cover {
+    grid-area: cover;
+    width: 20rem;
+    height: 30rem;
+  }
   &__info {
+    justify-self: stretch;
+    grid-area: title;
+    padding-left: 5px;
+  }
+  &__all {
+    grid-area: meta;
+    justify-self: end;
+    align-self: end;
+  }
+  &__meta {
     width: 100%;
-    &__title {
-      font-size: 22px;
+    &__icon {
+      margin-right: 5px;
     }
-    &__meta {
+    &__item {
       display: flex;
-      &__genre {
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      padding: 0 20px;
+      height: 25px;
+      p {
+        font-size: inherit;
+      }
+      &--genre {
         color: white;
-        display: flex;
-        align-items: center;
-        margin-right: 10px;
-        justify-content: center;
-        border-radius: 5px;
-        width: 100px;
         background-color: $secondary-light;
-        &__icon {
-          font-size: 14px;
-          margin-right: 5px;
-        }
-        &__text {
-          &::first-letter {
-            text-transform: capitalize;
-          }
-          font-size: 14px;
-        }
       }
-      &__chapterCount {
+      &--chapter {
         color: white;
-        display: flex;
-        margin-right: 10px;
-        align-items: center;
-        border-radius: 5px;
         background-color: $secondary;
-        justify-content: center;
-        width: 100px;
-        &__icon {
-          font-size: 14px;
-          margin-right: 5px;
-        }
-        &__text {
-          font-size: 14px;
-        }
       }
-      &__views {
+      &--view {
         color: white;
-        display: flex;
-        margin-right: 10px;
-
-        align-items: center;
-        justify-content: center;
-        width: 100px;
-        border-radius: 5px;
         background-color: $primary;
-        &__icon {
-          font-size: 18px;
-          margin-right: 5px;
-        }
-        &__text {
-          font-size: 14px;
-          margin-top: 1px;
-        }
       }
     }
   }
