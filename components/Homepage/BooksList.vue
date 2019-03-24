@@ -68,10 +68,12 @@ export default {
 <style lang="scss">
 .swiping-page--mobile {
   .swiper-slide {
-    width: 100px !important;
+    min-width: 10rem !important;
+    max-width: 12rem !important;
   }
   #book-card {
-    width: 100px !important;
+    min-width: 10rem !important;
+    max-width: 12rem !important;
   }
   .book-title {
     a {
@@ -82,17 +84,25 @@ export default {
 
   .book-cover {
     border-radius: 3px;
-    width: 10rem !important;
-    height: 15rem !important;
+    min-width: 10rem !important;
+    max-width: 12rem !important;
+    min-height: 15rem !important;
+    max-height: 18rem !important;
   }
   .book-homepage {
-    width: 30rem !important;
-    height: 20rem !important;
+    min-width: 30rem !important;
+    max-width: 32rem !important;
+    min-height: 20rem !important;
+    max-height: 22rem !important;
   }
   .book-img {
     border-radius: 3px;
-    width: 10rem !important;
-    height: 15rem !important;
+    min-width: 10rem !important;
+    max-width: 12rem !important;
+    min-height: 15rem !important;
+    max-height: 18rem !important;
+    // width: 10rem !important;
+    // height: 15rem !important;
   }
 }
 .swiper-wrapper {

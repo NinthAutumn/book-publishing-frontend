@@ -42,7 +42,7 @@
         :index="index"
         trending
         :score="book.sum"
-        :book="book._id.book[0]"
+        :book="book.book[0]"
         v-for="(book, index) in trending"
         :key="index"
       ></ranking-item>

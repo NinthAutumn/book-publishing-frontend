@@ -1,5 +1,5 @@
 <template>
-  <main class="book">
+  <main class="book" :class="{'book--mobile': $device.isMobile}">
     <div class="book__container">
       <img
         class="book__cover"
@@ -9,6 +9,9 @@
       >
       <div class="book__info flex flex-column flex--around">
         <header class="book__title">{{book.title}}</header>
+        <div class="book__title--more-info">
+          <div class="book__title__author">{{book.author}}</div>
+        </div>
         <div class="book__meta flex">
           <div
             class="book__meta__item"
@@ -28,7 +31,7 @@
       <div class="book__synopsis">
         <BookContent :book="book"></BookContent>
       </div>
-      <div class="book__all">
+      <div class="book__all" v-if="!$device.isMobile">
         <div class="book__information"></div>
         <div class="book__buttons">
           <span
@@ -48,7 +51,7 @@
       </div>
     </div>
 
-    <Tags></Tags>
+    <Tags v-if="!$device.isMobile"></Tags>
     <div @mouseleave="navLeave" class="book__content-nav book-showtab　flex flex-row">
       <div
         @mouseenter="navLine(1)"
@@ -373,6 +376,48 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 .book {
   $self: &;
+  &--mobile {
+    width: 100vw;
+    #{$self}__container {
+      grid-template-columns: 33% 33% 33%;
+      grid-template-rows: 15rem 30px 1fr;
+      grid-template-areas:
+        ". cover ."
+        "title title title "
+        "summary summary summary" !important;
+      .book-info {
+        width: 100%;
+      }
+    }
+    .review-open {
+      width: 100px;
+    }
+    .book__info {
+      display: block;
+    }
+    .book-content {
+      padding: 0 !important;
+    }
+    .book__title {
+      text-align: center;
+      font-size: 15px;
+      &--more-info {
+        width: 100%;
+        text-align: center;
+      }
+    }
+    #{$self}__meta {
+      display: none;
+    }
+    #{$self}__avatar {
+      display: none;
+    }
+    .book__cover {
+      width: 10rem;
+      height: 15rem;
+      justify-self: center;
+    }
+  }
   .ql-snow,
   .ql-snow * {
     -webkit-box-sizing: border-box;
@@ -385,6 +430,7 @@ input[type="number"]::-webkit-outer-spin-button {
     display: grid;
     grid-template-columns: 20rem 1fr 1fr 10rem;
     grid-template-rows: 75px 1fr 19rem;
+
     grid-template-areas:
       "cover title title avatar"
       "cover meta meta meta"

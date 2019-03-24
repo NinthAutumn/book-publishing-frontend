@@ -66,7 +66,7 @@ export default {
 //   }
 // }
 .mobile-nuxt {
-  padding: 0 10px;
+  padding: 10px;
 }
 
 .nuxt-pages .menu-active {
