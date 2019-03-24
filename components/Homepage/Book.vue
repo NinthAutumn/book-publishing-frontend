@@ -24,7 +24,7 @@
       </div>
       <nuxt-link tag="div" :to="'/books/' + book._id" class="text-info">
         <p class="book-title full" ref="texting">
-          <a class="animated-link" v-if="!$device.isMobile">{{book.title | truncate(19)}}</a>
+          <a v-if="!$device.isMobile">{{book.title | truncate(19)}}</a>
           <a class v-if="$device.isMobile">{{book.title | truncate(16)}}</a>
         </p>
         <span class="p-ending"></span>

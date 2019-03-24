@@ -3,7 +3,7 @@ import Vue from 'vue'
 
 Vue.use(InfiniteLoading, {
   slots: {
-    noMore: 'リストはこれで終わりです T=T', // you can pass a string value
-
+    noMore: 'リストはこれで終わり :(', // you can pass a string value
+    noResults: 'リストはこれ以上ないよ :('
   },
 })

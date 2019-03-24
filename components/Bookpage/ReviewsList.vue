@@ -87,7 +87,7 @@ export default {
   },
   computed: {
     reviews() {
-      return this.$store.state.review.reviews;
+      return this.$store.getters["review/getReviews"];
     },
     reviewed() {
       return this.$store.state.review.reviewed;
@@ -124,7 +124,8 @@ export default {
       await this.$store
         .dispatch("review/fetchNextReviews", {
           bookId: this.$route.params.id,
-          page: this.page++
+          page: this.page++,
+          userId: this.$store.getters["loggedInUser"]._id
         })
         .then(review => {
           if (this.$store.state.review.nextChapterLength) {

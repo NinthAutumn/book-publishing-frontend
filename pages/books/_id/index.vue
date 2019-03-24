@@ -127,7 +127,14 @@ export default {
   async fetch({ store, params }) {
     await store.dispatch("book/fetchBook", params.id);
     await store.dispatch("chapter/fetchPublishedTOC", params.id);
+    await store.dispatch("review/showAll", {
+      bookId: params.id
+    });
     if (store.state.auth.loggedIn) {
+      await store.dispatch("review/showAll", {
+        bookId: params.id,
+        userId: store.getters["loggedInUser"]._id
+      });
       await store.dispatch("review/reviewedStatus", params.id);
       await store.dispatch("library/checkBookmark", params.id);
     }
@@ -316,9 +323,7 @@ export default {
     // while (1) {
     //   alert("なぜそれが");
     // }
-    await this.$store.dispatch("review/showAll", {
-      bookId: this.$route.params.id
-    });
+
     this.tabs.review = this.$refs.review.clientWidth;
     this.tabs.toc = this.$refs.toc.clientWidth;
     this.tabs.position = {
