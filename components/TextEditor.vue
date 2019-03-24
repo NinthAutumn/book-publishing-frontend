@@ -54,9 +54,9 @@ export default {
     textLength() {
       return this.text
         .replace(/\s/g, "")
-        .replace(/[|]/, "")
-        .replace(/[》]/, "")
-        .replace(/[《]/, "").length;
+        .replace(/[|]/g, "")
+        .replace(/[》]/g, "")
+        .replace(/[《]/g, "").length;
     }
   },
   created() {
@@ -65,9 +65,11 @@ export default {
       this.text = this.text.replace(/(<([^>]+)>)/gi, "");
       this.textArray = this.text.split(/\n/);
       this.textArray.forEach(text => {
-        text = text.replace(/[|]/, "<ruby>");
-        text = text.replace(/[》]/, "</rt></ruby>");
-        text = text.replace(/[《]/, "<rt>");
+        text = text
+          .replace(/[|]+/g, "<ruby>")
+          .replace(/[》]+/g, "</rt></ruby>")
+          .replace(/[《]+/g, "<rt>");
+        console.log(text);
       });
       let br = 0;
       this.realArray = this.textArray
@@ -142,9 +144,9 @@ export default {
       let temp = [];
       this.textArray.forEach((text, index) => {
         this.textArray[index] = text
-          .replace(/[|]/, "<ruby>")
-          .replace(/[》]/, "</rt></ruby>")
-          .replace(/[《]/, "<rt>");
+          .replace(/[|]/g, "<ruby>")
+          .replace(/[》]/g, "</rt></ruby>")
+          .replace(/[《]/g, "<rt>");
       });
       let br = 0;
       this.realArray = this.textArray

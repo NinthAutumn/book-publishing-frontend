@@ -15,7 +15,7 @@
       <div class="review-card__info__content" v-html="review._id.review[0].content"></div>
       <div class="mobile" v-if="$device.isMobile">
         <hr>
-        <div class="review-author">{{review._id.review[0].author}}</div>
+        <div class="review-author">- {{review._id.review[0].author}}</div>
       </div>
     </div>
     <div class="review-card__book flex-column flex--center flex--around">
@@ -155,8 +155,7 @@ export default {
           font-size: 13px;
         }
       }
-      overflow: hidden;
-
+      overflow: scroll;
       line-height: 28px;
       height: 180px;
       // width: 70%;

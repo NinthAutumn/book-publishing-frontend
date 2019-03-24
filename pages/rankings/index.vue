@@ -23,6 +23,7 @@ export default {
 
 <style lang="scss">
 .ranking-header {
+  user-select: none;
   &__icon {
     margin-right: 5px;
   }
@@ -33,6 +34,7 @@ export default {
     font-weight: 400;
     display: flex;
     align-items: center;
+    
   }
 }
 

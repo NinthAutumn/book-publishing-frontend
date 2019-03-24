@@ -1,6 +1,8 @@
 <template>
   <div class="home-page">
-    <div class="head-banner"></div>
+    <div class="head-banner">
+      <BannerList></BannerList>
+    </div>
     <div class="main-books">
       <div class="card-title flex flex--align">
         <h3>今日のおすすめ</h3>
@@ -8,7 +10,7 @@
       <BooksList :books="$store.state.book.books.highestrated"></BooksList>
       <ReviewList></ReviewList>
       <div class="card-title">
-        <h3>今人気急上昇中の作品</h3>
+        <h3>今読まれてる小説</h3>
       </div>
       <BooksList :trendings="$store.state.book.books.trending"></BooksList>
       <!-- <Ranking></Ranking> -->
@@ -22,6 +24,7 @@ import ReviewList from "@/components/Homepage/ReviewList";
 import Ranking from "@/components/Homepage/Ranking";
 import BlobOne from "@/assets/svg/blob.svg";
 import BlobTwo from "@/assets/svg/blob2.svg";
+import BannerList from "@/components/Homepage/BannerList";
 
 export default {
   components: {
@@ -29,7 +32,8 @@ export default {
     ReviewList,
     Ranking,
     BlobOne,
-    BlobTwo
+    BlobTwo,
+    BannerList
   },
   methods: {},
 

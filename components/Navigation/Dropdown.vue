@@ -50,9 +50,9 @@ export default {
   data() {
     return {
       navList: [
-        { title: "プロフィール", link: "home" },
+        { title: "プロフィール", link: "/users/profile" },
         { title: "ダッシュボード", link: "/dashboard" },
-        { title: "設定", link: "home" },
+        { title: "設定", link: "/users/setting" },
         { title: "ログアウト", link: "/home" }
       ]
     };
@@ -131,9 +131,11 @@ export default {
     }
   }
   &__list {
+    user-select: none;
     position: relative;
     height: 100%;
     &__item {
+      user-select: none;
       transition: 100ms;
       color: black;
       &:hover {

@@ -221,6 +221,9 @@ export default {
   width: 55px !important;
   background-color: white;
 }
+.d-nav-v-list {
+  color: $primary;
+}
 
 .d-nav-v {
   /* display: none; */

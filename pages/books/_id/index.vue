@@ -9,7 +9,8 @@
       >
       <div class="book__info flex flex-column flex--around">
         <header class="book__title">{{book.title}}</header>
-        <div class="book__title--more-info">
+
+        <div class="book__title--more-info" v-if="$device.isMobile">
           <div class="book__title__author">{{book.author}}</div>
         </div>
         <div class="book__meta flex">
@@ -22,6 +23,37 @@
             <fa class="book__meta__icon" :icon="item.icon"></fa>
             <p>{{item.key}}</p>
           </div>
+        </div>
+        <div class="book__rating">
+          <no-ssr>
+            <star-rating
+              v-if="book.ratings"
+              :rating="+book.ratings.toFixed(2)"
+              :star-size="22"
+              :read-only="true"
+              inactive-color="#D8D7D5"
+              active-color="#FFB727"
+              :increment="0.01"
+              :round-start-rating="false"
+              border-color="#FFB727"
+              :glow="1"
+              class="star-rating"
+            ></star-rating>
+            <star-rating
+              v-else
+              :show-rating="false"
+              :rating="0"
+              :star-size="22"
+              :read-only="true"
+              inactive-color="#D8D7D5"
+              active-color="#FFB727"
+              :increment="0.01"
+              :round-start-rating="false"
+              border-color="#FFB727"
+              :glow="1"
+              class="star-rating"
+            ></star-rating>
+          </no-ssr>
         </div>
       </div>
 
@@ -67,7 +99,6 @@
       >目次</div>
       <div :style="tabs.position" class="book__content-nav__line"></div>
     </div>
-
     <BookChapterList v-show="tabs.open ==='toc'"></BookChapterList>
     <section class="book__reviews" v-show="tabs.open === 'review'">
       <ReviewsList></ReviewsList>
@@ -343,7 +374,7 @@ export default {
 .book__rating__all {
   .star-rating {
     .vue-star-rating-rating-text {
-      font-size: 20px;
+      font-size: 16px;
       margin: 0;
     }
   }
@@ -377,10 +408,9 @@ input[type="number"]::-webkit-outer-spin-button {
 .book {
   $self: &;
   &--mobile {
-    width: 100vw;
     #{$self}__container {
-      grid-template-columns: 33% 33% 33%;
-      grid-template-rows: 15rem 30px 1fr;
+      grid-template-rows: auto;
+      grid-template-columns: repeat(3, 1fr);
       grid-template-areas:
         ". cover ."
         "title title title "
@@ -397,10 +427,14 @@ input[type="number"]::-webkit-outer-spin-button {
     }
     .book-content {
       padding: 0 !important;
+      height: 100%;
+    }
+    .book__synopsis {
+      height: 100%;
     }
     .book__title {
       text-align: center;
-      font-size: 15px;
+      font-size: 1.5rem;
       &--more-info {
         width: 100%;
         text-align: center;
@@ -413,6 +447,11 @@ input[type="number"]::-webkit-outer-spin-button {
       display: none;
     }
     .book__cover {
+      border-radius: 5px;
+      min-width: 10rem;
+      min-height: 15rem;
+      max-width: 13rem;
+      max-height: 19.5rem;
       width: 10rem;
       height: 15rem;
       justify-self: center;
@@ -427,9 +466,13 @@ input[type="number"]::-webkit-outer-spin-button {
 
   &__container {
     // padding: 10px;
+    .vue-star-rating-rating-text {
+      margin: 0 !important;
+      font-size: 16px;
+    }
     display: grid;
     grid-template-columns: 20rem 1fr 1fr 10rem;
-    grid-template-rows: 75px 1fr 19rem;
+    grid-template-rows: 100px 1fr 19rem;
 
     grid-template-areas:
       "cover title title avatar"

@@ -82,7 +82,7 @@
         </div>
       </div>
       <transition name="tag-summon">
-        <TagList v-if="tag_search" v-model="tag_list"></TagList>
+        <TagCreate v-if="tag_search" v-model="tag_list"></TagCreate>
       </transition>
     </div>
   </div>
@@ -93,6 +93,7 @@ import Blob from "@/assets/svg/blob2.svg";
 import Select from "@/components/All/Select";
 import BookList from "@/components/Browse/BookList";
 import TagList from "@/components/Browse/TagList";
+import TagCreate from "@/components/Browse/TagCreate";
 
 export default {
   auth: false,
@@ -100,7 +101,7 @@ export default {
     Blob,
     Select,
     BookList,
-    TagList
+    TagCreate
   },
   computed: {
     books() {

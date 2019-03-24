@@ -119,6 +119,9 @@ module.exports = {
     }, {
       src: '@/plugins/watchMedia',
       ssr: false
+    }, {
+      src: '@/plugins/vueslides',
+      ssr: false
     },
   ],
 
