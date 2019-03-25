@@ -1,7 +1,8 @@
 <template>
   <div class="chapter-new">
     <div class="chapter-title__wrapper flex flex--align">
-      <h3 class="chapter-new-title">話を書く
+      <h3 class="chapter-new-title">
+        話を書く
         <fa icon="pen-nib" class="title-icon"></fa>
       </h3>
     </div>

@@ -95,10 +95,10 @@ export default {
   margin-left: 10px;
   position: sticky;
   height: 500px;
-  width: 300px;
+  width: 150px;
   padding: 10px;
   background-color: #fff;
-  overflow: auto;
+
   $self: &;
   &__header {
     font-size: 17px;
@@ -117,6 +117,8 @@ export default {
   &__list {
     display: flex;
     flex-wrap: wrap;
+    overflow: auto;
+    height: 400px;
     #{$self}__item {
       padding: 5px;
       color: grey;

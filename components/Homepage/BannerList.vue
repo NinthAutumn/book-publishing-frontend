@@ -21,7 +21,6 @@ export default {
     return {
       paginationSize: 10,
       images: [
-        "https://cdn.pixabay.com/photo/2015/10/29/14/32/business-1012449_1280.jpg",
         "https://placeit-assets.s3-accelerate.amazonaws.com/landing-pages/make-a-twitch-banner2/Twitch-Banner-Blue-1024x324.png"
       ]
     };

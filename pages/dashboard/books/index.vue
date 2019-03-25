@@ -39,10 +39,14 @@
               >{{book.reviewsCount}}</div>
             </div>
             <nuxt-link
+              class="user-books__announcement flex flex--align flex--center"
+              :to="`/dashboard/books/${book._id}/announcement`"
+            >通告を投稿</nuxt-link>
+            <nuxt-link
               :to="{path: `/dashboard/books/${book._id}/new`}"
               tag="div"
               class="user-books__create flex flex--align flex--center"
-            >話を投稿する</nuxt-link>
+            >新話を投稿</nuxt-link>
             <nuxt-link
               :to="{path: `/dashboard/books/${book._id}/published`}"
               tag="div"
@@ -98,7 +102,7 @@ export default {
         grid-template-areas:
           "chapter chapter chapter chapter"
           "state bookmark view review"
-          "none none toc create";
+          "none announcement toc create";
         grid-gap: 5px;
         grid-row-gap: 20px;
         #{$self}__latest-chapter {
@@ -165,6 +169,21 @@ export default {
           }
           &__stat {
             font-size: 13px;
+          }
+        }
+        #{$self}__announcement {
+          box-shadow: 1px 1px 5px rgb(243, 243, 243);
+          height: 30px;
+          grid-area: announcement;
+          color: white;
+          font-size: 12px;
+          background-color: #ff312f;
+          &:hover {
+            user-select: none;
+            cursor: pointer;
+            background-color: #fff;
+            border: 1px solid #ff312f;
+            color: #ff312f;
           }
         }
         #{$self}__create {

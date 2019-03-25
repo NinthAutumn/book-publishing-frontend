@@ -151,7 +151,7 @@
                 style="margin-top:10px;"
               >
                 <span class="chapter-title__placeholder">有料</span>
-                
+
                 <span class="chapter-title__content">
                   <Currency :amount="form.wordCount.length*0.0303"></Currency>
                 </span>
@@ -216,6 +216,11 @@ export default {
         .replace(/(\s*)?&nbsp;(\s*)?/, "")
         .replace(/<[^>]+>/gm, "")
         .replace(/\s/g, "");
+    },
+    "form.volume": async function(val) {
+      console.log(val);
+      console.log("this happaned");
+      this.getNewLatestChapter();
     }
   },
   data() {
@@ -291,6 +296,12 @@ export default {
       } else {
         this.downPlaceHolder = "";
       }
+    },
+    async getNewLatestChapter() {
+      await this.$store.dispatch("chapter/fetchLatestIndex", {
+        bookId: this.$route.params.id,
+        volume: this.form.volume
+      });
     },
     contentFocus() {
       this.contentHolder = "";

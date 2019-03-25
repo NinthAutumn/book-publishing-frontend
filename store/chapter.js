@@ -189,10 +189,11 @@ export const actions = {
   async fetchLatestIndex({
     commit
   }, {
-    bookId
+    bookId,
+    volume = ""
   }) {
     try {
-      const res = await this.$axios.get('/chapter/latestindex?bookId=' + bookId)
+      const res = await this.$axios.get(`/chapter/latestindex?bookId=${bookId}&volume=${volume}`)
       const {
         index
       } = res.data
