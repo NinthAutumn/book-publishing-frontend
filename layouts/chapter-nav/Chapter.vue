@@ -62,7 +62,7 @@ import RightV from "./Right-V";
 export default {
   data() {
     return {
-      blackTheme: this.$store.state.user.settings.theme === "black"
+      blackTheme: this.$store.state.user.theme === "black"
     };
   },
   components: {

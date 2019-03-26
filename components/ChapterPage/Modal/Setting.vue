@@ -16,6 +16,46 @@
         <!-- <div class="theme__item"></div> -->
       </div>
     </div>
+    <div class="font-style">
+      <h4>スタイル</h4>
+      <div class="font-style__list flex flex--align flex--center">
+        <div
+          class="font-style__item font-style__item--san-serif"
+          @click="updateFontFamily(false)"
+          :class="{active:fontFamily === defaultFont }"
+        >ゴシック</div>
+        <div
+          @click="updateFontFamily(true)"
+          class="font-style__item font-style__item--serif"
+          :class="{active:fontFamily !== defaultFont}"
+        >明朝</div>
+      </div>
+    </div>
+    <div class="font-size">
+      <h4>サイズ</h4>
+      <div class="font-size__select">
+        <div
+          @click="updateFontSize('decrease')"
+          class="font-size__option font-size__option--decrease"
+        >
+          <fa icon="font"></fa>
+          <p>-</p>
+        </div>
+        <div
+          @click="updateFontSize('default')"
+          class="font-size__option font-size__option--default"
+        >
+          <fa icon="font"></fa>
+        </div>
+        <div
+          @click="updateFontSize('increase')"
+          class="font-size__option font-size__option--increase"
+        >
+          <fa icon="font"></fa>
+          <p>+</p>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -23,7 +63,11 @@
 export default {
   data() {
     return {
-      blackTheme: this.$store.state.user.settings.theme === "black"
+      blackTheme: this.$store.state.user.theme === "black",
+      fontFamily: this.$store.getters["user/getFontFamily"],
+      fontSize: this.$store.getters["user/getFontSize"],
+      defaultFont:
+        "'IBM Plex Sans', 'Helvetica Neue', 'Segoe UI', Helvetica, Verdana, Arial, sans-serif"
     };
   },
   computed: {
@@ -36,10 +80,45 @@ export default {
       const setting = {
         theme: theme
       };
-      console.log(this.blackTheme);
-      this.$store.commit("user/SET_THEME", theme);
+      await this.$store.dispatch("user/setSetting", setting);
+    },
+    async updateFontFamily(change) {
+      if (change) {
+        const setting = {
+          font_family: "serif"
+        };
+        this.fontFamily = "serif";
+        await this.$store.dispatch("user/setSetting", setting);
+      } else {
+        const setting = {
+          font_family: this.defaultFont
+        };
+        this.fontFamily = this.defaultFont;
+        await this.$store.dispatch("user/setSetting", setting);
+      }
+    },
+    async updateFontSize(type) {
+      switch (type) {
+        case "increase":
+          if (this.fontSize > 24) {
+            break;
+          }
+          this.fontSize++;
 
-      console.log(this.blackTheme);
+          break;
+        case "decrease":
+          if (this.fontSize < 10) {
+            break;
+          }
+          this.fontSize--;
+          break;
+        case "default":
+          this.fontSize = 16;
+          break;
+      }
+      const setting = {
+        font_size: this.fontSize
+      };
       await this.$store.dispatch("user/setSetting", setting);
     }
   }
@@ -64,6 +143,77 @@ export default {
     margin: 0;
     font-size: 18px;
     font-weight: 400;
+  }
+}
+.font-size {
+  $self: &;
+  margin-top: 10px;
+  h4 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 400;
+  }
+  &__select {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    #{$self}__option {
+      display: flex;
+      font-size: 16px;
+      align-items: center;
+      justify-content: center;
+      height: 40px;
+      width: 40px;
+      background-color: white;
+      user-select: none;
+      &:hover {
+        cursor: pointer;
+        color: white;
+        background-color: $primary;
+      }
+      p {
+        font-size: 20px;
+      }
+      &--increate {
+      }
+      &--decrease {
+      }
+    }
+  }
+}
+
+.font-style {
+  margin-top: 10px;
+  h4 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 400;
+  }
+  .active {
+    background-color: $secondary !important;
+    color: white;
+  }
+  &__list {
+  }
+  &__item {
+    user-select: none;
+    &:hover {
+      background-color: $secondary;
+      color: white;
+      cursor: pointer;
+    }
+    padding: 10px;
+    background-color: #fff;
+    font-size: 15px;
+    &--san-serif {
+      // border-top-left-radius: 10px;
+      // border-bottom-left-radius: 10px;
+    }
+    &--serif {
+      // border-top-right-radius: 10px;
+      // border-bottom-right-radius: 10px;
+    }
   }
 }
 

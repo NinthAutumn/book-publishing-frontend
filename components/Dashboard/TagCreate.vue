@@ -99,7 +99,7 @@ export default {
   margin-left: 10px;
   position: sticky;
   height: 500px;
-  width: 300px;
+  width: 200px;
   padding: 10px;
   background-color: #fff;
   overflow: auto;

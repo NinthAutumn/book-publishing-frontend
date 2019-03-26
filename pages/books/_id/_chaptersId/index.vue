@@ -63,9 +63,6 @@ export default {
 </script>
 
 <style lang="scss">
-body {
-}
-
 .chapter {
   display: flex;
   justify-content: space-around;
@@ -93,13 +90,6 @@ body {
       display: flex;
       flex-direction: column;
       box-sizing: border-box;
-      p {
-        line-height: 28px;
-        font-weight: 400;
-        margin-bottom: 12px;
-        display: flex;
-        flex-direction: row;
-      }
     }
   }
 }

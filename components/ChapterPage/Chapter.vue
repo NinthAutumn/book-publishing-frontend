@@ -1,7 +1,7 @@
 <template>
   <section class="divider" style="padding: 0 10px;">
     <div class="chapter-title">
-      <header>{{$store.state.chapter.chapter.title}}</header>
+      <header :style="{'font-family':fontStyle}">{{$store.state.chapter.chapter.title}}</header>
     </div>
     <div
       class="chapter-announcement chapter-announcement--header"
@@ -14,7 +14,11 @@
       <fa class="announcement-pin" icon="quote-right"></fa>
     </div>
 
-    <article class="chapter-content" v-html="$store.state.chapter.chapter.content"></article>
+    <article
+      :style="{'font-size':fontSize, 'font-family':fontStyle}"
+      class="chapter-content"
+      v-html="$store.state.chapter.chapter.content"
+    ></article>
     <div
       class="chapter-payblock flex flex--align flex-column"
       v-if="!$store.state.chapter.chapter.content"
@@ -46,6 +50,19 @@ export default {
     Currency
   },
   created() {},
+  computed: {
+    fontSize() {
+      return this.$store.getters["user/getFontSize"] + "px";
+    },
+    fontStyle() {
+      return this.$store.getters["user/getFontFamily"];
+    }
+  },
+  watch: {},
+  data() {
+    return {};
+  },
+  created() {},
   methods: {
     purchase: async function() {
       try {
@@ -74,17 +91,10 @@ export default {
 
 .chapter-announcement {
   position: relative;
-  // background-color: ;
   padding: 20px;
   padding-top: 10px;
-  // padding-bottom: 20px;
-  // border-radius: 5px;
-  // color: rgb(0, 31, 78);
-  // color: $primary-black;
-  // color: $primary;
   box-shadow: 1px 1px 10px 0px rgb(207, 207, 207);
   font-family: "Noto Sans JP" !important;
-
   &--header {
     margin-bottom: 10px;
   }
@@ -97,11 +107,8 @@ export default {
     font-size: 40px;
     position: absolute;
     top: 5px;
-
-    // font-family: "Noto Serif Sans" !important;
     right: 5px;
     color: $primary-lighter;
-    // transform: rotate(45deg);
   }
 
   h4 {
@@ -137,26 +144,18 @@ export default {
 }
 
 .chapter-content {
-  // padding: 10px;
-  // width: 50vw;
-  // width:
-  // padding: 5px;
-  // text-align: center;
-
   line-height: 30px;
-  // font-family: "Meiryo", "Lucida Grande", "sans-serif";
-
+  ruby {
+    font-family: inherit;
+    font-size: inherit;
+  }
   p {
+    font-family: inherit;
+    font-size: inherit;
     user-select: none;
-    // white-space: pre-wrap;
-    display: block !important;
-    ruby {
-      font-size: 16px !important;
-    }
-    font-size: 16px !important;
-    // font-weight: 300;
-    line-height: 30px !important;
-    margin-bottom: 15px !important;
+    display: block;
+    line-height: 30px;
+    margin-bottom: 15px;
   }
 }
 </style>

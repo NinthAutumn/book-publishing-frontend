@@ -1,12 +1,21 @@
 export const state = () => ({
   books: [],
-  settings: {},
+  fontFamily: "'IBM Plex Sans', 'Helvetica Neue', 'Segoe UI', Helvetica, Verdana, Arial, sans-serif",
   theme: '',
+  fontSize: 16,
   bookmarkInbox: []
 })
 
 export const getters = {
-
+  getTheme: (state) => {
+    return state.theme
+  },
+  getFontFamily: (state) => {
+    return state.fontFamily
+  },
+  getFontSize: (state) => {
+    return state.fontSize
+  }
 }
 
 export const mutations = {
@@ -19,8 +28,11 @@ export const mutations = {
   LOADING_FIN: (state) => {
     state.isLoading = false
   },
-  USER_SETTINGS: (state, settings) => {
-    state.settings = settings
+  SET_FONT_FAMILY: (state, fontFamily) => {
+    state.fontFamily = fontFamily
+  },
+  SET_FONT_SIZE: (state, fontSize) => {
+    state.fontSize = fontSize
   },
   SET_THEME: (state, theme) => {
     state.theme = theme
@@ -47,7 +59,9 @@ export const actions = {
     commit
   }) {
     await this.$axios.get('/user/settings').then((res) => {
-      commit('USER_SETTINGS', res.data)
+      console.log(res.data);
+      commit('SET_FONT_FAMILY', res.data.font_family)
+      commit('SET_FONT_SIZE', res.data.font_size)
       commit('SET_THEME', res.data.theme)
     })
   },
@@ -55,7 +69,9 @@ export const actions = {
     commit
   }, setting) {
     await this.$axios.patch('/user/settings', setting).then((res) => {
-      commit('USER_SETTINGS', res.data)
+      commit('SET_FONT_FAMILY', res.data.font_family)
+      commit('SET_FONT_SIZE', res.data.font_size)
+      commit('SET_THEME', res.data.theme)
     })
   },
   async getBookUpdate({
@@ -67,6 +83,5 @@ export const actions = {
     } catch (error) {
 
     }
-
   }
 }
