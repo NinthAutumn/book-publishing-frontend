@@ -59,7 +59,6 @@ export const actions = {
     commit
   }) {
     await this.$axios.get('/user/settings').then((res) => {
-      console.log(res.data);
       commit('SET_FONT_FAMILY', res.data.font_family)
       commit('SET_FONT_SIZE', res.data.font_size)
       commit('SET_THEME', res.data.theme)

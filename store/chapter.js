@@ -38,6 +38,9 @@ export const getters = {
   },
   getNewIndex: (state) => {
     return state.latestIndex + 1
+  },
+  getChapterBookTitle: (state) => {
+    return state.bookTitle
   }
 }
 
@@ -144,7 +147,7 @@ export const actions = {
     }
     if (!state.bookTitle) {
       await this.$axios.get(`/book/title?&bookId=${bookId}`).then((res) => {
-        commit('SET_BOOK_TITLE', res.data.title)
+        commit('SET_BOOK_TITLE', res.data.title.title)
       })
     }
 

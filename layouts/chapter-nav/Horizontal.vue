@@ -6,7 +6,8 @@
     <nav>
       <div class="left-menu flex flex--align">
         <nuxt-link tag="div" to="/" class="site-logo">ノーブル</nuxt-link>
-        <div class="chapter-title"></div>
+        <div class="chapter-bookTitle" v-text="$store.getters['chapter/getChapterBookTitle']+'/'"></div>
+        <div class="chapter-nav-title" v-text="$store.state.chapter.chapter.title"></div>
       </div>
       <span v-if="loggedIn" style="z-index:3000;" id="prof" v-click-outside="dropOff">
         <img @click="stateDropChange" class="profile-pic" style="width: 40px;" :src="user.avatar">
@@ -143,6 +144,13 @@ export default {
 }
 
 .h-nav {
+  .chapter-bookTitle {
+    margin-left: 10px;
+    font-size: 16px;
+  }
+  .chapter-nav-title {
+    font-size: 16px;
+  }
   &--tan {
     background: url("../../assets/noise/noise-tan-container.png");
     box-shadow: none;

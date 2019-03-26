@@ -46,12 +46,14 @@ export default {
     if (store.state.auth.loggedIn) {
       await store.dispatch("chapter/fetchChapter", {
         chapterId: params.chaptersId,
-        userId: store.state.auth.user._id
+        userId: store.state.auth.user._id,
+        bookId: params.id
       });
       await store.dispatch("user/getSettings");
     } else {
       await store.dispatch("chapter/fetchChapter", {
-        chapterId: params.chaptersId
+        chapterId: params.chaptersId,
+        bookId: params.id
       });
     }
   },
