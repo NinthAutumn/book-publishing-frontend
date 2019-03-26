@@ -2,6 +2,7 @@ export const state = () => ({
   chapters: [],
   chapter: {},
   chapterCover: "",
+  bookTitle: "",
   loading: false,
   toc: '',
   volumeList: [],
@@ -57,6 +58,9 @@ export const mutations = {
       prev
     }
   },
+  SET_BOOK_TITLE(state, bookTitle) {
+    state.bookTitle = bookTitle
+  },
   TOC(state, toc) {
     state.toc = toc
   },
@@ -102,13 +106,16 @@ export const mutations = {
 }
 export const actions = {
   async fetchChapter({
-    commit
+    commit,
+    state
   }, {
     chapterId,
-    userId
+    userId,
+    bookId
   }) {
     // const nextindex = index
     if (userId) {
+
       await this.$axios.get('/chapter/direct?chapterId=' + chapterId + '&user=' + userId).then((res) => {
         const {
           next,
@@ -135,6 +142,12 @@ export const actions = {
         })
       })
     }
+    if (!state.bookTitle) {
+      await this.$axios.get(`/book/title?&bookId=${bookId}`).then((res) => {
+        commit('SET_BOOK_TITLE', res.data.title)
+      })
+    }
+
 
   },
   async tableOfContent({

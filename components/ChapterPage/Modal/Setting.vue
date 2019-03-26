@@ -64,7 +64,6 @@ export default {
   data() {
     return {
       blackTheme: this.$store.state.user.theme === "black",
-      fontFamily: this.$store.getters["user/getFontFamily"],
       fontSize: this.$store.getters["user/getFontSize"],
       defaultFont:
         "'IBM Plex Sans', 'Helvetica Neue', 'Segoe UI', Helvetica, Verdana, Arial, sans-serif"
@@ -73,6 +72,9 @@ export default {
   computed: {
     theme() {
       return this.$store.state.user.theme;
+    },
+    fontFamily() {
+      return this.$store.getters["user/getFontFamily"];
     }
   },
   methods: {
@@ -87,7 +89,6 @@ export default {
         const setting = {
           font_family: "serif"
         };
-        this.fontFamily = "serif";
         await this.$store.dispatch("user/setSetting", setting);
       } else {
         const setting = {
@@ -175,9 +176,12 @@ export default {
       p {
         font-size: 20px;
       }
-      &--increate {
+      color: grey;
+      &--increase {
+        color: black;
       }
       &--decrease {
+        color: black;
       }
     }
   }
