@@ -195,7 +195,7 @@ module.exports = {
     redirect: {
       login: '/auth/login',
       logout: '/',
-      callback: '/auth/login',
+      // callback: 'https://tolocalhost.com',
       home: '/'
     },
     plugins: ['~/plugins/auth.js']

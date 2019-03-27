@@ -45,7 +45,7 @@
         type="submit"
         value="サインイン"
         class="signup-button form-submit form-submit--primary"
-        :class="{active: errors.any()||!formUsername||!formEmail||!formPassword}"
+        :class="{active: errors.any()||!username||!email||!password}"
       >
     </form>
     <button @click="google">グーグろでサインイン</button>

@@ -31,7 +31,6 @@ export default async function ({
           $auth.setToken('local', 'Bearer ' + token)
         })
 
-        console.log(expdate);
         setInterval(async function () {
           await $axios.patch('/auth/token', {
             refresh: $auth.getRefreshToken('local')
@@ -54,7 +53,7 @@ export default async function ({
 
     const authStrategy = $auth.strategy.name;
     if (authStrategy === 'google') {
-      const token = auth.getToken(authStrategy).substr(7);
+      const token = $auth.getToken(authStrategy).substr(7);
       const url = '/auth/google'
       try {
         const {
@@ -65,9 +64,9 @@ export default async function ({
         $auth.setRefreshToken('local', data.refresh_token)
         $auth.setToken('local', data.access_token);
         setTimeout(async () => {
-          auth.setStrategy('local');
+          $auth.setStrategy('local');
           setTimeout(async () => {
-            await auth.fetchUser();
+            await $auth.fetchUser();
           })
         });
       } catch (e) {
