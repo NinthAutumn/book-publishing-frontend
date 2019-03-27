@@ -99,6 +99,14 @@ export default {
 </script>
 
 <style lang="scss">
+@media screen and (max-width: 461px) {
+  .right-vertical-nav {
+    display: none;
+  }
+  .chapter-page {
+    margin-right: 0 !important;
+  }
+}
 .chapters-modal {
   background-color: white;
   &--default {

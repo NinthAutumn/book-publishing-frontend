@@ -6,8 +6,21 @@
     <nav>
       <div class="left-menu flex flex--align">
         <nuxt-link tag="div" to="/" class="site-logo">ノーブル</nuxt-link>
-        <div class="chapter-bookTitle" v-text="$store.getters['chapter/getChapterBookTitle']+'/'"></div>
-        <div class="chapter-nav-title" v-text="$store.state.chapter.chapter.title"></div>
+        <div class="nav-title flex flex--align">
+          <nuxt-link
+            class="nav-title__book"
+            v-text="`${$store.getters['chapter/getChapterBookTitle']}/`"
+            :to="`/books/${$store.state.chapter.chapter.bookId}`"
+          ></nuxt-link>
+          <span
+            class="nav-title__chapter-index"
+            v-text="`第${$store.state.chapter.chapter.index}話:`"
+          ></span>
+          <div class="nav-title__chapter">
+            <h4 v-text="$store.state.chapter.chapter.title"></h4>
+          </div>
+          <div class="nav-title__progress" v-text="`${progress}%`"></div>
+        </div>
       </div>
       <span v-if="loggedIn" style="z-index:3000;" id="prof" v-click-outside="dropOff">
         <img @click="stateDropChange" class="profile-pic" style="width: 40px;" :src="user.avatar">
@@ -59,6 +72,13 @@ export default {
     },
     theme() {
       return this.$store.state.user.theme;
+    },
+    progress() {
+      return (
+        (this.$store.state.chapter.chapter.index /
+          this.$store.getters["book/getBookChapterCount"]) *
+        100
+      );
     }
   },
   methods: {
@@ -84,6 +104,14 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+@media screen and (max-width: 856px) {
+  .site-logo {
+    display: none !important;
+  }
+  .nav-title__book {
+    margin-left: 0 !important;
+  }
+}
 .loginform {
   width: 30%;
   margin: auto;
@@ -144,12 +172,48 @@ export default {
 }
 
 .h-nav {
-  .chapter-bookTitle {
-    margin-left: 10px;
-    font-size: 16px;
-  }
-  .chapter-nav-title {
-    font-size: 16px;
+  .nav-title {
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    &__book {
+      margin-left: 10px;
+      font-size: 1.6rem;
+      max-width: 20em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+    &__chapter-index {
+      font-size: 1.6rem;
+      margin-right: 5px;
+    }
+    &__progress {
+      font-size: 1.6rem;
+      border-left: 1px solid grey;
+      padding: 0 10px;
+      margin-left: 10px;
+    }
+    &__chapter {
+      // max-width: 30em;
+      max-width: 100%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      h4 {
+        max-width: 100%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin: 0;
+        font-size: 1.6rem;
+        font-weight: 400;
+      }
+    }
   }
   &--tan {
     background: url("../../assets/noise/noise-tan-container.png");
@@ -160,6 +224,9 @@ export default {
     background-color: #1a1a1b;
     box-shadow: none;
     border-bottom: 1px solid black;
+    .nav-title {
+      color: rgb(215, 218, 220);
+    }
   }
   &--ruby {
     background: url("../../assets/noise/noise-ruby-container.png");
@@ -208,11 +275,12 @@ ul {
 }
 .left-menu {
   margin-left: 10px;
+  max-width: 100%;
 }
 .profile-pic {
   border-radius: 100px;
   margin-right: 10px;
-  width: 45px;
+  max-width: 45px;
 
   position: relative;
   border: 1px solid #ffd700;

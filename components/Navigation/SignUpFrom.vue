@@ -17,7 +17,7 @@
         ref="username"
         class="form-input form-input--primary--lighter"
         type="text"
-        v-model="formUsername"
+        v-model="username"
       >
       <label for="email">メールアドレス</label>
       <input
@@ -26,7 +26,7 @@
         class="form-input form-input--primary--lighter"
         type="email"
         data-vv-as="記入されたメールアドレス"
-        v-model="formEmail"
+        v-model="email"
       >
       <span class="help is-danger">{{ errors.first('email') }}</span>
       <label for="password">パスワード</label>
@@ -36,7 +36,7 @@
         v-validate="'required||min:6'"
         type="password"
         :class="{'is-danger': errors.has('password')}"
-        v-model="formPassword"
+        v-model="password"
         data-vv-as="パスワード"
         ref="password"
       >
@@ -48,6 +48,7 @@
         :class="{active: errors.any()||!formUsername||!formEmail||!formPassword}"
       >
     </form>
+    <button @click="google">グーグろでサインイン</button>
   </div>
 </template>
 
@@ -56,10 +57,10 @@ export default {
   data() {
     return {
       validated: false,
-      formUsername: "",
-      formEmail: "",
-      formPassword: "",
-      formCPassword: "",
+      username: "",
+      email: "",
+      password: "",
+      confirm_password: "",
       gender: "",
       last_name: "",
       first_name: ""
@@ -71,27 +72,30 @@ export default {
     }
   },
   methods: {
+    async google() {
+      this.$auth.loginWith("google");
+    },
     async signUp() {
       // const isValid = await this.$refs.observer.validate();
       await this.$validator.validateAll();
       if (!this.errors.any()) {
-        const user = {
-          username: this.formUsername,
-          email: this.formEmail,
-          password: this.formPassword
-        };
-        await this.$store
-          .dispatch("auth/signUp", user)
-          .then(() => {
-            this.$store.commit("LOGIN_FALSE");
+        await this.$axios
+          .post("/auth/signup", {
+            username: this.username,
+            email: this.email,
+            password: this.password
           })
-          .catch(e => {
-            if (e.response.data.errors.username) {
-              alert(e.response.data.errors.username.message);
-            }
-            if (e.response.data.errors.email) {
-              alert(e.response.data.errors.email.message);
-            }
+          .then(async () => {
+            await this.$auth
+              .loginWith("local", {
+                data: {
+                  username: this.username,
+                  password: this.password
+                }
+              })
+              .then(() => {
+                window.location.reload(true);
+              });
           });
       }
     },

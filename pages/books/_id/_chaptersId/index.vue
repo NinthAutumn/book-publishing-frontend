@@ -58,7 +58,11 @@ export default {
     }
   },
   layout: "chapter-nav/Chapter",
-  created() {},
+  async asyncData({ store, params }) {
+    if (!store.getters["chapter/getBookChapterCount"]) {
+      await store.dispatch("book/fetchBookChapterCount", params.id);
+    }
+  },
   scrollToTop: false,
   transition: "none"
 };
@@ -79,19 +83,26 @@ export default {
     .chapter-container {
       background-color: white;
       position: relative;
+      display: inline-block;
       border: 1px solid #cecece;
+      max-width: 750px;
+      box-sizing: border-box;
       .chapter-title {
         margin-top: 10px;
         header {
+          display: inline-block;
           font-size: 24px;
           margin-bottom: 14px;
           margin-top: 12px;
         }
       }
-      width: 700px;
-      display: flex;
-      flex-direction: column;
-      box-sizing: border-box;
+      &::after {
+        content: "";
+        display: inline-block;
+        width: 100%;
+      }
+    }
+    .chapter-container::after {
     }
   }
 }

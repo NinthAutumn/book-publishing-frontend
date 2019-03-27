@@ -94,11 +94,7 @@ export const actions = {
     }).then((res) => {
       const token = res.headers.authorization
       this.$axios.defaults.headers.common['Authorization'] = token
-      Cookies.set("token", token)
-      commit("AUTH_SUCCESS", {
-        token: token,
-        user: res.data
-      });
+
     })
   },
   async refresh({

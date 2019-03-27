@@ -1,7 +1,10 @@
 <template>
   <section class="divider" style="padding: 0 10px;">
-    <div class="chapter-title">
-      <header :style="{'font-family':fontStyle}">{{$store.state.chapter.chapter.title}}</header>
+    <div class="chapter-title" style="display:inline-block;">
+      <header
+        class="chapter-title__item"
+        :style="{'font-family':fontStyle}"
+      >{{`第${$store.state.chapter.chapter.index}話:${$store.state.chapter.chapter.title}`}}</header>
     </div>
     <div
       class="chapter-announcement chapter-announcement--header"
@@ -85,8 +88,14 @@ export default {
 
 <style lang="scss">
 .chapter-title {
-  font-size: 1px;
+  width: 100%;
   text-align: center;
+  &__item {
+    font-size: 22px !important;
+    text-align: center;
+  }
+}
+.chapter-wrapper {
 }
 
 .chapter-announcement {
@@ -145,6 +154,8 @@ export default {
 
 .chapter-content {
   line-height: 30px;
+  display: inline-block;
+  width: 100%;
   ruby {
     font-family: inherit;
     font-size: inherit;

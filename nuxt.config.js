@@ -172,6 +172,9 @@ module.exports = {
 
   auth: {
     strategies: {
+      google: {
+        client_id: '1011183696401-5qgvj0o68dk9fdfjr5lfrfe2rc61m6hh.apps.googleusercontent.com'
+      },
       local: {
         _scheme: '~/auth/local.js',
         endpoints: {

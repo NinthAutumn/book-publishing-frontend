@@ -114,6 +114,15 @@ export default {
   transform: translateX(-210px);
   transition: 200ms;
 }
+@media screen and (max-width: 856px) {
+  .next-chapter-title {
+    display: none;
+  }
+  .prev-chapter-title {
+    display: none;
+  }
+}
+
 .navigation-prev {
   position: sticky !important;
   height: 100vh;
@@ -204,13 +213,13 @@ export default {
   &--black {
     background-color: #030303 !important;
     .next-chapter-title {
-      color: white !important;
+      color: rgb(215, 218, 220) !important;
     }
     .navigation-prev {
-      color: white !important;
+      color: rgb(215, 218, 220) !important;
     }
     .navigation-next {
-      color: white !important;
+      color: rgb(215, 218, 220) !important;
     }
     .chapter-container {
       background-color: rgb(26, 26, 27) !important;

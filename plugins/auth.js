@@ -14,8 +14,8 @@ export default async function ({
     $auth,
     $axios
   } = app
-  if (process.client) {
 
+  if (process.client) {
     const token = $auth.getToken('local', )
     if ($auth.loggedIn) {
       try {
@@ -52,7 +52,28 @@ export default async function ({
       }
     }
 
-
+    const authStrategy = $auth.strategy.name;
+    if (authStrategy === 'google') {
+      const token = auth.getToken(authStrategy).substr(7);
+      const url = '/auth/google'
+      try {
+        const {
+          data
+        } = await $axios.post(url, {
+          token
+        });
+        $auth.setRefreshToken('local', data.refresh_token)
+        $auth.setToken('local', data.access_token);
+        setTimeout(async () => {
+          auth.setStrategy('local');
+          setTimeout(async () => {
+            await auth.fetchUser();
+          })
+        });
+      } catch (e) {
+        console.log(e);
+      }
+    }
   }
 
 
