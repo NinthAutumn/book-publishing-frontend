@@ -1,5 +1,7 @@
 const pkg = require('./package')
 const webpack = require('webpack')
+require('dotenv').config()
+
 // var FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 // const webpack = require('webpack');
 // var webpackConfig = {
@@ -134,6 +136,7 @@ module.exports = {
     'nuxt-device-detect',
     'nuxt-webfontloader',
     '@nuxtjs/axios',
+    '@nuxtjs/dotenv',
 
     ['@nuxtjs/moment', {
       locales: ['ja'],
@@ -167,7 +170,7 @@ module.exports = {
    ** Axios module configuration
    */
   axios: {
-    baseURL: 'http://0.0.0.0:5000/api'
+    baseURL: process.env.BASE_URL || 'http://0.0.0.0:5000/api'
   },
 
   auth: {
@@ -195,7 +198,7 @@ module.exports = {
     redirect: {
       login: '/auth/login',
       logout: '/',
-      // callback: 'https://tolocalhost.com',
+      callback: '/',
       home: '/'
     },
     plugins: ['~/plugins/auth.js']
@@ -244,9 +247,6 @@ module.exports = {
       jQuery: 'jquery',
       'window.jQuery': 'jquery'
     })]
-  },
-  env: {
-    baseUrl: process.env.BASE_URL || 'http://0.0.0.0:5000'
   },
   transition: 'fade',
   server: {

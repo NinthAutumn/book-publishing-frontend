@@ -55,7 +55,7 @@
             <fa icon="book" class="v-nav-icons"></fa>
           </div>
           <div class="v-nav-title">
-            <p class="v-nav-title__item">ライブラリー</p>
+            <p>ライブラリー</p>
           </div>
         </div>
       </li>

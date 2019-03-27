@@ -20,9 +20,6 @@
         :class="{selected: tag.selected}"
       >{{tag.key}}({{tag.sum}})</li>
     </transition-group>
-    <div class="tag-create__selected-list">
-      <li class="tag-create__item" v-for="(tag,index) in object" :key="index">{{tag}}</li>
-    </div>
   </div>
 </template>
 
@@ -98,11 +95,11 @@ export default {
   // right: 100px;
   margin-left: 10px;
   position: sticky;
-  height: 500px;
+  height: 100%;
   width: 200px;
   padding: 10px;
   background-color: #fff;
-  overflow: auto;
+
   $self: &;
   &__header {
     font-size: 17px;
@@ -119,8 +116,10 @@ export default {
     }
   }
   &__list {
+    height: 400px;
     display: flex;
     flex-wrap: wrap;
+    overflow: auto;
     #{$self}__item {
       padding: 5px;
       color: grey;

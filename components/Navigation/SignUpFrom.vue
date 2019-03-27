@@ -48,7 +48,7 @@
         :class="{active: errors.any()||!username||!email||!password}"
       >
     </form>
-    <button @click="google">グーグろでサインイン</button>
+    <!-- <button @click="google">グーグろでサインイン</button> -->
   </div>
 </template>
 
@@ -73,7 +73,7 @@ export default {
   },
   methods: {
     async google() {
-      this.$auth.loginWith("google");
+      // this.$auth.loginWith("google");
     },
     async signUp() {
       // const isValid = await this.$refs.observer.validate();
