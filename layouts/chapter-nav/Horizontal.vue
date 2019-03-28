@@ -19,7 +19,7 @@
           <div class="nav-title__chapter">
             <h4 v-text="$store.state.chapter.chapter.title"></h4>
           </div>
-          <div class="nav-title__progress" v-text="`${progress}%`"></div>
+          <div class="nav-title__progress" v-text="`${progress.toFixed(2)}%`"></div>
         </div>
       </div>
       <span v-if="loggedIn" style="z-index:3000;" id="prof" v-click-outside="dropOff">

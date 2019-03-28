@@ -22,12 +22,12 @@
         <div
           class="font-style__item font-style__item--san-serif"
           @click="updateFontFamily(false)"
-          :class="{active:fontFamily === defaultFont }"
+          :class="{'active-font':fontFamily === defaultFont }"
         >ゴシック</div>
         <div
           @click="updateFontFamily(true)"
           class="font-style__item font-style__item--serif"
-          :class="{active:fontFamily !== defaultFont}"
+          :class="{'active-font':fontFamily !== defaultFont}"
         >明朝</div>
       </div>
     </div>
@@ -128,8 +128,44 @@ export default {
 
 <style lang="scss">
 .setting-modal {
+  &--tan {
+    .font-style {
+      .active-font {
+        border: 1px solid $secondary !important;
+        color: $secondary;
+      }
+      &__list {
+      }
+      &__item {
+        border: 1px solid #eae2b9;
+        &:hover {
+          border: 1px solid $secondary;
+          color: $secondary;
+          cursor: pointer;
+        }
+        background-color: #fff7cc;
+      }
+    }
+  }
   &--black {
     // background-color: black;
+    .font-style {
+      .active-font {
+        border: 1px solid $secondary !important;
+        color: $secondary;
+      }
+      &__list {
+      }
+      &__item {
+        border: 1px solid rgb(243, 243, 243);
+        &:hover {
+          border: 1px solid $secondary;
+          color: $secondary;
+          cursor: pointer;
+        }
+        background-color: #3d3d3d;
+      }
+    }
   }
   width: 400px;
   padding: 10px;
@@ -168,6 +204,7 @@ export default {
       width: 40px;
       background-color: white;
       user-select: none;
+
       &:hover {
         cursor: pointer;
         color: white;
@@ -194,17 +231,20 @@ export default {
     font-size: 18px;
     font-weight: 400;
   }
-  .active {
-    background-color: $secondary !important;
-    color: white;
+  .active-font {
+    border: 1px solid $secondary !important;
+    color: $secondary;
   }
   &__list {
   }
   &__item {
     user-select: none;
+    margin-right: 10px;
+    border-radius: 3px;
+    border: 1px solid rgb(243, 243, 243);
     &:hover {
-      background-color: $secondary;
-      color: white;
+      border: 1px solid $secondary;
+      color: $secondary;
       cursor: pointer;
     }
     padding: 10px;

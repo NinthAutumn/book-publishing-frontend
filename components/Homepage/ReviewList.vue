@@ -1,6 +1,5 @@
 <template>
   <div class="swiping-page">
-    <span style="font-size:16px;">評価が高いレビュー</span>
     <div v-swiper:mySwiper="swiperOption" v-if="!$device.isMobile">
       <div class="swiper-wrapper">
         <div class="swiper-slide" v-for="(review,index) in reviews" :key="index">

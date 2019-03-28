@@ -43,6 +43,19 @@
             class="star-rating flex flex--center"
           ></star-rating>
           <star-rating
+            v-else-if="book.rating"
+            :rating="+book.rating.toFixed(2)"
+            :star-size="18"
+            :read-only="true"
+            inactive-color="#D8D7D5"
+            active-color="#FFB727"
+            :increment="0.01"
+            :round-start-rating="false"
+            border-color="#FFB727"
+            :glow="1"
+            class="star-rating flex flex--center"
+          ></star-rating>
+          <star-rating
             v-else
             :show-rating="false"
             :rating="0"

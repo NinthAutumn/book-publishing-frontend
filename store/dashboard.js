@@ -18,7 +18,7 @@ export const actions = {
     commit
   }) {
     try {
-      const res = await this.$axios.get(`/data/totalviews`)
+      const res = await this.$axios.get(`/analytic/book/view`)
       if (!res) {
         return
       }

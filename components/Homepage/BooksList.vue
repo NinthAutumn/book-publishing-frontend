@@ -3,7 +3,7 @@
     <div v-if="trendings" v-swiper:mySwiper="swiperOption">
       <div class="swiper-wrapper">
         <div class="swiper-slide" v-for="book in trendings" :key="book.id">
-          <Book :book="book._id.book[0]" :size="size = 'big'"></Book>
+          <Book :book="book.book[0]" :size="size = 'big'"></Book>
         </div>
       </div>
       <div class="background" v-if="!$device.isMobile">

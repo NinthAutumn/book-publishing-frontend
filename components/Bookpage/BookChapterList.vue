@@ -1,5 +1,5 @@
 <template>
-  <div class="Book-Toc">
+  <div class="book-chapters">
     <div class="bookchapterlists__options">
       <fa
         class="bookchapterlists__options--sort"
@@ -8,31 +8,52 @@
         :class="{rotate: ascending}"
       ></fa>
     </div>
-    <transition-group name="list-complete" tag="ul" class="Book-TOC__content">
-      <li v-for="(volume, index) in volumes" :key="index" class="Book-TOC__all">
+    <transition-group name="list-complete" tag="ul" class="book-chapters__volume-list">
+      <li v-for="(volume, index) in volumes" :key="index" class="book-chapters__volume-item">
         <div
           v-if="volume.chapters.length> 0"
-          class="volume-title"
+          class="book-chapters__volume-item__content"
         >{{volume.title || `第${volume.index}章`}}</div>
 
-        <div class="Book-TOC__list" v-for="(chapter, index) in volume.chapters" :key="index">
+        <ul class="book-chapters__chapter-list">
           <nuxt-link
-            class="Book-TOC__item flex flex--between flex--align"
+            tag="li"
+            class="book-chapters__chapter-item"
+            v-for="(chapter, index) in volume.chapters"
+            :key="index"
             :to="{path: `/books/${ $route.params.id}/${chapter._id}`}"
           >
-            <div class="flex-divider flex Book-TOC__text Book-TOC__text--title">
-              <p
-                class="Book-TOC__text Book-TOC__text--title"
-              >{{chapter.index}}話:{{chapter.title | truncate(23)}}</p>
-            </div>
-            <div class="flex-divider flex flex--align">
-              <p
-                class="Book-TOC__text Book-TOC__text--date"
-              >{{$moment(chapter.createdAt).startOf('minute').fromNow()}}</p>
-              <fa class="Book-TOC__text Book-TOC__text--icon" icon="lock" v-if="chapter.locked"></fa>
+            <div class="flex-divider flex">
+              <div class="book-chapters__chapter-item__content--index">{{chapter.index}}</div>
+              <div
+                class="flex-divider flex flex-column book-chapters__chapter-item__content book-chapters__chapter-item__content--divider"
+              >
+                <div
+                  class="book-chapters__chapter-item__content book-chapters__chapter-item__content--title"
+                >
+                  <p>{{chapter.title}}</p>
+                </div>
+                <div
+                  class="book-chapters__chapter-item__content book-chapters__chapter-item__content--chapter-meta"
+                >
+                  <p
+                    class="book-chapters__chapter-item__content book-chapters__chapter-item__content--createdAt"
+                    v-if="today < $moment(chapter.createdAt).add(6, 'days').toDate()"
+                  >{{$moment(chapter.createdAt).startOf('minute').fromNow()}}</p>
+                  <p
+                    class="book-chapters__chapter-item__content--createdAt"
+                    v-else
+                  >{{$moment(chapter.createdAt).format('l')}}</p>
+                  <fa
+                    class="book-chapters_chapter-item__content--locked"
+                    icon="lock"
+                    v-if="chapter.locked"
+                  ></fa>
+                </div>
+              </div>
             </div>
           </nuxt-link>
-        </div>
+        </ul>
       </li>
     </transition-group>
   </div>
@@ -48,10 +69,14 @@ export default {
     return {
       rowCount: 0,
       createdAt: "null",
-      ascending: false
+      ascending: false,
+      today: ""
       // ascState: "asc"
       // chapters: {}
     };
+  },
+  created() {
+    this.today = this.$moment().toDate();
   },
   methods: {
     async asc() {
@@ -81,36 +106,104 @@ export default {
   font-size: 13px;
   text-align: right;
 }
-.volume-title {
-  // display: flex;
-  // align-items: center;
-  font-size: 17px;
-  margin-top: 10px;
-  // height: 50px;
-  // background-color: #eff4ff;
-  // padding: 0 10px;
-  grid-area: title;
-  width: 100%;
+
+@media screen and (max-width: 882px) {
+  .book-chapters {
+    &__chapter-list {
+      grid-template-columns: repeat(auto-fill, 100%) !important;
+    }
+  }
 }
+
+.book-chapters {
+  $self: &;
+
+  &__volume-list {
+    display: grid;
+    grid-template-areas: "volume volume" "content content";
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 0, 2rem 1.5rem;
+    #{$self}__volume-item {
+      grid-area: volume;
+      &__content {
+        font-size: 1.6rem;
+      }
+    }
+  }
+
+  &__chapter-list {
+    grid-area: content;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 50%);
+    grid-template-rows: auto;
+    user-select: none;
+
+    #{$self}__chapter-item {
+      max-width: 100%;
+      margin: 0.3rem 0.3rem;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid grey;
+      &:hover {
+        cursor: pointer;
+      }
+      &__content {
+        width: 100%;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        &--index {
+          padding: 0.5rem 0.2rem;
+          font-size: 1.6rem;
+          margin-right: 1rem;
+        }
+        &--chapter-meta {
+          max-width: 100%;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          display: flex;
+          justify-content: space-between;
+          font-size: 1.3rem !important;
+        }
+        &--divider {
+          padding-right: 10px;
+        }
+        &--title {
+          max-width: 100%;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          p {
+            max-width: 100%;
+            font-size: 1.6rem;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+          }
+        }
+        &--createdAt {
+          font-size: 1.4rem !important;
+        }
+      }
+    }
+  }
+}
+
 .Book-TOC {
+  .volume-title {
+    font-size: 17px;
+    margin-top: 10px;
+    grid-area: volume;
+    width: 100%;
+  }
   &__list {
-    // padding: 0 10px;
-    // &:nth-child(4n-1) {
-    //   background-color: #eff4ff !important;
-    // }
   }
   &__content {
-    // padding: 0 10px;
-    // &:nth-child(even) {
-    //   background-color: #eff4ff;
-    // }
   }
   &__all {
     display: grid;
-    // grid-template-columns: 1fr 1fr;
-    grid-template-areas: "title title " "content content";
+    grid-template-areas: "volume volume " "content content";
     grid-template-columns: 1fr 1fr;
-    // grid-template-columns: 1fr 1fr;
     grid-gap: 2px 15px;
   }
   &__item {
@@ -122,7 +215,6 @@ export default {
     }
     p {
       font-size: 16px;
-      // color: white;
       color: $primary;
     }
     height: 50px;
@@ -176,46 +268,17 @@ export default {
   // border: 1px solid $primary;
   &__list {
     overflow: scroll;
-    // -webkit-box-shadow: inset 0px 2px 5px 0px rgb(233, 218, 233);
-    // -moz-box-shadow: inset 0px 2px 5px 0px rgb(255, 255, 255);
-    // box-shadow: inset 0px 2px 5px 0px rgb(233, 218, 233);
-    // border: 1px solid $primary;
     box-shadow: 1px 1px 5px 0px rgb(179, 179, 179);
     height: 482px;
     display: grid;
-    // grid-auto-flow: dense;
-    // grid-auto-flow: dense;
-    // flex-wrap: wrap;
+
     grid-template-columns: 1fr 1fr;
     // grid-template-areas: "chapter";
     grid-gap: 2px 15px;
     grid-template-rows: 50px;
-    // justify-content: space-between;
     padding: 10px 15px;
-    // grid-auto-flow: dense;
-    // transition: 300ms;
-    // transition: 100ms;
 
     &--items {
-      // direction: ltr;
-
-      &:nth-child(odd) {
-        background-color: #fcefff;
-        &:hover {
-          background-color: white;
-          transition: 100ms;
-        }
-      }
-      &:nth-child(even) {
-        background-color: #eff4ff;
-
-        &:hover {
-          background-color: white;
-          transition: 100ms;
-        }
-      }
-      // margin-right: 5px;
-      // padding-right: 10px;
       box-sizing: border-box;
       // grid-area: chapter;
       margin-bottom: 5px;

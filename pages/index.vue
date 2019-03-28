@@ -5,14 +5,17 @@
     </div>
     <div class="main-books">
       <div class="card-title flex flex--align">
-        <h3>今日のおすすめ</h3>
+        <h3>おすすめ作品</h3>
       </div>
-      <BooksList :books="$store.state.book.books.highestrated"></BooksList>
+      <BooksList :books="$store.getters['book/getRecommended']"></BooksList>
+      <div class="card-title flex flex--align">
+        <h3>評価が高いレビュー</h3>
+      </div>
       <ReviewList></ReviewList>
       <div class="card-title">
-        <h3>今読まれてる小説</h3>
+        <h3>今週人気の作品</h3>
       </div>
-      <BooksList :trendings="$store.state.book.books.trending"></BooksList>
+      <BooksList :trendings="trending"></BooksList>
       <!-- <Ranking></Ranking> -->
     </div>
   </div>
@@ -38,8 +41,13 @@ export default {
   methods: {},
 
   async fetch({ store }) {
-    await store.dispatch("book/allBooks");
+    await store.dispatch("book/fetchRecommended");
     await store.dispatch("review/mostLiked");
+    await store.dispatch("ranking/fetchTrending", {
+      days: 7,
+      limit: 10,
+      page: 1
+    });
     if (store.state.auth.loggedIn) {
       await store.dispatch("library/fetchLatestChapters");
     }
@@ -47,6 +55,11 @@ export default {
   async created() {},
   async mounted() {
     if (this.$store.state.auth.loggedIn) {
+    }
+  },
+  computed: {
+    trending() {
+      return this.$store.getters["ranking/getTrendingList"];
     }
   },
   auth: false
@@ -95,27 +108,15 @@ export default {
 .card-title {
   margin-top: 1rem;
   position: relative;
-  /* padding: 5px 0; */
-  /* text-align: center; */
-  /* background: #557fe980; */
-  // width: 15rem;
-  // border-radius: 0.5rem;
-  font-weight: 300;
-  // height: 50px;
-  /* -webkit-box-shadow: 1px 1px 1px 0px rgba(153, 153, 153, 0.75);
-  -moz-box-shadow: 1px 1px 1px 0px rgba(153, 153, 153, 0.75);
-  box-shadow: 1px 1px 1px 0px rgba(153, 153, 153, 0.75); */
-}
-h3 {
-  font-family: "Open Sans", sans-serif;
 
-  font-size: 2rem;
-  /* color: white; */
-  margin: 0;
-  // margin-bottom: 10px;
-  /* margin-top: 10px; */
-  font-weight: 500;
+  font-weight: 300;
+  h3 {
+    font-size: 1.8rem;
+    margin: 0;
+    font-weight: 500;
+  }
 }
+
 body {
   background: white;
 }

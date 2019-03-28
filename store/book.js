@@ -10,8 +10,9 @@ const moment = require('moment');
 
 export const state = () => ({
   // books: [],
+  recommended: [],
   books: {
-    highestrated: [],
+
     trending: []
   },
   view: "",
@@ -34,7 +35,8 @@ export const getters = {
   getBook: state => state.book,
   getBookView: state => state.view,
   getBookChapterCount: state => state.chapterCount,
-  getTagList: state => state.tagList
+  getTagList: state => state.tagList,
+  getRecommended: state => state.recommended
 }
 
 export const actions = {
@@ -118,15 +120,15 @@ export const actions = {
   }) {
 
   },
-  async allBooks({
+  async fetchRecommended({
     commit,
   }) {
-    await this.$axios.get('/data/homepage/highestrated').then((res) => {
-      commit('HIGHEST_RATED', res.data)
+    await this.$axios.get('/analytic/book/recommended').then((res) => {
+      commit('SET_RECOMMENDED', res.data)
     })
-    await this.$axios.get('/data/homepage/trending').then((res) => {
-      commit('TRENDING', res.data)
-    })
+    // await this.$axios.get('/analytic/book/trending').then((res) => {
+    //   commit('TRENDING', res.data)
+    // })
 
   }
 }
@@ -135,8 +137,8 @@ export const mutations = {
   ADD(state, book) {
     state.books.push(book)
   },
-  HIGHEST_RATED(state, books) {
-    state.books.highestrated = books
+  SET_RECOMMENDED(state, books) {
+    state.recommended = books
   },
   TRENDING(state, books) {
     state.books.trending = books
@@ -144,15 +146,11 @@ export const mutations = {
   SET_BOOK(state, book) {
     state.book = book
   },
-  EDIT() {},
   BROWSE_BOOKS(state, books) {
     state.browse = books
   },
   SET_TAG_LIST(state, tags) {
     state.tagList = tags
-  },
-  URL_GOOGLE() {
-    const url = "https://storage.googleapis.com/theta-images/"
   },
   SET_BOOK_VIEW(state, view) {
     state.view = view

@@ -36,7 +36,7 @@ export const actions = {
     page
   }) {
 
-    await this.$axios.get(`/ranking/total?days=${days}&limit=${limit}&page=${page}`).then((res) => {
+    await this.$axios.get(`/analytic/book/rankinglist?days=${days}&limit=${limit}&page=${page}`).then((res) => {
       commit('SET_RANKING_LIST', res.data)
     })
   },
@@ -47,7 +47,7 @@ export const actions = {
     limit,
     page
   }) {
-    await this.$axios.get(`/ranking/trending?days=${days}&limit=${limit}&page=${page}`).then((res) => {
+    await this.$axios.get(`/analytic/book/trending?days=${days}&limit=${limit}&page=${page}`).then((res) => {
       commit('SET_TRENDING_LIST', res.data)
     })
   }
