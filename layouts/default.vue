@@ -1,5 +1,6 @@
 <template>
   <div>
+    <div v-if="$nuxt.isOffline">今オフラインです</div>
     <div class="not-mobile" v-if="!$device.isMobile">
       <Horizontal></Horizontal>
       <Vertical></Vertical>

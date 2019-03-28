@@ -124,6 +124,9 @@ module.exports = {
     }, {
       src: '@/plugins/vueslides',
       ssr: false
+    }, {
+      src: '@/plugins/vuepullrefresh',
+      ssr: false
     },
   ],
 
@@ -238,8 +241,8 @@ module.exports = {
     postcss: [
       require('postcss-gap-properties')(),
       require('autoprefixer')({
-        browsers: ['IE 11', 'last 2 versions'],
-        grid: true
+        grid: true,
+        flexbox: true
       })
     ],
     plugins: [new webpack.ProvidePlugin({

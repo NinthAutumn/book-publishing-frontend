@@ -22,29 +22,29 @@
     <div class="chapter" :class="{'move-left': modal}">
       <div class="chapter-wrapper flex">
         <div
-          v-if="prev"
+          v-if="prev&&!$device.isMobile"
           class="next-chapter-title flex flex-column flex--center flex--align"
           v-text="prev.title"
         ></div>
         <nuxt-link
           class="navigation-prev flex flex-column flex--center flex--align"
-          v-if="prev"
+          v-if="prev&&!$device.isMobile"
           :to="{path: `${prev._id}`}"
         >
           <fa icon="angle-left"></fa>
         </nuxt-link>
-        <div class="navigation-prev-cont" v-if="!prev"></div>
+        <div class="navigation-prev-cont" v-if="!prev&&!$device.isMobile"></div>
         <nuxt class="yikes"></nuxt>
-        <div class="navigation-prev-cont" v-if="!next"></div>
+        <div class="navigation-prev-cont" v-if="!next&&!$device.isMobile"></div>
         <nuxt-link
           class="navigation-next flex flex-column flex--center flex--align"
-          v-if="next"
+          v-if="next&&!$device.isMobile"
           :to="{path: `${next._id}`}"
         >
           <fa icon="angle-right"></fa>
         </nuxt-link>
         <div
-          v-if="next"
+          v-if="next&&!$device.isMobile"
           class="next-chapter-title flex flex-column flex--center flex--align"
           v-text="next.title"
         ></div>

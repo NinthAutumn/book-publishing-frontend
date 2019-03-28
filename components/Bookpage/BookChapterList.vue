@@ -145,6 +145,7 @@ export default {
       border-bottom: 1px solid grey;
       &:hover {
         cursor: pointer;
+        background-color: rgb(247, 247, 247);
       }
       &__content {
         width: 100%;
@@ -185,45 +186,6 @@ export default {
           font-size: 1.4rem !important;
         }
       }
-    }
-  }
-}
-
-.Book-TOC {
-  .volume-title {
-    font-size: 17px;
-    margin-top: 10px;
-    grid-area: volume;
-    width: 100%;
-  }
-  &__list {
-  }
-  &__content {
-  }
-  &__all {
-    display: grid;
-    grid-template-areas: "volume volume " "content content";
-    grid-template-columns: 1fr 1fr;
-    grid-gap: 2px 15px;
-  }
-  &__item {
-    padding: 0 10px;
-    grid-area: content;
-
-    &:hover {
-      background-color: #fff;
-    }
-    p {
-      font-size: 16px;
-      color: $primary;
-    }
-    height: 50px;
-    background-color: #fcefff;
-  }
-  &__text {
-    font-size: 16px;
-    &--icon {
-      margin-left: 10px;
     }
   }
 }

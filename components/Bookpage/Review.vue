@@ -11,12 +11,12 @@
       <div class="reviews-content-title">{{reviewLikes.title}}</div>
       <div class="flex-row flex--between">
         <div class="reviews-total-rating">
-          <span class="reviews-rating-total">総計:</span>
           <no-ssr>
             <star-rating
               name="rating"
               v-model="reviewLikes.rating.total"
-              :star-size="20"
+              :star-size="18"
+              :show-rating="false"
               :read-only="true"
               inactive-color="#D8D7D5"
               active-color="#FFB727"
@@ -32,26 +32,18 @@
         </div>
       </div>
 
-      <div class="reviews-content-text flex flex-column flex--between">
-        <no-ssr>
-          <truncate
-            action-class="customClass"
-            clamp="詳細"
-            :length="300"
-            less="一部を表示"
-            type="html"
-            :text="review.content"
-          ></truncate>
-        </no-ssr>
+      <div ref="review" class="reviews-content-text flex flex-column flex--between">
+        <div v-if="!readMore" v-html="truncate(review.content, 372)"></div>
+        <div v-if="readMore" v-html="review.content"></div>
         <!-- <div
           class="reviews-content-text--html"
           v-html="review.content"
           :class="{readmore: readMore}"
         ></div>-->
-        <!-- <div v-if="this.review.content.length > 85" class="buts">
-          <a @click="toggleCollapse" v-if="!readMore" class="reviews-content-text-more">Read More</a>
-          <a @click="toggleCollapse" v-else class="reviews-content-text-more">Read Less</a>
-        </div>-->
+        <div v-if="this.review.content.length > 372" class="buts">
+          <a @click="toggleCollapse" v-if="!readMore" class="reviews-content-text-more">詳細</a>
+          <a @click="toggleCollapse" v-else class="reviews-content-text-more">一部を表示</a>
+        </div>
       </div>
     </div>
   </div>
@@ -65,6 +57,7 @@ export default {
     review: Object
   },
   watch: {},
+
   data() {
     return {
       readMore: false,
@@ -132,6 +125,13 @@ export default {
         });
         this.likeNumber--;
       }
+    },
+    truncate: (string, number) => {
+      if (string.length > number) {
+        return (string || "").substring(0, number) + "…";
+      } else {
+        return string;
+      }
     }
   },
   computed: {
@@ -141,50 +141,32 @@ export default {
   },
   filters: {
     truncate: (string, number) => {
-      if (string.length > 300) {
-        return (string || "").substring(0, number) + "…";
+      if (string.length > number) {
+        return (string || "").substring(0, number) + "<";
       } else {
         return string;
       }
     }
   },
-  created() {}
+  mounted: function() {
+    console.log("unko sonko ronko ranko");
+    console.log("this");
+    console.log(this.$refs);
+    // if (this.$refs.reviewContent.clientHeight > 110) {
+    //   console.log("dog");
+    // }
+  }
 };
 </script>
 
 <style  lang="scss" >
 .reviews-content-text {
-  // width: 100%;
-  .customClass {
-    display: flex;
-    justify-content: flex-end;
-    // margin-right: 50px;
-  }
-  &--html {
-    height: 140px;
-  }
-  span {
-    font-size: 16px;
-    font-weight: 400;
-    text-align: left;
-    line-height: 28px;
-  }
-  p {
-    font-size: 16px;
-    font-weight: 400;
-    text-align: left;
-    line-height: 28px;
-    // font-weight: 300;
-  }
-  .readmore {
-    height: 100% !important;
-  }
   .buts {
-    width: 100%;
-    height: 20px;
-    background-color: white;
+    text-align: right !important;
   }
+
   .reviews-content-text-more {
+    font-size: 1.4rem;
   }
 }
 
@@ -200,24 +182,10 @@ export default {
   .reviews-total-rating {
     display: flex;
     align-items: center;
-    .reviews-rating-total {
-      font-size: 16px;
-      color: rgb(150, 123, 167);
-    }
   }
 
   width: 100%;
   display: flex;
-  // border: 2px solid #c1c9e4;
-  // border-radius: 10px;
-  // -webkit-box-shadow: 0px 4px 4px rgba(139, 139, 139, 0.25);
-  // -moz-box-shadow: 0px 4px 4px rgba(139, 139, 139, 0.25);
-  // box-shadow: 0px 4px 4px rgba(139, 139, 139, 0.25);
-  // -webkit-box-shadow: 0px 2px 5px 0px rgb(233, 218, 233);
-  // -moz-box-shadow: 0px 2px 5px 0px rgb(233, 218, 233);
-  // box-shadow: 0px 2px 5px 0px rgb(233, 218, 233);
-  // justify-content: space-around;
-  // height: 200px;
   margin-bottom: 10px;
   padding: 10px 10px;
   padding-bottom: 0 !important;
@@ -236,8 +204,7 @@ export default {
       border-radius: 100px;
     }
     &-username {
-      font-family: "メイリオ", "Meiryo", "Lucida Grande", "sans-serif";
-      font-size: 16px;
+      font-size: 1.4rem;
     }
   }
   &-rating {
@@ -260,7 +227,7 @@ export default {
         margin: 0;
       }
       p {
-        font-size: 16px;
+        font-size: 1.4rem;
       }
     }
     &-username {
@@ -268,11 +235,7 @@ export default {
     &-title {
       margin-bottom: 5px;
       // padding: 10px;
-      font-size: 18px;
-      // margin-left: 10px;
-      // font-weight: 500;
-      // line-height: 28.8px;
-      font-family: "メイリオ", "Meiryo", "Lucida Grande", "sans-serif";
+      font-size: 1.6rem;
     }
     .buts {
       text-align: center;
@@ -293,14 +256,12 @@ export default {
       // margin-left: 10px;
       p {
         white-space: pre-wrap;
-        font-size: 16px;
+        font-size: 1.4rem;
         line-height: 28px;
         font-weight: 300;
         text-align: left;
         overflow: hidden;
         height: 100% !important;
-
-        // font-weight: 300;
       }
     }
     &-text-bigger {
@@ -312,7 +273,7 @@ export default {
         overflow: hidden;
         // height: 132px;
         text-align: left;
-        font-size: 16px;
+        font-size: 1.4rem;
         font-weight: 300;
       }
     }
