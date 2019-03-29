@@ -30,7 +30,21 @@ export default {
     Chapter,
     CommentList
   },
-
+  created() {
+    if (process.client) {
+      if (this.$device.isMobile) {
+        this.scroll();
+        this.touch();
+      }
+    }
+  },
+  beforeDestroy() {
+    if (process.browser) {
+      window.removeEventListener("onscroll", this.nextChapter());
+      window.removeEventListener("touchstart", this.swipeStart());
+      window.removeEventListener("touchend", this.swipeEnd());
+    }
+  },
   methods: {
     scroll() {
       window.onscroll = () => {
@@ -161,10 +175,6 @@ export default {
   scrollToTop: false,
   transition: "none",
   mounted() {
-    if (this.$device.isMobile) {
-      this.scroll();
-      this.touch();
-    }
     // this.touch();
   }
 };
