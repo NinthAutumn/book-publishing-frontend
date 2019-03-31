@@ -11,10 +11,9 @@
         </div>
         <v-img
           :src="`https://storage.googleapis.com/theta-images/${book.cover}`"
-          class="book-browse__book-img"
           alt="Book cover"
-          :height="202.5"
-          :width="135"
+          :aspect-ratio="1/1.5"
+          max-width="15rem"
         ></v-img>
       </div>
       <div class="book-browse__text-info">

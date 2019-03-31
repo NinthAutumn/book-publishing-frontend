@@ -24,10 +24,10 @@
             :to="{path: `/books/${ $route.params.id}/${chapter._id}`}"
             v-ripple
           >
-            <div class="flex-divider flex">
+            <div class="flex-divider flex" style="height:100%;">
               <div class="book-chapters__chapter-item__content--index">{{chapter.index}}</div>
               <div
-                class="flex-divider flex flex-column book-chapters__chapter-item__content book-chapters__chapter-item__content--divider"
+                class="flex-divider flex--between flex-column book-chapters__chapter-item__content book-chapters__chapter-item__content--divider"
               >
                 <div
                   class="book-chapters__chapter-item__content book-chapters__chapter-item__content--title"
@@ -144,6 +144,7 @@ export default {
       margin: 0.3rem 0.3rem;
       padding: 0.5rem 0;
       border-bottom: 1px solid grey;
+      height: 6.5rem;
       &:hover {
         cursor: pointer;
         background-color: rgb(247, 247, 247);

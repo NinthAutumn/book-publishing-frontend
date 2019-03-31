@@ -197,6 +197,9 @@ export default {
   transition: 300ms;
   // animation: appearSlides 300ms;
   // color: #5bb8eb;
+  ul {
+    padding: 10px 0;
+  }
   &-list {
     display: flex;
     // padding: 1rem;

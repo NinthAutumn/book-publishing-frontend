@@ -3,12 +3,12 @@
     <div id="book-library__container" @click="linkTo">
       <div class="book-library__cover">
         <span class="star-rating"></span>
-        <img
-          v-lazyload
-          :data-src="`https://storage.googleapis.com/theta-images/${book.cover}`"
-          class="book-library__book-img"
+        <v-img
+          :src="`https://storage.googleapis.com/theta-images/${book.cover}`"
           alt="Book cover"
-        >
+          :aspect-ratio="1/1.5"
+          max-width="15rem"
+        ></v-img>
       </div>
       <div class="book-library__text-info">
         <p class="book-library__book-title full" ref="texting">

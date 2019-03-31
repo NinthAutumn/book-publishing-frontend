@@ -27,6 +27,7 @@ export default {};
     margin-bottom: 10px;
   }
   &__item {
+    margin-right: 5px;
     height: 3rem;
     padding: 0 1rem;
     display: flex;

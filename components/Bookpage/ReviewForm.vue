@@ -12,22 +12,13 @@
         max="50"
       >
       <div class="form-control">
-        <label for="rating" class="rating-label">評価</label>
-        <no-ssr>
-          <star-rating
-            name="rating"
-            v-model="review.rating.total"
-            :star-size="20"
-            :read-only="false"
-            inactive-color="#D8D7D5"
-            active-color="#FFB727"
-            :increment="0.25"
-            :round-start-rating="false"
-            border-color="#FFB727"
-            :glow="1"
-            class="star-rating"
-          ></star-rating>
-        </no-ssr>
+        <v-rating
+          color="#FF8D29"
+          :hover="true"
+          :half-increments="true"
+          v-model="review.rating.total"
+          :clearable="true"
+        ></v-rating>
       </div>
       <text-editor :content="pcontent" class="review-form__content" v-model="review.content"></text-editor>
       <div class="divider flex flex--right">

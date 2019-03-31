@@ -4,9 +4,9 @@
       <v-img
         class="book__cover"
         :src="`https://storage.googleapis.com/theta-images/${book.cover}`"
-        alt
+        alt="book cover"
         width="20rem"
-        height="30rem"
+        :aspect-ratio="1/1.5"
       ></v-img>
       <div class="book__info flex flex-column flex--around">
         <header class="book__title">{{book.title}}</header>
@@ -27,33 +27,14 @@
         </div>
         <div class="book__rating">
           <no-ssr>
-            <star-rating
+            <v-rating
+              color="#FF8D29"
               v-if="book.ratings"
-              :rating="+book.ratings.toFixed(2)"
-              :star-size="22"
-              :read-only="true"
-              inactive-color="#D8D7D5"
-              active-color="#FFB727"
-              :increment="0.01"
-              :round-start-rating="false"
-              border-color="#FFB727"
-              :glow="1"
-              class="star-rating"
-            ></star-rating>
-            <star-rating
-              v-else
-              :show-rating="false"
-              :rating="0"
-              :star-size="22"
-              :read-only="true"
-              inactive-color="#D8D7D5"
-              active-color="#FFB727"
-              :increment="0.01"
-              :round-start-rating="false"
-              border-color="#FFB727"
-              :glow="1"
-              class="star-rating"
-            ></star-rating>
+              :readonly="true"
+              medium
+              :value="+book.ratings.toFixed(2)"
+            ></v-rating>
+            <v-rating medium color="#FF8D29" v-else :readonly="true" :value="0"></v-rating>
           </no-ssr>
         </div>
       </div>
@@ -414,6 +395,9 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 .book {
   $self: &;
+  .v-icon {
+    padding: 0 !important;
+  }
   &--mobile {
     #{$self}__container {
       grid-template-rows: auto;

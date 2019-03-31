@@ -6,9 +6,8 @@
         <nuxt-link class="book-img-div" tag="div" :to="'/books/' + book._id">
           <v-img
             :src="`https://storage.googleapis.com/theta-images/${book.cover}`"
-            :width="140"
-            :height="210"
-            class="book-img"
+            :aspect-ratio="1/1.5"
+            max-width="155rem"
             alt="Book cover"
           ></v-img>
         </nuxt-link>
@@ -29,48 +28,27 @@
           <a class v-if="$device.isMobile">{{book.title | truncate(16)}}</a>
         </p>
         <span class="p-ending"></span>
-        <no-ssr v-if="!$device.isMobile">
-          <star-rating
-            v-if="book.ratings"
-            :rating="+book.ratings.toFixed(2)"
-            :star-size="18"
-            :read-only="true"
-            inactive-color="#D8D7D5"
-            active-color="#FFB727"
-            :increment="0.01"
-            :round-start-rating="false"
-            border-color="#FFB727"
-            :glow="1"
-            class="star-rating flex flex--center"
-          ></star-rating>
-          <star-rating
-            v-else-if="book.rating"
-            :rating="+book.rating.toFixed(2)"
-            :star-size="18"
-            :read-only="true"
-            inactive-color="#D8D7D5"
-            active-color="#FFB727"
-            :increment="0.01"
-            :round-start-rating="false"
-            border-color="#FFB727"
-            :glow="1"
-            class="star-rating flex flex--center"
-          ></star-rating>
-          <star-rating
-            v-else
-            :show-rating="false"
-            :rating="0"
-            :star-size="18"
-            :read-only="true"
-            inactive-color="#D8D7D5"
-            active-color="#FFB727"
-            :increment="0.01"
-            :round-start-rating="false"
-            border-color="#FFB727"
-            :glow="1"
-            class="star-rating flex flex--center"
-          ></star-rating>
-        </no-ssr>
+        <div class="flex-divider flex-row flex--align">
+          <div class="book-rating" v-if="book.ratings" v-text="`(${+book.ratings.toFixed(2)})`"></div>
+          <div class="book-rating" v-else-if="book.rating" v-text="`(${+book.rating.toFixed(2)})`"></div>
+          <div v-if="!$device.isMobile">
+            <v-rating
+              color="#FF8D29"
+              v-if="book.ratings"
+              :readonly="true"
+              size="20"
+              :value="+book.ratings.toFixed(2)"
+            ></v-rating>
+            <v-rating
+              color="#FF8D29"
+              size="20"
+              v-else-if="book.rating"
+              :readonly="true"
+              :value="+book.rating.toFixed(2)"
+            ></v-rating>
+            <v-rating size="20" color="#FF8D29" v-else :readonly="true" :value="0"></v-rating>
+          </div>
+        </div>
       </nuxt-link>
     </div>
   </div>
@@ -140,6 +118,9 @@ export default {
   width: 140px;
   /* height: 245px; */
   position: relative;
+  .book-rating {
+    font-size: 1.3rem;
+  }
   .book-menu {
     position: absolute;
     top: 5px;
@@ -226,7 +207,9 @@ export default {
   .text-info {
     display: flex;
     flex-direction: column;
-
+    .v-icon {
+      padding: 0 !important;
+    }
     .vue-star-rating-rating-text {
       font-size: 1.6rem;
 

@@ -1,9 +1,5 @@
 <template>
   <div class="banner-list">
-    <v-carousel>
-      <v-carousel-item v-for="(item,i) in images" :key="i" :src="item"></v-carousel-item>
-    </v-carousel>
-
     <no-ssr>
       <!-- <img :src="img" alt :class="{mobile:$device.isMobile}"> -->
     </no-ssr>
@@ -15,7 +11,7 @@ export default {
   data() {
     return {
       paginationSize: 10,
-      images: ["~/assets/banner.jpg"]
+      images: ["../../assets/banner.jpg"]
     };
   },
   async created() {

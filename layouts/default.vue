@@ -34,7 +34,8 @@ export default {
   },
   data() {
     return {
-      mvLeft: false
+      mvLeft: false,
+      links: ["Home", "About Us", "Team", "Services", "Blog", "Contact Us"]
     };
   },
   computed: {},
@@ -95,15 +96,10 @@ export default {
     padding: 10px 50px !important;
   }
   .v-nav {
-    position: absolute !important;
     /* display: none; */
     z-index: 10000 !important;
-    -webkit-box-shadow: inset 0px 0px 0px 0px rgba(122, 122, 122, 1) !important;
-    -moz-box-shadow: inset 0px 0px 0px 0px rgba(122, 122, 122, 1) !important;
-    box-shadow: inset 0px 0px 0px 0px rgba(122, 122, 122, 1) !important;
-    -webkit-box-shadow: 1px 1px 13px 0px rgba(145, 145, 145, 1) !important;
-    -moz-box-shadow: 1px 1px 13px 0px rgba(145, 145, 145, 1) !important;
-    box-shadow: 1px 1px 13px 0px rgba(145, 145, 145, 1) !important;
+
+    box-shadow: 1px 1px 5px 0px rgb(235, 235, 235) !important;
   }
 }
 /* body {
