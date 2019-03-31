@@ -60,7 +60,7 @@ export default {
 }
 .book-content {
   width: 100%;
-  padding: 5px;
+  margin-top: 1rem;
   height: 19rem;
   overflow: hidden;
   box-sizing: border-box;
@@ -72,10 +72,10 @@ export default {
     align-items: center;
     justify-content: flex-end;
     &__item {
-      width: 140px;
-      margin-left: 10px;
+      width: 14rem;
+      margin-left: 1rem;
       &__icon {
-        margin-right: 5px;
+        margin-right: 0.5rem;
       }
     }
   }
@@ -84,14 +84,9 @@ export default {
   }
 
   &--text {
-    // padding: 5px 10px;s
-    // -webkit-box-shadow: 0px 2px 5px 0px rgb(233, 218, 233);
-    // -moz-box-shadow: 0px 2px 5px 0px rgb(233, 218, 233);
-    // box-shadow: 0px 2px 5px 0px rgb(233, 218, 233);
-    // width: 802.812px;
     overflow: hidden;
     flex-grow: 1;
-    line-height: 30px;
+    line-height: 3rem;
 
     // text-overflow: ellipsis;
     // position: relative;
@@ -100,7 +95,8 @@ export default {
     &__summary {
       h4 {
         margin: 0;
-        font-size: 16px;
+        font-size: 2rem;
+        font-weight: 400;
       }
       &--text {
         // display: none;
@@ -116,13 +112,13 @@ export default {
 
       p {
         text-align: left !important;
-        font-size: 16px;
+        font-size: 1.6rem;
         line-height: 28px;
         font-weight: 300;
       }
 
       &--title {
-        font-size: 18px;
+        font-size: 2.2rem;
       }
     }
   }

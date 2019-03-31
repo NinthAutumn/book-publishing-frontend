@@ -23,11 +23,11 @@
       <div class="chapter-wrapper flex">
         <div
           v-if="prev&&!$device.isMobile"
-          class="next-chapter-title flex flex-column flex--center flex--align"
+          class="next-chapter-title flex-column flex--center flex--align"
           v-text="prev.title"
         ></div>
         <nuxt-link
-          class="navigation-prev flex flex-column flex--center flex--align"
+          class="navigation-prev flex-column flex--center flex--align"
           v-if="prev&&!$device.isMobile"
           :to="{path: `${prev._id}`}"
         >
@@ -37,7 +37,7 @@
         <nuxt class="yikes"></nuxt>
         <div class="navigation-prev-cont" v-if="!next&&!$device.isMobile"></div>
         <nuxt-link
-          class="navigation-next flex flex-column flex--center flex--align"
+          class="navigation-next flex-column flex--center flex--align"
           v-if="next&&!$device.isMobile"
           :to="{path: `${next._id}`}"
         >
@@ -45,7 +45,7 @@
         </nuxt-link>
         <div
           v-if="next&&!$device.isMobile"
-          class="next-chapter-title flex flex-column flex--center flex--align"
+          class="next-chapter-title flex-column flex--center flex--align"
           v-text="next.title"
         ></div>
       </div>

@@ -9,13 +9,13 @@
         <div class="book-browse__rating flex flex--align flex--center" v-else>
           <fa class="book-browse__rating__icon" icon="star"></fa>
         </div>
-        <img
-          v-lazyload
-          :data-src="`https://storage.googleapis.com/theta-images/${book.cover}`"
+        <v-img
           :src="`https://storage.googleapis.com/theta-images/${book.cover}`"
           class="book-browse__book-img"
           alt="Book cover"
-        >
+          :height="202.5"
+          :width="135"
+        ></v-img>
       </div>
       <div class="book-browse__text-info">
         <p class="book-browse__book-title full" ref="texting">
@@ -94,12 +94,10 @@ export default {
   }
   &__cover {
     margin: 0 !important;
-    width: 14rem;
-    height: 21rem;
+    width: 13.5rem;
+    height: 20.25rem;
     position: relative;
-    // -webkit-box-shadow: 1px 1px 1px 0px rgba(153, 153, 153, 0.75);
-    // -moz-box-shadow: 1px 1px 1px 0px rgba(153, 153, 153, 0.75);
-    // box-shadow: 1px 1px 1px 0px rgba(153, 153, 153, 0.75);
+
     &:hover {
       cursor: pointer;
       &::after {

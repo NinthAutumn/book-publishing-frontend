@@ -121,20 +121,14 @@ module.exports = {
     }, {
       src: '@/plugins/watchMedia',
       ssr: false
-    }, {
-      src: '@/plugins/vueslides',
-      ssr: false
-    }, {
-      src: '@/plugins/vuepullrefresh',
-      ssr: false
-    },
+    }
   ],
 
   /*
    ** Nuxt.js modules
    */
   modules: [
-
+    '@nuxtjs/vuetify',
     '@nuxtjs/pwa',
     'nuxt-device-detect',
     'nuxt-webfontloader',

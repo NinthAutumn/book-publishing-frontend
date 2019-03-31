@@ -1,15 +1,15 @@
 <template>
   <div class="h-nav" :class="'h-nav--'">
     <nav>
-      <div class="left-menu flex flex--align">
+      <div class="left-menu flex-row flex--align">
         <i class="el-icon-menu" :class="$store.state.menuState" @click="menuDrawer"></i>
         <nuxt-link v-if="$device.isDesktop||$device.isTablet" tag="div" to="/" class="site-logo">
           <fa icon="pen"></fa>ノーブル
         </nuxt-link>
       </div>
       <SearchBar class="searchbar"></SearchBar>
-      <div class="user-nav flex flex--align">
-        <div class="inbox-icon flex flex--align flex--center">
+      <div class="user-nav flex-row flex--align">
+        <div v-ripple class="inbox-icon flex flex--align flex--center">
           <fa icon="bell"></fa>
         </div>
         <div v-if="loggedIn" style="z-index:3000;" id="prof">
@@ -96,16 +96,16 @@ export default {
   font-size: 20px;
   margin-right: 20px;
   color: rgb(85, 85, 85);
-  width: 30px;
+  width: 35px;
   border-radius: 100px;
-  height: 30px;
+  height: 35px;
   transition: 200ms;
   &:hover {
     cursor: pointer;
   }
   &:active {
-    background-color: rgb(214, 214, 214);
-    transition: 200ms;
+    // background-color: rgb(214, 214, 214);
+    // transition: 200ms;
   }
 }
 .loginform {

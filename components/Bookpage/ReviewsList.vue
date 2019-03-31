@@ -51,6 +51,7 @@
         :fontSize="15"
         def="良いね順"
         　name="並び替え"
+        class="reviews-list__sort"
         :object="sort_type"
       ></Select>
       <li class="show" v-for="(review, index) in reviews" :key="index">
@@ -149,5 +150,8 @@ hr {
 
 li {
   transition: 300ms;
+}
+.reviews-list__sort {
+  margin-top: 5px;
 }
 </style>

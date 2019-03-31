@@ -1,19 +1,20 @@
 <template>
   <main class="book" :class="{'book--mobile': $device.isMobile}">
     <div class="book__container">
-      <img
+      <v-img
         class="book__cover"
-        v-lazyload
-        :data-src="`https://storage.googleapis.com/theta-images/${book.cover}`"
+        :src="`https://storage.googleapis.com/theta-images/${book.cover}`"
         alt
-      >
+        width="20rem"
+        height="30rem"
+      ></v-img>
       <div class="book__info flex flex-column flex--around">
         <header class="book__title">{{book.title}}</header>
 
         <div class="book__title--more-info" v-if="$device.isMobile">
           <div class="book__title__author">{{book.author}}</div>
         </div>
-        <div class="book__meta flex">
+        <div class="book__meta flex-row">
           <div
             class="book__meta__item"
             :class="'book__meta__item--' +item.type"
@@ -68,6 +69,7 @@
         <div class="book__buttons">
           <span
             class="book-content__buttons__item button button--primary--open button--shadow button--big"
+            v-ripple
           >登録</span>
           <span
             @click="bookmarkBook"
@@ -453,12 +455,6 @@ input[type="number"]::-webkit-outer-spin-button {
     }
     .book__cover {
       border-radius: 5px;
-      min-width: 10rem;
-      min-height: 15rem;
-      max-width: 13rem;
-      max-height: 19.5rem;
-      width: 10rem;
-      height: 15rem;
       justify-self: center;
     }
   }
@@ -548,6 +544,10 @@ input[type="number"]::-webkit-outer-spin-button {
   }
   &__reviews {
     grid-area: reviews;
+    // margin-bottom: 10px;
+    &__divider {
+      margin-bottom: 5px;
+    }
   }
   &__tags {
     grid-area: tags;

@@ -4,12 +4,13 @@
       <div class="book-cover">
         <span class="star-rating"></span>
         <nuxt-link class="book-img-div" tag="div" :to="'/books/' + book._id">
-          <img
-            v-lazyload
-            :data-src="`https://storage.googleapis.com/theta-images/${book.cover}`"
+          <v-img
+            :src="`https://storage.googleapis.com/theta-images/${book.cover}`"
+            :width="140"
+            :height="210"
             class="book-img"
             alt="Book cover"
-          >
+          ></v-img>
         </nuxt-link>
         <div @click="menu_modal=true" v-if="menu" class="book-menu flex flex--align flex--center">
           <fa icon="ellipsis-v"></fa>
@@ -177,7 +178,10 @@ export default {
   }
   .book-cover {
     width: 140px;
+    // min-height: 180px;
     height: 210px;
+    -o-object-fit: contain;
+    object-fit: contain;
     // width: 16.5rem;
     // height: 24.5rem;
     position: relative;
@@ -207,8 +211,10 @@ export default {
       }
     }
     .book-img {
-      width: 140px;
-      height: 210px;
+      min-width: 120px;
+      max-height: 140px;
+      min-height: 180px;
+      max-height: 210px;
 
       /* border-radius: 10px; */
 

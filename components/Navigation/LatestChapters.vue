@@ -5,6 +5,7 @@
         tag="li"
         @click="removeInbox(chapter._id, chapter.bookId._id)"
         class="latest-chapters__item"
+        v-ripple
         v-for="(chapter,index) in chapters"
         :key="index"
       >
@@ -90,7 +91,7 @@ export default {
       right: 5px;
     }
     #{$self}__chapter-title {
-      width: 90%;
+      width: 95%;
       font-size: 13px;
       margin-bottom: 5px;
       // width: 200px;

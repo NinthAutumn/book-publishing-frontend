@@ -1,16 +1,11 @@
 <template>
   <div class="banner-list">
+    <v-carousel>
+      <v-carousel-item v-for="(item,i) in images" :key="i" :src="item"></v-carousel-item>
+    </v-carousel>
+
     <no-ssr>
-      <carousel
-        :paginationSize="paginationSize"
-        paginationActiveColor="#f3a5a5"
-        :paginationPadding="0"
-        :perPage="1"
-      >
-        <slide v-for="(img, index) in images" :key="index">
-          <img :src="img" alt :class="{mobile:$device.isMobile}">
-        </slide>
-      </carousel>
+      <!-- <img :src="img" alt :class="{mobile:$device.isMobile}"> -->
     </no-ssr>
   </div>
 </template>
@@ -20,9 +15,7 @@ export default {
   data() {
     return {
       paginationSize: 10,
-      images: [
-        "https://placeit-assets.s3-accelerate.amazonaws.com/landing-pages/make-a-twitch-banner2/Twitch-Banner-Blue-1024x324.png"
-      ]
+      images: ["~/assets/banner.jpg"]
     };
   },
   async created() {

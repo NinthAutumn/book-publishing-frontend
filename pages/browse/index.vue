@@ -43,14 +43,14 @@
               ></Select>
             </div>
             <button
-              class="browse-page__open-tags flex flex--align flex--center"
+              class="browse-page__open-tags flex-row flex--align flex--center"
               @click="openTag"
               v-if="!tag_search"
             >
               <fa class="browse-page__open-tags__icon" icon="expand"></fa>タグで探す
             </button>
             <button
-              class="browse-page__open-tags flex flex--align flex--center"
+              class="browse-page__open-tags flex-row flex--align flex--center"
               @click="openTag"
               v-if="tag_search"
             >

@@ -1,14 +1,14 @@
 <template>
   <div class="user-analytics">
     <div class="main-analytics">
-      <div class="main-analytics__list flex flex--between">
+      <div class="main-analytics__list flex-row flex--between">
         <div
           v-for="(value, key,index) in mainAnalytics"
           :key="index"
-          class="main-analytics__item flex flex-column flex--center"
+          class="main-analytics__item flex-column flex--center"
         >
           <div class="main-analytics__title" v-text="value.title"></div>
-          <div class="flex-divider flex flex--align flex--between">
+          <div class="flex-divider flex-row flex--align flex--between">
             <div class="main-analytics__stats" v-text="value.stats"></div>
             <fa :icon="value.icon" class="main-analytics__icon"></fa>
           </div>

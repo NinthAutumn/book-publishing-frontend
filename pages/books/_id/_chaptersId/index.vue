@@ -1,14 +1,16 @@
 <template>
-  <div class="divider flex">
+  <div class="divider chapter-wrapper">
     <main class="divider chapter-container">
       <!-- <no-ssr v-if="$device.isMobile">
         <infinite-loading direction="top" @infinite="prevChapter"></infinite-loading>
       </no-ssr>-->
+      <VuePullRefresh :on-refresh="prevChapter"></VuePullRefresh>
       <Chapter></Chapter>
+
       <CommentList v-if="!$device.isMobile"></CommentList>
-      <!-- <no-ssr v-if="$device.isMobile">
+      <no-ssr v-if="$device.isMobile">
         <infinite-loading direction="bottom" @infinite="nextChapter"></infinite-loading>
-      </no-ssr>-->
+      </no-ssr>
     </main>
   </div>
 </template>
@@ -20,9 +22,7 @@ import CommentList from "@/components/ChapterPage/CommentList";
 export default {
   data() {
     return {
-      bottom: false,
-      pStart: { x: 0, y: 0 },
-      pStop: { x: 0, y: 0 }
+      bottom: false
     };
   },
 
@@ -30,82 +30,10 @@ export default {
     Chapter,
     CommentList
   },
-  created() {
-    if (process.client) {
-      if (this.$device.isMobile) {
-        this.scroll();
-        this.touch();
-      }
-    }
-  },
-  beforeDestroy() {
-    if (process.browser) {
-      window.removeEventListener("onscroll", this.nextChapter());
-      window.removeEventListener("touchstart", this.swipeStart());
-      window.removeEventListener("touchend", this.swipeEnd());
-    }
-  },
+  mounted() {},
+  beforeDestroy() {},
+  destroyed() {},
   methods: {
-    scroll() {
-      window.onscroll = () => {
-        // if (document.documentElement.scrollTop <= 0) {
-        //   this.prevChapter();
-        // }
-        let bottomOfWindow =
-          document.documentElement.scrollTop + window.innerHeight ===
-          document.documentElement.offsetHeight;
-
-        if (bottomOfWindow) {
-          this.nextChapter();
-        }
-      };
-    },
-    swipeStart(e) {
-      if (typeof e["targetTouches"] !== "undefined") {
-        var touch = e.targetTouches[0];
-        this.pStart.x = touch.screenX;
-        this.pStart.y = touch.screenY;
-      } else {
-        this.pStart.x = e.screenX;
-        this.pStart.y = e.screenY;
-      }
-    },
-    swipeEnd(e) {
-      if (typeof e["changedTouches"] !== "undefined") {
-        let touch = e.changedTouches[0];
-        this.pStop.x = touch.screenX;
-        this.pStop.y = touch.screenY;
-      } else {
-        this.pStop.x = e.screenX;
-        this.pStop.y = e.screenY;
-      }
-
-      this.swipeCheck();
-    },
-    swipeCheck: function() {
-      let changeY = this.pStart.y - this.pStop.y;
-      let changeX = this.pStart.x - this.pStop.x;
-      if (this.isPullDown(changeY, changeX)) {
-        this.prevChapter();
-      }
-    },
-    isPullDown: function(dY, dX) {
-      // methods of checking slope, length, direction of line created by swipe action
-      return (
-        dY < 0 &&
-        ((Math.abs(dX) <= 100 && Math.abs(dY) >= 200) ||
-          (Math.abs(dX) / Math.abs(dY) <= 0.3 && dY >= 60))
-      );
-    },
-    touch() {
-      const self = this;
-      document.addEventListener("touchstart", e => {
-        this.swipeStart(e);
-      });
-      document.addEventListener("touchend", e => {
-        this.swipeEnd(e);
-      });
-    },
     async nextChapter() {
       const bookId = this.$route.params.id,
         chapterId = this.$store.state.chapter.navigation.next._id;
@@ -173,10 +101,7 @@ export default {
     }
   },
   scrollToTop: false,
-  transition: "none",
-  mounted() {
-    // this.touch();
-  }
+  transition: "none"
 };
 </script>
 
@@ -186,6 +111,8 @@ export default {
   justify-content: space-around;
   .chapter-wrapper {
     position: relative;
+    display: flex;
+    justify-content: center;
     .chapter-navigation__next {
       text-align: center;
     }

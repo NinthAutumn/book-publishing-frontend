@@ -22,6 +22,7 @@
             v-for="(chapter, index) in volume.chapters"
             :key="index"
             :to="{path: `/books/${ $route.params.id}/${chapter._id}`}"
+            v-ripple
           >
             <div class="flex-divider flex">
               <div class="book-chapters__chapter-item__content--index">{{chapter.index}}</div>
