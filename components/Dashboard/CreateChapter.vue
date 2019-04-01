@@ -2,8 +2,8 @@
 <template>
   <div class="chapter-form">
     <form action class="flex flex-column chapter-new" @submit.prevent="createChapter">
-      <div class="chapter-form__save-draft flex flex--align flex--right">
-        <div class="chapter-form__save-draft__button flex flex--align flex--center">
+      <div class="chapter-form__save-draft flex-row flex--align flex--right">
+        <div class="chapter-form__save-draft__button flex-row flex--align flex--center">
           <fa class="chapter-form__save-draft__icon" icon="save"></fa>保存
         </div>
       </div>
@@ -11,14 +11,14 @@
         <Select v-model="form.volume" name="章を選ぶ" icon="archive" :object="volumes"></Select>
         <Select v-model="form.locked" def="無料" icon="yen-sign" name="時価" :object="locked"></Select>
         <div
-          class="chapter-form__options__user-news flex flex--align flex--center"
-          @click="announcementOpen"
+          class="chapter-form__options__user-news flex-row flex--align flex--center"
+          @click.stop="announcementOpen"
         >
           <fa class="chapter-form__options__user-news__icon" icon="newspaper"></fa>告知
         </div>
         <div
-          class="chapter-form__options__picture-upload flex flex--align flex--center"
-          @click="pictureOpen"
+          class="chapter-form__options__picture-upload flex-row flex--align flex--center"
+          @click.stop="pictureOpen"
         >
           <fa class="chapter-form__options__picture-upload__icon" icon="images"></fa>絵を投稿
         </div>
@@ -26,7 +26,7 @@
 
       <transition name="slide-fade">
         <div class="chapter-form__content-subject">
-          <div class="form-control flex flex--align">
+          <div class="form-control flex-row flex--align">
             <p class="chapter-index">第{{this.$store.getters["chapter/getNewIndex"]}}話</p>
             <input
               placeholder="タイトル"
@@ -110,7 +110,7 @@
               rows="5"
             ></textarea>
           </div>
-          <div class="chapter-form__announcement__decision flex flex--right">
+          <div class="chapter-form__announcement__decision flex-row flex--right">
             <div
               class="chapter-form__announcement__button flex flex--align flex--center"
               @click="announcementOpen"
@@ -119,7 +119,7 @@
         </dialog>
       </transition>
 
-      <div class="flex flex--right">
+      <div class="flex-row flex--right">
         <button
           @click.prevent="submitForm = !submitForm"
           class="form-submit form-submit--primary chapter-new-submit"
@@ -127,7 +127,7 @@
       </div>
       <transition name="grow-shrink">
         <dialog class="chapter-form__submit-form" open v-if="submitForm">
-          <div class="chapter-form__submit-form__title flex flex--align flex--between">
+          <div class="chapter-form__submit-form__title flex-row flex--align flex--between">
             <h3>話を公開する</h3>
             <fa class="close-icon" icon="times" @click="submitForm = !submitForm"></fa>
           </div>
@@ -136,7 +136,7 @@
               <span class="chapter-title__placeholder">話のタイトル</span>
               <span class="chapter-title__content">{{form.title}}</span>
             </div>
-            <div class="form-control flex flex--between">
+            <div class="form-control flex-row flex--between">
               <div class="chapter-form__submit-form__chapter-title" style="margin-top:10px;">
                 <span class="chapter-title__placeholder">話の章</span>
                 <span class="chapter-title__content">第{{form.volume}}章</span>
@@ -158,7 +158,7 @@
               </div>
             </div>
 
-            <div class="form-control flex flex--align flex--between">
+            <div class="form-control flex-row flex--align flex--between">
               <label for="schedule" style="margin-right:10px;font-size:14px;color: #949499;">予約公開する</label>
               <el-switch v-model="schedule"></el-switch>
             </div>
@@ -174,7 +174,7 @@
                 ></date-picker>
               </div>
             </transition>
-            <div class="form-control flex flex--align flex--right">
+            <div class="form-control flex-row flex--align flex--right">
               <div class="chapter-final-submit" @click="createChapter">公開</div>
             </div>
           </div>
@@ -377,6 +377,7 @@ export default {
 <style lang="scss">
 dialog {
   border: 0px;
+  margin: auto;
 }
 .fr-wrapper {
   font-size: 16px !important;

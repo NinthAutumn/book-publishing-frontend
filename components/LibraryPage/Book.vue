@@ -74,12 +74,9 @@ export default {
   }
   &__cover {
     margin: 0 !important;
-    width: 140px;
-    height: 210px;
+    width: 14rem;
+    height: 21rem;
     position: relative;
-    -webkit-box-shadow: 1px 1px 1px 0px rgba(153, 153, 153, 0.75);
-    -moz-box-shadow: 1px 1px 1px 0px rgba(153, 153, 153, 0.75);
-    box-shadow: 1px 1px 1px 0px rgba(153, 153, 153, 0.75);
     &:hover {
       cursor: pointer;
       &::after {

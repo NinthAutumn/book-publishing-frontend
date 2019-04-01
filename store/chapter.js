@@ -9,6 +9,7 @@ export const state = () => ({
   modal: '',
   navigation: {},
   latestIndex: 0,
+  latestBooks: [],
   dTOC: [], //chapters that aren't published
   pTOC: [] //chapters that are published shown in dashbaord of the user
 })
@@ -41,7 +42,8 @@ export const getters = {
   },
   getChapterBookTitle: (state) => {
     return state.bookTitle
-  }
+  },
+  getLatestBooks: state => state.latestBooks
 }
 
 export const mutations = {
@@ -105,6 +107,9 @@ export const mutations = {
   },
   SET_LATEST_INDEX(state, index) {
     state.latestIndex = index
+  },
+  SET_LATEST_BOOKS(state, books) {
+    state.latestBooks = books
   }
 }
 export const actions = {
@@ -218,7 +223,20 @@ export const actions = {
     } catch (error) {
       return Promise.reject(error)
     }
-
+  },
+  async fetchLatestBooks({
+    commit
+  }, {
+    limit = 10,
+    page = 1
+  }) {
+    try {
+      const res = await this.$axios.get(`/chapter/latestbooks?limit=${limit}&page=${page}`)
+      commit('SET_LATEST_BOOKS', res.data)
+      return Promise.resolve()
+    } catch (error) {
+      return Promise.reject(error)
+    }
   }
 
 }

@@ -40,6 +40,7 @@
                 icon="filter"
                 name="ジャンル"
                 :modalD="modalDirection"
+                :selected_item="$route.query.genre"
               ></Select>
             </div>
             <button
@@ -69,7 +70,7 @@
               class="browse-page__filter-list flex flex--align"
             >
               <li
-                class="browse-page__filter-list browse-page__filter-list__item flex flex--align"
+                class="browse-page__filter-list browse-page__filter-list__item flex-row flex--align"
                 v-for="(genre, index) in selected_genre"
                 :key="index"
                 v-text="genre"
@@ -126,7 +127,11 @@ export default {
       }
     }
   },
-  created() {},
+  created() {
+    if (this.$route.query.genre && this.$route.query.genre !== "undefined") {
+      this.selected_genre.push(this.$route.query.genre);
+    }
+  },
   watch: {
     selected_genre: function(val) {
       this.refresh();

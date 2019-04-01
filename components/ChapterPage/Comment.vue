@@ -25,7 +25,7 @@
         <div class="comment-modal__div">
           <div class="comment-modal__content">
             <div
-              class="comment-modal__divider flex flex--align"
+              class="comment-modal__divider flex-row flex--align"
               @mouseenter="contentFalse"
               @mouseleave="contentTrue"
             >
@@ -65,10 +65,10 @@
               class="form-input comment-reply-content"
               placeholder="コメントを書く"
             ></textarea>
-            <div class="divider flex flex--right">
+            <div class="divider flex-row flex--right">
               <input
                 type="submit"
-                class="form-submit form-submit--primary comment-form__submit flex flex--center"
+                class="form-submit form-submit--primary comment-form__submit flex--align flex-row flex--center"
                 value="投稿"
               >
             </div>
@@ -239,15 +239,11 @@ export default {
   .comment-reply-content {
     border: 2px solid #b4b7b9;
     resize: none;
-    border-radius: 5px;
     height: 75px;
     margin-bottom: 5px;
     font-size: 12px;
-    transition: 300ms;
     &:focus {
       outline: none;
-      transform: scaleY(1.02);
-      transition: 300ms;
     }
   }
 }

@@ -13,7 +13,12 @@
           <fa icon="bell"></fa>
         </div>
         <div v-if="loggedIn" style="z-index:3000;" id="prof">
-          <img @click="stateDropChange" class="profile-pic" style="width: 40px;" :src="user.avatar">
+          <img
+            @click.stop="stateDropChange"
+            class="profile-pic"
+            style="width: 40px;"
+            :src="user.avatar"
+          >
           <div class>
             <transition name="grow-shrink">
               <Dropdown v-click-outside="dropOff" v-if="$store.state.dropdownState"></Dropdown>

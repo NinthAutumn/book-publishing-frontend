@@ -11,7 +11,11 @@
             alt="Book cover"
           ></v-img>
         </nuxt-link>
-        <div @click="menu_modal=true" v-if="menu" class="book-menu flex flex--align flex--center">
+        <div
+          @click.stop="menu_modal=true"
+          v-if="menu"
+          class="book-menu flex flex--align flex--center"
+        >
           <fa icon="ellipsis-v"></fa>
         </div>
         <transition name="grow-shrink">

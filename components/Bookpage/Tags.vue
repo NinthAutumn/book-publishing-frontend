@@ -28,22 +28,19 @@ export default {};
   }
   &__item {
     margin-right: 5px;
-    height: 3rem;
+    height: 2.5rem;
     padding: 0 1rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.4rem;
-    background: white;
-    border: 1px solid black;
+    font-size: 1.3rem;
+    border: 1px solid $secondary;
     border-radius: 0.5rem;
-    color: black;
+    color: $secondary;
     user-select: none;
     &:hover {
       cursor: pointer;
-      color: $secondary;
-      background-color: white;
-      border: 1px solid $secondary;
+      background-color: #dbe5ff98;
     }
   }
 }

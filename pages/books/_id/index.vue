@@ -10,20 +10,21 @@
       ></v-img>
       <div class="book__info flex flex-column flex--around">
         <header class="book__title">{{book.title}}</header>
-
         <div class="book__title--more-info" v-if="$device.isMobile">
           <div class="book__title__author">{{book.author}}</div>
         </div>
         <div class="book__meta flex-row">
-          <div
+          <nuxt-link
             class="book__meta__item"
             :class="'book__meta__item--' +item.type"
             v-for="(item, index) in meta"
             :key="index"
+            :to="item.url"
+            tag="div"
           >
             <fa class="book__meta__icon" :icon="item.icon"></fa>
             <p>{{item.key}}</p>
-          </div>
+          </nuxt-link>
         </div>
         <div class="book__rating">
           <no-ssr>
@@ -161,17 +162,20 @@ export default {
         {
           key: this.$store.getters["book/getBook"].genres[0],
           icon: "landmark",
-          type: "genre"
+          type: "genre",
+          url: `/browse?genre=${this.$store.getters["book/getBook"].genres[0]}`
         },
         {
           key: this.$store.getters["book/getBookChapterCount"] + "話",
           icon: "scroll",
-          type: "chapter"
+          type: "chapter",
+          url: "/browse"
         },
         {
           key: this.$store.getters["book/getBookView"],
           icon: "eye",
-          type: "view"
+          type: "view",
+          url: "/browse"
         }
       ],
       review: {
@@ -506,6 +510,9 @@ input[type="number"]::-webkit-outer-spin-button {
       font-size: 1.2rem;
       padding: 0 20px;
       height: 25px;
+      &:hover {
+        cursor: pointer;
+      }
       p {
         font-size: inherit;
       }

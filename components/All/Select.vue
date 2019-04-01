@@ -7,7 +7,7 @@
       <div
         :style="{width: width+'px',height: height+'px','font-size': fontSize + 'px'}"
         class="select-component__name flex flex--align flex--center"
-        @click="openModal"
+        @click.stop="openModal"
         v-if="!multiple&&!selectD&&!def"
       >
         <fa v-if="icon" class="select-component__icon" :icon="icon"></fa>
@@ -16,7 +16,7 @@
       <div
         :style="{width: width+'px',height: height+'px','font-size': fontSize + 'px'}"
         class="select-component__name flex flex--align flex--center"
-        @click="openModal"
+        @click.stop="openModal"
         v-if="!multiple&&def&&!selectD"
       >
         <fa v-if="icon" class="select-component__icon" :icon="icon"></fa>
@@ -25,7 +25,7 @@
       <div
         :style="{width: width+'px',height: height+'px','font-size': fontSize + 'px'}"
         class="select-component__name flex flex--align flex--center"
-        @click="openModal"
+        @click.stop="openModal"
         v-if="!multiple&&selectD"
       >
         <fa v-if="icon" class="select-component__icon" :icon="icon"></fa>
@@ -33,7 +33,7 @@
       </div>
       <div
         class="select-component__name select-component__name--multiple flex flex--align flex--center"
-        @click="openModal"
+        @click.stop="openModal"
         v-if="multiple"
       >
         <fa class="select-component__name__icon" :icon="icon"></fa>
@@ -110,7 +110,8 @@ export default {
     top: Boolean,
     bottom: Boolean,
     fontSize: Number,
-    theme: String
+    theme: String,
+    selected_item: String
   },
   data() {
     return {
@@ -199,6 +200,21 @@ export default {
           value: item.value,
           selected: false
         });
+      });
+    }
+  },
+  mounted() {
+    if (
+      this.selected_item &&
+      this.selected_item !== "undefined" &&
+      this.selected_item !== undefined
+    ) {
+      this.multiData.forEach((item, index) => {
+        if (item.key === this.selected_item) {
+          this.multiData[index].selected = true;
+          item.selected = true;
+          this.selectedData.push(this.selected_item);
+        }
       });
     }
   }

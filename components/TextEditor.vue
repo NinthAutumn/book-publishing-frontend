@@ -200,6 +200,7 @@ export default {
     font-size: 13px;
     margin-bottom: 5px;
     transition: 200ms;
+    padding: 0 10px;
     &:active,
     &:focus {
       outline: none;

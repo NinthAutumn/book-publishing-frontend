@@ -149,6 +149,7 @@ export default {
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
+    margin-top: 10px;
     // width: 1010px;
   }
   .ranking-select {

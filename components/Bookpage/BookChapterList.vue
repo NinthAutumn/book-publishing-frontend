@@ -144,7 +144,7 @@ export default {
       margin: 0.3rem 0.3rem;
       padding: 0.5rem 0;
       border-bottom: 1px solid grey;
-      height: 6.5rem;
+      height: 6rem;
       &:hover {
         cursor: pointer;
         background-color: rgb(247, 247, 247);
@@ -230,52 +230,5 @@ export default {
     }
   }
   // border: 1px solid $primary;
-  &__list {
-    overflow: scroll;
-    box-shadow: 1px 1px 5px 0px rgb(179, 179, 179);
-    height: 482px;
-    display: grid;
-
-    grid-template-columns: 1fr 1fr;
-    // grid-template-areas: "chapter";
-    grid-gap: 2px 15px;
-    grid-template-rows: 50px;
-    padding: 10px 15px;
-
-    &--items {
-      box-sizing: border-box;
-      // grid-area: chapter;
-      margin-bottom: 5px;
-
-      height: 50px;
-      // width: 50%;
-      // margin-left: 5px;
-      &__links {
-        // width: 100%;
-
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        // -webkit-box-shadow: 0px 2px 5px 0px rgb(233, 218, 233);
-        // -moz-box-shadow: 0px 2px 5px 0px rgb(255, 255, 255);
-        // box-shadow: 0px 2px 5px 0px rgb(233, 218, 233);
-        padding: 0 10px;
-
-        height: 100%;
-        // width: 95%;
-        transition: 100ms;
-        &--title {
-          font-size: 1.6rem;
-          color: #8860d0;
-        }
-        &:hover {
-          transition: 100ms;
-          cursor: pointer;
-        }
-      }
-      // flex: 0 0 50%;
-      // width: 80%;
-    }
-  }
 }
 </style>

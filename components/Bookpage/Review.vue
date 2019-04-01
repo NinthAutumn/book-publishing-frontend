@@ -5,8 +5,9 @@
       <p v-text="likeNumber"></p>
       <ArrowDown class="reviews-like-down" :class="{disliked: disliked}" @click="dislikedReview"></ArrowDown>
     </div>
-
-    <div class="reviews-rating"></div>
+    <div class="reviews__avatar">
+      <!-- <v-img :src="review.cover"></v-img> -->
+    </div>
     <div class="reviews-content">
       <div class="reviews-content-title">{{reviewLikes.title}}</div>
       <div class="flex-row flex--between">
@@ -148,14 +149,7 @@ export default {
       }
     }
   },
-  mounted: function() {
-    console.log("unko sonko ronko ranko");
-    console.log("this");
-    console.log(this.$refs);
-    // if (this.$refs.reviewContent.clientHeight > 110) {
-    //   console.log("dog");
-    // }
-  }
+  mounted: function() {}
 };
 </script>
 

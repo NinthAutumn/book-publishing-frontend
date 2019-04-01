@@ -31,16 +31,16 @@
           </div>
         </nuxt-link>
       </li>
-      <!-- <li>
-        <nuxt-link to="/store" class="v-nav-list">
+      <li>
+        <nuxt-link to="/update" class="v-nav-list">
           <div class="v-nav-icon">
-            <fa icon="store" class="v-nav-icons"></fa>
+            <fa icon="globe" class="v-nav-icons"></fa>
           </div>
           <div class="v-nav-title">
-            <p>ストアー</p>
+            <p>更新</p>
           </div>
         </nuxt-link>
-      </li>-->
+      </li>
       <li>
         <nuxt-link to="/library" class="v-nav-list" v-if="$store.state.auth.loggedIn">
           <div class="v-nav-icon">
