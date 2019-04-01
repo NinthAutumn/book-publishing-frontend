@@ -1,8 +1,48 @@
-<template></template>
+<template>
+  <div class="update-books">
+    <ul class="update-books__date-list">
+      <li class="update-books__date-item" v-for="(books, index) in latestBooks" :key="index">
+        <div class="update-books__date-title">{{books._id}}</div>
+        <ul class="update-books__book-list">
+          <li class="update-books__book-item" v-for="(book, index) in books.books" :key="index">
+            <Book :book="book.book[0]" :chapters="book.chapters"></Book>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</template>
 
 <script>
-export default {};
+import Book from "./Book";
+export default {
+  components: {
+    Book
+  },
+  created() {},
+  computed: {
+    latestBooks() {
+      return this.$store.getters["chapter/getLatestBooks"];
+    }
+  }
+};
 </script>
 
 <style lang="scss">
+.update-books {
+  $self: &;
+  &__date-list {
+    #{$self}__date-title {
+      font-size: 1.5rem;
+    }
+    #{$self}__date-item {
+    }
+  }
+  &__book-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 13.5rem);
+    #{$self}__book-item {
+    }
+  }
+}
 </style>

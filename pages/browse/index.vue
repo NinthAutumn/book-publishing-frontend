@@ -71,8 +71,8 @@
             >
               <li
                 class="browse-page__filter-list browse-page__filter-list__item flex-row flex--align"
-                v-for="(genre, index) in selected_genre"
-                :key="index"
+                v-for="(genre) in selected_genre"
+                :key="genre"
                 v-text="genre"
               ></li>
             </transition-group>

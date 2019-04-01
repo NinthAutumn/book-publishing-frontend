@@ -9,7 +9,7 @@
       ></fa>
     </div>
     <transition-group name="list-complete" tag="ul" class="book-chapters__volume-list">
-      <li v-for="(volume, index) in volumes" :key="index" class="book-chapters__volume-item">
+      <li v-for="(volume) in volumes" :key="volume.index" class="book-chapters__volume-item">
         <div
           v-if="volume.chapters.length> 0"
           class="book-chapters__volume-item__content"
@@ -19,8 +19,8 @@
           <nuxt-link
             tag="li"
             class="book-chapters__chapter-item"
-            v-for="(chapter, index) in volume.chapters"
-            :key="index"
+            v-for="(chapter) in volume.chapters"
+            :key="chapter._id"
             :to="{path: `/books/${ $route.params.id}/${chapter._id}`}"
             v-ripple
           >

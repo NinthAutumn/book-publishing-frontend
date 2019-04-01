@@ -5,7 +5,7 @@
         <transition-group name="list" class="ranking-select__container">
           <li
             v-for="(type, index) in ranking_type"
-            :key="index"
+            :key="type.key"
             class="ranking-select__item"
             @click="select_menu(type.key,index)"
             :class="{first: index === 0, last: index === 2,selected:type.selected}"

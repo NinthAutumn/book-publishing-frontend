@@ -1,7 +1,7 @@
 <template>
   <div class="library-booklist">
     <transition-group name="list" tag="ul" class="browse-booklist__list">
-      <li class="library-booklist__item" v-for="(book, index) in books" :key="index">
+      <li class="library-booklist__item" v-for="(book) in books" :key="book._id">
         <Book :book="book"></Book>
       </li>
     </transition-group>

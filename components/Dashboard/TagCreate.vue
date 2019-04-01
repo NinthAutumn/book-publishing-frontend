@@ -16,7 +16,7 @@
         class="tag-create__item"
         @click="selectTag(index)"
         v-for="(tag,index) in selected"
-        :key="index"
+        :key="tag.key"
         :class="{selected: tag.selected}"
       >{{tag.key}}({{tag.sum}})</li>
     </transition-group>
