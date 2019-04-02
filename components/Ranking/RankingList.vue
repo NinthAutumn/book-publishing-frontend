@@ -35,19 +35,19 @@
         :score="book.sum"
         :book="book.book[0]"
         v-for="(book, index) in list"
-        :key="index"
+        :key="book.book[0]._id"
       ></ranking-item>
     </ul>
-    <ul class="book-list" v-if="selected_ranking_type === 1">
+    <transition-group name="list" tag="ul" class="book-list" v-if="selected_ranking_type === 1">
       <ranking-item
         :index="index"
         trending
         :score="book.sum"
         :book="book.book[0]"
         v-for="(book, index) in trending"
-        :key="index"
+        :key="book.book[0]._id"
       ></ranking-item>
-    </ul>
+    </transition-group>
   </div>
 </template>
 

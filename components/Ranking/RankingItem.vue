@@ -1,17 +1,16 @@
 <template>
   <div class="ranking-item" v-ripple>
-    <div class="ranking-item__container">
+    <nuxt-link tag="div" :to="`books/${book._id}`" class="ranking-item__container">
       <div
         class="book-ranking"
         :class="{first:index === 0,second:index === 1,third:index === 2, other:index > 2}"
       >{{index + 1}}</div>
       <div class="book-cover">
-        <img
+        <v-img
           class="book-cover__img"
-          v-lazyload
-          :data-src="`https://storage.googleapis.com/theta-images/${book.cover}`"
-          alt
-        >
+          :src="`https://storage.googleapis.com/theta-images/${book.cover}`"
+        ></v-img>
+        <img>
       </div>
       <div class="book-meta">
         <div class="book-title">
@@ -64,7 +63,7 @@
         </div>
       </div>
       <div v-if="!trending" class="book-score">{{score}}</div>
-    </div>
+    </nuxt-link>
   </div>
 </template>
 

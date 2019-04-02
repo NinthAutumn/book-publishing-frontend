@@ -115,6 +115,7 @@ export default {
         type: this.type,
         direction: this.direction,
         genres: this.selected_genre,
+        tags: this.tag_list,
         page: 1
       });
     },
@@ -140,6 +141,9 @@ export default {
       this.refresh();
     },
     direction: function(val) {
+      this.refresh();
+    },
+    tag_list: function(val) {
       this.refresh();
     }
   },
