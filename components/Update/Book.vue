@@ -1,14 +1,14 @@
 <template>
   <div class="update-book">
-    <div class="update-book__cover">
+    <nuxt-link tag="div" :to="`books/${book._id}`" class="update-book__cover">
       <v-img
         :aspect-ratio="1/1.5"
         max-width="13rem"
+        class="update-book__img"
         :src="`https://storage.googleapis.com/theta-images/${book.cover}`"
-      >
-        <span class="update-book__cover-meta">{{chapters.length}}</span>
-      </v-img>
-    </div>
+      ></v-img>
+      <span class="update-book__cover-meta">{{chapters.length}}</span>
+    </nuxt-link>
     <div class="update-book__meta">
       <div class="update-book__title">
         <p v-clampy="3">{{book.title}}</p>
@@ -56,6 +56,14 @@ export default {
     position: relative;
     height: 100%;
     width: 100%;
+    overflow: hidden;
+    #{$self}__img {
+      &:hover {
+        transform: scale(1.1);
+        transition: 200ms;
+      }
+      transition: 200ms;
+    }
     #{$self}__cover-meta {
       user-select: none;
       position: absolute;
@@ -71,7 +79,11 @@ export default {
     #{$self}__title {
       font-size: 1.35rem;
       max-width: 100%;
+
       p {
+        &:hover {
+          text-decoration: solid;
+        }
         // white-space: nowrap;
         // text-overflow: ellipsis;
         // overflow: hidden;

@@ -14,7 +14,7 @@
         <div
           @click.stop="menu_modal=true"
           v-if="menu"
-          class="book-menu flex flex--align flex--center"
+          class="book-menu flex-row flex--align flex--center"
         >
           <fa icon="ellipsis-v"></fa>
         </div>
@@ -66,7 +66,8 @@ export default {
   props: {
     book: Object,
     size: String,
-    trending: Object
+    trending: Object,
+    index: Number
   },
   data() {
     return {
@@ -137,12 +138,14 @@ export default {
     height: 2.5rem;
     &__modal {
       position: absolute;
-      right: -118px;
+      // right: -118px;
+      right: 0 !important;
       top: 0px;
       background-color: white;
       z-index: 2000;
       width: 120px;
-
+      &--left {
+      }
       box-shadow: 1px 1px 5px 0px rgb(219, 219, 219);
       &__options {
         &:hover {

@@ -2,8 +2,8 @@
   <div class="swiping-page" :class="{'swiping-page--mobile': $device.isMobile}">
     <div v-if="trendings" v-swiper:mySwiper="swiperOption">
       <div class="swiper-wrapper">
-        <div class="swiper-slide" v-for="book in trendings" :key="book.id">
-          <Book :book="book.book[0]" :size="size = 'big'"></Book>
+        <div class="swiper-slide" v-for="(book,index) in trendings" :key="book.id">
+          <Book :index="index" :book="book.book[0]" :size="size = 'big'"></Book>
         </div>
       </div>
       <div class="background" v-if="!$device.isMobile">
@@ -15,8 +15,8 @@
     </div>
     <div v-swiper:mySwiper="swiperOption">
       <div class="swiper-wrapper">
-        <div class="swiper-slide" v-for="book in books" :key="book.id">
-          <Book :book="book" :size="size = 'big'"></Book>
+        <div class="swiper-slide" v-for="(book,index) in books" :key="book.id">
+          <Book :index="index" :book="book" :size="size = 'big'"></Book>
         </div>
       </div>
       <div class="background" v-if="!$device.isMobile">

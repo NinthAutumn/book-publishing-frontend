@@ -1,20 +1,36 @@
 <template>
-  <div class="book-browse">
-    <div id="book-browse__container" @click="linkTo">
+  <div class="book-browse" @mouseenter="menuOpen" @mouseleave="menuClose">
+    <div id="book-browse__container">
       <div class="book-browse__cover">
         <div class="book-browse__rating flex flex--align flex--center" v-if="book.ratings">
           {{book.ratings.toFixed(2)|| '未定'}}
           <fa class="book-browse__rating__icon" icon="star"></fa>
         </div>
-        <div class="book-browse__rating flex flex--align flex--center" v-else>
+        <div class="book-browse__rating flex-row flex--align flex--center" v-else>
           <fa class="book-browse__rating__icon" icon="star"></fa>
         </div>
-        <v-img
-          :src="`https://storage.googleapis.com/theta-images/${book.cover}`"
-          alt="Book cover"
-          :aspect-ratio="1/1.5"
-          max-width="15rem"
-        ></v-img>
+        <nuxt-link class="book-img-div" tag="div" :to="'/books/' + book._id">
+          <v-img
+            :src="`https://storage.googleapis.com/theta-images/${book.cover}`"
+            alt="Book cover"
+            :aspect-ratio="1/1.5"
+            max-width="15rem"
+          ></v-img>
+        </nuxt-link>
+        <div
+          @click.stop="menu_modal=true"
+          v-if="menu"
+          class="book-menu flex-row flex--align flex--center"
+        >
+          <fa icon="ellipsis-v"></fa>
+        </div>
+        <transition name="grow-shrink">
+          <div class="book-menu__modal" v-if="menu_modal" v-click-outside="menuModalClose">
+            <div class="book-menu__modal__options flex--center flex flex--align">ブックマーク</div>
+            <div class="book-menu__modal__options flex--center flex flex--align">再読列記に保存</div>
+            <div class="book-menu__modal__options flex--center flex flex--align">後で読むに保存</div>
+          </div>
+        </transition>
       </div>
       <div class="book-browse__text-info">
         <p v-clampy="3" class="book-browse__book-title full" ref="texting">{{book.title }}</p>
@@ -35,7 +51,9 @@ export default {
   },
   data() {
     return {
-      rating: 3.5
+      rating: 3.5,
+      menu: false,
+      menu_modal: false
     };
   },
   methods: {
@@ -44,6 +62,15 @@ export default {
     },
     linkToT() {
       this.$router.push("/books/" + this.book._id.book[0]._id);
+    },
+    menuOpen() {
+      this.menu = true;
+    },
+    menuClose() {
+      this.menu = false;
+    },
+    menuModalClose() {
+      this.menu_modal = false;
     }
   },
   computated: {
@@ -62,6 +89,44 @@ export default {
 };
 </script>
 <style lang="scss">
+.book-menu {
+  position: absolute;
+  top: 5px;
+  right: 0;
+  font-size: 2rem;
+  z-index: 1000;
+  transition: 300ms;
+  color: rgb(255, 255, 255);
+  text-shadow: 1px 1px 10px 5px rgb(211, 211, 211);
+  width: 2.5rem;
+  height: 2.5rem;
+  &__modal {
+    position: absolute;
+    // right: -118px;
+    right: 0 !important;
+    top: 0px;
+    background-color: white;
+    z-index: 2000;
+    width: 120px;
+    &--left {
+    }
+    box-shadow: 1px 1px 5px 0px rgb(219, 219, 219);
+    &__options {
+      &:hover {
+        background-color: rgb(247, 247, 247);
+        cursor: pointer;
+      }
+      font-size: 14px;
+      height: 30px;
+    }
+  }
+  &:hover {
+    cursor: pointer;
+    transition: 300ms;
+    background-color: rgba(70, 70, 70, 0.432);
+    border-radius: 100px;
+  }
+}
 .book-browse {
   width: 13.5rem;
   &__container {
