@@ -74,9 +74,10 @@ export default {
           chapterId: this.$route.params.chaptersId,
           price: this.$store.state.chapter.chapter.price
         });
-        await this.$store.dispatch("chapter/nextChapter", {
+        await this.$store.dispatch("chapter/fetchChapter", {
           chapterId: this.$route.params.chaptersId,
-          userId: this.$store.state.auth.user._id
+          userId: this.$store.state.auth.user._id,
+          bookId: params.id
         });
       } catch (error) {
         alert(error);

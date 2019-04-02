@@ -23,7 +23,12 @@
         </div>
       </div>
       <span v-if="loggedIn" style="z-index:3000;" id="prof" v-click-outside="dropOff">
-        <img @click="stateDropChange" class="profile-pic" style="width: 40px;" :src="user.avatar">
+        <img
+          @click.stop="stateDropChange"
+          class="profile-pic"
+          style="width: 40px;"
+          :src="user.avatar"
+        >
         <div :class="$store.state.dropdownState">
           <div>
             <transition name="grow-shrink">
@@ -33,7 +38,11 @@
         </div>
       </span>
       <div class="not-loggedin" v-else>
-        <img class="not-loggedin__img text--link" src="~/assets/profile.png" @click="loginInState">
+        <img
+          class="not-loggedin__img text--link"
+          src="~/assets/profile.png"
+          @click.stop="loginInState"
+        >
       </div>
     </nav>
     <transition name="grow-shrink">

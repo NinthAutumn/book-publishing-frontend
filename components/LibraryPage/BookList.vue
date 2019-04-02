@@ -1,12 +1,12 @@
 <template>
   <div class="library-booklist">
     <transition-group tag="ul" class="library-booklist__list" v-if="trendings">
-      <li class="library-booklist__item" v-for="(book) in books" :key="book.bookId">
+      <li class="library-booklist__item" v-for="(book) in books" :key="book.bookId._id">
         <Book :progress="book.history" :book="book.bookId"></Book>
       </li>
     </transition-group>
     <transition-group tag="ul" v-if="history" class="library-booklist__list">
-      <li class="library-booklist__item" v-for="(book) in books" :key="book.bookId">
+      <li class="library-booklist__item" v-for="(book) in books" :key="book.bookId._id">
         <Book :progress="{index: book.index, chapterId: book.chapterId}" :book="book.bookId"></Book>
       </li>
     </transition-group>

@@ -1,5 +1,5 @@
 <template>
-  <div class="ranking-item">
+  <div class="ranking-item" v-ripple>
     <div class="ranking-item__container">
       <div
         class="book-ranking"
@@ -86,6 +86,7 @@ export default {
 
 <style lang="scss">
 .ranking-item {
+  user-select: none;
   margin-bottom: 10px;
   border-radius: 5px;
   box-shadow: 1px 1px 5px rgb(202, 202, 202);

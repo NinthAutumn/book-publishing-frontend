@@ -20,7 +20,6 @@ const filterParent = function (items, id = undefined) {
 export const mutations = {
   GET_COMMENTS(state, comments) {
     // const nestedParent = filterParent(comments)
-    console.log(comments);
     state.comments = comments
   },
   USER_LIKED_COMMENTS(state, userId) {

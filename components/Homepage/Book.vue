@@ -27,10 +27,7 @@
         </transition>
       </div>
       <nuxt-link tag="div" :to="'/books/' + book._id" class="text-info">
-        <p class="book-title full" ref="texting">
-          <a v-if="!$device.isMobile">{{book.title | truncate(19)}}</a>
-          <a class v-if="$device.isMobile">{{book.title | truncate(16)}}</a>
-        </p>
+        <p v-clampy="3" class="book-title full" ref="texting">{{book.title}}</p>
         <span class="p-ending"></span>
         <div class="flex-divider flex-row flex--align">
           <div class="book-rating" v-if="book.ratings" v-text="`(${+book.ratings.toFixed(2)})`"></div>
@@ -39,15 +36,17 @@
             <v-rating
               color="#FF8D29"
               v-if="book.ratings"
-              :readonly="true"
+              readonly
               size="20"
+              half-increments
               :value="+book.ratings.toFixed(2)"
             ></v-rating>
             <v-rating
               color="#FF8D29"
               size="20"
+              half-increments
               v-else-if="book.rating"
-              :readonly="true"
+              readonly
               :value="+book.rating.toFixed(2)"
             ></v-rating>
             <v-rating size="20" color="#FF8D29" v-else :readonly="true" :value="0"></v-rating>

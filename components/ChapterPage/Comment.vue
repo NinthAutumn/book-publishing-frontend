@@ -178,7 +178,6 @@ export default {
         });
     },
     async likedComment() {
-      console.log(this.comment._id);
       if (this.liked) {
         this.liked = false;
         this.$store.dispatch("comment/unLikeComment", {

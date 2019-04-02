@@ -12,6 +12,7 @@
     "devHttps": "node server/index.js"
   },
   "dependencies": {
+    "@clampy-js/vue-clampy": "^1.0.6",
     "@fortawesome/free-solid-svg-icons": "^5.6.3",
     "@nuxtjs/auth": "^4.5.3",
     "@nuxtjs/axios": "^5.3.6",

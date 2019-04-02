@@ -4,7 +4,7 @@
       <!-- <no-ssr v-if="$device.isMobile">
         <infinite-loading direction="top" @infinite="prevChapter"></infinite-loading>
       </no-ssr>-->
-      <VuePullRefresh :on-refresh="prevChapter"></VuePullRefresh>
+      <!-- <VuePullRefresh :on-refresh="prevChapter"></VuePullRefresh> -->
       <Chapter></Chapter>
 
       <CommentList v-if="!$device.isMobile"></CommentList>

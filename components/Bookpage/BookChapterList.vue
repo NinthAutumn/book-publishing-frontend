@@ -15,12 +15,12 @@
           class="book-chapters__volume-item__content"
         >{{volume.title || `第${volume.index}章`}}</div>
 
-        <ul class="book-chapters__chapter-list">
+        <transition-group name="list-complete" tag="ul" class="book-chapters__chapter-list">
           <nuxt-link
             tag="li"
             class="book-chapters__chapter-item"
             v-for="(chapter) in volume.chapters"
-            :key="chapter._id"
+            :key="chapter.index"
             :to="{path: `/books/${ $route.params.id}/${chapter._id}`}"
             v-ripple
           >
@@ -54,7 +54,7 @@
               </div>
             </div>
           </nuxt-link>
-        </ul>
+        </transition-group>
       </li>
     </transition-group>
   </div>

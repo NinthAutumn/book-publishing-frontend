@@ -11,9 +11,7 @@
         ></v-img>
       </div>
       <div class="book-library__text-info">
-        <p class="book-library__book-title full" ref="texting">
-          <a class>{{book.title | truncate(17)}}</a>
-        </p>
+        <p v-clampy="3" class="book-library__book-title full" ref="texting">{{book.title}}</p>
         <div class="book-library__more-info flex flex--align">
           <!-- <div class="book-library__author">{{book.author}}</div> -->
           <span

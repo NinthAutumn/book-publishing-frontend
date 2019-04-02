@@ -29,7 +29,7 @@
           <img
             class="not-loggedin__img text--link"
             src="~/assets/profile.png"
-            @click="loginInState"
+            @click.stop="loginInState"
           >
         </div>
       </div>

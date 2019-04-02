@@ -18,14 +18,15 @@
     </div>
     <div class="ranking-select__options">
       <div class="ranking-date" v-if="selected_ranking_type === 0|| selected_ranking_type=== 2">
-        <Select
-          v-model="time_day"
-          name="時間"
-          def="日間"
-          :object="sort_type"
-          :mheight="125"
-          transition="grow-shrink"
-        ></Select>
+        <ul class="ranking-date__list flex-row">
+          <li
+            class="ranking-date__item"
+            v-for="(date, index) in sort_type"
+            :key="index"
+            @click="time_day = date.value"
+            :class="{selected: time_day === date.value}"
+          >{{date.key}}</li>
+        </ul>
       </div>
     </div>
     <ul class="book-list" v-if="selected_ranking_type === 0">
@@ -61,7 +62,7 @@ export default {
       ranking_type: [
         { key: "総合", value: 0, selected: true, icon: "layer-group" },
         { key: "急上昇中", value: 1, selected: false, icon: "fire" },
-        { key: "ジャンル", value: 2, selected: false, icon: "landmark" }
+        { key: "ジャンル別", value: 2, selected: false, icon: "landmark" }
       ],
       selected_ranking_type: 0,
       sort_type: [
@@ -71,7 +72,7 @@ export default {
         { key: "年間", value: 365 },
         { key: "総合", value: "whole" }
       ],
-      time_day: 0
+      time_day: 1
     };
   },
   computed: {
@@ -126,6 +127,7 @@ export default {
       }
     },
     select_menu(key, index) {
+      this.time_day = 1;
       this.ranking_type.forEach(type => {
         if (type.key === key) {
           type.selected = true;
@@ -181,8 +183,8 @@ export default {
     }
     &__item {
       height: 100%;
-      width: 120px;
-      font-size: 16px;
+      width: 14rem;
+      font-size: 1.6rem;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -198,11 +200,34 @@ export default {
     &__options {
       width: 100%;
       display: flex;
-      justify-content: flex-end;
+      // justify-content: center;
     }
   }
   .ranking-date {
-    width: 100px;
+    .selected {
+      border-bottom: 2px solid $secondary;
+      color: $secondary;
+    }
+    &__list {
+      margin-top: 1rem;
+      // margin-bottom: 0.2rem;
+      width: 100%;
+    }
+    &__item {
+      font-size: 1.6rem;
+      padding: 0 1rem;
+      color: grey;
+      user-select: none;
+      transition: 200ms;
+      border-bottom: 2px solid rgb(247, 247, 247);
+
+      &:hover {
+        border-bottom: 2px solid $secondary;
+        color: $secondary;
+        transition: 200ms;
+        cursor: pointer;
+      }
+    }
   }
   .first {
     // grid-area: first;

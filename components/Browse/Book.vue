@@ -17,9 +17,7 @@
         ></v-img>
       </div>
       <div class="book-browse__text-info">
-        <p class="book-browse__book-title full" ref="texting">
-          <a class>{{book.title | truncate(17)}}</a>
-        </p>
+        <p v-clampy="3" class="book-browse__book-title full" ref="texting">{{book.title }}</p>
         <p class="book-browse__author">{{book.author}}</p>
       </div>
     </div>
@@ -87,7 +85,6 @@ export default {
     background-color: rgba(0, 0, 0, 0.5);
     color: white;
     &__icon {
-      color: #fbbd08;
       margin-left: 2px;
     }
   }

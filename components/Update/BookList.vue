@@ -33,14 +33,18 @@ export default {
   $self: &;
   &__date-list {
     #{$self}__date-title {
-      font-size: 1.5rem;
+      font-size: 1.6rem;
+      margin: 1rem 0;
     }
     #{$self}__date-item {
     }
   }
   &__book-list {
     display: grid;
-    grid-template-columns: repeat(auto-fill, 13.5rem);
+    grid-template-columns: repeat(auto-fill, 13rem);
+    grid-template-rows: auto;
+    grid-gap: 5px;
+
     #{$self}__book-item {
     }
   }

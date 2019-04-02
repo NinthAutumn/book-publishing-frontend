@@ -218,8 +218,6 @@ export default {
         .replace(/\s/g, "");
     },
     "form.volume": async function(val) {
-      console.log(val);
-      console.log("this happaned");
       this.getNewLatestChapter();
     }
   },
@@ -329,7 +327,7 @@ export default {
       // console.log(file);
     },
     successPhoto(res, file) {
-      this.form.extra.drawings.push(file.raw);
+      this.form.drawings.push(file.raw);
     },
     async createChapter() {
       if (this.form.drawings) {
