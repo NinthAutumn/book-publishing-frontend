@@ -1,5 +1,6 @@
 <template>
   <div class="update-page">
+    <div class="update-page__title">更新された小説</div>
     <BookList></BookList>
   </div>
 </template>
@@ -20,4 +21,9 @@ export default {
 </script>
 
 <style lang="scss">
+.update-page {
+  &__title {
+    font-size: 2rem;
+  }
+}
 </style>

@@ -13,15 +13,15 @@
           <fa icon="bell"></fa>
         </div>
         <div v-if="loggedIn" style="z-index:3000;" id="prof">
-          <img
-            @click.stop="stateDropChange"
-            class="profile-pic"
-            style="width: 40px;"
-            :src="user.avatar"
-          >
+          <div class="profile-pic">
+            <v-avatar size="40">
+              <img @click.stop="userProfile" :src="user.avatar">
+            </v-avatar>
+          </div>
+
           <div class>
             <transition name="grow-shrink">
-              <Dropdown v-click-outside="dropOff" v-if="$store.state.dropdownState"></Dropdown>
+              <Dropdown v-click-outside="userProfile" v-if="profile"></Dropdown>
             </transition>
           </div>
         </div>
@@ -53,8 +53,8 @@ export default {
   name: "Horizontal",
   data() {
     return {
-      menuStates: "menu-inactive"
-      // signUpForm: ""
+      menuStates: "menu-inactive",
+      profile: false
     };
   },
   components: {
@@ -88,7 +88,7 @@ export default {
       this.$store.commit("DROPDOWN_FALSE");
     },
     userProfile() {
-      this.$router.push("/dashboard");
+      this.profile = !this.profile;
     },
     loginInState() {
       this.$store.commit("LOGIN_STATE");
@@ -168,6 +168,8 @@ export default {
     -moz-box-shadow: 0px 2px 3px 0px #464646;
     box-shadow: 0px 2px 3px 0px #464646;
   }
+  padding: 0 1rem;
+  box-sizing: border-box;
   height: 50px;
   width: 100%;
   position: fixed;
@@ -210,15 +212,10 @@ nav {
 }
 .left-menu {
   // height: 100%;
-  margin-left: 10px;
 }
 .profile-pic {
-  border-radius: 100px;
-  margin-right: 10px;
-  width: 45px;
-
   position: relative;
-  border: 1px solid #ffd700;
+  border-radius: 100px;
   &:hover {
     -webkit-box-shadow: 0px 2px 4px 0px rgba(217, 217, 217, 1);
     -moz-box-shadow: 0px 2px 4px 0px rgba(217, 217, 217, 1);

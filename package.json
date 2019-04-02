@@ -21,6 +21,7 @@
     "@nuxtjs/google-analytics": "^2.0.2",
     "@nuxtjs/moment": "^1.1.0",
     "@nuxtjs/pwa": "^2.6.0",
+    "@nuxtjs/robots": "^2.0.0",
     "@nuxtjs/vuetify": "^0.5.5",
     "chart.js": "^2.7.3",
     "cookie": "^0.3.1",

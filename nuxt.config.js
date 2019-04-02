@@ -134,7 +134,16 @@ module.exports = {
     'nuxt-webfontloader',
     '@nuxtjs/axios',
     '@nuxtjs/dotenv',
-
+    ['@nuxtjs/robots', {
+      UserAgent: '*',
+      Disallow: '/',
+      UserAgent: 'Googlebot',
+      Disallow: '',
+      UserAgent: 'Yahoo-slurp',
+      Disallow: '',
+      UserAgent: 'Msnbot',
+      Disallow: ''
+    }],
     ['@nuxtjs/moment', {
       locales: ['ja'],
       defaultLocale: 'ja'

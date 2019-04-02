@@ -49,6 +49,9 @@ export default {
 <style lang="scss">
 .update-book {
   $self: &;
+  &:hover {
+    cursor: pointer;
+  }
   &__cover {
     position: relative;
     height: 100%;

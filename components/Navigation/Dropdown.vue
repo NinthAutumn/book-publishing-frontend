@@ -4,7 +4,9 @@
       <div class="profile-dropdown__list">
         <div class="profile-dropdown__user-info flex">
           <div class="profile-dropdown__profile-pic">
-            <img :src="user.avatar">
+            <v-avatar size="50">
+              <img :src="user.avatar">
+            </v-avatar>
           </div>
           <div class="profile-dropdown__user-text">
             <div class="profile-dropdown__username" v-text="user.username"></div>
@@ -92,8 +94,6 @@ export default {
   &__profile-pic {
     margin-right: 10px;
     img {
-      width: 50px;
-      border-radius: 100px;
       box-shadow: 1px 1px 5px rgb(233, 233, 233);
     }
   }
