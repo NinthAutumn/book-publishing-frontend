@@ -82,7 +82,6 @@ export const actions = {
     tags = [],
     tfilter = true
   }) {
-
     const books = await this.$axios.patch('/book/browse?direction=' + direction + '&type=' + type + '&page=' + page, {
       genres,
       gfilter,

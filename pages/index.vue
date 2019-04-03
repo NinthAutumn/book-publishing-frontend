@@ -5,7 +5,7 @@
     </div>
     <div class="main-books">
       <div class="card-title flex flex--align">
-        <h3>おすすめ作品</h3>
+        <h3>おすすめ</h3>
       </div>
       <BooksList :books="$store.getters['book/getRecommended']"></BooksList>
       <div class="card-title flex flex--align">
@@ -16,7 +16,9 @@
         <h3>今週人気の作品</h3>
       </div>
       <BooksList :trendings="trending"></BooksList>
-      <!-- <Ranking></Ranking> -->
+      <div class="card-title">
+        <h3>更新された作品</h3>
+      </div>
     </div>
   </div>
 </template>

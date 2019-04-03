@@ -40,6 +40,20 @@ export const actions = {
       commit('SET_RANKING_LIST', res.data)
     })
   },
+  async fetchGenreRanking({
+    commit
+  }, {
+    days,
+    limit,
+    page,
+    genre
+  }) {
+    await this.$axios.patch(`/analytic/book/genreranking?days=${days}&limit=${limit}&page=${page}`, {
+      genre
+    }).then((res) => {
+      commit('SET_RANKING_LIST', res.data)
+    })
+  },
   async fetchTrending({
     commit
   }, {

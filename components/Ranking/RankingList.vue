@@ -2,24 +2,42 @@
   <div id="ranking-list">
     <div class="ranking-select">
       <ul class="ranking-select__list">
-        <transition-group name="list" class="ranking-select__container">
+        <div name="list" class="ranking-select__container">
           <li
             v-for="(type, index) in ranking_type"
             :key="type.key"
             class="ranking-select__item"
-            @click="select_menu(type.key,index)"
+            @click="select_menu(type.key,type.value)"
             :class="{first: index === 0, last: ranking_type[ranking_type.length - 1].key === type.key,selected:type.selected}"
           >
             <fa class="ranking-select__icon" :icon="type.icon"></fa>
             {{type.key}}
           </li>
-        </transition-group>
+        </div>
       </ul>
     </div>
     <div class="ranking-select__options">
-      <div class="ranking-date" v-if="selected_ranking_type === 0|| selected_ranking_type=== 2">
+      <div class="ranking-genre" v-if="selected_ranking_type === 2">
+        <div class="ranking-genre__title">ジャンル</div>
+        <ul class="ranking-genre__list">
+          <li
+            class="ranking-genre__item"
+            @click="genre = item"
+            v-for="(item,index) in genres"
+            v-ripple
+            :key="index"
+            :class="{selected: genre === item}"
+          >{{item}}</li>
+        </ul>
+      </div>
+      <div
+        class="ranking-date"
+        v-if="selected_ranking_type === 0|| selected_ranking_type === 2 || selected_ranking_type === 3"
+      >
+        <div class="ranking-genre__title">時期</div>
         <ul class="ranking-date__list flex-row">
           <li
+            v-ripple
             class="ranking-date__item"
             v-for="(date, index) in sort_type"
             :key="index"
@@ -29,7 +47,12 @@
         </ul>
       </div>
     </div>
-    <ul class="book-list" v-if="selected_ranking_type === 0">
+    <transition-group
+      tag="ul"
+      name="list"
+      class="book-list"
+      v-if="selected_ranking_type === 0||selected_ranking_type === 2"
+    >
       <ranking-item
         :index="index"
         :score="book.sum"
@@ -37,15 +60,15 @@
         v-for="(book, index) in list"
         :key="book.book[0]._id"
       ></ranking-item>
-    </ul>
+    </transition-group>
     <ul class="book-list" v-if="selected_ranking_type === 3">
-      <!-- <ranking-item
+      <ranking-item
         :index="index"
         :score="book.sum"
         :book="book.book[0]"
         v-for="(book, index) in list"
         :key="book.book[0]._id"
-      ></ranking-item>-->
+      ></ranking-item>
     </ul>
     <transition-group name="list" tag="ul" class="book-list" v-if="selected_ranking_type === 1">
       <ranking-item
@@ -80,9 +103,44 @@ export default {
         { key: "週間", value: 7 },
         { key: "月間", value: 31 },
         { key: "年間", value: 365 },
-        { key: "総合", value: "whole" }
+        { key: "累計", value: "whole" }
       ],
-      time_day: 1
+      time_day: 1,
+      genre: "ファンタジー",
+      genres: [
+        "ファンタジー",
+        "恋愛",
+        "文学",
+        "異世界",
+        "空想科学",
+        "SF",
+        "武術",
+        "ミステリー",
+        "サスペンス",
+        "冒険",
+        "アクション",
+        "ノンフィクション",
+        "ホラー",
+        "オカルト",
+        "時代",
+        "歴史",
+        "コメディ",
+        "政治",
+        "スポーツ",
+        "武俠",
+        "経済",
+        "推理",
+        "青春",
+        "学園",
+        "ボーイズラブ",
+        "少女愛",
+        "メカ",
+        "少年",
+        "青年",
+        "音楽",
+        "日常",
+        "ゲーム"
+      ]
     };
   },
   computed: {
@@ -104,6 +162,9 @@ export default {
     time_day: function(val) {
       this.composite_time();
     },
+    genre: function(val) {
+      this.composite_time();
+    },
     selected_ranking_type: function(val) {
       this.changeListType();
     }
@@ -123,17 +184,44 @@ export default {
       }
     },
     async composite_time() {
-      if (this.time_day !== "whole") {
-        await this.$store.dispatch("ranking/fetchRanking", {
-          days: this.time_day,
-          limit: 10,
-          page: 1
-        });
-      } else {
-        await this.$store.dispatch("ranking/fetchRanking", {
-          limit: 10,
-          page: 1
-        });
+      let param = {};
+      switch (this.selected_ranking_type) {
+        case 0:
+          if (this.time_day === "whole") {
+            param = {
+              limit: 10,
+              page: 1
+            };
+          } else {
+            param = {
+              days: this.time_day,
+              limit: 10,
+              page: 1
+            };
+          }
+          await this.$store.dispatch("ranking/fetchRanking", param);
+          break;
+        case 1:
+          break;
+        case 2:
+          if (this.time_day === "whole") {
+            param = {
+              genre: this.genre,
+              limit: 10,
+              page: 1
+            };
+          } else {
+            param = {
+              genre: this.genre,
+              days: this.time_day,
+              limit: 10,
+              page: 1
+            };
+          }
+          await this.$store.dispatch("ranking/fetchGenreRanking", param);
+          break;
+        case 3:
+          break;
       }
     },
     select_menu(key, index) {
@@ -209,17 +297,49 @@ export default {
     }
     &__options {
       width: 100%;
-      display: flex;
       // justify-content: center;
     }
   }
+  .ranking-genre {
+    margin-top: 1rem;
+    user-select: none;
+    &__title {
+      font-size: 1.7rem;
+    }
+    .selected {
+      color: $primary;
+      border-bottom: 2px solid $primary;
+    }
+    &__list {
+      display: flex;
+      overflow: auto;
+      flex-wrap: wrap;
+    }
+    &__item {
+      &:hover {
+        color: $primary;
+        cursor: pointer;
+        border-bottom: 2px solid $primary;
+      }
+      border-bottom: 2px solid rgb(247, 247, 247);
+      font-size: 1.6rem;
+      flex-basis: auto;
+      // min-width: 100%;
+      color: grey;
+      padding: 1rem 1rem;
+      // display: flex;
+    }
+  }
   .ranking-date {
+    margin-top: 1rem;
     .selected {
       border-bottom: 2px solid $secondary;
       color: $secondary;
     }
+    &__title {
+      font-size: 1.7rem;
+    }
     &__list {
-      margin-top: 1rem;
       // margin-bottom: 0.2rem;
       width: 100%;
     }
