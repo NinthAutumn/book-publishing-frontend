@@ -110,6 +110,12 @@ export const mutations = {
   },
   SET_LATEST_BOOKS(state, books) {
     state.latestBooks = books
+  },
+  LOAD_LATEST_BOOKS(state, books) {
+    books.forEach((item) => {
+      state.latestBooks.push(item)
+    })
+
   }
 }
 export const actions = {
@@ -234,6 +240,20 @@ export const actions = {
       const res = await this.$axios.get(`/chapter/latestbooks?limit=${limit}&page=${page}`)
       commit('SET_LATEST_BOOKS', res.data)
       return Promise.resolve()
+    } catch (error) {
+      return Promise.reject(error)
+    }
+  },
+  async fetchMoreLatestBooks({
+    commit
+  }, {
+    limit,
+    page
+  }) {
+    try {
+      const res = await this.$axios.get(`/chapter/latestbooks?limit=${limit}&page=${page}`)
+      commit('LOAD_LATEST_BOOKS', res.data)
+      return Promise.resolve(res.data)
     } catch (error) {
       return Promise.reject(error)
     }

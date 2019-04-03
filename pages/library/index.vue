@@ -38,7 +38,7 @@
         <BookList :history="true" :books="history"></BookList>
       </div>
 
-      <div class="library-profile">
+      <div class="library-profile" v-if="!$device.isMobile">
         <Profile></Profile>
       </div>
     </div>

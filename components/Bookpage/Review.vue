@@ -42,8 +42,8 @@
           :class="{readmore: readMore}"
         ></div>-->
         <div v-if="this.review.content.length > 372" class="buts">
-          <a @click="toggleCollapse" v-if="!readMore" class="reviews-content-text-more">詳細</a>
-          <a @click="toggleCollapse" v-else class="reviews-content-text-more">一部を表示</a>
+          <a @click="toggleCollapse" v-if="!readMore" class="reviews-content-text-more">>>詳細</a>
+          <a @click="toggleCollapse" v-else class="reviews-content-text-more"><<一部を表示</a>
         </div>
       </div>
     </div>

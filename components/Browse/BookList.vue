@@ -77,8 +77,8 @@ export default {
   }
   &__list {
     display: grid;
-    grid-template-columns: repeat(auto-fill, 135px);
-    grid-gap: 15px;
+    grid-template-columns: repeat(auto-fit, minmax(10rem, 13.5rem));
+    grid-gap: 0.5rem;
     #{$self}__item {
       grid-column: auto;
       grid-row: auto;

@@ -1,9 +1,9 @@
 <template>
-  <div class="update-book">
+  <div class="update-book" v-ripple>
     <nuxt-link tag="div" :to="`books/${book._id}`" class="update-book__cover">
       <v-img
         :aspect-ratio="1/1.5"
-        max-width="13rem"
+        min-width="10rem"
         class="update-book__img"
         :src="`https://storage.googleapis.com/theta-images/${book.cover}`"
       ></v-img>
@@ -71,11 +71,12 @@ export default {
       font-size: 1.3rem;
       background-color: rgb(255, 70, 37);
       color: white;
-      bottom: 0;
-      right: 0;
+      top: 0;
+      left: 0;
     }
   }
   &__meta {
+    user-select: none;
     #{$self}__title {
       font-size: 1.35rem;
       max-width: 100%;

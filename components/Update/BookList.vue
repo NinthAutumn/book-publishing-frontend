@@ -41,11 +41,20 @@ export default {
   }
   &__book-list {
     display: grid;
-    grid-template-columns: repeat(auto-fill, 13rem);
+    grid-template-columns: repeat(auto-fill, minmax(10rem, 13rem));
     grid-template-rows: auto;
-    grid-gap: 5px;
+    grid-gap: 0.5rem;
 
     #{$self}__book-item {
+    }
+  }
+  @media screen and(max-width: 500px) {
+    #{$self}__book-list {
+      grid-template-columns: repeat(3, minmax(5rem, 13rem));
+      grid-gap: 3px;
+
+      #{$self}__book-item {
+      }
     }
   }
 }

@@ -8,7 +8,7 @@
             :key="type.key"
             class="ranking-select__item"
             @click="select_menu(type.key,index)"
-            :class="{first: index === 0, last: index === 2,selected:type.selected}"
+            :class="{first: index === 0, last: ranking_type[ranking_type.length - 1].key === type.key,selected:type.selected}"
           >
             <fa class="ranking-select__icon" :icon="type.icon"></fa>
             {{type.key}}
@@ -38,6 +38,15 @@
         :key="book.book[0]._id"
       ></ranking-item>
     </ul>
+    <ul class="book-list" v-if="selected_ranking_type === 3">
+      <!-- <ranking-item
+        :index="index"
+        :score="book.sum"
+        :book="book.book[0]"
+        v-for="(book, index) in list"
+        :key="book.book[0]._id"
+      ></ranking-item>-->
+    </ul>
     <transition-group name="list" tag="ul" class="book-list" v-if="selected_ranking_type === 1">
       <ranking-item
         :index="index"
@@ -61,6 +70,7 @@ export default {
     return {
       ranking_type: [
         { key: "総合", value: 0, selected: true, icon: "layer-group" },
+        { key: "投票", value: 3, selected: false, icon: "bolt" },
         { key: "急上昇中", value: 1, selected: false, icon: "fire" },
         { key: "ジャンル別", value: 2, selected: false, icon: "landmark" }
       ],

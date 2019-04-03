@@ -1,6 +1,6 @@
 <template>
   <div class="book-browse" @mouseenter="menuOpen" @mouseleave="menuClose">
-    <div id="book-browse__container">
+    <div id="book-browse__container" :to="`/books/${book._id}`">
       <div class="book-browse__cover">
         <div class="book-browse__rating flex flex--align flex--center" v-if="book.ratings">
           {{book.ratings.toFixed(2)|| '未定'}}
@@ -9,12 +9,12 @@
         <div class="book-browse__rating flex-row flex--align flex--center" v-else>
           <fa class="book-browse__rating__icon" icon="star"></fa>
         </div>
-        <nuxt-link class="book-img-div" tag="div" :to="'/books/' + book._id">
+        <nuxt-link class="book-browse__image" tag="div" :to="`/books/${book._id}`">
           <v-img
             :src="`https://storage.googleapis.com/theta-images/${book.cover}`"
             alt="Book cover"
             :aspect-ratio="1/1.5"
-            max-width="15rem"
+            min-width="10rem"
           ></v-img>
         </nuxt-link>
         <div
@@ -136,6 +136,24 @@ export default {
   &__author {
     color: grey;
   }
+  &__image {
+    &:hover {
+      cursor: pointer;
+      &::after {
+        position: absolute;
+        background: black;
+        top: 0;
+        left: 0;
+        content: "";
+        opacity: 0.2;
+        display: block;
+        animation: gradualAppearance 200ms ease-out;
+        animation-fill-mode: reverse;
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
   &__rating {
     position: absolute;
     z-index: 100;
@@ -158,23 +176,6 @@ export default {
     width: 13.5rem;
     height: 20.25rem;
     position: relative;
-
-    &:hover {
-      cursor: pointer;
-      &::after {
-        position: absolute;
-        background: black;
-        top: 0;
-        left: 0;
-        content: "";
-        opacity: 0.2;
-        display: block;
-        animation: gradualAppearance 200ms ease-out;
-        animation-fill-mode: reverse;
-        width: 100%;
-        height: 100%;
-      }
-    }
   }
   &__book-img {
     width: 140px;

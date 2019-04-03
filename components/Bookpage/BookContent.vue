@@ -5,7 +5,13 @@
         <transition name="slide-fade" mode="out-in">
           <div v-show="bookSynopsis" class="book-content--text__summary">
             <h4>あらすじ</h4>
-            <p class="book-content--text__summary--text">{{book.synopsis}}</p>
+            <div class="flex-divider"></div>
+            <p v-if="read" class="book-content--text__summary--text">{{book.synopsis|truncate(300)}}</p>
+            <p v-else class="book-content--text__summary--text">{{book.synopsis}}</p>
+            <div class="book-content__truncate-nav" v-if="book.synopsis.length > 299">
+              <div class="book-content__read-more" @click="read=!read" v-if="read">>>詳細</div>
+              <div class="book-content__read-less" @click="read=!read" v-else><<一部を表示</div>
+            </div>
           </div>
         </transition>
         <transition name="slide-fade" mode="out-in">
@@ -21,16 +27,23 @@
 
 <script>
 import Statics from "./Statistics";
+// import clampy from "@clampy-js/vue-clampy";
 export default {
   components: {
     Statics
+  },
+  directives: {
+    // clampy: {
+    //   truncationChar: "........"
+    // }
   },
   props: {
     // book: Object
   },
   data() {
     return {
-      text: ""
+      text: "",
+      read: true
     };
   },
   computed: {
@@ -44,6 +57,15 @@ export default {
   methods: {},
   created() {
     this.text = this.bookmarkedText;
+  },
+  filters: {
+    truncate: (string, number) => {
+      if (string.length > number) {
+        return (string || "").substring(0, number) + "…";
+      } else {
+        return string;
+      }
+    }
   }
 };
 </script>
@@ -61,10 +83,26 @@ export default {
 .book-content {
   width: 100%;
   margin-top: 1rem;
-  height: 19rem;
   overflow: hidden;
   box-sizing: border-box;
   position: relative;
+  &__truncate-nav {
+    display: flex;
+    justify-content: flex-end;
+    font-size: 1.6rem;
+    color: $primary;
+    margin-right: 10px;
+    user-select: none;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+  &__read-more {
+    font-size: inherit;
+  }
+  &__read-less {
+    font-size: inherit;
+  }
   &__buttons {
     // position: absolute;
     display: flex;
@@ -100,7 +138,7 @@ export default {
       }
       &--text {
         // display: none;
-        font-size: 16px;
+        font-size: 1.6rem;
         line-height: 30px;
         font-weight: 300;
         text-align: left;
