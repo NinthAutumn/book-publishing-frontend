@@ -7,6 +7,7 @@
             v-for="(type, index) in ranking_type"
             :key="type.key"
             class="ranking-select__item"
+            v-ripple
             @click="select_menu(type.key,type.value)"
             :class="{first: index === 0, last: ranking_type[ranking_type.length - 1].key === type.key,selected:type.selected}"
           >
@@ -47,36 +48,13 @@
         </ul>
       </div>
     </div>
-    <transition-group
-      tag="ul"
-      name="list"
-      class="book-list"
-      v-if="selected_ranking_type === 0||selected_ranking_type === 2"
-    >
-      <ranking-item
-        :index="index"
-        :score="book.sum"
-        :book="book.book[0]"
-        v-for="(book, index) in list"
-        :key="book.book[0]._id"
-      ></ranking-item>
-    </transition-group>
-    <ul class="book-list" v-if="selected_ranking_type === 3">
-      <ranking-item
-        :index="index"
-        :score="book.sum"
-        :book="book.book[0]"
-        v-for="(book, index) in list"
-        :key="book.book[0]._id"
-      ></ranking-item>
-    </ul>
-    <transition-group name="list" tag="ul" class="book-list" v-if="selected_ranking_type === 1">
+    <transition-group name="list" tag="ul" class="book-list">
       <ranking-item
         :index="index"
         trending
         :score="book.sum"
         :book="book.book[0]"
-        v-for="(book, index) in trending"
+        v-for="(book, index) in list"
         :key="book.book[0]._id"
       ></ranking-item>
     </transition-group>
@@ -157,6 +135,13 @@ export default {
       page: 1,
       days: 1
     });
+    if (this.$device.isMobile) {
+      this.ranking_type = [
+        { key: "総合", value: 0, selected: true, icon: "layer-group" },
+        { key: "投票", value: 3, selected: false, icon: "bolt" },
+        { key: "急上昇中", value: 1, selected: false, icon: "fire" }
+      ];
+    }
   },
   watch: {
     time_day: function(val) {
@@ -166,21 +151,13 @@ export default {
       this.composite_time();
     },
     selected_ranking_type: function(val) {
-      this.changeListType();
+      this.composite_time();
     }
   },
   methods: {
     async changeListType() {
       if (this.selected_ranking_type === 0) {
       } else if (this.selected_ranking_type === 1) {
-        if (this.trending.length > 0) {
-          return;
-        }
-        await this.$store.dispatch("ranking/fetchTrending", {
-          days: this.time_day,
-          limit: 10,
-          page: 1
-        });
       }
     },
     async composite_time() {
@@ -202,6 +179,14 @@ export default {
           await this.$store.dispatch("ranking/fetchRanking", param);
           break;
         case 1:
+          if (this.trending.length > 0) {
+            return;
+          }
+          await this.$store.dispatch("ranking/fetchTrending", {
+            days: this.time_day,
+            limit: 10,
+            page: 1
+          });
           break;
         case 2:
           if (this.time_day === "whole") {
@@ -240,6 +225,11 @@ export default {
 </script>
 
 <style lang="scss">
+@media screen and (max-width: 400px) {
+  .ranking-select__container {
+    // font-size: 8px !important;
+  }
+}
 #ranking-list {
   display: flex;
   justify-content: center;
@@ -254,13 +244,17 @@ export default {
   }
   .ranking-select {
     user-select: none;
+    $self: &;
+
     &__icon {
       margin-right: 5px;
     }
     &__list {
       display: flex;
       justify-content: center;
-      height: 45px;
+      max-height: 45px;
+      font-size: 10px;
+
       .selected {
         color: white;
         background-color: #f4648a;
@@ -278,14 +272,18 @@ export default {
       display: flex;
       border-radius: 10px;
       box-shadow: 1px 1px 5px rgb(243, 243, 243);
+      font-size: 10px;
     }
     &__item {
-      height: 100%;
-      width: 14rem;
-      font-size: 1.6rem;
+      max-width: 14rem;
+      min-width: 10rem;
+      min-height: 4rem;
+      max-height: 4.5rem;
+      padding: 0 0.5rem;
       display: flex;
       align-items: center;
       justify-content: center;
+      font-size: 1.6em;
 
       &:hover {
         user-select: none;

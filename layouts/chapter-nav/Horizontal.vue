@@ -209,7 +209,7 @@ export default {
     }
     &__chapter {
       // max-width: 30em;
-      max-width: 100%;
+      max-width: 90rem;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;

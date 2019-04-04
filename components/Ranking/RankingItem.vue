@@ -62,7 +62,7 @@
           </no-ssr>
         </div>
       </div>
-      <div v-if="!trending" class="book-score">{{score}}</div>
+      <div v-if="score" class="book-score">{{score}}</div>
     </nuxt-link>
   </div>
 </template>

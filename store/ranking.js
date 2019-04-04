@@ -62,7 +62,7 @@ export const actions = {
     page
   }) {
     await this.$axios.get(`/analytic/book/trending?days=${days}&limit=${limit}&page=${page}`).then((res) => {
-      commit('SET_TRENDING_LIST', res.data)
+      commit('SET_RANKING_LIST', res.data)
     })
   }
 }

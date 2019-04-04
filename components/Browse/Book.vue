@@ -15,6 +15,7 @@
             alt="Book cover"
             :aspect-ratio="1/1.5"
             min-width="10rem"
+            max-width="15rem"
           ></v-img>
         </nuxt-link>
         <div

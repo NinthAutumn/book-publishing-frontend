@@ -4,7 +4,7 @@
       <header
         class="chapter-title__item"
         :style="{'font-family':fontStyle}"
-      >{{`第${$store.state.chapter.chapter.index}話:${$store.state.chapter.chapter.title}`}}</header>
+      >{{`第${$store.state.chapter.chapter.index}話: ${$store.state.chapter.chapter.title}`}}</header>
     </div>
     <div
       class="chapter-announcement chapter-announcement--header"
