@@ -1,6 +1,6 @@
 <template>
   <div class="swiping-page" :class="{'swiping-page--mobile': $device.isMobile}">
-    <div v-if="trendings" v-swiper:mySwiper="swiperOption">
+    <div v-if="trendings&&!$device.isMobile" v-swiper:mySwiper="swiperOption">
       <div class="swiper-wrapper">
         <div class="swiper-slide" v-for="(book,index) in trendings" :key="book.id">
           <Book :index="index" :book="book.book[0]" :size="size = 'big'"></Book>
@@ -13,7 +13,14 @@
         <div class="swiper-button-next swiper-button-black" slot="button-next"></div>
       </div>
     </div>
-    <div v-swiper:mySwiper="swiperOption">
+    <div v-if="trendings&&$device.isMobile" v-swiper:mySwiper="swiperMobile">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide" v-for="(book,index) in trendings" :key="book.id">
+          <Book :index="index" :book="book.book[0]" :size="size = 'big'"></Book>
+        </div>
+      </div>
+    </div>
+    <div v-if="!trendings&&!$device.isMobile" v-swiper:mySwiper="swiperOption">
       <div class="swiper-wrapper">
         <div class="swiper-slide" v-for="(book,index) in books" :key="book.id">
           <Book :index="index" :book="book" :size="size = 'big'"></Book>
@@ -24,6 +31,13 @@
       </div>
       <div class="background" v-if="!$device.isMobile">
         <div class="swiper-button-next swiper-button-black" slot="button-next"></div>
+      </div>
+    </div>
+    <div v-if="!trendings&&$device.isMobile" v-swiper:mySwiper="swiperMobile">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide" v-for="(book,index) in books" :key="book.id">
+          <Book :index="index" :book="book" :size="size = 'big'"></Book>
+        </div>
       </div>
     </div>
   </div>
@@ -38,12 +52,21 @@ export default {
   data() {
     return {
       // slidesNumber: 7,
+      swiperMobile: {
+        slidesPerView: 3,
+        spaceBetween: 5,
+        freeMode: true,
+        mousewheel: {
+          invert: true,
+          sensitivity: 1,
+          forceToAxis: true
+        },
+        on: {},
+        breakpoints: {}
+      },
       swiperOption: {
-        // loop: true,
         slidesPerView: "auto",
-        // centeredSlides: true,
         spaceBetween: 15,
-        // effect: "coverflow",
         freeMode: true,
         mousewheel: {
           invert: true,
@@ -69,11 +92,11 @@ export default {
 .swiping-page--mobile {
   .swiper-slide {
     min-width: 10rem !important;
-    max-width: 12rem !important;
+    max-width: 15rem !important;
   }
   #book-card {
     min-width: 10rem !important;
-    max-width: 12rem !important;
+    max-width: 15rem !important;
   }
   .book-title {
     a {
@@ -84,23 +107,19 @@ export default {
 
   .book-cover {
     border-radius: 3px;
-    min-width: 10rem !important;
-    max-width: 12rem !important;
-    min-height: 15rem !important;
-    max-height: 18rem !important;
   }
   .book-homepage {
-    min-width: 30rem !important;
-    max-width: 32rem !important;
-    min-height: 20rem !important;
-    max-height: 22rem !important;
+    // min-width: 30rem !important;
+    // max-width: 32rem !important;
+    // min-height: 20rem !important;
+    // max-height: 22rem !important;
   }
   .book-img {
     border-radius: 3px;
-    min-width: 10rem !important;
-    max-width: 12rem !important;
-    min-height: 15rem !important;
-    max-height: 18rem !important;
+    // min-width: 10rem !important;
+    // max-width: 12rem !important;
+    // min-height: 15rem !important;
+    // max-height: 18rem !important;
     // width: 10rem !important;
     // height: 15rem !important;
   }

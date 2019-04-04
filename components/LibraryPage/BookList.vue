@@ -99,7 +99,7 @@ export default {
   }
   &__list {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(10rem, 15rem));
+    grid-template-columns: repeat(auto-fill, minmax(10rem, 13.5rem));
     grid-gap: 5px;
     #{$self}__item {
       grid-column: auto;

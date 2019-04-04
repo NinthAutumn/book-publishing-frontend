@@ -12,7 +12,6 @@ export const state = () => ({
   // books: [],
   recommended: [],
   books: {
-
     trending: []
   },
   view: "",

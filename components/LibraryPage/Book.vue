@@ -7,7 +7,7 @@
           :src="`https://storage.googleapis.com/theta-images/${book.cover}`"
           alt="Book cover"
           :aspect-ratio="1/1.5"
-          max-width="15rem"
+          max-width="13.5rem"
         ></v-img>
       </div>
       <div class="book-library__text-info">
@@ -65,14 +65,14 @@ export default {
 </script>
 <style lang="scss">
 .book-library {
-  max-width: 15rem;
+  max-width: 13.5rem;
   &__container {
-    max-width: 15rem;
+    max-width: 13.5rem;
     position: relative;
   }
   &__cover {
     margin: 0 !important;
-    max-width: 15rem;
+    max-width: 13.5rem;
     position: relative;
     &:hover {
       cursor: pointer;
@@ -92,7 +92,7 @@ export default {
     }
   }
   &__book-img {
-    max-width: 15rem;
+    max-width: 13rem;
     position: relative;
   }
   &__book-title {

@@ -84,6 +84,7 @@ export default {
   transition: 300ms;
 } */
 .home-page {
+  user-select: none;
   /* position: relative; */
   /* display: grid; */
   /* grid-template-columns:  */

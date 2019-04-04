@@ -1,5 +1,5 @@
 <template>
-  <div class="book-homepage">
+  <div class="book-homepage" v-ripple>
     <div @mouseenter="menuOpen" @mouseleave="menuClose" id="book-card" class="big">
       <div class="book-cover">
         <span class="star-rating"></span>
@@ -7,7 +7,7 @@
           <v-img
             :src="`https://storage.googleapis.com/theta-images/${book.cover}`"
             :aspect-ratio="1/1.5"
-            max-width="155rem"
+            max-width="15rem"
             alt="Book cover"
           ></v-img>
         </nuxt-link>
@@ -119,7 +119,7 @@ export default {
   flex-direction: column;
   // border-radius: 5px;
   // margin-right: 2rem;
-  width: 140px;
+  max-width: 100%;
   /* height: 245px; */
   position: relative;
   .book-rating {
@@ -143,7 +143,7 @@ export default {
       top: 0px;
       background-color: white;
       z-index: 2000;
-      width: 120px;
+      width: 12rem;
       &--left {
       }
       box-shadow: 1px 1px 5px 0px rgb(219, 219, 219);
@@ -164,11 +164,7 @@ export default {
     }
   }
   .book-cover {
-    width: 140px;
     // min-height: 180px;
-    height: 210px;
-    -o-object-fit: contain;
-    object-fit: contain;
     // width: 16.5rem;
     // height: 24.5rem;
     position: relative;
@@ -198,11 +194,6 @@ export default {
       }
     }
     .book-img {
-      min-width: 120px;
-      max-height: 140px;
-      min-height: 180px;
-      max-height: 210px;
-
       /* border-radius: 10px; */
 
       // border-radius: 5px;
