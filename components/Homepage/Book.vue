@@ -13,7 +13,7 @@
         </nuxt-link>
         <div
           @click.stop="menu_modal=true"
-          v-if="menu"
+          v-if="menu&&!$device.isMobile"
           class="book-menu flex-row flex--align flex--center"
         >
           <fa icon="ellipsis-v"></fa>

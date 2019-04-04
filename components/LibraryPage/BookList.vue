@@ -99,11 +99,16 @@ export default {
   }
   &__list {
     display: grid;
-    grid-template-columns: repeat(auto-fill, 135px);
-    grid-gap: 15px;
+    grid-template-columns: repeat(auto-fill, minmax(10rem, 15rem));
+    grid-gap: 5px;
     #{$self}__item {
       grid-column: auto;
       grid-row: auto;
+    }
+  }
+  @media screen and (max-width: 400px) {
+    &__list {
+      grid-template-columns: repeat(3, minmax(5rem, 15rem));
     }
   }
 }

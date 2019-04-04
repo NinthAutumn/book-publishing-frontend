@@ -1,8 +1,8 @@
 <template>
-  <div class="book-browse" @mouseenter="menuOpen" @mouseleave="menuClose">
+  <div class="book-browse" @mouseenter="menuOpen" @mouseleave="menuClose" v-ripple>
     <div id="book-browse__container" :to="`/books/${book._id}`">
       <div class="book-browse__cover">
-        <div class="book-browse__rating flex flex--align flex--center" v-if="book.ratings">
+        <div class="book-browse__rating flex-row flex--align flex--center" v-if="book.ratings">
           {{book.ratings.toFixed(2)|| '未定'}}
           <fa class="book-browse__rating__icon" icon="star"></fa>
         </div>
@@ -14,7 +14,6 @@
             :src="`https://storage.googleapis.com/theta-images/${book.cover}`"
             alt="Book cover"
             :aspect-ratio="1/1.5"
-            min-width="10rem"
             max-width="15rem"
           ></v-img>
         </nuxt-link>
@@ -27,9 +26,9 @@
         </div>
         <transition name="grow-shrink">
           <div class="book-menu__modal" v-if="menu_modal" v-click-outside="menuModalClose">
-            <div class="book-menu__modal__options flex--center flex flex--align">ブックマーク</div>
-            <div class="book-menu__modal__options flex--center flex flex--align">再読列記に保存</div>
-            <div class="book-menu__modal__options flex--center flex flex--align">後で読むに保存</div>
+            <div class="book-menu__modal__options flex--center flex-row flex--align">ブックマーク</div>
+            <div class="book-menu__modal__options flex--center flex-row flex--align">再読列記に保存</div>
+            <div class="book-menu__modal__options flex--center flex-row flex--align">後で読むに保存</div>
           </div>
         </transition>
       </div>
@@ -129,9 +128,7 @@ export default {
   }
 }
 .book-browse {
-  width: 13.5rem;
   &__container {
-    width: 13.5rem;
     position: relative;
   }
   &__author {
@@ -174,13 +171,10 @@ export default {
   }
   &__cover {
     margin: 0 !important;
-    width: 13.5rem;
-    height: 20.25rem;
+
     position: relative;
   }
   &__book-img {
-    width: 140px;
-    height: 210px;
     position: relative;
   }
   &__book-title {

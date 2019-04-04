@@ -1,5 +1,8 @@
 <template>
   <div class="home-page">
+    <div class="search-books" v-if="$device.isMobile">
+      <search-bar></search-bar>
+    </div>
     <div class="head-banner">
       <BannerList></BannerList>
     </div>
@@ -30,7 +33,7 @@ import Ranking from "@/components/Homepage/Ranking";
 import BlobOne from "@/assets/svg/blob.svg";
 import BlobTwo from "@/assets/svg/blob2.svg";
 import BannerList from "@/components/Homepage/BannerList";
-
+import SearchBar from "@/components/Navigation/SearchBar";
 export default {
   components: {
     BooksList,
@@ -38,7 +41,8 @@ export default {
     Ranking,
     BlobOne,
     BlobTwo,
-    BannerList
+    BannerList,
+    SearchBar
   },
   methods: {},
 
@@ -61,7 +65,7 @@ export default {
   },
   computed: {
     trending() {
-      return this.$store.getters["ranking/getTrendingList"];
+      return this.$store.getters["ranking/getRankingList"];
     }
   },
   auth: false
@@ -83,6 +87,17 @@ export default {
   /* position: relative; */
   /* display: grid; */
   /* grid-template-columns:  */
+  .search-books {
+    width: 100%;
+    display: flex;
+    .search-form {
+      width: 100vw !important;
+    }
+    .search-bar {
+      flex-grow: 1;
+      width: 100%;
+    }
+  }
 }
 .main-books-list {
   display: flex;

@@ -3,7 +3,7 @@
     <div class="library__header-wrapper flex flex--align">
       <header class="library__header">ライブラリー</header>
     </div>
-    <div class="library__nav flex" @mouseleave="navLineOut">
+    <div class="library__nav flex-row" @mouseleave="navLineOut" v-if="!$device.isMobile">
       <div
         @click="navSelect('Bookmark')"
         @mouseenter="navLine('Bookmark')"
@@ -20,8 +20,18 @@
 
       <i class="i__line" :style="line"></i>
     </div>
-    <div class="flex-divider flex flex-row flex--between">
-      <div v-if="selectedTabName === 'bookmark'" class="library-bookmark">
+    <div v-else class="library-nav__list library-nav__list--mobile flex-row">
+      <div
+        v-for="(item,index) in nav_list"
+        :key="index"
+        :class="{'library-nav__item--selected': selected_item === item}"
+        @click="change_tab(item)"
+        class="library-nav__item library-nav__item--mobile"
+        v-ripple
+      >{{item}}</div>
+    </div>
+    <div class="flex-divider flex-row flex--between">
+      <div v-if="selectedTabName === 'bookmark'&& selected_item!== '歴史'" class="library-bookmark">
         <div class="library-bookmark__select flex flex--align flex--right">
           <Select
             v-model="order"
@@ -34,7 +44,7 @@
         </div>
         <BookList :trendings="true" :books="bookmarks"></BookList>
       </div>
-      <div class="library-history" v-if="selectedTabName=== 'history'">
+      <div class="library-history" v-if="selectedTabName=== 'history'||selected_item=== '歴史'">
         <BookList :history="true" :books="history"></BookList>
       </div>
 
@@ -67,7 +77,9 @@ export default {
       },
       selectedTabName: "bookmark",
       sortTypes: ["最近読んだ順", "入れた順", "名前順"],
-      order: "入れた順"
+      order: "入れた順",
+      selected_item: "再生リスト",
+      nav_list: ["再生リスト", "レビュー", "購入済み", "歴史"]
     };
   },
   watch: {
@@ -167,6 +179,12 @@ export default {
           };
           break;
       }
+    },
+    async change_tab(item) {
+      this.selected_item = item;
+      if (item === "歴史") {
+        await this.$store.dispatch("library/getHistory");
+      }
     }
   },
   async fetch({ store }) {
@@ -211,6 +229,11 @@ export default {
       font-size: 16px !important;
     }
   }
+  @media screen and (max-width: 400px) {
+    &-bookmark {
+      margin: 0 !important;
+    }
+  }
   &-bookmark {
     margin-right: 10px;
     flex-grow: 1;
@@ -224,6 +247,28 @@ export default {
   }
   &__header {
     font-size: 20px;
+  }
+}
+.library-nav {
+  &__list {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 2px solid rgb(243, 243, 243);
+
+    margin-bottom: 1rem;
+  }
+  &__item {
+    padding: 0.5rem 0;
+    margin-right: 0.5rem;
+    font-size: 1.6rem;
+    &:active {
+      color: $primary;
+      border-bottom: 2px solid $primary;
+    }
+    &--selected {
+      color: $primary;
+      border-bottom: 2px solid $primary;
+    }
   }
 }
 </style>

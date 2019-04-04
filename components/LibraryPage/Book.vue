@@ -12,7 +12,7 @@
       </div>
       <div class="book-library__text-info">
         <p v-clampy="3" class="book-library__book-title full" ref="texting">{{book.title}}</p>
-        <div class="book-library__more-info flex flex--align">
+        <div class="book-library__more-info flex-row flex--align">
           <!-- <div class="book-library__author">{{book.author}}</div> -->
           <span
             class="book-library__progress"
@@ -65,15 +65,14 @@ export default {
 </script>
 <style lang="scss">
 .book-library {
-  width: 135px;
+  max-width: 15rem;
   &__container {
-    width: 135px;
+    max-width: 15rem;
     position: relative;
   }
   &__cover {
     margin: 0 !important;
-    width: 14rem;
-    height: 21rem;
+    max-width: 15rem;
     position: relative;
     &:hover {
       cursor: pointer;
@@ -93,8 +92,7 @@ export default {
     }
   }
   &__book-img {
-    width: 140px;
-    height: 210px;
+    max-width: 15rem;
     position: relative;
   }
   &__book-title {

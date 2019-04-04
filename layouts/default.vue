@@ -11,7 +11,7 @@
     </div>
     <div class="is-mobile" v-else>
       <transition name="slide-right">
-        <VerticalRightMobile v-touch:swipe.left="swipeLeft" v-if="mvLeft"></VerticalRightMobile>
+        <VerticalRightMobile :user="user" v-touch:swipe.left="swipeLeft" v-if="mvLeft"></VerticalRightMobile>
       </transition>
       <nuxt class="mobile-nuxt" v-touch:swipe.right="swipeRight"></nuxt>
     </div>
@@ -38,7 +38,11 @@ export default {
       links: ["Home", "About Us", "Team", "Services", "Blog", "Contact Us"]
     };
   },
-  computed: {},
+  computed: {
+    user() {
+      return this.$store.getters.loggedInUser;
+    }
+  },
   watch: {},
   methods: {
     dropOff() {

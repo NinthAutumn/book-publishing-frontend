@@ -1,13 +1,16 @@
 <template>
   <div class="browse-page">
-    <div class="browse-page__header flex flex--align">
-      <blob class="header-blob"></blob>
+    <div
+      class="browse-page__header flex-row flex--align"
+      :class="{'browse-page__header--mobile':$device.isMobile}"
+    >
+      <blob v-if="!$device.isMobile" class="header-blob"></blob>
       <header>作品を探す</header>
     </div>
     <div class="flex-divider browse-page__section flex">
       <div class="flex-divider" style="flex-grow:1;">
         <div class="browse-page__sorting-list flex">
-          <div class="flex-divider flex">
+          <div class="flex-divider flex-row">
             <div class="browse-page__sort-type">
               <Select
                 :width="100"
@@ -30,7 +33,7 @@
               ></Select>
             </div>
           </div>
-          <div class="flex-divider flex flex--right" style="width:100%;">
+          <div class="flex-divider flex-row flex--right" style="width:100%;">
             <div class="browse-page__filter-genre">
               <Select
                 v-model="selected_genre"
@@ -46,7 +49,7 @@
             <button
               class="browse-page__open-tags flex-row flex--align flex--center"
               @click="openTag"
-              v-if="!tag_search"
+              v-if="!tag_search&&!$device.isMobile"
             >
               <fa class="browse-page__open-tags__icon" icon="expand"></fa>タグで探す
             </button>
@@ -228,6 +231,9 @@ export default {
   }
   &__header {
     height: 100px;
+    &--mobile {
+      height: 100% !important;
+    }
   }
   header {
     font-size: 20px;

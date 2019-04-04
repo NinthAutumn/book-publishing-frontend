@@ -7,10 +7,11 @@
       >{{index + 1}}</div>
       <div class="book-cover">
         <v-img
-          class="book-cover__img"
           :src="`https://storage.googleapis.com/theta-images/${book.cover}`"
+          alt="Book cover"
+          :aspect-ratio="1/1.5"
+          max-width="15rem"
         ></v-img>
-        <img>
       </div>
       <div class="book-meta">
         <div class="book-title">
@@ -142,15 +143,21 @@ export default {
   .other {
     // background-color: #11c6ff7a;
   }
+  @media screen and (max-width: 400px) {
+    .book-cover {
+      max-width: 13rem !important;
+      min-width: 7rem !important;
+    }
+  }
   .book-cover {
-    width: 100px;
-    height: 150px;
-    overflow: hidden;
     border-radius: 10px;
+    max-width: 15rem;
+    min-width: 10rem;
+    overflow: hidden;
+
     &__img {
+      max-width: 15rem;
       border-radius: 10px;
-      width: 100px;
-      height: 150px;
       transition: 300ms;
       &:hover {
         transform: scale(1.1);

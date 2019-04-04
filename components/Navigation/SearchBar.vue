@@ -50,6 +50,24 @@ export default {
 <style lang="scss" >
 .search-bar {
   /* display: flex; */
+  .search-form {
+    height: 32px;
+    // border-radius: 10px;
+    /* padding: 0 2px; */
+    display: flex;
+    align-items: center;
+    min-width: 45vw;
+    max-width: 100%;
+    /* position: relative; */
+    border: 1px solid $primary;
+    animation: stay 200ms ease-out 1s;
+    transition: height 200ms ease-out, width 200ms ease-out;
+    position: relative;
+
+    &:focus-within,
+    &:hover {
+    }
+  }
 }
 .search-input {
   height: 100%;
@@ -67,24 +85,6 @@ export default {
   &:hover {
     // font-size: 16px;
     // transition: 200ms;
-  }
-}
-
-.search-form {
-  height: 32px;
-  // border-radius: 10px;
-  /* padding: 0 2px; */
-  display: flex;
-  align-items: center;
-  width: 45vw;
-  /* position: relative; */
-  border: 1px solid $primary;
-  animation: stay 200ms ease-out 1s;
-  transition: height 200ms ease-out, width 200ms ease-out;
-  position: relative;
-
-  &:focus-within,
-  &:hover {
   }
 }
 

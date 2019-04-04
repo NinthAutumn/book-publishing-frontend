@@ -1,12 +1,7 @@
 <template>
   <div class="divider chapter-wrapper">
     <main class="divider chapter-container">
-      <!-- <no-ssr v-if="$device.isMobile">
-        <infinite-loading direction="top" @infinite="prevChapter"></infinite-loading>
-      </no-ssr>-->
-      <!-- <VuePullRefresh :on-refresh="prevChapter"></VuePullRefresh> -->
       <Chapter></Chapter>
-
       <CommentList v-if="!$device.isMobile"></CommentList>
       <no-ssr v-if="$device.isMobile">
         <infinite-loading direction="bottom" @infinite="nextChapter"></infinite-loading>
