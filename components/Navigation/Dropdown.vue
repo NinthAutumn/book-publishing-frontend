@@ -28,6 +28,13 @@
             v-text="item.title"
           ></div>
           <nuxt-link
+            v-else-if="item.title === 'プロフィール'"
+            :to="item.link + user._id"
+            tag="div"
+            class="profile-dropdown__nav-link flex flex--align"
+            v-text="item.title"
+          ></nuxt-link>
+          <nuxt-link
             v-else
             :to="item.link"
             tag="div"
@@ -49,21 +56,22 @@ export default {
   async mounted() {
     await this.$store.dispatch("wallet/wealth");
   },
+  computed: {
+    user() {
+      return this.$store.getters.loggedInUser;
+    }
+  },
   data() {
     return {
       navList: [
-        { title: "プロフィール", link: "/users/profile" },
+        { title: "プロフィール", link: "/users/" },
         { title: "ダッシュボード", link: "/dashboard" },
         { title: "設定", link: "/users/setting" },
         { title: "ログアウト", link: "/home" }
       ]
     };
   },
-  computed: {
-    user() {
-      return this.$store.getters.loggedInUser;
-    }
-  },
+
   methods: {
     async logOut() {
       await this.$auth.logout();

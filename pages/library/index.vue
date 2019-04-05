@@ -1,5 +1,5 @@
 <template>
-  <div class="library">
+  <div class="library page-padding">
     <div class="library__header-wrapper flex flex--align">
       <header class="library__header">ライブラリー</header>
     </div>

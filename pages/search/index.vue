@@ -1,5 +1,5 @@
 <template>
-  <div id="search">
+  <div id="search " class="page-padding">
     <ul>
       <li class="search-book-item" v-for="(book, index) in searchBooks" :key="index">
         <Books :book="book"></Books>

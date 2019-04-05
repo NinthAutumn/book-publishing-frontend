@@ -3,7 +3,8 @@ export const state = () => ({
   fontFamily: "'IBM Plex Sans', 'Helvetica Neue', 'Segoe UI', Helvetica, Verdana, Arial, sans-serif",
   theme: '',
   fontSize: 16,
-  bookmarkInbox: []
+  bookmarkInbox: [],
+  user: {}
 })
 
 export const getters = {
@@ -15,6 +16,9 @@ export const getters = {
   },
   getFontSize: (state) => {
     return state.fontSize
+  },
+  getUserProfile: (state) => {
+    return state.user
   }
 }
 
@@ -39,6 +43,9 @@ export const mutations = {
   },
   GET_BOOKMARK_UPDATE: (state, update) => {
     state.bookmarkInbox = update
+  },
+  SET_USER_PROFILE: (state, user) => {
+    state.user = user
   }
 }
 export const actions = {
@@ -83,6 +90,21 @@ export const actions = {
 
     }
   },
+  async fetchUser({
+    commit
+  }, {
+    userId
+  }) {
+    try {
+      const res = await this.$axios.get(`/user/show?userId=${userId}`)
+      commit('SET_USER_PROFILE', res.data)
+      Promise.resolve(res)
+    } catch (error) {
+      Promise.reject(error)
+    }
+
+
+  }
   // async signUpGoogle({
   //   commit
   // }){

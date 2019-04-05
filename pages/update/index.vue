@@ -1,5 +1,5 @@
 <template>
-  <div class="update-page">
+  <div class="update-page page-padding">
     <div class="update-page__title">
       <fa class="update-page__title--icon" icon="globe"></fa>更新された小説
     </div>

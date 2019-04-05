@@ -1,5 +1,5 @@
 <template>
-  <div class="home-page">
+  <div class="home-page page-padding">
     <div class="search-books" v-if="$device.isMobile">
       <search-bar></search-bar>
     </div>

@@ -78,11 +78,11 @@ export default {
 .nuxt-pages .menu-active {
   margin-left: 240px;
   margin-top: 50px;
-  padding: 10px 50px;
+  // padding: 10px 50px;
   position: relative;
 }
 .nuxt-pages .menu-inactive {
-  padding: 10px 60px;
+  // padding: 10px 60px;
   position: relative;
   margin-top: 50px;
 }

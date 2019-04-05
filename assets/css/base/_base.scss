@@ -44,6 +44,16 @@ body {
   // background: black;
 }
 
+.page-padding {
+  padding: 10px 50px;
+}
+
+@media screen and (max-width: 1136px) {
+  .page-padding {
+    padding: 10px 0 !important;
+  }
+}
+
 @media (prefers-color-scheme: dark) {
 
   /* Overrides for Dark Mode. */

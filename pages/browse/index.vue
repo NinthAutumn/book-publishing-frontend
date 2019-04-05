@@ -1,5 +1,5 @@
 <template>
-  <div class="browse-page">
+  <div class="browse-page page-padding">
     <div
       class="browse-page__header flex-row flex--align"
       :class="{'browse-page__header--mobile':$device.isMobile}"

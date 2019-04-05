@@ -1,5 +1,5 @@
 <template>
-  <div class="ranking-main">
+  <div class="ranking-main page-padding">
     <header class="ranking-header">
       <h3 class="ranking-header__text">
         <fa class="ranking-header__icon" icon="crown"></fa>ランキング
@@ -34,7 +34,6 @@ export default {
     font-weight: 400;
     display: flex;
     align-items: center;
-    
   }
 }
 

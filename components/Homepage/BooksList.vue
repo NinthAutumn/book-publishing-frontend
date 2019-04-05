@@ -128,7 +128,7 @@ export default {
   // z-index: -10;
 }
 .swiper-slide {
-  width: 150px;
+  width: 14rem;
 }
 .main-books {
   width: 100%;

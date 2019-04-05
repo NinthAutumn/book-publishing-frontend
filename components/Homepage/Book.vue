@@ -7,7 +7,7 @@
           <v-img
             :src="`https://storage.googleapis.com/theta-images/${book.cover}`"
             :aspect-ratio="1/1.5"
-            max-width="15rem"
+            max-width="14rem"
             alt="Book cover"
           ></v-img>
         </nuxt-link>
