@@ -184,7 +184,7 @@ export default {
           commentId: this.comment._id,
           type: "like"
         });
-        this.likeNumber = this.comment - 1;
+        this.likeNumber--;
       } else {
         this.liked = true;
         if (this.disliked) {

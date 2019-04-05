@@ -1,5 +1,5 @@
 <template>
-  <main class="book" :class="{'book--mobile': $device.isMobile}">
+  <main class="book page-padding" :class="{'book--mobile': $device.isMobile}">
     <div class="book__container">
       <v-img
         class="book__cover"

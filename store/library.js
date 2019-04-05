@@ -46,7 +46,7 @@ export const mutations = {
   SORT_BY_DATE(state) {
     state.bookmarks = _.orderBy(state.bookmarks, function (item) {
       return item.insertedDate
-    }, 'desc')
+    }, 'asc')
 
   },
   SORT_BY_NAME(state) {

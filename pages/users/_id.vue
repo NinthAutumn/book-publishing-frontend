@@ -1,7 +1,7 @@
 <template>
   <div class="user-profile">
-    <profile-nav :user="user"></profile-nav>
-    <user-content :user="user"></user-content>
+    <profile-nav :owner="owner" :user="user"></profile-nav>
+    <user-content :owner="owner" :user="user"></user-content>
   </div>
 </template>
 
@@ -20,6 +20,12 @@ export default {
   computed: {
     user() {
       return this.$store.getters["user/getUserProfile"];
+    },
+    owner() {
+      return (
+        this.$store.getters["user/getUserProfile"]._id ===
+        this.$store.getters["loggedInUser"]._id
+      );
     }
   }
 };

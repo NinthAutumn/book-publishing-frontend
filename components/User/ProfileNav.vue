@@ -26,7 +26,8 @@
 <script>
 export default {
   props: {
-    user: Object
+    user: Object,
+    owner: Boolean
   },
   data() {
     return {
