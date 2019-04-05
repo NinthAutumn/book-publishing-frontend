@@ -17,6 +17,7 @@
       </div>
       <div class="profile-content__book-list">
         <div class="profile-content__title">作品リスト</div>
+        <book-list :books="books"></book-list>
       </div>
       <div class="profile-content__activity">
         <div class="profile-content__title">アクティビティー</div>
@@ -26,10 +27,15 @@
 </template>
 
 <script>
+import BookList from "./BookList";
 export default {
   props: {
     user: Object,
-    owner: Boolean
+    owner: Boolean,
+    books: Array
+  },
+  components: {
+    BookList
   },
   data() {
     return {

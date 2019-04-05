@@ -1,7 +1,7 @@
 <template>
   <div class="user-profile">
     <profile-nav :owner="owner" :user="user"></profile-nav>
-    <user-content :owner="owner" :user="user"></user-content>
+    <user-content :books="books" :owner="owner" :user="user"></user-content>
   </div>
 </template>
 
@@ -22,10 +22,17 @@ export default {
       return this.$store.getters["user/getUserProfile"];
     },
     owner() {
-      return (
-        this.$store.getters["user/getUserProfile"]._id ===
-        this.$store.getters["loggedInUser"]._id
-      );
+      if (this.$store.getters["isLoggedIn"]) {
+        return (
+          this.$store.getters["user/getUserProfile"]._id ===
+          this.$store.getters["loggedInUser"]._id
+        );
+      } else {
+        return false;
+      }
+    },
+    books() {
+      return this.$store.getters["user/getUserBooks"];
     }
   }
 };

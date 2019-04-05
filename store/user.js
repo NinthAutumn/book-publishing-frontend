@@ -4,7 +4,7 @@ export const state = () => ({
   theme: '',
   fontSize: 16,
   bookmarkInbox: [],
-  user: {}
+  user: {},
 })
 
 export const getters = {
@@ -19,11 +19,14 @@ export const getters = {
   },
   getUserProfile: (state) => {
     return state.user
+  },
+  getUserBooks: (state) => {
+    return state.books
   }
 }
 
 export const mutations = {
-  USERS_BOOKS(state, books) {
+  SET_USER_BOOKS(state, books) {
     state.books = books
   },
   LOADING: (state) => {
@@ -96,8 +99,9 @@ export const actions = {
     userId
   }) {
     try {
-      const res = await this.$axios.get(`/user/show?userId=${userId}`)
-      commit('SET_USER_PROFILE', res.data)
+      const res = await this.$axios.get(`/user/profile?userId=${userId}`)
+      commit('SET_USER_PROFILE', res.data.user)
+      commit('SET_USER_BOOKS', res.data.books)
       Promise.resolve(res)
     } catch (error) {
       Promise.reject(error)
