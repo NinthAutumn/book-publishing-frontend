@@ -88,16 +88,15 @@ export default {
 }
 @media screen and (max-width: 1136px) {
   .nuxt-pages .menu-active {
-    padding: 10px 0 !important;
     /* transition: 300ms !important; */
     /* position: relative !important; */
-    margin: 10px 50px !important;
+    margin-left: 0;
+    margin-top: 5rem;
     transition: 300ms;
     position: relative !important;
   }
   .nuxt-pages .menu-inactive {
-    margin: 10px 50px !important;
-    padding: 10px 0 !important;
+    // margin: 10px 50px !important;
   }
   .v-nav {
     /* display: none; */

@@ -52,20 +52,38 @@
         <dialog class="chapter-form__upload-img" open v-if="picture" v-click-outside="pictureOpen">
           <transition name="slide-fade">
             <div class="chapter-form__extra">
-              <el-upload
+              <upload-btn
+                accept="image/*"
+                ripple
+                multiple
+                title="画像アップロード"
+                :fileChangedCallback="upload"
+              >
+                <template slot="icon">
+                  <v-icon>add</v-icon>
+                </template>
+              </upload-btn>
+              <v-img
+                class="chapter-form__image-btn"
+                v-for="(url, index) in fileList"
+                :key="index"
+                :src="url"
+              >
+                <fa class="chapter-form__image-btn__close" icon="times"></fa>
+              </v-img>
+              <!-- <el-upload
                 class="upload-demo"
                 action
                 :on-preview="handlePreview"
                 :on-remove="handleRemove"
                 :on-success="successPhoto"
-                list-type="picture"
+                list-type="picture-card"
                 :limit="3"
                 :on-exceed="handleExceed"
                 accept="image/*"
               >
-                <el-button size="small" type="primary">絵など写真の投稿</el-button>
                 <div slot="tip" class="el-upload__tip">jpeg などイメージフォーマットでお願いします</div>
-              </el-upload>
+              </el-upload>-->
             </div>
           </transition>
         </dialog>
@@ -304,6 +322,23 @@ export default {
     contentFocus() {
       this.contentHolder = "";
     },
+    upload(files) {
+      let dogs = Object.keys(files);
+      let store = [];
+      dogs.forEach(dog => {
+        store.push(files[dog]);
+      });
+      // files.forEach(file => {
+      //
+      // });
+      const reader = new FileReader();
+      store.forEach(file => {
+        this.form.drawings.push(file);
+        this.fileList.push(URL.createObjectURL(file));
+      });
+
+      console.log(this.fileList);
+    },
     contentBlur() {
       this.contentHolder = "本文";
     },
@@ -478,10 +513,29 @@ dialog {
 }
 .chapter-form {
   position: relative;
+  .v-btn:not(.v-btn--outline).primary {
+    color: black;
+  }
+  $self: &;
   &__upload-img {
     padding: 10px;
     box-shadow: 1px 1px 5px 2px rgb(238, 238, 238);
     width: 300px;
+    #{$self}__image-btn {
+      position:relative;
+      &__close {
+        font-size: 1.6rem;
+        position:absolute;
+        top:0.5rem;
+      right: 0.5rem;
+      transition: 200ms;
+      &:hover{
+        cursor:pointer;
+        transform:rotate(180deg) scale(1.2);
+        transition: transform 200ms;
+      }
+      }
+    }
   }
   &__submit-form {
     padding: 0;

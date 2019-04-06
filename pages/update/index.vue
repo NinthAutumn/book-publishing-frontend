@@ -17,7 +17,8 @@
         icon="th-list"
       ></fa>
     </div>
-    <BookList v-if="update_view === 'grid'"></BookList>
+    <BookList :latestBooks="latestBooks" v-if="update_view === 'grid'"></BookList>
+    <book-table :latestBooks="latestBooks" v-if="update_view === 'list'"></book-table>
     <no-ssr>
       <infinite-loading @infinite="infiniteHandler"></infinite-loading>
     </no-ssr>
@@ -26,9 +27,11 @@
 
 <script>
 import BookList from "@/components/Update/BookList";
+import BookTable from "@/components/Update/BookTable";
 export default {
   components: {
-    BookList
+    BookList,
+    BookTable
   },
   async fetch({ store }) {
     await store.dispatch("chapter/fetchLatestBooks", {
@@ -66,7 +69,14 @@ export default {
   },
   computed: {
     update_view() {
-      return this.$store.getters["user/getUpdateView"];
+      if (this.$store.getters.isAuthenticated) {
+        return this.$store.getters["user/getUpdateView"];
+      } else {
+        return "grid";
+      }
+    },
+    latestBooks() {
+      return this.$store.getters["chapter/getLatestBooks"];
     }
   }
 };
@@ -85,6 +95,9 @@ export default {
       transform: scale(1);
       color: grey;
       transition: transform 200ms;
+      &:hover {
+        cursor: pointer;
+      }
       &:active {
         transform: scale(0.95);
         transition: transform 200ms;

@@ -22,7 +22,7 @@
         <div
           class="update-book__createdAt"
           v-else
-        >{{$moment(chapters[0].createdAt).startOf('day').fromNow()}}</div>
+        >{{$moment(chapters[0].createdAt).startOf('hour').fromNow()}}</div>
       </div>
     </div>
   </div>

@@ -16,15 +16,14 @@
 <script>
 import Book from "./Book";
 export default {
+  props: {
+    latestBooks: Array
+  },
   components: {
     Book
   },
   created() {},
-  computed: {
-    latestBooks() {
-      return this.$store.getters["chapter/getLatestBooks"];
-    }
-  }
+  computed: {}
 };
 </script>
 

@@ -1,11 +1,10 @@
 import Vue from 'vue'
-import {
-  VueEditor
-} from 'vue2-editor'
+import UploadButton from 'vuetify-upload-button';
+
 
 const VueSelect = {
   install(Vue, options) {
-    Vue.component('vue-editor', VueEditor)
+    Vue.component('upload-btn', UploadButton)
   }
 };
 Vue.use(VueSelect);
