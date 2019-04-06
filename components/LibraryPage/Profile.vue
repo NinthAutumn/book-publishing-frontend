@@ -3,12 +3,16 @@
     <div class="library-up__container">
       <div class="library-up__avatar flex flex--align flex-column flex--center">
         <div class="library-up__avatar__img">
-          <img class="profile-img" src="@/assets/profile.png" alt>
+          <v-avatar :size="80" class="profile-nav__avatar-img">
+            <!-- <img
+            :src="`https://storage.googleapis.com/theta-images/${user.avatar}`"
+            alt="user profile picture"
+            >-->
+            <img :src="user.avatar" alt>
+          </v-avatar>
         </div>
-        <div class="library-up__avatar__username" v-text="$store.state.auth.user.username"></div>
-        <div
-          class="library-up__avatar__founding-date"
-        >{{$moment($store.state.auth.user.createdAt).year()}} 年から</div>
+        <div class="library-up__avatar__username" v-text="user.username"></div>
+        <div class="library-up__avatar__founding-date">{{$moment(user.createdAt).year()}} 年から</div>
       </div>
       <ul class="library-up__data__list">
         <li class="library-up__data__item flex flex--align flex--between">
@@ -43,26 +47,30 @@
 </template>
 
 <script>
-export default {};
+export default {
+  computed: {
+    user() {
+      return this.$store.getters.loggedInUser;
+    }
+  }
+};
 </script>
 
 <style lang="scss">
 .library-up {
   width: 100%;
   $self: &;
-
   .profile-img {
-    width: 80px;
-    height: 80px;
     border-radius: 100px;
     box-shadow: 1px 1px 5px 0px rgb(231, 231, 231);
   }
   &__container {
     padding: 10px;
-    box-shadow: 1px 1px 5px 0px rgb(231, 231, 231);
   }
   &__avatar {
     &__img {
+      box-shadow: 1px 1px 5px 0px rgb(231, 231, 231);
+      border-radius: 50%;
     }
     &__username {
       margin-top: 5px;

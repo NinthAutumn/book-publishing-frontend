@@ -52,15 +52,7 @@
         </div>
         <div class="book-header flex-row flex-row--between"></div>
         <div class="book-synopsis">
-          <p class="synopsis" :class="readMore">{{book.synopsis}}</p>
-          <div class="divider" v-if="readMore">
-            <a
-              class="primary flex-row flex-row--around"
-              @click="openState"
-              v-if="!readMore"
-            >Read More</a>
-            <a class="primary flex-row flex-row--around" @click="openState" v-else>Read Less</a>
-          </div>
+          <p class="synopsis" v-clampy="3">{{book.synopsis}}</p>
         </div>
       </div>
     </div>
@@ -130,18 +122,6 @@ export default {
   .book-synopsis {
     overflow: hidden;
     line-height: 27px;
-
-    p {
-      font-size: 16.5px;
-      font-weight: 300;
-      height: 70px;
-      overflow: hidden;
-    }
-    p .open {
-      font-size: 16.5px;
-      font-weight: 300;
-      overflow: visible;
-    }
   }
 }
 

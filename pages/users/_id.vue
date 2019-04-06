@@ -1,7 +1,13 @@
 <template>
   <div class="user-profile">
-    <profile-nav :owner="owner" :user="user"></profile-nav>
-    <user-content :books="books" :owner="owner" :user="user"></user-content>
+    <profile-nav :books_count="books.length" :owner="owner" :user="user"></profile-nav>
+    <user-content
+      :reviews="reviews"
+      :comments="comments"
+      :books="books"
+      :owner="owner"
+      :user="user"
+    ></user-content>
   </div>
 </template>
 
@@ -13,6 +19,11 @@ export default {
   components: {
     ProfileNav,
     UserContent
+  },
+  methods: {
+    changeSticky() {
+      console.log("called");
+    }
   },
   async fetch({ store, params }) {
     await store.dispatch("user/fetchUser", { userId: params.id });
@@ -33,8 +44,15 @@ export default {
     },
     books() {
       return this.$store.getters["user/getUserBooks"];
+    },
+    reviews() {
+      return this.$store.getters["user/getUserReviews"];
+    },
+    comments() {
+      return this.$store.getters["user/getUserComments"];
     }
-  }
+  },
+  mounted() {}
 };
 </script>
 

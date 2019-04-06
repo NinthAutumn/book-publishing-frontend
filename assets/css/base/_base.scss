@@ -54,6 +54,12 @@ body {
   }
 }
 
+@media screen and (max-width:400px) {
+  .page-padding {
+    padding: 10px !important;
+  }
+}
+
 @media (prefers-color-scheme: dark) {
 
   /* Overrides for Dark Mode. */

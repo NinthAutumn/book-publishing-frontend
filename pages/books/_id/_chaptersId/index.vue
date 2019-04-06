@@ -81,7 +81,7 @@ export default {
         userId: store.state.auth.user._id,
         bookId: params.id
       });
-      await store.dispatch("user/getSettings");
+      await store.dispatch("user/fetchUserSettings");
     } else {
       await store.dispatch("chapter/fetchChapter", {
         chapterId: params.chaptersId,

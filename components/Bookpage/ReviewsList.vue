@@ -22,24 +22,23 @@
     </div>
     <div class="book__reviews__divider flex flex--align flex--between">
       <div class="book__rating__all flex flex--align">
-        <no-ssr class>
-          <star-rating
-            name="rating"
-            v-model="$store.state.book.book.ratings"
-            :star-size="23"
-            :read-only="true"
-            inactive-color="#D8D7D5"
-            active-color="#FFB727"
-            :increment="0.01"
-            :round-start-rating="false"
-            border-color="#FFB727"
-            :glow="1"
-            class="star-rating"
-          ></star-rating>
-        </no-ssr>
+        <v-rating
+          color="#FF8D29"
+          v-if="$store.state.book.book.ratings"
+          readonly
+          size="30"
+          half-increments
+          :value="+$store.state.book.book.ratings.toFixed(2)"
+        ></v-rating>
+
+        <v-rating size="20" color="#FF8D29" v-else :readonly="true" :value="0"></v-rating>
       </div>
-      <button v-if="!reviewed" @click="reviewOpen" class="review-open button">レビューを書く</button>
-      <button v-else @click="reviewOpen" class="review-open button">レビューを編集</button>
+      <button
+        v-if="!reviewed&&!$device.isMobile"
+        @click="reviewOpen"
+        class="review-open button"
+      >レビューを書く</button>
+      <button v-else-if="!$device.isMobile" @click="reviewOpen" class="review-open button">レビューを編集</button>
     </div>
     <hr>
     <ul class="list">

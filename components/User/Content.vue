@@ -19,8 +19,9 @@
         <div class="profile-content__title">作品リスト</div>
         <book-list :books="books"></book-list>
       </div>
-      <div class="profile-content__activity">
-        <div class="profile-content__title">アクティビティー</div>
+      <div class="profile-content__activity flex-row">
+        <div class="profile-content__title profile-content__title--activity">レビュー</div>
+        <div class="profile-content__title profile-content__title--activity">コメント</div>
       </div>
     </div>
   </div>
@@ -40,10 +41,18 @@ export default {
   data() {
     return {
       metas: [
-        { key: "登録日", value: "2011年4月 に登録", icon: "calendar" },
+        {
+          key: "登録日",
+          value:
+            this.$moment(this.user.createdAt)
+              .startOf("month")
+              .fromNow() + " 登録",
+          icon: "calendar"
+        },
         { key: "県", value: "宮城県" || "非表示", icon: "map-marker" },
         { key: "性別", value: "男" || "非表示", icon: "venus-mars" }
-      ]
+      ],
+      data: {}
     };
   }
 };
@@ -57,6 +66,7 @@ export default {
     display: grid;
     grid-template-columns: 30rem 1fr 1fr;
     grid-template-areas: "meta books books" "meta activity activity";
+    padding-right: 5rem;
 
     #{$self}__meta {
       grid-area: meta;
@@ -92,6 +102,9 @@ export default {
     }
     #{$self}__title {
       font-size: 2rem;
+      &--activity {
+        margin-right: 1rem;
+      }
     }
   }
 }

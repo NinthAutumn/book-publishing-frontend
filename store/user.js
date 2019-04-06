@@ -3,8 +3,13 @@ export const state = () => ({
   fontFamily: "'IBM Plex Sans', 'Helvetica Neue', 'Segoe UI', Helvetica, Verdana, Arial, sans-serif",
   theme: '',
   fontSize: 16,
+  update_view: 'grid',
   bookmarkInbox: [],
   user: {},
+  activity: {
+    reviews: [],
+    comments: []
+  }
 })
 
 export const getters = {
@@ -22,6 +27,15 @@ export const getters = {
   },
   getUserBooks: (state) => {
     return state.books
+  },
+  getUserComments: (state) => {
+    return state.activity.comments
+  },
+  getUserReviews: (state) => {
+    return state.activity.reviews
+  },
+  getUpdateView: (state) => {
+    return state.update_view
   }
 }
 
@@ -44,11 +58,17 @@ export const mutations = {
   SET_THEME: (state, theme) => {
     state.theme = theme
   },
+  SET_UPDATE_VIEW: (state, update_view) => {
+    state.update_view = update_view
+  },
   GET_BOOKMARK_UPDATE: (state, update) => {
     state.bookmarkInbox = update
   },
   SET_USER_PROFILE: (state, user) => {
     state.user = user
+  },
+  SET_USER_ACTIVITY: (state, activity) => {
+    state.activity = activity
   }
 }
 export const actions = {
@@ -58,20 +78,21 @@ export const actions = {
     commit('LOADING')
     try {
       const res = await this.$axios.get('/user/books')
-      commit('USERS_BOOKS', res.data)
+      commit('SET_USER_BOOKS', res.data)
     } catch (error) {
       if (error.status) {
         console.log("dog");
       }
     }
   },
-  async getSettings({
+  async fetchUserSettings({
     commit
   }) {
     await this.$axios.get('/user/settings').then((res) => {
       commit('SET_FONT_FAMILY', res.data.font_family)
       commit('SET_FONT_SIZE', res.data.font_size)
       commit('SET_THEME', res.data.theme)
+      commit('SET_UPDATE_VIEW', res.data.update_view)
     })
   },
   async setSetting({
@@ -81,6 +102,7 @@ export const actions = {
       commit('SET_FONT_FAMILY', res.data.font_family)
       commit('SET_FONT_SIZE', res.data.font_size)
       commit('SET_THEME', res.data.theme)
+      commit('SET_UPDATE_VIEW', res.data.update_view)
     })
   },
   async getBookUpdate({
@@ -102,6 +124,7 @@ export const actions = {
       const res = await this.$axios.get(`/user/profile?userId=${userId}`)
       commit('SET_USER_PROFILE', res.data.user)
       commit('SET_USER_BOOKS', res.data.books)
+      commit('SET_USER_ACTIVITY', res.data.activity)
       Promise.resolve(res)
     } catch (error) {
       Promise.reject(error)

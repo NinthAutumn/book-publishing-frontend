@@ -24,7 +24,6 @@
     opacity: 0;
     // transform: translateY(10px);
   }
-
 }
 
 .tag-summon {
@@ -49,6 +48,47 @@
       transform: translateX(0) translateY(0px) scale(1);
       // height: 100%;
     }
+  }
+}
+
+.twitter-nav {
+  &-enter {
+    transform: translateY(3rem);
+
+    &-active {
+      transition: 200ms;
+    }
+  }
+
+  &-leave {
+
+
+    &-active {
+      display: none
+    }
+
+    &-to {}
+  }
+}
+
+.reverse-twitter-nav {
+  &-enter {
+    transform: translateY(-10rem);
+
+    &-active {
+      transition: 200ms;
+    }
+  }
+
+  &-leave {
+    transform: translateY(-rem);
+    opacity: 0;
+
+    &-active {
+      transition: 100ms;
+    }
+
+    &-to {}
   }
 }
 
