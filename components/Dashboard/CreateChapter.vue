@@ -65,9 +65,10 @@
               </upload-btn>
               <v-img
                 class="chapter-form__image-btn"
-                v-for="(url, index) in fileList"
+                v-for="(file, index) in fileList"
                 :key="index"
-                :src="url"
+                :src="file.url"
+                @click="deleteImage(file.url)"
               >
                 <fa class="chapter-form__image-btn__close" icon="times"></fa>
               </v-img>
@@ -334,10 +335,15 @@ export default {
       const reader = new FileReader();
       store.forEach(file => {
         this.form.drawings.push(file);
-        this.fileList.push(URL.createObjectURL(file));
+        this.fileList.push({url: URL.createObjectURL(file), file: file});
       });
 
       console.log(this.fileList);
+    },
+    deleteImage(url){
+      this.fileList = this.fileList.filter((file)=>{
+        return file.url !== url
+      })
     },
     contentBlur() {
       this.contentHolder = "本文";
@@ -355,15 +361,7 @@ export default {
     pictureOpen() {
       this.picture = !this.picture;
     },
-    handleRemove(file, fileList) {
-      // console.log(file, fileList);
-    },
-    handlePreview(file) {
-      // console.log(file);
-    },
-    successPhoto(res, file) {
-      this.form.drawings.push(file.raw);
-    },
+
     async createChapter() {
       if (this.form.drawings) {
         this.form.drawings.forEach(async image => {
