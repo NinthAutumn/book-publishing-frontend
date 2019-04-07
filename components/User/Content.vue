@@ -19,9 +19,13 @@
         <div class="profile-content__title">作品リスト</div>
         <book-list :books="books"></book-list>
       </div>
-      <div class="profile-content__activity flex-row">
-        <div class="profile-content__title profile-content__title--activity">レビュー</div>
-        <div class="profile-content__title profile-content__title--activity">コメント</div>
+
+      <div class="profile-content__activity">
+        <div class="profile-content__activity-nav flex-row">
+          <div class="profile-content__title profile-content__title--activity">レビュー</div>
+          <div class="profile-content__title profile-content__title--activity">コメント</div>
+        </div>
+        <activity-list reviews :user="user" :list="reviews"></activity-list>
       </div>
     </div>
   </div>
@@ -29,14 +33,18 @@
 
 <script>
 import BookList from "./BookList";
+import ActivityList from "./ActivityList";
 export default {
   props: {
     user: Object,
     owner: Boolean,
-    books: Array
+    books: Array,
+    reviews: Array,
+    comments: Array
   },
   components: {
-    BookList
+    BookList,
+    ActivityList
   },
   data() {
     return {
@@ -99,6 +107,8 @@ export default {
     #{$self}__activity {
       padding-top: 2rem;
       grid-area: activity;
+    }
+    #{$self}__activity-nav {
     }
     #{$self}__title {
       font-size: 2rem;

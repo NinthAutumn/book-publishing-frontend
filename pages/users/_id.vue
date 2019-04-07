@@ -52,7 +52,11 @@ export default {
       return this.$store.getters["user/getUserComments"];
     }
   },
-  mounted() {}
+  async mounted() {
+    await this.$store.dispatch("user/fetchUserReviews", {
+      userId: this.$route.params.id
+    });
+  }
 };
 </script>
 

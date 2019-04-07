@@ -6,10 +6,9 @@ export const state = () => ({
   update_view: 'grid',
   bookmarkInbox: [],
   user: {},
-  activity: {
-    reviews: [],
-    comments: []
-  }
+  reviews: [],
+  comments: []
+
 })
 
 export const getters = {
@@ -29,10 +28,10 @@ export const getters = {
     return state.books
   },
   getUserComments: (state) => {
-    return state.activity.comments
+    return state.comments
   },
   getUserReviews: (state) => {
-    return state.activity.reviews
+    return state.reviews
   },
   getUpdateView: (state) => {
     return state.update_view
@@ -67,8 +66,11 @@ export const mutations = {
   SET_USER_PROFILE: (state, user) => {
     state.user = user
   },
-  SET_USER_ACTIVITY: (state, activity) => {
-    state.activity = activity
+  SET_USER_REVIEWS: (state, reviews) => {
+    state.reviews = reviews
+  },
+  SET_USER_COMMENTS: (state, comments) => {
+    state.comments = comments
   }
 }
 export const actions = {
@@ -121,16 +123,40 @@ export const actions = {
     userId
   }) {
     try {
-      const res = await this.$axios.get(`/user/profile?userId=${userId}`)
+      const res = await this.$axios.get(`/user/profile/books?userId=${userId}`)
       commit('SET_USER_PROFILE', res.data.user)
       commit('SET_USER_BOOKS', res.data.books)
-      commit('SET_USER_ACTIVITY', res.data.activity)
+
       Promise.resolve(res)
     } catch (error) {
       Promise.reject(error)
     }
-
-
+  },
+  async fetchUserReviews({
+    commit
+  }, {
+    userId
+  }) {
+    try {
+      const res = await this.$axios.get(`/user/profile/reviews?userId=${userId}`)
+      commit('SET_USER_REVIEWS', res.data)
+      return Promise.resolve()
+    } catch (error) {
+      return Promise.reject(error)
+    }
+  },
+  async fetchUserComments({
+    commit
+  }, {
+    userId
+  }) {
+    try {
+      const res = await this.$axios.get(`/user/profile/comments?userId=${userId}`)
+      commit('SET_USER_COMMENTS', res.data)
+      return Promise.resolve()
+    } catch (error) {
+      return Promise.reject(error)
+    }
   }
   // async signUpGoogle({
   //   commit
