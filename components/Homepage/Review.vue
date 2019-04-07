@@ -2,27 +2,27 @@
   <div class="review-card flex flex-row--between" :class="{'review-card--mobile':mobile}">
     <div class="review-card__profile flex-column">
       <div class="divider">
-        <img class="review-card__profile__pic" :src="review._id.user[0].avatar" alt>
+        <img class="review-card__profile__pic" :src="user.avatar" alt>
       </div>
       <div class="divider">
-        <p class="review-card__profile__username">{{review._id.review[0].author}}</p>
+        <p class="review-card__profile__username">{{review.author}}</p>
       </div>
     </div>
     <div class="review-card__info flex-column flex--grow">
       <div class="divider flex-row flex--align">
-        <div class="review-card__info__title">{{review._id.review[0].title}}</div>
+        <div class="review-card__info__title">{{review.title}}</div>
       </div>
-      <div class="review-card__info__content" v-html="review._id.review[0].content"></div>
+      <div class="review-card__info__content" v-html="review.content"></div>
       <div class="mobile" v-if="$device.isMobile">
         <hr>
-        <div class="review-author">- {{review._id.review[0].author}}</div>
+        <div class="review-author">- {{review.author}}</div>
       </div>
     </div>
     <div class="review-card__book flex-column flex--center flex--around">
       <div class="review-card__info__rating">
         <no-ssr>
           <star-rating
-            :rating="review._id.review[0].rating.total"
+            :rating="review.rating"
             :star-size="17"
             :read-only="true"
             :show-rating="false"
@@ -39,11 +39,11 @@
       <div class="review-card__book__cover">
         <img
           class="review-card__book__cover__item"
-          :src="'https://storage.googleapis.com/theta-images/' + review._id.book[0].cover"
+          :src="'https://storage.googleapis.com/theta-images/' + book.cover"
         >
       </div>
       <nuxt-link
-        :to="'/books/' + review._id.book[0]._id"
+        :to="'/books/' + book._id"
         tag="div"
         class="review-card__button button button--small button--primary--open"
       >Read</nuxt-link>
@@ -55,7 +55,9 @@
 export default {
   props: {
     review: Object,
-    mobile: Boolean
+    mobile: Boolean,
+    user: Object,
+    book: Object
   },
   created() {},
   filters: {

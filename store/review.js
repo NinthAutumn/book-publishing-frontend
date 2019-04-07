@@ -5,11 +5,15 @@ export const state = () => ({
   reviewed: '',
   myReviews: [],
   myReview: {},
-  nextChapterLength: 0
+  nextChapterLength: 0,
+  trending: []
 })
 export const getters = {
   getReviews: (state) => {
     return state.reviews
+  },
+  getTrendingList: (state) => {
+    return state.trending
   }
 }
 
@@ -73,6 +77,9 @@ export const mutations = {
   },
   SET_NEXT_REVIEW_LENGTH(state, count) {
     state.nextChapterLength = count
+  },
+  SET_TRENDING(state, reviews) {
+    state.trending = reviews
   }
 }
 export const actions = {
@@ -209,5 +216,18 @@ export const actions = {
     const update = await this.$axios.patch('/review/review?id=' + id, {
       review
     })
+  },
+  async fetchTrendingReviews({
+    commit
+  }, {
+    days
+  }) {
+    try {
+      const res = await this.$axios.get(`/analytic/review/trending?days=${days}`)
+      commit('SET_TRENDING', res.data)
+      return Promise.resolve()
+    } catch (error) {
+      return Promise.reject(error)
+    }
   }
 }

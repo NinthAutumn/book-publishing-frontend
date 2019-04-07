@@ -57,6 +57,7 @@ export default {
     if (store.state.auth.loggedIn) {
       await store.dispatch("library/fetchLatestChapters");
     }
+    await store.dispatch("review/fetchTrendingReviews", { days: 15 });
   },
   async created() {},
   async mounted() {
