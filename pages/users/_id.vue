@@ -1,13 +1,7 @@
 <template>
   <div class="user-profile">
     <profile-nav :books_count="books.length" :owner="owner" :user="user"></profile-nav>
-    <user-content
-      :reviews="reviews"
-      :comments="comments"
-      :books="books"
-      :owner="owner"
-      :user="user"
-    ></user-content>
+    <user-content :books="books" :owner="owner" :user="user"></user-content>
   </div>
 </template>
 
@@ -44,18 +38,7 @@ export default {
     },
     books() {
       return this.$store.getters["user/getUserBooks"];
-    },
-    reviews() {
-      return this.$store.getters["user/getUserReviews"];
-    },
-    comments() {
-      return this.$store.getters["user/getUserComments"];
     }
-  },
-  async mounted() {
-    await this.$store.dispatch("user/fetchUserReviews", {
-      userId: this.$route.params.id
-    });
   }
 };
 </script>

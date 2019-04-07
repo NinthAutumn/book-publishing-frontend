@@ -38,13 +38,19 @@ export default {
   props: {
     user: Object,
     owner: Boolean,
-    books: Array,
-    reviews: Array,
-    comments: Array
+    books: Array
   },
   components: {
     BookList,
     ActivityList
+  },
+  computed: {
+    reviews() {
+      return this.$store.getters["user/getUserReviews"];
+    },
+    comments() {
+      return this.$store.getters["user/getUserComments"];
+    }
   },
   data() {
     return {
@@ -62,6 +68,11 @@ export default {
       ],
       data: {}
     };
+  },
+  async mounted() {
+    await this.$store.dispatch("user/fetchUserReviews", {
+      userId: this.$route.params.id
+    });
   }
 };
 </script>

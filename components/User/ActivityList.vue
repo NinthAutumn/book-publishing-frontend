@@ -14,7 +14,10 @@
           </div>
           <div class="user-activity__content" v-clampy="4" v-if="reviews" v-html="item.content"></div>
           <p class="user-activity__content" v-clampy="3" v-else>{{item.content}}</p>
-          <div class="user-activity__parent">{{item.bookId.title}}</div>
+          <div class="user-activity__parent">
+            <fa class="user-activity__parent__icon" icon="book"></fa>
+            {{item.bookId.title}}
+          </div>
         </div>
       </li>
     </ul>
@@ -56,6 +59,24 @@ export default {
     }
     #{$self}__title {
       font-size: 1.6rem;
+    }
+    #{$self}__parent {
+      font-size: 1.4rem;
+      padding: 1rem 1.5rem;
+      border-radius: 0.5rem;
+      border: 1px solid rgb(241, 241, 241);
+      color: grey;
+      transition: transform 200ms;
+      &__icon {
+        margin-right: 0.5rem;
+      }
+      &:hover {
+        cursor: pointer;
+      }
+      &:active {
+        transform: scale(0.98);
+        transition: transform 200ms;
+      }
     }
   }
 }
