@@ -22,19 +22,11 @@
             color="#FF8D29"
             v-if="book.ratings"
             readonly
-            size="23"
+            size="20"
             half-increments
             :value="+book.ratings.toFixed(2)"
           ></v-rating>
-          <v-rating
-            color="#FF8D29"
-            size="23"
-            half-increments
-            v-else-if="book.rating"
-            readonly
-            :value="+book.rating.toFixed(2)"
-          ></v-rating>
-          <v-rating size="23" color="#FF8D29" v-else :readonly="true" :value="0"></v-rating>
+          <v-rating size="20" color="#FF8D29" v-else :readonly="true" :value="0"></v-rating>
         </div>
         <div class="user-books__meta user-books__meta--synopsis">
           <p v-clampy="3">{{book.synopsis}}</p>

@@ -37,8 +37,7 @@ import ActivityList from "./ActivityList";
 export default {
   props: {
     user: Object,
-    owner: Boolean,
-    books: Array
+    owner: Boolean
   },
   components: {
     BookList,
@@ -50,6 +49,9 @@ export default {
     },
     comments() {
       return this.$store.getters["user/getUserComments"];
+    },
+    books() {
+      return this.$store.getters["user/getUserBooks"];
     }
   },
   data() {
@@ -71,7 +73,8 @@ export default {
   },
   async mounted() {
     await this.$store.dispatch("user/fetchUserReviews", {
-      userId: this.$route.params.id
+      userId: this.$route.params.id,
+      authorId: this.$store.getters["user/getUserProfile"].username
     });
   }
 };

@@ -1,7 +1,7 @@
 <template>
   <div class="user-profile">
-    <profile-nav :books_count="books.length" :owner="owner" :user="user"></profile-nav>
-    <user-content :books="books" :owner="owner" :user="user"></user-content>
+    <profile-nav :books_count="books.length" :user="user"></profile-nav>
+    <user-content :books="books" :user="user"></user-content>
   </div>
 </template>
 

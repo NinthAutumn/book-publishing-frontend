@@ -135,10 +135,12 @@ export const actions = {
   async fetchUserReviews({
     commit
   }, {
-    userId
+    userId,
+    authorId,
+    page = 1
   }) {
     try {
-      const res = await this.$axios.get(`/user/profile/reviews?userId=${userId}`)
+      const res = await this.$axios.get(`/user/profile/reviews?userId=${userId}&author=${authorId}&page=${page}`)
       commit('SET_USER_REVIEWS', res.data)
       return Promise.resolve()
     } catch (error) {
@@ -148,10 +150,11 @@ export const actions = {
   async fetchUserComments({
     commit
   }, {
-    userId
+    userId,
+    page = 1
   }) {
     try {
-      const res = await this.$axios.get(`/user/profile/comments?userId=${userId}`)
+      const res = await this.$axios.get(`/user/profile/comments?userId=${userId}&page=${page}`)
       commit('SET_USER_COMMENTS', res.data)
       return Promise.resolve()
     } catch (error) {
