@@ -160,6 +160,8 @@ export default {
       overflow: scroll;
       line-height: 28px;
       height: 180px;
+      word-break: break-word;
+
       // width: 70%;
       // text-overflow: ellipsis;
     }
