@@ -2,14 +2,19 @@
   <div class="user-books">
     <ul class="user-books__list">
       <li class="user-books__item" v-for="(book, index) in books" :key="index">
-        <div class="user-books__cover">
+        <nuxt-link tag="div" :to="`/books/${book._id}`" class="user-books__cover">
           <v-img
             :src="`https://storage.googleapis.com/theta-images/${book.cover}`"
             :aspect-ratio="1/1.5"
             max-width="11rem"
           ></v-img>
-        </div>
-        <div class="user-books__meta user-books__meta--title" v-text="book.title"></div>
+        </nuxt-link>
+        <nuxt-link
+          tag="div"
+          :to="`/books/${book._id}`"
+          class="user-books__meta user-books__meta--title"
+          v-text="book.title"
+        ></nuxt-link>
         <div class="user-books__meta user-books__meta--genres">
           <div
             class="user-books__genre-list"

@@ -12,8 +12,8 @@
           <div v-if="reviews&&item.rating" class="user-activity__rating">
             <v-rating color="#FF8D29" readonly size="20" half-increments :value="item.rating.total"></v-rating>
           </div>
-          <div class="user-activity__content" v-clampy="4" v-if="reviews" v-html="item.content"></div>
-          <p class="user-activity__content" v-clampy="3" v-else>{{item.content}}</p>
+          <div class="user-activity__content" v-if="reviews" v-html="item.content"></div>
+          <p class="user-activity__content" v-else>{{item.content}}</p>
           <nuxt-link :to="'/books/'+item.bookId._id" tag="div" class="user-activity__parent">
             <fa class="user-activity__parent__icon" icon="book"></fa>
             {{item.bookId.title}}
@@ -41,6 +41,7 @@ export default {
   &__list {
     #{$self}__item {
       display: flex;
+      margin-bottom: 1rem;
     }
     #{$self}__meta {
     }
