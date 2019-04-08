@@ -97,7 +97,7 @@ export default {
         tags: [],
         mgenre: "",
         genre: [],
-        avatar: {}
+        cover: {}
       },
       selected: [],
       list: [
@@ -142,38 +142,37 @@ export default {
   },
   methods: {
     handleAvatarSuccess(res, file) {
-      this.form.avatar = file.raw;
+      this.form.cover = file.raw;
       this.imageUrl = URL.createObjectURL(file.raw);
     },
     beforeAvatarUpload(file) {},
     async postBook() {
       console.log(this.form);
-      // await this.$store
-      //   .dispatch("upload/image", this.form.avatar)
-      //   .then(async () => {
-      //     const book = {
-      //       title: this.form.title,
-      //       tags: this.form.tags,
-      //       genres: this.form.genre,
-      //       synopsis: this.form.synopsis,
-      //       cover: this.$store.state.upload.url
-      //     };
-      //     await this.$store
-      //       .dispatch("book/addBook", book)
-      //       .then(() => {
-      //         this.$message({
-      //           message: "本の投稿に成功しました",
-      //           type: "success"
-      //         });
-      //         this.$router.push("/dashboard/books");
-      //       })
-      //       .catch(e => {
-      //         this.$message({
-      //           message: `本の投稿に失敗しました！`,
-      //           type: "error"
-      //         });
-      //       });
-      //   });
+      await this.$store
+        .dispatch("upload/image", this.form.cover)
+        .then(async () => {
+          const book = {
+            title: this.form.title,
+            tags: this.form.tags,
+            genres: this.form.genre,
+            synopsis: this.form.synopsis,
+            cover: this.$store.state.upload.url
+          };
+          await this.$store
+            .dispatch("book/addBook", book)
+            .then(() => {
+              this.$message({
+                message: "本の投稿に成功しました",
+                type: "success"
+              });
+            })
+            .catch(error => {
+              this.$message({
+                message: `本の投稿に失敗しました！${error}`,
+                type: "error"
+              });
+            });
+        });
     }
   }
 };

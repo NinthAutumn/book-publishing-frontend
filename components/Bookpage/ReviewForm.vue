@@ -52,6 +52,7 @@ export default {
   components: {
     TextEditor
   },
+  watch: {},
   methods: {
     async addReview() {
       if (this.reviewed) {
@@ -71,10 +72,14 @@ export default {
             bookId: this.$route.params.id,
             username: username
           })
-          .then(() => {
+          .then(async () => {
             this.$message({
               message: "レビューの投稿に成功しました",
               type: "success"
+            });
+            await this.$store.dispatch("review/showAll", {
+              bookId: params.id,
+              userId: this.$store.getters["loggedInUser"]._id
             });
             this.$emit("input", false);
           })

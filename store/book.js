@@ -67,8 +67,13 @@ export const actions = {
   async addBook({
     commit
   }, book) {
+    try {
+      await this.$axios.post('/book/add', book)
+      return Promise.resolve()
+    } catch (error) {
+      return Promise.reject(error)
+    }
 
-    await this.$axios.post('/book/add', book)
   },
   async browseBooks({
     commit

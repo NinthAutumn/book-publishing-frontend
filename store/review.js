@@ -119,27 +119,25 @@ export const actions = {
     rootState
   }, {
     review,
-    bookId,
-    username
+    bookId
   }) {
     let recommended = false
-    if (review.rating > 3) {
+    if (review.rating.total > 3) {
       recommended = true
     }
-    await this.$axios.post('/review/add', {
-      title: review.title,
-      content: review.content,
-      bookId: bookId,
-      rating: review.rating,
-      recommended: recommended,
-      author: username
-    }).then((res) => {
-      commit('ADD_REVIEW', {
-        reviews: res.data
+    try {
+      await this.$axios.post('/review/add', {
+        title: review.title,
+        content: review.content,
+        bookId: bookId,
+        rating: review.rating,
+        recommended: recommended,
       })
-    }).catch((e) => {
+      return Promise.resolve()
+    } catch (error) {
+      return Promise.reject(error)
+    }
 
-    })
   },
   async likeReview({
     commit

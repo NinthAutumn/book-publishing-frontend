@@ -35,7 +35,7 @@
       </div>
       <button
         v-if="!reviewed&&!$device.isMobile"
-        @click="reviewOpen"
+        @click.stop="reviewOpen"
         class="review-open button"
       >レビューを書く</button>
       <button v-else-if="!$device.isMobile" @click="reviewOpen" class="review-open button">レビューを編集</button>

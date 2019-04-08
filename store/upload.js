@@ -23,9 +23,6 @@ export const actions = {
     commit
   }, file) {
     const uploadConfig = await this.$axios.get('/upload/cover')
-    delete this.$axios.defaults.headers.common['Authorization'];
-    delete this.$axios.defaults.headers.common['TrackId'];
-    console.log(uploadConfig.data);
     await this.$axios.put(uploadConfig.data.url, file, {
       headers: {
         'Content-Type': 'image',
@@ -37,10 +34,6 @@ export const actions = {
     }).catch((e) => {
       console.log(e);
     })
-    const token = Cookies.get('token');
-    const uuid = Cookies.get('track_id');
-    this.$axios.defaults.headers.common['TrackId'] = uuid
-    this.$axios.defaults.headers.common['Authorization'] = token;
 
   },
   async multiImage({
