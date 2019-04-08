@@ -59,6 +59,17 @@
             ></li>
           </transition-group>
         </div>
+        <div class="book-form__genre">
+          <div class="book-form__genre-title">タグリスト</div>
+          <transition-group tag="ul" name="list" class="book-form__genre-list">
+            <li
+              class="book-form__genre-item book-form__genre-item--tag"
+              v-for="(genre) in form.tags"
+              :key="genre"
+              v-text="genre"
+            ></li>
+          </transition-group>
+        </div>
         <div class="divider flex flex--right">
           <input
             type="submit"
@@ -312,6 +323,10 @@ export default {
       border-radius: 0.5rem;
       color: $primary;
       border: 1px solid $primary;
+      &--tag {
+        color: $secondary;
+        border: 1px solid $secondary;
+      }
       &:hover {
         cursor: pointer;
       }

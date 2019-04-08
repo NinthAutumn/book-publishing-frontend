@@ -9,7 +9,7 @@
         type="text"
         @change="filterTags"
       >
-      <button class="tag-create__create-button">作る</button>
+      <button class="tag-create__create-button" @click="createTag">作る</button>
     </div>
     <transition-group name="list" class="tag-create__list">
       <li
@@ -55,6 +55,7 @@ export default {
     this.selected = object;
   },
   methods: {
+    async createTag() {},
     async filterTags() {
       await this.$store.dispatch("book/searchTags", {
         page: 1,

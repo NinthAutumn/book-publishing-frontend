@@ -10,6 +10,7 @@ export const state = () => ({
   navigation: {},
   latestIndex: 0,
   latestBooks: [],
+  latestBooksSimple: [],
   dTOC: [], //chapters that aren't published
   pTOC: [] //chapters that are published shown in dashbaord of the user
 })
@@ -43,7 +44,8 @@ export const getters = {
   getChapterBookTitle: (state) => {
     return state.bookTitle
   },
-  getLatestBooks: state => state.latestBooks
+  getLatestBooks: state => state.latestBooks,
+  getLatestBooksSimple: state => state.latestBooksSimple
 }
 
 export const mutations = {
@@ -115,7 +117,9 @@ export const mutations = {
     books.forEach((item) => {
       state.latestBooks.push(item)
     })
-
+  },
+  LOAD_LATEST_BOOKS_SIMPLE(state, books) {
+    state.latestBooksSimple = books
   }
 }
 export const actions = {
@@ -129,7 +133,6 @@ export const actions = {
   }) {
     // const nextindex = index
     if (userId) {
-
       await this.$axios.get('/chapter/direct?chapterId=' + chapterId + '&user=' + userId).then((res) => {
         const {
           next,
@@ -161,8 +164,6 @@ export const actions = {
         commit('SET_BOOK_TITLE', res.data.title.title)
       })
     }
-
-
   },
   async tableOfContent({
     commit,
@@ -253,6 +254,20 @@ export const actions = {
     try {
       const res = await this.$axios.get(`/chapter/latestbooks?limit=${limit}&page=${page}`)
       commit('LOAD_LATEST_BOOKS', res.data)
+      return Promise.resolve(res.data)
+    } catch (error) {
+      return Promise.reject(error)
+    }
+  },
+  async fetchMoreLatestBooksSimple({
+    commit
+  }, {
+    limit,
+    page
+  }) {
+    try {
+      const res = await this.$axios.get(`/chapter/latestbooks/simple?limit=${limit}&page=${page}`)
+      commit('LOAD_LATEST_BOOKS_SIMPLE', res.data)
       return Promise.resolve(res.data)
     } catch (error) {
       return Promise.reject(error)

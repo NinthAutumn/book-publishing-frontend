@@ -22,6 +22,7 @@
       <div class="card-title">
         <h3>更新された作品</h3>
       </div>
+      <BooksList :trendings="latest"></BooksList>
     </div>
   </div>
 </template>
@@ -54,6 +55,10 @@ export default {
       limit: 10,
       page: 1
     });
+    await store.dispatch("chapter/fetchMoreLatestBooksSimple", {
+      page: 1,
+      limit: 8
+    });
     if (store.state.auth.loggedIn) {
       await store.dispatch("library/fetchLatestChapters");
     }
@@ -67,6 +72,9 @@ export default {
   computed: {
     trending() {
       return this.$store.getters["ranking/getRankingList"];
+    },
+    latest() {
+      return this.$store.getters["chapter/getLatestBooksSimple"];
     }
   },
   auth: false

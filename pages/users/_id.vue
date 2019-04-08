@@ -10,6 +10,7 @@ import ProfileNav from "@/components/User/ProfileNav";
 import UserContent from "@/components/User/Content";
 
 export default {
+  auth: false,
   components: {
     ProfileNav,
     UserContent

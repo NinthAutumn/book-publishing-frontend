@@ -16,7 +16,13 @@
           </div>
         </div>
       </div>
-      <table class="dashboard-toc">
+      <table class="dashboard-toc" v-if="volume.chapters.length > 0">
+        <thead>
+          <th>第何話</th>
+          <th>タイトル</th>
+          <th>投稿日</th>
+          <th>更新</th>
+        </thead>
         <tbody class="dashboard-toc__body">
           <chapter-toc-item
             :published="published"
@@ -67,7 +73,14 @@ export default {
   border-spacing: 0;
   width: 100%;
   background-color: rgb(255, 255, 255);
-  // box-shadow: 1px 1px 5px 0px rgb(228, 228, 228);
+  // box-shadow: 1px 1px 5px 0px rgb(228, 228, 228)
+  thead {
+    th {
+      font-size: 1.6rem;
+      text-align: left;
+      padding: 1rem 0.5rem;
+    }
+  }
   &__header {
     &__row {
       &__item {

@@ -5,13 +5,13 @@
     </div>
     <div class="update-page__nav">
       <fa
-        @click="updateView('grid')"
+        @click.stop="updateView('grid')"
         :class="{'update-page__icon--selected':update_view === 'grid'}"
         class="update-page__icon update-page__icon--grid"
         icon="th"
       ></fa>
       <fa
-        @click="updateView('list')"
+        @click.stop="updateView('list')"
         :class="{'update-page__icon--selected':update_view === 'list'}"
         class="update-page__icon update-page__icon--list"
         icon="th-list"
@@ -29,16 +29,19 @@
 import BookList from "@/components/Update/BookList";
 import BookTable from "@/components/Update/BookTable";
 export default {
+  auth: false,
   components: {
     BookList,
     BookTable
   },
   async fetch({ store }) {
+    if (store.getters.isAuthenticated) {
+      await store.dispatch("user/fetchUserSettings");
+    }
     await store.dispatch("chapter/fetchLatestBooks", {
       page: 1,
       limit: 3
     });
-    await store.dispatch("user/fetchUserSettings");
   },
   data() {
     return {
@@ -61,6 +64,9 @@ export default {
         });
     },
     updateView: async function(setting) {
+      if (!this.loggedIn) {
+        return this.$store.commit("LOGIN_STATE");
+      }
       setting = {
         update_view: setting
       };
@@ -77,6 +83,9 @@ export default {
     },
     latestBooks() {
       return this.$store.getters["chapter/getLatestBooks"];
+    },
+    loggedIn() {
+      return this.$store.getters.isAuthenticated;
     }
   }
 };
