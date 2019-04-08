@@ -197,6 +197,7 @@ export default {
 <style lang="scss">
 .library {
   &__nav {
+    margin-bottom: 1rem;
     &:hover {
       cursor: pointer;
     }

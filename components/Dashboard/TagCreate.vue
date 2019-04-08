@@ -95,7 +95,7 @@ export default {
   // right: 100px;
   margin-left: 10px;
   position: sticky;
-  height: 100%;
+  height: 50rem;
   width: 200px;
   padding: 10px;
   background-color: #fff;

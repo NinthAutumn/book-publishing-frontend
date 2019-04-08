@@ -1,52 +1,67 @@
 <template>
   <div class="book-form">
-    <h3 class="book-form__title">本の情報</h3>
-    <form ref="form" @submit.prevent="postBook" class="flex flex-column">
-      <div class="divider">
-        <div class="divider" style="margin-right:10px;">
-          <Select transition="grow-shrink" name="ジャンル" multiple :data="list" icon="location-arrow"></Select>
-          <label for="avatar-uploader">本のカバー</label>
-          <el-upload
-            class="avatar-uploader flex"
-            action
-            drag
-            :show-file-list="false"
-            :on-success="handleAvatarSuccess"
-            :before-upload="beforeAvatarUpload"
-          >
-            <img v-if="imageUrl" :src="imageUrl" class="avatar">
-            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-          </el-upload>
+    <div class="book-form__container">
+      <h3 class="book-form__title">本の情報</h3>
+      <form ref="form" @submit.prevent="postBook" class="flex flex-column">
+        <div class="divider">
+          <div class="divider" style="margin-right:10px;">
+            <Select
+              transition="grow-shrink"
+              name="ジャンル"
+              multiple
+              :data="list"
+              icon="location-arrow"
+              v-model="form.genre"
+            ></Select>
+            <label for="avatar-uploader">本のカバー</label>
+            <el-upload
+              class="avatar-uploader flex"
+              action
+              drag
+              :show-file-list="false"
+              :on-success="handleAvatarSuccess"
+              :before-upload="beforeAvatarUpload"
+            >
+              <img v-if="imageUrl" :src="imageUrl" class="avatar">
+              <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+            </el-upload>
+          </div>
+          <div class="divider flex flex-column" style="width:100%;">
+            <label for="book-title">タイトル</label>
+            <input
+              type="text"
+              name="book-title"
+              for="book-title"
+              class="book-form--input form-input form-input--primary"
+              placeholder="タイトル"
+              v-model="form.title"
+            >
+            <label for="synopsis">あらすじ</label>
+            <textarea
+              class="book-form--textarea"
+              name="synopsis"
+              for="synopsis"
+              placeholder="あらすじ"
+              v-model="form.synopsis"
+            ></textarea>
+          </div>
         </div>
-        <div class="divider flex flex-column" style="width:100%;">
-          <label for="book-title">タイトル</label>
+        <div class="divider flex flex--right">
           <input
-            type="text"
-            name="book-title"
-            for="book-title"
-            class="book-form--input form-input form-input--primary"
-            placeholder="タイトル"
-            v-model="form.title"
+            type="submit"
+            class="form-submit form-submit--primary book-form__submit"
+            value="投稿"
           >
-          <label for="synopsis">あらすじ</label>
-          <textarea
-            class="book-form--textarea"
-            name="synopsis"
-            for="synopsis"
-            placeholder="あらすじ"
-            v-model="form.synopsis"
-          ></textarea>
         </div>
-      </div>
-      <div class="divider flex flex--right">
-        <input type="submit" class="form-submit form-submit--primary book-form__submit" value="投稿">
-      </div>
-    </form>
+      </form>
+    </div>
+    <TagCreate v-model="form.tags"></TagCreate>
   </div>
 </template>
 
 <script>
 import Select from "@/components/All/Select";
+import TagCreate from "./TagCreate";
 export default {
   data() {
     return {
@@ -98,7 +113,8 @@ export default {
     };
   },
   components: {
-    Select
+    Select,
+    TagCreate
   },
   methods: {
     handleAvatarSuccess(res, file) {
@@ -107,32 +123,33 @@ export default {
     },
     beforeAvatarUpload(file) {},
     async postBook() {
-      await this.$store
-        .dispatch("upload/image", this.form.avatar)
-        .then(async () => {
-          const book = {
-            title: this.form.title,
-            tags: this.form.tags,
-            genres: this.form.genre,
-            synopsis: this.form.synopsis,
-            cover: this.$store.state.upload.url
-          };
-          await this.$store
-            .dispatch("book/addBook", book)
-            .then(() => {
-              this.$message({
-                message: "本の投稿に成功しました",
-                type: "success"
-              });
-              this.$router.push("/dashboard/books");
-            })
-            .catch(e => {
-              this.$message({
-                message: `本の投稿に失敗しました！`,
-                type: "error"
-              });
-            });
-        });
+      console.log(this.form);
+      // await this.$store
+      //   .dispatch("upload/image", this.form.avatar)
+      //   .then(async () => {
+      //     const book = {
+      //       title: this.form.title,
+      //       tags: this.form.tags,
+      //       genres: this.form.genre,
+      //       synopsis: this.form.synopsis,
+      //       cover: this.$store.state.upload.url
+      //     };
+      //     await this.$store
+      //       .dispatch("book/addBook", book)
+      //       .then(() => {
+      //         this.$message({
+      //           message: "本の投稿に成功しました",
+      //           type: "success"
+      //         });
+      //         this.$router.push("/dashboard/books");
+      //       })
+      //       .catch(e => {
+      //         this.$message({
+      //           message: `本の投稿に失敗しました！`,
+      //           type: "error"
+      //         });
+      //       });
+      //   });
     }
   }
 };
@@ -259,13 +276,17 @@ export default {
   }
 }
 .book-form {
-  background-color: white;
-  padding: 50px;
-  // border-radius: 10px;
-  // box-shadow: 1px 1px 5px 0px rgb(199, 198, 198);
-  overflow: scroll;
-  // height: 80vh;
-  width: 440px;
+  display: flex;
+  &__container {
+    background-color: white;
+    padding: 50px;
+    // border-radius: 10px;
+    // box-shadow: 1px 1px 5px 0px rgb(199, 198, 198);
+    overflow: scroll;
+    // height: 80vh;
+    width: 440px;
+  }
+
   &__title {
     font-size: 25px;
     margin-top: 0;
