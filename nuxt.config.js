@@ -176,7 +176,7 @@ module.exports = {
    ** Axios module configuration
    */
   axios: {
-    baseURL: process.env.BASE_URL || 'http://0.0.0.0:5000/api'
+    baseURL: 'http://0.0.0.0:5000/api'
   },
 
   auth: {
@@ -256,7 +256,7 @@ module.exports = {
   },
   transition: 'fade',
   server: {
-    port: 3000, // default: 3000
-    host: '0.0.0.0', // default: localhost
+    port: process.env.CLIENT_PORT || 3000, // default: 3000
+    host: process.env.API_HOST || '0.0.0.0', // default: localhost
   },
 }
