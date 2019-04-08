@@ -5,14 +5,6 @@
       <form ref="form" @submit.prevent="postBook" class="flex flex-column">
         <div class="divider">
           <div class="divider" style="margin-right:10px;">
-            <Select
-              transition="grow-shrink"
-              name="ジャンル"
-              multiple
-              :data="list"
-              icon="location-arrow"
-              v-model="form.genre"
-            ></Select>
             <label for="avatar-uploader">本のカバー</label>
             <el-upload
               class="avatar-uploader flex"
@@ -45,6 +37,27 @@
               v-model="form.synopsis"
             ></textarea>
           </div>
+          <Select
+            transition="grow-shrink"
+            name="ジャンル"
+            multiple
+            :data="list"
+            icon="location-arrow"
+            v-model="form.genre"
+            top
+            :limit="6"
+          ></Select>
+        </div>
+        <div class="book-form__genre">
+          <div class="book-form__genre-title">ジャンルリスト</div>
+          <transition-group tag="ul" name="list" class="book-form__genre-list">
+            <li
+              class="book-form__genre-item"
+              v-for="(genre) in form.genre"
+              :key="genre"
+              v-text="genre"
+            ></li>
+          </transition-group>
         </div>
         <div class="divider flex flex--right">
           <input
@@ -277,6 +290,33 @@ export default {
 }
 .book-form {
   display: flex;
+  $self: &;
+  &__genre {
+    #{$self}__genre-list {
+      margin-top: 0.5rem;
+      display: flex;
+      box-shadow: inset 1px 1px 5px rgb(245, 245, 245);
+      padding: 0.5rem;
+      flex-wrap: wrap;
+      min-height: 4.5rem;
+    }
+    #{$self}__genre-title {
+      font-size: 1.6rem;
+      margin-top: 1rem;
+    }
+    #{$self}__genre-item {
+      padding: 0.5rem 1rem;
+      font-size: 1.4rem;
+      margin-right: 0.5rem;
+      margin-bottom: 0.5rem;
+      border-radius: 0.5rem;
+      color: $primary;
+      border: 1px solid $primary;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
   &__container {
     background-color: white;
     padding: 50px;

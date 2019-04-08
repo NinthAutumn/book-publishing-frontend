@@ -111,7 +111,8 @@ export default {
     bottom: Boolean,
     fontSize: Number,
     theme: String,
-    selected_item: String
+    selected_item: String,
+    limit: Number
   },
   data() {
     return {
@@ -139,6 +140,25 @@ export default {
           }
         }
       });
+      if (this.selectedData.length > this.limit) {
+        this.$message({
+          type: "error",
+          message: "これ以上選べません"
+        });
+        this.selectedData.pop();
+        this.multiData.forEach((item, n) => {
+          if (n === index) {
+            item.selected = !item.selected;
+            if (item.selected) {
+              this.selectedData.push(item.key);
+            } else {
+              this.selectedData = this.selectedData.filter(
+                element => element !== item.key
+              );
+            }
+          }
+        });
+      }
       this.$emit("input", this.selectedData);
     },
     openModal: function() {
