@@ -1,28 +1,20 @@
 <template>
   <div class="book-library">
-    <div id="book-library__container" @click="linkTo">
+    <nuxt-link tag="div" :to="`books/${book.book_id}`" id="book-library__container">
       <div class="book-library__cover">
         <span class="star-rating"></span>
-        <v-img
-          :src="`https://storage.googleapis.com/theta-images/${book.cover}`"
-          alt="Book cover"
-          :aspect-ratio="1/1.5"
-          max-width="13.5rem"
-        ></v-img>
+        <!-- :src="`https://storage.googleapis.com/theta-images/${book.cover}`" -->
+        <v-img :src="book.cover" alt="Book cover" :aspect-ratio="1/1.5" max-width="13.5rem"></v-img>
       </div>
       <div class="book-library__text-info">
         <p v-clampy="3" class="book-library__book-title full" ref="texting">{{book.title}}</p>
         <div class="book-library__more-info flex-row flex--align">
-          <!-- <div class="book-library__author">{{book.author}}</div> -->
-          <span
-            class="book-library__progress"
-            v-if="progress"
-            v-text="'栞: '+progress.index + '/' + book.chapters.length"
-          ></span>
-          <span class="book-library__progress" v-else v-text="'栞: '+0+ '/' + book.chapters.length"></span>
+          <div class="book-library__author">{{book.author}}</div>
+          <span class="book-library__progress" v-text="'栞: '+book.read + '/' + book.chapter_count"></span>
+          <!-- <span class="book-library__progress" v-else v-text="'栞: '+0+ '/' + book.id"></span> -->
         </div>
       </div>
-    </div>
+    </nuxt-link>
   </div>
 </template>
 <script>
@@ -42,10 +34,10 @@ export default {
   },
   methods: {
     linkTo() {
-      this.$router.push("/books/" + this.book._id);
+      this.$router.push("/books/" + this.book.id);
     },
     linkToT() {
-      this.$router.push("/books/" + this.book._id.book[0]._id);
+      this.$router.push("/books/" + this.book.id);
     }
   },
   computated: {
@@ -97,9 +89,11 @@ export default {
   }
   &__book-title {
     margin: 0;
+    word-break: break-word;
     a {
       font-size: 14px;
       font-weight: 500;
+      word-break: break-word;
     }
     padding: 0;
     text-align: left;

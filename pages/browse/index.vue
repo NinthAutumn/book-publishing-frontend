@@ -19,7 +19,7 @@
                 name="詳細条件"
                 :object="sort_type"
                 transition="grow-shrink"
-                def="視聴回数"
+                def="栞数"
               ></Select>
             </div>
             <div class="browse-page__sort-type browse-page__sort-type--direction">
@@ -93,19 +93,13 @@
 </template>
 
 <script>
-import Blob from "@/assets/svg/blob2.svg";
-import Select from "@/components/All/Select";
-import BookList from "@/components/Browse/BookList";
-import TagList from "@/components/Browse/TagList";
-import TagCreate from "@/components/Browse/TagCreate";
-
 export default {
   auth: false,
   components: {
-    Blob,
-    Select,
-    BookList,
-    TagCreate
+    Blob: () => import("@/assets/svg/blob2.svg"),
+    Select: () => import("@/components/All/Select"),
+    BookList: () => import("@/components/Browse/BookList"),
+    TagCreate: () => import("@/components/Browse/TagCreate")
   },
   computed: {
     books() {
@@ -155,7 +149,8 @@ export default {
       type: 4,
       direction: "desc",
       genres: [],
-      page: 1
+      page: 1,
+      type: "bookmarks"
     });
   },
   data() {
@@ -166,11 +161,11 @@ export default {
       modalDirection: "right",
       selected_genre: [],
       sort_type: [
-        { key: "視聴回数", value: 0 },
-        { key: "栞数", value: 1 },
-        { key: "話数", value: 2 },
-        { key: "字数", value: 3 },
-        { key: "評価", value: 4 }
+        // { key: "視聴回数", value: "views" },
+        { key: "栞数", value: "bookmarks" },
+        { key: "話数", value: "chapter_count" },
+        { key: "字数", value: "word_count" },
+        { key: "評価", value: "review" }
       ],
       sort_directions: [
         { key: "上り", value: "asc" },

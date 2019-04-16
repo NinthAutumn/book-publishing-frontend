@@ -10,13 +10,11 @@
 </template>
 
 <script>
-import RankingList from "@/components/Ranking/RankingList";
-
 export default {
   auth: false,
   async fetch({ store }) {},
   components: {
-    RankingList
+    RankingList: () => import("@/components/Ranking/RankingList")
   }
 };
 </script>

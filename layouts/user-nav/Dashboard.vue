@@ -56,7 +56,6 @@
 var moment = require("moment");
 // import { fas } from "@fortawesome/free-solid-svg-icons";
 // import { faGithub } from '@fortawesome/free-brands-svg-icons'
-import BookForm from "@/components/Dashboard/CreateBook";
 
 export default {
   name: "Vertical",
@@ -97,7 +96,7 @@ export default {
   },
   components: {
     // HomeIcon
-    BookForm
+    BookForm: () => import("@/components/Dashboard/CreateBook")
   },
   watch: {
     // fetchUserId: function() {
@@ -107,7 +106,6 @@ export default {
   methods: {
     menuDrawer() {
       this.$store.commit("DASHBOARD_MENU_STATE_CHANGE");
-      console.log("dog");
     },
     bookOff() {
       this.writeBookState = false;

@@ -48,7 +48,7 @@ export default {
   },
   props: {},
   components: {
-    SignUpFrom
+    SignUpFrom: () => import("./SignUpFrom")
   },
   mounted() {
     this.$refs.username.focus();

@@ -44,7 +44,7 @@ export default {
     published: Boolean
   },
   components: {
-    ChapterTocItem
+    ChapterTocItem: () => import("./ChapterTocItem")
   }
 };
 </script>

@@ -1,21 +1,17 @@
 <template>
-  <div class="book-browse" @mouseenter="menuOpen" @mouseleave="menuClose" v-ripple>
-    <div id="book-browse__container" :to="`/books/${book._id}`">
+  <div class="book-browse" @mouseenter="menuOpen" @mouseleave="menuClose">
+    <div id="book-browse__container" :to="`/books/${book.id}`">
       <div class="book-browse__cover">
-        <div class="book-browse__rating flex-row flex--align flex--center" v-if="book.ratings">
-          {{book.ratings.toFixed(2)|| '未定'}}
+        <div class="book-browse__rating flex-row flex--align flex--center" v-if="book.rating">
+          {{book.rating|| '未定'}}
           <fa class="book-browse__rating__icon" icon="star"></fa>
         </div>
         <div class="book-browse__rating flex-row flex--align flex--center" v-else>
           <fa class="book-browse__rating__icon" icon="star"></fa>
         </div>
-        <nuxt-link class="book-browse__image" tag="div" :to="`/books/${book._id}`">
-          <v-img
-            :src="`https://storage.googleapis.com/theta-images/${book.cover}`"
-            alt="Book cover"
-            :aspect-ratio="1/1.5"
-            max-width="15rem"
-          ></v-img>
+        <nuxt-link class="book-browse__image" tag="div" :to="`/books/${book.id}`">
+          <!-- :src="`https://storage.googleapis.com/theta-images/${book.cover}`" -->
+          <v-img :src="book.cover" alt="Book cover" :aspect-ratio="1/1.5" max-width="15rem"></v-img>
         </nuxt-link>
         <div
           @click.stop="menu_modal=true"
@@ -34,7 +30,7 @@
       </div>
       <div class="book-browse__text-info">
         <p v-clampy="3" class="book-browse__book-title full" ref="texting">{{book.title }}</p>
-        <p class="book-browse__author">{{book.author}}</p>
+        <p class="book-browse__author">{{book.status}}</p>
       </div>
     </div>
   </div>

@@ -69,10 +69,6 @@
   </nav>
 </template>
 <script>
-import HomeIcon from "@/assets/home-icon";
-// import { fas } from "@fortawesome/free-solid-svg-icons";
-// import { faGithub } from '@fortawesome/free-brands-svg-icons'
-import LatestChapters from "@/components/Navigation/LatestChapters";
 export default {
   name: "Vertical",
   props: {
@@ -117,8 +113,8 @@ export default {
     };
   },
   components: {
-    HomeIcon,
-    LatestChapters
+    HomeIcon: () => import("@/assets/home-icon"),
+    LatestChapters: () => import("@/components/Navigation/LatestChapters")
   },
   watch: {
     // fetchUserId: function() {

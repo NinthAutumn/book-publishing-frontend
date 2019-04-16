@@ -53,10 +53,6 @@
   </div>
 </template>
 <script>
-import SignUpForm from "@/components/Navigation/SignUpFrom";
-import LoginForm from "@/components/Navigation/LoginForm";
-import AuthModal from "@/components/Navigation/AuthModal";
-import Dropdown from "@/components/Navigation/Dropdown";
 export default {
   name: "Horizontal",
   data() {
@@ -66,8 +62,8 @@ export default {
     };
   },
   components: {
-    AuthModal,
-    Dropdown
+    AuthModal: () => import("@/components/Navigation/AuthModal"),
+    Dropdown: () => import("@/components/Navigation/Dropdown")
   },
   computed: {
     user() {

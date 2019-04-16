@@ -12,7 +12,7 @@ import Dashboard from "./Dashboard";
 
 export default {
   components: {
-    Dashboard
+    Dashboard: () => import("./Dashboard")
   }
 };
 </script>

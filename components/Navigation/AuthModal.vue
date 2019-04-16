@@ -8,8 +8,6 @@
 </template>
 
 <script>
-import LoginForm from "./LoginForm";
-import SignUpFrom from "./SignUpFrom";
 export default {
   data() {
     return {
@@ -18,8 +16,8 @@ export default {
   },
   transition: "slide-fade",
   components: {
-    LoginForm,
-    SignUpFrom
+    LoginForm: () => import("./LoginForm"),
+    SignUpFrom: () => import("./SignUpFrom")
   },
   methods: {
     close() {

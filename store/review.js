@@ -6,7 +6,8 @@ export const state = () => ({
   myReviews: [],
   myReview: {},
   nextChapterLength: 0,
-  trending: []
+  trending: [],
+  count: 0
 })
 export const getters = {
   getReviews: (state) => {
@@ -14,6 +15,9 @@ export const getters = {
   },
   getTrendingList: (state) => {
     return state.trending
+  },
+  getReviewCount: state => {
+    return state.count
   }
 }
 
@@ -23,7 +27,7 @@ export const mutations = {
   SET_NEXT_REVIEWS(state, review) {
     state.reviews.push(review)
   },
-  GET_REVIEWS(state, reviews) {
+  SET_REVIEWS(state, reviews) {
     state.reviews = reviews
   },
   ADD_REVIEW(
@@ -80,6 +84,9 @@ export const mutations = {
   },
   SET_TRENDING(state, reviews) {
     state.trending = reviews
+  },
+  SET_REVIEW_LENGTH(state, count) {
+    state.count = count
   }
 }
 export const actions = {
@@ -90,16 +97,17 @@ export const actions = {
     bookId,
     limit = 10,
     page = 2,
-    userId = ""
+    userId = "",
+    direction,
+    type
   }) {
-    await this.$axios.get(`/review/book?id=${bookId}&limit=${limit}&page=${page}&userId=${userId}`).then(async (res) => {
+    // await this.$axios.get(`/review/book?bookId=${bookId}&limit=${limit}&page=${page}&userId=${userId}&direction=${direction}`).then(async (res) => {
+    //   res.data.forEach((review) => {
+    //     commit('SET_NEXT_REVIEWS', review)
+    //   })
+    //   commit('SET_NEXT_REVIEW_LENGTH', res.data.length)
 
-      res.data.forEach((review) => {
-        commit('SET_NEXT_REVIEWS', review)
-      })
-      commit('SET_NEXT_REVIEW_LENGTH', res.data.length)
-
-    })
+    // })
   },
   async showAll({
     commit,
@@ -108,10 +116,13 @@ export const actions = {
     bookId,
     limit = 10,
     page = 1,
-    userId = ""
+    userId = "",
+    type,
+    direction
   }) {
-    await this.$axios.get(`/review/book?id=${bookId}&limit=${limit}&page=${page}&userId=${userId}`).then(async (res) => {
-      commit('GET_REVIEWS', res.data)
+    await this.$axios.get(`/review/book?bookId=${bookId}&limit=${limit}&page=${page}&userId=${userId}&direction=${direction}&type=${type}`).then(async (res) => {
+      commit('SET_REVIEWS', res.data.reviews)
+      commit('SET_REVIEW_LENGTH', res.data.review_count)
     })
   },
   async addReview({
@@ -143,16 +154,18 @@ export const actions = {
     commit
   }, {
     reviewId,
-    type
+    data
   }) {
-    await this.$axios.patch('/review/like', {
-      id: reviewId,
-      type: type
-    }).then((res) => {
-      commit('LIKED_REVIEWS', reviewId)
-    }).catch((d) => {
-      console.log(d);
-    })
+    try {
+      const res = await this.$axios.patch('/review/vote', {
+        reviewId: reviewId,
+        data: data
+      })
+      Promise.resolve()
+    } catch (error) {
+      Promise.reject(error)
+    }
+
   },
   async unLikeReview({
     commit

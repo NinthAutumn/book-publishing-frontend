@@ -41,8 +41,6 @@
 </template>
 
 <script>
-import Comment from "@/components/ChapterPage/Comment";
-import Select from "@/components/All/Select";
 export default {
   computed: {
     comments() {
@@ -50,8 +48,8 @@ export default {
     }
   },
   components: {
-    Comment,
-    Select
+    Comment: () => import("@/components/ChapterPage/Comment"),
+    Select: () => import("@/components/All/Select")
   },
 
   data() {

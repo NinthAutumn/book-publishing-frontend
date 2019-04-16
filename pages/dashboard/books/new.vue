@@ -6,13 +6,11 @@
 </template>
 
 <script>
-import BookForm from "@/components/Dashboard/CreateBook";
-import TagCreate from "@/components/Dashboard/TagCreate";
 export default {
   layout: "user-nav/User",
   components: {
-    BookForm,
-    TagCreate
+    BookForm: () => import("@/components/Dashboard/CreateBook"),
+    TagCreate: () => import("@/components/Dashboard/TagCreate")
   }
 };
 </script>

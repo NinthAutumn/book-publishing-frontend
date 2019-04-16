@@ -19,8 +19,9 @@ export const state = () => ({
   book: {},
   loading: false,
   browse: [],
-  tagList: [],
+  tags: [],
   chapterCount: 0,
+  latest: []
 })
 
 export const getters = {
@@ -35,27 +36,33 @@ export const getters = {
   getBookView: state => state.view,
   getBookChapterCount: state => state.chapterCount,
   getTagList: state => state.tagList,
-  getRecommended: state => state.recommended
+  getRecommended: state => state.recommended,
+  getLatest: state => state.latest
 }
 
 export const actions = {
   async fetchBook({
     commit,
     dispatch
-  }, id) {
-    await this.$axios.get('book/show?id=' + id).then((res) => {
+  }, {
+    id,
+    userId = ""
+  }) {
+    await this.$axios.get(`book/show?id=${id}&userId=${userId}`).then((res) => {
       commit('SET_BOOK', res.data.book)
+      console.log(res.data.book);
+      commit('SET_TAGS', res.data.tags)
     })
-    await dispatch('fetchBookView', id)
-    await dispatch('fetchBookChapterCount', id)
+    // await dispatch('fetchBookView', id)
+    // await dispatch('fetchBookChapterCount', id)
 
   },
   async fetchBookView({
     commit
   }, id) {
-    await this.$axios.get("/book/view?id=" + id).then((res) => {
-      commit('SET_BOOK_VIEW', res.data)
-    })
+    // await this.$axios.get("/book/view?id=" + id).then((res) => {
+    //   commit('SET_BOOK_VIEW', res.data)
+    // })
   },
   async fetchBookChapterCount({
     commit
@@ -84,7 +91,7 @@ export const actions = {
     page,
     gfilter = true,
     tags = [],
-    tfilter = true
+    tfilter = true,
   }) {
     const books = await this.$axios.patch('/book/browse?direction=' + direction + '&type=' + type + '&page=' + page, {
       genres,
@@ -115,14 +122,12 @@ export const actions = {
     page,
     limit
   }) {
-    const res = await this.$axios.get(`/book/searchtag?search=${search}&limit=${limit}&page=${page}`)
+    const res = await this.$axios.get(`/book/tags?search=${search}&limit=${limit}&page=${page}`)
     commit('SET_TAG_LIST', res.data)
   },
   async deleteBook({
     commit
-  }) {
-
-  },
+  }) {},
   async fetchRecommended({
     commit,
   }) {
@@ -132,13 +137,42 @@ export const actions = {
     // await this.$axios.get('/analytic/book/trending').then((res) => {
     //   commit('TRENDING', res.data)
     // })
+  },
+  async fetchLatestBooks({
+    commit
+  }, {
+    page,
+    limit
+  }) {
+    try {
+      const res = await this.$axios.get(`/book/update?limit=${limit}&page=${page}`)
+      commit('SET_LATEST_BOOKS', res.data)
+      return Promise.resolve(res.data)
+    } catch (error) {}
+  },
+  async fetchMoreLatestBooks({
+    commit
+  }, {
+    page,
+    limit
+  }) {
+    try {
+      const res = await this.$axios.get(`/book/update?limit=${limit}&page=${page}`)
+      commit('SET_MORE_LATEST_BOOKS', res.data)
+      return Promise.resolve(res.data)
+    } catch (error) {
+      return Promise.reject(error)
+    }
 
-  }
+  },
 }
 
 export const mutations = {
   ADD(state, book) {
     state.books.push(book)
+  },
+  SET_TAGS(state, tags) {
+    state.tags = tags
   },
   SET_RECOMMENDED(state, books) {
     state.recommended = books
@@ -178,6 +212,22 @@ export const mutations = {
   },
   BOOKMARK(state) {
     state.book.bookmarked = true
+  },
+  SET_LATEST_BOOKS(state, books) {
+    state.latest = books
+  },
+  SET_MORE_LATEST_BOOKS(state, books) {
+    books.forEach((item) => {
+      state.latest.forEach((late) => {
+        if (item.date === late.date) {
+          item.book.forEach((book) => {
+            late.book.push(book)
+          })
+        }
+      })
+    })
+    // state.latest.push(books)
   }
+
 
 }

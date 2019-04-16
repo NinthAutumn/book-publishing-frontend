@@ -1,28 +1,28 @@
 <template>
   <div class="update-book" v-ripple>
-    <nuxt-link tag="div" :to="`books/${book._id}`" class="update-book__cover">
+    <nuxt-link tag="div" :to="`books/${book[0].id}`" class="update-book__cover">
       <v-img
         :aspect-ratio="1/1.5"
-        min-width="10rem"
+        max-width="15rem"
         class="update-book__img"
-        :src="`https://storage.googleapis.com/theta-images/${book.cover}`"
+        :src="`https://storage.googleapis.com/theta-images/${book[0].cover}`"
       ></v-img>
-      <span class="update-book__cover-meta">{{chapters.length}}</span>
+      <span class="update-book__cover-meta">{{book.length}}</span>
     </nuxt-link>
     <div class="update-book__meta">
       <div class="update-book__title">
-        <p v-clampy="3">{{book.title}}</p>
+        <p v-clampy="3">{{book[0].title}}</p>
       </div>
       <div class="flex-divider flex-row flex--align flex--between">
-        <div class="update-book__author">{{book.author}}</div>
+        <div class="update-book__author">{{book[0].author}}</div>
         <div
           class="update-book__createdAt"
-          v-if="$moment().format('l') === $moment(chapters[0].createdAt).format('l')"
-        >{{$moment(chapters[0].createdAt).startOf('second').fromNow()}}</div>
+          v-if="$moment().format('l') === $moment(book[0].published).format('l')"
+        >{{$moment(book[0].published).startOf('second').fromNow()}}</div>
         <div
           class="update-book__createdAt"
           v-else
-        >{{$moment(chapters[0].createdAt).startOf('hour').fromNow()}}</div>
+        >{{$moment(book[0].published).startOf('hour').fromNow()}}</div>
       </div>
     </div>
   </div>
@@ -32,7 +32,7 @@
 export default {
   props: {
     chapters: Array,
-    book: Object
+    book: Array
   },
   filters: {
     truncate: (string, number) => {
@@ -84,6 +84,7 @@ export default {
       p {
         &:hover {
           text-decoration: solid;
+          word-break: break-word;
         }
         // white-space: nowrap;
         // text-overflow: ellipsis;

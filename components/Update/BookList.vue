@@ -2,10 +2,10 @@
   <div class="update-books">
     <ul class="update-books__date-list">
       <li class="update-books__date-item" v-for="(books, index) in latestBooks" :key="index">
-        <div class="update-books__date-title">{{books._id}}</div>
+        <div class="update-books__date-title">{{books.date}}</div>
         <ul class="update-books__book-list">
-          <li class="update-books__book-item" v-for="(book, index) in books.books" :key="index">
-            <Book :book="book.book[0]" :chapters="book.chapters"></Book>
+          <li class="update-books__book-item" v-for="(book, index) in books.book" :key="index">
+            <Book :book="book"></Book>
           </li>
         </ul>
       </li>
@@ -14,13 +14,13 @@
 </template>
 
 <script>
-import Book from "./Book";
+// import Book from "./Book";
 export default {
   props: {
     latestBooks: Array
   },
   components: {
-    Book
+    Book: () => import("./Book")
   },
   created() {},
   computed: {}
@@ -41,7 +41,7 @@ export default {
   &__book-list {
     display: grid;
 
-    grid-template-columns: repeat(auto-fill, minmax(10rem, 13rem));
+    grid-template-columns: repeat(auto-fill, minmax(10rem, 15rem));
     grid-template-rows: auto;
     grid-gap: 0.5rem;
 
@@ -49,15 +49,15 @@ export default {
     }
   }
   @supports not (
-    grid-template-columns: repeat(auto-fill, minmax(10rem, 13rem))
+    grid-template-columns: repeat(auto-fill, minmax(10rem, 15rem))
   ) {
     &__book-list {
-      grid-template-columns: repeat(8, minmax(10rem, 13rem));
+      grid-template-columns: repeat(8, minmax(10rem, 15rem));
     }
   }
   @media screen and(max-width: 500px) {
     #{$self}__book-list {
-      grid-template-columns: repeat(3, minmax(5rem, 13rem));
+      grid-template-columns: repeat(3, minmax(5rem, 15rem));
       grid-gap: 3px;
 
       #{$self}__book-item {

@@ -90,21 +90,21 @@ export const actions = {
   async fetchUserSettings({
     commit
   }) {
-    await this.$axios.get('/user/settings').then((res) => {
-      commit('SET_FONT_FAMILY', res.data.font_family)
-      commit('SET_FONT_SIZE', res.data.font_size)
-      commit('SET_THEME', res.data.theme)
-      commit('SET_UPDATE_VIEW', res.data.update_view)
+    await this.$axios.get('/user/setting').then((res) => {
+      commit('SET_FONT_FAMILY', res.data.chapterFontFamily)
+      commit('SET_FONT_SIZE', res.data.chapterFontSize)
+      commit('SET_THEME', res.data.chapterTheme)
+      commit('SET_UPDATE_VIEW', res.data.updateDisplay)
     })
   },
   async setSetting({
     commit
   }, setting) {
-    await this.$axios.patch('/user/settings', setting).then((res) => {
-      commit('SET_FONT_FAMILY', res.data.font_family)
-      commit('SET_FONT_SIZE', res.data.font_size)
-      commit('SET_THEME', res.data.theme)
-      commit('SET_UPDATE_VIEW', res.data.update_view)
+    await this.$axios.patch('/user/setting', setting).then((res) => {
+      commit('SET_FONT_FAMILY', res.data.chapterFontFamily)
+      commit('SET_FONT_SIZE', res.data.chapterFontSize)
+      commit('SET_THEME', res.data.chapterTheme)
+      commit('SET_UPDATE_VIEW', res.data.updateDisplay)
     })
   },
   async getBookUpdate({

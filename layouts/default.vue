@@ -18,16 +18,11 @@
   </div>
 </template>
 <script>
-import Horizontal from "./main-nav/Horizontal";
-import Vertical from "./main-nav/Vertical";
-import VerticalRightMobile from "./mobile-nav/Vertical-right";
-// import "~/assets/css/typography.css";
-
 export default {
   components: {
-    Horizontal,
-    Vertical,
-    VerticalRightMobile
+    Horizontal: () => import("./main-nav/Horizontal"),
+    Vertical: () => import("./main-nav/Vertical"),
+    VerticalRightMobile: () => import("./mobile-nav/Vertical-right")
   },
   mounted() {
     document.addEventListener("touchstart", { passive: true });

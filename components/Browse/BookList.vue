@@ -1,14 +1,13 @@
 <template>
   <div class="library-booklist">
-    <transition-group name="list" tag="ul" class="browse-booklist__list">
-      <li class="library-booklist__item" v-for="(book) in books" :key="book._id">
+    <transition-group tag="ul" class="browse-booklist__list">
+      <li class="library-booklist__item" v-for="(book) in books" :key="book.id">
         <Book :book="book"></Book>
       </li>
     </transition-group>
   </div>
 </template>
 <script>
-import Book from "./Book";
 export default {
   props: {
     books: Array,
@@ -19,7 +18,7 @@ export default {
     return {};
   },
   components: {
-    Book
+    Book: () => import("./Book")
   },
   methods: {}
 };
@@ -77,7 +76,7 @@ export default {
   }
   &__list {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(10rem, 13.5rem));
+    grid-template-columns: repeat(auto-fit, minmax(10rem, 15rem));
     grid-gap: 0.5rem;
   }
   @media screen and (max-width: 400px) {

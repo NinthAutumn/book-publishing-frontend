@@ -79,12 +79,13 @@ export const actions = {
   async getBookmark({
     commit
   }) {
-    await this.$axios.get('/library/bookmarks').then((res) => {
-      if (res) {
-        commit('GET_BOOKMARK', res.data.store)
-      }
+    try {
+      const res = await this.$axios.get('/user/library')
+      commit('GET_BOOKMARK', res.data)
+    } catch (error) {
+      Promise.reject(error)
+    }
 
-    })
   },
   async getFavorites({
     commit

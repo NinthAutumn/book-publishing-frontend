@@ -66,9 +66,9 @@ export default {
     };
   },
   components: {
-    Horizontal,
-    LeftV,
-    RightV
+    Horizontal: () => import("./Horizontal"),
+    LeftV: () => import("./Left-V"),
+    RightV: () => import("./Right-V")
   },
   computed: {
     modal() {

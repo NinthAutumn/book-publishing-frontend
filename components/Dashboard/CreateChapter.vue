@@ -209,9 +209,9 @@ import Select from "@/components/All/Select";
 import Currency from "@/components/All/Currency";
 export default {
   components: {
-    TextEditor,
-    Select,
-    Currency
+    TextEditor: () => import("@/components/TextEditor"),
+    Select: () => import("@/components/All/Select"),
+    Currency: () => import("@/components/All/Currency")
   },
   created() {
     this.$store.getters["chapter/getVolumeList"].forEach((volume, index) => {
@@ -335,15 +335,15 @@ export default {
       const reader = new FileReader();
       store.forEach(file => {
         this.form.drawings.push(file);
-        this.fileList.push({url: URL.createObjectURL(file), file: file});
+        this.fileList.push({ url: URL.createObjectURL(file), file: file });
       });
 
       console.log(this.fileList);
     },
-    deleteImage(url){
-      this.fileList = this.fileList.filter((file)=>{
-        return file.url !== url
-      })
+    deleteImage(url) {
+      this.fileList = this.fileList.filter(file => {
+        return file.url !== url;
+      });
     },
     contentBlur() {
       this.contentHolder = "本文";
@@ -520,18 +520,18 @@ dialog {
     box-shadow: 1px 1px 5px 2px rgb(238, 238, 238);
     width: 300px;
     #{$self}__image-btn {
-      position:relative;
+      position: relative;
       &__close {
         font-size: 1.6rem;
-        position:absolute;
-        top:0.5rem;
-      right: 0.5rem;
-      transition: 200ms;
-      &:hover{
-        cursor:pointer;
-        transform:rotate(180deg) scale(1.2);
-        transition: transform 200ms;
-      }
+        position: absolute;
+        top: 0.5rem;
+        right: 0.5rem;
+        transition: 200ms;
+        &:hover {
+          cursor: pointer;
+          transform: rotate(180deg) scale(1.2);
+          transition: transform 200ms;
+        }
       }
     }
   }

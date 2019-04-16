@@ -47,10 +47,9 @@
 </template>
 
 <script>
-import Currency from "@/components/All/Currency";
 export default {
   components: {
-    Currency
+    Currency: () => import("@/components/All/Currency")
   },
   created() {},
   computed: {

@@ -11,9 +11,6 @@
 </template>
 
 <script>
-import Chapter from "@/components/ChapterPage/Chapter";
-import CommentList from "@/components/ChapterPage/CommentList";
-
 export default {
   data() {
     return {
@@ -22,8 +19,8 @@ export default {
   },
 
   components: {
-    Chapter,
-    CommentList
+    Chapter: () => import("@/components/ChapterPage/Chapter"),
+    CommentList: () => import("@/components/ChapterPage/CommentList")
   },
   mounted() {},
   beforeDestroy() {},

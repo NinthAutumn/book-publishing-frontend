@@ -8,7 +8,6 @@
 
 <script>
 import Cookies from "js-cookie";
-import LoginForm from "@/components/Navigation/LoginForm";
 export default {
   data() {
     return {
@@ -17,7 +16,7 @@ export default {
     };
   },
   components: {
-    LoginForm
+    LoginForm: () => import("@/components/Navigation/LoginForm")
   },
   methods: {
     async login() {

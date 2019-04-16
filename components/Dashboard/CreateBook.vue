@@ -137,8 +137,8 @@ export default {
     };
   },
   components: {
-    Select,
-    TagCreate
+    Select: () => import("@/components/All/Select"),
+    TagCreate: () => import("./TagCreate")
   },
   methods: {
     handleAvatarSuccess(res, file) {

@@ -32,16 +32,14 @@
 </template>
 
 <script>
-import BookList from "./BookList";
-import ActivityList from "./ActivityList";
 export default {
   props: {
     user: Object,
     owner: Boolean
   },
   components: {
-    BookList,
-    ActivityList
+    BookList: () => import("./BookList"),
+    ActivityList: () => import("./ActivityList")
   },
   computed: {
     reviews() {

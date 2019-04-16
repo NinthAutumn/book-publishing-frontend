@@ -29,7 +29,7 @@
           ></div>
           <nuxt-link
             v-else-if="item.title === 'プロフィール'"
-            :to="item.link + user._id"
+            :to="item.link + user.id"
             tag="div"
             class="profile-dropdown__nav-link flex flex--align"
             v-text="item.title"
@@ -48,10 +48,9 @@
 </template>
 
 <script>
-import Currency from "@/components/All/Currency";
 export default {
   components: {
-    Currency
+    Currency: () => import("@/components/All/Currency")
   },
   async mounted() {
     await this.$store.dispatch("wallet/wealth");

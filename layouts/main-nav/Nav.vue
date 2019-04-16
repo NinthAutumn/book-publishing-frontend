@@ -5,12 +5,10 @@
   </div>
 </template>
 <script>
-import Horizontal from "./Horizontal";
-import Vertical from "./Vertical";
 export default {
   components: {
-    Horizontal,
-    Vertical
+    Horizontal: () => import("./Horizontal"),
+    Vertical: () => import("./Vertical")
   },
   data() {
     return {};

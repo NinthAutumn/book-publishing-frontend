@@ -26,21 +26,19 @@
 </template>
 
 <script>
-import BookList from "@/components/Update/BookList";
-import BookTable from "@/components/Update/BookTable";
 export default {
   auth: false,
   components: {
-    BookList,
-    BookTable
+    BookList: () => import("@/components/Update/BookList"),
+    BookTable: () => import("@/components/Update/BookTable")
   },
   async fetch({ store }) {
     if (store.getters.isAuthenticated) {
       await store.dispatch("user/fetchUserSettings");
     }
-    await store.dispatch("chapter/fetchLatestBooks", {
+    await store.dispatch("book/fetchLatestBooks", {
       page: 1,
-      limit: 3
+      limit: 30
     });
   },
   data() {
@@ -51,11 +49,12 @@ export default {
   methods: {
     infiniteHandler: async function($state) {
       await this.$store
-        .dispatch("chapter/fetchMoreLatestBooks", {
+        .dispatch("book/fetchMoreLatestBooks", {
           page: this.page++,
-          limit: 3
+          limit: 30
         })
         .then(array => {
+          console.log(array);
           if (array.length < 1) {
             $state.complete();
           } else {
@@ -82,7 +81,7 @@ export default {
       }
     },
     latestBooks() {
-      return this.$store.getters["chapter/getLatestBooks"];
+      return this.$store.getters["book/getLatest"];
     },
     loggedIn() {
       return this.$store.getters.isAuthenticated;

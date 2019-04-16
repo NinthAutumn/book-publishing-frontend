@@ -51,10 +51,6 @@
 </template>
 
 <script>
-import TOC from "@/components/ChapterPage/Modal/TOC";
-import Profile from "@/components/ChapterPage/Modal/Profile";
-import Setting from "@/components/ChapterPage/Modal/Setting";
-import Images from "@/components/ChapterPage/Modal/Images";
 export default {
   computed: {
     modal() {
@@ -65,10 +61,10 @@ export default {
     }
   },
   components: {
-    TOC,
-    Profile,
-    Setting,
-    Images
+    TOC: () => import("@/components/ChapterPage/Modal/TOC"),
+    Profile: () => import("@/components/ChapterPage/Modal/Profile"),
+    Setting: () => import("@/components/ChapterPage/Modal/Setting"),
+    Images: () => import("@/components/ChapterPage/Modal/Images")
   },
   methods: {
     async table() {

@@ -42,13 +42,6 @@
   </div>
 </template>
 <script>
-import SearchBar from "@/components/Navigation/SearchBar";
-import SignUpForm from "@/components/Navigation/SignUpFrom";
-import LoginForm from "@/components/Navigation/LoginForm";
-import Dropdown from "@/components/Navigation/Dropdown";
-
-import AuthModal from "@/components/Navigation/AuthModal";
-
 export default {
   name: "Horizontal",
   data() {
@@ -58,9 +51,9 @@ export default {
     };
   },
   components: {
-    SearchBar,
-    AuthModal,
-    Dropdown
+    SearchBar: () => import("@/components/Navigation/SearchBar"),
+    AuthModal: () => import("@/components/Navigation/AuthModal"),
+    Dropdown: () => import("@/components/Navigation/Dropdown")
   },
   computed: {
     user() {

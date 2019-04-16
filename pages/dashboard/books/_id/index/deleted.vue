@@ -5,8 +5,6 @@
 </template>
 
 <script>
-import ChapterToc from "@/components/Dashboard/ChapterToc";
-
 export default {
   computed: {
     toc() {
@@ -14,7 +12,7 @@ export default {
     }
   },
   components: {
-    ChapterToc
+    ChapterToc: () => import("@/components/Dashboard/ChapterToc")
   },
   transition: "slide-fade"
 };

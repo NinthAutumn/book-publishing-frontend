@@ -62,11 +62,11 @@
 </template>
 
 <script>
-import RankingItem from "./RankingItem";
-import Select from "@/components/All/Select";
-
 export default {
-  components: { RankingItem, Select },
+  components: {
+    RankingItem: () => import("./RankingItem"),
+    Select: () => import("@/components/All/Select")
+  },
   data() {
     return {
       ranking_type: [

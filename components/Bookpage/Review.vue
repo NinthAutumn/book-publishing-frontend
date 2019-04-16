@@ -9,13 +9,13 @@
       <!-- <v-img :src="review.cover"></v-img> -->
     </div>
     <div class="reviews-content">
-      <div class="reviews-content-title">{{reviewLikes.title}}</div>
+      <div class="reviews-content-title">{{review.title}}</div>
       <div class="flex-row flex--between">
         <div class="reviews-total-rating">
           <no-ssr>
             <star-rating
               name="rating"
-              v-model="reviewLikes.rating.total"
+              v-model="review.rating"
               :star-size="18"
               :show-rating="false"
               :read-only="true"
@@ -29,21 +29,20 @@
           </no-ssr>
         </div>
         <div class="reviews-author">
-          <p class="reviews-content-username">投稿者：{{reviewLikes.author}}</p>
+          <p class="reviews-content-username">投稿者：{{review.username}}</p>
         </div>
       </div>
-
       <div ref="review" class="reviews-content-text flex flex-column flex--between">
         <div v-if="!readMore" v-html="truncate(review.content, 372)"></div>
         <div v-if="readMore" v-html="review.content"></div>
-        <!-- <div
+        <div
           class="reviews-content-text--html"
           v-html="review.content"
           :class="{readmore: readMore}"
-        ></div>-->
-        <div v-if="this.review.content.length > 372" class="buts">
+        ></div>
+        <div v-if="review.content.length > 372" class="buts">
           <a @click="toggleCollapse" v-if="!readMore" class="reviews-content-text-more">>>詳細</a>
-          <a @click="toggleCollapse" v-else class="reviews-content-text-more"><<一部を表示</a>
+          <a @click="toggleCollapse" v-else class="reviews-content-text-more">{{'<<'}}一部を表示</a>
         </div>
       </div>
     </div>
@@ -62,9 +61,9 @@ export default {
   data() {
     return {
       readMore: false,
-      liked: this.review.liked,
-      disliked: this.review.disliked,
-      likeNumber: this.review.like
+      liked: this.review.voted > 0,
+      disliked: this.review.voted < 0,
+      likeNumber: this.review.likes
     };
   },
   components: {
@@ -77,54 +76,46 @@ export default {
     },
     async likedReview() {
       if (this.liked) {
-        this.liked = false;
-        this.$store.dispatch("review/unLikeReview", {
-          reviewId: this.review._id,
-          type: "like"
+        await this.$store.dispatch("review/likeReview", {
+          reviewId: this.review.id,
+          data: 0
         });
-        this.likeNumber = this.likeNumber - 1;
+        this.likeNumber--;
+        this.liked = false;
       } else {
+        await this.$store.dispatch("review/likeReview", {
+          reviewId: this.review.id,
+          data: 1
+        });
         this.liked = true;
         if (this.disliked) {
+          this.likeNumber = this.likeNumber + 2;
           this.disliked = false;
-          await this.$store.dispatch("review/unLikeReview", {
-            reviewId: this.review._id,
-            type: "dislike"
-          });
+        } else {
           this.likeNumber++;
         }
-        await this.$store.dispatch("review/likeReview", {
-          reviewId: this.review._id,
-          type: "like"
-        });
-        this.likeNumber++;
       }
     },
     async dislikedReview() {
       if (this.disliked) {
-        this.disliked = false;
-
-        await this.$store.dispatch("review/unLikeReview", {
-          reviewId: this.review._id,
-          type: "dislike"
+        await this.$store.dispatch("review/likeReview", {
+          reviewId: this.review.id,
+          data: 0
         });
         this.likeNumber++;
+        this.disliked = false;
       } else {
+        await this.$store.dispatch("review/likeReview", {
+          reviewId: this.review.id,
+          data: -1
+        });
         this.disliked = true;
-
         if (this.liked) {
+          this.likeNumber = this.likeNumber - 2;
           this.liked = false;
-          await this.$store.dispatch("review/unLikeReview", {
-            reviewId: this.review._id,
-            type: "like"
-          });
+        } else {
           this.likeNumber--;
         }
-        await this.$store.dispatch("review/likeReview", {
-          reviewId: this.review._id,
-          type: "dislike"
-        });
-        this.likeNumber--;
       }
     },
     truncate: (string, number) => {
@@ -135,11 +126,7 @@ export default {
       }
     }
   },
-  computed: {
-    reviewLikes() {
-      return this.review;
-    }
-  },
+  computed: {},
   filters: {
     truncate: (string, number) => {
       if (string.length > number) {

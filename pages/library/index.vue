@@ -61,9 +61,9 @@ import Profile from "@/components/LibraryPage/Profile";
 import Select from "@/components/All/Select";
 export default {
   components: {
-    BookList,
-    Profile,
-    Select
+    BookList: () => import("@/components/LibraryPage/BookList"),
+    Profile: () => import("@/components/LibraryPage/Profile"),
+    Select: () => import("@/components/All/Select")
   },
   data() {
     return {

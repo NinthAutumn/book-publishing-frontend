@@ -8,11 +8,10 @@
   </div>
 </template>
 <script>
-import Books from "@/components/SearchPage/Books";
 export default {
   name: "search",
   components: {
-    Books
+    Books: () => import("@/components/SearchPage/Books")
   },
   computed: {
     searchBooks() {

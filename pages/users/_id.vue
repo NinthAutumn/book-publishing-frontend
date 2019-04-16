@@ -6,14 +6,11 @@
 </template>
 
 <script>
-import ProfileNav from "@/components/User/ProfileNav";
-import UserContent from "@/components/User/Content";
-
 export default {
   auth: false,
   components: {
-    ProfileNav,
-    UserContent
+    ProfileNav: () => import("@/components/User/ProfileNav"),
+    UserContent: () => import("@/components/User/Content")
   },
   methods: {
     changeSticky() {

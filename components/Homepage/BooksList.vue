@@ -43,7 +43,6 @@
   </div>
 </template>
 <script>
-import Book from "./Book";
 export default {
   props: {
     books: Array,
@@ -83,7 +82,7 @@ export default {
     };
   },
   components: {
-    Book
+    Book: () => import("./Book")
   },
   methods: {}
 };

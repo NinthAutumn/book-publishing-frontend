@@ -1,9 +1,10 @@
 <template>
   <main class="book page-padding" :class="{'book--mobile': $device.isMobile}">
     <div class="book__container">
+      <!-- :src="`https://storage.googleapis.com/theta-images/${book.cover}`" -->
       <v-img
         class="book__cover"
-        :src="`https://storage.googleapis.com/theta-images/${book.cover}`"
+        :src="book.cover"
         alt="book cover"
         width="20rem"
         :aspect-ratio="1/1.5"
@@ -41,7 +42,7 @@
       </div>
 
       <div class="book__avatar">
-        <img class="book-author" :src="$store.state.book.book.authorId.avatar" alt="author avatar">
+        <!-- <img class="book-author" :src="$store.state.book.book.authorId.avatar" alt="author avatar"> -->
       </div>
       <div class="book__synopsis">
         <BookContent :book="book"></BookContent>
@@ -74,7 +75,7 @@
         ref="review"
         class="book__content-nav__item book__content-nav__item--review"
         @click="navSelect('review')"
-      >レビュー({{book.reviewsCount|| 0}})</div>
+      >レビュー({{$store.getters['review/getReviewCount']|| 0}})</div>
       <div
         @click="navSelect('toc')"
         @mouseenter="navLine(2)"
@@ -91,13 +92,6 @@
 </template>
 
 <script>
-//
-import BookContent from "@/components/Bookpage/BookContent";
-import BookChapterList from "@/components/Bookpage/BookChapterList";
-import ReviewsList from "@/components/Bookpage/ReviewsList";
-import ReviewsForm from "@/components/Bookpage/ReviewForm";
-import Tags from "@/components/Bookpage/Tags";
-
 export default {
   auth: false,
   async asyncData({ params, store }) {},
@@ -109,25 +103,35 @@ export default {
     // );
   },
   async fetch({ store, params }) {
-    await store.dispatch("book/fetchBook", params.id);
-    await store.dispatch("chapter/fetchPublishedTOC", params.id);
-    await store.dispatch("review/showAll", {
-      bookId: params.id
-    });
     if (store.state.auth.loggedIn) {
+      await store.dispatch("book/fetchBook", {
+        id: params.id,
+        userId: store.getters["loggedInUser"].id
+      });
       await store.dispatch("review/showAll", {
         bookId: params.id,
-        userId: store.getters["loggedInUser"]._id
+        userId: store.getters["loggedInUser"].id,
+        page: 1,
+        limit: 10,
+        direction: "desc",
+        type: "likes"
       });
-      await store.dispatch("review/reviewedStatus", params.id);
-      await store.dispatch("library/checkBookmark", params.id);
+      // await store.dispatch("review/reviewedStatus", params.id);
+      // await store.dispatch("library/checkBookmark", params.id);
+    } else {
+      await store.dispatch("book/fetchBook", { id: params.id });
+      // await store.dispatch("chapter/fetchPublishedTOC", params.id);
+      await store.dispatch("review/showAll", {
+        bookId: params.id,
+        page: 1,
+        limit: 10,
+        direction: "desc",
+        type: "likes"
+      });
     }
   },
   computed: {
     // ...MapGetters({})
-    bookmarked() {
-      return this.$store.getters["library/isBookmarked"];
-    },
     bookmarkedText() {
       if (!this.bookmarked) {
         return "ブックマーク";
@@ -148,6 +152,7 @@ export default {
   data() {
     return {
       reviews: [],
+      bookmarked: this.$store.getters["book/getBook"].bookmarked,
       tabs: {
         review: "",
         toc: "",
@@ -298,11 +303,11 @@ export default {
     }
   },
   components: {
-    BookContent,
-    BookChapterList,
-    ReviewsList,
-    ReviewsForm,
-    Tags
+    BookContent: () => import("@/components/Bookpage/BookContent"),
+    BookChapterList: () => import("@/components/Bookpage/BookChapterList"),
+    ReviewsList: () => import("@/components/Bookpage/ReviewsList"),
+    ReviewsForm: () => import("@/components/Bookpage/ReviewForm"),
+    Tags: () => import("@/components/Bookpage/Tags")
     // TextEditor
   },
   transition: false,
@@ -310,18 +315,21 @@ export default {
     // while (1) {
     //   alert("なぜそれが");
     // }
-
-    this.tabs.review = this.$refs.review.clientWidth;
-    this.tabs.toc = this.$refs.toc.clientWidth;
-    this.tabs.position = {
-      width: `${this.tabs.review}px`,
-      left: 0
-    };
-    this.tabs.selected = {
-      width: `${this.tabs.review}px`,
-      left: 0
-    };
-    this.text = this.bookmarkedText;
+    // this.tabs.review = this.$refs.review.clientWidth;
+    // this.tabs.toc = this.$refs.toc.clientWidth;
+    // this.tabs.position = {
+    //   width: `${this.tabs.review}px`,
+    //   left: 0
+    // };
+    // this.tabs.selected = {
+    //   width: `${this.tabs.review}px`,
+    //   left: 0
+    // };
+    if (this.bookmarked) {
+      this.text = "ブックマーク済み";
+    } else {
+      this.text = "ブックマーク";
+    }
   }
 };
 </script>

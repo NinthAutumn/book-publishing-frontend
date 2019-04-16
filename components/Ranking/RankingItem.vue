@@ -69,7 +69,6 @@
 </template>
 
 <script>
-import Select from "@/components/All/Select";
 export default {
   props: {
     book: Object,
@@ -78,7 +77,7 @@ export default {
     trending: Boolean
   },
   components: {
-    Select
+    Select: () => import("@/components/All/Select")
   },
   created() {}
 };

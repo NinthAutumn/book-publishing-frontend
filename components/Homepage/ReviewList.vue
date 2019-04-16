@@ -67,7 +67,7 @@ export default {
     };
   },
   components: {
-    Review
+    Review: () => import("./Review")
   },
   methods: {},
   created() {}

@@ -11,7 +11,6 @@
 </template>
 
 <script>
-import CreateChapter from "@/components/Dashboard/CreateChapter";
 export default {
   name: "new-chapter",
   layout: "user-nav/User",
@@ -21,7 +20,7 @@ export default {
     };
   },
   components: {
-    CreateChapter
+    CreateChapter: () => import("@/components/Dashboard/CreateChapter")
   },
   created() {},
   async fetch({ store, params }) {

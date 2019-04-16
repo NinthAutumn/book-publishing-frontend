@@ -1,8 +1,8 @@
 <template>
   <div class="library-booklist">
     <transition-group tag="ul" class="library-booklist__list" v-if="trendings">
-      <li class="library-booklist__item" v-for="(book) in books" :key="book.bookId._id">
-        <Book :progress="book.history" :book="book.bookId"></Book>
+      <li class="library-booklist__item" v-for="(book) in books" :key="book.book_id">
+        <Book :book="book"></Book>
       </li>
     </transition-group>
     <transition-group tag="ul" v-if="history" class="library-booklist__list">
@@ -13,7 +13,8 @@
   </div>
 </template>
 <script>
-import Book from "./Book";
+// import Book from "./Book";
+
 export default {
   props: {
     books: Array,
@@ -29,7 +30,7 @@ export default {
     };
   },
   components: {
-    Book
+    Book: () => import("./Book")
   },
   methods: {
     showSelect() {

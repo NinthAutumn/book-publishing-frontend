@@ -10,7 +10,7 @@
       <div class="card-title flex flex--align">
         <h3>おすすめ</h3>
       </div>
-      <BooksList :books="$store.getters['book/getRecommended']"></BooksList>
+      <!-- <BooksList :books="$store.getters['book/getRecommended']"></BooksList> -->
       <div class="card-title flex flex--align">
         <h3>評価が高いレビュー</h3>
       </div>
@@ -18,51 +18,44 @@
       <div class="card-title">
         <h3>今週人気の作品</h3>
       </div>
-      <BooksList :trendings="trending"></BooksList>
+      <!-- <BooksList :trendings="trending"></BooksList> -->
       <div class="card-title">
         <h3>更新された作品</h3>
       </div>
-      <BooksList :trendings="latest"></BooksList>
+      <!-- <BooksList :trendings="latest"></BooksList> -->
     </div>
   </div>
 </template>
 
 <script>
-import BooksList from "@/components/Homepage/BooksList";
-import ReviewList from "@/components/Homepage/ReviewList";
-import Ranking from "@/components/Homepage/Ranking";
-import BlobOne from "@/assets/svg/blob.svg";
-import BlobTwo from "@/assets/svg/blob2.svg";
-import BannerList from "@/components/Homepage/BannerList";
-import SearchBar from "@/components/Navigation/SearchBar";
 export default {
   components: {
-    BooksList,
-    ReviewList,
-    Ranking,
-    BlobOne,
-    BlobTwo,
-    BannerList,
-    SearchBar
+    BooksList: () => import("@/components/Homepage/BooksList"),
+    ReviewList: () => import("@/components/Homepage/ReviewList"),
+    Ranking: () => import("@/components/Homepage/Ranking"),
+    BlobOne: () => import("@/assets/svg/blob.svg"),
+    BlobTwo: () => import("@/assets/svg/blob2.svg"),
+    BannerList: () => import("@/components/Homepage/BannerList"),
+    SearchBar: () => import("@/components/Navigation/SearchBar")
   },
   methods: {},
 
   async fetch({ store }) {
-    await store.dispatch("book/fetchRecommended");
-    await store.dispatch("review/mostLiked");
-    await store.dispatch("ranking/fetchTrending", {
-      days: 7,
-      limit: 10,
-      page: 1
-    });
-    await store.dispatch("chapter/fetchMoreLatestBooksSimple", {
-      page: 1,
-      limit: 8
-    });
-    if (store.state.auth.loggedIn) {
-      await store.dispatch("library/fetchLatestChapters");
-    }
-    await store.dispatch("review/fetchTrendingReviews", { days: 15 });
+    // await store.dispatch("book/fetchRecommended");
+    // await store.dispatch("review/mostLiked");
+    // await store.dispatch("ranking/fetchTrending", {
+    //   days: 7,
+    //   limit: 10,
+    //   page: 1
+    // });
+    // await store.dispatch("chapter/fetchMoreLatestBooksSimple", {
+    //   page: 1,
+    //   limit: 8
+    // });
+    // if (store.state.auth.loggedIn) {
+    //   await store.dispatch("library/fetchLatestChapters");
+    // }
+    // await store.dispatch("review/fetchTrendingReviews", { days: 15 });
   },
   async created() {},
   async mounted() {

@@ -176,7 +176,7 @@ module.exports = {
    ** Axios module configuration
    */
   axios: {
-    baseURL: process.env.SERVER_URL || 'http://0.0.0.0:5000/api'
+    baseURL: process.env.SERVER_URL || 'http://0.0.0.0:8000/api'
   },
 
   auth: {
