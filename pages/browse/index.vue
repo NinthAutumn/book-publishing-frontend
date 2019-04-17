@@ -165,7 +165,8 @@ export default {
         { key: "栞数", value: "bookmarks" },
         { key: "話数", value: "chapter_count" },
         { key: "字数", value: "word_count" },
-        { key: "評価", value: "review" }
+        { key: "評価", value: "review" },
+        { key: "視聴回数", value: "views" }
       ],
       sort_directions: [
         { key: "上り", value: "asc" },

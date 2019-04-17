@@ -80,7 +80,7 @@ export const actions = {
     commit
   }) {
     try {
-      const res = await this.$axios.get('/user/library')
+      const res = await this.$axios.get(`/user/library?type=bookmark`)
       commit('GET_BOOKMARK', res.data)
     } catch (error) {
       Promise.reject(error)
@@ -127,17 +127,12 @@ export const actions = {
       commit('GET_READ_LATER', res.data)
     })
   },
-  async addStore({
+  async patchStore({
     commit
-  }, store) {
-    await this.$axios.patch('/library/updateLibrary', {
-      store
-    })
-  },
-  async removeStore({
-    commit
-  }, store) {
-    await this.$axios.patch('/library/updateDeleteLibrary', {
+  }, {
+    store
+  }) {
+    await this.$axios.patch('/user/library', {
       store
     })
   },

@@ -60,6 +60,7 @@
             @mouseenter="bookmarkHover"
             @mouseleave="bookmarkLeave"
             :class="{'button--secondary': bookmarked, 'button--secondary--open': !bookmarked}"
+            v-ripple
           >
             <fa class="book-content__buttons__item__icon" style="font-size:15px;" icon="bookmark"></fa>
             <span style="font-size:13px;" v-text="text"></span>
@@ -255,8 +256,8 @@ export default {
     },
     async bookmarkBook() {
       const store = {
-        storeType: "bookmark",
-        bookId: this.$store.state.book.book._id
+        type: "bookmark",
+        bookId: this.book.id
       };
       if (this.$store.state.loggedIn === false) {
         this.$message({
@@ -267,37 +268,28 @@ export default {
       } else {
         if (this.bookmarked) {
           try {
-            const remove = await this.$store.dispatch(
-              "library/removeStore",
+            const remove = await this.$store.dispatch("library/patchStore", {
               store
-            );
+            });
+            this.bookmarked = false;
           } catch (error) {
-            // throw err
             this.$message({
               message: `ブックマーク解除に失敗しました`,
               type: "error"
             });
           }
-          await this.$store.dispatch(
-            "library/checkBookmark",
-            this.$route.params.id
-          );
         } else {
           try {
-            const addStore = await this.$store.dispatch(
-              "library/addStore",
+            const addStore = await this.$store.dispatch("library/patchStore", {
               store
-            );
+            });
+            this.bookmarked = true;
           } catch (error) {
             this.$message({
               message: `ブックマークを失敗しました`,
               type: "error"
             });
           }
-          const library = await this.$store.dispatch(
-            "library/checkBookmark",
-            this.$route.params.id
-          );
         }
       }
     }
@@ -315,16 +307,16 @@ export default {
     // while (1) {
     //   alert("なぜそれが");
     // }
-    // this.tabs.review = this.$refs.review.clientWidth;
-    // this.tabs.toc = this.$refs.toc.clientWidth;
-    // this.tabs.position = {
-    //   width: `${this.tabs.review}px`,
-    //   left: 0
-    // };
-    // this.tabs.selected = {
-    //   width: `${this.tabs.review}px`,
-    //   left: 0
-    // };
+    this.tabs.review = this.$refs.review.clientWidth;
+    this.tabs.toc = this.$refs.toc.clientWidth;
+    this.tabs.position = {
+      width: `${this.tabs.review}px`,
+      left: 0
+    };
+    this.tabs.selected = {
+      width: `${this.tabs.review}px`,
+      left: 0
+    };
     if (this.bookmarked) {
       this.text = "ブックマーク済み";
     } else {

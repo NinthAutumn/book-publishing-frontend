@@ -50,7 +50,6 @@ export const actions = {
   }) {
     await this.$axios.get(`book/show?id=${id}&userId=${userId}`).then((res) => {
       commit('SET_BOOK', res.data.book)
-      console.log(res.data.book);
       commit('SET_TAGS', res.data.tags)
     })
     // await dispatch('fetchBookView', id)
