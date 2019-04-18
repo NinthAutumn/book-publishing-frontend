@@ -1,13 +1,15 @@
 <template>
   <div class="reviews">
+    <div class="reviews__avatar">
+      <!-- <v-img :src="review.avatar"></v-img> -->
+      <!-- {{review}} -->
+    </div>
     <div class="reviews-like">
       <ArrowUp class="reviews-like-up" :class="{liked: liked}" @click="likedReview"></ArrowUp>
       <p v-text="likeNumber"></p>
       <ArrowDown class="reviews-like-down" :class="{disliked: disliked}" @click="dislikedReview"></ArrowDown>
     </div>
-    <div class="reviews__avatar">
-      <!-- <v-img :src="review.cover"></v-img> -->
-    </div>
+
     <div class="reviews-content">
       <div class="reviews-content-title">{{review.title}}</div>
       <div class="flex-row flex--between">

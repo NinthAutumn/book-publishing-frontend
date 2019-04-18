@@ -4,7 +4,7 @@
       class="browse-page__header flex-row flex--align"
       :class="{'browse-page__header--mobile':$device.isMobile}"
     >
-      <blob v-if="!$device.isMobile" class="header-blob"></blob>
+      <!-- <blob v-if="!$device.isMobile" class="header-blob"></blob> -->
       <header>作品を探す</header>
     </div>
     <div class="flex-divider browse-page__section flex">
@@ -96,7 +96,6 @@
 export default {
   auth: false,
   components: {
-    Blob: () => import("@/assets/svg/blob2.svg"),
     Select: () => import("@/components/All/Select"),
     BookList: () => import("@/components/Browse/BookList"),
     TagCreate: () => import("@/components/Browse/TagCreate")

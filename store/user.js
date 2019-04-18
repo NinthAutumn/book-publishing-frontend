@@ -99,13 +99,20 @@ export const actions = {
   },
   async setSetting({
     commit
-  }, setting) {
-    await this.$axios.patch('/user/setting', setting).then((res) => {
-      commit('SET_FONT_FAMILY', res.data.chapterFontFamily)
-      commit('SET_FONT_SIZE', res.data.chapterFontSize)
-      commit('SET_THEME', res.data.chapterTheme)
-      commit('SET_UPDATE_VIEW', res.data.updateDisplay)
+  }, {
+    type,
+    change
+  }) {
+    const res = await this.$axios.patch('/user/setting', {
+      type,
+      change
     })
+    commit('SET_FONT_FAMILY', res.data.chapterFontFamily)
+    commit('SET_FONT_SIZE', res.data.chapterFontSize)
+    commit('SET_THEME', res.data.chapterTheme)
+
+    commit('SET_UPDATE_VIEW', res.data.updateDisplay)
+
   },
   async getBookUpdate({
     commit

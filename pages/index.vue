@@ -14,11 +14,11 @@
       <div class="card-title flex flex--align">
         <h3>評価が高いレビュー</h3>
       </div>
-      <ReviewList></ReviewList>
+      <!-- <ReviewList></ReviewList> -->
       <div class="card-title">
         <h3>今週人気の作品</h3>
       </div>
-      <!-- <BooksList :trendings="trending"></BooksList> -->
+      <BooksList :trendings="trending"></BooksList>
       <div class="card-title">
         <h3>更新された作品</h3>
       </div>
@@ -43,11 +43,7 @@ export default {
   async fetch({ store }) {
     // await store.dispatch("book/fetchRecommended");
     // await store.dispatch("review/mostLiked");
-    // await store.dispatch("ranking/fetchTrending", {
-    //   days: 7,
-    //   limit: 10,
-    //   page: 1
-    // });
+    await store.dispatch("analytic/fetchTrending");
     // await store.dispatch("chapter/fetchMoreLatestBooksSimple", {
     //   page: 1,
     //   limit: 8
@@ -64,7 +60,7 @@ export default {
   },
   computed: {
     trending() {
-      return this.$store.getters["ranking/getRankingList"];
+      return this.$store.getters["analytic/getTrending"];
     },
     latest() {
       return this.$store.getters["chapter/getLatestBooksSimple"];

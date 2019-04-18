@@ -2,7 +2,7 @@
   <div class="book-table">
     <ul class="update-books__date-list">
       <li class="update-books__date-item" v-for="(dates, index) in latestBooks" :key="index">
-        <div class="update-books__date-title">{{dates._id}}</div>
+        <div class="update-books__date-title">{{dates.date}}</div>
         <table>
           <thead class="book-table__header">
             <th
@@ -13,41 +13,41 @@
             >{{item}}</th>
           </thead>
           <tbody>
-            <tr v-for="(book, index) in dates.books" :key="index">
+            <tr v-for="(book, index) in dates.book" :key="index">
               <nuxt-link
                 v-if="!$device.isMobile"
                 tag="td"
-                :to="'/browse?genre=' + book.book[0].genres[0]"
+                :to="'/browse?genre=' + book[0].genres[0]"
                 class="book-table__row-header book-table__row-header--genres"
-              >{{book.book[0].genres[0]}}</nuxt-link>
+              >{{book[0].genres[0]}}</nuxt-link>
               <nuxt-link
                 tag="td"
-                :to="`/books/${book.book[0]._id}`"
+                :to="`/books/${book.id}`"
                 class="book-table__row-title"
-              >{{book.book[0].title}}</nuxt-link>
+              >{{book[0].title}}</nuxt-link>
               <nuxt-link
                 tag="td"
                 v-if="!$device.isMobile"
-                :to="`/books/${book.book[0]._id}/${book.chapters[0]._id}`"
+                :to="`/books/${book._id}/${book[0].chapter_id}`"
                 class="book-table__row-index"
-                v-text="`第${book.chapters[0].index}話: ${book.chapters[0].title}`"
+                v-text="`第${book[0].index}話: ${book[0].chapter_title}`"
               ></nuxt-link>
               <nuxt-link
                 tag="td"
                 v-else
-                :to="`/books/${book.book[0]._id}/${book.chapters[0]._id}`"
+                :to="`/books/${book.id}/${book.id}`"
                 class="book-table__row-index"
-                v-text="`第${book.chapters[0].index}話`"
+                v-text="`第${book[0].index}話`"
               ></nuxt-link>
               <nuxt-link
                 tag="td"
                 v-if="!$device.isMobile"
-                :to="`/users/${book.book[0].authorId}`"
+                :to="`/author/${book[0].pen_name}`"
                 class="book-table__row-author"
-              >{{book.book[0].author}}</nuxt-link>
+              >{{book[0].pen_name}}</nuxt-link>
               <td
                 class="book-table__row-header"
-              >{{$moment(book.chapters[0].createdAt).startOf('second').fromNow()}}</td>
+              >{{$moment(book[0].created_at).startOf('second').fromNow()}}</td>
             </tr>
           </tbody>
         </table>

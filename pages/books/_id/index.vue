@@ -178,7 +178,7 @@ export default {
           url: "/browse"
         },
         {
-          key: this.$store.getters["book/getBookView"],
+          key: this.$store.getters["book/getBook"].view,
           icon: "eye",
           type: "view",
           url: "/browse"

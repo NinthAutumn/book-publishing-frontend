@@ -3,7 +3,7 @@
     <div @mouseenter="menuOpen" @mouseleave="menuClose" id="book-card" class="big">
       <div class="book-cover">
         <span class="star-rating"></span>
-        <nuxt-link class="book-img-div" tag="div" :to="'/books/' + book._id">
+        <nuxt-link class="book-img-div" tag="div" :to="'/books/' + book.id">
           <v-img
             :src="`https://storage.googleapis.com/theta-images/${book.cover}`"
             :aspect-ratio="1/1.5"
@@ -26,30 +26,14 @@
           </div>
         </transition>
       </div>
-      <nuxt-link tag="div" :to="'/books/' + book._id" class="text-info">
+      <nuxt-link tag="div" :to="'/books/' + book.id" class="text-info">
         <p v-clampy="3" class="book-title full" ref="texting">{{book.title}}</p>
         <span class="p-ending"></span>
         <div class="flex-divider flex-row flex--align">
-          <div class="book-rating" v-if="book.ratings" v-text="`(${+book.ratings.toFixed(2)})`"></div>
-          <div class="book-rating" v-else-if="book.rating" v-text="`(${+book.rating.toFixed(2)})`"></div>
+          <!-- <div class="book-rating" v-if="book.ratings" v-text="`(${+book.ratings.toFixed(2)})`"></div>
+          <div class="book-rating" v-else-if="book.rating" v-text="`(${+book.rating.toFixed(2)})`"></div>-->
           <div v-if="!$device.isMobile">
-            <v-rating
-              color="#FF8D29"
-              v-if="book.ratings"
-              readonly
-              size="20"
-              half-increments
-              :value="+book.ratings.toFixed(2)"
-            ></v-rating>
-            <v-rating
-              color="#FF8D29"
-              size="20"
-              half-increments
-              v-else-if="book.rating"
-              readonly
-              :value="+book.rating.toFixed(2)"
-            ></v-rating>
-            <v-rating size="20" color="#FF8D29" v-else :readonly="true" :value="0"></v-rating>
+            <v-rating color="#FF8D29" readonly size="20" half-increments :value="+book.rating"></v-rating>
           </div>
         </div>
       </nuxt-link>

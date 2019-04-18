@@ -1,7 +1,3 @@
-import {
-  strict
-} from 'assert';
-
 // import {
 //   axios
 // } from 'axios'
@@ -147,7 +143,9 @@ export const actions = {
       const res = await this.$axios.get(`/book/update?limit=${limit}&page=${page}`)
       commit('SET_LATEST_BOOKS', res.data)
       return Promise.resolve(res.data)
-    } catch (error) {}
+    } catch (error) {
+      return Promise.reject(error)
+    }
   },
   async fetchMoreLatestBooks({
     commit
@@ -216,15 +214,29 @@ export const mutations = {
     state.latest = books
   },
   SET_MORE_LATEST_BOOKS(state, books) {
-    books.forEach((item) => {
-      state.latest.forEach((late) => {
-        if (item.date === late.date) {
-          item.book.forEach((book) => {
-            late.book.push(book)
+    let temp = books
+    state.latest.forEach((item) => {
+      temp.forEach((book, index) => {
+        if (item.date === book.date) {
+          book.book.forEach((boo) => {
+            item.book.push(boo)
           })
+          temp.splice(index, 1)
         }
       })
     })
+    // console.log(books);
+    temp.forEach((book) => {
+      state.latest.push(book)
+    })
+    // state.latest.forEach((item) => {
+    //   temp.forEach((book) => {
+    //     if (item.date !== book.date) {
+    //       state.latest.push(book)
+    //     }
+    //   })
+    // })
+
     // state.latest.push(books)
   }
 

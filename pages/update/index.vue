@@ -48,33 +48,31 @@ export default {
   },
   methods: {
     infiniteHandler: async function($state) {
-      await this.$store
-        .dispatch("book/fetchMoreLatestBooks", {
-          page: this.page++,
-          limit: 30
-        })
-        .then(array => {
-          console.log(array);
-          if (array.length < 1) {
-            $state.complete();
-          } else {
-            $state.loaded();
-          }
-        });
+      const array = await this.$store.dispatch("book/fetchMoreLatestBooks", {
+        page: this.page++,
+        limit: 30
+      });
+      console.log(array);
+      // if (array.length < 1) {
+      //   $state.complete();
+      // } else {
+      $state.loaded();
+      // }
     },
     updateView: async function(setting) {
       if (!this.loggedIn) {
         return this.$store.commit("LOGIN_STATE");
       }
-      setting = {
-        update_view: setting
-      };
-      await this.$store.dispatch("user/setSetting", setting);
+      await this.$store.dispatch("user/setSetting", {
+        type: "updateDisplay",
+        change: setting
+      });
     }
   },
   computed: {
     update_view() {
       if (this.$store.getters.isAuthenticated) {
+        // console.log(this.$store.getters["user/getUpdateView"]);
         return this.$store.getters["user/getUpdateView"];
       } else {
         return "grid";
