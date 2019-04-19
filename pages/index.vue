@@ -41,7 +41,6 @@ export default {
   methods: {},
 
   async fetch({ store }) {
-    // await store.dispatch("book/fetchRecommended");
     // await store.dispatch("review/mostLiked");
     await store.dispatch("analytic/fetchTrending");
     // await store.dispatch("chapter/fetchMoreLatestBooksSimple", {

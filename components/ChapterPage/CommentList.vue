@@ -65,9 +65,9 @@ export default {
   },
   async created() {},
   async mounted() {
-    await this.$store.dispatch("comment/getComments", {
-      chapterId: this.$route.params.chaptersId
-    });
+    // await this.$store.dispatch("comment/getComments", {
+    //   chapterId: this.$route.params.chaptersId
+    // });
   },
   methods: {
     async addComment() {

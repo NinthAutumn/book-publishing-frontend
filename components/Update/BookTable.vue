@@ -22,7 +22,7 @@
               >{{book[0].genres[0]}}</nuxt-link>
               <nuxt-link
                 tag="td"
-                :to="`/books/${book.id}`"
+                :to="`/books/${book[0].book_id}`"
                 class="book-table__row-title"
               >{{book[0].title}}</nuxt-link>
               <nuxt-link
@@ -35,7 +35,7 @@
               <nuxt-link
                 tag="td"
                 v-else
-                :to="`/books/${book.id}/${book.id}`"
+                :to="`/books/${book[0].book_id}/${book[0].chapter_id}`"
                 class="book-table__row-index"
                 v-text="`第${book[0].index}話`"
               ></nuxt-link>

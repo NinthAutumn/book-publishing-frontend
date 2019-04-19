@@ -3,20 +3,19 @@
     <ul class="latest-chapters__list">
       <li
         tag="li"
-        @click="removeInbox(chapter._id, chapter.bookId._id)"
         class="latest-chapters__item"
         v-ripple
-        v-for="(chapter,index) in chapters"
+        v-for="(notification,index) in notifications"
         :key="index"
       >
         <div class="latest-chapters__chapter-title flex flex--between">
-          <p v-text="chapter.bookId.title"></p>
+          <p v-text="notification.title"></p>
         </div>
         <div class="latest-chapters__chapter-meta flex flex--between">
-          <div class="latest-chapters__chapter-index">第{{chapter.index}}話</div>
+          <div class="latest-chapters__chapter-index">第{{notification.index}}話</div>
           <div
             class="latest-chapters__chapter-date"
-          >{{$moment(chapter.createdAt).startOf('minute').fromNow()}}</div>
+          >{{$moment(notification.created_at).startOf('minute').fromNow()}}</div>
         </div>
         <div class="latest-chapters__notification"></div>
       </li>
@@ -28,12 +27,12 @@
 export default {
   async mounted() {
     if (this.$store.state.auth.loggedIn) {
-      await this.$store.dispatch("library/fetchLatestChapters");
+      await this.$store.dispatch("user/fetchNotifications");
     }
   },
   computed: {
-    chapters() {
-      return this.$store.getters["library/getLatestChapters"];
+    notifications() {
+      return this.$store.getters["user/getNotification"];
     }
   },
   methods: {

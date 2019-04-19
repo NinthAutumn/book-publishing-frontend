@@ -38,8 +38,8 @@ export const mutations = {
 
     })
   },
-  COMMENT_STRUCTURE(state) {
-    state.comments = filterParent(state.comments)
+  SET_COMMENTS(state, comments) {
+    state.comments = comments
   }
 
 }
@@ -49,15 +49,11 @@ export const actions = {
     commit,
     rootState
   }, {
-    chapterId
+    chapterId,
+    userId = ""
   }) {
-    await this.$axios.get('/comment/show?chapterId=' + chapterId).then(async (res) => {
-      commit('GET_COMMENTS', res.data)
-      if (rootState.auth.loggedIn) {
-        commit('USER_LIKED_COMMENTS', rootState.auth.user._id)
-      }
-      commit('COMMENT_STRUCTURE')
-
+    await this.$axios.get(`/comment/show?chapterId=${chapterId}&userId=${userId}`).then(async (res) => {
+      commit('SET_COMMENTS', res.data)
     })
   },
   async addComment({

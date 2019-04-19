@@ -81,7 +81,7 @@
             </transition-group>
           </div>
         </transition>
-        <div class="browse-page__content flex">
+        <div v-loading.fullscreen.lock="loading" class="browse-page__content flex-row">
           <BookList :books="books"></BookList>
         </div>
       </div>
@@ -107,6 +107,7 @@ export default {
   },
   methods: {
     async refresh() {
+      this.loading = true;
       await this.$store.dispatch("book/browseBooks", {
         type: this.type,
         direction: this.direction,
@@ -114,6 +115,7 @@ export default {
         tags: this.tag_list,
         page: 1
       });
+      this.loading = false;
     },
     openTag() {
       this.tag_search = !this.tag_search;
@@ -143,20 +145,23 @@ export default {
       this.refresh();
     }
   },
-  async fetch({ store }) {
-    await store.dispatch("book/browseBooks", {
+  async fetch({ store }) {},
+  async mounted() {
+    await this.$store.dispatch("book/browseBooks", {
       type: 4,
       direction: "desc",
       genres: [],
       page: 1,
       type: "bookmarks"
     });
+    this.loading = false;
   },
   data() {
     return {
       type: "",
       direction: "desc",
       genre: "",
+      loading: true,
       modalDirection: "right",
       selected_genre: [],
       sort_type: [

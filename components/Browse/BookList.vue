@@ -1,10 +1,10 @@
 <template>
   <div class="library-booklist">
-    <transition-group tag="ul" class="browse-booklist__list">
+    <ul class="browse-booklist__list">
       <li class="library-booklist__item" v-for="(book) in books" :key="book.id">
         <Book :book="book"></Book>
       </li>
-    </transition-group>
+    </ul>
   </div>
 </template>
 <script>

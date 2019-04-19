@@ -10,7 +10,7 @@
           <nuxt-link
             class="nav-title__book"
             v-text="`${$store.getters['chapter/getChapterBookTitle']}/`"
-            :to="`/books/${$store.state.chapter.chapter.bookId}`"
+            :to="`/books/${$route.params.id}`"
           ></nuxt-link>
           <span
             class="nav-title__chapter-index"
@@ -81,7 +81,7 @@ export default {
     progress() {
       return (
         (this.$store.state.chapter.chapter.index /
-          this.$store.getters["book/getBookChapterCount"]) *
+          this.$store.getters["chapter/getChapterCount"]) *
         100
       );
     }

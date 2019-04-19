@@ -1,7 +1,7 @@
 <template>
   <div class="inbox-dropdown">
-    <ul>
-      <li></li>
+    <ul class="inbox-dropdown__list">
+      <li class="inbox-dropdown__item"></li>
     </ul>
   </div>
 </template>
@@ -17,4 +17,13 @@ export default {
 </script>
 
 <style lang="scss">
+.inbox-dropdown {
+  $self: &;
+  max-width: 400px;
+  max-height: 480px;
+  &__list {
+    #{$self}__item {
+    }
+  }
+}
 </style>

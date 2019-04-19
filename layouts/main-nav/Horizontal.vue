@@ -92,7 +92,7 @@ export default {
 <style lang="scss" scoped>
 .inbox-icon {
   font-size: 20px;
-  margin-right: 20px;
+  margin-right: 0.5rem;
   color: rgb(85, 85, 85);
   width: 35px;
   border-radius: 100px;

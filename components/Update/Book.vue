@@ -1,6 +1,6 @@
 <template>
   <div class="update-book" v-ripple>
-    <nuxt-link tag="div" :to="`books/${book[0].id}`" class="update-book__cover">
+    <nuxt-link tag="div" :to="`books/${book[0].book_id}`" class="update-book__cover">
       <v-img
         :aspect-ratio="1/1.5"
         max-width="15rem"

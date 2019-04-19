@@ -9,19 +9,18 @@
       ></fa>
     </div>
     <transition-group name="list-complete" tag="ul" class="book-chapters__volume-list">
-      <li v-for="(volume) in volumes" :key="volume.index" class="book-chapters__volume-item">
+      <li v-for="(volume) in volumes" :key="volume.volume" class="book-chapters__volume-item">
         <div
           v-if="volume.chapters.length> 0"
           class="book-chapters__volume-item__content"
-        >{{volume.title || `第${volume.index}章`}}</div>
-
+        >{{volume.volume_title || `第${volume.volume}章`}}</div>
         <transition-group name="list-complete" tag="ul" class="book-chapters__chapter-list">
           <nuxt-link
             tag="li"
             class="book-chapters__chapter-item"
             v-for="(chapter) in volume.chapters"
             :key="chapter.index"
-            :to="{path: `/books/${ $route.params.id}/${chapter._id}`}"
+            :to="{path: `/books/${ $route.params.id}/${chapter.id}`}"
             v-ripple
           >
             <div class="flex-divider flex" style="height:100%;">
@@ -39,12 +38,12 @@
                 >
                   <p
                     class="book-chapters__chapter-item__content book-chapters__chapter-item__content--createdAt"
-                    v-if="today < $moment(chapter.createdAt).add(6, 'days').toDate()"
-                  >{{$moment(chapter.createdAt).startOf('minute').fromNow()}}</p>
+                    v-if="today < $moment(chapter.created_at).add(6, 'days').toDate()"
+                  >{{$moment(chapter.created_at).startOf('minute').fromNow()}}</p>
                   <p
                     class="book-chapters__chapter-item__content--createdAt"
                     v-else
-                  >{{$moment(chapter.createdAt).format('l')}}</p>
+                  >{{$moment(chapter.created_at).format('l')}}</p>
                   <fa
                     class="book-chapters_chapter-item__content--locked"
                     icon="lock"
@@ -79,6 +78,11 @@ export default {
   created() {
     this.today = this.$moment().toDate();
   },
+  async mounted() {
+    this.$store.dispatch("chapter/fetchPublishedList", {
+      bookId: this.$route.params.id
+    });
+  },
   methods: {
     async asc() {
       this.$store.commit("chapter/TOC_REVERSE");
@@ -87,7 +91,7 @@ export default {
   },
   computed: {
     volumes: function() {
-      return this.$store.state.chapter.pTOC;
+      return this.$store.getters["chapter/getChapterList"];
     }
   },
   filters: {

@@ -89,7 +89,7 @@ export default {
   layout: "chapter-nav/Chapter",
   async asyncData({ store, params }) {
     if (!store.getters["chapter/getBookChapterCount"]) {
-      await store.dispatch("book/fetchBookChapterCount", params.id);
+      // await store.dispatch("book/fetchBookChapterCount", params.id);
     }
   },
   scrollToTop: false,

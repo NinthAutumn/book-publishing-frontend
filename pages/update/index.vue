@@ -17,7 +17,11 @@
         icon="th-list"
       ></fa>
     </div>
-    <BookList :latestBooks="latestBooks" v-if="update_view === 'grid'"></BookList>
+    <BookList
+      v-loading.fullscreen="loading"
+      :latestBooks="latestBooks"
+      v-if="update_view === 'grid'"
+    ></BookList>
     <book-table :latestBooks="latestBooks" v-if="update_view === 'list'"></book-table>
     <no-ssr>
       <infinite-loading @infinite="infiniteHandler"></infinite-loading>
@@ -36,14 +40,18 @@ export default {
     if (store.getters.isAuthenticated) {
       await store.dispatch("user/fetchUserSettings");
     }
-    await store.dispatch("book/fetchLatestBooks", {
+  },
+  async mounted() {
+    await this.$store.dispatch("book/fetchLatestBooks", {
       page: 1,
       limit: 30
     });
+    this.loading = false;
   },
   data() {
     return {
-      page: 2
+      page: 2,
+      loading: true
     };
   },
   methods: {

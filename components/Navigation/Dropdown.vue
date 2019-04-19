@@ -10,8 +10,11 @@
           </div>
           <div class="profile-dropdown__user-text">
             <div class="profile-dropdown__username" v-text="user.username"></div>
-            <div class="profile-dropdown__wallet flex flex--align flex--between">
-              <Currency :amount="$store.state.wallet.wealth"></Currency>
+            <div
+              v-loading="loading"
+              class="profile-dropdown__wallet flex flex--align flex--between"
+            >
+              <Currency :amount="wealth"></Currency>
               <div class="profile-dropdown__wallet__buy-more">買う</div>
             </div>
           </div>
@@ -54,10 +57,14 @@ export default {
   },
   async mounted() {
     await this.$store.dispatch("wallet/wealth");
+    this.loading = false;
   },
   computed: {
     user() {
       return this.$store.getters.loggedInUser;
+    },
+    wealth() {
+      return this.$store.getters["wallet/getWealth"];
     }
   },
   data() {
@@ -67,7 +74,8 @@ export default {
         { title: "ダッシュボード", link: "/dashboard" },
         { title: "設定", link: "/users/setting" },
         { title: "ログアウト", link: "/home" }
-      ]
+      ],
+      loading: true
     };
   },
 

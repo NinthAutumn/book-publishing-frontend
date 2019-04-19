@@ -7,7 +7,8 @@ export const state = () => ({
   bookmarkInbox: [],
   user: {},
   reviews: [],
-  comments: []
+  comments: [],
+  notification: []
 
 })
 
@@ -35,7 +36,8 @@ export const getters = {
   },
   getUpdateView: (state) => {
     return state.update_view
-  }
+  },
+  getNotification: state => state.notification
 }
 
 export const mutations = {
@@ -71,6 +73,9 @@ export const mutations = {
   },
   SET_USER_COMMENTS: (state, comments) => {
     state.comments = comments
+  },
+  SET_NOTIFICATION: (state, notification) => {
+    state.notification = notification
   }
 }
 export const actions = {
@@ -166,6 +171,17 @@ export const actions = {
       return Promise.resolve()
     } catch (error) {
       return Promise.reject(error)
+    }
+  },
+  async fetchNotifications({
+    commit
+  }) {
+    try {
+      const res = await this.$axios.get(`/user/notifications`)
+      console.log(res.data);
+      commit('SET_NOTIFICATION', res.data)
+    } catch (error) {
+
     }
   }
   // async signUpGoogle({

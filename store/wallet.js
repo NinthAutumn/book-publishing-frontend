@@ -3,7 +3,7 @@ export const state = () => ({
 })
 
 export const getters = {
-
+  getWealth: state => state.wealth
 }
 
 export const mutations = {

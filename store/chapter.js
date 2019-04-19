@@ -4,7 +4,7 @@ export const state = () => ({
   chapterCover: "",
   bookTitle: "",
   loading: false,
-  toc: '',
+  list: [],
   volumeList: [],
   modal: '',
   navigation: {},
@@ -12,12 +12,12 @@ export const state = () => ({
   latestBooks: [],
   latestBooksSimple: [],
   dTOC: [], //chapters that aren't published
-  pTOC: [] //chapters that are published shown in dashbaord of the user
+  count: 0
 })
 
 export const getters = {
-  published: (state) => {
-    return state.pTOC
+  getChapterList: (state) => {
+    return state.list
   },
   deleted: (state) => {
     return state.dTOC.filter((chapter) => {
@@ -44,6 +44,7 @@ export const getters = {
   getChapterBookTitle: (state) => {
     return state.bookTitle
   },
+  getChapterCount: state => state.count,
   getLatestBooks: state => state.latestBooks,
   getLatestBooksSimple: state => state.latestBooksSimple
 }
@@ -55,6 +56,9 @@ export const mutations = {
   },
   SET_CHAPTER(state, chapter) {
     state.chapter = chapter
+  },
+  SET_CHAPTER_LIST: (state, list) => {
+    state.list = list
   },
   SET_NAVIGATION(state, {
     next,
@@ -92,8 +96,8 @@ export const mutations = {
       volume.chapters.reverse()
     })
   },
-  D_TOC(state, toc) {
-    state.dTOC = toc
+  SET_CHAPTER_COUNT(state, count) {
+    state.count = count
   },
   P_TOC(state, toc) {
     state.pTOC = toc
@@ -128,41 +132,31 @@ export const actions = {
     state
   }, {
     chapterId,
-    userId,
+    userId = "",
     bookId
   }) {
     // const nextindex = index
-    if (userId) {
-      await this.$axios.get('/chapter/direct?chapterId=' + chapterId + '&user=' + userId).then((res) => {
-        const {
-          next,
-          prev,
-          chapter
-        } = res.data
-        commit('SET_CHAPTER', chapter)
-        commit('SET_NAVIGATION', {
-          next,
-          prev
-        })
-      })
-    } else {
-      await this.$axios.get('/chapter/direct?chapterId=' + chapterId).then((res) => {
-        const {
-          next,
-          prev,
-          chapter
-        } = res.data
-        commit('SET_CHAPTER', chapter)
-        commit('SET_NAVIGATION', {
-          next,
-          prev
-        })
-      })
-    }
+    await this.$axios.get('/book/chapter?chapterId=' + chapterId + '&user=' + userId).then((res) => {
+      const {
+        next,
+        prev,
+        chapter
+      } = res.data
+      commit('SET_CHAPTER', chapter)
+      // commit('SET_NAVIGATION', {
+      //   next,
+      //   prev
+      // })
+    })
+
     if (!state.bookTitle) {
-      await this.$axios.get(`/book/title?&bookId=${bookId}`).then((res) => {
-        commit('SET_BOOK_TITLE', res.data.title.title)
-      })
+      const res = await this.$axios.get(`/book/title?bookId=${bookId}`)
+      commit('SET_BOOK_TITLE', res.data.title)
+
+    }
+    if (!state.count) {
+      const res = await this.$axios.get(`book/chapter/count?bookId=${bookId}`)
+      commit('SET_CHAPTER_COUNT', res.data.count)
     }
   },
   async tableOfContent({
@@ -188,11 +182,13 @@ export const actions = {
       commit('D_TOC', res.data)
     })
   },
-  async fetchPublishedTOC({
+  async fetchPublishedList({
     commit
-  }, bookId) {
-    await this.$axios.get('/chapter/published?bookId=' + bookId).then((res) => {
-      commit('P_TOC', res.data)
+  }, {
+    bookId
+  }) {
+    await this.$axios.get('/book/chapter/published/list?bookId=' + bookId).then((res) => {
+      commit('SET_CHAPTER_LIST', res.data)
     })
   },
   async fetchVolumeList({
