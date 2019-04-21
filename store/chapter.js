@@ -92,8 +92,8 @@ export const mutations = {
     state.modal = ''
   },
   TOC_REVERSE(state) {
-    state.pTOC = state.pTOC.reverse()
-    state.pTOC.forEach((volume) => {
+    state.list = state.list.reverse()
+    state.list.forEach((volume) => {
       volume.chapters.reverse()
     })
   },

@@ -1,5 +1,11 @@
 <template>
   <section class="divider" style="padding: 0 10px;">
+    <v-progress-linear
+      style="position:fixed; top:40px;left:0;"
+      color="purple"
+      height="5"
+      :value="Math.round(currStepProgress * 100)"
+    ></v-progress-linear>
     <div class="chapter-title" style="display:inline-block;">
       <header
         class="chapter-title__item"
@@ -16,12 +22,14 @@
       <p v-text="$store.state.chapter.chapter.header"></p>
       <fa class="announcement-pin" icon="quote-right"></fa>
     </div>
-
-    <article
-      :style="{'font-size':fontSize, 'font-family':fontStyle}"
-      class="chapter-content"
-      v-html="$store.state.chapter.chapter.content"
-    ></article>
+    <scrollama @step-enter="stepEnterHandler" :progress="true" @step-progress="progressHandler">
+      <div
+        data-step="1"
+        :style="{'font-size':fontSize, 'font-family':fontStyle}"
+        class="chapter-content step1"
+        v-html="$store.state.chapter.chapter.content"
+      ></div>
+    </scrollama>
     <div
       class="chapter-payblock flex flex--align flex-column"
       v-if="!$store.state.chapter.chapter.content"
@@ -62,7 +70,9 @@ export default {
   },
   watch: {},
   data() {
-    return {};
+    return {
+      currStepProgress: null
+    };
   },
   created() {},
   methods: {
@@ -81,6 +91,13 @@ export default {
       } catch (error) {
         alert(error);
       }
+    },
+    stepEnterHandler: async function({ element, index, direction }) {
+      console.log(element, index, direction);
+    },
+    progressHandler: async function({ progress }) {
+      this.currStepProgress = progress;
+      console.log(Math.round(this.currStepProgress * 100));
     }
   }
 };

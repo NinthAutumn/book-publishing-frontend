@@ -144,6 +144,18 @@ export const actions = {
       Promise.reject(error)
     }
   },
+  async fetchMyReviews({
+    commit
+  }, {
+    userId
+  }) {
+    try {
+      const res = await this.$axios.get(`/review/me`)
+      commit('SET_USER_REVIEWS', res.data)
+    } catch (error) {
+      return Promise.reject(error)
+    }
+  },
   async fetchUserReviews({
     commit
   }, {

@@ -47,7 +47,6 @@
       <div class="library-history" v-if="selectedTabName=== 'history'||selected_item=== '歴史'">
         <BookList :history="true" :books="history"></BookList>
       </div>
-
       <div class="library-profile" v-if="!$device.isMobile">
         <Profile></Profile>
       </div>

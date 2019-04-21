@@ -18,7 +18,8 @@ export const getters = {
   },
   getReviewCount: state => {
     return state.count
-  }
+  },
+  getMyReview: state => state.myReviews
 }
 
 
@@ -200,11 +201,11 @@ export const actions = {
   async userReviews({
     commit
   }) {
-    const reviews = await this.$axios.get('/review/myreviews')
-    if (!reviews) {
+    const res = await this.$axios.get('/review/my')
+    if (!res) {
       return
     }
-    commit('GET_MYREVIEWS', reviews.data)
+    commit('GET_MYREVIEWS', res.data)
   },
   async myReview({
     commit

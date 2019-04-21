@@ -121,6 +121,9 @@ module.exports = {
     }, {
       src: '@/plugins/watchMedia',
       ssr: false
+    }, {
+      src: '@/plugins/scrollama',
+      ssr: false
     }
   ],
 
@@ -153,7 +156,6 @@ module.exports = {
     }],
     "@nuxtjs/auth",
     'cookie-universal-nuxt',
-    'nuxt-svg-loader',
     ['nuxt-fontawesome', {
       component: 'fa',
       imports: [
