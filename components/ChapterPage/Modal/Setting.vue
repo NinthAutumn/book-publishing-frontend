@@ -80,19 +80,22 @@ export default {
   methods: {
     async updateTheme(theme) {
       const setting = {
-        theme: theme
+        type: "chapterTheme",
+        change: theme
       };
       await this.$store.dispatch("user/setSetting", setting);
     },
     async updateFontFamily(change) {
       if (change) {
         const setting = {
-          font_family: "serif"
+          type: "chapterFontFamily",
+          change: "serif"
         };
         await this.$store.dispatch("user/setSetting", setting);
       } else {
         const setting = {
-          font_family: this.defaultFont
+          type: "chapterFontFamily",
+          change: this.defaultFont
         };
         this.fontFamily = this.defaultFont;
         await this.$store.dispatch("user/setSetting", setting);
@@ -118,7 +121,8 @@ export default {
           break;
       }
       const setting = {
-        font_size: this.fontSize
+        type: "chapterFontSize",
+        change: this.fontSize
       };
       await this.$store.dispatch("user/setSetting", setting);
     }

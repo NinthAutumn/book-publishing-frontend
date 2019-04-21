@@ -29,7 +29,7 @@
         <nuxt-link
           class="navigation-prev flex-column flex--center flex--align"
           v-if="prev&&!$device.isMobile"
-          :to="{path: `${prev._id}`}"
+          :to="{path: `${prev.id}`}"
         >
           <fa icon="angle-left"></fa>
         </nuxt-link>
@@ -39,7 +39,7 @@
         <nuxt-link
           class="navigation-next flex-column flex--center flex--align"
           v-if="next&&!$device.isMobile"
-          :to="{path: `${next._id}`}"
+          :to="{path: `${next.id}`}"
         >
           <fa icon="angle-right"></fa>
         </nuxt-link>

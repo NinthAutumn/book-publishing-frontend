@@ -29,16 +29,19 @@
               @mouseenter="contentFalse"
               @mouseleave="contentTrue"
             >
-              <div class="comment-modal__username">{{comment.userId.username}}</div>
+              <div class="comment-modal__username">{{comment.username}}</div>
               <div
                 class="comment-modal__author"
-                v-if="$store.state.book.author === comment.userId.username"
+                v-if="$store.state.book.author === comment.username"
               ></div>
-              <div class="comment-modal__likes" :class="{blue: blue}">{{likeNumber}}</div>
+              <div
+                class="comment-modal__likes"
+                :class="{'comment-modal__likes--blue': blue}"
+              >{{likeNumber}}</div>
               <div
                 class="comment-modal__createdAt"
                 @click="toggleChildren"
-              >・{{$moment(comment.createdAt).startOf('minute').fromNow()}}</div>
+              >・{{$moment(comment.created_at).startOf('minute').fromNow()}}</div>
               <div class="hide-content" v-if="!hideContent" @click="toggleChildren">
                 <fa icon="anchor"></fa>
               </div>
@@ -91,11 +94,11 @@
         <div class="open-comment" @click="toggleChildren">
           <div class="comment-modal__divider flex flex--align">
             <Zondicon class="open-comment__icon" icon="add-solid" style="width:14px;"></Zondicon>
-            <div class="comment-modal__username">{{comment.userId.username}}</div>
+            <div class="comment-modal__username">{{comment.username}}</div>
             <div class="comment-modal__likes">{{comment.likes}}</div>
             <div
               class="comment-modal__createdAt"
-            >・{{$moment(comment.createdAt).startOf('minute').fromNow()}}</div>
+            >・{{$moment(comment.created_at).startOf('minute').fromNow()}}</div>
             <div class="comment-modal__child-count">(返事{{comment.children.length}}個)</div>
           </div>
         </div>
@@ -114,8 +117,8 @@ export default {
       hideContent: true,
       content: "",
       replyForm: false,
-      liked: this.comment.liked,
-      disliked: this.comment.disliked,
+      liked: this.comment.voted > 0,
+      disliked: this.comment.voted < 0,
       likeNumber: this.comment.likes
     };
   },
@@ -127,7 +130,7 @@ export default {
       return { "padding-left": `${this.depth * 30}px` };
     },
     blue() {
-      return this.comment.likes < 1;
+      return this.likeNumber < 1;
     },
     theme() {
       return this.$store.state.user.theme;
@@ -179,54 +182,46 @@ export default {
     },
     async likedComment() {
       if (this.liked) {
-        this.liked = false;
-        this.$store.dispatch("comment/unLikeComment", {
-          commentId: this.comment._id,
-          type: "like"
+        await this.$store.dispatch("comment/likeComment", {
+          commentId: this.comment.id,
+          data: 0
         });
         this.likeNumber--;
+        this.liked = false;
       } else {
+        await this.$store.dispatch("comment/likeComment", {
+          commentId: this.comment.id,
+          data: 1
+        });
         this.liked = true;
         if (this.disliked) {
+          this.likeNumber = this.likeNumber + 2;
           this.disliked = false;
-          await this.$store.dispatch("comment/unLikeComment", {
-            commentId: this.comment._id,
-            type: "dislike"
-          });
+        } else {
           this.likeNumber++;
         }
-        await this.$store.dispatch("comment/likeComment", {
-          commentId: this.comment._id,
-          type: "like"
-        });
-        this.likeNumber++;
       }
     },
     async dislikedComment() {
       if (this.disliked) {
-        this.disliked = false;
-
-        await this.$store.dispatch("review/unLikeComment", {
-          commentId: this.comment._id,
-          type: "dislike"
+        await this.$store.dispatch("comment/likeComment", {
+          commentId: this.comment.id,
+          data: 0
         });
         this.likeNumber++;
+        this.disliked = false;
       } else {
+        await this.$store.dispatch("comment/likeComment", {
+          commentId: this.comment.id,
+          data: -1
+        });
         this.disliked = true;
-
         if (this.liked) {
+          this.likeNumber = this.likeNumber - 2;
           this.liked = false;
-          await this.$store.dispatch("review/unLikeComment", {
-            commentId: this.comment._id,
-            type: "like"
-          });
+        } else {
           this.likeNumber--;
         }
-        await this.$store.dispatch("review/likeComment", {
-          commentId: this.comment._id,
-          type: "dislike"
-        });
-        this.likeNumber--;
       }
     }
   }

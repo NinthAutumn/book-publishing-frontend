@@ -3,7 +3,7 @@ export const state = () => ({
 })
 
 export const getters = {
-
+  getComments: state => state.comments
 }
 
 
@@ -18,41 +18,24 @@ const filterParent = function (items, id = undefined) {
 
 
 export const mutations = {
-  GET_COMMENTS(state, comments) {
-    // const nestedParent = filterParent(comments)
-    state.comments = comments
-  },
-  USER_LIKED_COMMENTS(state, userId) {
-    state.comments.forEach((comment) => {
-      if (comment.ratedBy) {
-        comment.ratedBy.forEach((rate) => {
-          if (rate.userId === userId) {
-            if (rate.type === 'like') {
-              comment.liked = true
-            } else {
-              comment.disliked = true
-            }
-          }
-        })
-      }
-
-    })
-  },
   SET_COMMENTS(state, comments) {
     state.comments = comments
   }
-
 }
 
 export const actions = {
-  async getComments({
+  async fetchCommentList({
     commit,
     rootState
   }, {
     chapterId,
-    userId = ""
+    userId = "",
+    limit = 10,
+    page = 1,
+    type = 'likes',
+    direction = 'desc'
   }) {
-    await this.$axios.get(`/comment/show?chapterId=${chapterId}&userId=${userId}`).then(async (res) => {
+    await this.$axios.get(`/comment/chapter?type=${type}&direction=${direction}&page=${page}&limit=${limit}&chapterId=${chapterId}&userId=${userId}`).then(async (res) => {
       commit('SET_COMMENTS', res.data)
     })
   },
@@ -88,19 +71,17 @@ export const actions = {
     commit
   }, {
     commentId,
-    type
+    data
   }) {
     try {
-      await this.$axios.patch('/comment/like', {
-        id: commentId,
-        type: type
+      const res = await this.$axios.patch('/comment/vote', {
+        commentId: commentId,
+        data: data
       })
-      commit('LIKED_COMMENTS', commentId)
+      Promise.resolve()
     } catch (error) {
-
+      Promise.reject(error)
     }
-
-
   },
   async unLikeComment({
     commit

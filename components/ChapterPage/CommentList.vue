@@ -65,9 +65,16 @@ export default {
   },
   async created() {},
   async mounted() {
-    // await this.$store.dispatch("comment/getComments", {
-    //   chapterId: this.$route.params.chaptersId
-    // });
+    if (this.$store.getters.isAuthenticated) {
+      await this.$store.dispatch("comment/fetchCommentList", {
+        chapterId: this.$route.params.chaptersId,
+        userId: this.$store.getters["loggedInUser"].id
+      });
+    } else {
+      await this.$store.dispatch("comment/fetchCommentList", {
+        chapterId: this.$route.params.chaptersId
+      });
+    }
   },
   methods: {
     async addComment() {
@@ -124,8 +131,9 @@ export default {
     }
   }
   .comment-header-icon {
-    font-size: 1.6rem;
+    font-size: 2rem;
     color: $secondary;
+    margin-right: 0.5rem;
   }
   &__error {
     color: red;
@@ -136,6 +144,7 @@ export default {
   }
   .comment-header {
     color: $secondary;
+    font-size: 2rem;
   }
   .comment-submit {
     height: 3.5rem !important;

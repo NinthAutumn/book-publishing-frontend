@@ -46,7 +46,8 @@ export const getters = {
   },
   getChapterCount: state => state.count,
   getLatestBooks: state => state.latestBooks,
-  getLatestBooksSimple: state => state.latestBooksSimple
+  getLatestBooksSimple: state => state.latestBooksSimple,
+  getChapter: state => state.chapter,
 }
 
 export const mutations = {
@@ -159,6 +160,27 @@ export const actions = {
       commit('SET_CHAPTER_COUNT', res.data.count)
     }
   },
+  async fetchChapterNav({
+    commit
+  }, {
+    bookId,
+    index
+  }) {
+    try {
+      const res = await this.$axios.get('/book/chapter/nav?index=' + index + '&bookId=' + bookId)
+      const {
+        next,
+        prev,
+      } = res.data
+      commit('SET_NAVIGATION', {
+        next,
+        prev
+      })
+    } catch (error) {
+
+    }
+
+  },
   async tableOfContent({
     commit,
     state
@@ -168,9 +190,8 @@ export const actions = {
       return commit('MODAL_CLOSE')
     }
     commit('TOC_MODAL')
-    await this.$axios.get('chapter/toc?bookId=' + bookId).then((res) => {
-      commit('TOC', res.data)
-
+    await this.$axios.get('/book/chapter/published/list?bookId=' + bookId).then((res) => {
+      commit('SET_CHAPTER_LIST', res.data)
     })
     commit('LOADING_FALSE')
 

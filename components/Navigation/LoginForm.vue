@@ -65,18 +65,22 @@ export default {
         username: this.form.username,
         password: this.form.password
       };
-      await this.$auth
-        .loginWith("local", {
+      try {
+        await this.$auth.loginWith("local", {
           data: {
             username: this.form.username,
             password: this.form.password
           }
-        })
-        .then(res => {
-          console.log(res);
-          this.$store.commit("LOGIN_FALSE");
-          window.location.reload(true);
         });
+        this.$store.commit("LOGIN_FALSE");
+        window.location.reload(true);
+      } catch (error) {
+        this.$message({
+          message: "パスワードまたはユーザ名が間違っています",
+          type: "error"
+        });
+      }
+
       // await this.$store
       //   .dispatch("nauth/login", user)
       //   .then(() => {

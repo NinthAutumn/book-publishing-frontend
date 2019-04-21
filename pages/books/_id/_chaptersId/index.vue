@@ -17,12 +17,16 @@ export default {
       bottom: false
     };
   },
-
   components: {
     Chapter: () => import("@/components/ChapterPage/Chapter"),
     CommentList: () => import("@/components/ChapterPage/CommentList")
   },
-  mounted() {},
+  async mounted() {
+    await this.$store.dispatch("chapter/fetchChapterNav", {
+      index: this.$store.getters["chapter/getChapter"].index,
+      bookId: this.$route.params.id
+    });
+  },
   beforeDestroy() {},
   destroyed() {},
   methods: {
@@ -46,7 +50,7 @@ export default {
         .dispatch("chapter/fetchChapter", {
           bookId,
           chapterId,
-          userId: this.$store.getters["loggedInUser"]._id
+          userId: this.$store.getters["loggedInUser"].id
         })
         .then(review => {
           this.$router.push(`/books/${bookId}/${chapterId}`);
@@ -69,7 +73,6 @@ export default {
     }
   },
   auth: false,
-
   async fetch({ store, params }) {
     const index = params.chaptersId;
     if (store.state.auth.loggedIn) {
