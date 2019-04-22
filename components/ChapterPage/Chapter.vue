@@ -1,11 +1,13 @@
 <template>
   <section class="divider" style="padding: 0 10px;">
     <v-progress-linear
-      style="position:fixed; top:40px;left:0;"
+      style="position:fixed!important; top:40px!important;left:0!important;"
       color="purple"
       height="5"
-      :value="Math.round(currStepProgress * 100)"
+      :value="currStepProgress * 100"
+      v-if="!modal"
     ></v-progress-linear>
+
     <div class="chapter-title" style="display:inline-block;">
       <header
         class="chapter-title__item"
@@ -66,6 +68,9 @@ export default {
     },
     fontStyle() {
       return this.$store.getters["user/getFontFamily"];
+    },
+    modal() {
+      return this.$store.getters["chapter/getModalState"];
     }
   },
   watch: {},
@@ -93,11 +98,10 @@ export default {
       }
     },
     stepEnterHandler: async function({ element, index, direction }) {
-      console.log(element, index, direction);
+      // console.log(element, index, direction);
     },
     progressHandler: async function({ progress }) {
       this.currStepProgress = progress;
-      console.log(Math.round(this.currStepProgress * 100));
     }
   }
 };

@@ -48,14 +48,24 @@
         </ul>
       </div>
     </div>
-    <transition-group name="list" tag="ul" class="book-list">
+    <transition-group name="list" tag="ul" class="book-list" v-if="selected_ranking_type===0">
       <ranking-item
         :index="index"
         trending
         :score="book.sum"
-        :book="book.book[0]"
+        :book="book"
         v-for="(book, index) in list"
-        :key="book.book[0]._id"
+        :key="book.id"
+      ></ranking-item>
+    </transition-group>
+    <transition-group name="list" tag="ul" class="book-list" v-if="selected_ranking_type===1">
+      <ranking-item
+        :index="index"
+        trending
+        :score="book.sum"
+        :book="book"
+        v-for="(book, index) in trending"
+        :key="book.id"
       ></ranking-item>
     </transition-group>
   </div>
@@ -77,13 +87,13 @@ export default {
       ],
       selected_ranking_type: 0,
       sort_type: [
-        { key: "日間", value: 1 },
-        { key: "週間", value: 7 },
-        { key: "月間", value: 31 },
-        { key: "年間", value: 365 },
-        { key: "累計", value: "whole" }
+        { key: "日間", value: "daily" },
+        { key: "週間", value: "weekly" },
+        { key: "月間", value: "monthly" },
+        { key: "年間", value: "yearly" },
+        { key: "累計", value: "total" }
       ],
-      time_day: 1,
+      time_day: "daily",
       genre: "ファンタジー",
       genres: [
         "ファンタジー",
@@ -123,17 +133,17 @@ export default {
   },
   computed: {
     list() {
-      return this.$store.getters["ranking/getRankingList"];
+      return this.$store.getters["analytic/getRankingList"];
     },
     trending() {
-      return this.$store.getters["ranking/getTrendingList"];
+      return this.$store.getters["analytic/getTrendingList"];
     }
   },
   async mounted() {
-    await this.$store.dispatch("ranking/fetchRanking", {
+    await this.$store.dispatch("analytic/fetchRanking", {
       limit: 10,
       page: 1,
-      days: 1
+      time: "daily"
     });
     if (this.$device.isMobile) {
       this.ranking_type = [
@@ -164,7 +174,7 @@ export default {
       let param = {};
       switch (this.selected_ranking_type) {
         case 0:
-          if (this.time_day === "whole") {
+          if (this.time_day === "total") {
             param = {
               limit: 10,
               page: 1
@@ -176,16 +186,18 @@ export default {
               page: 1
             };
           }
-          await this.$store.dispatch("ranking/fetchRanking", param);
+          await this.$store.dispatch("analytic/fetchRanking", {
+            time: this.time_day
+          });
           break;
         case 1:
           if (this.trending.length > 0) {
             return;
           }
-          await this.$store.dispatch("ranking/fetchTrending", {
-            days: this.time_day,
+          await this.$store.dispatch("analytic/fetchTrending", {
             limit: 10,
-            page: 1
+            page: 1,
+            time: "weekly"
           });
           break;
         case 2:
@@ -210,7 +222,7 @@ export default {
       }
     },
     select_menu(key, index) {
-      this.time_day = 1;
+      this.time_day = "daily";
       this.ranking_type.forEach(type => {
         if (type.key === key) {
           type.selected = true;

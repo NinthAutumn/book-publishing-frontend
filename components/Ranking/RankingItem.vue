@@ -1,6 +1,6 @@
 <template>
   <div class="ranking-item" v-ripple>
-    <nuxt-link tag="div" :to="`books/${book._id}`" class="ranking-item__container">
+    <nuxt-link tag="div" :to="`books/${book.id}`" class="ranking-item__container">
       <div
         class="book-ranking"
         :class="{first:index === 0,second:index === 1,third:index === 2, other:index > 2}"
@@ -24,7 +24,7 @@
           <no-ssr>
             <star-rating
               v-if="book.rating"
-              :rating="+book.rating.toFixed(2)"
+              :rating="book.rating"
               :star-size="18"
               :read-only="true"
               inactive-color="#D8D7D5"
@@ -33,18 +33,6 @@
               :round-start-rating="false"
               border-color="#FFB727"
               :glow="1"
-              class="star-rating"
-            ></star-rating>
-            <star-rating
-              v-else-if="book.ratings"
-              :rating="+book.ratings.toFixed(2)"
-              :star-size="18"
-              :read-only="true"
-              inactive-color="#D8D7D5"
-              active-color="#FFB727"
-              :increment="0.01"
-              :round-start-rating="false"
-              border-color="#FFB727"
               class="star-rating"
             ></star-rating>
             <star-rating

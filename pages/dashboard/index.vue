@@ -14,7 +14,7 @@
 export default {
   layout: "user-nav/User",
   async fetch({ store, params }) {
-    await store.dispatch("dashboard/fetchTotalViews");
+    await store.dispatch("analytic/fetchUserViews");
   },
   components: {
     Analytics: () => import("@/components/Dashboard/Analytics"),

@@ -13,7 +13,7 @@
         </div>
         <div class="user-books__meta-info">
           <div class="user-books__title flex flex--align flex--between">
-            <nuxt-link tag="p" :to="{path: `/books/${book._id}`}">{{book.title|truncate(17)}}</nuxt-link>
+            <nuxt-link tag="p" :to="{path: `/books/${book.id}`}">{{book.title}}</nuxt-link>
             <fa class="user-books__title__icon" icon="cog"></fa>
           </div>
           <div class="user-books__content">
@@ -26,7 +26,7 @@
               <div class="user-books__bookmark__title flex flex--align flex--center">ブックマーク数</div>
               <div
                 class="user-books__bookmark__stat flex flex--align flex--center"
-              >{{book.bookmarkCount}}</div>
+              >{{book.bookmark_count}}</div>
             </div>
             <div class="user-books__view flex-column flex--center flex--align">
               <div class="user-books__view__title flex flex--align flex--center">視聴回数</div>
@@ -36,19 +36,19 @@
               <div class="user-books__review__title flex flex--align flex--center">レビュー数</div>
               <div
                 class="user-books__review__stat flex flex--align flex--center"
-              >{{book.reviewsCount}}</div>
+              >{{book.rating_count}}</div>
             </div>
             <nuxt-link
               class="user-books__announcement flex flex--align flex--center"
-              :to="`/dashboard/books/${book._id}/announcement`"
+              :to="`/dashboard/books/${book.id}/announcement`"
             >通告を投稿</nuxt-link>
             <nuxt-link
-              :to="{path: `/dashboard/books/${book._id}/new`}"
+              :to="{path: `/dashboard/books/${book.id}/new`}"
               tag="div"
               class="user-books__create flex flex--align flex--center"
             >新話を投稿</nuxt-link>
             <nuxt-link
-              :to="{path: `/dashboard/books/${book._id}/published`}"
+              :to="{path: `/dashboard/books/${book.id}/published`}"
               tag="div"
               class="user-books__toc flex flex--align flex--center"
             >作品の目次</nuxt-link>
@@ -63,11 +63,11 @@
 export default {
   layout: "user-nav/User",
   async fetch({ store }) {
-    await store.dispatch("user/getBooks");
+    await store.dispatch("analytic/fetchUserBooks");
   },
   computed: {
     books() {
-      return this.$store.state.user.books;
+      return this.$store.getters["analytic/getBookList"];
     }
   },
   filters: {
@@ -84,11 +84,11 @@ export default {
 
 <style lang="scss">
 .user-books {
-  height: 100vh;
+  min-height: 100vh;
   $self: &;
   &__books-list {
     width: 100%;
-    height: 199px;
+    height: 100%;
     display: grid;
     grid-template-columns: repeat(auto-fill, 500px);
     grid-gap: 10px;
@@ -124,6 +124,8 @@ export default {
           &__title {
             font-size: 11px;
             font-weight: bold;
+
+            max-width: 100%;
           }
           &__stat {
             font-size: 13px;
@@ -218,6 +220,14 @@ export default {
         }
       }
       #{$self}__title {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        p {
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+        }
         &__icon {
           font-size: 18px;
           color: $secondary;

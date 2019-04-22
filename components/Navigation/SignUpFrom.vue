@@ -15,10 +15,14 @@
       <label for="username">ユーザー名</label>
       <input
         ref="username"
+        name="username"
+        v-validate="'required'"
+        data-vv-as="ユーザー名"
         class="form-input form-input--primary--lighter"
         type="text"
         v-model="username"
       >
+      <span class="help is-danger">{{ errors.first('username') }}</span>
       <label for="email">メールアドレス</label>
       <input
         name="email"

@@ -50,7 +50,7 @@
             <p>ライブラリー</p>
           </div>
         </nuxt-link>
-        <div @click="loginInState" class="v-nav-list" v-else>
+        <div @click.stop="loginInState" class="v-nav-list" v-else>
           <div class="v-nav-icon">
             <fa icon="book" class="v-nav-icons"></fa>
           </div>

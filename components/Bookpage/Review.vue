@@ -5,9 +5,19 @@
       <!-- {{review}} -->
     </div>
     <div class="reviews-like">
-      <ArrowUp class="reviews-like-up" :class="{liked: liked}" @click="likedReview"></ArrowUp>
+      <svg-icon
+        name="arrow-up"
+        class="reviews-like-up"
+        :class="{liked: liked}"
+        @click="likedReview"
+      ></svg-icon>
       <p v-text="likeNumber"></p>
-      <ArrowDown class="reviews-like-down" :class="{disliked: disliked}" @click="dislikedReview"></ArrowDown>
+      <svg-icon
+        name="arrow-down"
+        class="reviews-like-down"
+        :class="{disliked: disliked}"
+        @click="dislikedReview"
+      ></svg-icon>
     </div>
 
     <div class="reviews-content">
@@ -52,8 +62,8 @@
 </template>
 
 <script>
-import ArrowDown from "@/assets/svg/arrow-down.svg";
-import ArrowUp from "@/assets/svg/arrow-up.svg";
+// import ArrowDown from "@/assets/svg/arrow-down.svg";
+// import ArrowUp from "@/assets/svg/arrow-up.svg";
 export default {
   props: {
     review: Object
@@ -68,10 +78,7 @@ export default {
       likeNumber: this.review.likes
     };
   },
-  components: {
-    ArrowDown,
-    ArrowUp
-  },
+  components: {},
   methods: {
     toggleCollapse() {
       this.readMore = !this.readMore;

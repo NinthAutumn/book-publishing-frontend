@@ -17,7 +17,8 @@ export const state = () => ({
   browse: [],
   tags: [],
   chapterCount: 0,
-  latest: []
+  latest: [],
+  createAuthor: false
 })
 
 export const getters = {
@@ -70,7 +71,10 @@ export const actions = {
     commit
   }, book) {
     try {
-      await this.$axios.post('/book/add', book)
+      const res = await this.$axios.post('/book/add', book)
+      if (res.data.noAuthor) {
+        return commit('CHANGE_AUTHOR_STATE')
+      }
       return Promise.resolve()
     } catch (error) {
       return Promise.reject(error)
@@ -211,6 +215,9 @@ export const mutations = {
   },
   SET_LATEST_BOOKS(state, books) {
     state.latest = books
+  },
+  CHANGE_AUTHOR_STATE: function (state) {
+    state.createAuthor = !state.createAuthor
   },
   SET_MORE_LATEST_BOOKS(state, books) {
     let temp = books

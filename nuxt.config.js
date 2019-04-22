@@ -137,6 +137,10 @@ module.exports = {
     'nuxt-webfontloader',
     '@nuxtjs/axios',
     '@nuxtjs/dotenv',
+    '@nuxtjs/svg-sprite',
+    ['nuxt-validate', {
+      lang: 'ja',
+    }],
     ['@nuxtjs/robots', {
       UserAgent: '*',
       Disallow: '/',
@@ -158,13 +162,10 @@ module.exports = {
     'cookie-universal-nuxt',
     ['nuxt-fontawesome', {
       component: 'fa',
-      imports: [
-        //import whole set
-        {
-          set: '@fortawesome/free-solid-svg-icons',
-          icons: ['fas']
-        }
-      ]
+      imports: [{
+        set: '@fortawesome/free-solid-svg-icons',
+        icons: ['fas']
+      }]
     }],
     ['@nuxtjs/google-analytics', {
       id: 'UA-119733183-2',

@@ -48,6 +48,7 @@ export const getters = {
   getLatestBooks: state => state.latestBooks,
   getLatestBooksSimple: state => state.latestBooksSimple,
   getChapter: state => state.chapter,
+  getModalState: state => state.modal
 }
 
 export const mutations = {

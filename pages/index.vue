@@ -33,8 +33,8 @@ export default {
     BooksList: () => import("@/components/Homepage/BooksList"),
     ReviewList: () => import("@/components/Homepage/ReviewList"),
     Ranking: () => import("@/components/Homepage/Ranking"),
-    BlobOne: () => import("@/assets/svg/blob.svg"),
-    BlobTwo: () => import("@/assets/svg/blob2.svg"),
+    // BlobOne: () => import("@/assets/svg/blob.svg"),
+    // BlobTwo: () => import("@/assets/svg/blob2.svg"),
     BannerList: () => import("@/components/Homepage/BannerList"),
     SearchBar: () => import("@/components/Navigation/SearchBar")
   },
@@ -42,7 +42,7 @@ export default {
 
   async fetch({ store }) {
     // await store.dispatch("review/mostLiked");
-    await store.dispatch("analytic/fetchTrending");
+    await store.dispatch("analytic/fetchTrending", { time: "weekly" });
     // await store.dispatch("chapter/fetchMoreLatestBooksSimple", {
     //   page: 1,
     //   limit: 8

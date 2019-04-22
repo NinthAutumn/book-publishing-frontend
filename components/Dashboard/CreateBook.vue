@@ -10,6 +10,7 @@
               class="avatar-uploader flex"
               action
               drag
+              accept="image/*"
               :show-file-list="false"
               :on-success="handleAvatarSuccess"
               :before-upload="beforeAvatarUpload"
@@ -21,13 +22,17 @@
           <div class="divider flex flex-column" style="width:100%;">
             <label for="book-title">タイトル</label>
             <input
+              minlength="2"
               type="text"
+              v-validate="'required||min:5'"
+              data-vv-as="タイトル"
               name="book-title"
               for="book-title"
               class="book-form--input form-input form-input--primary"
               placeholder="タイトル"
               v-model="form.title"
             >
+            <span class="help is-danger">{{ errors.first('book-title') }}</span>
             <label for="synopsis">あらすじ</label>
             <textarea
               class="book-form--textarea"
@@ -64,9 +69,9 @@
           <transition-group tag="ul" name="list" class="book-form__genre-list">
             <li
               class="book-form__genre-item book-form__genre-item--tag"
-              v-for="(genre) in form.tags"
-              :key="genre"
-              v-text="genre"
+              v-for="(tag) in form.tags"
+              :key="tag"
+              v-text="tag"
             ></li>
           </transition-group>
         </div>
@@ -80,6 +85,21 @@
       </form>
     </div>
     <TagCreate v-model="form.tags"></TagCreate>
+    <v-dialog v-model="$store.state.book.createAuthor" persistent max-width="600px">
+      <v-card>
+        <v-card-title>
+          <span class="headline">作者になる</span>
+        </v-card-title>
+        <v-card-text>
+          <small>*indicates required field</small>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="blue darken-1" flat @click="dialog = false">Close</v-btn>
+          <v-btn color="blue darken-1" flat @click="dialog = false">Save</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -147,32 +167,32 @@ export default {
     },
     beforeAvatarUpload(file) {},
     async postBook() {
-      console.log(this.form);
-      await this.$store
-        .dispatch("upload/image", this.form.cover)
-        .then(async () => {
-          const book = {
-            title: this.form.title,
-            tags: this.form.tags,
-            genres: this.form.genre,
-            synopsis: this.form.synopsis,
-            cover: this.$store.state.upload.url
-          };
-          await this.$store
-            .dispatch("book/addBook", book)
-            .then(() => {
-              this.$message({
-                message: "本の投稿に成功しました",
-                type: "success"
-              });
-            })
-            .catch(error => {
-              this.$message({
-                message: `本の投稿に失敗しました！${error}`,
-                type: "error"
-              });
-            });
+      if (this.form.title.length < 5) {
+        return;
+      }
+      const book = {
+        title: this.form.title,
+        tags: this.form.tags,
+        genres: this.form.genre,
+        synopsis: this.form.synopsis,
+        cover: this.$store.state.upload.url
+      };
+      try {
+        const uploaded = await this.$store.dispatch(
+          "upload/image",
+          this.form.cover
+        );
+        const book = await this.$store.dispatch("book/addBook", Book);
+        this.$message({
+          message: "本の投稿に成功しました",
+          type: "success"
         });
+      } catch (error) {
+        this.$message({
+          message: `本の投稿に失敗しました！${error}`,
+          type: "error"
+        });
+      }
     }
   }
 };

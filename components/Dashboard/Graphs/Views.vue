@@ -25,18 +25,31 @@ export default {
     };
   },
   async mounted() {
-    this.$store.getters["dashboard/getTotalViews"].forEach(day => {
+    let row = Object.keys(this.$store.getters["analytic/getTotalViews"]);
+    row.forEach(item => {
       this.object = {
-        date: day._id.day
+        date: item
       };
-      day.views.forEach(book => {
-        if (this.chartData.columns.indexOf(book.book[0]) === -1) {
-          this.chartData.columns.push(book.book[0]);
+      this.$store.getters["analytic/getTotalViews"][item].forEach(book => {
+        if (this.chartData.columns.indexOf(book.book_id) === -1) {
+          this.chartData.columns.push(book.book_id);
         }
-        this.object[book.book[0]] = book.view;
+        this.object[book.book_id] = book.views;
       });
       this.chartData.rows.push(this.object);
     });
+    // this.$store.getters["analytic/getTotalViews"].forEach(day => {
+    //   this.object = {
+    //     date: day._id.day
+    //   };
+    //   day.views.forEach(book => {
+    //     if (this.chartData.columns.indexOf(book.book[0]) === -1) {
+    //       this.chartData.columns.push(book.book[0]);
+    //     }
+    //     this.object[book.book[0]] = book.view;
+    //   });
+    //   this.chartData.rows.push(this.object);
+    // });
   }
 };
 </script>

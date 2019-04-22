@@ -2,21 +2,22 @@
   <div class="currency flex flex--align" :class="{'currency--large':size === 'large'}">
     <div class="currency__number" :class="{'currency__number--large':size === 'large'}">{{amount}}</div>
     <div class="currency__type" :class="{'currency__type--large':size === 'large'}">
-      <Crown class="currency__icon" :class="{'currency__icon--large':size === 'large'}"></Crown>
+      <svg-icon
+        name="crown"
+        class="currency__icon"
+        :class="{'currency__icon--large':size === 'large'}"
+      ></svg-icon>
     </div>
   </div>
 </template>
 
 <script>
-import Crown from "@/assets/svg/crown.svg";
 export default {
   props: {
     size: String,
     amount: Number
   },
-  components: {
-    Crown
-  }
+  components: {}
 };
 </script>
 
