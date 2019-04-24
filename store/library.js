@@ -8,7 +8,8 @@ export const state = () => ({
   reading: [],
   read_later: [],
   history: [],
-  latestChapters: []
+  latestChapters: [],
+  reviews: []
 })
 
 export const getters = {
@@ -58,6 +59,9 @@ export const mutations = {
     chapters
   }) {
     state.latestChapters = chapters
+  },
+  SET_REVIEWS: (state, reviews) => {
+    state.reviews = reviews
   }
 }
 
@@ -80,7 +84,7 @@ export const actions = {
     commit
   }) {
     try {
-      const res = await this.$axios.get(`/user/library?type=bookmark`)
+      const res = await this.$axios.get(`/library?type=bookmark`)
       commit('GET_BOOKMARK', res.data)
     } catch (error) {
       Promise.reject(error)
@@ -132,7 +136,7 @@ export const actions = {
   }, {
     store
   }) {
-    await this.$axios.patch('/user/library', {
+    await this.$axios.post('/library', {
       store
     })
   },
@@ -169,6 +173,15 @@ export const actions = {
       console.log(error);
       throw error
     }
-
+  },
+  async fetchReviews({
+    commit
+  }) {
+    try {
+      const res = await this.$axios.get('/library/reviews')
+      commit('SET_REVIEWS', res.data)
+    } catch (error) {
+      Promise.reject(error)
+    }
   }
 }

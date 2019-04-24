@@ -85,12 +85,22 @@
       </form>
     </div>
     <TagCreate v-model="form.tags"></TagCreate>
-    <v-dialog v-model="$store.state.book.createAuthor" persistent max-width="600px">
+    <v-dialog v-model="isAuthor" persistent max-width="600px" hide-overlay>
       <v-card>
         <v-card-title>
           <span class="headline">作者になる</span>
         </v-card-title>
         <v-card-text>
+          <v-text-field
+            v-model="author.penname"
+            v-validate="'required|max:10'"
+            required
+            :counter="10"
+            :error-messages="errors.collect('penname')"
+            label="ペンネーム*"
+            name="penname"
+            data-vv-name="ペンネーム"
+          ></v-text-field>
           <small>*indicates required field</small>
         </v-card-text>
         <v-card-actions>
@@ -111,6 +121,9 @@ export default {
     return {
       content: "",
       imageUrl: "",
+      author: {
+        penname: ""
+      },
       form: {
         synopsis: "",
         title: "",
@@ -156,6 +169,18 @@ export default {
       ]
     };
   },
+  async mounted() {
+    await this.$store.dispatch("user/fetchIsAuthor");
+  },
+  computed: {
+    isAuthor() {
+      return this.$store.getters["user/isAuthor"];
+    },
+    isFormInValid() {
+      return Object.keys(this.fields).some(key => this.fields[key].invalid);
+    }
+  },
+
   components: {
     Select: () => import("@/components/All/Select"),
     TagCreate: () => import("./TagCreate")
@@ -414,6 +439,9 @@ export default {
       // display: none;
       outline: none;
     }
+  }
+  .v-text-field__slot {
+    font-size: 1.6rem;
   }
 }
 </style>

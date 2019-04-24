@@ -138,28 +138,27 @@ export const actions = {
     bookId
   }) {
     // const nextindex = index
-    await this.$axios.get('/book/chapter?chapterId=' + chapterId + '&user=' + userId).then((res) => {
+    try {
+      const res = await this.$axios.get(`book/chapter?chapterId=${chapterId}&userId=${userId}`)
       const {
         next,
         prev,
         chapter
       } = res.data
       commit('SET_CHAPTER', chapter)
-      // commit('SET_NAVIGATION', {
-      //   next,
-      //   prev
-      // })
-    })
+      if (!state.bookTitle) {
+        const res = await this.$axios.get(`/book/title?bookId=${bookId}`)
+        commit('SET_BOOK_TITLE', res.data.title)
 
-    if (!state.bookTitle) {
-      const res = await this.$axios.get(`/book/title?bookId=${bookId}`)
-      commit('SET_BOOK_TITLE', res.data.title)
+      }
+      if (!state.count) {
+        const res = await this.$axios.get(`book/chapter/count?bookId=${bookId}`)
+        commit('SET_CHAPTER_COUNT', res.data.count)
+      }
+    } catch (error) {
+      return Promise.reject(error.response.message)
+    }
 
-    }
-    if (!state.count) {
-      const res = await this.$axios.get(`book/chapter/count?bookId=${bookId}`)
-      commit('SET_CHAPTER_COUNT', res.data.count)
-    }
   },
   async fetchChapterNav({
     commit

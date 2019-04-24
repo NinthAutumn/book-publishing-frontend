@@ -8,8 +8,8 @@ export const state = () => ({
   user: {},
   reviews: [],
   comments: [],
-  notification: []
-
+  notification: [],
+  isAuthor: false,
 })
 
 export const getters = {
@@ -37,7 +37,8 @@ export const getters = {
   getUpdateView: (state) => {
     return state.update_view
   },
-  getNotification: state => state.notification
+  getNotification: state => state.notification,
+  isAuthor: state => state.isAuthor
 }
 
 export const mutations = {
@@ -76,6 +77,9 @@ export const mutations = {
   },
   SET_NOTIFICATION: (state, notification) => {
     state.notification = notification
+  },
+  SET_ISAUTHOR: async (state, isauthor) => {
+    state.isAuthor = isauthor
   }
 }
 export const actions = {
@@ -189,11 +193,18 @@ export const actions = {
     commit
   }) {
     try {
-      const res = await this.$axios.get(`/user/notifications`)
-      console.log(res.data);
+      const res = await this.$axios.get(`/notifications/chapter`)
       commit('SET_NOTIFICATION', res.data)
+    } catch (error) {}
+  },
+  async fetchIsAuthor({
+    commit
+  }) {
+    try {
+      const res = await this.$axios.get(`/user/isAuthor`)
+      commit('SET_ISAUTHOR', res.data.author)
     } catch (error) {
-
+      return Promise.reject(error)
     }
   }
   // async signUpGoogle({

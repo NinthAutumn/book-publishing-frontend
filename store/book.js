@@ -165,6 +165,11 @@ export const actions = {
       return Promise.reject(error)
     }
   },
+  async fetchIsAuthor({
+    commit
+  }) {
+
+  }
 }
 
 export const mutations = {

@@ -121,19 +121,19 @@ export default {
       this.reviewState = false;
     },
     async infiniteHandler($state) {
-      await this.$store
-        .dispatch("review/fetchNextReviews", {
-          bookId: this.$route.params.id,
-          page: this.page++,
-          userId: this.$store.getters["loggedInUser"]._id
-        })
-        .then(review => {
-          if (this.$store.state.review.nextChapterLength) {
-            $state.loaded();
-          } else {
-            $state.complete();
-          }
-        });
+      // await this.$store
+      //   .dispatch("review/fetchNextReviews", {
+      //     bookId: this.$route.params.id,
+      //     page: this.page++,
+      //     userId: this.$store.getters["loggedInUser"].id
+      //   })
+      //   .then(review => {
+      //     if (this.$store.state.review.nextChapterLength) {
+      //       $state.loaded();
+      //     } else {
+      //       $state.complete();
+      //     }
+      //   });
     }
   }
 };

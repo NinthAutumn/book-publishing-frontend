@@ -17,13 +17,23 @@ export const actions = {
   }, {
     bookId,
     chapterId,
-    price
+    amount
   }) {
-    await this.$axios.patch('/transaction/chapter', {
-      bookId,
-      chapterId,
-      price
-    })
+    try {
+      const res = await this.$axios.post('/transaction/chapter', {
+        chapterId,
+        amount,
+        bookId,
+        type: 'chapter'
+      })
+      if (res.data.error) {
+        return Promise.reject(res.data.error)
+      }
+      return Promise.resolve()
+    } catch (error) {
+      return Promise.reject(error)
+    }
+
 
   },
   async wealth({
@@ -31,6 +41,7 @@ export const actions = {
   }, ) {
     try {
       const res = await this.$axios.get('/user/wealth')
+      console.log(res.data);
       if (res) {
         commit('SET_WEALTH', res.data.wealth)
       }

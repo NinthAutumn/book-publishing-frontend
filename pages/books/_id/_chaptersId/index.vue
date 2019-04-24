@@ -78,7 +78,7 @@ export default {
     if (store.state.auth.loggedIn) {
       await store.dispatch("chapter/fetchChapter", {
         chapterId: params.chaptersId,
-        userId: store.state.auth.user._id,
+        userId: store.state.auth.user.id,
         bookId: params.id
       });
       await store.dispatch("user/fetchUserSettings");
@@ -133,7 +133,7 @@ export default {
       &::after {
         content: "";
         display: inline-block;
-        width: 100%;
+        width: 80vw;
       }
     }
     .chapter-container::after {

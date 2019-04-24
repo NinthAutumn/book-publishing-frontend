@@ -5,23 +5,20 @@
       color="purple"
       height="5"
       :value="currStepProgress * 100"
-      v-if="!modal"
+      v-if="!modal&&!chapter.locked"
     ></v-progress-linear>
 
     <div class="chapter-title" style="display:inline-block;">
       <header
         class="chapter-title__item"
         :style="{'font-family':fontStyle}"
-      >{{`第${$store.state.chapter.chapter.index}話: ${$store.state.chapter.chapter.title}`}}</header>
+      >{{`第${chapter.index}話: ${chapter.title}`}}</header>
     </div>
-    <div
-      class="chapter-announcement chapter-announcement--header"
-      v-if="$store.state.chapter.chapter.header"
-    >
+    <div class="chapter-announcement chapter-announcement--header" v-if="chapter.header">
       <h4>
         <fa style="margin-right:10px;" icon="envelope"></fa>告知・メッセージ・上書き
       </h4>
-      <p v-text="$store.state.chapter.chapter.header"></p>
+      <p v-text="chapter.header"></p>
       <fa class="announcement-pin" icon="quote-right"></fa>
     </div>
     <scrollama @step-enter="stepEnterHandler" :progress="true" @step-progress="progressHandler">
@@ -29,27 +26,21 @@
         data-step="1"
         :style="{'font-size':fontSize, 'font-family':fontStyle}"
         class="chapter-content step1"
-        v-html="$store.state.chapter.chapter.content"
+        v-html="chapter.content"
       ></div>
     </scrollama>
-    <div
-      class="chapter-payblock flex flex--align flex-column"
-      v-if="!$store.state.chapter.chapter.content"
-    >
+    <div class="chapter-payblock" v-if="chapter.locked">
       <div class="payblock-price">
-        <Currency size="large" :amount="$store.state.chapter.chapter.price"></Currency>
+        <Currency size="large" :amount="chapter.price"></Currency>
       </div>
-      <div class="payblock-buy button button--primary" @click="purchase">ロック解除</div>
+      <div class="payblock-buy button button--primary" @click="purchase" :class="{}">ロック解除</div>
     </div>
-    <div class="divider" v-if="$store.state.chapter.chapter.extra">
-      <div
-        class="chapter-announcement chapter-announcement--footer"
-        v-if="$store.state.chapter.chapter.footer"
-      >
+    <div class="divider" v-if="chapter.extra">
+      <div class="chapter-announcement chapter-announcement--footer" v-if="chapter.footer">
         <h4>
           <fa style="margin-right:10px;" icon="envelope"></fa>告知・メッセージ・下書き
         </h4>
-        <p v-text="$store.state.chapter.chapter.footer"></p>
+        <p v-text="chapter.footer"></p>
         <fa class="announcement-pin" icon="quote-right"></fa>
       </div>
     </div>
@@ -71,6 +62,9 @@ export default {
     },
     modal() {
       return this.$store.getters["chapter/getModalState"];
+    },
+    chapter() {
+      return this.$store.getters["chapter/getChapter"];
     }
   },
   watch: {},
@@ -86,15 +80,18 @@ export default {
         await this.$store.dispatch("wallet/buyChapter", {
           bookId: this.$route.params.id,
           chapterId: this.$route.params.chaptersId,
-          price: this.$store.state.chapter.chapter.price
+          amount: this.$store.state.chapter.chapter.price
         });
         await this.$store.dispatch("chapter/fetchChapter", {
           chapterId: this.$route.params.chaptersId,
-          userId: this.$store.state.auth.user._id,
-          bookId: params.id
+          userId: this.$store.state.auth.user.id,
+          bookId: this.$route.params.id
         });
       } catch (error) {
-        alert(error);
+        this.$message({
+          message: error,
+          type: "error"
+        });
       }
     },
     stepEnterHandler: async function({ element, index, direction }) {
@@ -155,28 +152,32 @@ export default {
 }
 
 .chapter-payblock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 350px;
+  user-select: none;
   .payblock-price {
-    margin-top: 120px;
-    margin-bottom: 10px;
-    // margin-bottom: 0 !important;
     font-size: 20px;
   }
   .payblock-buy {
-    // height: 50px;
     width: 130px;
     font-size: 20px;
-    // margin-bottom: 20px;
   }
   // margin-bottom: 50px;
-  box-sizing: border-box;
-  height: 400px;
-  width: 100%;
 }
 
 .chapter-content {
   line-height: 30px;
   display: inline-block;
-  width: 100%;
+  // ::after {
+  //   content: "";
+  //   position: relative;
+  //   width: 100vw;
+  // }
   ruby {
     font-family: inherit;
     font-size: inherit;
