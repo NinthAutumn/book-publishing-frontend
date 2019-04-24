@@ -85,31 +85,6 @@
       </form>
     </div>
     <TagCreate v-model="form.tags"></TagCreate>
-    <v-dialog v-model="isAuthor" persistent max-width="600px" hide-overlay>
-      <v-card>
-        <v-card-title>
-          <span class="headline">作者になる</span>
-        </v-card-title>
-        <v-card-text>
-          <v-text-field
-            v-model="author.penname"
-            v-validate="'required|max:10'"
-            required
-            :counter="10"
-            :error-messages="errors.collect('penname')"
-            label="ペンネーム*"
-            name="penname"
-            data-vv-name="ペンネーム"
-          ></v-text-field>
-          <small>*indicates required field</small>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" flat @click="dialog = false">Close</v-btn>
-          <v-btn color="blue darken-1" flat @click="dialog = false">Save</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
   </div>
 </template>
 
@@ -121,9 +96,8 @@ export default {
     return {
       content: "",
       imageUrl: "",
-      author: {
-        penname: ""
-      },
+      rotation: 0,
+      scale: 1,
       form: {
         synopsis: "",
         title: "",
@@ -169,13 +143,8 @@ export default {
       ]
     };
   },
-  async mounted() {
-    await this.$store.dispatch("user/fetchIsAuthor");
-  },
+
   computed: {
-    isAuthor() {
-      return this.$store.getters["user/isAuthor"];
-    },
     isFormInValid() {
       return Object.keys(this.fields).some(key => this.fields[key].invalid);
     }
@@ -218,6 +187,14 @@ export default {
           type: "error"
         });
       }
+    },
+    saveClicked() {
+      var img = this.$refs.vueavatar.getImageScaled();
+      this.$refs.image.src = img.toDataURL();
+    },
+    onImageReady() {
+      this.scale = 1;
+      this.rotation = 0;
     }
   }
 };
@@ -440,8 +417,10 @@ export default {
       outline: none;
     }
   }
-  .v-text-field__slot {
-    font-size: 1.6rem;
+
+  .author-avatar {
+    width: 20rem;
+    height: 20rem;
   }
 }
 </style>

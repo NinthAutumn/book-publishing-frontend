@@ -78,10 +78,10 @@ module.exports = {
       src: '~/plugins/swiper',
       ssr: false
     },
-    // {
-    //   ssr: false,
-    //   src: '~plugins/auth'
-    // }, 
+    {
+      ssr: false,
+      src: '~/plugins/avatar'
+    },
     {
       ssr: false,
       src: "~plugins/clickOutside"

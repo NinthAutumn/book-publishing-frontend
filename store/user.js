@@ -9,7 +9,7 @@ export const state = () => ({
   reviews: [],
   comments: [],
   notification: [],
-  isAuthor: false,
+  author: {}
 })
 
 export const getters = {
@@ -38,7 +38,13 @@ export const getters = {
     return state.update_view
   },
   getNotification: state => state.notification,
-  isAuthor: state => state.isAuthor
+  isAuthor: state => {
+    if (state.author) {
+      return false
+    } else {
+      return true
+    }
+  }
 }
 
 export const mutations = {
@@ -78,8 +84,8 @@ export const mutations = {
   SET_NOTIFICATION: (state, notification) => {
     state.notification = notification
   },
-  SET_ISAUTHOR: async (state, isauthor) => {
-    state.isAuthor = isauthor
+  SET_AUTHOR: async (state, author) => {
+    state.author = author
   }
 }
 export const actions = {
@@ -193,19 +199,33 @@ export const actions = {
     commit
   }) {
     try {
-      const res = await this.$axios.get(`/notifications/chapter`)
+      const res = await this.$axios.get(`/notification/chapter`)
       commit('SET_NOTIFICATION', res.data)
     } catch (error) {}
   },
-  async fetchIsAuthor({
+  async fetchAuthor({
     commit
   }) {
     try {
-      const res = await this.$axios.get(`/user/isAuthor`)
-      commit('SET_ISAUTHOR', res.data.author)
+      const res = await this.$axios.get(`/author`)
+      commit('SET_AUTHOR', res.data)
     } catch (error) {
       return Promise.reject(error)
     }
+  },
+  async postAuthor({
+    commit,
+    dispatch
+  }, {
+    author
+  }) {
+    try {
+      const res = await this.$axios.post(`/author`, author)
+      await dispatch('fetchAuthor')
+    } catch (error) {
+      return Promise.reject(error)
+    }
+
   }
   // async signUpGoogle({
   //   commit

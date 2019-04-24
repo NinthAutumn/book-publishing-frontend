@@ -49,11 +49,11 @@
       </ul>
       <hr>
     </nav>
+    <create-author></create-author>
   </div>
 </template>
 <script>
 // import HomeIcon from "../../assets/home-icon";
-var moment = require("moment");
 // import { fas } from "@fortawesome/free-solid-svg-icons";
 // import { faGithub } from '@fortawesome/free-brands-svg-icons'
 
@@ -61,6 +61,9 @@ export default {
   name: "Vertical",
   props: {
     // menus: Array
+  },
+  async mounted() {
+    await this.$store.dispatch("user/fetchAuthor");
   },
   data() {
     return {
@@ -96,7 +99,8 @@ export default {
   },
   components: {
     // HomeIcon
-    BookForm: () => import("@/components/Dashboard/CreateBook")
+    BookForm: () => import("@/components/Dashboard/CreateBook"),
+    CreateAuthor: () => import("@/components/Dashboard/CreateAuthor")
   },
   watch: {
     // fetchUserId: function() {
@@ -214,6 +218,8 @@ export default {
   left: -25rem !important;
   transition: 300ms;
 }
+.d-nav-all {
+}
 
 .d-nav-all .dashboard-inactive {
   width: 55px !important;
@@ -249,6 +255,7 @@ export default {
   animation-fill-mode: forwards; */
   transition: 300ms;
   // animation: appearSlides 300ms;
+
   &-list {
     display: flex;
     // padding: 1rem;
