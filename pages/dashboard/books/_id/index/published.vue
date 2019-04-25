@@ -8,7 +8,7 @@
 export default {
   computed: {
     toc() {
-      return this.$store.state.chapter.pTOC;
+      return this.$store.getters["chapter/getPublishedList"];
     }
   },
   components: {

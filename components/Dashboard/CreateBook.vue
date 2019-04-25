@@ -32,7 +32,7 @@
               placeholder="タイトル"
               v-model="form.title"
             >
-            <span class="help is-danger">{{ errors.first('book-title') }}</span>
+            <span class="form-error">{{ errors.first('book-title') }}</span>
             <label for="synopsis">あらすじ</label>
             <textarea
               class="book-form--textarea"
@@ -161,8 +161,11 @@ export default {
     },
     beforeAvatarUpload(file) {},
     async postBook() {
-      if (this.form.title.length < 5) {
-        return;
+      if (this.form.genre.length < 1 || this.form.tags.length < 1) {
+        return this.$message({
+          message: "ジャンルまたはタグは必ず一個以上選択してください",
+          type: "error"
+        });
       }
       const book = {
         title: this.form.title,
@@ -176,7 +179,7 @@ export default {
           "upload/image",
           this.form.cover
         );
-        const book = await this.$store.dispatch("book/addBook", Book);
+        await this.$store.dispatch("book/addBook", book);
         this.$message({
           message: "本の投稿に成功しました",
           type: "success"
@@ -371,8 +374,12 @@ export default {
     text-align: center;
     // mar
   }
+  .form-error {
+    font-size: 1.6rem;
+    color: red;
+    // margin-bottom: 1rem;
+  }
   &--input {
-    margin-bottom: 20px;
     line-height: 20px;
     font-size: 18px;
     &:focus {

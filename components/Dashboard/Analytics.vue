@@ -1,7 +1,7 @@
 <template>
   <div class="user-analytics">
     <div class="main-analytics">
-      <div class="main-analytics__list flex-row flex--between">
+      <div class="main-analytics__list">
         <div
           v-for="(value, key,index) in mainAnalytics"
           :key="index"
@@ -54,10 +54,14 @@ export default {
 .main-analytics {
   $self: &;
   &__list {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(10rem, 40rem));
+    grid-template-rows: repeat(1, minmax(5rem, 15rem));
+    grid-gap: 5rem;
   }
   &__item {
-    height: 125px;
-    width: 250px;
+    height: 100%;
+    width: 100%;
     border-radius: 3px;
     box-shadow: 1px 1px 5px rgb(233, 233, 233);
     background-color: #fff;

@@ -27,7 +27,11 @@
       <transition name="slide-fade">
         <div class="chapter-form__content-subject">
           <div class="form-control flex-row flex--align">
-            <p class="chapter-index">第{{this.$store.getters["chapter/getNewIndex"]}}話</p>
+            <p
+              v-if="form.volume > 0"
+              class="chapter-index"
+            >第{{this.$store.getters["chapter/getNewIndex"]}}話</p>
+            <p v-else class="chapter-index">第{{0}}話</p>
             <input
               placeholder="タイトル"
               type="text"
@@ -49,7 +53,8 @@
         </div>
       </transition>
       <transition name="grow-shrink">
-        <dialog class="chapter-form__upload-img" open v-if="picture" v-click-outside="pictureOpen">
+        <dialog class="chapter-form__upload-img" open v-if="picture">
+          <fa @click="picture= !picture" class="chapter-form__image-btn__close" icon="times"></fa>
           <transition name="slide-fade">
             <div class="chapter-form__extra">
               <upload-btn
@@ -317,7 +322,7 @@ export default {
     async getNewLatestChapter() {
       await this.$store.dispatch("chapter/fetchLatestIndex", {
         bookId: this.$route.params.id,
-        volume: this.form.volume
+        volume_index: this.form.volume
       });
     },
     contentFocus() {
@@ -633,6 +638,7 @@ dialog {
     box-shadow: 1px 1px 5px rgb(223, 223, 223);
   }
   &__options {
+    user-select: none;
     &__user-news {
       height: 30px;
       width: 100px;

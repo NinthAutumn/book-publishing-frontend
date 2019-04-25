@@ -8,7 +8,7 @@
 export default {
   computed: {
     toc() {
-      return this.$store.getters["chapter/draft"];
+      return this.$store.getters["chapter/getDraft"];
     }
   },
   components: {

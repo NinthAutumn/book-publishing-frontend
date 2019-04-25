@@ -68,30 +68,35 @@ export default {
   },
   methods: {
     async table() {
-      await this.$store.dispatch(
-        "chapter/tableOfContent",
-        this.$route.params.id
-      );
+      if (this.modal === "table") {
+        this.$store.commit("chapter/SET_MODAL", "");
+      } else {
+        await this.$store.dispatch(
+          "chapter/fetchPublishedList",
+          this.$route.params.id
+        );
+        this.$store.commit("chapter/SET_MODAL", "table");
+      }
     },
     async comments() {
-      if (this.$store.state.chapter.modal === "comment") {
-        await this.$store.commit("chapter/MODAL_CLOSE");
+      if (this.modal === "comment") {
+        this.$store.commit("chapter/SET_MODAL", "");
       } else {
-        await this.$store.commit("chapter/COMMENT");
+        this.$store.commit("chapter/SET_MODAL", "comment");
       }
     },
     async setting() {
-      if (this.$store.state.chapter.modal === "setting") {
-        await this.$store.commit("chapter/MODAL_CLOSE");
+      if (this.modal === "setting") {
+        this.$store.commit("chapter/SET_MODAL", "");
       } else {
-        await this.$store.commit("chapter/SETTING");
+        this.$store.commit("chapter/SET_MODAL", "setting");
       }
     },
     async images() {
-      if (this.$store.state.chapter.modal === "image") {
-        await this.$store.commit("chapter/MODAL_CLOSE");
+      if (this.modal === "image") {
+        this.$store.commit("chapter/SET_MODAL", "");
       } else {
-        await this.$store.commit("chapter/IMAGE");
+        this.$store.commit("chapter/SET_MODAL", "image");
       }
     }
   }

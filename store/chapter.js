@@ -11,7 +11,7 @@ export const state = () => ({
   latestIndex: 0,
   latestBooks: [],
   latestBooksSimple: [],
-  dTOC: [], //chapters that aren't published
+  unlist: [], //chapters that aren't published
   count: 0
 })
 
@@ -19,13 +19,13 @@ export const getters = {
   getChapterList: (state) => {
     return state.list
   },
-  deleted: (state) => {
-    return state.dTOC.filter((chapter) => {
+  getDeleted: (state) => {
+    return state.unlist.filter((chapter) => {
       return chapter.state === 'deleted'
     })
   },
-  draft: (state) => {
-    return state.dTOC.filter((chapter) => {
+  getDraft: (state) => {
+    return state.unlist.filter((chapter) => {
       return chapter.state === 'draft'
     })
   },
@@ -48,7 +48,9 @@ export const getters = {
   getLatestBooks: state => state.latestBooks,
   getLatestBooksSimple: state => state.latestBooksSimple,
   getChapter: state => state.chapter,
-  getModalState: state => state.modal
+  getModalState: state => state.modal,
+  getNotPublished: state => state.unlist,
+  getPublishedList: state => state.list
 }
 
 export const mutations = {
@@ -61,6 +63,9 @@ export const mutations = {
   },
   SET_CHAPTER_LIST: (state, list) => {
     state.list = list
+  },
+  SET_NOT_CHAPTER_LIST: (state, list) => {
+    state.unlist = list
   },
   SET_NAVIGATION(state, {
     next,
@@ -77,20 +82,8 @@ export const mutations = {
   TOC(state, toc) {
     state.toc = toc
   },
-  TOC_MODAL(state) {
-    state.modal = 'table'
-  },
-  IMAGE(state) {
-    state.modal = 'image'
-  },
-  SETTING(state) {
-    state.modal = 'setting'
-  },
-  COMMENT(state) {
-    state.modal = 'comment'
-  },
-  MODAL_CLOSE(state) {
-    state.modal = ''
+  SET_MODAL(state, type) {
+    state.modal = type
   },
   TOC_REVERSE(state) {
     state.list = state.list.reverse()
@@ -100,15 +93,6 @@ export const mutations = {
   },
   SET_CHAPTER_COUNT(state, count) {
     state.count = count
-  },
-  P_TOC(state, toc) {
-    state.pTOC = toc
-  },
-  LOADING(state) {
-    state.loading = true
-  },
-  LOADING_FALSE(state) {
-    state.loading = false
   },
   SET_VOLUME_LIST(state, list) {
     state.volumeList = list
@@ -181,42 +165,42 @@ export const actions = {
     }
 
   },
-  async tableOfContent({
-    commit,
-    state
-  }, bookId) {
-    commit('LOADING')
-    if (state.modal === 'table') {
-      return commit('MODAL_CLOSE')
-    }
-    commit('TOC_MODAL')
-    await this.$axios.get('/book/chapter/published/list?bookId=' + bookId).then((res) => {
-      commit('SET_CHAPTER_LIST', res.data)
-    })
-    commit('LOADING_FALSE')
-
-  },
-  async fetchAllTOC({
+  async fetchNotPublishedList({
     commit
-  }, bookId) {
-    await this.$axios.get('/chapter/dashboard?bookId=' + bookId).then((res) => {
-      commit('D_TOC', res.data)
-    })
+  }, {
+    bookId
+  }) {
+    try {
+      const res = await this.$axios.get(`/book/chapter/notpublished?bookId=${bookId}`)
+      commit('SET_NOT_CHAPTER_LIST', res.data)
+    } catch (error) {
+      return Promise.reject(error)
+    }
+
   },
   async fetchPublishedList({
     commit
   }, {
     bookId
   }) {
-    await this.$axios.get('/book/chapter/published/list?bookId=' + bookId).then((res) => {
+    try {
+      const res = await this.$axios.get(`/book/chapter/published/list?bookId=${bookId}`)
       commit('SET_CHAPTER_LIST', res.data)
-    })
+    } catch (error) {
+      return Promise.reject(error)
+    }
+
   },
   async fetchVolumeList({
     commit
   }, bookId) {
-    const res = await this.$axios.get('/chapter/volume/list?bookId=' + bookId)
-    commit('SET_VOLUME_LIST', res.data)
+    try {
+      const res = await this.$axios.get(`/book/volume/list?bookId=${bookId}`)
+      commit('SET_VOLUME_LIST', res.data)
+    } catch (error) {
+      return Promise.reject(error)
+    }
+
   },
   async createChapter({
     commit
@@ -235,10 +219,10 @@ export const actions = {
     commit
   }, {
     bookId,
-    volume = ""
+    volume_index = ""
   }) {
     try {
-      const res = await this.$axios.get(`/chapter/latestindex?bookId=${bookId}&volume=${volume}`)
+      const res = await this.$axios.get(`/book/chapter/latestIndex?bookId=${bookId}&volume_index=${volume_index}`)
       const {
         index
       } = res.data
