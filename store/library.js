@@ -18,7 +18,8 @@ export const getters = {
   },
   isBookmarked: (state) => {
     return state.bookmarked
-  }
+  },
+  getReviews: state => state.reviews
 }
 
 
@@ -182,6 +183,21 @@ export const actions = {
       commit('SET_REVIEWS', res.data)
     } catch (error) {
       Promise.reject(error)
+    }
+  },
+  async postHistory({
+    commit
+  }, {
+    chapterId,
+    bookId
+  }) {
+    try {
+      const res = await this.$axios.post(`/library/history`, {
+        chapterId,
+        bookId
+      })
+    } catch (error) {
+
     }
   }
 }

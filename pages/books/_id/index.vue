@@ -1,10 +1,9 @@
 <template>
   <main class="book page-padding" :class="{'book--mobile': $device.isMobile}">
     <div class="book__container">
-      <!-- :src="`https://storage.googleapis.com/theta-images/${book.cover}`" -->
       <v-img
         class="book__cover"
-        :src="book.cover"
+        :src="`https://storage.googleapis.com/theta-images/${book.cover}`"
         alt="book cover"
         width="20rem"
         :aspect-ratio="1/1.5"
@@ -29,14 +28,8 @@
         </div>
         <div class="book__rating">
           <no-ssr>
-            <v-rating
-              color="#FF8D29"
-              v-if="book.ratings"
-              :readonly="true"
-              medium
-              :value="+book.ratings.toFixed(2)"
-            ></v-rating>
-            <v-rating medium color="#FF8D29" v-else :readonly="true" :value="0"></v-rating>
+            <v-rating half-increments color="#FF8D29" :readonly="true" medium :value="+book.rating"></v-rating>
+            <!-- <v-rating medium color="#FF8D29" v-else :readonly="true" :value="0"></v-rating> -->
           </no-ssr>
         </div>
       </div>
@@ -44,9 +37,31 @@
       <div class="book__avatar">
         <!-- <img class="book-author" :src="$store.state.book.book.authorId.avatar" alt="author avatar"> -->
       </div>
-      <div class="book__synopsis">
-        <BookContent :book="book"></BookContent>
+      <div @mouseleave="navLeave" class="book__content-nav book-showtab　flex flex-row">
+        <div
+          @mouseenter="navLine(1)"
+          ref="review"
+          class="book__content-nav__item book__content-nav__item--review"
+          @click="navSelect('review')"
+        >作品情報</div>
+        <div
+          @click="navSelect('toc')"
+          @mouseenter="navLine(2)"
+          ref="toc"
+          class="book__content-nav__item"
+        >目次</div>
+        <div :style="tabs.position" class="book__content-nav__line"></div>
       </div>
+      <div class="book__synopsis" v-show="tabs.open === 'review'">
+        <BookContent :book="book"></BookContent>
+        <Tags v-if="!$device.isMobile"></Tags>
+        <section class="book__reviews">
+          <div class="book__reviews__title">レビュー({{this.$store.getters["review/getReviewCount"]}})</div>
+          <ReviewsList :rating="book.rating"></ReviewsList>
+        </section>
+      </div>
+      <BookChapterList class="book__synopsis" v-show="tabs.open ==='toc'"></BookChapterList>
+
       <div class="book__all" v-if="!$device.isMobile">
         <div class="book__information"></div>
         <div class="book__buttons">
@@ -68,27 +83,6 @@
         </div>
       </div>
     </div>
-
-    <Tags v-if="!$device.isMobile"></Tags>
-    <div @mouseleave="navLeave" class="book__content-nav book-showtab　flex flex-row">
-      <div
-        @mouseenter="navLine(1)"
-        ref="review"
-        class="book__content-nav__item book__content-nav__item--review"
-        @click="navSelect('review')"
-      >レビュー({{$store.getters['review/getReviewCount']|| 0}})</div>
-      <div
-        @click="navSelect('toc')"
-        @mouseenter="navLine(2)"
-        ref="toc"
-        class="book__content-nav__item"
-      >目次</div>
-      <div :style="tabs.position" class="book__content-nav__line"></div>
-    </div>
-    <BookChapterList v-show="tabs.open ==='toc'"></BookChapterList>
-    <section class="book__reviews" v-show="tabs.open === 'review'">
-      <ReviewsList></ReviewsList>
-    </section>
   </main>
 </template>
 
@@ -104,31 +98,16 @@ export default {
     // );
   },
   async fetch({ store, params }) {
-    if (store.state.auth.loggedIn) {
+    if (store.getters.isAuthenticated) {
       await store.dispatch("book/fetchBook", {
         id: params.id,
         userId: store.getters["loggedInUser"].id
-      });
-      await store.dispatch("review/showAll", {
-        bookId: params.id,
-        userId: store.getters["loggedInUser"].id,
-        page: 1,
-        limit: 10,
-        direction: "desc",
-        type: "likes"
       });
       // await store.dispatch("review/reviewedStatus", params.id);
       // await store.dispatch("library/checkBookmark", params.id);
     } else {
       await store.dispatch("book/fetchBook", { id: params.id });
       // await store.dispatch("chapter/fetchPublishedTOC", params.id);
-      await store.dispatch("review/showAll", {
-        bookId: params.id,
-        page: 1,
-        limit: 10,
-        direction: "desc",
-        type: "likes"
-      });
     }
   },
   computed: {
@@ -165,12 +144,12 @@ export default {
         open: "review"
       },
       meta: [
-        {
-          key: this.$store.getters["book/getBook"].genres[0],
-          icon: "landmark",
-          type: "genre",
-          url: `/browse?genre=${this.$store.getters["book/getBook"].genres[0]}`
-        },
+        // {
+        //   key: this.$store.getters["book/getBook"].genres[0] || "ファンタ",
+        //   icon: "landmark",
+        //   type: "genre",
+        //   url: `/browse?genre=${this.$store.getters["book/getBook"].genres[0]}`
+        // },
         {
           key: this.$store.getters["book/getBookChapterCount"] + "話",
           icon: "scroll",
@@ -466,7 +445,8 @@ input[type="number"]::-webkit-outer-spin-button {
     grid-template-areas:
       "cover title title avatar"
       "cover meta meta meta"
-      "summary summary summary summary ";
+      "summary summary summary summary "
+      "content content content content ";
     // "summary summary summary summary";
   }
 
@@ -474,7 +454,7 @@ input[type="number"]::-webkit-outer-spin-button {
     display: flex;
   }
   &__synopsis {
-    grid-area: summary;
+    grid-area: content;
   }
   &__title {
     font-size: 22px;
@@ -536,6 +516,9 @@ input[type="number"]::-webkit-outer-spin-button {
   &__reviews {
     grid-area: reviews;
     // margin-bottom: 10px;
+    &__title {
+      font-size: 2rem;
+    }
     &__divider {
       margin-bottom: 5px;
     }
@@ -547,6 +530,7 @@ input[type="number"]::-webkit-outer-spin-button {
   &__content-nav {
     position: relative;
     // color: red;
+    grid-area: summary;
     &__line {
       border: 2px solid $primary;
       position: absolute;
@@ -574,7 +558,8 @@ input[type="number"]::-webkit-outer-spin-button {
         }
       }
 
-      font-size: 20px;
+      font-size: 2.2rem;
+      // margin-bottom: 1.5rem;
     }
   }
 }

@@ -38,10 +38,10 @@
                 class="user-books__review__stat flex flex--align flex--center"
               >{{book.rating_count}}</div>
             </div>
-            <nuxt-link
+            <div
+              @click="openForm(book.id)"
               class="user-books__announcement flex flex--align flex--center"
-              :to="`/dashboard/books/${book.id}/announcement`"
-            >通告を投稿</nuxt-link>
+            >通告を投稿</div>
             <nuxt-link
               :to="{path: `/dashboard/books/${book.id}/new`}"
               tag="div"
@@ -56,6 +56,39 @@
         </div>
       </div>
     </div>
+    <v-dialog v-model="dialog" persistent max-width="600px">
+      <v-card>
+        <v-card-title>
+          <span class="headline">報告をする</span>
+        </v-card-title>
+        <v-card-text>
+          <v-text-field
+            v-validate="'required|max:100'"
+            :error-messages="errors.collect('タイトル')"
+            data-vv-name="タイトル"
+            v-model="announcement.title"
+            :counter="100"
+            label="タイトル"
+            required
+          ></v-text-field>
+          <v-textarea
+            v-validate="'required|max:500'"
+            :error-messages="errors.collect('報告')"
+            data-vv-name="報告"
+            :max="500"
+            v-model="announcement.content"
+            :counter="500"
+            label="報告"
+            required
+          ></v-textarea>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="blue darken-1" flat @click="dialog = false">キャンセル</v-btn>
+          <v-btn color="blue darken-1" flat @click="dialog = false">投稿</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -65,9 +98,32 @@ export default {
   async fetch({ store }) {
     await store.dispatch("analytic/fetchUserBooks");
   },
+  data() {
+    return {
+      dialog: false,
+      bookId: 0,
+      announcement: {
+        title: "",
+        content: ""
+      }
+    };
+  },
+  watch: {
+    "announcement.title": val => {
+      if (val.length > 100) {
+        return alert("over");
+      }
+    }
+  },
   computed: {
     books() {
       return this.$store.getters["analytic/getBookList"];
+    }
+  },
+  methods: {
+    async openForm(id) {
+      this.dialog = true;
+      this.bookId = id;
     }
   },
   filters: {
@@ -86,6 +142,9 @@ export default {
 .user-books {
   min-height: 100vh;
   $self: &;
+  .v-text-field__slot {
+    font-size: 1.6rem;
+  }
   &__books-list {
     width: 100%;
     height: 100%;
@@ -179,13 +238,13 @@ export default {
           grid-area: announcement;
           color: white;
           font-size: 12px;
-          background-color: #ff312f;
+          background-color: #bca0ff;
           &:hover {
             user-select: none;
             cursor: pointer;
             background-color: #fff;
-            border: 1px solid #ff312f;
-            color: #ff312f;
+            border: 1px solid #bca0ff;
+            color: #bca0ff;
           }
         }
         #{$self}__create {

@@ -16,11 +16,16 @@
           color="#FF8D29"
           :hover="true"
           :half-increments="true"
-          v-model="review.rating.total"
+          v-model="review.rating"
           :clearable="true"
         ></v-rating>
       </div>
-      <text-editor :content="pcontent" class="review-form__content" v-model="review.content"></text-editor>
+      <text-editor
+        placeholder="レビュー本文"
+        :content="pcontent"
+        class="review-form__content"
+        v-model="review.content"
+      ></text-editor>
       <div class="divider flex flex--right">
         <button type="submit" class="review-submit">投稿</button>
       </div>
@@ -42,9 +47,7 @@ export default {
       review: {
         title: this.ptitle,
         content: "",
-        rating: {
-          total: this.prating
-        }
+        rating: this.prating
       },
       state: this.value
     };
@@ -56,39 +59,47 @@ export default {
   methods: {
     async addReview() {
       if (this.reviewed) {
-        await this.$store.dispatch("review/updateReview", {
-          id: this.$store.state.review.myReview._id,
-          review: this.review
-        });
-        await this.$store.dispatch("review/showAll", {
-          bookId: this.$route.params.id
-        });
-      } else {
-        const username = this.$store.state.auth.user.username;
-
-        await this.$store
-          .dispatch("review/addReview", {
-            review: this.review,
-            bookId: this.$route.params.id,
-            username: username
-          })
-          .then(async () => {
-            this.$message({
-              message: "レビューの投稿に成功しました",
-              type: "success"
-            });
-            await this.$store.dispatch("review/showAll", {
-              bookId: params.id,
-              userId: this.$store.getters["loggedInUser"]._id
-            });
-            this.$emit("input", false);
-          })
-          .catch(() => {
-            this.$message({
-              message: "レビューの投稿に失敗しました",
-              type: "error"
-            });
+        try {
+          await this.$store.dispatch("review/updateReview", {
+            id: this.$store.state.review.myReview._id,
+            review: this.review
           });
+          await this.$store.dispatch("review/showAll", {
+            bookId: this.$route.params.id
+          });
+        } catch (error) {
+          this.$message({
+            message: "レビューの投稿に失敗しました",
+            type: "error"
+          });
+          console.log(error);
+        }
+      } else {
+        try {
+          await this.$store.dispatch("review/addReview", {
+            review: this.review,
+            bookId: this.$route.params.id
+          });
+          await this.$store.dispatch("review/showAll", {
+            bookId: this.$route.params.id,
+            userId: this.$store.getters["loggedInUser"].id,
+            page: 1,
+            limit: 10,
+            direction: "desc",
+            type: "likes"
+          });
+          this.$message({
+            message: "レビューの投稿に成功しました",
+            type: "success"
+          });
+          this.$emit("input", false);
+        } catch (error) {
+          this.$message({
+            message: "レビューの投稿に失敗しました" + error,
+            type: "error"
+          });
+          console.log(error);
+        }
       }
     }
   }
@@ -180,7 +191,7 @@ export default {
     background-color: $review-color;
     width: 90px;
     height: 33px;
-    border-radius: 10px;
+    // border-radius: 10px;
     font-size: 15px;
     border: none;
     color: white;

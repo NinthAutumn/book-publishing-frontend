@@ -22,16 +22,7 @@
     </div>
     <div class="book__reviews__divider flex flex--align flex--between">
       <div class="book__rating__all flex flex--align">
-        <v-rating
-          color="#FF8D29"
-          v-if="$store.state.book.book.ratings"
-          readonly
-          size="30"
-          half-increments
-          :value="+$store.state.book.book.ratings.toFixed(2)"
-        ></v-rating>
-
-        <v-rating size="20" color="#FF8D29" v-else :readonly="true" :value="0"></v-rating>
+        <v-rating color="#FF8D29" readonly size="30" half-increments :value="+rating"></v-rating>
       </div>
       <button
         v-if="!reviewed&&!$device.isMobile"
@@ -68,10 +59,11 @@
 import Review from "./Review";
 import ReviewsForm from "@/components/Bookpage/ReviewForm";
 import Select from "@/components/All/Select";
+import { EFAULT } from "constants";
 
 export default {
   props: {
-    // reviews: Array
+    rating: Number
   },
   data() {
     return {
@@ -101,6 +93,26 @@ export default {
     //   }
     // }
   },
+  async mounted() {
+    if (this.$store.getters.isAuthenticated) {
+      await this.$store.dispatch("review/showAll", {
+        bookId: this.$route.params.id,
+        userId: this.$store.getters.loggedInUser.id,
+        page: 1,
+        limit: 10,
+        direction: "desc",
+        type: "likes"
+      });
+    } else {
+      await this.$store.dispatch("review/showAll", {
+        bookId: this.$route.params.id,
+        page: 1,
+        limit: 10,
+        direction: "desc",
+        type: "likes"
+      });
+    }
+  },
   components: {
     Review,
     ReviewsForm,
@@ -121,19 +133,32 @@ export default {
       this.reviewState = false;
     },
     async infiniteHandler($state) {
-      // await this.$store
-      //   .dispatch("review/fetchNextReviews", {
-      //     bookId: this.$route.params.id,
-      //     page: this.page++,
-      //     userId: this.$store.getters["loggedInUser"].id
-      //   })
-      //   .then(review => {
-      //     if (this.$store.state.review.nextChapterLength) {
-      //       $state.loaded();
-      //     } else {
-      //       $state.complete();
-      //     }
-      //   });
+      let reviews = [];
+      if (this.$store.getters.isAuthenticated) {
+        reviews = await this.$store.dispatch("review/showAll", {
+          bookId: this.$route.params.id,
+          userId: this.$store.getters.loggedInUser.id,
+          page: this.page++,
+          limit: 10,
+          direction: "desc",
+          type: "likes",
+          next: true
+        });
+      } else {
+        reviews = await this.$store.dispatch("review/showAll", {
+          bookId: this.$route.params.id,
+          page: this.page++,
+          limit: 10,
+          direction: "desc",
+          type: "likes",
+          next: true
+        });
+      }
+      if (reviews.length > 0) {
+        $state.loaded();
+      } else {
+        $state.complete();
+      }
     }
   }
 };

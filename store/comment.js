@@ -83,19 +83,16 @@ export const actions = {
       Promise.reject(error)
     }
   },
-  async unLikeComment({
+  fetchUserComments: async function ({
     commit
   }, {
-    commentId,
-    type
+    bookId
   }) {
-    await this.$axios.patch('/comment/unlike', {
-      id: commentId,
-      type: type
-    }).then((res) => {
-      commit('UNLIKED_COMMENTS', commentId)
-    }).catch((e) => {
-      console.log(e);
-    })
+    try {
+      const res = await this.$axios.get(`/comment/userBooks?bookId=${bookId}`)
+      commit('SET_COMMENTS', res.data)
+    } catch (error) {
+      return Promise.reject(error)
+    }
   }
 }

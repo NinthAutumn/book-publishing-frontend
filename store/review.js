@@ -25,8 +25,11 @@ export const getters = {
 
 
 export const mutations = {
-  SET_NEXT_REVIEWS(state, review) {
-    state.reviews.push(review)
+  SET_NEXT_REVIEWS(state, reviews) {
+    reviews.forEach((review) => {
+      state.reviews.push(review)
+
+    })
   },
   SET_REVIEWS(state, reviews) {
     state.reviews = reviews
@@ -119,12 +122,17 @@ export const actions = {
     page = 1,
     userId = "",
     type,
-    direction
+    direction,
+    next = false
   }) {
-    await this.$axios.get(`/review/book?bookId=${bookId}&limit=${limit}&page=${page}&userId=${userId}&direction=${direction}&type=${type}`).then(async (res) => {
+    const res = await this.$axios.get(`/review/book?bookId=${bookId}&limit=${limit}&page=${page}&userId=${userId}&direction=${direction}&type=${type}`)
+    if (next) {
+      commit('SET_NEXT_REVIEWS', res.data.reviews)
+      return Promise.resolve(res.data.reviews)
+    } else {
       commit('SET_REVIEWS', res.data.reviews)
       commit('SET_REVIEW_LENGTH', res.data.review_count)
-    })
+    }
   },
   async addReview({
     commit,
@@ -138,14 +146,13 @@ export const actions = {
       recommended = true
     }
     try {
-      await this.$axios.post('/review/add', {
+      await this.$axios.post('/review', {
         title: review.title,
         content: review.content,
         bookId: bookId,
         rating: review.rating,
         recommended: recommended,
       })
-      return Promise.resolve()
     } catch (error) {
       return Promise.reject(error)
     }

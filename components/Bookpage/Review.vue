@@ -5,19 +5,14 @@
       <!-- {{review}} -->
     </div>
     <div class="reviews-like">
-      <svg-icon
-        name="arrow-up"
-        class="reviews-like-up"
-        :class="{liked: liked}"
-        @click="likedReview"
-      ></svg-icon>
+      <div class="reviews-icon" @click="likedReview">
+        <svg-icon name="arrow-up" class="reviews-like-up" :class="{liked: liked}"></svg-icon>
+      </div>
+
       <p v-text="likeNumber"></p>
-      <svg-icon
-        name="arrow-down"
-        class="reviews-like-down"
-        :class="{disliked: disliked}"
-        @click="dislikedReview"
-      ></svg-icon>
+      <div class="reviews-icon" @click="dislikedReview">
+        <svg-icon name="arrow-down" class="reviews-like-down" :class="{disliked: disliked}"></svg-icon>
+      </div>
     </div>
 
     <div class="reviews-content">
@@ -64,12 +59,12 @@
 <script>
 // import ArrowDown from "@/assets/svg/arrow-down.svg";
 // import ArrowUp from "@/assets/svg/arrow-up.svg";
+import _ from "lodash";
 export default {
   props: {
     review: Object
   },
   watch: {},
-
   data() {
     return {
       readMore: false,
@@ -98,7 +93,7 @@ export default {
         });
         this.liked = true;
         if (this.disliked) {
-          this.likeNumber = this.likeNumber + 2;
+          this.likeNumber = _.toNumber(this.likeNumber) + 2;
           this.disliked = false;
         } else {
           this.likeNumber++;
@@ -120,7 +115,7 @@ export default {
         });
         this.disliked = true;
         if (this.liked) {
-          this.likeNumber = this.likeNumber - 2;
+          this.likeNumber = _.toNumber(this.likeNumber) - 2;
           this.liked = false;
         } else {
           this.likeNumber--;

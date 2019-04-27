@@ -3,7 +3,9 @@ export const state = () => ({
   ranking: [],
   views: {},
   books: [],
-  recommended: []
+  recommended: [],
+  comments: [],
+  latest: []
 })
 
 export const getters = {
@@ -11,7 +13,9 @@ export const getters = {
   getRankingList: state => state.ranking,
   getTotalViews: state => state.views,
   getBookList: state => state.books,
-  getRecommended: state => state.recommended
+  getRecommended: state => state.recommended,
+  getComments: state => state.comments,
+  getLatest: state => state.latest
 }
 
 export const mutations = {
@@ -29,6 +33,12 @@ export const mutations = {
   },
   SET_RECOMMENDED: (state, books) => {
     state.recommended = books
+  },
+  SET_COMMENTS: (state, comments) => {
+    state.comments = comments
+  },
+  SET_LATEST: (state, latest) => {
+    state.latest = latest
   }
 }
 export const actions = {
@@ -89,6 +99,16 @@ export const actions = {
     try {
       const res = await this.$axios.get(`/analytic/home/recommended`)
       commit('SET_RECOMMENDED', res.data)
+    } catch (error) {
+      return Promise.reject(error)
+    }
+  },
+  fetchLatest: async function ({
+    commit
+  }) {
+    try {
+      const res = await this.$axios.get(`/analytic/book/latest`)
+      commit('SET_LATEST', res.data)
     } catch (error) {
       return Promise.reject(error)
     }

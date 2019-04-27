@@ -1,12 +1,13 @@
 <template>
   <div class="latest-chapters">
     <ul class="latest-chapters__list">
-      <li
+      <nuxt-link
         tag="li"
         class="latest-chapters__item"
         v-ripple
         v-for="(notification,index) in notifications"
         :key="index"
+        :to="`/books/${notification.book_id}/${notification.chapter_id}`"
       >
         <div class="latest-chapters__chapter-title flex flex--between">
           <p v-text="notification.title"></p>
@@ -18,7 +19,7 @@
           >{{$moment(notification.created_at).startOf('minute').fromNow()}}</div>
         </div>
         <div class="latest-chapters__notification"></div>
-      </li>
+      </nuxt-link>
     </ul>
   </div>
 </template>

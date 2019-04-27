@@ -4,7 +4,8 @@
       <header>ダッシュボード</header>
     </div>
     <Analytics></Analytics>
-    <div class="graphs flex flex--right">
+    <div class="graphs flex-row flex--between">
+      <comment-list></comment-list>
       <ViewBarGraph height="300px"></ViewBarGraph>
     </div>
   </div>
@@ -18,7 +19,8 @@ export default {
   },
   components: {
     Analytics: () => import("@/components/Dashboard/Analytics"),
-    ViewBarGraph: () => import("@/components/Dashboard/Graphs/Views")
+    ViewBarGraph: () => import("@/components/Dashboard/Graphs/Views"),
+    CommentList: () => import("@/components/Dashboard/CommentList")
   },
   created() {},
   mounted() {},
@@ -31,7 +33,7 @@ export default {
 <style lang="scss">
 .user-dashboard {
   position: relative;
-  height: 100vh;
+  min-height: 100vh;
   &__header {
     header {
       font-size: 30px;
@@ -56,7 +58,8 @@ export default {
     }
   }
 }
-.graph {
+.graphs {
+  margin-top: 20px;
   // overflow: hidden;
 }
 #line-chart {

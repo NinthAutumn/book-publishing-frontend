@@ -16,13 +16,13 @@
       </div>
       <!-- <ReviewList></ReviewList> -->
       <div class="card-title">
-        <h3>今週人気の作品</h3>
+        <h3>今日人気の作品</h3>
       </div>
       <BooksList :trendings="trending"></BooksList>
       <div class="card-title">
         <h3>更新された作品</h3>
       </div>
-      <!-- <BooksList :trendings="latest"></BooksList> -->
+      <BooksList :trendings="latest"></BooksList>
     </div>
   </div>
 </template>
@@ -44,6 +44,7 @@ export default {
     // await store.dispatch("review/mostLiked");
     await store.dispatch("analytic/fetchTrending", { time: "weekly" });
     await store.dispatch("analytic/fetchRecommended");
+    await store.dispatch('analytic/fetchLatest')
     // await store.dispatch("chapter/fetchMoreLatestBooksSimple", {
     //   page: 1,
     //   limit: 8
@@ -65,7 +66,7 @@ export default {
       return this.$store.getters["analytic/getTrendingList"];
     },
     latest() {
-      return this.$store.getters["chapter/getLatestBooksSimple"];
+      return this.$store.getters["analytic/getLatest"];
     },
     recommended() {
       return this.$store.getters["analytic/getRecommended"];

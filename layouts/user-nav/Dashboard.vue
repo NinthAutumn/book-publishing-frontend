@@ -231,6 +231,7 @@ export default {
 
 .d-nav-v {
   /* display: none; */
+  padding-top: 1rem;
   width: 255px;
   min-height: 100vh;
   position: fixed;

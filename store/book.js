@@ -91,14 +91,25 @@ export const actions = {
     gfilter = true,
     tags = [],
     tfilter = true,
+    limit = 20,
+    infinite = false
   }) {
-    const books = await this.$axios.patch('/book/browse?direction=' + direction + '&type=' + type + '&page=' + page, {
+
+    const res = await this.$axios.patch('/book/browse', {
       genres,
       gfilter,
       tfilter,
-      tags
+      tags,
+      direction,
+      type,
+      page,
+      limit
     })
-    commit('BROWSE_BOOKS', books.data)
+    if (infinite) {
+      commit('BROWSE_BOOKS_NEXT', res.data)
+      return Promise.resolve(res.data)
+    }
+    commit('BROWSE_BOOKS', res.data)
   },
   async editBook({
     commit
@@ -185,6 +196,12 @@ export const mutations = {
   },
   BROWSE_BOOKS(state, books) {
     state.browse = books
+  },
+  BROWSE_BOOKS_NEXT(state, books) {
+    books.forEach((book) => {
+      state.browse.push(book)
+    })
+
   },
   SET_TAG_LIST(state, tags) {
     state.tagList = tags

@@ -5,6 +5,9 @@
         <Book :book="book"></Book>
       </li>
     </ul>
+    <no-ssr>
+      <infinite-loading @infinite="infiniteHandler"></infinite-loading>
+    </no-ssr>
   </div>
 </template>
 <script>
@@ -12,15 +15,38 @@ export default {
   props: {
     books: Array,
     trendings: Boolean,
-    history: Boolean
+    history: Boolean,
+    type: Number,
+    genres: Array,
+    direction: String,
+    tags: Array
   },
   data() {
-    return {};
+    return {
+      page: 2
+    };
   },
   components: {
     Book: () => import("./Book")
   },
-  methods: {}
+  methods: {
+    async infiniteHandler($state) {
+      const books = await this.$store.dispatch("book/browseBooks", {
+        type: this.type,
+        direction: this.direction,
+        genres: this.genres,
+        tags: this.tags,
+        page: this.page++,
+        limit: 20,
+        infinite: true
+      });
+      if (books.length > 0) {
+        $state.loaded();
+      } else {
+        $state.complete();
+      }
+    }
+  }
 };
 </script>
 <style lang="scss">

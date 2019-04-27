@@ -19,7 +19,7 @@
                 name="詳細条件"
                 :object="sort_type"
                 transition="grow-shrink"
-                def="栞数"
+                def="視聴回数"
               ></Select>
             </div>
             <div class="browse-page__sort-type browse-page__sort-type--direction">
@@ -81,8 +81,14 @@
             </transition-group>
           </div>
         </transition>
-        <div v-loading.fullscreen.lock="loading" class="browse-page__content flex-row">
-          <BookList :books="books"></BookList>
+        <div v-loading.fullscreen="loading" class="browse-page__content flex-row">
+          <BookList
+            :type="type"
+            :genres="selected_genre"
+            :tags="tag_list"
+            :direction="direction"
+            :books="books"
+          ></BookList>
         </div>
       </div>
       <transition name="tag-summon">
@@ -113,7 +119,8 @@ export default {
         direction: this.direction,
         genres: this.selected_genre,
         tags: this.tag_list,
-        page: 1
+        page: 1,
+        limit: 20
       });
       this.loading = false;
     },
@@ -123,6 +130,22 @@ export default {
         this.modalDirection = "left";
       } else {
         this.modalDirection = "right";
+      }
+    },
+    async infiniteHandler($state) {
+      const books = await this.$store.dispatch("book/browseBooks", {
+        type: this.type,
+        direction: this.direction,
+        genres: this.selected_genre,
+        tags: this.tag_list,
+        page: 1,
+        limit: 20,
+        infinite: true
+      });
+      if (books.length > 0) {
+        $state.loaded();
+      } else {
+        $state.complete();
       }
     }
   },
@@ -148,29 +171,31 @@ export default {
   async fetch({ store }) {},
   async mounted() {
     await this.$store.dispatch("book/browseBooks", {
-      type: 4,
+      type: 5,
       direction: "desc",
       genres: [],
       page: 1,
-      type: "bookmarks"
+      limit: 20
     });
     this.loading = false;
   },
   data() {
     return {
-      type: "",
+      type: 5,
       direction: "desc",
       genre: "",
+      page: 1,
+      limit: 20,
       loading: true,
       modalDirection: "right",
       selected_genre: [],
       sort_type: [
         // { key: "視聴回数", value: "views" },
-        { key: "栞数", value: "bookmarks" },
-        { key: "話数", value: "chapter_count" },
-        { key: "字数", value: "word_count" },
-        { key: "評価", value: "review" },
-        { key: "視聴回数", value: "views" }
+        { key: "栞数", value: 1 },
+        { key: "話数", value: 2 },
+        { key: "字数", value: 3 },
+        { key: "評価", value: 4 },
+        { key: "視聴回数", value: 5 }
       ],
       sort_directions: [
         { key: "上り", value: "asc" },
