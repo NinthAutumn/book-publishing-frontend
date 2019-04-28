@@ -71,10 +71,9 @@ export default {
       if (this.modal === "table") {
         this.$store.commit("chapter/SET_MODAL", "");
       } else {
-        await this.$store.dispatch(
-          "chapter/fetchPublishedList",
-          this.$route.params.id
-        );
+        await this.$store.dispatch("chapter/fetchPublishedList", {
+          bookId: this.$route.params.id
+        });
         this.$store.commit("chapter/SET_MODAL", "table");
       }
     },

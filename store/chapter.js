@@ -206,10 +206,13 @@ export const actions = {
     commit
   }, {
     chapter,
-    bookId
+    date
   }) {
     try {
-      await this.$axios.post('/chapter/add?id=' + bookId, chapter)
+      await this.$axios.post('/chapter/add', {
+        chapter,
+        date
+      })
       return Promise.resolve()
     } catch (error) {
       return Promise.reject(error)

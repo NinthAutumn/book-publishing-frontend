@@ -6,6 +6,26 @@ export const getters = {
   getComments: state => state.comments
 }
 
+function findObjectById(items, id, object) {
+  items.forEach((item) => {
+    if (item.id === id) {
+      return item.children.unshift(object)
+    }
+    if (item.id !== id) {
+
+      item.children.forEach((child) => {
+        if (child.id === id) {
+          return child.children.unshift(object)
+        }
+        if (child.id !== id) {
+          findObjectById(item.children, id, object)
+        }
+      })
+    }
+  })
+};
+
+
 
 const filterParent = function (items, id = undefined) {
   return items.filter((item) => {
@@ -20,6 +40,18 @@ const filterParent = function (items, id = undefined) {
 export const mutations = {
   SET_COMMENTS(state, comments) {
     state.comments = comments
+  },
+  PUSH_COMMENT(state, comment) {
+    console.log(comment.parentId);
+    try {
+      // findObjectById(state.comments, comment.parentId, comment);
+
+    } catch (error) {
+      console.log(error);
+    }
+    // chcomment.children.push(comment)
+
+
   }
 }
 
@@ -45,14 +77,21 @@ export const actions = {
     bookId,
     chapterId,
     content,
-    parent
+    parentId = null
   }) {
-    await this.$axios.post('/comment/add', {
-      bookId,
-      chapterId,
-      content,
-      parent
-    })
+    try {
+      const res = await this.$axios.post('/comment', {
+        bookId,
+        chapterId,
+        content,
+        parentId
+      })
+      // console.log();
+      commit('PUSH_COMMENT', res.data)
+    } catch (error) {
+
+    }
+
   },
   async addParentlessComment({
     commit
@@ -61,7 +100,7 @@ export const actions = {
     chapterId,
     content
   }) {
-    await this.$axios.post('/comment/add', {
+    await this.$axios.post('/comment', {
       bookId,
       chapterId,
       content

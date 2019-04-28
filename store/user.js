@@ -9,7 +9,9 @@ export const state = () => ({
   reviews: [],
   comments: [],
   notification: [],
-  author: {}
+  author: {},
+  username: false,
+  profile: []
 })
 
 export const getters = {
@@ -44,7 +46,8 @@ export const getters = {
     } else {
       return true
     }
-  }
+  },
+  isUsernameAvailable: state => state.username
 }
 
 export const mutations = {
@@ -72,10 +75,10 @@ export const mutations = {
   GET_BOOKMARK_UPDATE: (state, update) => {
     state.bookmarkInbox = update
   },
-  SET_USER_PROFILE: (state, user) => {
-    state.user = user
+  SET_PROFILE: (state, profile) => {
+    state.profile = profile
   },
-  SET_USER_REVIEWS: (state, reviews) => {
+  SET_PROFILE_REVIEWS: (state, reviews) => {
     state.reviews = reviews
   },
   SET_USER_COMMENTS: (state, comments) => {
@@ -86,6 +89,9 @@ export const mutations = {
   },
   SET_AUTHOR: async (state, author) => {
     state.author = author
+  },
+  SET_USERNAME_AVAILABILITY: async (state, username) => {
+    state.username = username
   }
 }
 export const actions = {
@@ -139,7 +145,7 @@ export const actions = {
 
     }
   },
-  async fetchUser({
+  async fetchProfile({
     commit
   }, {
     userId
@@ -226,6 +232,19 @@ export const actions = {
       return Promise.reject(error)
     }
 
+  },
+  async checkUsername({
+    commit
+  }, {
+    username
+  }) {
+    try {
+      const res = await this.$axios.get(`/user/usernameAvailable?username=${username}`)
+      commit('SET_USERNAME_AVAILABILITY', res.data)
+      console.log(res.data);
+    } catch (error) {
+      return Promise.reject(error)
+    }
   }
   // async signUpGoogle({
   //   commit

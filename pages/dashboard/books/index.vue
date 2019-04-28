@@ -85,7 +85,7 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="blue darken-1" flat @click="dialog = false">キャンセル</v-btn>
-          <v-btn color="blue darken-1" flat @click="dialog = false">投稿</v-btn>
+          <v-btn color="blue darken-1" flat @click="postAnnouncement">投稿</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -111,7 +111,7 @@ export default {
   watch: {
     "announcement.title": val => {
       if (val.length > 100) {
-        return alert("over");
+        // return alert("over");
       }
     }
   },
@@ -124,6 +124,27 @@ export default {
     async openForm(id) {
       this.dialog = true;
       this.bookId = id;
+    },
+    async postAnnouncement() {
+      try {
+        await this.$validator.validateAll();
+        if (!this.errors.any()) {
+          const announcement = await this.$store.dispatch(
+            "book/postAnnouncement",
+            {
+              bookId: this.bookId,
+              content: this.announcement.content,
+              title: this.announcement.title
+            }
+          );
+          this.dialog = false;
+        }
+      } catch (error) {
+        return this.$message({
+          message: "報告の投稿に失敗しました",
+          type: "error"
+        });
+      }
     }
   },
   filters: {
@@ -144,6 +165,21 @@ export default {
   $self: &;
   .v-text-field__slot {
     font-size: 1.6rem;
+  }
+  .v-btn__content {
+    font-size: 1.4rem;
+  }
+  .v-dialog {
+    &::after {
+      content: "";
+      height: 100vh;
+      width: 100vw;
+      background-color: rgba(248, 248, 248, 0.493);
+      z-index: -1;
+      position: fixed;
+      top: 0;
+      left: 0;
+    }
   }
   &__books-list {
     width: 100%;

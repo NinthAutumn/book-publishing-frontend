@@ -14,7 +14,7 @@
       <div class="card-title flex flex--align">
         <h3>評価が高いレビュー</h3>
       </div>
-      <!-- <ReviewList></ReviewList> -->
+      <ReviewList></ReviewList>
       <div class="card-title">
         <h3>今日人気の作品</h3>
       </div>
@@ -44,7 +44,7 @@ export default {
     // await store.dispatch("review/mostLiked");
     await store.dispatch("analytic/fetchTrending", { time: "weekly" });
     await store.dispatch("analytic/fetchRecommended");
-    await store.dispatch('analytic/fetchLatest')
+    await store.dispatch("analytic/fetchLatest");
     // await store.dispatch("chapter/fetchMoreLatestBooksSimple", {
     //   page: 1,
     //   limit: 8
@@ -52,7 +52,7 @@ export default {
     // if (store.state.auth.loggedIn) {
     //   await store.dispatch("library/fetchLatestChapters");
     // }
-    // await store.dispatch("review/fetchTrendingReviews", { days: 15 });
+    await store.dispatch("analytic/fetchTrendingReviews");
   },
   async created() {
     // console.log(this.recommended);

@@ -1,7 +1,7 @@
 <template>
   <div class="sign-up">
     <form @submit.prevent="signUp" class="signup-form">
-      <div @click="signOff" class="flex go-back">
+      <div @click="signOff" class="flex-row go-back">
         <div class="divider">
           <Zondicon class="zond-back" icon="arrow-thick-left"></Zondicon>
         </div>
@@ -10,7 +10,7 @@
         </div>
       </div>
 
-      <p class="signup-title">Signup to Lyfr</p>
+      <p class="signup-title text--center text--large">アカウントを作る</p>
 
       <label for="username">ユーザー名</label>
       <input
@@ -22,7 +22,8 @@
         type="text"
         v-model="username"
       >
-      <span class="help is-danger">{{ errors.first('username') }}</span>
+      <span v-if="errors.first('username')" class="help is-danger">{{ errors.first('username') }}</span>
+      <span v-else-if="!usernameAvailable" class="help is-danger">このユーザー名はもう使われています</span>
       <label for="email">メールアドレス</label>
       <input
         name="email"
@@ -45,12 +46,14 @@
         ref="password"
       >
       <span v-show="errors.has('password')" class="help is-danger">{{ errors.first('password') }}</span>
-      <input
-        type="submit"
-        value="サインイン"
-        class="signup-button form-submit form-submit--primary"
-        :class="{active: errors.any()||!username||!email||!password}"
-      >
+      <div class="flex-divider flex-row flex--right">
+        <v-btn
+          type="submit"
+          color="#8860d0"
+          class
+          :class="{active: errors.any()||!username||!email||!password}"
+        >サインイン</v-btn>
+      </div>
     </form>
     <!-- <button @click="google">グーグろでサインイン</button> -->
   </div>
@@ -70,9 +73,17 @@ export default {
       first_name: ""
     };
   },
+  watch: {
+    username: async function(username) {
+      this.$store.dispatch("user/checkUsername", { username });
+    }
+  },
   computed: {
     isFormInValid() {
       return Object.keys(this.fields).some(key => this.fields[key].invalid);
+    },
+    usernameAvailable() {
+      return this.$store.getters["user/isUsernameAvailable"];
     }
   },
   methods: {
@@ -83,28 +94,30 @@ export default {
       // const isValid = await this.$refs.observer.validate();
       await this.$validator.validateAll();
       if (!this.errors.any()) {
-        await this.$axios
-          .post("/auth/signup", {
+        try {
+          let user = {
             username: this.username,
             email: this.email,
             password: this.password
-          })
-          .then(async () => {
-            await this.$auth
-              .loginWith("local", {
-                data: {
-                  username: this.username,
-                  password: this.password
-                }
-              })
-              .then(() => {
-                window.location.reload(true);
-              });
+          };
+          const postUser = await this.$store.dispatch("postUser", { user });
+          const succ = await this.$auth.loginWith("local", {
+            data: {
+              username: this.username,
+              password: this.password
+            }
           });
+          // window.location.reload(true);
+        } catch (error) {
+          this.$message({
+            message: "アカウント作成に失敗",
+            type: "error"
+          });
+        }
       }
     },
     signOff() {
-      this.$store.commit("START");
+      this.$store.commit("SET_AUTH_PAGE", 0);
     }
   },
   mounted() {
@@ -140,6 +153,10 @@ export default {
 }
 .sign-up {
   position: absolute;
+  .v-btn__content {
+    color: white;
+    font-size: 1.4rem;
+  }
   .active {
     background-color: #fff;
     color: black;
@@ -157,11 +174,7 @@ export default {
   }
   // transition: 300ms;
   .signup-title {
-    height: 50px;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    font-size: 20px;
+    font-weight: bold;
   }
   .signup-form {
     background-color: white;

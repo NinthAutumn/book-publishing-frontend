@@ -26,6 +26,20 @@ export default {
       page: 2
     };
   },
+  watch: {
+    type: function(val) {
+      this.page = 2;
+    },
+    tags: function(val) {
+      this.page = 2;
+    },
+    direction: function(val) {
+      this.page = 2;
+    },
+    genres: function(val) {
+      this.page = 2;
+    }
+  },
   components: {
     Book: () => import("./Book")
   },

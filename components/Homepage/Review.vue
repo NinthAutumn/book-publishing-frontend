@@ -2,10 +2,10 @@
   <div class="review-card flex flex-row--between" :class="{'review-card--mobile':mobile}">
     <div class="review-card__profile flex-column">
       <div class="divider">
-        <img class="review-card__profile__pic" :src="user.avatar" alt>
+        <img class="review-card__profile__pic" :src="review.avatar" alt>
       </div>
       <div class="divider">
-        <p class="review-card__profile__username">{{review.author}}</p>
+        <p class="review-card__profile__username">{{review.username}}</p>
       </div>
     </div>
     <div class="review-card__info flex-column flex--grow">
@@ -15,7 +15,7 @@
       <div class="review-card__info__content" v-html="review.content"></div>
       <div class="mobile" v-if="$device.isMobile">
         <hr>
-        <div class="review-author">- {{review.author}}</div>
+        <div class="review-author">- {{review.username}}</div>
       </div>
     </div>
     <div class="review-card__book flex-column flex--center flex--around">
@@ -37,13 +37,13 @@
       </div>
 
       <div class="review-card__book__cover">
-        <img
+        <v-img
           class="review-card__book__cover__item"
-          :src="'https://storage.googleapis.com/theta-images/' + book.cover"
-        >
+          :src="`https://storage.googleapis.com/theta-images/${review.cover}`"
+        ></v-img>
       </div>
       <nuxt-link
-        :to="'/books/' + book._id"
+        :to="`/books/${review.book_id}`"
         tag="div"
         class="review-card__button button button--small button--primary--open"
       >Read</nuxt-link>

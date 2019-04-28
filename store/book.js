@@ -18,7 +18,8 @@ export const state = () => ({
   tags: [],
   chapterCount: 0,
   latest: [],
-  createAuthor: false
+  createAuthor: false,
+  announcements: []
 })
 
 export const getters = {
@@ -34,7 +35,8 @@ export const getters = {
   getBookChapterCount: state => state.chapterCount,
   getTagList: state => state.tagList,
   getRecommended: state => state.recommended,
-  getLatest: state => state.latest
+  getLatest: state => state.latest,
+  getAnnouncements: state => state.announcements
 }
 
 export const actions = {
@@ -175,6 +177,35 @@ export const actions = {
     } catch (error) {
       return Promise.reject(error)
     }
+  },
+  async fetchAnnouncements({
+    commit
+  }, {
+    bookId
+  }) {
+    try {
+      const res = await this.$axios.get(`/book/announcements?bookId=${bookId}`)
+      commit('SET_ANNOUNCEMENTS', res.data)
+    } catch (error) {
+
+    }
+  },
+  async postAnnouncement({
+    commit
+  }, {
+    title,
+    content,
+    bookId
+  }) {
+    try {
+      const res = await this.$axios.post(`/book/announcement`, {
+        title,
+        content,
+        bookId
+      })
+    } catch (error) {
+      return Promise.reject(error)
+    }
   }
 }
 
@@ -261,6 +292,9 @@ export const mutations = {
     // })
 
     // state.latest.push(books)
+  },
+  SET_ANNOUNCEMENTS: (state, announcements) => {
+    state.announcements = announcements
   }
 
 

@@ -3,7 +3,7 @@
     <div v-swiper:mySwiper="swiperOption" v-if="!$device.isMobile">
       <div class="swiper-wrapper">
         <div class="swiper-slide" v-for="(review,index) in reviews" :key="index">
-          <Review :book="review.book[0]" :user="review.user[0]" :review="review.review[0]"></Review>
+          <Review :review="review"></Review>
         </div>
       </div>
       <div class="background">
@@ -16,7 +16,7 @@
     <div class="mobile-swiper--review" v-swiper:mySwiper="mobileOption" v-else>
       <div class="swiper-wrapper">
         <div class="swiper-slide" v-for="(review,index) in reviews" :key="index">
-          <Review mobile :book="review.book[0]" :user="review.user[0]" :review="review.review[0]"></Review>
+          <Review mobile :review="review"></Review>
         </div>
       </div>
     </div>
@@ -29,7 +29,7 @@ export default {
   created() {},
   computed: {
     reviews() {
-      return this.$store.getters["review/getTrendingList"];
+      return this.$store.getters["analytic/getTrendingReviews"];
     }
   },
   data() {

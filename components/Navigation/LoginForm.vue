@@ -2,7 +2,7 @@
   <div class="login-form">
     <div class="login-form__item">
       <h3 class="login__header text--center text--large" style>ログインをする</h3>
-      <form @submit.prevent="login" class="flex flex-column">
+      <form @submit.prevent="login" class="flex flex-column" style="padding-top:20px;">
         <label for="username">ユーザー名</label>
         <input
           class="form-input form-input--primary--lighter login__input"
@@ -21,12 +21,22 @@
           autocomplete="current-password"
           v-model="form.password"
         >
-        <input class="form-submit login__submit form-submit--primary" type="submit" value="ログイン">
+        <div class="text--center" style="margin-top:1rem;">
+          <p
+            class="login-forgot__password text--primary text--link"
+            @click="changePage(2)"
+          >パスワードを忘れた?</p>
+        </div>
+
+        <div class="flex-divider flex-row flex--right">
+          <v-btn color="#8860d0" type="submit">ログイン</v-btn>
+        </div>
+
+        <!-- <input class="form-submit login__submit form-submit--primary" value="ログイン"> -->
       </form>
-      <div class="login-forgot text--center">
+      <div class="text--center">
         <!-- <a href>パスワード</a> -->
-        <p class="text--primary text--link" @click="signUp">アカウントを作る</p>
-        <nuxt-link to="home" class="login-forgot__password">パスワードを忘れた?</nuxt-link>
+        <p class="text--primary text--link" @click="changePage(1)">アカウントを作る</p>
       </div>
     </div>
     <!-- <transition name="side-fade">
@@ -57,8 +67,8 @@ export default {
     // async stateOff() {
     //   await this.$store.commit("LOGIN_FALSE");
     // },
-    signUp() {
-      this.$store.commit("SIGNUP_STATE");
+    changePage(page) {
+      this.$store.commit("SET_AUTH_PAGE", page);
     },
     async login() {
       const user = {
@@ -112,23 +122,26 @@ export default {
   position: absolute;
   .login__header {
   }
+  .v-btn__content {
+    color: white;
+    font-size: 1.4rem;
+  }
   // color: #8dadb7;
   height: 600px;
   // padding: 30px;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -ms-flex-pack: distribute;
-  justify-content: space-around;
+
+  // justify-content: space-around;
+  -webkit-box-shadow: 1px 1px 13px 0px #ababab;
+  box-shadow: 1px 1px 13px 0px #ababab;
+  background-color: white;
   padding: 10px;
   width: 100%;
   width: 440px;
+  padding: 30px;
+
   &__item {
     // border-radius: 10px;
-    background-color: white;
+
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -136,10 +149,8 @@ export default {
     -webkit-box-direction: normal;
     -ms-flex-direction: column;
     flex-direction: column;
-    -webkit-box-shadow: 1px 1px 13px 0px #ababab;
-    box-shadow: 1px 1px 13px 0px #ababab;
-    height: 100%;
-    padding: 30px;
+
+    // height: 100%;
     width: 100%;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;

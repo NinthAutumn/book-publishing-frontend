@@ -9,7 +9,7 @@
       </div>
       <div class="chapter-form__options flex">
         <Select v-model="form.volume" name="章を選ぶ" icon="archive" :object="volumes"></Select>
-        <Select v-model="form.locked" def="無料" icon="yen-sign" name="時価" :object="locked"></Select>
+        <!-- <Select v-model="form.locked" def="無料" icon="yen-sign" name="時価" :object="locked"></Select> -->
         <div
           class="chapter-form__options__user-news flex-row flex--align flex--center"
           @click.stop="announcementOpen"
@@ -145,7 +145,7 @@
 
       <div class="flex-row flex--right">
         <button
-          @click.prevent="submitForm = !submitForm"
+          @click.prevent="openSubmitForm"
           class="form-submit form-submit--primary chapter-new-submit"
         >話を投稿</button>
       </div>
@@ -366,7 +366,15 @@ export default {
     pictureOpen() {
       this.picture = !this.picture;
     },
-
+    openSubmitForm() {
+      if (this.form.content.length < 1 || this.form.title.length < 1) {
+        return this.$message({
+          message: "コンテンツとタイトルは必要項目です",
+          type: "error"
+        });
+      }
+      this.submitForm = !this.submitForm;
+    },
     async createChapter() {
       if (this.form.drawings) {
         this.form.drawings.forEach(async image => {
@@ -374,18 +382,15 @@ export default {
         });
       }
 
-      if (!this.form.content || !this.form.title) {
-        return (this.progress = 2);
-      }
       let state = "published";
       if (this.schedule) {
         state = "scheduled";
       }
       // console.log(this.$store.state.upload.urls, "dog so nad");
+      const bookId = this.$route.params.id;
       let chapter = {
         title: this.form.title,
         content: this.form.content,
-        schedule: this.form.date,
         wordCount: this.form.wordCount.length,
         locked: this.form.locked,
         volume: this.form.volume,
@@ -393,11 +398,15 @@ export default {
         state,
         header: this.form.header,
         footer: this.form.footer,
-        drawings: this.$store.state.upload.urls
+        drawings: this.$store.state.upload.urls,
+        bookId
       };
       // chapter.extra.drawings = this.$store.state.upload.urls;
-      const bookId = this.$route.params.id;
-      await this.$store.dispatch("chapter/createChapter", { bookId, chapter });
+
+      await this.$store.dispatch("chapter/createChapter", {
+        chapter,
+        date: this.form.date
+      });
     },
     handleExceed(files, fileList) {
       this.$message.warning(

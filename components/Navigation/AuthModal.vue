@@ -3,6 +3,7 @@
     <transition name="slide-fade">
       <login-form v-if="$store.state.authed === 0"></login-form>
       <sign-up-from v-if="$store.state.authed === 1"></sign-up-from>
+      <forgot-password v-if="$store.state.authed === 2"></forgot-password>
     </transition>
   </div>
 </template>
@@ -17,7 +18,8 @@ export default {
   transition: "slide-fade",
   components: {
     LoginForm: () => import("./LoginForm"),
-    SignUpFrom: () => import("./SignUpFrom")
+    SignUpFrom: () => import("./SignUpFrom"),
+    ForgotPassword: () => import("./ForgotPassword")
   },
   methods: {
     close() {

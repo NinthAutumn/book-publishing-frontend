@@ -34,7 +34,9 @@ export const mutations = {
   SIGNUP_STATE(state) {
     state.authed = 1;
   },
-
+  SET_AUTH_PAGE(state, page) {
+    state.authed = page
+  },
   START(state) {
     state.authed = 0
   },
@@ -79,6 +81,22 @@ export const mutations = {
 
 
 export const actions = {
+  async postUser({
+    commit
+  }, {
+    user
+  }) {
+    try {
+      const res = await this.$axios.post("/auth/signup", {
+        username: user.username,
+        email: user.email,
+        password: user.password
+      });
+      return Promise.resolve(res.data)
+    } catch (error) {
+      return Promise.reject(error)
+    }
+  },
   async nuxtServerInit({
     commit,
     state,

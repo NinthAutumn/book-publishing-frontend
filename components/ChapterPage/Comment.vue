@@ -154,21 +154,22 @@ export default {
       const bookId = this.$route.params.id;
       const chapterId = this.$route.params.chaptersId;
       const content = this.content;
-      const parent = this.comment._id;
+      const parentId = this.comment.id;
       await this.$store
         .dispatch("comment/addComment", {
           bookId,
           chapterId,
           content,
-          parent
+          parentId
         })
         .then(async () => {
           this.$message({
             message: "返信の投稿に成功しました",
             type: "success"
           });
-          await this.$store.dispatch("comment/getComments", {
-            chapterId: this.$route.params.chaptersId
+          await this.$store.dispatch("comment/fetchCommentList", {
+            chapterId: this.$route.params.chaptersId,
+            userId: this.$store.getters["loggedInUser"].id
           });
           this.replyForm = false;
           this.content = "";

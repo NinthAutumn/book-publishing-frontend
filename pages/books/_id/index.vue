@@ -35,7 +35,7 @@
       </div>
 
       <div class="book__avatar">
-        <!-- <img class="book-author" :src="$store.state.book.book.authorId.avatar" alt="author avatar"> -->
+        <v-img class="book-author" :src="$store.state.book.book.avatar" alt="author avatar"></v-img>
       </div>
       <div @mouseleave="navLeave" class="book__content-nav book-showtab　flex flex-row">
         <div
@@ -70,7 +70,20 @@
             v-ripple
           >登録</span>
           <span
+            v-if="$store.getters.isAuthenticated"
             @click="bookmarkBook"
+            class="book-content__buttons__item button button--shadow button--big"
+            @mouseenter="bookmarkHover"
+            @mouseleave="bookmarkLeave"
+            :class="{'button--secondary': bookmarked, 'button--secondary--open': !bookmarked}"
+            v-ripple
+          >
+            <fa class="book-content__buttons__item__icon" style="font-size:15px;" icon="bookmark"></fa>
+            <span style="font-size:13px;" v-text="text"></span>
+          </span>
+          <span
+            v-else
+            @click.stop="$store.commit('LOGIN_STATE')"
             class="book-content__buttons__item button button--shadow button--big"
             @mouseenter="bookmarkHover"
             @mouseleave="bookmarkLeave"

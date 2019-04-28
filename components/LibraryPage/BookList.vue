@@ -7,7 +7,7 @@
     </transition-group>
     <transition-group tag="ul" v-if="history" class="library-booklist__list">
       <li class="library-booklist__item" v-for="(book) in books" :key="book.book_id">
-        <Book :progress="{index: book.index, chapterId: book.chapter_id}" :book="book.book_id"></Book>
+        <Book :progress="{index: book.index, chapterId: book.chapter_id}" :book="book"></Book>
       </li>
     </transition-group>
   </div>
@@ -44,7 +44,7 @@ export default {
 
       this.itemSelected = true;
       this.sortSelect = false;
-    },
+    }
   }
 };
 </script>

@@ -44,7 +44,7 @@
 export default {
   computed: {
     comments() {
-      return this.$store.state.comment.comments;
+      return this.$store.getters["comment/getComments"];
     }
   },
   components: {
@@ -84,7 +84,7 @@ export default {
         return (this.error = true);
       }
       this.$store
-        .dispatch("comment/addParentlessComment", {
+        .dispatch("comment/addComment", {
           bookId,
           chapterId,
           content: this.content
@@ -94,8 +94,9 @@ export default {
             message: "コメントの投稿に成功！",
             type: "success"
           });
-          await this.$store.dispatch("comment/getComments", {
-            chapterId: this.$route.params.chaptersId
+          await this.$store.dispatch("comment/fetchCommentList", {
+            chapterId: this.$route.params.chaptersId,
+            userId: this.$store.getters["loggedInUser"].id
           });
           this.newComment.content = "";
         })
