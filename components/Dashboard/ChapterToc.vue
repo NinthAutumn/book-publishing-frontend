@@ -17,6 +17,7 @@
         </template>
       </v-data-table>
     </div>
+
     <div v-else-if="published" v-for="(volume,index) in toc" :key="index" class="elevation-1">
       <h3 class="volume-list__title">{{'第'+ (index+1) + '章: '+ volume.volume_title }}</h3>
       <v-data-table
@@ -25,6 +26,9 @@
         :items="volume.chapters"
         class="elevation-1"
       >
+        <!-- <template v-slot:no-data>
+          <p style="text-align:center;">データがないです</p>
+        </template>-->
         <template v-slot:items="props">
           <td>{{ props.item.index }}</td>
           <td>{{ props.item.title }}</td>
@@ -36,30 +40,18 @@
         </template>
       </v-data-table>
     </div>
-    <div class="table" v-else v-for="(volume, index) in toc" :key="index">
-      <div class="table-volume" v-if="volume.chapters.length > 0">
-        <div class="table-header flex flex--align">
-          <div class="volume-title">
-            <h3>{{volume.volume_title || `第${volume.volume}章`}}</h3>
-          </div>
-        </div>
-      </div>
-      <table class="dashboard-toc" v-if="volume.chapters.length > 0">
-        <thead>
-          <th>話</th>
-          <th>タイトル</th>
-          <th>投稿日</th>
-          <th>更新</th>
-        </thead>
-        <tbody class="dashboard-toc__body">
-          <chapter-toc-item
-            :published="published"
-            :chapter="chapter"
-            v-for="(chapter, index) in volume.chapters"
-            :key="index"
-          ></chapter-toc-item>
-        </tbody>
-      </table>
+    <div class="no-chapter">
+      <v-data-table
+        v-if="toc.length < 1&&published"
+        :headers="innerHeaders"
+        hide-actions
+        :items="toc"
+        class="elevation-1"
+      >
+        <template v-slot:no-data>
+          <p style="text-align:center;">データがないです</p>
+        </template>
+      </v-data-table>
     </div>
   </div>
 </template>

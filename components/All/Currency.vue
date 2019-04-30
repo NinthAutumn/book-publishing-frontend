@@ -1,6 +1,5 @@
 <template>
-  <div class="currency flex flex--align" :class="{'currency--large':size === 'large'}">
-    <div class="currency__number" :class="{'currency__number--large':size === 'large'}">{{amount}}</div>
+  <div class="currency flex-row flex--align" :class="{'currency--large':size === 'large'}">
     <div class="currency__type" :class="{'currency__type--large':size === 'large'}">
       <svg-icon
         name="crown"
@@ -8,6 +7,7 @@
         :class="{'currency__icon--large':size === 'large'}"
       ></svg-icon>
     </div>
+    <div class="currency__number" :class="{'currency__number--large':size === 'large'}">{{amount}}</div>
   </div>
 </template>
 
@@ -28,7 +28,7 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-direction: column-reverse;
+    flex-direction: column;
     width: 100px;
   }
   &__number {
@@ -51,7 +51,7 @@ export default {
       margin: 0;
       margin-bottom: 10px;
     }
-    margin-left: 5px;
+    margin-right: 5px;
   }
   // perspective: 400px;
   // perspective-origin: 100% 100%;
@@ -66,7 +66,7 @@ export default {
     width: 22px;
     height: 22px;
     // margin-left: 15px;
-    box-shadow: 1px 1px 5px $secondary;
+    box-shadow: 1px 1px 3px $secondary;
     border-radius: 10000px;
     transition: 300ms;
     // left: 24px;

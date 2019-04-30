@@ -2,7 +2,7 @@
   <div class="user-books">
     <ul class="user-books__list">
       <li class="user-books__item" v-for="(book, index) in books" :key="index">
-        <nuxt-link tag="div" :to="`/books/${book._id}`" class="user-books__cover">
+        <nuxt-link tag="div" :to="`/books/${book.id}`" class="user-books__cover">
           <v-img
             :src="`https://storage.googleapis.com/theta-images/${book.cover}`"
             :aspect-ratio="1/1.5"
@@ -11,7 +11,7 @@
         </nuxt-link>
         <nuxt-link
           tag="div"
-          :to="`/books/${book._id}`"
+          :to="`/books/${book.id}`"
           class="user-books__meta user-books__meta--title"
           v-text="book.title"
         ></nuxt-link>
@@ -25,11 +25,11 @@
         <div class="user-books__meta user-books__meta--rating">
           <v-rating
             color="#FF8D29"
-            v-if="book.ratings"
+            v-if="book.rating"
             readonly
             size="20"
             half-increments
-            :value="+book.ratings.toFixed(2)"
+            :value="+book.rating"
           ></v-rating>
           <v-rating size="20" color="#FF8D29" v-else :readonly="true" :value="0"></v-rating>
         </div>
@@ -49,7 +49,12 @@ export default {
   data() {
     return {};
   },
-  async created() {}
+  computed: {},
+  async mounted() {
+    this.$store.dispatch("user/fetchProfileBooks", {
+      userId: this.$route.params.id
+    });
+  }
 };
 </script>
 
@@ -60,6 +65,8 @@ export default {
     padding: 0;
   }
   &__list {
+    height: 500px;
+    overflow: auto;
     #{$self}__item {
       margin-bottom: 1rem;
       display: grid;

@@ -18,12 +18,16 @@ export default {
     }
   },
   async fetch({ store, params }) {
-    await store.dispatch("user/fetchUser", { userId: params.id });
+    await store.dispatch("user/fetchProfile", { userId: params.id });
+    await store.dispatch("user/fetchProfileStats", {
+      userId: params.id
+    });
   },
   computed: {
     user() {
-      return this.$store.getters["user/getUserProfile"];
+      return this.$store.getters["user/getProfile"];
     },
+
     owner() {
       if (this.$store.getters["isLoggedIn"]) {
         return (
@@ -35,9 +39,10 @@ export default {
       }
     },
     books() {
-      return this.$store.getters["user/getUserBooks"];
+      return this.$store.getters["user/getProfileBooks"];
     }
-  }
+  },
+  async mounted() {}
 };
 </script>
 

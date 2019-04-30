@@ -54,15 +54,16 @@ export const actions = {
       commit('SET_RANKING_LIST', res.data)
     })
   },
-  async fetchTrending({
+  async postVote({
     commit
   }, {
-    days,
-    limit,
-    page
+    bookId
   }) {
-    await this.$axios.get(`/analytic/book/trending?days=${days}&limit=${limit}&page=${page}`).then((res) => {
-      commit('SET_RANKING_LIST', res.data)
-    })
+    try {
+      await this.$axios.post(`/analytic/book/trending?bookId=${bookId}`)
+    } catch (error) {
+      return Promise.reject(error)
+    }
+
   }
 }

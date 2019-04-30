@@ -6,7 +6,8 @@ export const state = () => ({
   recommended: [],
   comments: [],
   latest: [],
-  reviews: []
+  reviews: [],
+  voteRanking: []
 })
 
 export const getters = {
@@ -17,7 +18,8 @@ export const getters = {
   getRecommended: state => state.recommended,
   getComments: state => state.comments,
   getLatest: state => state.latest,
-  getTrendingReviews: state => state.reviews
+  getTrendingReviews: state => state.reviews,
+  getVoteRanking: state => state.voteRanking
 }
 
 export const mutations = {
@@ -44,16 +46,20 @@ export const mutations = {
   },
   SET_REVIEW_TRENDING: (state, reviews) => {
     state.reviews = reviews
+  },
+  SET_VOTE_RANKING: (state, voteRanking) => {
+    state.voteRanking = voteRanking
   }
 }
 export const actions = {
   fetchTrending: async function ({
     commit
   }, {
-    time
+    time,
+    page
   }) {
     try {
-      const res = await this.$axios.get(`/analytic/trending?time=${time}`)
+      const res = await this.$axios.get(`/analytic/trending?time=${time}&page=${page}`)
       commit('SET_TRENDING', res.data)
     } catch (error) {}
 
@@ -61,10 +67,18 @@ export const actions = {
   fetchRanking: async function ({
     commit
   }, {
-    time
+    time,
+    page,
+    genre
   }) {
     try {
-      const res = await this.$axios.get(`/analytic/ranking?time=${time}`)
+      let res = ""
+      if (genre) {
+        res = await this.$axios.get(`/analytic/ranking/genre?time=${time}&page=${page}&genre=${genre}`)
+      } else {
+        res = await this.$axios.get(`/analytic/ranking?time=${time}&page=${page}`)
+
+      }
       commit('SET_RANKING', res.data)
     } catch (error) {}
   },
@@ -127,5 +141,18 @@ export const actions = {
     } catch (error) {
       return Promise.reject(error)
     }
-  }
+  },
+  fetchVoteRanking: async function ({
+    commit
+  }, {
+    time,
+    page
+  }) {
+    try {
+      const res = await this.$axios.get(`/analytic/vote?time=${time}&page=${page}`)
+      commit('SET_VOTE_RANKING', res.data)
+    } catch (error) {
+      return Promise.reject(error)
+    }
+  },
 }

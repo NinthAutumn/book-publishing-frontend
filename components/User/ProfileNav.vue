@@ -31,7 +31,7 @@
 
       <div class="profile-nav__content">
         <ul class="profile-nav__stats-list">
-          <li v-for="(stat,index) in stats" :key="index" class="profile-nav__stats-item">
+          <li v-for="(stat,index) in stat_menu" :key="index" class="profile-nav__stats-item">
             <div class="profile-nav__stats-item__title" v-text="stat.name"></div>
             <div class="profile-nav__stats-item__stats" v-text="stat.value"></div>
           </li>
@@ -49,13 +49,30 @@ export default {
     books_count: Number,
     reviews_count: Number
   },
+  computed: {
+    stats() {
+      return this.$store.getters["users/getProfileStats"];
+    }
+  },
   data() {
     return {
-      stats: [
-        { name: "作品", value: this.books_count },
-        { name: "レビュー", value: "143" },
-        { name: "良いね", value: "143" },
-        { name: "コメント", value: "433" }
+      stat_menu: [
+        {
+          name: "作品",
+          value: this.$store.getters["user/getProfileStats"].book_count
+        },
+        {
+          name: "レビュー",
+          value: this.$store.getters["user/getProfileStats"].review_count
+        },
+        {
+          name: "良いね",
+          value: this.$store.getters["user/getProfileStats"].likes
+        },
+        {
+          name: "コメント",
+          value: this.$store.getters["user/getProfileStats"].comment_count
+        }
       ],
       scrolled: false
     };
@@ -68,6 +85,12 @@ export default {
         this.scrolled = false;
       }
     }
+  },
+
+  async mounted() {
+    // this.stat_menu[1].value = this.stats.review_count;
+    // this.stat_menu[2].value = this.stats.likes;
+    // this.stat_menu[3].value = this.stats.comment_like;
   },
   created() {
     if (process.client) {

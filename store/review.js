@@ -19,7 +19,8 @@ export const getters = {
   getReviewCount: state => {
     return state.count
   },
-  getMyReview: state => state.myReviews
+  getMyReview: state => state.myReview,
+  isReviewed: state => state.reviewed
 }
 
 
@@ -74,9 +75,6 @@ export const mutations = {
   GET_GOOD_REVIEWS(state, goodReviews) {
     state.goodReviews = goodReviews
   },
-  GET_REVIEWED(state, status) {
-    state.reviewed = status
-  },
   GET_MYREVIEWS(state, reviews) {
     state.myReviews = reviews
   },
@@ -91,6 +89,9 @@ export const mutations = {
   },
   SET_REVIEW_LENGTH(state, count) {
     state.count = count
+  },
+  SET_IS_REVIEWED: (state, reviewed) => {
+    state.reviewed = reviewed
   }
 }
 export const actions = {
@@ -244,6 +245,18 @@ export const actions = {
       const res = await this.$axios.get(`/analytic/review/trending?days=${days}`)
       commit('SET_TRENDING', res.data)
       return Promise.resolve()
+    } catch (error) {
+      return Promise.reject(error)
+    }
+  },
+  async fetchIsReviewed({
+    commit
+  }, {
+    bookId
+  }) {
+    try {
+      const res = await this.$axios.get(`/review/isreviewed?bookId=${bookId}`)
+      commit('SET_IS_REVIEWED', res.data.reviewed)
     } catch (error) {
       return Promise.reject(error)
     }

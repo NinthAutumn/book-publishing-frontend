@@ -1,14 +1,19 @@
 export const state = () => ({
-  wealth: 0
+  wealth: 0,
+  token: 0
 })
 
 export const getters = {
-  getWealth: state => state.wealth
+  getWealth: state => state.wealth,
+  getToken: state => state.token
 }
 
 export const mutations = {
   SET_WEALTH(state, wealth) {
     state.wealth = wealth
+  },
+  SET_VOTE_TOKEN(state, token) {
+    state.token = token
   }
 }
 export const actions = {
@@ -44,6 +49,7 @@ export const actions = {
       console.log(res.data);
       if (res) {
         commit('SET_WEALTH', res.data.wealth)
+        commit('SET_VOTE_TOKEN', res.data.vote_token)
       }
 
     } catch (error) {

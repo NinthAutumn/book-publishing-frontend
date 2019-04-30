@@ -48,11 +48,16 @@
         </ul>
       </div>
     </div>
-    <transition-group name="list" tag="ul" class="book-list" v-if="selected_ranking_type===0">
+    <transition-group
+      name="list"
+      tag="ul"
+      class="book-list"
+      v-if="selected_ranking_type===0||selected_ranking_type===2"
+    >
       <ranking-item
         :index="index"
         trending
-        :score="book.sum"
+        :score="book.score"
         :book="book"
         v-for="(book, index) in list"
         :key="book.id"
@@ -65,6 +70,16 @@
         :score="book.sum"
         :book="book"
         v-for="(book, index) in trending"
+        :key="book.id"
+      ></ranking-item>
+    </transition-group>
+    <transition-group name="list" tag="ul" class="book-list" v-if="selected_ranking_type===3">
+      <ranking-item
+        :index="index"
+        trending
+        :score="book.votes"
+        :book="book"
+        v-for="(book, index) in vote"
         :key="book.id"
       ></ranking-item>
     </transition-group>
@@ -137,6 +152,9 @@ export default {
     },
     trending() {
       return this.$store.getters["analytic/getTrendingList"];
+    },
+    vote() {
+      return this.$store.getters["analytic/getVoteRanking"];
     }
   },
   async mounted() {
@@ -187,7 +205,8 @@ export default {
             };
           }
           await this.$store.dispatch("analytic/fetchRanking", {
-            time: this.time_day
+            time: this.time_day,
+            page: 1
           });
           break;
         case 1:
@@ -201,23 +220,17 @@ export default {
           });
           break;
         case 2:
-          if (this.time_day === "whole") {
-            param = {
-              genre: this.genre,
-              limit: 10,
-              page: 1
-            };
-          } else {
-            param = {
-              genre: this.genre,
-              days: this.time_day,
-              limit: 10,
-              page: 1
-            };
-          }
-          await this.$store.dispatch("ranking/fetchGenreRanking", param);
+          await this.$store.dispatch("analytic/fetchRanking", {
+            time: this.time_day,
+            page: 1,
+            genre: this.genre
+          });
           break;
         case 3:
+          await this.$store.dispatch("analytic/fetchVoteRanking", {
+            time: this.time_day,
+            page: 1
+          });
           break;
       }
     },

@@ -11,7 +11,8 @@ export const state = () => ({
   notification: [],
   author: {},
   username: false,
-  profile: []
+  profile: {},
+  stats: {}
 })
 
 export const getters = {
@@ -24,10 +25,10 @@ export const getters = {
   getFontSize: (state) => {
     return state.fontSize
   },
-  getUserProfile: (state) => {
-    return state.user
+  getProfile: (state) => {
+    return state.profile
   },
-  getUserBooks: (state) => {
+  getProfileBooks: (state) => {
     return state.books
   },
   getUserComments: (state) => {
@@ -47,7 +48,9 @@ export const getters = {
       return true
     }
   },
-  isUsernameAvailable: state => state.username
+  isUsernameAvailable: state => state.username,
+  getProfileStats: state => state.stats
+
 }
 
 export const mutations = {
@@ -92,6 +95,12 @@ export const mutations = {
   },
   SET_USERNAME_AVAILABILITY: async (state, username) => {
     state.username = username
+  },
+  SET_PROFILE_BOOKS: async (state, books) => {
+    state.books = books
+  },
+  SET_PROFILE_STATS: async (state, stats) => {
+    state.stats = stats
   }
 }
 export const actions = {
@@ -151,10 +160,8 @@ export const actions = {
     userId
   }) {
     try {
-      const res = await this.$axios.get(`/user/profile/books?userId=${userId}`)
-      commit('SET_USER_PROFILE', res.data.user)
-      commit('SET_USER_BOOKS', res.data.books)
-
+      const res = await this.$axios.get(`/user/profile?userId=${userId}`)
+      commit('SET_PROFILE', res.data)
       Promise.resolve(res)
     } catch (error) {
       Promise.reject(error)
@@ -172,7 +179,19 @@ export const actions = {
       return Promise.reject(error)
     }
   },
-  async fetchUserReviews({
+  async fetchProfileStats({
+    commit
+  }, {
+    userId
+  }) {
+    try {
+      const res = await this.$axios.get(`/user/profile/stats?userId=${userId}`)
+      commit('SET_PROFILE_STATS', res.data)
+    } catch (error) {
+      return Promise.reject(error)
+    }
+  },
+  async fetchProfileReviews({
     commit
   }, {
     userId,
@@ -180,8 +199,8 @@ export const actions = {
     page = 1
   }) {
     try {
-      const res = await this.$axios.get(`/user/profile/reviews?userId=${userId}&author=${authorId}&page=${page}`)
-      commit('SET_USER_REVIEWS', res.data)
+      const res = await this.$axios.get(`/user/profile/reviews?userId=${userId}&page=${page}`)
+      commit('SET_PROFILE_REVIEWS', res.data)
       return Promise.resolve()
     } catch (error) {
       return Promise.reject(error)
@@ -196,6 +215,19 @@ export const actions = {
     try {
       const res = await this.$axios.get(`/user/profile/comments?userId=${userId}&page=${page}`)
       commit('SET_USER_COMMENTS', res.data)
+      return Promise.resolve()
+    } catch (error) {
+      return Promise.reject(error)
+    }
+  },
+  async fetchProfileBooks({
+    commit
+  }, {
+    userId
+  }) {
+    try {
+      const res = await this.$axios.get(`/user/profile/books?userId=${userId}`)
+      commit('SET_PROFILE_BOOKS', res.data)
       return Promise.resolve()
     } catch (error) {
       return Promise.reject(error)

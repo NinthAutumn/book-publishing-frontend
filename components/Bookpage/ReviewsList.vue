@@ -11,9 +11,9 @@
           <ReviewsForm v-if="!reviewed" v-model="reviewState"></ReviewsForm>
           <ReviewsForm
             v-else
-            :pcontent="$store.state.review.myReview.content"
-            :ptitle="$store.state.review.myReview.title"
-            :prating="$store.state.review.myReview.rating.total"
+            :pcontent="myReview.content"
+            :ptitle="myReview.title"
+            :prating="myReview.rating"
             :reviewed="reviewed"
             v-model="reviewState"
           ></ReviewsForm>
@@ -25,20 +25,26 @@
         <v-rating color="#FF8D29" readonly size="30" half-increments :value="+rating"></v-rating>
       </div>
       <button
+        v-ripple
         v-if="!reviewed&&!$device.isMobile"
         @click.stop="reviewOpen"
         class="review-open button"
       >レビューを書く</button>
-      <button v-else-if="!$device.isMobile" @click="reviewOpen" class="review-open button">レビューを編集</button>
+      <button
+        v-ripple
+        v-else-if="!$device.isMobile"
+        @click="reviewOpen"
+        class="review-open button"
+      >レビューを編集</button>
     </div>
     <hr>
     <ul class="list">
       <Select
         transition="grow-shrink"
         icon="sort"
-        :width="120"
-        :height="35"
-        :fontSize="15"
+        :width="100"
+        :height="30"
+        :fontSize="14"
         def="良いね順"
         　name="並び替え"
         class="reviews-list__sort"
@@ -82,7 +88,10 @@ export default {
       return this.$store.getters["review/getReviews"];
     },
     reviewed() {
-      return this.$store.state.review.reviewed;
+      return this.$store.getters["review/isReviewed"];
+    },
+    myReview() {
+      return this.$store.getters["review/getMyReview"];
     }
   },
   watch: {
@@ -94,24 +103,16 @@ export default {
     // }
   },
   async mounted() {
-    if (this.$store.getters.isAuthenticated) {
-      await this.$store.dispatch("review/showAll", {
-        bookId: this.$route.params.id,
-        userId: this.$store.getters.loggedInUser.id,
-        page: 1,
-        limit: 10,
-        direction: "desc",
-        type: "likes"
-      });
-    } else {
-      await this.$store.dispatch("review/showAll", {
-        bookId: this.$route.params.id,
-        page: 1,
-        limit: 10,
-        direction: "desc",
-        type: "likes"
-      });
-    }
+    await this.$store.dispatch("review/showAll", {
+      bookId: this.$route.params.id,
+      page: 1,
+      limit: 10,
+      direction: "desc",
+      type: "likes"
+    });
+    await this.$store.dispatch("review/fetchIsReviewed", {
+      bookId: this.$route.params.id
+    });
   },
   components: {
     Review,
@@ -179,6 +180,6 @@ li {
   transition: 300ms;
 }
 .reviews-list__sort {
-  margin-top: 5px;
+  margin: 1rem 0;
 }
 </style>

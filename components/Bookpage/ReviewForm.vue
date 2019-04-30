@@ -27,7 +27,7 @@
         v-model="review.content"
       ></text-editor>
       <div class="divider flex flex--right">
-        <button type="submit" class="review-submit">投稿</button>
+        <button v-ripple type="submit" class="review-open button">投稿</button>
       </div>
     </form>
   </div>
@@ -61,7 +61,7 @@ export default {
       if (this.reviewed) {
         try {
           await this.$store.dispatch("review/updateReview", {
-            id: this.$store.state.review.myReview._id,
+            id: this.$store.state.review.myReview.id,
             review: this.review
           });
           await this.$store.dispatch("review/showAll", {
@@ -76,6 +76,12 @@ export default {
         }
       } else {
         try {
+          if (!this.review.rating) {
+            return this.$message({
+              message: "レビューを投稿するには投票が必要です",
+              type: "error"
+            });
+          }
           await this.$store.dispatch("review/addReview", {
             review: this.review,
             bookId: this.$route.params.id
@@ -124,6 +130,9 @@ export default {
 }
 .review-form {
   display: flex;
+  .review-open {
+    width: 7.5rem;
+  }
   flex-direction: column;
   &__title {
     height: 50px;

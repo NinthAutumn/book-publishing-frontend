@@ -49,7 +49,7 @@ export default {
       return this.$store.getters["user/getUserComments"];
     },
     books() {
-      return this.$store.getters["user/getUserBooks"];
+      return this.$store.getters["user/getProfileBooks"];
     }
   },
   data() {
@@ -58,7 +58,7 @@ export default {
         {
           key: "登録日",
           value:
-            this.$moment(this.user.createdAt)
+            this.$moment(this.user.created_at)
               .startOf("month")
               .fromNow() + " 登録",
           icon: "calendar"
@@ -70,9 +70,8 @@ export default {
     };
   },
   async mounted() {
-    await this.$store.dispatch("user/fetchUserReviews", {
-      userId: this.$route.params.id,
-      authorId: this.$store.getters["user/getUserProfile"].username
+    await this.$store.dispatch("user/fetchProfileReviews", {
+      userId: this.$route.params.id
     });
   }
 };

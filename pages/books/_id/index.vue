@@ -389,6 +389,28 @@ input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+.review-open {
+  // width: 100px;
+  background-color: #c1c9e4;
+  color: white;
+  box-shadow: 1px 1px 5px white;
+  transition: 300ms;
+  &:hover {
+    box-shadow: 1px 1px 5px #c1c9e4;
+    background-color: #fff;
+    color: #c1c9e4;
+    transition: 300ms;
+  }
+  &:active,
+  &:focus {
+    outline: none;
+  }
+  &:active,
+  &:focus {
+    box-shadow: 1px 1px 2px #c1c9e4;
+    transition: 300ms;
+  }
+}
 .book {
   $self: &;
   .v-icon {
@@ -406,9 +428,7 @@ input[type="number"]::-webkit-outer-spin-button {
         width: 100%;
       }
     }
-    .review-open {
-      width: 100px;
-    }
+
     .book__info {
       display: block;
     }

@@ -5,39 +5,19 @@
       <!-- {{review}} -->
     </div>
     <div class="reviews-like">
-      <div class="reviews-icon" @click="likedReview">
-        <svg-icon name="arrow-up" class="reviews-like-up" :class="{liked: liked}"></svg-icon>
-      </div>
-
-      <p v-text="likeNumber"></p>
-      <div class="reviews-icon" @click="dislikedReview">
-        <svg-icon name="arrow-down" class="reviews-like-down" :class="{disliked: disliked}"></svg-icon>
-      </div>
+      <v-avatar size="8rem">
+        <v-img :src="review.avatar"></v-img>
+      </v-avatar>
+      <p class="reviews-content-username">{{review.username}}</p>
     </div>
 
     <div class="reviews-content">
       <div class="reviews-content-title">{{review.title}}</div>
       <div class="flex-row flex--between">
         <div class="reviews-total-rating">
-          <no-ssr>
-            <star-rating
-              name="rating"
-              v-model="review.rating"
-              :star-size="18"
-              :show-rating="false"
-              :read-only="true"
-              inactive-color="#D8D7D5"
-              active-color="#FFB727"
-              :increment="0.01"
-              :round-start-rating="false"
-              border-color="#FFB727"
-              :glow="1"
-            ></star-rating>
-          </no-ssr>
+          <v-rating color="#FF8D29" readonly size="20" half-increments :value="+review.rating"></v-rating>
         </div>
-        <div class="reviews-author">
-          <p class="reviews-content-username">投稿者：{{review.username}}</p>
-        </div>
+        <div class="reviews-author"></div>
       </div>
       <div ref="review" class="reviews-content-text flex flex-column flex--between">
         <div v-if="!readMore" v-html="truncate(review.content, 372)"></div>
@@ -50,6 +30,25 @@
         <div v-if="review.content.length > 372" class="buts">
           <a @click="toggleCollapse" v-if="!readMore" class="reviews-content-text-more">>>詳細</a>
           <a @click="toggleCollapse" v-else class="reviews-content-text-more">{{'<<'}}一部を表示</a>
+        </div>
+      </div>
+      <div class="flex-divider flex-row">
+        <div class="reviews__rate">
+          <div class="reviews__rate__up" @click="likedReview">
+            <fa icon="thumbs-up" class :class="{liked: liked}"></fa>
+          </div>
+          <p v-text="likeNumber" :class="{disliked: likeNumber <0}"></p>
+          <div class="reviews__rate__down" @click="dislikedReview">
+            <fa icon="thumbs-up" :class="{disliked: disliked}"></fa>
+          </div>
+        </div>
+        <div
+          class="flex-row flex--right reviews__edit"
+          style="width:100%;"
+          v-if="$store.getters.isAuthenticated"
+        >
+          <div v-if="$store.getters.loggedInUser.id === review.user_id">編集</div>
+          <div v-else>レポート</div>
         </div>
       </div>
     </div>
@@ -168,7 +167,66 @@ export default {
     display: flex;
     align-items: center;
   }
+  .v-avatar {
+    box-shadow: 1px 1px 5px rgb(219, 219, 219);
+  }
+  &__edit {
+    div {
+      font-size: 1.4rem;
+    }
+    &:hover {
+      cursor: pointer;
+    }
+    color: grey;
+  }
+  &__rate {
+    display: flex;
+    color: grey;
+    align-items: center;
+    .liked {
+      color: orangered;
+    }
+    .disliked {
+      color: #7193ff;
+    }
 
+    &__up {
+      font-size: 1.6rem;
+      margin-right: 0.7rem;
+      &:hover {
+        cursor: pointer;
+        color: orangered;
+      }
+      &:active {
+        transform: scale(1.2);
+        transition: transform 300ms;
+      }
+      &:focus {
+        transform: scale(0.9);
+        transition: transform 300ms;
+      }
+      transition: transform 300ms;
+    }
+    &__down {
+      // transform: ;
+      &:hover {
+        color: #7193ff;
+        cursor: pointer;
+      }
+      &:active {
+        transform: scale(1.2) rotate(180deg);
+        transition: transform 300ms;
+      }
+      &:focus {
+        transform: scale(0.9) rotate(180deg);
+        transition: transform 300ms;
+      }
+      transition: transform 300ms;
+      margin-left: 0.7rem;
+      font-size: 1.6rem;
+      transform: rotate(180deg);
+    }
+  }
   width: 100%;
   display: flex;
   margin-bottom: 10px;
@@ -203,6 +261,7 @@ export default {
     box-sizing: border-box;
     // height: 150px;
     // justify-content: space-between;
+
     .flex-row {
       font-size: 16px;
       line-height: none;

@@ -2,7 +2,7 @@
   <div class="profile-dropdown">
     <transition name="drop-down" appear>
       <div class="profile-dropdown__list">
-        <div class="profile-dropdown__user-info flex">
+        <div class="profile-dropdown__user-info flex-row flex--align">
           <div class="profile-dropdown__profile-pic">
             <v-avatar size="50">
               <img :src="user.avatar">
@@ -10,13 +10,20 @@
           </div>
           <div class="profile-dropdown__user-text">
             <div class="profile-dropdown__username" v-text="user.username"></div>
-            <div
-              v-loading="loading"
-              class="profile-dropdown__wallet flex flex--align flex--between"
-            >
-              <Currency :amount="wealth"></Currency>
-              <div class="profile-dropdown__wallet__buy-more">買う</div>
-            </div>
+            <div class="profile-dropdown__email">{{user.email}}</div>
+          </div>
+        </div>
+        <div
+          v-loading="loading"
+          class="profile-dropdown__wallet flex-row flex--between flex--align"
+        >
+          <fa class="wallet-icon" icon="wallet"></fa>
+          <div class="profile-dropdown__wallet__content flex-row">
+            <Currency style="margin-right:1rem;" :amount="wealth"></Currency>
+            <Vote :amount="token"></Vote>
+          </div>
+          <div class="flex-divider">
+            <div class="profile-dropdown__wallet__buy-more">買う</div>
           </div>
         </div>
         <li
@@ -53,7 +60,8 @@
 <script>
 export default {
   components: {
-    Currency: () => import("@/components/All/Currency")
+    Currency: () => import("@/components/All/Currency"),
+    Vote: () => import("@/components/All/Vote")
   },
   async mounted() {
     await this.$store.dispatch("wallet/wealth");
@@ -65,6 +73,9 @@ export default {
     },
     wealth() {
       return this.$store.getters["wallet/getWealth"];
+    },
+    token() {
+      return this.$store.getters["wallet/getToken"];
     }
   },
   data() {
@@ -120,9 +131,30 @@ export default {
   &__username {
     font-size: 18px;
   }
+  &__email {
+    font-size: 1.6rem;
+    color: rgb(83, 83, 83);
+  }
   &__wallet {
-    font-size: 15px;
-    color: rgb(46, 46, 46);
+    font-size: 2rem;
+    color: $primary;
+    padding: 0.5rem 2rem;
+    position: relative;
+    overflow: hidden;
+    .wallet-icon {
+      position: absolute;
+      top: 5px;
+      left: 20px;
+      font-size: 2rem;
+      opacity: 0.5;
+    }
+    &__content {
+      color: black;
+      padding: 1rem 1.5rem;
+      // border: 1px solid grey;
+      box-shadow: inset 1px 1px 5px rgb(240, 240, 240);
+      border-radius: 1rem;
+    }
     &__buy-more {
       margin-left: 10px;
       // height: 2px

@@ -45,7 +45,7 @@
         <BookList :trendings="true" :books="bookmarks"></BookList>
       </div>
       <div class="library-history" v-if="selectedTabName=== 'history'||selected_item=== '歴史'">
-        <BookList :history="true" :books="history"></BookList>
+        <HistoryBook :books="history"></HistoryBook>
       </div>
       <div class="library-profile" v-if="!$device.isMobile">
         <Profile></Profile>
@@ -55,14 +55,12 @@
 </template>
 
 <script>
-import BookList from "@/components/LibraryPage/BookList";
-import Profile from "@/components/LibraryPage/Profile";
-import Select from "@/components/All/Select";
 export default {
   components: {
     BookList: () => import("@/components/LibraryPage/BookList"),
     Profile: () => import("@/components/LibraryPage/Profile"),
-    Select: () => import("@/components/All/Select")
+    Select: () => import("@/components/All/Select"),
+    HistoryBook: () => import("@/components/LibraryPage/HistoryBook")
   },
   data() {
     return {
@@ -98,8 +96,8 @@ export default {
     history() {
       return this.$store.state.library.history;
     },
-    reviews(){
-      return this.$store.getters['library/getReviews']
+    reviews() {
+      return this.$store.getters["library/getReviews"];
     }
   },
   methods: {
@@ -222,7 +220,8 @@ export default {
     }
   }
   &-profile {
-    width: 180px;
+    min-width: 180px;
+    max-width: 300px;
   }
   $self: &;
   &-history {
