@@ -65,8 +65,8 @@ export default {
     padding: 0;
   }
   &__list {
-    height: 500px;
-    overflow: auto;
+    // height: 500px;
+    // overflow: auto;
     #{$self}__item {
       margin-bottom: 1rem;
       display: grid;
@@ -119,8 +119,9 @@ export default {
       }
       &--synopsis {
         grid-area: synopsis;
-        align-self: end;
+        // align-self: end;
         font-size: 1.6rem;
+        align-self: self-start;
         p {
           font-size: inherit;
         }

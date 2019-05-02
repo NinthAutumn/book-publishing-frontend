@@ -32,7 +32,7 @@ export default {
   margin-left: 50px;
   padding: 0 45px;
   padding-top: 10px;
-  height: 100vh;
+  min-height: 100vh;
   background-color: #fbf9f9;
   transition: 200ms;
 }

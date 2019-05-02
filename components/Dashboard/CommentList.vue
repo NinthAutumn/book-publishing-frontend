@@ -1,7 +1,8 @@
 <template>
   <div class="dash-comments">
+    <h3 class="dash-comments__header">最新コメント</h3>
+
     <ul class="dash-comments__list">
-      <h3 class="dash-comments__header">最新コメント</h3>
       <li class="dash-comments__item" v-for="(comment, index) in comments" :key="index">
         <div class="dash-comments__avatar">
           <v-avatar :size="45" style="box-shadow:1px 1px 5px rgb(240, 240, 240);">
@@ -48,8 +49,7 @@ export default {
   // height: 400px;
   max-width: 100%;
   min-width: 35.4rem;
-  height: 35.4rem;
-  overflow: auto;
+
   box-shadow: 1px 1px 5px rgb(240, 240, 240);
   border-radius: 0.5rem;
   // margin-top:
@@ -60,6 +60,8 @@ export default {
     font-size: 1.6rem;
   }
   &__list {
+    max-height: 30rem;
+    overflow: auto;
     #{$self}__book-info {
       max-width: 30rem;
       white-space: nowrap;
@@ -86,6 +88,7 @@ export default {
     }
     #{$self}__item {
       display: flex;
+
       margin: 1rem;
       padding: 1rem 0;
       border-bottom: 1px solid rgb(226, 226, 226);
@@ -112,10 +115,10 @@ export default {
       font-size: 1rem;
       color: rgb(184, 184, 184);
     }
-    #{$self}__header {
-      padding: 2rem 1rem;
-      border-bottom: 1px solid rgb(226, 226, 226);
-    }
+  }
+  &__header {
+    padding: 2rem 1rem;
+    border-bottom: 1px solid rgb(226, 226, 226);
   }
 }
 </style>

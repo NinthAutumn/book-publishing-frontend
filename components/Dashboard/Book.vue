@@ -5,7 +5,7 @@
         :src="`https://storage.googleapis.com/theta-images/${book.cover}`"
         :aspect-ratio="1/1.5"
         max-width="12rem"
-        style=" box-shadow: 1px 1px 5px rgb(255, 234, 255); "
+        style=" "
       ></v-img>
       <transition name="fade">
         <fa v-if="image" class="dash-booklist__camera" icon="image"></fa>

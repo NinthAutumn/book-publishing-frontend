@@ -68,15 +68,18 @@
                   <v-icon>add</v-icon>
                 </template>
               </upload-btn>
-              <v-img
-                class="chapter-form__image-btn"
-                v-for="(file, index) in fileList"
-                :key="index"
-                :src="file.url"
-                @click="deleteImage(file.url)"
-              >
-                <fa class="chapter-form__image-btn__close" icon="times"></fa>
-              </v-img>
+              <div class="chapter-form__image-list">
+                <v-img
+                  class="chapter-form__image-btn"
+                  v-for="(file, index) in fileList"
+                  :key="index"
+                  :src="file.url"
+                  @click="deleteImage(file.url)"
+                >
+                  <fa class="chapter-form__image-btn__close" icon="times"></fa>
+                </v-img>
+              </div>
+
               <!-- <el-upload
                 class="upload-demo"
                 action
@@ -532,7 +535,18 @@ dialog {
   &__upload-img {
     padding: 10px;
     box-shadow: 1px 1px 5px 2px rgb(238, 238, 238);
-    width: 300px;
+    width: 50rem;
+    #{$self}__extra {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+    #{$self}__image-list {
+      max-height: 50rem;
+      overflow: auto;
+      width: 100%;
+    }
     #{$self}__image-btn {
       position: relative;
       &__close {

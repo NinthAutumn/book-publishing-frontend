@@ -260,5 +260,12 @@ export const actions = {
     } catch (error) {
       return Promise.reject(error)
     }
+  },
+  async deleteReview({
+    commit
+  }, {
+    reviewId
+  }) {
+
   }
 }

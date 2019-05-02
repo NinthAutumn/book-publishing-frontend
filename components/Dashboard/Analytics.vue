@@ -3,14 +3,15 @@
     <div class="main-analytics">
       <div class="main-analytics__list">
         <div
-          v-for="(value, key,index) in mainAnalytics"
+          v-for="(value,index) in mainAnalytics"
           :key="index"
           class="main-analytics__item flex-column flex--center"
         >
           <div class="main-analytics__title" v-text="value.title"></div>
           <div class="flex-divider flex-row flex--align flex--between">
             <div class="main-analytics__stats">
-              <no-ssr>
+              <div v-if="value.title==='ランキング'&&!value.stats" class="no-rank">未定</div>
+              <no-ssr v-else>
                 <countTo :startVal="0" :endVal="value.stats" :duration="1000"></countTo>
               </no-ssr>
             </div>
@@ -26,29 +27,29 @@
 export default {
   data() {
     return {
-      mainAnalytics: {
-        ranking: {
+      mainAnalytics: [
+        {
           title: "ランキング",
           icon: "crown",
-          stats: 30
+          stats: this.$store.getters["dashboard/getRanking"].rank || 0
         },
-        views: {
+        {
           title: "総計視聴回数",
           icon: "eye",
-          stats: 1000
+          stats: this.$store.getters["dashboard/getStats"].view_count
         },
 
-        bookmark: {
+        {
           title: "総計ブックマーク数",
           icon: "bookmark",
-          stats: 30
+          stats: this.$store.getters["dashboard/getStats"].bookmark_count
         },
-        comments: {
+        {
           title: "総計コメント数",
           icon: "comment",
-          stats: 1234
+          stats: this.$store.getters["dashboard/getStats"].comment_count
         }
-      }
+      ]
     };
   }
 };
@@ -83,7 +84,9 @@ export default {
       color: #4a4a4a;
     }
     #{$self}__stats {
-      font-size: 34px;
+      div {
+        font-size: 3.4rem;
+      }
       color: #718af4;
       span {
         font-size: 3.4rem;

@@ -1,9 +1,11 @@
 <template>
   <div class="views-bargraph">
     <div class="views-bargraph__title">作品の視聴回数</div>
-    <no-ssr>
-      <ve-line :height="height" :settings="chartSetting" :data="chartData"></ve-line>
-    </no-ssr>
+    <div class="views-bargraph__graph">
+      <no-ssr>
+        <ve-line :height="height" :settings="chartSetting" :data="chartData"></ve-line>
+      </no-ssr>
+    </div>
   </div>
 </template>
 
@@ -26,18 +28,32 @@ export default {
   },
   async mounted() {
     let row = Object.keys(this.$store.getters["analytic/getTotalViews"]);
+    let i = 7;
+    while (i > 0) {
+      let date = this.$moment()
+        .subtract(i, "days")
+        .format("YYYY-MM-DD");
+      this.chartData.rows.push({ date });
+      i--;
+    }
     row.forEach(item => {
-      this.object = {
-        date: item
-      };
-      this.$store.getters["analytic/getTotalViews"][item].forEach(book => {
-        if (this.chartData.columns.indexOf(book.book_id) === -1) {
-          this.chartData.columns.push(book.book_id);
+      this.chartData.rows.forEach((el, index) => {
+        if (el.date === item) {
+          this.object = {
+            date: item
+          };
+          this.$store.getters["analytic/getTotalViews"][item].forEach(book => {
+            if (this.chartData.columns.indexOf(book.title) === -1) {
+              this.chartData.columns.push(book.title);
+            }
+            this.object[book.title] = book.views;
+          });
+          this.chartData.rows[index] = this.object;
         }
-        this.object[book.book_id] = book.views;
       });
-      this.chartData.rows.push(this.object);
     });
+
+    // console.log(row);
     // this.$store.getters["analytic/getTotalViews"].forEach(day => {
     //   this.object = {
     //     date: day._id.day
@@ -56,15 +72,19 @@ export default {
 
 <style lang="scss">
 .views-bargraph {
-  padding: 10px;
   // margin-top: 30px;
   background-color: #fff;
   box-shadow: 1px 1px 5px rgb(233, 233, 233);
   border-radius: 5px;
   &__title {
-    font-size: 16px;
-    margin-bottom: 10px;
-    margin-left: 10px;
+    font-size: 1.6rem;
+    padding: 2rem 1rem;
+    font-weight: bold;
+  }
+  &__graph {
+    // display: flex;
+    // align-items: center;
+    // justify-content: center;
   }
 }
 </style>

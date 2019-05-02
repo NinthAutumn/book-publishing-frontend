@@ -50,18 +50,25 @@ export default {
       color: grey;
     }
     #{$self}__cover {
+      // width: 13rem;
       display: flex;
       align-items: center;
       justify-content: center;
+      // margin: 0 auto;
       margin-bottom: 0.5rem;
+      position: relative;
       &:hover {
         cursor: pointer;
       }
     }
     #{$self}__camera {
       font-size: 3.5rem;
-      margin: auto;
+
+      // top: 50%;
+      // bottom: 50%;
+      // margin: auto;
       position: absolute;
+      z-index: 0;
     }
     #{$self}__title {
       font-size: 1.6rem;

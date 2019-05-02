@@ -7,6 +7,7 @@
     <div class="user-dashboard__content">
       <ViewBarGraph class="user-dashboard__view" height="300px"></ViewBarGraph>
       <comment-list class="user-dashboard__comment-list"></comment-list>
+      <transaction-list class="user-dashboard__transaction-list"></transaction-list>
     </div>
   </div>
 </template>
@@ -16,11 +17,14 @@ export default {
   layout: "user-nav/User",
   async fetch({ store, params }) {
     await store.dispatch("analytic/fetchUserViews");
+    await store.dispatch("dashboard/fetchStatistics");
+    await store.dispatch("dashboard/fetchRanking");
   },
   components: {
     Analytics: () => import("@/components/Dashboard/Analytics"),
     ViewBarGraph: () => import("@/components/Dashboard/Graphs/Views"),
-    CommentList: () => import("@/components/Dashboard/CommentList")
+    CommentList: () => import("@/components/Dashboard/CommentList"),
+    TransactionList: () => import("@/components/Dashboard/TransactionList")
   },
   created() {},
   mounted() {},
@@ -34,12 +38,11 @@ export default {
 .user-dashboard {
   position: relative;
   min-height: 100vh;
-
   $self: &;
   &__content {
     display: grid;
     margin-top: 1rem;
-    grid-template-areas: "views views views" "commentlist . .";
+    grid-template-areas: "views views views" "transactions transactions commentlist";
     grid-gap: 10px;
 
     #{$self}__view {
@@ -47,6 +50,9 @@ export default {
     }
     #{$self}__comment-list {
       grid-area: commentlist;
+    }
+    #{$self}__transaction-list {
+      grid-area: transactions;
     }
   }
   &__header {
