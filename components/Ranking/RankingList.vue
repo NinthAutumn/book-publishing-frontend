@@ -80,9 +80,13 @@
         :score="book.votes"
         :book="book"
         v-for="(book, index) in vote"
+        vote
         :key="book.id"
       ></ranking-item>
     </transition-group>
+    <no-ssr>
+      <infinite-loading :identifier="infiniteId" @infinite="infiniteHandler"></infinite-loading>
+    </no-ssr>
   </div>
 </template>
 
@@ -143,7 +147,9 @@ export default {
         "学園",
         "ボーイズラブ",
         "ガールズラブ"
-      ]
+      ],
+      page: 2,
+      infiniteId: Math.floor(Math.random() * (20000 - 1)) + 1
     };
   },
   computed: {
@@ -188,31 +194,62 @@ export default {
       } else if (this.selected_ranking_type === 1) {
       }
     },
-    async composite_time() {
-      let param = {};
+    async infiniteHandler($state) {
+      let books = "";
+
       switch (this.selected_ranking_type) {
         case 0:
-          if (this.time_day === "total") {
-            param = {
-              limit: 10,
-              page: 1
-            };
-          } else {
-            param = {
-              days: this.time_day,
-              limit: 10,
-              page: 1
-            };
-          }
+          books = await this.$store.dispatch("analytic/fetchRanking", {
+            time: this.time_day,
+            page: this.page++,
+            infinite: true
+          });
+          break;
+        case 1:
+          books = await this.$store.dispatch("analytic/fetchTrending", {
+            page: this.page++,
+            time: "weekly",
+            infinite: true
+          });
+          break;
+        case 2:
+          books = await this.$store.dispatch("analytic/fetchRanking", {
+            time: this.time_day,
+            page: this.page++,
+            genre: this.genre,
+            infinite: true
+          });
+          break;
+        case 3:
+          books = await this.$store.dispatch("analytic/fetchVoteRanking", {
+            time: this.time_day,
+            page: this.page++,
+            infinite: true
+          });
+          break;
+      }
+      if (books.length > 0) {
+        $state.loaded();
+      } else {
+        // this.$message({
+        //   message: "リストはこれで終わりです",
+        //   type: "info"
+        // });
+        $state.complete();
+      }
+    },
+    async composite_time() {
+      let param = {};
+      this.page = 2;
+      this.infiniteId++;
+      switch (this.selected_ranking_type) {
+        case 0:
           await this.$store.dispatch("analytic/fetchRanking", {
             time: this.time_day,
             page: 1
           });
           break;
         case 1:
-          if (this.trending.length > 0) {
-            return;
-          }
           await this.$store.dispatch("analytic/fetchTrending", {
             limit: 10,
             page: 1,

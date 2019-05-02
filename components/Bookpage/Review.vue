@@ -47,7 +47,21 @@
           style="width:100%;"
           v-if="$store.getters.isAuthenticated"
         >
-          <div v-if="$store.getters.loggedInUser.id === review.user_id">編集</div>
+          <div v-if="$store.getters.loggedInUser.id === review.user_id">
+            <span>編集</span>|
+            <span @click="toggleWarning">削除</span>
+            <v-dialog v-model="deleteModal" persistent max-width="290">
+              <v-card>
+                <v-card-title class="headline">本当に削除しますか?</v-card-title>
+                <v-card-text>削除したらもうこのレビューは取り戻しできなくなります。</v-card-text>
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn color="red darken-1" flat @click="toggleWarning">いいえ</v-btn>
+                  <v-btn :loading="loading" color="blue darken-1" flat @click="deleteReview">はい</v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
+          </div>
           <div v-else>レポート</div>
         </div>
       </div>
@@ -69,7 +83,9 @@ export default {
       readMore: false,
       liked: this.review.voted > 0,
       disliked: this.review.voted < 0,
-      likeNumber: this.review.likes
+      likeNumber: this.review.likes,
+      deleteModal: false,
+      loading: false
     };
   },
   components: {},
@@ -127,6 +143,36 @@ export default {
       } else {
         return string;
       }
+    },
+    toggleWarning: function(state) {
+      this.deleteModal = !this.deleteModal;
+    },
+    deleteReview: async function() {
+      this.loading = true;
+      try {
+        await this.$axios.delete(
+          `/review?reviewId=${this.review.id}&rating=${
+            this.review.rating
+          }&bookId=${this.review.book_id}`
+        );
+        await this.$store.dispatch("review/showAll", {
+          bookId: this.$route.params.id,
+          page: 1,
+          limit: 10,
+          direction: "desc",
+          type: "likes"
+        });
+        await this.$store.dispatch("review/fetchIsReviewed", {
+          bookId: this.$route.params.id
+        });
+        this.deleteModal = !this.deleteModal;
+        this.loading = false;
+      } catch (error) {
+        return this.$message({
+          message: "レビューの削除に失敗しました",
+          type: "error"
+        });
+      }
     }
   },
   computed: {},
@@ -173,6 +219,9 @@ export default {
   &__edit {
     div {
       font-size: 1.4rem;
+      span {
+        font-size: inherit;
+      }
     }
     &:hover {
       cursor: pointer;

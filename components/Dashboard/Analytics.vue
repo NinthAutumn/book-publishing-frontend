@@ -9,7 +9,11 @@
         >
           <div class="main-analytics__title" v-text="value.title"></div>
           <div class="flex-divider flex-row flex--align flex--between">
-            <div class="main-analytics__stats" v-text="value.stats"></div>
+            <div class="main-analytics__stats">
+              <no-ssr>
+                <countTo :startVal="0" :endVal="value.stats" :duration="1000"></countTo>
+              </no-ssr>
+            </div>
             <fa :icon="value.icon" class="main-analytics__icon"></fa>
           </div>
         </div>
@@ -53,10 +57,11 @@ export default {
 <style lang="scss">
 .main-analytics {
   $self: &;
+
   &__list {
     display: grid;
     grid-template-columns: repeat(4, minmax(10rem, 40rem));
-    grid-template-rows: repeat(1, minmax(5rem, 15rem));
+    grid-template-rows: repeat(1, 12rem);
     grid-gap: 5rem;
   }
   &__item {
@@ -80,10 +85,19 @@ export default {
     #{$self}__stats {
       font-size: 34px;
       color: #718af4;
+      span {
+        font-size: 3.4rem;
+      }
     }
     #{$self}__icon {
       font-size: 35px;
       color: #718af4;
+      transform: scale(1);
+      transition: transform 300ms;
+      &:hover {
+        transform: scale(1.2);
+        transition: 300ms;
+      }
     }
   }
 }

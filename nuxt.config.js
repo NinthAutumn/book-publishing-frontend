@@ -124,6 +124,9 @@ module.exports = {
     }, {
       src: '@/plugins/scrollama',
       ssr: false
+    }, {
+      src: '@/plugins/countTo',
+      ssr: false
     }
   ],
 
@@ -138,6 +141,7 @@ module.exports = {
     '@nuxtjs/axios',
     '@nuxtjs/dotenv',
     '@nuxtjs/svg-sprite',
+
     ['nuxt-validate', {
       lang: 'ja',
     }],

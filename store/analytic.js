@@ -49,6 +49,21 @@ export const mutations = {
   },
   SET_VOTE_RANKING: (state, voteRanking) => {
     state.voteRanking = voteRanking
+  },
+  PUSH_VOTE_RANKING: (state, voteRanking) => {
+    voteRanking.forEach((book) => {
+      state.voteRanking.push(book)
+    })
+  },
+  PUSH_TRENDING: (state, trending) => {
+    trending.forEach((book) => {
+      state.trending.push(book)
+    })
+  },
+  PUSH_RANKING: (state, ranking) => {
+    ranking.forEach((book) => {
+      state.ranking.push(book)
+    })
   }
 }
 export const actions = {
@@ -56,11 +71,18 @@ export const actions = {
     commit
   }, {
     time,
-    page
+    page,
+    infinite
   }) {
     try {
       const res = await this.$axios.get(`/analytic/trending?time=${time}&page=${page}`)
-      commit('SET_TRENDING', res.data)
+      if (infinite) {
+        commit('PUSH_TRENDING', res.data)
+      } else {
+        commit('SET_TRENDING', res.data)
+      }
+
+      return Promise.resolve(res.data)
     } catch (error) {}
 
   },
@@ -69,7 +91,8 @@ export const actions = {
   }, {
     time,
     page,
-    genre
+    genre,
+    infinite
   }) {
     try {
       let res = ""
@@ -77,9 +100,15 @@ export const actions = {
         res = await this.$axios.get(`/analytic/ranking/genre?time=${time}&page=${page}&genre=${genre}`)
       } else {
         res = await this.$axios.get(`/analytic/ranking?time=${time}&page=${page}`)
+      }
+      if (infinite) {
+        commit('PUSH_RANKING', res.data)
+      } else {
+        commit('SET_RANKING', res.data)
 
       }
-      commit('SET_RANKING', res.data)
+      return Promise.resolve(res.data)
+
     } catch (error) {}
   },
   fetchUserViews: async function ({
@@ -88,6 +117,8 @@ export const actions = {
     try {
       const res = await this.$axios.get(`/analytic/book/views`)
       commit('SET_VIEWS', res.data)
+      return Promise.resolve(res.data)
+
     } catch (error) {
       console.log(error);
     }
@@ -98,6 +129,8 @@ export const actions = {
     try {
       const res = await this.$axios.get(`/analytic/book/list`)
       commit('SET_BOOKS', res.data)
+      return Promise.resolve(res.data)
+
     } catch (error) {
       console.log(error);
     }
@@ -108,6 +141,8 @@ export const actions = {
     try {
       const res = await this.$axios.get(`/analytic/comment/list`)
       commit('SET_COMMENTS', res.data)
+      return Promise.resolve(res.data)
+
     } catch (error) {
       return Promise.reject(error)
     }
@@ -118,6 +153,8 @@ export const actions = {
     try {
       const res = await this.$axios.get(`/analytic/home/recommended`)
       commit('SET_RECOMMENDED', res.data)
+      return Promise.resolve(res.data)
+
     } catch (error) {
       return Promise.reject(error)
     }
@@ -128,6 +165,8 @@ export const actions = {
     try {
       const res = await this.$axios.get(`/analytic/book/latest`)
       commit('SET_LATEST', res.data)
+      return Promise.resolve(res.data)
+
     } catch (error) {
       return Promise.reject(error)
     }
@@ -138,6 +177,8 @@ export const actions = {
     try {
       const res = await this.$axios.get(`/analytic/review/trending`)
       commit('SET_REVIEW_TRENDING', res.data)
+      return Promise.resolve(res.data)
+
     } catch (error) {
       return Promise.reject(error)
     }
@@ -146,11 +187,19 @@ export const actions = {
     commit
   }, {
     time,
-    page
+    page,
+    infinite
   }) {
     try {
       const res = await this.$axios.get(`/analytic/vote?time=${time}&page=${page}`)
-      commit('SET_VOTE_RANKING', res.data)
+      if (infinite) {
+        commit('PUSH_VOTE_RANKING', res.data)
+      } else {
+        commit('SET_VOTE_RANKING', res.data)
+      }
+
+      return Promise.resolve(res.data)
+
     } catch (error) {
       return Promise.reject(error)
     }

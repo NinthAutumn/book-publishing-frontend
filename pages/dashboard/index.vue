@@ -4,9 +4,9 @@
       <header>ダッシュボード</header>
     </div>
     <Analytics></Analytics>
-    <div class="graphs flex-row flex--between">
-      <comment-list></comment-list>
-      <ViewBarGraph height="300px"></ViewBarGraph>
+    <div class="user-dashboard__content">
+      <ViewBarGraph class="user-dashboard__view" height="300px"></ViewBarGraph>
+      <comment-list class="user-dashboard__comment-list"></comment-list>
     </div>
   </div>
 </template>
@@ -34,6 +34,21 @@ export default {
 .user-dashboard {
   position: relative;
   min-height: 100vh;
+
+  $self: &;
+  &__content {
+    display: grid;
+    margin-top: 1rem;
+    grid-template-areas: "views views views" "commentlist . .";
+    grid-gap: 10px;
+
+    #{$self}__view {
+      grid-area: views;
+    }
+    #{$self}__comment-list {
+      grid-area: commentlist;
+    }
+  }
   &__header {
     header {
       font-size: 30px;
@@ -58,10 +73,7 @@ export default {
     }
   }
 }
-.graphs {
-  margin-top: 20px;
-  // overflow: hidden;
-}
+
 #line-chart {
 }
 </style>

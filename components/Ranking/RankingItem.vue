@@ -51,7 +51,12 @@
           </no-ssr>
         </div>
       </div>
-      <div v-if="score" class="book-score">{{score}}</div>
+      <div v-if="score" class="book-score">
+        <fa v-if="vote" icon="bolt" style="margin-right:1rem;color:rgb(255, 64, 64);"></fa>
+        {{score}}
+        <span v-if="vote">ポイント</span>
+        <span v-if="!vote">スコアー</span>
+      </div>
     </nuxt-link>
   </div>
 </template>
@@ -62,7 +67,8 @@ export default {
     book: Object,
     index: Number,
     score: Number,
-    trending: Boolean
+    trending: Boolean,
+    vote: Boolean
   },
   components: {
     Select: () => import("@/components/All/Select")
@@ -100,6 +106,7 @@ export default {
     padding: 0 5px;
   }
   .book-title {
+    margin-bottom: 1rem;
     h4 {
       font-size: 16px;
       margin: 0 !important;
@@ -108,6 +115,15 @@ export default {
   &__container {
     display: flex;
     width: 100%;
+  }
+  .book-score {
+    font-size: 1.6rem;
+    display: flex;
+    align-items: center;
+    padding: 0 1rem;
+    span {
+      font-size: 1.6rem;
+    }
   }
   .book-ranking {
     font-size: 18px;

@@ -1,7 +1,7 @@
 <template>
   <div class="inbox-dropdown">
     <ul class="inbox-dropdown__list">
-      <li class="inbox-dropdown__item"></li>
+      <li class="inbox-dropdown__item" v-for="(notification, index) in notifications" :key="index"></li>
     </ul>
   </div>
 </template>

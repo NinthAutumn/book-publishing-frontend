@@ -2,25 +2,10 @@
   <section class="comment-modal">
     <article class="comment-modal__container" v-if="showChildren">
       <div :style="indent" class="divider flex">
-        <div class="comment-modal__rate flex flex-column flex--align flex--left">
-          <div class="rate-up" @click="likedComment">
-            <no-ssr>
-              <Zondicon
-                :class="{'comment-like--black': theme==='black', 'comment-like--liked': liked}"
-                class="comment-like"
-                icon="arrow-thick-up"
-              ></Zondicon>
-            </no-ssr>
-          </div>
-          <div class="rate-down" @click="dislikedComment">
-            <no-ssr>
-              <Zondicon
-                :class="{'comment-dislike--black': theme==='black','comment-dislike--disliked': disliked}"
-                class="comment-dislike"
-                icon="arrow-thick-down"
-              ></Zondicon>
-            </no-ssr>
-          </div>
+        <div class="comment-modal__avatar flex-column flex--align flex--left">
+          <v-avatar size="40" v-if="!comment.deleted">
+            <img :src="comment.avatar">
+          </v-avatar>
         </div>
         <div class="comment-modal__div">
           <div class="comment-modal__content">
@@ -34,6 +19,7 @@
                 class="comment-modal__author"
                 v-if="$store.state.book.author === comment.username"
               ></div>
+
               <div
                 class="comment-modal__likes"
                 :class="{'comment-modal__likes--blue': blue}"
@@ -46,10 +32,25 @@
                 <fa icon="anchor"></fa>
               </div>
             </div>
-            <div class="comment-modal__subject flex">
-              <div class="content">{{comment.content}}</div>
+            <div class="comment-modal__subject flex-row">
+              <div class="content deleted" v-if="comment.deleted">[削除されました]</div>
+              <div class="content" v-else>{{comment.content}}</div>
             </div>
-            <div class="comment-modal__operations flex flex--align">
+            <div v-if="!comment.deleted" class="comment-modal__operations flex flex--align">
+              <div class="comment-modal__rate">
+                <div
+                  class="comment-modal__rate__item comment-modal__rate__item--like"
+                  @click="likedComment"
+                >
+                  <fa icon="thumbs-up" class :class="{liked: liked}"></fa>
+                </div>
+                <div
+                  class="comment-modal__rate__item comment-modal__rate__item--dislike"
+                  @click="dislikedComment"
+                >
+                  <fa icon="thumbs-up" :class="{disliked: disliked}"></fa>
+                </div>
+              </div>
               <div class="comment-modal__reply" @click="replyOpen">
                 <fa icon="comment-alt" style="transform:rotateY(180deg);margin-right:2px;"></fa>返信
               </div>
@@ -308,6 +309,9 @@ export default {
   // display: inline-block;
 
   // overflow: hidden;/
+  &__avatar {
+    width: 4rem;
+  }
   &__container {
     width: 100%;
 
@@ -324,8 +328,34 @@ export default {
     width: 100%;
   }
   &__rate {
-    width: 20px;
+    // width: 20px;
+    display: flex;
     margin-right: 10px;
+    &__item {
+      &:hover {
+        cursor: pointer;
+      }
+      &--like {
+        font-size: 1.2rem;
+        margin-right: 0.5rem;
+        &:hover {
+          color: orangered;
+        }
+      }
+      &--dislike {
+        font-size: 1.2rem;
+        transform: rotate(180deg) translateY(-3px);
+        &:hover {
+          color: #7193ff;
+        }
+      }
+      .liked {
+        color: orangered;
+      }
+      .disliked {
+        color: #7193ff;
+      }
+    }
   }
   &__username {
     font-size: 14px;
@@ -352,6 +382,12 @@ export default {
   &__subject {
     font-size: 14px;
     line-height: 24px;
+    .content {
+      font-size: 1.4rem;
+    }
+    .deleted {
+      font-size: 1.2rem;
+    }
     // &:hover {
     //   cursor: pointer;
     // }

@@ -4,91 +4,8 @@
       <header>本棚</header>
     </div>
     <div class="user-books__books-list">
-      <div class="user-books__book flex" v-for="(book, index) in books" :key="index">
-        <div class="user-books__cover">
-          <img
-            :src="'https://storage.googleapis.com/theta-images/' + book.cover"
-            alt="user created book cover"
-          >
-        </div>
-        <div class="user-books__meta-info">
-          <div class="user-books__title flex flex--align flex--between">
-            <nuxt-link tag="p" :to="{path: `/books/${book.id}`}">{{book.title}}</nuxt-link>
-            <fa class="user-books__title__icon" icon="cog"></fa>
-          </div>
-          <div class="user-books__content">
-            <div class="user-books__latest-chapter flex flex--align">第3話: これが最新の話なのか</div>
-            <div class="user-books__state flex-column flex--center flex--align">
-              <div class="user-books__state__title flex flex--align flex--center">作品状態</div>
-              <div class="user-books__state__stat flex flex--align flex--center">連載中</div>
-            </div>
-            <div class="user-books__bookmark flex-column flex--center flex--align">
-              <div class="user-books__bookmark__title flex flex--align flex--center">ブックマーク数</div>
-              <div
-                class="user-books__bookmark__stat flex flex--align flex--center"
-              >{{book.bookmark_count}}</div>
-            </div>
-            <div class="user-books__view flex-column flex--center flex--align">
-              <div class="user-books__view__title flex flex--align flex--center">視聴回数</div>
-              <div class="user-books__view__stat flex flex--align flex--center">{{book.views}}</div>
-            </div>
-            <div class="user-books__review flex-column flex--center flex--align">
-              <div class="user-books__review__title flex flex--align flex--center">レビュー数</div>
-              <div
-                class="user-books__review__stat flex flex--align flex--center"
-              >{{book.rating_count}}</div>
-            </div>
-            <div
-              @click="openForm(book.id)"
-              class="user-books__announcement flex flex--align flex--center"
-            >通告を投稿</div>
-            <nuxt-link
-              :to="{path: `/dashboard/books/${book.id}/new`}"
-              tag="div"
-              class="user-books__create flex flex--align flex--center"
-            >新話を投稿</nuxt-link>
-            <nuxt-link
-              :to="{path: `/dashboard/books/${book.id}/published`}"
-              tag="div"
-              class="user-books__toc flex flex--align flex--center"
-            >作品の目次</nuxt-link>
-          </div>
-        </div>
-      </div>
+      <book-list :books="books"></book-list>
     </div>
-    <v-dialog v-model="dialog" persistent max-width="600px">
-      <v-card>
-        <v-card-title>
-          <span class="headline">報告をする</span>
-        </v-card-title>
-        <v-card-text>
-          <v-text-field
-            v-validate="'required|max:100'"
-            :error-messages="errors.collect('タイトル')"
-            data-vv-name="タイトル"
-            v-model="announcement.title"
-            :counter="100"
-            label="タイトル"
-            required
-          ></v-text-field>
-          <v-textarea
-            v-validate="'required|max:500'"
-            :error-messages="errors.collect('報告')"
-            data-vv-name="報告"
-            :max="500"
-            v-model="announcement.content"
-            :counter="500"
-            label="報告"
-            required
-          ></v-textarea>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" flat @click="dialog = false">キャンセル</v-btn>
-          <v-btn color="blue darken-1" flat @click="postAnnouncement">投稿</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
   </div>
 </template>
 
@@ -108,6 +25,9 @@ export default {
       }
     };
   },
+  components: {
+    BookList: () => import("@/components/Dashboard/BookList")
+  },
   watch: {
     "announcement.title": val => {
       if (val.length > 100) {
@@ -120,33 +40,7 @@ export default {
       return this.$store.getters["analytic/getBookList"];
     }
   },
-  methods: {
-    async openForm(id) {
-      this.dialog = true;
-      this.bookId = id;
-    },
-    async postAnnouncement() {
-      try {
-        await this.$validator.validateAll();
-        if (!this.errors.any()) {
-          const announcement = await this.$store.dispatch(
-            "book/postAnnouncement",
-            {
-              bookId: this.bookId,
-              content: this.announcement.content,
-              title: this.announcement.title
-            }
-          );
-          this.dialog = false;
-        }
-      } catch (error) {
-        return this.$message({
-          message: "報告の投稿に失敗しました",
-          type: "error"
-        });
-      }
-    }
-  },
+  methods: {},
   filters: {
     truncate: (string, number) => {
       if (string.length > 16) {
@@ -184,9 +78,7 @@ export default {
   &__books-list {
     width: 100%;
     height: 100%;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, 500px);
-    grid-gap: 10px;
+
     #{$self}__book {
       height: 199px;
       width: 100%;

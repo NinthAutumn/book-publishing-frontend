@@ -1,23 +1,29 @@
 <template>
   <div class="dash-comments">
     <ul class="dash-comments__list">
-      <h3 class="dash-comments__header">コメントリスト</h3>
+      <h3 class="dash-comments__header">最新コメント</h3>
       <li class="dash-comments__item" v-for="(comment, index) in comments" :key="index">
         <div class="dash-comments__avatar">
-          <v-avatar :size="60" style="box-shadow:1px 1px 5px rgb(240, 240, 240);">
+          <v-avatar :size="45" style="box-shadow:1px 1px 5px rgb(240, 240, 240);">
             <v-img :src="comment.avatar"></v-img>
           </v-avatar>
-          <div class="dash-comments__user-name">{{comment.username}}</div>
         </div>
-        <div class="flex-divider">
+        <div class="flex-divider" style="width:100%;">
+          <div class="flex-row flex--between flex--align">
+            <div class="dash-comments__user-name">{{comment.username}}</div>
+            <div
+              class="dash-comments__created-at"
+            >{{$moment(comment.created_at).startOf('second').fromNow()}}</div>
+          </div>
+
           <div class="dash-comments__comment">{{comment.content}}</div>
-          <div class="flex-divider flex-column dash-comments__book-info">
+          <!-- <div class="flex-divider flex-column dash-comments__book-info">
             <div class="dash-comments__book-title">{{comment.title}}</div>
             <div class="flex-divider flex-row flex--align">
               <div class="dash-comments__chapter-index">第{{comment.index}}話:</div>
               <div class="dash-comments__chapter-title">{{comment.chapter_title}}</div>
             </div>
-          </div>
+          </div>-->
         </div>
       </li>
     </ul>
@@ -40,20 +46,20 @@ export default {
 <style lang="scss">
 .dash-comments {
   // height: 400px;
-  max-width: 40rem;
-  max-height: 50rem;
+  max-width: 100%;
+  min-width: 35.4rem;
+  height: 35.4rem;
   overflow: auto;
   box-shadow: 1px 1px 5px rgb(240, 240, 240);
   border-radius: 0.5rem;
   // margin-top:
   $self: &;
+  background-color: #fff;
+
   &__header {
     font-size: 1.6rem;
   }
   &__list {
-    background-color: #fff;
-    padding: 1rem;
-
     #{$self}__book-info {
       max-width: 30rem;
       white-space: nowrap;
@@ -80,18 +86,35 @@ export default {
     }
     #{$self}__item {
       display: flex;
-      padding: 1rem;
+      margin: 1rem;
+      padding: 1rem 0;
+      border-bottom: 1px solid rgb(226, 226, 226);
     }
     #{$self}__user-name {
-      text-align: center;
+      text-align: left;
+      font-size: 1.4rem;
+      font-weight: bold;
       word-break: break-all;
     }
     #{$self}__avatar {
-      width: 6rem !important;
-      margin-right: 0.5rem;
+      width: 4rem !important;
+      margin-right: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
     }
     #{$self}__comment {
       font-size: 1.2rem;
+      color: grey;
+    }
+    #{$self}__created-at {
+      font-size: 1rem;
+      color: rgb(184, 184, 184);
+    }
+    #{$self}__header {
+      padding: 2rem 1rem;
+      border-bottom: 1px solid rgb(226, 226, 226);
     }
   }
 }

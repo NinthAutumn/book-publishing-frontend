@@ -1,39 +1,27 @@
 <template>
   <section class="search-books">
     <div class="book-container flex-row flex-row--betweeen">
-      <div class="divider flex flex-column">
+      <div class="flex-column">
         <div class="book-cover">
-          <nuxt-link :to="{path: `books/${book._id}`}">
-            <img
+          <nuxt-link :to="{path: `books/${book.id}`}">
+            <v-img
               class="book-cover-img"
-              v-lazyload
-              :data-src="`https://storage.googleapis.com/theta-images/${book.cover}`"
-              alt
-            >
+              :src="`https://storage.googleapis.com/theta-images/${book.cover}`"
+              :aspect-ratio="1/1.5"
+              max-width="14rem"
+              min-width="12rem"
+              alt="Book cover"
+            ></v-img>
           </nuxt-link>
         </div>
         <div class="book-rating">
-          <no-ssr>
-            <star-rating
-              v-if="book.ratings"
-              :rating="book.ratings.toFixed(2)"
-              :star-size="18"
-              :read-only="true"
-              inactive-color="#D8D7D5"
-              active-color="#FFB727"
-              :increment="0.01"
-              :round-start-rating="false"
-              border-color="#FFB727"
-              :glow="1"
-              class="star-rating"
-            ></star-rating>
-          </no-ssr>
+          <v-rating color="#FF8D29" readonly size="20" half-increments :value="+book.rating"></v-rating>
         </div>
       </div>
 
       <div class="book-info flex-column" :class="readMore">
         <div class="book-title">
-          <nuxt-link :to="{path: `books/${book._id}`}">
+          <nuxt-link :to="{path: `books/${book.id}`}">
             <header class="book-title--text">{{book.title}}</header>
           </nuxt-link>
         </div>
@@ -98,12 +86,12 @@ export default {
   }
 }
 .book-cover-img {
-  width: 119px;
-  height: 175px;
-  border-radius: 5px;
   margin-right: 10px;
 }
 .book-container {
+  .v-icon {
+    padding: 0 !important;
+  }
   padding: 5px 7px;
   .vue-star-rating-rating-text {
     margin: 0 !important;

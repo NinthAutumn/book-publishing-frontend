@@ -45,13 +45,13 @@ export const actions = {
     commit
   }, query) {
     commit('LOADING')
-    await this.$axios.get('/search/searchBooks?query=' + query).then((res) => {
+    await this.$axios.get(`/book/search?search=${query}&page=${1}`).then((res) => {
       if (res.data.genre) {
         commit('QUERIED_BOOKS', res.data.genre)
       } else {
-        commit('QUERIED_BOOKS', res.data.books)
+        commit('QUERIED_BOOKS', res.data)
       }
-      commit('RATING_FIX')
+      // commit('RATING_FIX')
       commit('LOADING_FIN')
     })
   }

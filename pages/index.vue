@@ -42,7 +42,7 @@ export default {
 
   async fetch({ store }) {
     // await store.dispatch("review/mostLiked");
-    await store.dispatch("analytic/fetchTrending", { time: "weekly" });
+    await store.dispatch("analytic/fetchTrending", { time: "weekly", page: 1 });
     await store.dispatch("analytic/fetchRecommended");
     await store.dispatch("analytic/fetchLatest");
     // await store.dispatch("chapter/fetchMoreLatestBooksSimple", {
