@@ -3,7 +3,13 @@
     <nav>
       <div class="left-menu flex-row flex--align">
         <i class="el-icon-menu" :class="$store.state.menuState" @click="menuDrawer"></i>
-        <nuxt-link v-if="$device.isDesktop||$device.isTablet" tag="div" to="/" class="site-logo">
+        <nuxt-link
+          v-ripple
+          v-if="$device.isDesktop||$device.isTablet"
+          tag="div"
+          to="/"
+          class="site-logo"
+        >
           <fa icon="pen"></fa>ノーブル
         </nuxt-link>
       </div>

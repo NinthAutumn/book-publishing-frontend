@@ -8,16 +8,19 @@
       class="transaction-list__list"
     >
       <template v-slot:items="props">
-        <td>
-          <v-img
-            :src="`https://storage.googleapis.com/theta-images/${props.item.cover}`"
-            :aspect-ratio="1/1.5"
-            max-width="5rem"
-          ></v-img>
+        <td class="flex-column flex--align flex--center">
+          <v-avatar class="elevation-1" :size="35">
+            <!-- :src="`https://storage.googleapis.com/theta-images/${props.item.avatar}`" -->
+            <v-img :src="props.item.avatar" :aspect-ratio="1/1.5" max-width="5rem"></v-img>
+          </v-avatar>
         </td>
+        <td class="transaction-list__item transaction-list__item--title">{{ props.item.username }}</td>
         <td class="transaction-list__item transaction-list__item--title">{{ props.item.book_title }}</td>
         <td class="transaction-list__item transaction-list__item--index">{{ props.item.index }}</td>
-        <td class="transaction-list__item transaction-list__item--amount">{{ props.item.amount }}</td>
+        <td class="transaction-list__item transaction-list__item--amount">
+          {{ }}
+          <Currency :amount="props.item.amount" size="small"></Currency>
+        </td>
         <td
           class="transaction-list__item transaction-list__item--created_at"
         >{{ $moment(props.item.created_at).startOf('second').fromNow() }}</td>
@@ -28,10 +31,12 @@
 
 <script>
 export default {
+  
   data() {
     return {
       headers: [
-        { text: "カバー", value: "cover", sortable: false },
+        { text: "アバター", value: "avatar", sortable: false },
+        { text: "ユーザー", value: "user", sortable: false },
         { text: "タイトル", value: "title", sortable: false },
         { text: "何話", value: "chapter", sortable: false },
         { text: "金額", value: "amount", sortable: false },
@@ -44,6 +49,9 @@ export default {
     transactions() {
       return this.$store.getters["dashboard/getTransactions"];
     }
+  },
+  components: {
+    Currency: () => import("@/components/All/Currency")
   },
   async mounted() {
     this.loading = true;
@@ -66,6 +74,8 @@ export default {
   // max-width: 50rem;
   &__list {
     box-shadow: 0px;
+    max-height: 30rem;
+    overflow: auto;
   }
   &__item {
     &--title {

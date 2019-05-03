@@ -41,6 +41,10 @@ export default {
       background-color: #fff;
       box-shadow: 1px 1px 10px rgb(255, 234, 255);
       padding: 1rem;
+      &:hover {
+        box-shadow: 1px 1px 10px rgb(255, 216, 255);
+        // background-color: rgb(248, 248, 248);
+      }
     }
     #{$self}__edit {
       font-size: 2rem;

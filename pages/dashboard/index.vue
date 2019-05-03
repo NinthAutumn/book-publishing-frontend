@@ -44,7 +44,8 @@ export default {
     margin-top: 1rem;
     grid-template-areas: "views views views" "transactions transactions commentlist";
     grid-gap: 10px;
-
+    // margin-bottom: 1rem;
+    padding-bottom: 10px;
     #{$self}__view {
       grid-area: views;
     }

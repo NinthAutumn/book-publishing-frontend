@@ -4,10 +4,13 @@
       <svg-icon
         name="crown"
         class="currency__icon"
-        :class="{'currency__icon--large':size === 'large'}"
+        :class="{'currency__icon--large':size === 'large','currency__icon--small':size === 'small'}"
       ></svg-icon>
     </div>
-    <div class="currency__number" :class="{'currency__number--large':size === 'large'}">{{amount}}</div>
+    <div
+      class="currency__number"
+      :class="{'currency__number--large':size === 'large','currency__number--small':size === 'small'}"
+    >{{amount}}</div>
   </div>
 </template>
 
@@ -39,10 +42,13 @@ export default {
       // margin-left: 5px;
       font-size: 25px;
     }
+    &--small {
+      font-size: 1.3rem;
+    }
   }
   &__type {
-    height: 25px;
-    width: 25px;
+    // height: 25px;
+    // width: 25px;
     transform-style: preserve-3d;
     transform: perspective(500px);
     &--large {
@@ -75,6 +81,10 @@ export default {
     &--large {
       width: 45px;
       height: 45px;
+    }
+    &--small {
+      width: 2rem;
+      height: 2rem;
     }
 
     &:hover {

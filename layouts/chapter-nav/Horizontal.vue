@@ -5,7 +5,7 @@
   >
     <nav>
       <div class="left-menu flex flex--align">
-        <nuxt-link tag="div" to="/" class="site-logo">ノーブル</nuxt-link>
+        <nuxt-link v-ripple tag="div" to="/" class="site-logo">ノーブル</nuxt-link>
         <div class="nav-title flex flex--align">
           <nuxt-link
             class="nav-title__book"

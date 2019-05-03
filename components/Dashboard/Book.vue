@@ -132,4 +132,9 @@ export default {
 </script>
 
 <style lang="scss">
+.dash-book {
+  &:hover {
+    // background-color: grey;
+  }
+}
 </style>

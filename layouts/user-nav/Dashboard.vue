@@ -1,12 +1,12 @@
 <template>
   <div class="d-nav-all">
     <div class="d-nav-h" style="z-index:1000;">
-      <div class="dashboard-h-menu flex flex--between">
-        <div class="divider flex flex--align">
+      <div class="dashboard-h-menu flex-row flex--between">
+        <div class="divider flex-row flex--align">
           <div class="dashboard-icon">
             <i class="el-icon-menu" @click="menuDrawer"></i>
           </div>
-          <nuxt-link tag="div" to="/" class="site-logo">ノーブル</nuxt-link>
+          <nuxt-link v-ripple tag="div" to="/" class="site-logo">ノーブル</nuxt-link>
         </div>
         <nuxt-link
           v-if="$route.name ==='dashboard-books-id-index-draft'||$route.name ==='dashboard-books-id-index-published'||$route.name ==='dashboard-books-id-index'||$route.name ==='dashboard-books-id-index-deleted'||$route.name ==='dashboard-books-id-new'"
@@ -89,9 +89,9 @@ export default {
           meta: "analytics"
         },
         {
-          title: "コメント",
-          icon: "comment",
-          link: "/dashboard/comments",
+          title: "収入",
+          icon: "yen-sign",
+          link: "/dashboard/earning",
           meta: "comments"
         }
       ]
@@ -256,7 +256,9 @@ export default {
   animation-fill-mode: forwards; */
   transition: 300ms;
   // animation: appearSlides 300ms;
-
+  ul {
+    padding-bottom: 1rem;
+  }
   &-list {
     display: flex;
     // padding: 1rem;
@@ -266,6 +268,7 @@ export default {
     text-align: left;
     font-size: 2.5rem;
     height: 48px;
+
     p {
       font-size: 1.7rem;
     }
