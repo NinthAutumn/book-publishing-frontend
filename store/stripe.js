@@ -100,5 +100,20 @@ export const actions = {
         phone
       })
     } catch (error) {}
+  },
+  savePaymentMethod: async function ({
+    commit
+  }, {
+    customerId,
+    paymentMethodId
+  }) {
+    try {
+      const res = await this.$axios.patch('/stripe/paymentMethod/save', {
+        customerId,
+        paymentMethodId
+      })
+    } catch (error) {
+
+    }
   }
 }

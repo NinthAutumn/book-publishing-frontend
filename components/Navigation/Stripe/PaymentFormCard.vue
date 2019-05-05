@@ -9,13 +9,32 @@
       >{{card.card.last4}}</div>-->
     </div>
     <div class="form-container">
-      <div class="flex-control">
-        <label for="fullname">名前</label>
-        <input v-model="form.fullname" type="text" name="fullname" placeholder="名字　名前">
+      <div class="flex-control flex-row flex--between">
+        <div class="flex-control">
+          <label for="fullname">姓名</label>
+          <input
+            class="product-modal__input product-modal__input--name product-modal__input--firstname"
+            v-model="form.lastname"
+            type="text"
+            name="fullname"
+            placeholder="姓名"
+          >
+        </div>
+        <div class="flex-control">
+          <label for="fullname">名前</label>
+          <input
+            class="product-modal__input product-modal__input--name"
+            v-model="form.firstname"
+            type="text"
+            name="fullname"
+            placeholder="名前"
+          >
+        </div>
       </div>
       <div class="flex-control">
         <label for="email">Eメール</label>
         <input
+          class="product-modal__input product-modal__input--email"
           v-validate="'required|email'"
           type="email"
           v-model="form.email"
@@ -27,6 +46,7 @@
       <div class="flex-control">
         <label for="phone">電話番号</label>
         <input
+          class="product-modal__input product-modal__input--phone"
           v-model="form.phone"
           @keypress="isNumber"
           type="text"
@@ -35,9 +55,10 @@
         >
       </div>
     </div>
+    <label class="product-modal__card-label">クレジット・デビット カード</label>
     <div id="card-element"></div>
-    <v-checkbox v-model="saveCard" :label="`カードを保存する`"></v-checkbox>
     <div id="card-errors" role="alert" v-text="cardError"></div>
+    <v-checkbox v-model="saveCard" :label="`カードを保存する`"></v-checkbox>
     <div v-ripple @click="buttonSelect" class="product-modal__buy-button">{{`¥${price}円払う`}}</div>
   </div>
 </template>
@@ -56,7 +77,9 @@ export default {
       form: {
         phone: "",
         email: this.$store.getters.loggedInUser.email,
-        fullname: ""
+        fullname: "",
+        firstname: "",
+        lastname: ""
       },
       card: "",
       cardError: "",
@@ -94,13 +117,12 @@ export default {
       }
     },
     buttonSelect: async function() {
-      this.loading = true;
       const { paymentMethod, error } = await this.stripe.createPaymentMethod(
         "card",
         this.card,
         {
           billing_details: {
-            name: this.form.fullname,
+            name: `${this.form.lastname} ${this.form.firstname}`,
             email: this.form.email,
             phone: `+88${this.form.phone}`
           }
@@ -108,6 +130,14 @@ export default {
       );
       if (error) {
         return (this.cardError = error.message);
+      }
+      this.loading = true;
+
+      if (this.saveCard) {
+        await this.$store.dispatch("stripe/savePaymentMethod", {
+          customerId: this.$store.getters["loggedInUser"].stripeCustomerId,
+          paymentMethodId: paymentMethod.id
+        });
       }
       let res;
       if (this.customer) {
@@ -126,7 +156,6 @@ export default {
           skuId: this.skuId
         });
       }
-
       this.handleServerResponse(res);
       this.loading = false;
     },
@@ -140,7 +169,7 @@ export default {
       const form = {
         phone: this.form.phone,
         email: this.form.email,
-        fullname: this.form.fullname,
+        fullname: `${this.form.lastname} ${this.form.firstname}`,
         skuId: this.skuId,
         source
       };
@@ -167,10 +196,11 @@ export default {
         const form = {
           phone: this.form.phone,
           email: this.form.email,
-          fullname: this.form.fullname,
+          fullname: `${this.form.lastname} ${this.form.firstname}`,
           skuId: this.skuId
         };
         await this.$store.dispatch("wallet/buyCoin", { form });
+        this.$store.commit("TOGGLE_PRODUCT_MODAL");
         return this.$message({
           message: "クラウンコインの購入に成功しました",
           type: "success"
@@ -207,36 +237,60 @@ export default {
 .product-modal {
   $self: &;
   #{$self}__payment {
-    padding: 0.75rem 2rem;
-
+    padding: 0 2rem;
+    padding-bottom: 1rem;
     .form-container {
-      box-shadow: 1px 1px 5px grey;
-      border-radius: 0.5rem;
-      padding: 1rem;
-      margin-bottom: 1rem;
-      label {
-        font-size: 1.6rem;
-        width: 10rem;
-      }
+      // label {
+      //   font-size: 1.6rem;
+      //   width: 10rem;
+      // }
       .flex-control {
-        display: flex;
-        align-items: center;
+        // display: flex;
+        // align-items: center;
         // justify-content: space-between;
       }
     }
-    input {
+    #{$self}__input {
+      height: 40px;
+      padding: 10px 12px;
+      color: #32325d;
+      background-color: white;
+      border: 1px solid transparent;
+      border-radius: 4px;
+      box-shadow: 0 1px 3px 0 #e6ebf1;
+      -webkit-transition: box-shadow 150ms ease;
+      transition: box-shadow 150ms ease;
       font-size: 1.6rem;
-      padding: 0.75rem 1rem;
-      width: 100%;
+
+      margin-bottom: 2rem;
+      &--firstname {
+        // width: 80%;
+      }
+      &--name {
+        // width: 80%;
+        width: 17rem;
+      }
+      &--email {
+        width: 100%;
+      }
+      &--phone {
+        width: 100%;
+      }
     }
+
     &--hidden {
       opacity: 0;
     }
     opacity: 1;
     #card-element {
-      border-radius: 0.5rem;
-      box-shadow: 1px 1px 5px grey;
-      padding: 1rem;
+      height: 40px;
+      padding: 10px 12px;
+      color: #32325d;
+      padding: 10px 12px;
+      background-color: white;
+      border: 1px solid transparent;
+      border-radius: 4px;
+      box-shadow: 0 1px 3px 0 #e6ebf1;
       // margin-bottom: 3rem;
     }
     #{$self}__buy-button {
@@ -245,15 +299,15 @@ export default {
       box-sizing: border-box;
       text-align: center;
       border-radius: 0.5rem;
+      background-color: #6772e4;
       color: white;
-      background-color: $primary;
       transition: box-shadow 300ms, background-color 300ms, color 300ms;
       user-select: none;
       box-shadow: 1px 1px 5px grey;
       &:hover {
         cursor: pointer;
-        color: $primary;
-        background-color: white;
+        color: #6772e4;
+        background-color: #cad3ff;
         transition: box-shadow 300ms, background-color 300ms, color 300ms;
       }
     }
@@ -264,20 +318,41 @@ export default {
       // margin-right: 0.5rem;
     }
   }
+  label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    font-variant: normal;
+    -webkit-font-smoothing: antialiased;
+    color: #6b7c93;
+  }
   .v-input__slot {
     flex-direction: row-reverse;
     // box-shadow: 1px 1px 5px grey;
     // padding: 1rem;
+    align-items: center;
     border-radius: 0.5rem;
-    // margin-bottom: 0 !important;
+    margin-bottom: 0 !important;
   }
   .v-input {
     margin-top: 1rem;
     justify-content: flex-end;
+    .v-label {
+      margin-bottom: 0 !important;
+      color: #6b7c93;
+    }
+  }
+  #card-errors {
+    font-size: 1.4rem;
+    text-align: center;
+    margin-top: 0.8rem;
+    color: #ffa1ae;
   }
   .v-input--selection-controls__input {
     margin-right: 0;
     margin-left: 8px;
+    color: white;
   }
 }
 </style>

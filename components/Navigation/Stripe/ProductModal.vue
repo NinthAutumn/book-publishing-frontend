@@ -2,37 +2,45 @@
   <div open class="product-modal" width="30rem" height="50rem">
     <div class="product-modal__wrapper elevation-10">
       <div class="product-modal__header flex-row flex--between flex--align">
-        <fa @click="step--" v-if="step > 1" icon="arrow-left" class="product-modal__back"></fa>クラウンコインを入手
+        <fa @click="goBack" v-if="step > 1" icon="arrow-left" class="product-modal__back"></fa>クラウンコインを入手
         <fa
           @click="$store.commit('TOGGLE_PRODUCT_MODAL')"
           class="product-modal__close"
           icon="times"
         ></fa>
       </div>
-      <p
-        class="product-modal__description"
-      >*クラウンコインとは本の話の購入・作者のサポート・広告のスキップなどができる nobles.jp ないの仮想通貨である</p>
-      <div class="product-modal__container" v-if="step ===1">
-        <div class="product-modal__buy-price_show">{{`合計 ¥${price}円`}}</div>
-        <li
-          class="product-modal__item"
-          v-for="(product,index) in products"
-          :key="index"
-          :class="{'product-modal__item--active':selected===index}"
-          @click="selectProduct(index,product.amount,product.value,product.id)"
-        >
-          <div class="product-modal__crown-coin">
-            <Currency :amount="product.amount"></Currency>
+      <div class="product-modal__container">
+        <p
+          class="product-modal__description"
+        >*クラウンコインとは本の話の購入・作者のサポート・広告のスキップなどができる nobles.jp ないの仮想通貨である</p>
+        <transition name="slide-fade">
+          <div class="product-modal__content" v-if="step ===1">
+            <div class="product-modal__buy-price_show">{{`合計 ¥${price}円`}}</div>
+            <li
+              class="product-modal__item"
+              v-for="(product,index) in products"
+              :key="index"
+              :class="{'product-modal__item--active':selected===index}"
+              @click="selectProduct(index,product.amount,product.value,product.id)"
+            >
+              <div class="product-modal__crown-coin">
+                <Currency :amount="product.amount"></Currency>
+              </div>
+              <div class="product-modal__price">
+                {{`¥${product.value + (product.value*0.08)}円`}}
+                <span class="product-modal__tax">税込</span>
+              </div>
+            </li>
+            <div @click="step = 2" v-ripple class="product-modal__button">{{`クラウンコインを${coin}個買う`}}</div>
           </div>
-          <div class="product-modal__price">
-            {{`¥${product.value + (product.value*0.08)}円`}}
-            <span class="product-modal__tax">税込</span>
-          </div>
-        </li>
-        <div @click="step = 2" v-ripple class="product-modal__button">{{`クラウンコインを${coin}個買う`}}</div>
+        </transition>
+        <transition name="slide-fade">
+          <payment-method :price="price" v-model="step" v-if="step === 2" :coin="coin" :skuId="id"></payment-method>
+        </transition>
+        <transition name="slide-fade">
+          <payment-form-card v-if="step === 3" :price="price" :coin="coin" :skuId="id"></payment-form-card>
+        </transition>
       </div>
-      <payment-method :price="price" v-model="step" v-if="step === 2"></payment-method>
-      <payment-form-card v-if="step === 3" :price="price" :coin="coin" :skuId="id"></payment-form-card>
     </div>
   </div>
 </template>
@@ -81,7 +89,26 @@ export default {
       this.coin = coin;
       this.price = price + price * 0.08;
       this.id = id;
+    },
+    goBack() {
+      if (this.step === 4) {
+        this.step--;
+        this.step--;
+      } else if (
+        this.step === 3 &&
+        this.$store.getters["stripe/getPaymentMethods"].data.length < 1
+      ) {
+        this.step = 1;
+      } else {
+        this.step--;
+      }
     }
+  },
+  async mounted() {
+    await this.$store.dispatch("stripe/fetchPaymentMethods", {
+      customerId: this.$store.getters.loggedInUser.stripeCustomerId,
+      type: "card"
+    });
   }
 };
 </script>
@@ -98,9 +125,13 @@ export default {
   #card-element {
   }
   &__wrapper {
-    height: 55rem;
-    width: 40rem;
     background-color: #fff;
+    #{$self}__container {
+      min-height: 55rem;
+      max-width: 40rem;
+      color: #6b7c93;
+      background-color: #f7f8f9;
+    }
 
     #{$self}__header {
       font-size: 1.8rem;
@@ -130,7 +161,7 @@ export default {
       }
     }
     #{$self}__description {
-      padding: 2rem;
+      padding: 1rem 2rem;
       font-size: 1.3rem;
       // padding: 1rem;
       border-radius: 1rem;

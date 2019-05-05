@@ -127,6 +127,9 @@ module.exports = {
     }, {
       src: '@/plugins/countTo',
       ssr: false
+    }, {
+      src: '@/plugins/card',
+      ssr: false
     }
   ],
 
@@ -178,7 +181,8 @@ module.exports = {
       }
     }],
     ['@nuxtjs/dotenv', {
-      /* module options */ }],
+      /* module options */
+    }],
     ['nuxt-stripe-module', {
       publishableKey: process.env.STRIPE_KEY,
       version: 'v3', // Default
