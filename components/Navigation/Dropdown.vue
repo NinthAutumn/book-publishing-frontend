@@ -23,7 +23,10 @@
             <Vote :amount="token"></Vote>
           </div>
           <div class="flex-divider">
-            <div class="profile-dropdown__wallet__buy-more">買う</div>
+            <div
+              class="profile-dropdown__wallet__buy-more"
+              @click="$store.commit('TOGGLE_PRODUCT_MODAL')"
+            >買う</div>
           </div>
         </div>
         <li
@@ -86,7 +89,8 @@ export default {
         { title: "設定", link: "/users/setting" },
         { title: "ログアウト", link: "/home" }
       ],
-      loading: true
+      loading: true,
+      product: false
     };
   },
 

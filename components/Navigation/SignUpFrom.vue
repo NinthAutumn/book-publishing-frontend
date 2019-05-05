@@ -27,7 +27,7 @@
       <label for="email">メールアドレス</label>
       <input
         name="email"
-        v-validate="'email'"
+        v-validate="'required|email'"
         class="form-input form-input--primary--lighter"
         type="email"
         data-vv-as="記入されたメールアドレス"

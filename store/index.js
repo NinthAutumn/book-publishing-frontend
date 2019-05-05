@@ -14,7 +14,7 @@ export const state = () => ({
   dropdownState: false,
   authed: 0,
   loginForm: false,
-
+  productModal: false,
 })
 
 export const getters = {
@@ -26,13 +26,17 @@ export const getters = {
   },
   loggedInUser: (state) => {
     return state.auth.user
-  }
+  },
+  getProductModalState: state => state.productModal
 }
 
 
 export const mutations = {
   SIGNUP_STATE(state) {
     state.authed = 1;
+  },
+  TOGGLE_PRODUCT_MODAL(state) {
+    state.productModal = !state.productModal
   },
   SET_AUTH_PAGE(state, page) {
     state.authed = page

@@ -56,7 +56,18 @@ export const actions = {
       console.log(error.status);
       throw error
     }
+  },
+  async buyCoin({
+    commit
+  }, {
+    form
+  }) {
+    try {
+      const res = await this.$axios.post(`/transaction/coin`, {
+        form
+      })
+    } catch (error) {
 
+    }
   }
-
 }

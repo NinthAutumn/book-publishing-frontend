@@ -176,7 +176,13 @@ module.exports = {
       autoTracking: {
         page: false
       }
-    }]
+    }],
+    ['@nuxtjs/dotenv', {
+      /* module options */ }],
+    ['nuxt-stripe-module', {
+      publishableKey: process.env.STRIPE_KEY,
+      version: 'v3', // Default
+    }],
 
   ],
   /*

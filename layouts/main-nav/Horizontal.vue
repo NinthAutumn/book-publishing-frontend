@@ -45,6 +45,11 @@
         <AuthModal></AuthModal>
       </div>
     </transition>
+    <transition name="grow-shrink">
+      <div class="productform" v-if="productState">
+        <product-modal></product-modal>
+      </div>
+    </transition>
   </div>
 </template>
 <script>
@@ -59,7 +64,8 @@ export default {
   components: {
     SearchBar: () => import("@/components/Navigation/SearchBar"),
     AuthModal: () => import("@/components/Navigation/AuthModal"),
-    Dropdown: () => import("@/components/Navigation/Dropdown")
+    Dropdown: () => import("@/components/Navigation/Dropdown"),
+    ProductModal: () => import("@/components/Navigation/ProductModal")
   },
   computed: {
     user() {
@@ -71,6 +77,9 @@ export default {
     },
     loginState() {
       return this.$store.state.loginForm;
+    },
+    productState() {
+      return this.$store.getters.getProductModalState;
     }
   },
   methods: {
