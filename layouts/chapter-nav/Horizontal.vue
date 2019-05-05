@@ -62,7 +62,7 @@ export default {
     };
   },
   components: {
-    AuthModal: () => import("@/components/Navigation/AuthModal"),
+    AuthModal: () => import("@/components/Navigation/Auth/AuthModal"),
     Dropdown: () => import("@/components/Navigation/Dropdown")
   },
   computed: {

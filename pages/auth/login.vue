@@ -16,7 +16,7 @@ export default {
     };
   },
   components: {
-    LoginForm: () => import("@/components/Navigation/LoginForm")
+    LoginForm: () => import("@/components/Navigation/Auth/LoginForm")
   },
   methods: {
     async login() {
@@ -24,7 +24,6 @@ export default {
         username: this.username,
         password: this.password
       };
-      console.log(user);
       await this.$store
         .dispatch("auth/login", user)
         .then(() => {
@@ -38,7 +37,12 @@ export default {
   },
   auth: false,
   beforeCreate() {
-    if (Cookies.get("token")) {
+    if (this.$store.getters.isAuthenticated) {
+      this.$router.go(-1);
+    }
+  },
+  async mounted() {
+    if (this.$store.getters.isAuthenticated) {
       this.$router.go(-1);
     }
   }

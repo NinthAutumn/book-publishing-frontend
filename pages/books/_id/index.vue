@@ -68,7 +68,7 @@
           <span
             class="book-content__buttons__item button button--primary--open button--shadow button--big"
             v-ripple
-          >登録</span>
+          >サポートする</span>
           <span
             v-if="$store.getters.isAuthenticated"
             @click="bookmarkBook"

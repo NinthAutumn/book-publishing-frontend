@@ -70,7 +70,7 @@ export default {
   watch: {},
   components: {
     Currency: () => import("@/components/All/Currency"),
-    PaymentForm: () => import("@/components/Navigation/PaymentForm")
+    PaymentForm: () => import("@/components/Navigation/Stripe/PaymentForm")
   },
   methods: {
     selectProduct: function(index, coin, price, id) {
@@ -187,64 +187,6 @@ export default {
         box-shadow: 1px 1px 5px rgb(226, 226, 255);
         transition: box-shadow 300ms, background-color 300ms;
       }
-    }
-  }
-  #{$self}__payment {
-    padding: 0.75rem 2rem;
-
-    .form-container {
-      box-shadow: 1px 1px 5px grey;
-      border-radius: 0.5rem;
-      padding: 1rem;
-      margin-bottom: 1rem;
-      label {
-        font-size: 1.6rem;
-        width: 10rem;
-      }
-      .flex-control {
-        display: flex;
-        align-items: center;
-        // justify-content: space-between;
-      }
-    }
-    input {
-      font-size: 1.6rem;
-      padding: 0.75rem 1rem;
-      width: 100%;
-    }
-    &--hidden {
-      opacity: 0;
-    }
-    opacity: 1;
-    #card-element {
-      border-radius: 0.5rem;
-      box-shadow: 1px 1px 5px grey;
-      padding: 1rem;
-      margin-bottom: 3rem;
-    }
-    #{$self}__buy-button {
-      font-size: 1.6rem;
-      padding: 0.75rem 0;
-      box-sizing: border-box;
-      text-align: center;
-      border-radius: 0.5rem;
-      color: white;
-      background-color: $primary;
-      transition: box-shadow 300ms, background-color 300ms, color 300ms;
-      user-select: none;
-      box-shadow: 1px 1px 5px grey;
-      &:hover {
-        cursor: pointer;
-        color: $primary;
-        background-color: white;
-        transition: box-shadow 300ms, background-color 300ms, color 300ms;
-      }
-    }
-    #{$self}__buy-price {
-      font-size: 1.6rem;
-      text-align: right;
-      margin-bottom: 1rem;
-      // margin-right: 0.5rem;
     }
   }
 }

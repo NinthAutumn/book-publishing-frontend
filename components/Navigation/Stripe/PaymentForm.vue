@@ -36,6 +36,7 @@
       </div>
     </div>
     <div id="card-element"></div>
+    <v-checkbox v-model="saveCard" :label="`カードを保存する`"></v-checkbox>
     <div id="card-errors" role="alert" v-text="cardError"></div>
     <div v-ripple @click="buttonSelect" class="product-modal__buy-button">{{`¥${price}円払う`}}</div>
   </div>
@@ -59,6 +60,7 @@ export default {
       },
       card: "",
       cardError: "",
+      saveCard: false,
       loading: false
     };
   },
@@ -238,7 +240,7 @@ export default {
       border-radius: 0.5rem;
       box-shadow: 1px 1px 5px grey;
       padding: 1rem;
-      margin-bottom: 3rem;
+      // margin-bottom: 3rem;
     }
     #{$self}__buy-button {
       font-size: 1.6rem;
@@ -264,6 +266,21 @@ export default {
       margin-bottom: 1rem;
       // margin-right: 0.5rem;
     }
+  }
+  .v-input__slot {
+    flex-direction: row-reverse;
+    // box-shadow: 1px 1px 5px grey;
+    // padding: 1rem;
+    border-radius: 0.5rem;
+    // margin-bottom: 0 !important;
+  }
+  .v-input {
+    margin-top: 1rem;
+    justify-content: flex-end;
+  }
+  .v-input--selection-controls__input {
+    margin-right: 0;
+    margin-left: 8px;
   }
 }
 </style>

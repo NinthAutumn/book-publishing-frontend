@@ -63,9 +63,9 @@ export default {
   },
   components: {
     SearchBar: () => import("@/components/Navigation/SearchBar"),
-    AuthModal: () => import("@/components/Navigation/AuthModal"),
+    AuthModal: () => import("@/components/Navigation/Auth/AuthModal"),
     Dropdown: () => import("@/components/Navigation/Dropdown"),
-    ProductModal: () => import("@/components/Navigation/ProductModal")
+    ProductModal: () => import("@/components/Navigation/Stripe/ProductModal")
   },
   computed: {
     user() {
