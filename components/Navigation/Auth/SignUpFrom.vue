@@ -107,7 +107,7 @@ export default {
               password: this.password
             }
           });
-          // window.location.reload(true);
+          this.$router.go(0);
         } catch (error) {
           this.$message({
             message: "アカウント作成に失敗",

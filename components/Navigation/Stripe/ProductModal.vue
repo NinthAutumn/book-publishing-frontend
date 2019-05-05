@@ -31,7 +31,8 @@
         </li>
         <div @click="step = 2" v-ripple class="product-modal__button">{{`クラウンコインを${coin}個買う`}}</div>
       </div>
-      <payment-form v-if="step === 2" :price="price" :coin="coin" :skuId="id"></payment-form>
+      <payment-method :price="price" v-model="step" v-if="step === 2"></payment-method>
+      <payment-form-card v-if="step === 3" :price="price" :coin="coin" :skuId="id"></payment-form-card>
     </div>
   </div>
 </template>
@@ -70,7 +71,9 @@ export default {
   watch: {},
   components: {
     Currency: () => import("@/components/All/Currency"),
-    PaymentForm: () => import("@/components/Navigation/Stripe/PaymentForm")
+    PaymentFormCard: () =>
+      import("@/components/Navigation/Stripe/PaymentFormCard"),
+    PaymentMethod: () => import("@/components/Navigation/Stripe/PaymentMethod")
   },
   methods: {
     selectProduct: function(index, coin, price, id) {

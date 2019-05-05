@@ -35,7 +35,7 @@ export const actions = {
     type
   }) {
     try {
-      const res = await this.$axios.get(`/stripe/paymentMethods?customerId=${customerId}type=${type}`)
+      const res = await this.$axios.get(`/stripe/paymentMethods?customerId=${customerId}&type=${type}`)
       commit('SET_PAYMENT_METHODS', _.get(res, 'data', []))
     } catch (error) {
       return Promise.reject(error)

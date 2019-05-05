@@ -83,7 +83,7 @@ export default {
           }
         });
         this.$store.commit("LOGIN_FALSE");
-        window.location.reload(true);
+        this.$router.go(0);
       } catch (error) {
         this.$message({
           message: "パスワードまたはユーザ名が間違っています",

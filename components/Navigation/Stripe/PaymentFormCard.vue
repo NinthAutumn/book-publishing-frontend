@@ -78,7 +78,7 @@ export default {
     }
   },
   components: {
-    Currency: () => import("@/components/All/Currency")
+    // Currency: () => import("@/components/All/Currency")
   },
   methods: {
     isNumber(evt) {
@@ -112,7 +112,9 @@ export default {
       let res;
       if (this.customer) {
         res = await this.$store.dispatch("stripe/postPaymentIntent", {
-          customerId: this.customer.id,
+          customerId:
+            this.customer.id ||
+            this.$store.getters["loggedInUser"].stripeCustomerId,
           payment_method_id: paymentMethod.id,
           amount: this.price,
           skuId: this.skuId
@@ -176,12 +178,7 @@ export default {
       }
     }
   },
-  async created() {
-    await this.$store.dispatch("stripe/fetchPaymentMethods", {
-      customerId: this.$store.getters.loggedInUser.stripeCustomerId,
-      type: "card"
-    });
-  },
+  async created() {},
   async mounted() {
     const elements = this.stripe.elements({ locale: "ja" });
     const self = this;
