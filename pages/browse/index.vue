@@ -14,7 +14,6 @@
             <div class="browse-page__sort-type">
               <Select
                 :width="100"
-                :mheight="158"
                 v-model="type"
                 name="詳細条件"
                 :object="sort_type"

@@ -20,20 +20,7 @@
     </div>
     <div class="review-card__book flex-column flex--center flex--around">
       <div class="review-card__info__rating">
-        <no-ssr>
-          <star-rating
-            :rating="review.rating"
-            :star-size="17"
-            :read-only="true"
-            :show-rating="false"
-            inactive-color="#D8D7D5"
-            active-color="#FFB727"
-            :increment="0.01"
-            :round-start-rating="false"
-            border-color="#FFB727"
-            class="star-rating"
-          ></star-rating>
-        </no-ssr>
+        <v-rating color="#FF8D29" readonly size="17" half-increments :value="+review.rating"></v-rating>
       </div>
 
       <div class="review-card__book__cover">
@@ -74,9 +61,13 @@ export default {
 
 <style lang="scss">
 .review-card {
+  .v-icon {
+    padding: 0 !important;
+  }
   &--mobile {
     width: 80vw;
     height: 150px !important;
+
     // background-color: $secondary;
     // color: white;
     hr {

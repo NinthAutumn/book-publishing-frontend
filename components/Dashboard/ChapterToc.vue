@@ -19,7 +19,7 @@
     </div>
 
     <div v-else-if="published" v-for="(volume,index) in toc" :key="index" class="elevation-1">
-      <h3 class="volume-list__title">{{'第'+ (index+1) + '章: '+ volume.volume_title }}</h3>
+      <h3 class="volume-list__title">{{'第'+ (index+1) + '章 '+ volume.volume_title }}</h3>
       <v-data-table
         :headers="innerHeaders"
         hide-actions
@@ -34,8 +34,8 @@
           <td>{{ props.item.title }}</td>
           <td>{{ $moment(props.item.created_at).format('DD-M-YYYY') }}</td>
           <td>
-            <v-icon class="mr-2">edit</v-icon>
-            <v-icon>delete</v-icon>
+            <v-icon class="mr-2 volume-list__item__icon">edit</v-icon>
+            <v-icon class="volume-list__item__icon">delete</v-icon>
           </td>
         </template>
       </v-data-table>
@@ -57,7 +57,6 @@
 </template>
 
 <script>
-import ChapterTocItem from "./ChapterTocItem";
 export default {
   data() {
     return {
@@ -74,9 +73,7 @@ export default {
     toc: Array,
     published: Boolean
   },
-  components: {
-    ChapterTocItem: () => import("./ChapterTocItem")
-  }
+  components: {}
 };
 </script>
 
@@ -94,15 +91,28 @@ export default {
     font-weight: bold;
   }
 }
-.volume-list__title {
-  background-color: #fff;
-  height: 50px;
-  font-size: 1.7rem;
-  font-weight: 400;
-  display: flex;
-  align-items: center;
-  padding-left: 2rem;
+.volume-list {
+  $self: &;
+  &__title {
+    background-color: #fff;
+    height: 50px;
+    font-size: 1.7rem;
+    font-weight: 400;
+    display: flex;
+    align-items: center;
+    padding-left: 2rem;
+  }
+  &__item {
+    &__icon {
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
 }
+.volume-list__title {
+}
+
 .dashboard-toc {
   .divider {
     width: 100%;

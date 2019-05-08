@@ -80,7 +80,8 @@ export default {
             require("@/assets/img/jcb.png"),
             require("@/assets/img/visa.png"),
             require("@/assets/img/mastercard.png"),
-            require("@/assets/img/america.png")
+            require("@/assets/img/amex.png"),
+            require("@/assets/img/diner.png")
           ],
           value: "card",
           step: 3
@@ -201,9 +202,13 @@ export default {
       align-items: center;
       justify-content: space-between;
       flex-wrap: wrap;
+      height: 200px;
+      overflow: auto;
+      padding: 1rem;
     }
     #{$self}__cards {
       width: 47%;
+      margin-bottom: 2rem;
     }
   }
   &__list {
@@ -212,6 +217,7 @@ export default {
     justify-content: center;
     flex-direction: column;
     text-align: center;
+
     #{$self}__button {
       font-size: 1.6rem;
       padding: 1rem 1.5rem;
@@ -263,6 +269,7 @@ export default {
     }
   }
   &__buy-price {
+    color: black;
   }
 }
 </style>

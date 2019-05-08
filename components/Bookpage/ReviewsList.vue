@@ -8,6 +8,8 @@
           v-if="reviewState"
           :class="{center: $store.state.menuState === 'menu-inactive'}"
         >
+          <h3 class="review-form__header">感想を書く</h3>
+
           <ReviewsForm v-if="!reviewed" v-model="reviewState"></ReviewsForm>
           <ReviewsForm
             v-else
@@ -181,5 +183,24 @@ li {
 }
 .reviews-list__sort {
   margin: 1rem 0;
+}
+.review-form-modal {
+  background-color: #f1f3f7;
+  -webkit-box-shadow: 0 13px 27px -5px rgba(50, 50, 93, 0.25),
+    0 8px 16px -8px rgba(0, 0, 0, 0.3), 0 -6px 16px -6px rgba(0, 0, 0, 0.025);
+  box-shadow: 0 13px 27px -5px rgba(50, 50, 93, 0.25),
+    0 8px 16px -8px rgba(0, 0, 0, 0.3), 0 -6px 16px -6px rgba(0, 0, 0, 0.025);
+  -webkit-transition-property: color, background-color, -webkit-box-shadow,
+    -webkit-transform;
+  transition-property: color, background-color, -webkit-box-shadow,
+    -webkit-transform;
+  transition-property: color, background-color, box-shadow, transform;
+  transition-property: color, background-color, box-shadow, transform,
+    -webkit-box-shadow, -webkit-transform;
+  .review-form__header {
+    font-size: 2rem;
+    padding: 1rem 0;
+    color: #32325d;
+  }
 }
 </style>

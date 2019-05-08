@@ -113,7 +113,7 @@ export default {
           const announcement = await this.$store.dispatch(
             "book/postAnnouncement",
             {
-              bookId: this.bookId,
+              bookId: this.book.id,
               content: this.announcement.content,
               title: this.announcement.title
             }

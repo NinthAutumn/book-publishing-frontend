@@ -25,6 +25,10 @@
 
 <script>
 export default {
+  props: {
+    value: Array,
+    limit: Number
+  },
   data() {
     return {
       search: "",
@@ -78,12 +82,19 @@ export default {
     async selectTag(name) {
       this.selected[name].selected = !this.selected[name].selected;
       let temparray = [];
+
       this.selected.forEach(tag => {
         if (tag.selected) {
           temparray.push(tag.key);
         }
       });
+      if (temparray.length > this.limit) {
+        console.log(temparray[temparray.length - 1]);
+        this.selected[name].selected = false;
+        temparray.pop();
+      }
       this.object = temparray;
+
       this.$emit("input", temparray);
     }
   }

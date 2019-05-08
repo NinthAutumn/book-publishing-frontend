@@ -61,7 +61,7 @@
         </section>
       </div>
       <BookChapterList class="book__synopsis" v-show="tabs.open ==='toc'"></BookChapterList>
-
+      <announcements v-if="!$device.isMobile" class="book__announcements"></announcements>
       <div class="book__all" v-if="!$device.isMobile">
         <div class="book__information"></div>
         <div class="book__buttons">
@@ -291,7 +291,8 @@ export default {
     BookChapterList: () => import("@/components/Bookpage/BookChapterList"),
     ReviewsList: () => import("@/components/Bookpage/ReviewsList"),
     ReviewsForm: () => import("@/components/Bookpage/ReviewForm"),
-    Tags: () => import("@/components/Bookpage/Tags")
+    Tags: () => import("@/components/Bookpage/Tags"),
+    Announcements: () => import("@/components/Bookpage/Announcements")
     // TextEditor
   },
   transition: false,
@@ -423,12 +424,14 @@ input[type="number"]::-webkit-outer-spin-button {
       grid-template-areas:
         ". cover ."
         "title title title "
-        "summary summary summary" !important;
+        "summary summary summray"
+        "content content content" !important;
       .book-info {
         width: 100%;
       }
     }
-
+    .book__announcements {
+    }
     .book__info {
       display: block;
     }
@@ -477,7 +480,7 @@ input[type="number"]::-webkit-outer-spin-button {
 
     grid-template-areas:
       "cover title title avatar"
-      "cover meta meta meta"
+      "cover announcements . meta"
       "summary summary summary summary "
       "content content content content ";
     // "summary summary summary summary";
@@ -485,12 +488,16 @@ input[type="number"]::-webkit-outer-spin-button {
 
   &__buttons {
     display: flex;
+    user-select: none;
   }
   &__synopsis {
     grid-area: content;
   }
   &__title {
     font-size: 22px;
+  }
+  &__announcements {
+    grid-area: announcements;
   }
   &__avatar {
     grid-area: avatar;

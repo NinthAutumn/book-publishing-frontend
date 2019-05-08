@@ -316,6 +316,7 @@ export default {
       text-align: right;
       margin-bottom: 1rem;
       // margin-right: 0.5rem;
+      color: black;
     }
   }
   label {

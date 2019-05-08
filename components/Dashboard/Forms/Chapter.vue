@@ -613,7 +613,7 @@ dialog {
   .chapter-index {
     font-size: 18px;
     height: 50px;
-
+    margin-right: 1rem;
     &:hover {
       user-select: none;
     }

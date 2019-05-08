@@ -9,7 +9,7 @@
         <div class="nav-title flex flex--align">
           <nuxt-link
             class="nav-title__book"
-            v-text="`${$store.getters['chapter/getChapterBookTitle']}/`"
+            v-text="`${title}/`"
             :to="`/books/${$route.params.id}`"
           ></nuxt-link>
           <span
@@ -50,6 +50,11 @@
         <AuthModal></AuthModal>
       </div>
     </transition>
+    <transition name="grow-shrink">
+      <div class="productform" v-if="productState">
+        <product-modal></product-modal>
+      </div>
+    </transition>
   </div>
 </template>
 <script>
@@ -61,9 +66,15 @@ export default {
       // signUpForm: ""
     };
   },
+  async mounted() {
+    await this.$store.dispatch("chapter/fetchChapterBookTitle", {
+      bookId: this.$route.params.id
+    });
+  },
   components: {
     AuthModal: () => import("@/components/Navigation/Auth/AuthModal"),
-    Dropdown: () => import("@/components/Navigation/Dropdown")
+    Dropdown: () => import("@/components/Navigation/Dropdown"),
+    ProductModal: () => import("@/components/Navigation/Stripe/ProductModal")
   },
   computed: {
     user() {
@@ -84,6 +95,12 @@ export default {
           this.$store.getters["chapter/getChapterCount"]) *
         100
       );
+    },
+    productState() {
+      return this.$store.getters.getProductModalState;
+    },
+    title() {
+      return this.$store.getters["chapter/getChapterBookTitle"];
     }
   },
   methods: {

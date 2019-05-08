@@ -280,7 +280,8 @@ export default {
       cursor: pointer;
       background-color: rgb(248, 248, 248);
     }
-    box-shadow: 1px 1px 5px rgb(238, 238, 238);
+    box-shadow: 0 2px 5px 0 rgba(60, 66, 87, 0.1),
+      0 1px 1px 0 rgba(0, 0, 0, 0.07);
   }
   .top {
     top: -400px;
@@ -288,7 +289,8 @@ export default {
   &__list {
     z-index: 10000;
     background-color: #fff;
-    box-shadow: 1px 1px 5px 0px rgb(235, 235, 235);
+    box-shadow: 0 2px 5px 0 rgba(60, 66, 87, 0.1),
+      0 1px 1px 0 rgba(0, 0, 0, 0.07);
     padding: 5px;
     width: 100%;
     top: -30px;

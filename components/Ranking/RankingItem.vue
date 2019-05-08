@@ -81,8 +81,19 @@ export default {
 .ranking-item {
   user-select: none;
   margin-bottom: 10px;
-  border-radius: 5px;
-  box-shadow: 1px 1px 5px rgb(202, 202, 202);
+  border-radius: 0.8rem;
+  box-shadow: 0 2px 5px 0 rgba(60, 66, 87, 0.1), 0 1px 1px 0 rgba(0, 0, 0, 0.07);
+  // -webkit-box-shadow: 0 13px 27px -5px rgba(50, 50, 93, 0.25),
+  //   0 8px 16px -8px rgba(0, 0, 0, 0.3), 0 -6px 16px -6px rgba(0, 0, 0, 0.025);
+  // box-shadow: 0 13px 27px -5px rgba(50, 50, 93, 0.25),
+  //   0 8px 16px -8px rgba(0, 0, 0, 0.3), 0 -6px 16px -6px rgba(0, 0, 0, 0.025);
+  // -webkit-transition-property: color, background-color, -webkit-box-shadow,
+  //   -webkit-transform;
+  // transition-property: color, background-color, -webkit-box-shadow,
+  //   -webkit-transform;
+  // transition-property: color, background-color, box-shadow, transform;
+  // transition-property: color, background-color, box-shadow, transform,
+  //   -webkit-box-shadow, -webkit-transform;
   padding: 10px 0;
   background: linear-gradient(to right, rgb(248, 248, 248) 50%, white 50%);
   background-size: 200% 100%;

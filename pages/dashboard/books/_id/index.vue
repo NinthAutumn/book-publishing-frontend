@@ -20,9 +20,7 @@
         >削除済({{$store.getters['chapter/getDeleted'].length}})</nuxt-link>
       </div>
     </div>
-    <div class="create-book flex flex--right">
-      <div class="button button--secondary">話を書く</div>
-    </div>
+
     <nuxt-child></nuxt-child>
   </div>
 </template>
@@ -40,6 +38,7 @@ export default {
   },
   created() {},
   computed: {},
+  scrollToTop: true,
   methods: {
     handleClick() {}
   },

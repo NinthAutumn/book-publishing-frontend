@@ -93,13 +93,13 @@ export default {
       product: false
     };
   },
-
   methods: {
     async logOut() {
       await this.$auth.logout();
-      window.location.reload(true);
+      this.$router.go(0);
     }
   }
+  // loading: false
 };
 </script>
 

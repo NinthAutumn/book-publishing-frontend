@@ -24,7 +24,7 @@ export const getters = {
 
 
 export const mutations = {
-  GET_BOOKMARK(state, bookmarked) {
+  SET_BOOKMARK(state, bookmarked) {
     state.bookmarks = bookmarked
   },
   GET_FAVORITE(state, favorites) {
@@ -44,17 +44,6 @@ export const mutations = {
   },
   GET_HISTORY(state, history) {
     state.history = history
-  },
-  SORT_BY_DATE(state) {
-    state.bookmarks = _.orderBy(state.bookmarks, function (item) {
-      return item.insertedDate
-    }, 'asc')
-
-  },
-  SORT_BY_NAME(state) {
-    state.bookmarks = _.orderBy(state.bookmarks, function (item) {
-      return item.bookId.title
-    }, 'desc')
   },
   SET_LATEST_CHAPTERS(state, {
     chapters
@@ -83,34 +72,16 @@ export const actions = {
   },
   async getBookmark({
     commit
+  }, {
+    sortby = 0
   }) {
     try {
-      const res = await this.$axios.get(`/library?type=bookmark`)
-      commit('GET_BOOKMARK', res.data)
+      const res = await this.$axios.get(`/library?type=bookmark&sortby=${sortby}`)
+      commit('SET_BOOKMARK', res.data)
     } catch (error) {
       Promise.reject(error)
     }
 
-  },
-  async getFavorites({
-    commit
-  }) {
-    await this.$axios.get('/library/show?type=favorite').then((res) => {
-      if (res) {
-        commit('GET_FAVORITE', res.data)
-      }
-
-    })
-  },
-  async getReading({
-    commit
-  }) {
-    await this.$axios.get('/library/show?type=reading').then((res) => {
-      if (res) {
-        commit('GET_READING', res.data)
-      }
-
-    })
   },
   async getHistory({
     commit

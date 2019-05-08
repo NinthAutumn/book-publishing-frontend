@@ -77,6 +77,19 @@ export default {
     position: relative;
     &:hover {
       cursor: pointer;
+      -webkit-box-shadow: 0 13px 27px -5px rgba(50, 50, 93, 0.25),
+        0 8px 16px -8px rgba(0, 0, 0, 0.3),
+        0 -6px 16px -6px rgba(0, 0, 0, 0.025);
+      box-shadow: 0 13px 27px -5px rgba(50, 50, 93, 0.25),
+        0 8px 16px -8px rgba(0, 0, 0, 0.3),
+        0 -6px 16px -6px rgba(0, 0, 0, 0.025);
+      -webkit-transition-property: color, background-color, -webkit-box-shadow,
+        -webkit-transform;
+      transition-property: color, background-color, -webkit-box-shadow,
+        -webkit-transform;
+      transition-property: color, background-color, box-shadow, transform;
+      transition-property: color, background-color, box-shadow, transform,
+        -webkit-box-shadow, -webkit-transform;
       &::after {
         position: absolute;
         background: black;

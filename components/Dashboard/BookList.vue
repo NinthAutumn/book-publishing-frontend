@@ -33,18 +33,19 @@ export default {
     grid-gap: 10px;
     #{$self}__item {
       width: 100%;
-      // border-radius: 1rem;
+      border-radius: 0.8rem;
       display: flex;
       flex-direction: column;
       justify-content: space-evenly;
       position: relative;
       background-color: #fff;
-      box-shadow: 1px 1px 10px rgb(255, 234, 255);
+      box-shadow: 0 2px 5px 0 rgba(60, 66, 87, 0.1),
+        0 1px 1px 0 rgba(0, 0, 0, 0.07);
       padding: 1rem;
-      &:hover {
-        box-shadow: 1px 1px 10px rgb(255, 216, 255);
-        // background-color: rgb(248, 248, 248);
-      }
+      // &:hover {
+      //   box-shadow: 1px 1px 10px rgb(255, 216, 255);
+      //   // background-color: rgb(248, 248, 248);
+      // }
     }
     #{$self}__edit {
       font-size: 2rem;
@@ -62,7 +63,7 @@ export default {
       margin-bottom: 0.5rem;
       position: relative;
       &:hover {
-        cursor: pointer;
+        // cursor: pointer;
       }
     }
     #{$self}__camera {

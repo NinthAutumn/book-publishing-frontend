@@ -1,36 +1,40 @@
 <template>
-  <div class="book__reviews">
-    <form class="review-form" @submit.prevent="addReview">
-      <!-- <label for="title">Title</label> -->
-      <h3 style="text-align:center;">感想を書く</h3>
-      <input
-        class="review-form__title"
-        type="text"
-        v-model="review.title"
-        name="title"
-        placeholder="タイトル"
-        max="50"
-      >
-      <div class="form-control">
-        <v-rating
-          color="#FF8D29"
-          :hover="true"
-          :half-increments="true"
-          v-model="review.rating"
-          :clearable="true"
-        ></v-rating>
-      </div>
-      <text-editor
-        placeholder="レビュー本文"
-        :content="pcontent"
-        class="review-form__content"
-        v-model="review.content"
-      ></text-editor>
-      <div class="divider flex flex--right">
-        <button v-ripple type="submit" class="review-open button">投稿</button>
-      </div>
-    </form>
-  </div>
+  <form class="review-form" @submit.prevent="addReview">
+    <!-- <label for="title">Title</label> -->
+    <input
+      class="review-form__title"
+      type="text"
+      v-model="review.title"
+      name="タイトル"
+      placeholder="タイトル"
+      max="50"
+      v-validate="'required'"
+      data-vv-as="タイトル"
+      :class="{'review-form__title--error':errors.first('タイトル')}"
+    >
+    <div class="form-control">
+      <v-rating
+        color="#FF8D29"
+        :hover="true"
+        :half-increments="true"
+        v-model="review.rating"
+        :clearable="true"
+      ></v-rating>
+    </div>
+    <text-editor
+      name="本文"
+      placeholder="レビュー本文"
+      :content="pcontent"
+      class="review-form__content"
+      v-model="review.content"
+      v-validate="'required||min:5'"
+      data-vv-as="本文"
+    ></text-editor>
+    <span class="help is-danger">{{ errors.first('本文')}}</span>
+    <div class="divider flex flex--right">
+      <button v-ripple type="submit" class="review-open button">投稿</button>
+    </div>
+  </form>
 </template>
 
 <script>
@@ -113,25 +117,15 @@ export default {
 </script>
 
 <style lang="scss">
-.ql-toolbar.ql-snow {
-  border: 2px solid $review-color !important;
-  border-bottom: 0 !important;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-  padding: 8px;
-  // border-top-left-radius: 10;
-  // border-top-right-radius: 10px;
-}
-.ql-container.ql-snow {
-  border: 2px solid $review-color !important;
-  // border-radius: 10px;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-}
 .review-form {
   display: flex;
   .review-open {
-    width: 7.5rem;
+    width: 8rem;
+    box-shadow: 0 2px 5px 0 rgba(60, 66, 87, 0.1),
+      0 1px 1px 0 rgba(0, 0, 0, 0.07);
+    font-size: 1.5rem;
+    height: 3.5rem;
+    // border-radius: 0.8rem;
   }
   flex-direction: column;
   &__title {
@@ -139,19 +133,32 @@ export default {
     font-size: 18px;
     // width: 410px;
     width: 100%;
-    padding: 5px;
-    border: 2px solid $review-color;
+    padding: 12px;
+    // border: 2px solid $review-color;
+    box-shadow: 0 2px 5px 0 rgba(60, 66, 87, 0.1),
+      0 1px 1px 0 rgba(0, 0, 0, 0.07);
     // border-radius: 5px;
+    // border-radius: 0.8rem;
     box-sizing: border-box;
     margin-bottom: 10px;
+    background-color: #fff;
+    &--error {
+    }
   }
   &__content-editor {
     margin-bottom: 10px;
   }
   &__content {
     height: 300px;
+    background-color: #fff;
     // padding: 5px;
     // width: 100%;
+    // border-radius: 0.8rem;
+    box-shadow: 0 2px 5px 0 rgba(60, 66, 87, 0.1),
+      0 1px 1px 0 rgba(0, 0, 0, 0.07);
+    textarea {
+      border: 0px solid white !important;
+    }
 
     // border: 2px solid $review-color;
     // border-radius: 5px;
@@ -170,6 +177,7 @@ export default {
   }
   .star-rating {
     // margin-bottom: 10px;
+
     .vue-star-rating-rating-text {
       font-size: 15px;
       margin: 0;
@@ -196,6 +204,13 @@ export default {
     // margin-bottom: 12px;
     // box-sizing: border-box;
   }
+  .v-rating {
+    box-shadow: 0 2px 5px 0 rgba(60, 66, 87, 0.1),
+      0 1px 1px 0 rgba(0, 0, 0, 0.07);
+    background-color: #fff;
+    // border-radius: 0.8rem;
+    padding: 0.5rem 1rem;
+  }
   .review-submit {
     background-color: $review-color;
     width: 90px;
@@ -210,12 +225,6 @@ export default {
       background-color: rgb(228, 212, 231);
       transition: 300ms;
     }
-    // align-self: right;
-    // align-content: right;
-    // display: flex;
-    // -webkit-box-shadow: 1px 1px 5px 0px rgba(224, 224, 224, 1);
-    // -moz-box-shadow: 1px 1px 5px 0px rgba(224, 224, 224, 1);
-    // box-shadow: 1px 1px 5px 0px rgba(224, 224, 224, 1);
   }
 }
 </style>

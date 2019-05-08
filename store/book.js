@@ -181,10 +181,18 @@ export const actions = {
   async fetchAnnouncements({
     commit
   }, {
-    bookId
+    bookId,
+    page = 1,
+    infinite = false
   }) {
     try {
-      const res = await this.$axios.get(`/book/announcements?bookId=${bookId}`)
+      const res = await this.$axios.get(`/book/announcements?bookId=${bookId}&page=${page}`)
+      if (infinite) {
+        commit('PUSH_ANNOUNCEMENTS', res.data)
+        return Promise.resolve({
+          announcement: res.data
+        })
+      }
       commit('SET_ANNOUNCEMENTS', res.data)
     } catch (error) {
 
@@ -206,7 +214,7 @@ export const actions = {
     } catch (error) {
       return Promise.reject(error)
     }
-  }
+  },
 }
 
 export const mutations = {
@@ -295,7 +303,11 @@ export const mutations = {
   },
   SET_ANNOUNCEMENTS: (state, announcements) => {
     state.announcements = announcements
+  },
+  PUSH_ANNOUNCEMENTS: (state, announcements) => {
+    announcements.forEach((announcement) => {
+      state.announcements.push(announcement)
+    })
   }
-
 
 }

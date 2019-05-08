@@ -1,6 +1,6 @@
 <template>
   <div class="drafted-toc">
-    <chapter-toc :toc="toc"></chapter-toc>
+    <book-toc :toc="toc"></book-toc>
   </div>
 </template>
 
@@ -12,7 +12,7 @@ export default {
     }
   },
   components: {
-    ChapterToc: () => import("@/components/Dashboard/ChapterToc")
+    BookToc: () => import("@/components/Dashboard/BookToc")
   },
   transition: "slide-fade"
 };

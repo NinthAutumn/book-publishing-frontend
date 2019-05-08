@@ -113,12 +113,13 @@ export const actions = {
   },
   fetchUserViews: async function ({
     commit
+  }, {
+    type
   }) {
     try {
-      const res = await this.$axios.get(`/analytic/book/views`)
+      const res = await this.$axios.get(`/analytic/book/views?time=${type}`)
       commit('SET_VIEWS', res.data)
       return Promise.resolve(res.data)
-
     } catch (error) {
       console.log(error);
     }

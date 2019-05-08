@@ -15,8 +15,9 @@
 <script>
 export default {
   layout: "user-nav/User",
+  props: {},
   async fetch({ store, params }) {
-    await store.dispatch("analytic/fetchUserViews");
+    await store.dispatch("analytic/fetchUserViews", { type: 8 });
     await store.dispatch("dashboard/fetchStatistics");
     await store.dispatch("dashboard/fetchRanking");
   },
@@ -26,6 +27,7 @@ export default {
     CommentList: () => import("@/components/Dashboard/CommentList"),
     TransactionList: () => import("@/components/Dashboard/TransactionList")
   },
+  computed: {},
   created() {},
   mounted() {},
   data() {

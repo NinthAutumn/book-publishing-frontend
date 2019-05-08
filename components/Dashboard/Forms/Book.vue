@@ -84,7 +84,7 @@
         </div>
       </form>
     </div>
-    <TagCreate v-model="form.tags"></TagCreate>
+    <TagCreate :limit="6" v-model="form.tags"></TagCreate>
   </div>
 </template>
 
@@ -149,10 +149,16 @@ export default {
       return Object.keys(this.fields).some(key => this.fields[key].invalid);
     }
   },
-
+  watch: {
+    // "form.tags": function(val) {
+    //   if (val.length > 5) {
+    //     this.form.tags.pop();
+    //   }
+    // }
+  },
   components: {
     Select: () => import("@/components/All/Select"),
-    TagCreate: () => import("./TagCreate")
+    TagCreate: () => import("./Tag")
   },
   methods: {
     handleAvatarSuccess(res, file) {

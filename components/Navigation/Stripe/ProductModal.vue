@@ -125,6 +125,9 @@ export default {
   #card-element {
   }
   &__wrapper {
+    #{$self}__content {
+      color: black;
+    }
     background-color: #fff;
     #{$self}__container {
       min-height: 55rem;

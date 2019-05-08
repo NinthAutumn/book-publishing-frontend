@@ -10,7 +10,7 @@ var cookie = require('cookie');
 export const state = () => ({
   counter: 0,
   menuState: "menu-active",
-  dashboardMenuState: "dashboard-active",
+  dashboardMenuState: "dashboard-inactive",
   dropdownState: false,
   authed: 0,
   loginForm: false,
@@ -21,6 +21,7 @@ export const getters = {
   getMenuState(state) {
     return state.menuState
   },
+  getDMenuState: state => state.dashboardMenuState,
   isAuthenticated: (state) => {
     return state.auth.loggedIn
   },

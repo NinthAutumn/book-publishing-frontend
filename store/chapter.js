@@ -130,11 +130,8 @@ export const actions = {
         chapter
       } = res.data
       commit('SET_CHAPTER', chapter)
-      if (!state.bookTitle) {
-        const res = await this.$axios.get(`/book/title?bookId=${bookId}`)
-        commit('SET_BOOK_TITLE', res.data.title)
 
-      }
+
       if (!state.count) {
         const res = await this.$axios.get(`book/chapter/count?bookId=${bookId}`)
         commit('SET_CHAPTER_COUNT', res.data.count)
@@ -276,6 +273,19 @@ export const actions = {
     } catch (error) {
       return Promise.reject(error)
     }
+  },
+  async fetchChapterBookTitle({
+    commit
+  }, {
+    bookId
+  }) {
+    try {
+      const res = await this.$axios.get(`/book/title?bookId=${bookId}`)
+      commit('SET_BOOK_TITLE', res.data.title)
+    } catch (error) {
+      return Promise.reject(error)
+    }
+
   }
 
 }

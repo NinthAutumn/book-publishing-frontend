@@ -181,9 +181,7 @@ export default {
   height: 50px;
   width: 100%;
   position: fixed;
-  -webkit-box-shadow: 0px 2px 3px 0px rgba(245, 226, 245, 1);
-  -moz-box-shadow: 0px 2px 3px 0px rgba(245, 226, 245, 1);
-  box-shadow: 0px 2px 3px 0px rgba(245, 226, 245, 1);
+  box-shadow: 0 2px 5px 0 rgba(60, 66, 87, 0.1), 0 1px 1px 0 rgba(0, 0, 0, 0.07);
   top: 0;
   left: 0;
   background-color: white;

@@ -20,11 +20,11 @@ export default {
     };
   },
   components: {
-    CreateChapter: () => import("@/components/Dashboard/CreateChapter")
+    CreateChapter: () => import("@/components/Dashboard/Forms/Chapter")
   },
   created() {},
   async fetch({ store, params }) {
-    await store.dispatch("chapter/fetchPublishedTOC", params.id);
+    // await store.dispatch("chapter/fetchPublishedTOC", params.id);
     await store.dispatch("chapter/fetchVolumeList", params.id);
     await store.dispatch("chapter/fetchLatestIndex", { bookId: params.id });
   }

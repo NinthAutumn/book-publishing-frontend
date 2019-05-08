@@ -1,6 +1,6 @@
 <template>
   <div class="published-toc">
-    <chapter-toc :published="true" :toc="toc"></chapter-toc>
+    <book-toc :published="true" :toc="toc"></book-toc>
   </div>
 </template>
 
@@ -12,7 +12,7 @@ export default {
     }
   },
   components: {
-    ChapterToc: () => import("@/components/Dashboard/ChapterToc")
+    BookToc: () => import("@/components/Dashboard/BookToc")
   },
   created() {},
   transition: {

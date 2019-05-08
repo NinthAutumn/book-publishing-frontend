@@ -8,20 +8,26 @@
           </div>
           <nuxt-link v-ripple tag="div" to="/" class="site-logo">ノーブル</nuxt-link>
         </div>
-        <nuxt-link
-          v-if="$route.name ==='dashboard-books-id-index-draft'||$route.name ==='dashboard-books-id-index-published'||$route.name ==='dashboard-books-id-index'||$route.name ==='dashboard-books-id-index-deleted'||$route.name ==='dashboard-books-id-new'"
-          class="write-chapter button--shadow button button--secondary--open"
-          :to="{path: `new`}"
-        >
-          <fa icon="pen-nib" style="margin-right:5px;"></fa>新しい話を書く
-        </nuxt-link>
-        <nuxt-link
-          v-else
-          :to="'/dashboard/books/new'"
-          class="write-book button--shadow button button--primary--open"
-        >
-          <fa icon="pen-nib" class style="margin-right:5px;"></fa>本を書く
-        </nuxt-link>
+        <div class="flex-divider flex-row">
+          <div class="contract-button button--shadow button" v-if="!author.contracted">
+            <fa icon="file-contract" class style="margin-right:5px;"></fa>契約を組む
+          </div>
+          <nuxt-link
+            v-if="$route.name ==='dashboard-books-id-index-draft'||$route.name ==='dashboard-books-id-index-published'||$route.name ==='dashboard-books-id-index'||$route.name ==='dashboard-books-id-index-deleted'||$route.name ==='dashboard-books-id-new'"
+            class="write-chapter button--shadow button button--secondary--open"
+            :to="{path: `new`}"
+          >
+            <fa icon="pen-nib" style="margin-right:5px;"></fa>新しい話を書く
+          </nuxt-link>
+
+          <nuxt-link
+            v-else
+            :to="'/dashboard/books/new'"
+            class="write-book button--shadow button button--primary--open"
+          >
+            <fa icon="pen-nib" class style="margin-right:5px;"></fa>本を書く
+          </nuxt-link>
+        </div>
       </div>
 
       <div class="create-books" v-if="writeBookState">
@@ -34,10 +40,17 @@
           <div
             v-if="$store.state.dashboardMenuState === 'dashboard-active'"
             class="dashboard-profile"
+            style="margin-bottom:1rem;"
           >
-            <img class="dashboard-profile-pic" :src="$store.state.auth.user.avatar">
+            <v-avatar size="130" class="elevation-1">
+              <v-img :src="$store.state.auth.user.avatar"></v-img>
+            </v-avatar>
           </div>
-          <div v-else></div>
+          <div v-else class="flex-row flex--align flex--center" style="margin-bottom:1rem;">
+            <v-avatar size="40" class="elevation-1">
+              <v-img :src="$store.state.auth.user.avatar"></v-img>
+            </v-avatar>
+          </div>
         </li>
         <li v-for="menu in menus" :key="menu.title">
           <nuxt-link class="d-nav-v-list" :to="menu.link">
@@ -59,10 +72,9 @@
 
 export default {
   name: "Vertical",
-  props: {
-    // menus: Array
-  },
+  props: ["value"],
   async mounted() {
+    console.log(this.$refs);
     await this.$store.dispatch("user/fetchAuthor");
   },
   data() {
@@ -99,13 +111,18 @@ export default {
   },
   components: {
     // HomeIcon
-    BookForm: () => import("@/components/Dashboard/CreateBook"),
-    CreateAuthor: () => import("@/components/Dashboard/CreateAuthor")
+    BookForm: () => import("@/components/Dashboard/Forms/Book"),
+    CreateAuthor: () => import("@/components/Dashboard/Forms/Author")
   },
   watch: {
     // fetchUserId: function() {
     //   ;
     // }
+  },
+  computed: {
+    author() {
+      return this.$store.getters["user/getAuthor"];
+    }
   },
   methods: {
     menuDrawer() {
@@ -156,6 +173,19 @@ export default {
   // display: flex;
   // align-items: center;
   // justify-content: center;
+}
+.contract-button {
+  // color: white;
+  color: #4554ff;
+  width: 15rem;
+  font-size: 1.6rem;
+  margin-right: 1rem;
+  transition: 300ms;
+  &:hover {
+    background-color: #4554ff;
+    color: white;
+    transition: 300ms;
+  }
 }
 .d-nav-h {
   width: 100vw;

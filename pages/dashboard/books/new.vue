@@ -9,8 +9,7 @@
 export default {
   layout: "user-nav/User",
   components: {
-    BookForm: () => import("@/components/Dashboard/CreateBook"),
-    TagCreate: () => import("@/components/Dashboard/TagCreate")
+    BookForm: () => import("@/components/Dashboard/Forms/Book")
   }
 };
 </script>

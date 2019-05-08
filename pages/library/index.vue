@@ -39,7 +39,8 @@
             transition="grow-shrink"
             icon="sort"
             name="並び替え"
-            :data="sortTypes"
+            :object="sortTypes"
+            :width="120"
           ></Select>
         </div>
         <BookList :trendings="true" :books="bookmarks"></BookList>
@@ -73,20 +74,19 @@ export default {
         left: "0px"
       },
       selectedTabName: "bookmark",
-      sortTypes: ["最近読んだ順", "入れた順", "名前順"],
+      sortTypes: [
+        { key: "最近読んだ順", value: "0" },
+        { key: "入れた順", value: "1" },
+        { key: "名前順", value: "2" }
+      ],
       order: "入れた順",
       selected_item: "再生リスト",
       nav_list: ["再生リスト", "レビュー", "購入済み", "歴史"]
     };
   },
   watch: {
-    order: function(e) {
-      if (e === "入れた順") {
-        this.$store.commit("library/SORT_BY_DATE");
-      } else if (e === "最近読んだ順") {
-      } else {
-        this.$store.commit("library/SORT_BY_NAME");
-      }
+    order: async function(e) {
+      await this.$store.dispatch("library/getBookmark", { sortby: e });
     }
   },
   computed: {
@@ -188,7 +188,7 @@ export default {
     }
   },
   async fetch({ store }) {
-    await store.dispatch("library/getBookmark");
+    await store.dispatch("library/getBookmark", { sortby: 0 });
     await store.dispatch("library/fetchReviews");
   }
 };
