@@ -128,9 +128,9 @@ module.exports = {
       src: '@/plugins/countTo',
       ssr: false
     }, {
-      src: '@/plugins/card',
+      src: '@/plugins/chartLine',
       ssr: false
-    }
+    },
   ],
 
   /*

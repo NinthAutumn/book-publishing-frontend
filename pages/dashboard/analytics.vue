@@ -13,7 +13,7 @@
 export default {
   layout: "user-nav/User",
   async fetch({ store, params }) {
-    await store.dispatch("dashboard/fetchTransactionGraph", { days: 9 });
+    await store.dispatch("dashboard/fetchTransactionGraph", { days: 10 });
     await store.dispatch("dashboard/fetchTransactionPie");
   },
   components: {

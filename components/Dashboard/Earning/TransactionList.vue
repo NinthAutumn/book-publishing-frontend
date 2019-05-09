@@ -95,7 +95,7 @@ export default {
 
   &__list {
     box-shadow: 0px;
-    height: 25rem;
+    height: 30rem;
     overflow: auto;
   }
   header {
@@ -142,7 +142,7 @@ export default {
       }
       &--title {
         // min-width: 15rem;
-        max-width: 50%;
+        width: 50%;
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;

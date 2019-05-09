@@ -235,7 +235,7 @@ export const actions = {
     date
   }) {
     try {
-      await this.$axios.post('/chapter/add', {
+      await this.$axios.post('/book/chapter', {
         chapter,
         date
       })

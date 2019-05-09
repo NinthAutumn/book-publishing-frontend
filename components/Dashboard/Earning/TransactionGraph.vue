@@ -6,6 +6,9 @@
       <no-ssr>
         <ve-line heigh="50rem" ref="view-bar" :settings="chartSetting" :data="chartData"></ve-line>
       </no-ssr>
+      <!-- <no-ssr>
+        <chart-line :data="chartData" :options="options"></chart-line>
+      </no-ssr>-->
     </div>
   </div>
 </template>
@@ -16,16 +19,28 @@ export default {
     return {
       chartSetting: {
         nullAddZero: true,
-        area: true,
+        area: false,
         offsetY: 300
         // scale: [true, true]
       },
+      options: {
+        fill: false,
+        pointRadius: 0,
+        area: false
+      },
       chartData: {
         columns: ["date"],
-        rows: []
+        labels: [],
+        rows: [],
+        datasets: []
       },
-      height: "30rem"
+      height: "30rem",
+      colors: ["#FA6E85", "#C4B4E4", "blue", "yellow"]
     };
+  },
+
+  components: {
+    ChartLine: () => import("@/plugins/chartLine")
   },
   computed: {
     transaction() {
@@ -34,14 +49,38 @@ export default {
   },
   mounted: async function() {
     let row = Object.keys(this.transaction);
-    let i = 8;
+    let i = 9;
     while (i >= 0) {
       let date = this.$moment()
         .subtract(i, "days")
         .format("YYYY-MM-DD");
       this.chartData.rows.push({ date });
+      // this.chartData.labels.push(date);
       i--;
     }
+
+    // row.forEach((title, index) => {
+    //   let data = [];
+    //   this.chartData.labels.forEach((date, index) => {
+    //     this.transaction[title].forEach(book => {
+    //       if (date === book.day) {
+    //         data.push(book.sum);
+    //       }
+    //     });
+    //     if (!data[index]) {
+    //       data[index] = 0;
+    //     }
+    //   });
+    //   this.object = {
+    //     label: title,
+    //     data,
+    //     backgroundColor: this.colors[index],
+    //     fill: false,
+    //     showLine: true,
+    //     borderColor: this.colors[index]
+    //   };
+    //   this.chartData.datasets.push(this.object);
+    // });
     row.forEach(item => {
       this.chartData.rows.forEach((el, index) => {
         if (el.date === item) {
@@ -51,6 +90,7 @@ export default {
           this.transaction[item].forEach(book => {
             if (this.chartData.columns.indexOf(book.title) === -1) {
               this.chartData.columns.push(book.title);
+              // this.chartData.labels.push()
             }
             this.object[book.title] = book.sum;
           });
@@ -76,6 +116,7 @@ export default {
     padding: 2rem 1rem;
   }
   &__graph {
+    // height: 30rem;
     // width: 50rem;
     // height: 50rem;
   }
