@@ -37,8 +37,8 @@ export default {
   data() {
     return {
       chartSetting: {
-        nullAddZero: true
-        // area: true
+        nullAddZero: true,
+        area: true
         // scale: [true, true]
       },
       chartData: {
@@ -48,9 +48,9 @@ export default {
       object: {},
       sort_type: [
         // { key: "視聴回数", value: "views" },
-        { key: "一週間", value: 8 },
-        { key: "今月", value: 32 },
-        { key: "今年", value: 366 }
+        { key: "一週間", value: 7 },
+        { key: "今月", value: 31 },
+        { key: "今年", value: 365 }
         // { key: "全体", value: "total" }
       ],
       type: "",
@@ -106,7 +106,7 @@ export default {
           if (this.type === "total") {
           } else {
             let i = this.type;
-            while (i > 0) {
+            while (i >= 0) {
               let date = this.$moment()
                 .subtract(i, "days")
                 .format("YYYY-MM-DD");
@@ -139,8 +139,8 @@ export default {
     // console.log(this.$moment());
     this.isMounted = true;
     let row = Object.keys(this.time);
-    let i = 8;
-    while (i > 0) {
+    let i = 7;
+    while (i >= 0) {
       let date = this.$moment()
         .subtract(i, "days")
         .format("YYYY-MM-DD");
@@ -185,7 +185,7 @@ export default {
 .views-bargraph {
   // margin-top: 30px;
   background-color: #fff;
-  box-shadow: 1px 1px 5px rgb(233, 233, 233);
+  box-shadow: 0 2px 5px 0 rgba(60, 66, 87, 0.1), 0 1px 1px 0 rgba(0, 0, 0, 0.07);
   border-radius: 5px;
   $self: &;
   &__header {

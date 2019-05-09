@@ -31,7 +31,6 @@
 
 <script>
 export default {
-  
   data() {
     return {
       headers: [
@@ -55,7 +54,7 @@ export default {
   },
   async mounted() {
     this.loading = true;
-    await this.$store.dispatch("dashboard/fetchTransactionList");
+    await this.$store.dispatch("dashboard/fetchTransactionList", { page: 1 });
     this.loading = false;
   }
 };
@@ -63,7 +62,7 @@ export default {
 
 <style lang="scss">
 .transaction-list {
-  box-shadow: 1px 1px 5px rgb(219, 219, 219);
+  box-shadow: 0 2px 5px 0 rgba(60, 66, 87, 0.1), 0 1px 1px 0 rgba(0, 0, 0, 0.07);
   border-radius: 0.5rem;
   header {
     font-size: 1.6rem;

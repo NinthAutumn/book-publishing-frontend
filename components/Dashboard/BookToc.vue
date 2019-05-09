@@ -31,11 +31,12 @@
         <div class="book-toc__volume-edit">編集</div>
       </div>
       <div class="book-toc__chapter-list">
-        <div class="book-toc__chapter-item" v-if="volume.chapters.length < 1">
+        <div class="book-toc__chapter-item" v-if="!volume.chapters[0].id">
           <div class="book-toc__title">まだ話はありません</div>
         </div>
         <div
           class="book-toc__chapter-item"
+          v-else
           v-for="(chapter,index) in volume.chapters"
           :key="index"
           v-ripple
@@ -112,13 +113,14 @@ export default {
     -webkit-box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11),
       0 1px 3px rgba(0, 0, 0, 0.08);
     box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+    margin-bottom: 1rem;
     #{$self}__chapter-item {
       padding: 1.2rem 2rem;
       display: flex;
       justify-content: space-between;
       background-color: #fff;
       color: #6772e5;
-      margin-bottom: 2px;
+      // margin-bottom: 2px;
       &:hover {
         background-color: rgb(248, 248, 248);
       }

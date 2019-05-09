@@ -61,13 +61,13 @@ export default {
   methods: {
     async createTag() {},
     async filterTags() {
-      await this.$store.dispatch("book/searchTags", {
+      const tags = await this.$store.dispatch("book/queryTags", {
         page: 1,
         limit: 30,
         search: this.search
       });
       let object = [];
-      this.tags.forEach(item => {
+      tags.forEach(item => {
         object.push({ key: item.name, sum: item.books, selected: false });
       });
       this.selected = object;
@@ -78,6 +78,7 @@ export default {
           }
         });
       });
+      console.log(this.selected);
     },
     async selectTag(name) {
       this.selected[name].selected = !this.selected[name].selected;
@@ -111,7 +112,7 @@ export default {
   width: 200px;
   padding: 10px;
   background-color: #fff;
-
+  box-shadow: 0 2px 5px 0 rgba(60, 66, 87, 0.1), 0 1px 1px 0 rgba(0, 0, 0, 0.07);
   $self: &;
   &__header {
     font-size: 17px;

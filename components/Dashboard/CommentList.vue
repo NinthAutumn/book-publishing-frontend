@@ -50,7 +50,7 @@ export default {
   max-width: 100%;
   min-width: 35.4rem;
 
-  box-shadow: 1px 1px 5px rgb(240, 240, 240);
+  box-shadow: 0 2px 5px 0 rgba(60, 66, 87, 0.1), 0 1px 1px 0 rgba(0, 0, 0, 0.07);
   border-radius: 0.5rem;
   // margin-top:
   $self: &;

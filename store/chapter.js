@@ -12,7 +12,8 @@ export const state = () => ({
   latestBooks: [],
   latestBooksSimple: [],
   unlist: [], //chapters that aren't published
-  count: 0
+  count: 0,
+  // chapters
 })
 
 export const getters = {
@@ -110,9 +111,37 @@ export const mutations = {
   },
   LOAD_LATEST_BOOKS_SIMPLE(state, books) {
     state.latestBooksSimple = books
+  },
+  SET_CHAPTER_MOBILE(state, chapter) {
+    state.chapters.push(chapter)
   }
 }
 export const actions = {
+  async fetchMobileChapter({
+    commit
+  }, {
+    chapterId,
+    userId = "",
+    bookId
+  }) {
+    try {
+      const res = await this.$axios.get(`book/chapter?chapterId=${chapterId}&userId=${userId}`)
+      const {
+        next,
+        prev,
+        chapter
+      } = res.data
+      commit('SET_CHAPTER_MOBILE', chapter)
+
+
+      if (!state.count) {
+        const res = await this.$axios.get(`book/chapter/count?bookId=${bookId}`)
+        commit('SET_CHAPTER_COUNT', res.data.count)
+      }
+    } catch (error) {
+      return Promise.reject(error.response.message)
+    }
+  },
   async fetchChapter({
     commit,
     state

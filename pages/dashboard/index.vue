@@ -18,14 +18,15 @@ export default {
   props: {},
   async fetch({ store, params }) {
     await store.dispatch("analytic/fetchUserViews", { type: 8 });
-    await store.dispatch("dashboard/fetchStatistics");
+    await store.dispatch("dashboard/fetchStatistics", { page: 1 });
     await store.dispatch("dashboard/fetchRanking");
   },
   components: {
     Analytics: () => import("@/components/Dashboard/Analytics"),
     ViewBarGraph: () => import("@/components/Dashboard/Graphs/Views"),
     CommentList: () => import("@/components/Dashboard/CommentList"),
-    TransactionList: () => import("@/components/Dashboard/TransactionList")
+    TransactionList: () =>
+      import("@/components/Dashboard/Earning/TransactionList")
   },
   computed: {},
   created() {},

@@ -249,6 +249,9 @@ export default {
     .nav-title {
       color: rgb(215, 218, 220);
     }
+    .nav-title__book {
+      color: rgb(215, 218, 220);
+    }
   }
   &--ruby {
     background: url("../../assets/noise/noise-ruby-container.png");

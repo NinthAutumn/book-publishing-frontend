@@ -14,13 +14,15 @@
               :show-file-list="false"
               :on-success="handleAvatarSuccess"
               :before-upload="beforeAvatarUpload"
+              :aspect-ratio="1/1.5"
+              width="150"
             >
               <img v-if="imageUrl" :src="imageUrl" class="avatar">
               <i v-else class="el-icon-plus avatar-uploader-icon"></i>
             </el-upload>
           </div>
           <div class="divider flex flex-column" style="width:100%;">
-            <label for="book-title">タイトル</label>
+            <label for="book-title">タイトル*</label>
             <input
               minlength="2"
               type="text"
@@ -28,14 +30,14 @@
               data-vv-as="タイトル"
               name="book-title"
               for="book-title"
-              class="book-form--input form-input form-input--primary"
+              class="book-form__input book-form__input--title"
               placeholder="タイトル"
               v-model="form.title"
             >
             <span class="form-error">{{ errors.first('book-title') }}</span>
-            <label for="synopsis">あらすじ</label>
+            <label for="synopsis">あらすじ*</label>
             <textarea
-              class="book-form--textarea"
+              class="book-form__input book-form__input--textarea"
               name="synopsis"
               for="synopsis"
               placeholder="あらすじ"
@@ -46,15 +48,16 @@
             transition="grow-shrink"
             name="ジャンル"
             multiple
-            :data="list"
+            :data="items"
             icon="location-arrow"
             v-model="form.genre"
             top
             :limit="6"
+            style="margin-bottom:2rem;"
           ></Select>
         </div>
         <div class="book-form__genre">
-          <div class="book-form__genre-title">ジャンルリスト</div>
+          <label for>ジャンル</label>
           <transition-group tag="ul" name="list" class="book-form__genre-list">
             <li
               class="book-form__genre-item"
@@ -63,9 +66,10 @@
               v-text="genre"
             ></li>
           </transition-group>
+          <span>*最高６ジャンルまで &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; *必ず1ジャンルを選択</span>
         </div>
         <div class="book-form__genre">
-          <div class="book-form__genre-title">タグリスト</div>
+          <label for>タグ</label>
           <transition-group tag="ul" name="list" class="book-form__genre-list">
             <li
               class="book-form__genre-item book-form__genre-item--tag"
@@ -74,6 +78,7 @@
               v-text="tag"
             ></li>
           </transition-group>
+          <span>*最高６タグまで &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; *必ず1タグを選択</span>
         </div>
         <div class="divider flex flex--right">
           <input
@@ -104,8 +109,9 @@ export default {
         genre: [],
         cover: {}
       },
+      search: "",
       selected: [],
-      list: [
+      items: [
         "ファンタジー",
         "恋愛",
         "文学",
@@ -145,6 +151,9 @@ export default {
   computed: {
     isFormInValid() {
       return Object.keys(this.fields).some(key => this.fields[key].invalid);
+    },
+    url() {
+      return this.$store.state.upload.url;
     }
   },
   watch: {
@@ -171,23 +180,26 @@ export default {
           type: "error"
         });
       }
-      const book = {
-        title: this.form.title,
-        tags: this.form.tags,
-        genres: this.form.genre,
-        synopsis: this.form.synopsis,
-        cover: this.$store.state.upload.url
-      };
+
       try {
         const uploaded = await this.$store.dispatch(
           "upload/image",
           this.form.cover
         );
+        const book = {
+          title: this.form.title,
+          tags: this.form.tags,
+          genres: this.form.genre,
+          synopsis: this.form.synopsis,
+          cover: this.url
+        };
         await this.$store.dispatch("book/addBook", book);
         this.$message({
           message: "本の投稿に成功しました",
           type: "success"
         });
+        this.$router.go(-1);
+        this.$store.commit("REMOVE_URL");
       } catch (error) {
         this.$message({
           message: `本の投稿に失敗しました！${error}`,
@@ -221,6 +233,8 @@ export default {
   font-size: 16px;
 }
 .book-form {
+  // background-color: rgb(245, 245, 245);
+
   .el-input__inner {
     // height: 40px;
   }
@@ -241,18 +255,39 @@ export default {
     height: 191px;
     display: flex;
     border: none;
+    border-radius: 0;
     &:hover {
       border: none;
     }
   }
+
   .avatar-uploader .el-upload {
-    border: 2px solid;
+    border: 0px solid;
     border-color: $primary-lighter;
     // border-radius: 6px;
     cursor: pointer;
     position: relative;
     overflow: hidden;
     margin-bottom: 20px;
+    box-shadow: 0 2px 5px 0 rgba(60, 66, 87, 0.1),
+      0 1px 1px 0 rgba(0, 0, 0, 0.07);
+    &:hover {
+      -webkit-box-shadow: 0 13px 27px -5px rgba(50, 50, 93, 0.25),
+        0 8px 16px -8px rgba(0, 0, 0, 0.3),
+        0 -6px 16px -6px rgba(0, 0, 0, 0.025);
+      box-shadow: 0 13px 27px -5px rgba(50, 50, 93, 0.25),
+        0 8px 16px -8px rgba(0, 0, 0, 0.3),
+        0 -6px 16px -6px rgba(0, 0, 0, 0.025);
+      -webkit-transition-property: color, background-color, -webkit-box-shadow,
+        -webkit-transform;
+      transition-property: color, background-color, -webkit-box-shadow,
+        -webkit-transform;
+      transition-property: color, background-color, box-shadow, transform;
+      transition-property: color, background-color, box-shadow, transform,
+        -webkit-box-shadow, -webkit-transform;
+      -webkit-transition-duration: 0.15s;
+      transition-duration: 0.15s;
+    }
   }
   .avatar-uploader .el-upload:hover {
     border-color: $primary;
@@ -330,14 +365,71 @@ export default {
 .book-form {
   display: flex;
   $self: &;
+  label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    font-variant: normal;
+    -webkit-font-smoothing: antialiased;
+    color: #6b7c93;
+  }
+  &__input {
+    height: 40px;
+    padding: 10px 12px;
+    color: #32325d;
+    background-color: white;
+    border: 1px solid transparent;
+    // border-radius: 4px;
+    box-shadow: 0 1px 3px 0 #e6ebf1;
+    -webkit-transition: box-shadow 150ms ease;
+    transition: box-shadow 150ms ease;
+    font-size: 1.6rem;
+    transition: 300ms;
+    margin-bottom: 2rem;
+    &--textarea {
+      height: 15rem;
+      &:focus {
+        outline: none;
+      }
+    }
+    &:focus,
+    &:hover {
+      outline: none;
+      -webkit-box-shadow: 0 13px 27px -5px rgba(50, 50, 93, 0.25),
+        0 8px 16px -8px rgba(0, 0, 0, 0.3),
+        0 -6px 16px -6px rgba(0, 0, 0, 0.025);
+      box-shadow: 0 13px 27px -5px rgba(50, 50, 93, 0.25),
+        0 8px 16px -8px rgba(0, 0, 0, 0.3),
+        0 -6px 16px -6px rgba(0, 0, 0, 0.025);
+      -webkit-transition-property: color, background-color, -webkit-box-shadow,
+        -webkit-transform;
+      transition-property: color, background-color, -webkit-box-shadow,
+        -webkit-transform;
+      transition-property: color, background-color, box-shadow, transform;
+      transition-property: color, background-color, box-shadow, transform,
+        -webkit-box-shadow, -webkit-transform;
+      -webkit-transition-duration: 0.15s;
+      transition-duration: 0.15s;
+      transition: 300ms;
+    }
+  }
   &__genre {
+    margin-bottom: 2rem;
+    span {
+      color: grey;
+    }
     #{$self}__genre-list {
-      margin-top: 0.5rem;
+      // margin-top: 0.5rem;
       display: flex;
-      box-shadow: inset 1px 1px 5px rgb(245, 245, 245);
+      box-shadow: 0 1px 3px 0 #e6ebf1;
+      -webkit-transition: box-shadow 150ms ease;
+      transition: box-shadow 150ms ease;
       padding: 0.5rem;
       flex-wrap: wrap;
       min-height: 4.5rem;
+      background-color: #fff;
+      margin-bottom: 0.8rem;
     }
     #{$self}__genre-title {
       font-size: 1.6rem;
@@ -361,19 +453,20 @@ export default {
     }
   }
   &__container {
-    background-color: white;
+    background-color: rgb(245, 245, 245);
     padding: 50px;
     // border-radius: 10px;
-    // box-shadow: 1px 1px 5px 0px rgb(199, 198, 198);
+    box-shadow: 0 2px 5px 0 rgba(60, 66, 87, 0.1),
+      0 1px 1px 0 rgba(0, 0, 0, 0.07);
     overflow: scroll;
     // height: 80vh;
-    width: 440px;
+    width: 50rem;
   }
 
   &__title {
-    font-size: 25px;
+    font-size: 2.5rem;
     margin-top: 0;
-    color: #8b8b8b;
+    color: #000000;
     font-weight: 400;
     text-align: center;
     // mar
@@ -389,10 +482,7 @@ export default {
     &:focus {
       outline: none;
     }
-  }
-  label {
-    font-size: 18px;
-    color: #bfbfc2;
+    margin-bottom: 2rem;
   }
 
   &__submit {

@@ -20,7 +20,34 @@
       </div>
     </div>
     <div class="chapter" :class="{'move-left': modal}">
-      <div class="chapter-wrapper flex">
+      <div
+        class="chapter-wrapper"
+        :class="{'flex-row':!$device.isMobile, 'flex-column':$device.isMobile}"
+      >
+        <div class="flex-divider flex-row flex--align flex--between" v-if="$device.isMobile">
+          <nuxt-link
+            class="mobile-navigation mobile-navigation--prev"
+            v-if="prev"
+            :to="{path: `${prev.id}`}"
+          >
+            <span class="mobile-navigation__icon">
+              <fa icon="angle-left"></fa>
+            </span>
+            <span>前の話へ</span>
+          </nuxt-link>
+          <span class="mobile-navigation--placeholder" v-if="!prev"></span>
+          <span class="mobile-navigation--placeholder" v-if="!next"></span>
+          <nuxt-link
+            class="mobile-navigation mobile-navigation--next"
+            v-if="next"
+            :to="{path: `${next.id}`}"
+          >
+            <span>次の話へ</span>
+            <span class="mobile-navigation__icon">
+              <fa icon="angle-right"></fa>
+            </span>
+          </nuxt-link>
+        </div>
         <div
           v-if="prev&&!$device.isMobile"
           class="next-chapter-title flex-column flex--center flex--align"
@@ -48,6 +75,30 @@
           class="next-chapter-title flex-column flex--center flex--align"
           v-text="next.title"
         ></div>
+        <div class="flex-divider flex-row flex--align flex--between" v-if="$device.isMobile">
+          <nuxt-link
+            class="mobile-navigation mobile-navigation--prev"
+            v-if="prev"
+            :to="{path: `${prev.id}`}"
+          >
+            <span class="mobile-navigation__icon">
+              <fa icon="angle-left"></fa>
+            </span>
+            <span>前の話へ</span>
+          </nuxt-link>
+          <span class="mobile-navigation--placeholder" v-if="!prev"></span>
+          <span class="mobile-navigation--placeholder" v-if="!next"></span>
+          <nuxt-link
+            class="mobile-navigation mobile-navigation--next"
+            v-if="next"
+            :to="{path: `${next.id}`}"
+          >
+            <span>次の話へ</span>
+            <span class="mobile-navigation__icon">
+              <fa icon="angle-right"></fa>
+            </span>
+          </nuxt-link>
+        </div>
       </div>
     </div>
     <!-- <div class="block-move" v-if="modal"></div> -->
@@ -103,6 +154,7 @@ export default {
   width: 50px;
   font-size: 30px;
   top: 0;
+
   &:hover {
     background-color: $secondary;
     cursor: pointer;
@@ -110,6 +162,7 @@ export default {
     transition: 300ms;
   }
 }
+
 .move-left {
   transform: translateX(-210px);
   transition: 200ms;
@@ -195,6 +248,14 @@ export default {
     right: 50px;
   }
 }
+@keyframes moveMe {
+  from {
+    transform: translateY(-0.2rem);
+  }
+  to {
+    transform: translateY(0.2rem);
+  }
+}
 .chapter-page {
   // padding: 1rem 0rem;
   transition: 300ms;
@@ -204,6 +265,37 @@ export default {
   background-color: #dae0e6;
   position: relative;
   // .chapter-container
+  .mobile-navigation--placeholder {
+    width: 50%;
+  }
+  .mobile-navigation {
+    display: flex;
+    align-items: center;
+
+    // flex-direction: column;
+    font-size: 2rem;
+    padding: 1.5rem 1.5rem;
+    width: 50%;
+    span {
+      font-size: 1.5rem;
+    }
+    &__icon {
+      font-size: 2rem !important;
+    }
+    &--next {
+      justify-content: flex-end;
+      span {
+        margin-right: 1rem;
+      }
+    }
+    &--prev {
+      justify-content: flex-start;
+      span {
+        margin-left: 1rem;
+      }
+    }
+    // background-color: #fff;
+  }
   &--default {
     background: url("../../assets/noise/noise-default-all.png");
     .chapter-container {
@@ -212,6 +304,9 @@ export default {
   }
   &--black {
     background-color: #030303 !important;
+    .mobile-navigation {
+      color: rgb(215, 218, 220);
+    }
     .next-chapter-title {
       color: rgb(215, 218, 220) !important;
     }
@@ -244,6 +339,9 @@ export default {
       color: #fdd4e4;
       border: 1px solid red !important;
     }
+    .mobile-navigation {
+      color: #fdd4e4;
+    }
   }
   &--sapphire {
     background: url("../../assets/noise/noise-sapphire-all.png");
@@ -251,6 +349,9 @@ export default {
       background: url("../../assets/noise/noise-sapphire-container.png");
       color: #d4e6fd;
       border: 1px solid blue !important;
+    }
+    .mobile-navigation {
+      color: #d4e6fd;
     }
   }
 }

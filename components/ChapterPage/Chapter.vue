@@ -21,7 +21,12 @@
       <p v-text="chapter.header"></p>
       <fa class="announcement-pin" icon="quote-right"></fa>
     </div>
-    <scrollama @step-enter="stepEnterHandler" :progress="true" @step-progress="progressHandler">
+    <scrollama
+      @step-enter="stepEnterHandler"
+      @step-leave="stepLeaveHandler"
+      :progress="true"
+      @step-progress="progressHandler"
+    >
       <div
         data-step="1"
         :style="{'font-size':fontSize, 'font-family':fontStyle}"
@@ -97,6 +102,7 @@ export default {
     stepEnterHandler: async function({ element, index, direction }) {
       // console.log(element, index, direction);
     },
+    stepLeaveHandler: async function({}) {},
     progressHandler: async function({ progress }) {
       this.currStepProgress = progress;
     }

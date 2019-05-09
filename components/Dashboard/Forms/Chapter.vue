@@ -427,27 +427,7 @@ dialog {
   border: 0px;
   margin: auto;
 }
-.fr-wrapper {
-  font-size: 16px !important;
-  color: #444444;
-}
-.fr-box {
-  font-family: inherit;
-  font-size: 16px !important;
-  color: #444444;
-}
-.fr-view {
-  font-family: inherit;
-  font-size: 16px !important;
-  color: #444444;
-  p {
-  }
-  * {
-    font-size: 16px !important;
-    line-height: 20px;
-    color: rgb(179, 179, 179);
-  }
-}
+
 .el-button--mini,
 .el-button--small span {
   font-size: 13px;
@@ -467,65 +447,14 @@ dialog {
     outline: none;
   }
 }
-.ql-editor {
-  padding: 0 15px !important;
-}
-.ql-editor.ql-blank:before {
-  font-style: none;
-}
-.ql-snow * {
-  font-size: 16px;
-}
-.fr-box.fr-basic .fr-element {
-  p {
-    // font-size: 16px;
-  }
-}
+
 .el-step__line {
   font-size: 16px !important;
 }
 .el-step__icon-inner {
   font-size: 20px !important;
 }
-.quillWrapper .ql-snow.ql-toolbar {
-  // padding: 0 15px !important;
-  padding-top: 5px !important;
-  padding-bottom: 0px !important;
-}
-.ql-toolbar.ql-snow {
-  border: 1px solid $review-color !important;
-  border-bottom: 0 !important;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-  padding: 8px;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
-  background-color: white;
-  // box-shadow: 1px 1px 5px 0px rgb(209, 209, 209);
-  p {
-    font-size: 16px;
-  }
-}
-.ql-editor.ql-blank:before {
-  font-style: normal !important;
-}
-.ql-container.ql-snow {
-  border: 1px solid $review-color !important;
-  border-top: 0 !important;
-  // border-radius: 10px;
 
-  p {
-    font-size: 16px;
-    font-family: $text-font-stack;
-    font-weight: 400;
-  }
-
-  background-color: white;
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px;
-  color: #979797;
-  //
-}
 .chapter-form {
   position: relative;
   .v-btn:not(.v-btn--outline).primary {

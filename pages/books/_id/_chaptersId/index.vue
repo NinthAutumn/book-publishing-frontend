@@ -3,9 +3,6 @@
     <main class="divider chapter-container">
       <Chapter></Chapter>
       <CommentList v-if="!$device.isMobile"></CommentList>
-      <no-ssr v-if="$device.isMobile">
-        <infinite-loading direction="bottom" @infinite="nextChapter"></infinite-loading>
-      </no-ssr>
     </main>
   </div>
 </template>
@@ -82,10 +79,10 @@ export default {
         bookId: params.id
       });
       await store.dispatch("user/fetchUserSettings");
-      await store.dispatch('library/postHistory',{
+      await store.dispatch("library/postHistory", {
         chapterId: params.chaptersId,
-        bookId:params.id
-      })
+        bookId: params.id
+      });
     } else {
       await store.dispatch("chapter/fetchChapter", {
         chapterId: params.chaptersId,
@@ -99,6 +96,7 @@ export default {
       // await store.dispatch("book/fetchBookChapterCount", params.id);
     }
   },
+  computed: {},
   scrollToTop: false,
   transition: "none"
 };

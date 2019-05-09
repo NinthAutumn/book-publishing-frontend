@@ -1,5 +1,6 @@
 import Cookies from 'js-cookie';
 
+
 export const state = () => ({
   url: '',
   urls: []
@@ -15,6 +16,9 @@ export const mutations = {
   },
   PUSH_URL(state, url) {
     state.urls.push(url)
+  },
+  REMOVE_URL(state, url) {
+    state.url = ""
   }
 }
 

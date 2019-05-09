@@ -73,7 +73,13 @@ export const actions = {
     commit
   }, book) {
     try {
-      const res = await this.$axios.post('/book/add', book)
+      const {
+        res,
+        error
+      } = await this.$axios.post('/book/add', book)
+      if (error) {
+        return Promise.reject(error)
+      }
       if (res.data.noAuthor) {
         return commit('CHANGE_AUTHOR_STATE')
       }
@@ -136,6 +142,22 @@ export const actions = {
   }) {
     const res = await this.$axios.get(`/book/tags?search=${search}&limit=${limit}&page=${page}`)
     commit('SET_TAG_LIST', res.data)
+  },
+  async queryTags({
+    commit
+  }, {
+    search,
+    page,
+    limit
+  }) {
+    try {
+      const res = await this.$axios.get(`/book/tags/query?search=${search}&limit=${limit}&page=${page}`)
+      commit('SET_TAG_LIST', res.data)
+      return Promise.resolve(res.data)
+    } catch (error) {
+
+    }
+
   },
   async deleteBook({
     commit
