@@ -7,4 +7,7 @@ export default {};
 </script>
 
 <style lang="scss">
+.bank-form {
+  $self: &;
+}
 </style>

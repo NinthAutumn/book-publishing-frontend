@@ -136,7 +136,7 @@ export default {
   },
 
   async mounted() {
-    // console.log(object);
+    // console.log(this.$moment());
     this.isMounted = true;
     let row = Object.keys(this.time);
     let i = 8;

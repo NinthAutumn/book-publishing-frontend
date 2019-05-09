@@ -9,7 +9,7 @@
           <nuxt-link v-ripple tag="div" to="/" class="site-logo">ノーブル</nuxt-link>
         </div>
         <div class="flex-divider flex-row">
-          <div class="contract-button button--shadow button" v-if="!author.contracted">
+          <div @click="contract = !contract" class="contract-button button--shadow button" v-if="!author.contracted">
             <fa icon="file-contract" class style="margin-right:5px;"></fa>契約を組む
           </div>
           <nuxt-link
@@ -63,6 +63,7 @@
       <hr>
     </nav>
     <create-author></create-author>
+    <ContractForm v-if="contract"></ContractForm>
   </div>
 </template>
 <script>
@@ -81,6 +82,7 @@ export default {
     return {
       draw: null,
       writeBookState: false,
+      contract: false,
       menus: [
         {
           title: "ダッシュボード",
@@ -112,7 +114,8 @@ export default {
   components: {
     // HomeIcon
     BookForm: () => import("@/components/Dashboard/Forms/Book"),
-    CreateAuthor: () => import("@/components/Dashboard/Forms/Author")
+    CreateAuthor: () => import("@/components/Dashboard/Forms/Author"),
+    ContractForm: () => import("@/components/Dashboard/Forms/Contract")
   },
   watch: {
     // fetchUserId: function() {

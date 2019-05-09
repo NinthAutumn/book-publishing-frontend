@@ -31,6 +31,9 @@
         <div class="book-toc__volume-edit">編集</div>
       </div>
       <div class="book-toc__chapter-list">
+        <div class="book-toc__chapter-item" v-if="volume.chapters.length < 1">
+          <div class="book-toc__title">まだ話はありません</div>
+        </div>
         <div
           class="book-toc__chapter-item"
           v-for="(chapter,index) in volume.chapters"

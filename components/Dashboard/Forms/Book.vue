@@ -89,8 +89,6 @@
 </template>
 
 <script>
-import Select from "@/components/All/Select";
-import TagCreate from "./TagCreate";
 export default {
   data() {
     return {
