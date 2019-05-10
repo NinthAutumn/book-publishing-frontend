@@ -1,8 +1,9 @@
 <template>
   <div class="analytic-page">
     <header class="analytic-page__header">アナリティクス</header>
+    <main-graph></main-graph>
     <div class="flex-divider flex-row flex--between">
-      <transaction-graph class="analytic-page__graph"></transaction-graph>
+      <!-- <transaction-graph class="analytic-page__graph"></transaction-graph> -->
       <transaction-pie class="analytic-page__pie"></transaction-pie>
     </div>
     <transaction-list class="analytic-page__list"></transaction-list>
@@ -13,16 +14,15 @@
 export default {
   layout: "user-nav/User",
   async fetch({ store, params }) {
-    await store.dispatch("dashboard/fetchTransactionGraph", { days: 10 });
+    // await store.dispatch("dashboard/fetchTransactionGraph", { time:  });
     await store.dispatch("dashboard/fetchTransactionPie");
   },
   components: {
     TransactionList: () =>
       import("@/components/Dashboard/Earning/TransactionList"),
-    TransactionGraph: () =>
-      import("@/components/Dashboard/Earning/TransactionGraph"),
     TransactionPie: () =>
-      import("@/components/Dashboard/Earning/TransactionPie")
+      import("@/components/Dashboard/Earning/TransactionPie"),
+    MainGraph: () => import("@/components/Dashboard/Graphs/Main")
   }
 };
 </script>

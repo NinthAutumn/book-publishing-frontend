@@ -9,7 +9,7 @@
           name="時間"
           :object="sort_type"
           transition="grow-shrink"
-          def="一週間"
+          def="今週"
         ></Select>
       </div>
     </div>
@@ -48,7 +48,7 @@ export default {
       object: {},
       sort_type: [
         // { key: "視聴回数", value: "views" },
-        { key: "一週間", value: 7 },
+        { key: "今週", value: 7 },
         { key: "今月", value: 31 },
         { key: "今年", value: 365 }
         // { key: "全体", value: "total" }
@@ -105,7 +105,7 @@ export default {
           };
           if (this.type === "total") {
           } else {
-            let i = this.type;
+            let i = this.type - 1;
             while (i >= 0) {
               let date = this.$moment()
                 .subtract(i, "days")
@@ -139,7 +139,7 @@ export default {
     // console.log(this.$moment());
     this.isMounted = true;
     let row = Object.keys(this.time);
-    let i = 7;
+    let i = 6;
     while (i >= 0) {
       let date = this.$moment()
         .subtract(i, "days")

@@ -2,16 +2,16 @@ export const state = () => ({
   transactions: [],
   statistics: {},
   ranking: [],
-  transactionGraph: [],
-  transactionPie: []
+  transactionPie: [],
+  votesBar: {}
 })
 
 export const getters = {
   getTransactions: state => state.transactions,
   getStats: state => state.statistics,
   getRanking: state => state.ranking,
-  getTransactionGraph: state => state.transactionGraph,
-  getTransactionPie: state => state.transactionPie
+  getTransactionPie: state => state.transactionPie,
+  getVotesBar: state => state.votesBar
 }
 
 export const mutations = {
@@ -29,11 +29,11 @@ export const mutations = {
       state.transactions.push(transaction)
     })
   },
-  SET_TRANSACTION_GRAPH: (state, transactionGraph) => {
-    state.transactionGraph = transactionGraph
-  },
   SET_TRANSACTION_PIE: (state, transactionPie) => {
     state.transactionPie = transactionPie
+  },
+  SET_VOTES_BAR: (state, votesBar) => {
+    state.votesBar = votesBar
   }
 }
 export const actions = {
@@ -56,20 +56,6 @@ export const actions = {
       return Promise.reject(error)
     }
   },
-  async fetchTransactionGraph({
-    commit
-  }, {
-    days
-  }) {
-    try {
-      const res = await this.$axios.get(`/analytic/dashboard/earning/graph?days=${days}`)
-      commit('SET_TRANSACTION_GRAPH', res.data)
-      return Promise.resolve(res.data)
-    } catch (error) {
-      return Promise.reject(error)
-    }
-
-  },
   async fetchTransactionPie({
     commit
   }) {
@@ -87,7 +73,7 @@ export const actions = {
       try {
         const res = await this.$axios.get(`/analytic/dashboard/stats`)
         commit('SET_STATISTICS', res.data)
-        return Promise.resolve()
+        return Promise.resolve(res.data)
       } catch (error) {
         return Promise.reject(error)
       }
@@ -98,16 +84,40 @@ export const actions = {
   async fetchRanking({
     commit
   }) {
-    try {
-      try {
-        const res = await this.$axios.get(`/analytic/dashboard/ranking`)
-        commit('SET_RANKING', res.data)
-        return Promise.resolve()
-      } catch (error) {
-        return Promise.reject(error)
-      }
-    } catch (error) {
 
+    try {
+      const res = await this.$axios.get(`/analytic/dashboard/ranking`)
+      commit('SET_RANKING', res.data)
+      return Promise.resolve()
+    } catch (error) {
+      return Promise.reject(error)
+    }
+
+  },
+  async fetchVotesBar({
+    commit
+  }, {
+    time
+  }) {
+    try {
+      const res = await this.$axios.get(`/analytic/dashboard/votes?time=${time}`)
+      commit('SET_VOTES_BAR', res.data)
+      return Promise.resolve(res.data)
+    } catch (error) {
+      return Promise.reject(error)
     }
   },
+  async fetchMainAnalytics({
+    commit
+  }, {
+    time,
+    type
+  }) {
+    try {
+      const res = await this.$axios.get(`/analytic/dashboard/main?time=${time}&type=${type}`)
+      return Promise.resolve(res.data)
+    } catch (error) {
+      return Promise.reject(error)
+    }
+  }
 }

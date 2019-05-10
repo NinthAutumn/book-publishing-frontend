@@ -17,7 +17,6 @@
           v-loading="loading"
           class="profile-dropdown__wallet flex-row flex--between flex--align"
         >
-          <fa class="wallet-icon" icon="wallet"></fa>
           <div class="profile-dropdown__wallet__content flex-row">
             <Currency style="margin-right:1rem;" :amount="wealth"></Currency>
             <Vote :amount="token"></Vote>
@@ -154,9 +153,9 @@ export default {
     }
     &__content {
       color: black;
-      padding: 1rem 1.5rem;
+      // padding: 1rem 1.5rem;
       // border: 1px solid grey;
-      box-shadow: inset 1px 1px 5px rgb(240, 240, 240);
+      // box-shadow: inset 1px 1px 5px rgb(240, 240, 240);
       border-radius: 1rem;
     }
     &__buy-more {
