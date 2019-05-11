@@ -24,7 +24,7 @@ export default async function ({
     const authStrategy = $auth.strategy.name;
     if (authStrategy === 'google' || authStrategy === 'facebook') {
       const token = $auth.getToken(authStrategy).substr(7);
-      const url = `/auth/social?service=${authStrategy}&token=${token}`
+      const url = `/auth/social/${authStrategy}/token=${token}`
       try {
   
         const {
