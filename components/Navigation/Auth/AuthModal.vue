@@ -1,10 +1,23 @@
 <template>
   <div class="auth-modal" v-click-outside="close">
     <transition name="slide-fade">
-      <login-form v-if="$store.state.authed === 0"></login-form>
-      <sign-up-from v-if="$store.state.authed === 1"></sign-up-from>
-      <forgot-password v-if="$store.state.authed === 2"></forgot-password>
+      <social-auth v-if="step === 0"></social-auth>
+      <login-form v-if="step === 1"></login-form>
+      <sign-up-from v-if="step === 2"></sign-up-from>
+      <forgot-password v-if="step === 3"></forgot-password>
     </transition>
+    <div class="auth-modal__footer">
+      <ul class="auth-modal__footer__list flex-row flex--align flex--center">
+        <li
+          class="auth-modal__footer__item"
+          v-for="(footer,index) in footerList"
+          :key="footer.value"
+        >
+          <span>{{footer.key}}</span>
+          <i v-if="index !== 2">|</i>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -12,27 +25,81 @@
 export default {
   data() {
     return {
-      // auth: 0
+      footerList: [
+        { key: "© nobles 2019", value: "copyright" },
+        { key: "利用規約", value: "toc" },
+        { key: "プライバシーポリシー", value: "privacy policy" }
+      ]
     };
   },
   transition: "slide-fade",
   components: {
     LoginForm: () => import("./LoginForm"),
     SignUpFrom: () => import("./SignUpFrom"),
-    ForgotPassword: () => import("./ForgotPassword")
+    ForgotPassword: () => import("./ForgotPassword"),
+    SocialAuth: () => import("@/components/Navigation/Auth/SocialAuth")
   },
   methods: {
     close() {
       this.$store.commit("LOGIN_FALSE");
     }
   },
-  computed: {}
+  computed: {
+    step() {
+      return this.$store.state.authed;
+    }
+  }
 };
 </script>
 
-<style>
+<style lang="scss">
 .auth-modal {
   width: 100%;
-  position: relative;
+  width: 44rem;
+  height: 60rem;
+  margin-top: 2rem;
+  /* padding: 3rem; */
+  box-sizing: border-box;
+  -webkit-box-shadow: 0 13px 27px -5px rgba(50, 50, 93, 0.25),
+    0 8px 16px -8px rgba(0, 0, 0, 0.3), 0 -6px 16px -6px rgba(0, 0, 0, 0.025);
+  box-shadow: 0 13px 27px -5px rgba(50, 50, 93, 0.25),
+    0 8px 16px -8px rgba(0, 0, 0, 0.3), 0 -6px 16px -6px rgba(0, 0, 0, 0.025);
+  -webkit-transition-property: color, background-color, -webkit-box-shadow,
+    -webkit-transform;
+  transition-property: color, background-color, -webkit-box-shadow,
+    -webkit-transform;
+  transition-property: color, background-color, box-shadow, transform;
+  transition-property: color, background-color, box-shadow, transform,
+    -webkit-box-shadow, -webkit-transform;
+  -webkit-transition-duration: 0.15s;
+  transition-duration: 0.15s;
+  background-color: rgb(255, 255, 255);
+  $self: &;
+  &__footer {
+    $self: &;
+    &__list {
+      i {
+        display: inline-block;
+        width: 0;
+        overflow: hidden;
+        text-indent: 9999px;
+        height: 1rem;
+        margin: 0 0.3em;
+        vertical-align: middle;
+        border-left: 1px solid;
+      }
+      #{$self}__item {
+        font-size: 1.4rem;
+        span {
+          font-size: 1.4rem;
+        }
+        i {
+          font-size: 1.4rem;
+        }
+        // margin-right: 2rem;
+        // border-right: 1px solid grey;
+      }
+    }
+  }
 }
 </style>

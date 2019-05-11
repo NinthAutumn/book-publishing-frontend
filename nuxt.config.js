@@ -172,6 +172,9 @@ module.exports = {
       imports: [{
         set: '@fortawesome/free-solid-svg-icons',
         icons: ['fas']
+      }, {
+        set: '@fortawesome/free-brands-svg-icons',
+        icons: ['fab']
       }]
     }],
     ['@nuxtjs/google-analytics', {
@@ -203,8 +206,11 @@ module.exports = {
         user: true,
         redirect_uri: 'http://127.0.0.1:3000/'
       },
-      facebook:{
-        client_id:process.env.FACEBOOK_CLIENT_ID
+      facebook: {
+        client_id: process.env.FACEBOOK_CLIENT_ID,
+        userinfo_endpoint: false,
+        scope: ['public_profile', 'email'],
+        redirect_uri: 'https://tolocalhost.com/'
       },
       local: {
         _scheme: '~/auth/local.js',

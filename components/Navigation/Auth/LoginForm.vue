@@ -1,30 +1,41 @@
 <template>
   <div class="login-form">
     <div class="login-form__item">
-      <h3 class="login__header text--center text--large" style>ログインをする</h3>
+      <div @click="changePage(0)" class="flex-row go-back">
+        <div class="divider">
+          <Zondicon class="zond-back" icon="arrow-thick-left"></Zondicon>
+        </div>
+        <div class="divider">
+          <p>戻る</p>
+        </div>
+      </div>
+      <h3 class="login__header text--center text--large">ノーブル</h3>
+
       <form @submit.prevent="login" class="flex flex-column" style="padding-top:20px;">
         <label for="username">ユーザー名</label>
         <input
-          class="form-input form-input--primary--lighter login__input"
+          class="login-form__input elevation-1"
           type="text"
           ref="username"
           name="username"
           v-model="form.username"
           autocomplete="username"
           style="margin-bottom:15px;"
+          placeholder="ユーザー名"
         >
         <label for="password">パスワード</label>
         <input
-          class="form-input form-input--primary--lighter login__input"
+          class="login-form__input elevation-1"
           type="password"
           name="password"
           autocomplete="current-password"
+          placeholder="パスワード"
           v-model="form.password"
         >
         <div class="text--center" style="margin-top:1rem;">
           <p
             class="login-forgot__password text--primary text--link"
-            @click="changePage(2)"
+            @click="changePage(3)"
           >パスワードを忘れた?</p>
         </div>
 
@@ -36,10 +47,10 @@
       </form>
       <div class="text--center">
         <!-- <a href>パスワード</a> -->
-        <p class="text--primary text--link" @click="changePage(1)">アカウントを作る</p>
+        <p class="text--primary text--link" @click="changePage(2)">アカウントを作る</p>
       </div>
     </div>
-    <div class="social-auth" @click="social">ログイン</div>
+
     <!-- <transition name="side-fade">
       <SignUpFrom v-if="auth === 1"></SignUpFrom>
     </transition>-->
@@ -70,9 +81,6 @@ export default {
     // },
     changePage(page) {
       this.$store.commit("SET_AUTH_PAGE", page);
-    },
-    async social() {
-      this.$auth.loginWith("google");
     },
     async login() {
       const user = {
@@ -123,7 +131,6 @@ export default {
 
 <style lang="scss">
 .login-form {
-  position: absolute;
   .login__header {
   }
   .v-btn__content {
@@ -131,21 +138,49 @@ export default {
     font-size: 1.4rem;
   }
   // color: #8dadb7;
-  height: 600px;
+  height: 90%;
   // padding: 30px;
-
+  padding: 3rem;
   // justify-content: space-around;
-  -webkit-box-shadow: 1px 1px 13px 0px #ababab;
-  box-shadow: 1px 1px 13px 0px #ababab;
-  background-color: white;
-  padding: 10px;
   width: 100%;
-  width: 440px;
-  padding: 30px;
-
+  // padding: 30px;
+  $self: &;
   &__item {
     // border-radius: 10px;
-
+    #{$self}__input {
+      height: 47px;
+      padding: 12px 14px;
+      color: #32325d;
+      background-color: white;
+      border: 1px solid transparent;
+      // border-radius: 4px;
+      // box-shadow: 0 1px 3px 0 #d9d1dd;
+      -webkit-transition: box-shadow 150ms ease;
+      transition: box-shadow 150ms ease;
+      font-size: 1.6rem;
+      transition: 300ms;
+      margin-bottom: 2rem;
+      &:focus,
+      &:hover {
+        outline: none;
+        -webkit-box-shadow: 0 13px 27px -5px rgba(50, 50, 93, 0.25),
+          0 8px 16px -8px rgba(0, 0, 0, 0.3),
+          0 -6px 16px -6px rgba(0, 0, 0, 0.025) !important;
+        box-shadow: 0 13px 27px -5px rgba(50, 50, 93, 0.25),
+          0 8px 16px -8px rgba(0, 0, 0, 0.3),
+          0 -6px 16px -6px rgba(0, 0, 0, 0.025) !important;
+        -webkit-transition-property: color, background-color, -webkit-box-shadow,
+          -webkit-transform;
+        transition-property: color, background-color, -webkit-box-shadow,
+          -webkit-transform;
+        transition-property: color, background-color, box-shadow, transform;
+        transition-property: color, background-color, box-shadow, transform,
+          -webkit-box-shadow, -webkit-transform;
+        -webkit-transition-duration: 0.15s;
+        transition-duration: 0.15s;
+        transition: 300ms;
+      }
+    }
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -161,8 +196,13 @@ export default {
   }
 
   label {
-    font-size: 13px;
-    color: $primary-lighter;
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    font-variant: normal;
+    -webkit-font-smoothing: antialiased;
+    color: #6b7c93;
   }
   .login__input {
     // border-color: #c8cecf;

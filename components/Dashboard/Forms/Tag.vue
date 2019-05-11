@@ -7,7 +7,7 @@
         placeholder="タグ検索または作成"
         class="tag-create__search__input"
         type="text"
-        @change="filterTags"
+        @change.stop="filterTags"
       >
       <button class="tag-create__create-button" @click="createTag">作る</button>
     </div>
@@ -102,12 +102,13 @@ export default {
 
 <style lang="scss">
 .tag-create {
-  top: 60px;
+  // top: 60px;
   // right: 100px;
-  margin-left: 10px;
-  position: sticky;
-  height: 50rem;
-  width: 200px;
+  // margin-left: 10px;
+  // position: sticky;
+  margin-bottom: 2rem;
+  height: 300px;
+  width: 100%;
   padding: 10px;
   background-color: #fff;
   box-shadow: 0 2px 5px 0 rgba(60, 66, 87, 0.1), 0 1px 1px 0 rgba(0, 0, 0, 0.07);
@@ -127,7 +128,7 @@ export default {
     }
   }
   &__list {
-    height: 400px;
+    height: 200px;
     display: flex;
     flex-wrap: wrap;
     overflow: auto;
@@ -152,25 +153,25 @@ export default {
   &__search {
     margin-bottom: 10px;
     #{$self}__create-button {
-      width: 70px;
-      height: 30px;
+      min-width: 7rem;
+      height: 3.5rem;
       background-color: #fff;
       transition: 300ms;
       border: 1px solid rgb(236, 236, 236);
-
+      font-size: 1.4rem;
       &:focus,
       &:active {
         outline: none;
       }
       &:hover {
         cursor: pointer;
-        background-color: $primary;
-        color: white;
+        box-shadow: 0 2px 5px 0 rgba(60, 66, 87, 0.1),
+          0 1px 1px 0 rgba(0, 0, 0, 0.07);
         transition: 300ms;
       }
     }
     &__input {
-      height: 30px;
+      height: 3.5rem;
       font-size: 12px;
       padding: 2px 5px;
       width: 100%;

@@ -18,11 +18,12 @@
       <input
         name="email"
         v-validate="'email'"
-        class="form-input form-input--primary--lighter"
+        class="fg-modal__input elevation-1"
         type="email"
         data-vv-as="記入されたメールアドレス"
         v-model="email"
         placeholder="メールアドレス"
+        ref="email"
       >
     </div>
     <div class="flex-divider flex-row flex--right">
@@ -40,8 +41,11 @@ export default {
   },
   methods: {
     signOff() {
-      this.$store.commit("SET_AUTH_PAGE", 0);
+      this.$store.commit("SET_AUTH_PAGE", 1);
     }
+  },
+  mounted() {
+    this.$refs.email.focus();
   }
 };
 </script>
@@ -49,11 +53,8 @@ export default {
 <style lang="scss">
 .fg-modal {
   padding: 3rem;
-  height: 600px;
-  width: 440px;
-  background-color: #fff;
-  -webkit-box-shadow: 1px 1px 13px 0px #ababab;
-  box-shadow: 1px 1px 13px 0px #ababab;
+  height: 90%;
+  width: 100%;
   box-sizing: border-box;
   .v-btn__content {
     color: white;
@@ -70,9 +71,48 @@ export default {
   &__button {
     font-size: 1.4rem;
   }
+  &__input {
+    height: 47px;
+    padding: 12px 14px;
+    color: #32325d;
+    background-color: white;
+    border: 1px solid transparent;
+    // border-radius: 4px;
+    // box-shadow: 0 1px 3px 0 #d9d1dd;
+    -webkit-transition: box-shadow 150ms ease;
+    transition: box-shadow 150ms ease;
+    font-size: 1.6rem;
+    transition: 300ms;
+    margin-bottom: 2rem;
+    &:focus,
+    &:hover {
+      outline: none;
+      -webkit-box-shadow: 0 13px 27px -5px rgba(50, 50, 93, 0.25),
+        0 8px 16px -8px rgba(0, 0, 0, 0.3),
+        0 -6px 16px -6px rgba(0, 0, 0, 0.025) !important;
+      box-shadow: 0 13px 27px -5px rgba(50, 50, 93, 0.25),
+        0 8px 16px -8px rgba(0, 0, 0, 0.3),
+        0 -6px 16px -6px rgba(0, 0, 0, 0.025) !important;
+      -webkit-transition-property: color, background-color, -webkit-box-shadow,
+        -webkit-transform;
+      transition-property: color, background-color, -webkit-box-shadow,
+        -webkit-transform;
+      transition-property: color, background-color, box-shadow, transform;
+      transition-property: color, background-color, box-shadow, transform,
+        -webkit-box-shadow, -webkit-transform;
+      -webkit-transition-duration: 0.15s;
+      transition-duration: 0.15s;
+      transition: 300ms;
+    }
+  }
   label {
-    font-size: 13px;
-    color: $primary-lighter;
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    font-variant: normal;
+    -webkit-font-smoothing: antialiased;
+    color: #6b7c93;
   }
 }
 </style>

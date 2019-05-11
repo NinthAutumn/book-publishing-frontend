@@ -2,7 +2,7 @@
   <div class="book-form">
     <div class="book-form__container">
       <h3 class="book-form__title">本の情報</h3>
-      <form ref="form" @submit.prevent="postBook" class="flex flex-column">
+      <form ref="form" @submit.prevent class="flex flex-column">
         <div class="divider">
           <div class="divider" style="margin-right:10px;">
             <label for="avatar-uploader">本のカバー</label>
@@ -68,6 +68,7 @@
           </transition-group>
           <span>*最高６ジャンルまで &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; *必ず1ジャンルを選択</span>
         </div>
+        <TagCreate :limit="6" v-model="form.tags"></TagCreate>
         <div class="book-form__genre">
           <label for>タグ</label>
           <transition-group tag="ul" name="list" class="book-form__genre-list">
@@ -85,11 +86,11 @@
             type="submit"
             class="form-submit form-submit--primary book-form__submit"
             value="投稿"
+            @click="postBook"
           >
         </div>
       </form>
     </div>
-    <TagCreate :limit="6" v-model="form.tags"></TagCreate>
   </div>
 </template>
 

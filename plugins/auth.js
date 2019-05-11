@@ -16,7 +16,7 @@ export default async function ({
   if (!$auth.loggedIn) {
     return
   }
- 
+
   if (process.client) {
     if (!$auth.loggedIn) {
       return
@@ -24,13 +24,13 @@ export default async function ({
     const authStrategy = $auth.strategy.name;
     if (authStrategy === 'google' || authStrategy === 'facebook') {
       const token = $auth.getToken(authStrategy).substr(7);
-      const url = `/auth/social/${authStrategy}/token=${token}`
+      const url = `/auth/social/${authStrategy}?token=${token}`
       try {
-  
+
         const {
           data
         } = await $axios.post(url);
-  
+
         $auth.setRefreshToken('local', 'Bearer ' + data.refresh_token)
         $auth.setToken('Bearer ' + token)
         $auth.setToken('local', 'Bearer ' + data.access_token)
@@ -41,8 +41,9 @@ export default async function ({
             await $auth.fetchUser();
           })
         });
+        return
         // window.location.reload(true)
-  
+
       } catch (e) {
         console.log(e);
       }
