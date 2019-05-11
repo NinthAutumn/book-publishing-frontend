@@ -67,7 +67,8 @@ export default {
       data_type: [
         { key: "投票", value: 0 },
         { key: "視聴回数", value: 1 },
-        { key: "購入履歴", value: 2 }
+        { key: "購入履歴", value: 2 },
+        { key: "ブックマーク", value: 3 }
       ],
       type: 7,
       dataSelected: 0,

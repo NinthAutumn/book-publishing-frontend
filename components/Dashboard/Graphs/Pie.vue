@@ -36,8 +36,8 @@ export default {
   data() {
     return {
       chartSetting: {
-        nullAddZero: true
-        // offsetY: 300
+        nullAddZero: true,
+        offsetY: 250
         // radius: 90
         // scale: [true, true]
       },
@@ -48,7 +48,8 @@ export default {
       data_type: [
         { key: "投票", value: 0 },
         { key: "視聴回数", value: 1 },
-        { key: "購入履歴", value: 2 }
+        { key: "購入履歴", value: 2 },
+        { key: "ブックマーク", value: 3 }
       ],
       graph_select: [{ key: "パイ", value: 0 }, { key: "リング", value: 1 }],
       graph: 0,

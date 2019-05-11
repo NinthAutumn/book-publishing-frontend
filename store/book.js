@@ -237,6 +237,23 @@ export const actions = {
       return Promise.reject(error)
     }
   },
+  async postVote({
+    commit
+  }, {
+    bookId
+  }) {
+    try {
+      const res = await this.$axios.post(`/book/vote?bookId=${bookId}`)
+      if (res.data.error) {
+        return Promise.resolve({
+          error: res.data.error
+        })
+      }
+      return Promise.resolve()
+    } catch (error) {
+      return Promise.reject(error)
+    }
+  }
 }
 
 export const mutations = {

@@ -142,7 +142,7 @@ export default {
         padding: 1rem 2rem;
         font-size: 2rem;
         color: #32325d;
-        padding-top: 2rem;
+        // padding-top: 2rem;
       }
       #{$self}__close {
         &:hover {

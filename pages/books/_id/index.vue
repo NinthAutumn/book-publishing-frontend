@@ -66,6 +66,26 @@
         <div class="book__information"></div>
         <div class="book__buttons">
           <span
+            class="book-content__buttons__item book-content__buttons__item--vote button button--primary--open button--shadow button--big"
+            v-ripple
+            @click="voteHandler"
+          >
+            <div v-if="loading" class="lds-ellipsis">
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
+
+            <fa
+              v-if="!loading"
+              class="book-content__buttons__item__icon"
+              style="font-size:15px;"
+              icon="bolt"
+            ></fa>
+            <span v-if="!loading">投票をかける</span>
+          </span>
+          <span
             class="book-content__buttons__item button button--primary--open button--shadow button--big"
             v-ripple
           >サポートする</span>
@@ -184,7 +204,8 @@ export default {
         }
       },
       text: "",
-      reviewState: false
+      reviewState: false,
+      loading: false
     };
   },
   methods: {
@@ -284,6 +305,23 @@ export default {
           }
         }
       }
+    },
+    async voteHandler() {
+      this.loading = true;
+      try {
+        const { error } = await this.$store.dispatch("book/postVote", {
+          bookId: this.$route.params.id
+        });
+        if (error) {
+          this.$message({
+            message: error,
+            type: "error"
+          });
+        }
+      } catch (error) {
+        console.log(error.message);
+      }
+      this.loading = false;
     }
   },
   components: {
@@ -320,6 +358,31 @@ export default {
 </script>
 
 <style lang="scss">
+@keyframes lds-ellipsis1 {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes lds-ellipsis3 {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
+@keyframes lds-ellipsis2 {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(19px, 0);
+  }
+}
+
 .book-showtab {
   position: relative;
 }
@@ -489,6 +552,55 @@ input[type="number"]::-webkit-outer-spin-button {
   &__buttons {
     display: flex;
     user-select: none;
+    .book-content__buttons__item {
+      .lds-ellipsis {
+        display: inline-block;
+        position: relative;
+        width: 64px;
+        height: 64px;
+      }
+      .lds-ellipsis div {
+        position: absolute;
+        top: 27px;
+        width: 11px;
+        height: 11px;
+        border-radius: 50%;
+        background: #f4648a;
+        animation-timing-function: cubic-bezier(0, 1, 1, 0);
+      }
+      .lds-ellipsis div:nth-child(1) {
+        left: 6px;
+        animation: lds-ellipsis1 0.6s infinite;
+      }
+      .lds-ellipsis div:nth-child(2) {
+        left: 6px;
+        animation: lds-ellipsis2 0.6s infinite;
+      }
+      .lds-ellipsis div:nth-child(3) {
+        left: 26px;
+        animation: lds-ellipsis2 0.6s infinite;
+      }
+      .lds-ellipsis div:nth-child(4) {
+        left: 45px;
+        animation: lds-ellipsis3 0.6s infinite;
+      }
+      &--vote {
+        border: 1px solid #f4648a !important;
+        color: #f4648a !important;
+        transition: 300ms;
+        span {
+          font-size: 1.3rem;
+        }
+        &:hover {
+          background-color: #f4648a !important;
+          color: white !important;
+          transition: 300ms;
+          .lds-ellipsis div {
+            background: white;
+          }
+        }
+      }
+    }
   }
   &__synopsis {
     grid-area: content;

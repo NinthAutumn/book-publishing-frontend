@@ -2,13 +2,13 @@
   <div class="profile-form">
     <div class="flex-control flex-row flex--between">
       <div class="flex-control flex-column">
-        <label for="fullname">姓*</label>
+        <label for="fullname">氏名*</label>
         <input
           class="profile-form__input profile-form__input--name profile-form__input--firstname"
           v-model="form.lastname"
           type="text"
           name="fullname"
-          placeholder="姓名"
+          placeholder="氏名"
         >
         <input
           class="profile-form__input profile-form__input--name-kana"
@@ -306,8 +306,10 @@ export default {
     margin-bottom: 2rem;
     &--name {
       margin-bottom: 1rem;
+      width: 19.4rem;
       &-kana {
         font-size: 1.2rem;
+        width: 19.4rem;
         height: 3rem;
       }
     }

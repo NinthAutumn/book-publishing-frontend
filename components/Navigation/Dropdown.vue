@@ -21,7 +21,7 @@
             <Currency style="margin-right:1rem;" :amount="wealth"></Currency>
             <Vote :amount="token"></Vote>
           </div>
-          <div class="flex-divider">
+          <div class="flex-divider flex-row flex--right">
             <div
               class="profile-dropdown__wallet__buy-more"
               @click="$store.commit('TOGGLE_PRODUCT_MODAL')"
@@ -144,6 +144,7 @@ export default {
     padding: 0.5rem 2rem;
     position: relative;
     overflow: hidden;
+    flex-wrap: wrap;
     .wallet-icon {
       position: absolute;
       top: 5px;
@@ -159,8 +160,9 @@ export default {
       border-radius: 1rem;
     }
     &__buy-more {
-      margin-left: 10px;
+      // margin-left: 10px;
       // height: 2px
+
       display: flex;
       align-items: center;
       justify-content: center;
@@ -172,9 +174,10 @@ export default {
         cursor: pointer;
         background-color: $primary;
         color: white;
+        transition: 300ms;
       }
-      height: 30px;
-      width: 100px;
+      height: 3rem;
+      width: 10rem;
       background-color: white;
       border: 1px solid $primary;
       color: $primary;
