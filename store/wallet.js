@@ -46,7 +46,6 @@ export const actions = {
   }, ) {
     try {
       const res = await this.$axios.get('/user/wealth')
-      console.log(res.data);
       if (res) {
         commit('SET_WEALTH', res.data.wealth)
         commit('SET_VOTE_TOKEN', res.data.vote_token)

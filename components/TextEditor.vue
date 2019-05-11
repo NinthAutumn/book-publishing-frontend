@@ -69,7 +69,6 @@ export default {
           .replace(/[|]+/g, "<ruby>")
           .replace(/[》]+/g, "</rt></ruby>")
           .replace(/[《]+/g, "<rt>");
-        console.log(text);
       });
       let br = 0;
       this.realArray = this.textArray

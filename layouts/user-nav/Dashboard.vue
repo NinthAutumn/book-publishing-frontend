@@ -9,7 +9,11 @@
           <nuxt-link v-ripple tag="div" to="/" class="site-logo">ノーブル</nuxt-link>
         </div>
         <div class="flex-divider flex-row">
-          <div @click="contract = !contract" class="contract-button button--shadow button" v-if="!author.contracted">
+          <div
+            @click.stop="$store.commit('SET_CONTRACT_MODAL_STATE')"
+            class="contract-button button--shadow button"
+            v-if="!author.contracted"
+          >
             <fa icon="file-contract" class style="margin-right:5px;"></fa>契約を組む
           </div>
           <nuxt-link
@@ -63,7 +67,7 @@
       <hr>
     </nav>
     <create-author></create-author>
-    <ContractForm v-if="contract"></ContractForm>
+    <ContractForm></ContractForm>
   </div>
 </template>
 <script>

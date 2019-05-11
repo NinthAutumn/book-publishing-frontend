@@ -95,7 +95,7 @@ export default {
   methods: {
     async logOut() {
       await this.$auth.logout();
-      this.$router.go(0);
+      this.$axios.setHeader("Authorization", null);
     }
   }
   // loading: false

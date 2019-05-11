@@ -43,11 +43,9 @@ export const actions = {
   async multiImage({
     commit
   }, file) {
-    console.log("this is gract");
     // delete this.$axios.defaults.headers.common['Authorization'];
     // delete this.$axios.defaults.headers.common['TrackId'];
     const uploadConfig = await this.$axios.get('/upload')
-    console.log(uploadConfig.data);
     await this.$axios.put(uploadConfig.data.url, file, {
       headers: {
         'Content-Type': 'image',

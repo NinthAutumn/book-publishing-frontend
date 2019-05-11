@@ -6,7 +6,7 @@
         <Select
           :width="100"
           v-model="dataSelected"
-          name="時間"
+          name="タイプ"
           :object="data_type"
           transition="grow-shrink"
           def="投票"
@@ -22,7 +22,7 @@
         <Select
           :width="100"
           v-model="graph"
-          name="時間"
+          name="グラフ"
           :object="graph_select"
           transition="grow-shrink"
           def="バーグラフ"
@@ -30,10 +30,24 @@
       </div>
     </div>
 
-    <div class="vote-graph__graph" v-loading="loading">
+    <div class="vote-graph__graph">
       <no-ssr>
-        <ve-histogram v-if="graph===0" :data="chartData" :settings="chartSetting"></ve-histogram>
-        <ve-line v-if="graph===1" :data="chartData" :settings="chartSetting"></ve-line>
+        <ve-histogram
+          :data-zoom="dataZoom"
+          v-if="graph===0"
+          :data="chartData"
+          :settings="chartSetting"
+          :loading="loading"
+        ></ve-histogram>
+        <ve-line
+          :data-zoom="dataZoom"
+          v-if="graph===1"
+          :data="chartData"
+          :settings="chartSetting"
+          :loading="loading"
+        >
+          <!-- <div class="data-empty">data empty😂</div> -->
+        </ve-line>
       </no-ssr>
     </div>
   </div>
@@ -62,6 +76,11 @@ export default {
         area: true
         // scale: [true, true]
       },
+      toolbox: {
+        feature: {
+          magicType: { type: ["line", "bar"] }
+        }
+      },
       chartData: {
         columns: ["date"],
         rows: []
@@ -69,10 +88,24 @@ export default {
       object: {},
       loading: false,
       graph: 0,
+      markLine: {
+        data: [
+          {
+            name: "average",
+            type: "average"
+          }
+        ]
+      },
+      dataZoom: [
+        {
+          type: "slider"
+        }
+      ],
       graph_select: [
         { key: "バーグラフ", value: 0 },
         { key: "ライングラフ", value: 1 }
       ]
+      // dataEmpty: true
     };
   },
   components: {

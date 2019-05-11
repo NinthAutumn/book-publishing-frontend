@@ -78,7 +78,6 @@ export default {
       this.changeDate();
     },
     widthBar: function(val) {
-      console.log(val);
       //  this.$refs["bargraph"].clientWidth;
     },
     menu: function(val) {

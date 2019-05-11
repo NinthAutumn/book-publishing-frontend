@@ -199,7 +199,9 @@ module.exports = {
   auth: {
     strategies: {
       google: {
-        client_id: '1011183696401-5qgvj0o68dk9fdfjr5lfrfe2rc61m6hh.apps.googleusercontent.com'
+        client_id: "1011183696401-881iv1102bbj3outp8o6vnb4qjcigs94.apps.googleusercontent.com",
+        user: true,
+        redirect_uri: 'http://127.0.0.1:3000/'
       },
       local: {
         _scheme: '~/auth/local.js',

@@ -42,7 +42,7 @@ export const mutations = {
     state.comments = comments
   },
   PUSH_COMMENT(state, comment) {
-    console.log(comment.parentId);
+    // console.log(comment.parentId);
     try {
       // findObjectById(state.comments, comment.parentId, comment);
 

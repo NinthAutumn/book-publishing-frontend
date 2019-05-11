@@ -78,7 +78,6 @@ export default {
           }
         });
       });
-      console.log(this.selected);
     },
     async selectTag(name) {
       this.selected[name].selected = !this.selected[name].selected;
@@ -90,7 +89,6 @@ export default {
         }
       });
       if (temparray.length > this.limit) {
-        console.log(temparray[temparray.length - 1]);
         this.selected[name].selected = false;
         temparray.pop();
       }

@@ -41,13 +41,14 @@
       <v-radio v-for="n in genders" :key="n" :label="`${n}`" :value="n" color="#566CD6"></v-radio>
     </v-radio-group>
     <label for="birthday">誕生日*</label>
-    <el-date-picker
-      :lang="lang"
-      :minute-step="1"
-      v-model="form.birth"
+    <date-picker
+      :not-after="$moment().subtract('18', 'years')"
       type="date"
-      placeholder="誕生日"
-    ></el-date-picker>
+      format="YYYY/MM/DD"
+      :lang="lang"
+      v-model="form.birth"
+      :default-value="$moment().subtract('18', 'years')"
+    ></date-picker>
     <label for="fullname">郵便番号*</label>
     <input
       v-mask="'###-####'"
@@ -68,6 +69,13 @@
           name="state"
           placeholder="神奈川県"
         >
+        <input
+          class="profile-form__input profile-form__input--state-kana profile-form__input--kana"
+          v-model="kana_form.address.state"
+          type="text"
+          name="state"
+          placeholder="カタカナ*"
+        >
       </div>
       <div class="flex-divider flex-column">
         <label for="fullname">市区郡*</label>
@@ -77,6 +85,13 @@
           type="text"
           name="city"
           placeholder="市区郡"
+        >
+        <input
+          class="profile-form__input profile-form__input--city-kana profile-form__input--kana"
+          v-model="kana_form.address.city"
+          type="text"
+          name="city"
+          placeholder="カタカナ*"
         >
       </div>
       <div class="flex-divider flex-column">
@@ -88,6 +103,13 @@
           type="text"
           name="town"
           placeholder="町村名"
+        >
+        <input
+          class="profile-form__input profile-form__input--town-kana profile-form__input--kana"
+          v-model="kana_form.address.town"
+          type="text"
+          name="town"
+          placeholder="カタカナ*"
         >
       </div>
       <div class="flex-divider flex-column">
@@ -102,44 +124,8 @@
         >
       </div>
     </div>
-    <div class="flex-divider flex-row flex--between">
-      <div class="flex-divider flex-column">
-        <input
-          class="profile-form__input profile-form__input--state-kana profile-form__input--kana"
-          v-model="kana_form.address.state"
-          type="text"
-          name="state"
-          placeholder="カタカナ*"
-        >
-      </div>
-      <div class="flex-divider flex-column">
-        <input
-          class="profile-form__input profile-form__input--city-kana profile-form__input--kana"
-          v-model="kana_form.address.city"
-          type="text"
-          name="city"
-          placeholder="カタカナ*"
-        >
-      </div>
-      <div class="flex-divider flex-column">
-        <input
-          class="profile-form__input profile-form__input--town-kana profile-form__input--kana"
-          v-model="kana_form.address.town"
-          type="text"
-          name="town"
-          placeholder="カタカナ*"
-        >
-      </div>
-      <div class="flex-divider flex-column">
-        <input
-          disabled
-          class="profile-form__input profile-form__input--line-kana profile-form__input--kana profile-form__input--hide"
-          v-model="kana_form.address.town"
-          type="text"
-          name="town"
-          placeholder="カタカナ*"
-        >
-      </div>
+    <div class="flex-divider flex-row flex--right">
+      <div class="profile-form__button">進む</div>
     </div>
   </div>
 </template>
@@ -153,7 +139,7 @@ export default {
       date: "",
       form: {
         firstName: "",
-        birth: "",
+        birth: this.$moment().subtract("18", "years"),
         lastName: "",
         gender: "男性",
         address: {
@@ -246,7 +232,7 @@ export default {
           "previous 30 days"
         ],
         placeholder: {
-          date: "日にちを選ぶ"
+          date: "誕生日"
         }
       }
     };
@@ -257,6 +243,9 @@ export default {
       console.log(this.form.address.city);
       // this.form.address.city.replace(/市/g, "");
     }
+  },
+  async mounted() {
+    // this.date =
   }
 };
 </script>
@@ -264,6 +253,7 @@ export default {
 <style lang="scss">
 .profile-form {
   $self: &;
+  padding: 2rem;
   .el-input__inner {
     border: none;
   }
@@ -284,6 +274,21 @@ export default {
     border: 0px solid grey !important;
     margin-bottom: 2rem;
   }
+  .mx-datepicker {
+    margin-bottom: 2rem;
+    input {
+      height: 40px;
+      padding: 10px 12px;
+      color: #32325d;
+      background-color: white;
+      border: 1px solid transparent;
+      border-radius: 4px;
+      box-shadow: 0 1px 3px 0 #e6ebf1;
+      -webkit-transition: box-shadow 150ms ease;
+      transition: box-shadow 150ms ease;
+      font-size: 1.6rem;
+    }
+  }
   &__input {
     height: 40px;
     padding: 10px 12px;
@@ -295,7 +300,9 @@ export default {
     -webkit-transition: box-shadow 150ms ease;
     transition: box-shadow 150ms ease;
     font-size: 1.6rem;
-
+    &:focus {
+      outline: none;
+    }
     margin-bottom: 2rem;
     &--name {
       margin-bottom: 1rem;
@@ -349,6 +356,19 @@ export default {
     }
     &--post {
       width: 10rem;
+    }
+  }
+  &__button {
+    font-size: 1.5rem;
+    padding: 0.5rem 2rem;
+    border-radius: 0.4rem;
+    color: #fff;
+    background: #6772e5;
+    -webkit-box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11),
+      0 1px 3px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+    &:hover {
+      cursor: pointer;
     }
   }
   label {

@@ -90,8 +90,8 @@ export default {
       loading: false,
       selectedCard: {
         index: 0,
-        id: this.$store.getters["stripe/getPaymentMethods"].data[0].id,
-        last: this.$store.getters["stripe/getPaymentMethods"].data[0].card.last4
+        id: "",
+        last: ""
       },
       stripe: this.$stripe.import(),
       card: {
@@ -107,6 +107,12 @@ export default {
     // const elements = this.stripe.elements({ locale: "ja" });
     if (this.paymentMethods.data.length < 1) {
       this.$emit("input", 3);
+    } else {
+      this.selectedCard = {
+        index: 0,
+        id: this.$store.getters["stripe/getPaymentMethods"].data[0].id,
+        last: this.$store.getters["stripe/getPaymentMethods"].data[0].card.last4
+      };
     }
     const options = {
       // Custom styling can be passed to options when creating an Element.
@@ -134,7 +140,6 @@ export default {
     async buyButton() {
       this.loading = true;
       let res;
-      console.log(this.selectedCard);
       res = await this.$store.dispatch("stripe/postPaymentIntent", {
         customerId: this.$store.getters["loggedInUser"].stripeCustomerId,
         payment_method_id: this.selectedCard.id,

@@ -7,10 +7,15 @@
           :key="index"
           class="main-analytics__item flex-column flex--center"
         >
-          <div class="main-analytics__title" v-text="value.title"></div>
+          <div class="main-analytics__header flex-row flex--between flex--align">
+            <div class="main-analytics__title">{{`${value.title}`}}</div>
+            <div v-if="index === 0" class="main-analytics__select">
+              <Select def="日間" v-model="ranking" :object="ranking_dates" name="時間"></Select>
+            </div>
+          </div>
           <div class="flex-divider flex-row flex--align flex--between">
             <div class="main-analytics__stats">
-              <div v-if="value.title==='ランキング'&&!value.stats" class="no-rank">未定</div>
+              <div v-if="index===0&&!value.stats" class="no-rank">未定</div>
               <no-ssr v-else>
                 <countTo :startVal="0" :endVal="value.stats" :duration="1000"></countTo>
               </no-ssr>
@@ -49,8 +54,28 @@ export default {
           icon: "comment",
           stats: this.$store.getters["dashboard/getStats"].comment_count
         }
-      ]
+      ],
+      ranking_dates: [
+        { key: "日間", value: "daily" },
+        { key: "週間", value: "weekly" },
+        { key: "月間", value: "monthly" },
+        { key: "年間", value: "yearly" },
+        { key: "トータル", value: "total" }
+      ],
+      ranking: "daily"
     };
+  },
+  watch: {
+    ranking: async function(val) {
+      this.$store
+        .dispatch("dashboard/fetchRanking", { type: val })
+        .then(ranking => {
+          this.mainAnalytics[0].stats = ranking.rank || 0;
+        });
+    }
+  },
+  components: {
+    Select: () => import("@/components/All/Select")
   }
 };
 </script>
@@ -73,7 +98,7 @@ export default {
       0 1px 1px 0 rgba(0, 0, 0, 0.07);
     background-color: #fff;
     position: relative;
-    overflow: hidden;
+    // overflow: hidden;
     user-select: none;
     // color: red;
     padding: 1.7rem;

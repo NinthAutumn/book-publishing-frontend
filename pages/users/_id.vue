@@ -13,9 +13,7 @@ export default {
     UserContent: () => import("@/components/User/Content")
   },
   methods: {
-    changeSticky() {
-      console.log("called");
-    }
+    changeSticky() {}
   },
   async fetch({ store, params }) {
     await store.dispatch("user/fetchProfile", { userId: params.id });

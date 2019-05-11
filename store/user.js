@@ -115,9 +115,7 @@ export const actions = {
       const res = await this.$axios.get('/user/books')
       commit('SET_USER_BOOKS', res.data)
     } catch (error) {
-      if (error.status) {
-        console.log("dog");
-      }
+      if (error.status) {}
     }
   },
   async fetchUserSettings({

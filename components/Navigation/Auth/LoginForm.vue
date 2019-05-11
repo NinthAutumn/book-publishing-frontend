@@ -39,6 +39,7 @@
         <p class="text--primary text--link" @click="changePage(1)">アカウントを作る</p>
       </div>
     </div>
+    <div class="social-auth" @click="social">ログイン</div>
     <!-- <transition name="side-fade">
       <SignUpFrom v-if="auth === 1"></SignUpFrom>
     </transition>-->
@@ -69,6 +70,9 @@ export default {
     // },
     changePage(page) {
       this.$store.commit("SET_AUTH_PAGE", page);
+    },
+    async social() {
+      this.$auth.loginWith("google");
     },
     async login() {
       const user = {

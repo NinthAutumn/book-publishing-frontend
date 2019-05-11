@@ -15,7 +15,9 @@ export const state = () => ({
   authed: 0,
   loginForm: false,
   productModal: false,
+  contractModal: false,
 })
+
 
 export const getters = {
   getMenuState(state) {
@@ -28,7 +30,8 @@ export const getters = {
   loggedInUser: (state) => {
     return state.auth.user
   },
-  getProductModalState: state => state.productModal
+  getProductModalState: state => state.productModal,
+  getContractModalState: state => state.contractModal
 }
 
 
@@ -81,6 +84,9 @@ export const mutations = {
       state.dashboardMenuState = "dashboard-active"
     }
 
+  },
+  SET_CONTRACT_MODAL_STATE(state) {
+    state.contractModal = !state.contractModal
   }
 }
 

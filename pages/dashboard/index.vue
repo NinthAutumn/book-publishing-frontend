@@ -19,7 +19,7 @@ export default {
   async fetch({ store, params }) {
     await store.dispatch("analytic/fetchUserViews", { type: 8 });
     await store.dispatch("dashboard/fetchStatistics", { page: 1 });
-    await store.dispatch("dashboard/fetchRanking");
+    await store.dispatch("dashboard/fetchRanking", { type: "daily" });
   },
   components: {
     Analytics: () => import("@/components/Dashboard/Analytics"),

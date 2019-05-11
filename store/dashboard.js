@@ -83,29 +83,18 @@ export const actions = {
   },
   async fetchRanking({
     commit
-  }) {
-
-    try {
-      const res = await this.$axios.get(`/analytic/dashboard/ranking`)
-      commit('SET_RANKING', res.data)
-      return Promise.resolve()
-    } catch (error) {
-      return Promise.reject(error)
-    }
-
-  },
-  async fetchVotesBar({
-    commit
   }, {
-    time
+    type
   }) {
+
     try {
-      const res = await this.$axios.get(`/analytic/dashboard/votes?time=${time}`)
-      commit('SET_VOTES_BAR', res.data)
+      const res = await this.$axios.get(`/analytic/dashboard/ranking?type=${type}`)
+      commit('SET_RANKING', res.data)
       return Promise.resolve(res.data)
     } catch (error) {
       return Promise.reject(error)
     }
+
   },
   async fetchMainAnalytics({
     commit
@@ -115,6 +104,19 @@ export const actions = {
   }) {
     try {
       const res = await this.$axios.get(`/analytic/dashboard/main?time=${time}&type=${type}`)
+      return Promise.resolve(res.data)
+    } catch (error) {
+      return Promise.reject(error)
+    }
+  },
+  async fetchPieAnalytics({
+    commit
+  }, {
+    type,
+    time
+  }) {
+    try {
+      const res = await this.$axios.get(`/analytic/dashboard/pie?time=${time}&type=${type}`)
       return Promise.resolve(res.data)
     } catch (error) {
       return Promise.reject(error)
