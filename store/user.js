@@ -15,7 +15,7 @@ export const state = () => ({
   author: {},
   username: false,
   profile: {},
-  stats: {}
+  stats: {},
 })
 
 export const getters = {
@@ -53,7 +53,8 @@ export const getters = {
   },
   isUsernameAvailable: state => state.username,
   getProfileStats: state => state.stats,
-  getAuthor: state => state.author
+  getAuthor: state => state.author,
+
 }
 
 export const mutations = {
@@ -104,7 +105,8 @@ export const mutations = {
   },
   SET_PROFILE_STATS: async (state, stats) => {
     state.stats = stats
-  }
+  },
+
 }
 export const actions = {
   async getBooks({
@@ -277,7 +279,8 @@ export const actions = {
     } catch (error) {
       return Promise.reject(error)
     }
-  }
+  },
+
   // async signUpGoogle({
   //   commit
   // }){

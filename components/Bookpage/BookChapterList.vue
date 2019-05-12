@@ -124,12 +124,12 @@ export default {
   $self: &;
 
   &__volume-list {
-    display: grid;
-    grid-template-areas: "volume volume" "content content";
-    grid-template-columns: 1fr 1fr;
-    grid-gap: 0, 2rem 1.5rem;
+    // display: grid;
+    // grid-template-areas: "volume volume" "content content";
+    // grid-template-columns: 1fr 1fr;
+    // grid-gap: 0, 2rem 1.5rem;
     #{$self}__volume-item {
-      grid-area: volume;
+      // grid-area: volume;
       &__content {
         font-size: 1.6rem;
       }
@@ -137,10 +137,10 @@ export default {
   }
 
   &__chapter-list {
-    grid-area: content;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, 50%);
-    grid-template-rows: auto;
+    // grid-area: content;
+    // display: grid;
+    // grid-template-columns: repeat(auto-fill, 50%);
+    // grid-template-rows: auto;
     user-select: none;
 
     #{$self}__chapter-item {

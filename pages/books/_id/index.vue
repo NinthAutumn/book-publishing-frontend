@@ -76,7 +76,6 @@
               <div></div>
               <div></div>
             </div>
-
             <fa
               v-if="!loading"
               class="book-content__buttons__item__icon"

@@ -137,6 +137,8 @@ export default {
     color: white;
     font-size: 1.4rem;
   }
+  max-width: 44rem;
+  max-height: 60rem;
   // color: #8dadb7;
   height: 90%;
   // padding: 30px;

@@ -2,7 +2,7 @@
   <div class="social-auth">
     <div class="social-auth__header text--center text--large">ノーブル</div>
 
-    <ul class="social-auth__list">
+    <ul class="social-auth__list flex-column flex--center flex--align">
       <li
         v-ripple
         class="social-auth__item flex-row flex--align flex--between"
@@ -88,6 +88,8 @@ export default {
       font-size: 1.6rem;
       padding: 1.25rem 4rem;
       // display:flex;
+      min-width: 35rem;
+      max-width: 50rem;
       border: 0px solid;
       margin-bottom: 1.5rem;
       border-radius: 0.5rem;

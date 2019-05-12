@@ -3,7 +3,9 @@ export const state = () => ({
   statistics: {},
   ranking: [],
   transactionPie: [],
-  votesBar: {}
+  votesBar: {},
+  banks: [],
+  shops: []
 })
 
 export const getters = {
@@ -11,7 +13,9 @@ export const getters = {
   getStats: state => state.statistics,
   getRanking: state => state.ranking,
   getTransactionPie: state => state.transactionPie,
-  getVotesBar: state => state.votesBar
+  getVotesBar: state => state.votesBar,
+  getBanks: state => state.banks,
+  getShops: state => state.shops
 }
 
 export const mutations = {
@@ -34,6 +38,12 @@ export const mutations = {
   },
   SET_VOTES_BAR: (state, votesBar) => {
     state.votesBar = votesBar
+  },
+  SET_BANKS: function (state, banks) {
+    state.banks = banks
+  },
+  SET_SHOPS: function (state, shops) {
+    state.shops = shops
   }
 }
 export const actions = {
@@ -118,6 +128,31 @@ export const actions = {
     try {
       const res = await this.$axios.get(`/analytic/dashboard/pie?time=${time}&type=${type}`)
       return Promise.resolve(res.data)
+    } catch (error) {
+      return Promise.reject(error)
+    }
+  },
+  async fetchBanks({
+    commit
+  }, {
+    search
+  }) {
+    try {
+      const res = await this.$axios.get(`/author/bank?search=${search}`)
+      commit('SET_BANKS', res.data)
+    } catch (error) {
+      return Promise.reject(error)
+    }
+  },
+  async fetchShops({
+    commit
+  }, {
+    search,
+    bankCode
+  }) {
+    try {
+      const res = await this.$axios.get(`/author/bank/shop?search=${search}&bankCode=${bankCode}`)
+      commit('SET_SHOPS', res.data)
     } catch (error) {
       return Promise.reject(error)
     }

@@ -1,11 +1,18 @@
 <template>
   <div class="contract-component">
-    <v-dialog v-model="contract" height="50rem" width="50rem" persistent hide-overlay>
-      <div class="contract-component__title">
-        <fa icon="file-contract" class style="margin-right:5px;"></fa>契約を結ぶ
+    <div class="contract-component__modal">
+      <div
+        class="contract-component__title flex-row flex--between flex--align"
+        @click="$store.commit('SET_CONTRACT_MODAL_STATE')"
+      >
+        <span>
+          <fa icon="file-contract" class style="margin-right:5px;"></fa>契約を結ぶ
+        </span>
+        <fa icon="times" class="contract-component__icon" style></fa>
       </div>
-      <Profile></Profile>
-    </v-dialog>
+      <Profile v-if="contractStep === 0"></Profile>
+      <Bank v-if="contractStep === 1"></Bank>
+    </div>
   </div>
 </template>
 
@@ -17,12 +24,13 @@ export default {
     };
   },
   computed: {
-    contract() {
-      return this.$store.getters["getContractModalState"];
+    contractStep() {
+      return this.$store.getters["getContractStep"];
     }
   },
   components: {
-    Profile: () => import("./Profile")
+    Profile: () => import("./Profile"),
+    Bank: () => import("./Bank")
   }
 };
 </script>
@@ -30,11 +38,48 @@ export default {
 <style lang="scss">
 .contract-component {
   $self: &;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  border: none;
+  z-index: 1000;
   .v-dialog {
+  }
+  #{$self}__modal {
+    // margin: auto;
+    // z-index: 100;
+    // margin-top: 10px;
+    margin: auto;
+    z-index: 1000;
+    scroll-behavior: unset;
+    // overflow: hidden;
+    height: 65rem;
+    width: 50rem;
+    margin-top: 10px;
     background-color: #f7f8f9;
+    -webkit-box-shadow: 0 30px 60px -12px rgba(50, 50, 93, 0.25),
+      0 18px 36px -18px rgba(0, 0, 0, 0.3),
+      0 -12px 36px -8px rgba(0, 0, 0, 0.025);
+    box-shadow: 0 30px 60px -12px rgba(50, 50, 93, 0.25),
+      0 18px 36px -18px rgba(0, 0, 0, 0.3),
+      0 -12px 36px -8px rgba(0, 0, 0, 0.025);
+    // height: 50rem;
+    // width: 50rem;
+    // width: 100%;
+    // height: 100%;
+    // top: 0;
+    // left: 50rem;
   }
   &__title {
     font-size: 1.8rem;
+    span {
+      font-size: inherit;
+    }
+    #{$self}__icon {
+      &:hover {
+        cursor: pointer;
+      }
+    }
     padding: 2rem;
     border-bottom: 1px solid rgb(238, 238, 238);
     background-color: #fff;

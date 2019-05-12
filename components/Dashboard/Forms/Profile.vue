@@ -40,7 +40,7 @@
     <v-radio-group v-model="form.gender" row>
       <v-radio v-for="n in genders" :key="n" :label="`${n}`" :value="n" color="#566CD6"></v-radio>
     </v-radio-group>
-    <label for="birthday">誕生日*</label>
+    <label for="birthday">生年月日*</label>
     <date-picker
       :not-after="$moment().subtract('18', 'years')"
       type="date"
@@ -61,21 +61,46 @@
     <div class="flex-divider flex-row flex--between">
       <div class="flex-divider flex-column">
         <label for="fullname">都道府県*</label>
-        <input
+        <div class="profile-form__select-container">
+          <div
+            class="profile-form__input profile-form__input--state flex-row flex--between flex--align"
+            @click.stop="toggleStateModal"
+          >
+            {{form.address.state.name||`都道府県`}}
+            <fa icon="sort"></fa>
+          </div>
+          <!-- <transition name="grow-shrink"> -->
+          <div
+            class="profile-form__select-modal"
+            v-if="stateModal"
+            v-click-outside="toggleStateModal"
+          >
+            <input placeholder="検索" v-model="search" class="profile-form__search-input">
+            <ul class="profile-form__options">
+              <li
+                class="profile-form__option profile-form__option--default"
+                v-if="search.length < 1"
+              >都道府県</li>
+              <li
+                class="profile-form__option"
+                v-else
+                v-for="state in selected"
+                :key="state"
+                @click="selectState(state)"
+                :class="{'profile-form__option--selected':state === form.address.state}"
+              >{{state.name}}</li>
+            </ul>
+          </div>
+          <!-- </transition> -->
+        </div>
+        <!-- <input
           class="profile-form__input profile-form__input--state profile-form__input--kanji"
           v-model="form.address.state"
           maxlength="4"
           type="text"
           name="state"
           placeholder="神奈川県"
-        >
-        <input
-          class="profile-form__input profile-form__input--state-kana profile-form__input--kana"
-          v-model="kana_form.address.state"
-          type="text"
-          name="state"
-          placeholder="カタカナ*"
-        >
+        >-->
       </div>
       <div class="flex-divider flex-column">
         <label for="fullname">市区郡*</label>
@@ -125,7 +150,7 @@
       </div>
     </div>
     <div class="flex-divider flex-row flex--right">
-      <div class="profile-form__button">進む</div>
+      <div @click="changeStep(1)" class="profile-form__button">進む</div>
     </div>
   </div>
 </template>
@@ -160,55 +185,74 @@ export default {
           line: ""
         }
       },
-      prefectures: [
-        "北海道",
-        "青森県",
-        "岩手県",
-        "宮城県",
-        "秋田県",
-        "山形県",
-        "福島県",
-        "茨城県",
-        "栃木県",
-        "群馬県",
-        "埼玉県",
-        "千葉県",
-        "東京都",
-        "神奈川県",
-        "新潟県",
-        "富山県",
-        "石川県",
-        "福井県",
-        "山梨県",
-        "長野県",
-        "岐阜県",
-        "静岡県",
-        "愛知県",
-        "三重県",
-        "滋賀県",
-        "京都府",
-        "大阪府",
-        "兵庫県",
-        "奈良県",
-        "和歌山県",
-        "鳥取県",
-        "島根県",
-        "岡山県",
-        "広島県",
-        "山口県",
-        "徳島県",
-        "香川県",
-        "愛媛県",
-        "高知県",
-        "福岡県",
-        "佐賀県",
-        "長崎県",
-        "熊本県",
-        "大分県",
-        "宮崎県",
-        "鹿児島県",
-        "沖縄県"
-      ],
+      search: "",
+      stateModal: false,
+      prefectures: {
+        北海道: { name: "北海道", kana: "ホッカイドウ", hira: "ほっかいどう" },
+        青森県: { name: "青森県", kana: "アオモリケン", hira: "あおもりけん" },
+        岩手県: { name: "岩手県", kana: "イワテケン", hira: "いわてけん" },
+        宮城県: { name: "宮城県", kana: "ミヤギケン", hira: "みやぎけん" },
+        秋田県: { name: "秋田県", kana: "アキタケン", hira: "あきたけん" },
+        山形県: { name: "山形県", kana: "ヤマガタケン", hira: "やまがたけん" },
+        福島県: { name: "福島県", kana: "フクシマケン", hira: "ふくしまけん" },
+        茨城県: { name: "茨城県", kana: "イバラキケン", hira: "いばらきけん" },
+        栃木県: { name: "栃木県", kana: "トジギケン", hira: "とちぎけん" },
+        群馬県: { name: "群馬県", kana: "グンマケン", hira: "ぐんまけん" },
+        埼玉県: { name: "埼玉県", kana: "サイタマケン", hira: "さいたまけん" },
+        千葉県: { name: "千葉県", kana: "チバケン", hira: "ちばけん" },
+        東京都: { name: "東京都", kana: "トウキョウト", hira: "とうきょうと" },
+        神奈川県: {
+          name: "神奈川県",
+          kana: "カナガワケン",
+          hira: "かながわけん"
+        },
+        新潟県: { name: "新潟県", kana: "ニイガタケン", hira: "にいがたけん" },
+        富山県: { name: "富山県", kana: "トヤマケン", hira: "とやまけん" },
+        石川県: { name: "石川県", kana: "イシカワケン", hira: "いしかわけん" },
+        福井県: { name: "福井県", kana: "フクイケン", hira: "ふくいけん" },
+        山梨県: { name: "山梨県", kana: "ヤマナシケン", hira: "やまなしけん" },
+        長野県: { name: "長野県", kana: "ナガノケン", hira: "ながのけん" },
+        岐阜県: { name: "岐阜県", kana: "ギフケン", hira: "ぎふけん" },
+        静岡県: { name: "静岡県", kana: "シズオカケン", hira: "シズオカケン" },
+        愛知県: { name: "愛知県", kana: "アイチケン", hira: "あいちけん" },
+        三重県: { name: "三重県", kana: "ミエケン", hira: "みえけん" },
+        滋賀県: { name: "滋賀県", kana: "シガケン", hira: "しがけん" },
+        京都府: { name: "京都府", kana: "キョウトフ", hira: "きょうとふ" },
+        大阪府: { name: "大阪府", kana: "オオサカフ", hira: "おおさかふ" },
+        兵庫県: { name: "兵庫県", kana: "ヒョウゴケン", hira: "ひょうごけん" },
+        奈良県: { name: "奈良県", kana: "ナラケン", hira: "ならけん" },
+        和歌山県: {
+          name: "和歌山県",
+          kana: "ワカヤマケン",
+          hira: "わかやまけん"
+        },
+        鳥取県: { name: "鳥取県", kana: "トットリケン", hira: "とっとりけん" },
+        島根県: { name: "島根県", kana: "シマネケン", hira: "しまねけん" },
+        岡山県: { name: "岡山県", kana: "オカヤマケン", hira: "おかやまけん" },
+        広島県: { name: "広島県", kana: "ヒロシマケン", hira: "ひろしまけん" },
+        山口県: { name: "山口県", kana: "ヤマグチケン", hira: "やまぐちけん" },
+        徳島県: { name: "徳島県", kana: "トクシマケン", hira: "とくしまけん" },
+        香川県: { name: "香川県", kana: "カガワケン", hira: "かがわけん" },
+        愛媛県: { name: "愛知県", kana: "アイチケン", hira: "あいちけん" },
+        高知県: { name: "高知県", kana: "コウチケン", hira: "こうちけん" },
+        福岡県: { name: "福岡県", kana: "フクオカケン", hira: "ふくおかけん" },
+        佐賀県: { name: "佐賀県", kana: "サガケン", hira: "さがけん" },
+        長崎県: { name: "長崎県", kana: "ナガサキケン", hira: "ながさきけん" },
+        熊本県: { name: "熊本県", kana: "クマモトケン", hira: "くまもとけん" },
+        大分県: { name: "大分県", kana: "オオイタケン", hira: "おおいたけん" },
+        宮崎県: { name: "宮崎県", kana: "ミヤザキケン", hira: "みやざきけん" },
+        鹿児島県: {
+          name: "鹿児島県",
+          kana: "カゴシマケン",
+          hira: "かごしまけん"
+        },
+        沖縄県: {
+          name: "沖縄県",
+          short: "沖縄",
+          kana: "オキナワケン",
+          hira: "おきなわけん"
+        }
+      },
       lang: {
         days: ["日", "月", "火", "水", "木", "金", "土"],
         months: [
@@ -234,18 +278,48 @@ export default {
         placeholder: {
           date: "誕生日"
         }
-      }
+      },
+      selected: []
     };
   },
   watch: {
-    "form.address.city": function(val) {
+    search: function(val) {
       // console.log("this");
-      console.log(this.form.address.city);
+      let rows = Object.keys(this.prefectures);
+      let select = [];
+      rows.forEach(row => {
+        let found = this.prefectures[row].name.match(val);
+        if (found) {
+          select.push(this.prefectures[row]);
+        } else {
+          found = this.prefectures[row].kana.match(val);
+          if (found) {
+            select.push(this.prefectures[row]);
+          } else {
+            found = this.prefectures[row].hira.match(val);
+            if (found) {
+              select.push(this.prefectures[row]);
+            }
+          }
+        }
+      });
+      this.selected = select;
       // this.form.address.city.replace(/市/g, "");
     }
   },
   async mounted() {
     // this.date =
+  },
+  methods: {
+    changeStep(step) {
+      this.$store.commit("SET_CONTRACT_STEP", 1);
+    },
+    toggleStateModal() {
+      this.stateModal = !this.stateModal;
+    },
+    selectState(state) {
+      this.form.address.state = state;
+    }
   }
 };
 </script>
@@ -254,6 +328,119 @@ export default {
 .profile-form {
   $self: &;
   padding: 2rem;
+  &__select-container {
+    position: relative;
+    input {
+      height: 3rem;
+      font-size: 1.3rem;
+      padding: 10px 14px;
+      color: #32325d;
+      background-color: white;
+      border: 1px solid transparent;
+      width: 100%;
+      border-radius: 4px;
+      box-shadow: 0 1px 3px 0 #d9d1dd;
+      -webkit-transition: box-shadow 150ms ease;
+      transition: box-shadow 150ms ease;
+      transition: 300ms;
+      margin-bottom: 2rem;
+      &:active,
+      &:focus {
+        outline: none;
+      }
+    }
+    #{$self}__bank-select {
+      height: 3rem;
+      font-size: 1.3rem;
+      padding: 0 14px;
+      color: #32325d;
+      background-color: white;
+      border: 1px solid transparent;
+      width: 100%;
+      border-radius: 4px;
+      box-shadow: 0 1px 3px 0 #d9d1dd;
+      -webkit-transition: box-shadow 150ms ease;
+      transition: box-shadow 150ms ease;
+      transition: 300ms;
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      &:hover {
+        cursor: pointer;
+      }
+      &--disabled {
+        background-color: #f7fafc;
+        color: #b8c0c9;
+        border: 1px solid #d3d6db;
+        &:hover {
+          cursor: default;
+        }
+      }
+      &:active,
+      &:focus {
+        outline: none;
+      }
+    }
+    #{$self}__select-modal {
+      z-index: 10;
+      position: absolute;
+      top: 4.1rem;
+      width: 100%;
+      box-shadow: 0 7px 14px 0 rgba(60, 66, 87, 0.1),
+        0 3px 6px 0 rgba(0, 0, 0, 0.07);
+      -webkit-transition: box-shadow 150ms ease;
+      transition: box-shadow 150ms ease;
+      border-radius: 0.4rem;
+      overflow: hidden;
+      #{$self}__search-input {
+        margin-bottom: 0rem;
+        box-shadow: none;
+        // border-top: 0.4rem;
+        border-radius: 0;
+        &:active,
+        &:focus {
+          outline: none;
+        }
+      }
+      #{$self}__options {
+        border-top: 1px solid #e3e8ee;
+        width: 100%;
+        max-height: 8rem;
+        overflow: auto;
+      }
+
+      #{$self}__option {
+        height: 3rem;
+        color: #32325d;
+        padding: 0px 14px;
+        display: flex;
+        align-items: center;
+        background-color: white;
+        width: 100%;
+        font-size: 1.4rem;
+        transition: 300ms;
+        &:hover {
+          background-color: #f7fafc;
+          cursor: pointer;
+        }
+        &--selected {
+          background-color: #f7fafc;
+        }
+        &--default {
+          height: 3rem;
+          font-size: 1.3rem;
+          &:hover {
+            background-color: white;
+            cursor: default;
+          }
+          // justify-content: cen
+          padding: 0px 14px;
+          font-size: 1.4rem;
+        }
+      }
+    }
+  }
   .el-input__inner {
     border: none;
   }
@@ -332,11 +519,13 @@ export default {
       }
     }
     &--state {
-      width: 9rem;
-      &-kana {
-        width: 9rem;
-        font-size: 1.2rem;
-        height: 3rem;
+      width: 10rem;
+      padding: 0 12px;
+      display: flex;
+      align-items: center;
+      margin-bottom: 1rem;
+      &:hover {
+        cursor: pointer;
       }
     }
     &--hide {

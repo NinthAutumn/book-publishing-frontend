@@ -174,10 +174,11 @@ export const actions = {
     commit
   }, {
     bookId,
-    index
+    index,
+    settingIndex
   }) {
     try {
-      const res = await this.$axios.get('/book/chapter/nav?index=' + index + '&bookId=' + bookId)
+      const res = await this.$axios.get(`/book/chapter/nav?index=${index}&bookId=${bookId}&settingIndex=${settingIndex}`)
       const {
         next,
         prev,

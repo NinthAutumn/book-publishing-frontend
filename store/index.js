@@ -16,6 +16,7 @@ export const state = () => ({
   loginForm: false,
   productModal: false,
   contractModal: false,
+  contractStep: 0
 })
 
 
@@ -31,7 +32,8 @@ export const getters = {
     return state.auth.user
   },
   getProductModalState: state => state.productModal,
-  getContractModalState: state => state.contractModal
+  getContractModalState: state => state.contractModal,
+  getContractStep: state => state.contractStep
 }
 
 
@@ -44,6 +46,9 @@ export const mutations = {
   },
   SET_AUTH_PAGE(state, page) {
     state.authed = page
+  },
+  SET_CONTRACT_STEP(state, step) {
+    state.contractStep = step
   },
   START(state) {
     state.authed = 0

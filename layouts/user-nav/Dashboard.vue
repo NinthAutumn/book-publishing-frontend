@@ -67,7 +67,7 @@
       <hr>
     </nav>
     <create-author></create-author>
-    <ContractForm></ContractForm>
+    <ContractForm v-if="contract"></ContractForm>
   </div>
 </template>
 <script>
@@ -86,7 +86,6 @@ export default {
     return {
       draw: null,
       writeBookState: false,
-      contract: false,
       menus: [
         {
           title: "ダッシュボード",
@@ -129,6 +128,9 @@ export default {
   computed: {
     author() {
       return this.$store.getters["user/getAuthor"];
+    },
+    contract() {
+      return this.$store.getters["getContractModalState"];
     }
   },
   methods: {

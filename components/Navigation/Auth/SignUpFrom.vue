@@ -165,7 +165,8 @@ export default {
 }
 .sign-up {
   $self: &;
-
+  max-width: 44rem;
+  max-height: 60rem;
   .signup-form__input {
     height: 47px;
     padding: 12px 14px;

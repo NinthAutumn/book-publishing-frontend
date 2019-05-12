@@ -21,7 +21,8 @@ export default {
   async mounted() {
     await this.$store.dispatch("chapter/fetchChapterNav", {
       index: this.$store.getters["chapter/getChapter"].index,
-      bookId: this.$route.params.id
+      bookId: this.$route.params.id,
+      settingIndex: this.$store.getters["chapter/getChapter"].setting_index
     });
   },
   beforeDestroy() {},
