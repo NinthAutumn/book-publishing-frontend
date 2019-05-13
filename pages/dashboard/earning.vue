@@ -1,9 +1,11 @@
 <template>
   <div class="earning-page">
     <header class="earning-page__header">収入</header>
+    <Total class="earning-page__graph"></Total>
+    <Earning></Earning>
     <!-- <transaction-graph class="earning-page__graph"></transaction-graph>
-    <transaction-pie class="earning-page__pie"></transaction-pie>
-    <transaction-list class="earning-page__list"></transaction-list>-->
+    <transaction-pie class="earning-page__pie"></transaction-pie>-->
+    <transaction-list class="earning-page__list"></transaction-list>
   </div>
 </template>
 
@@ -11,7 +13,12 @@
 export default {
   layout: "user-nav/User",
   async fetch({ store, params }) {},
-  components: {}
+  components: {
+    Total: () => import("@/components/Dashboard/Earning/Total"),
+    Earning: () => import("@/components/Dashboard/Earning/Earning"),
+    TransactionList: () =>
+      import("@/components/Dashboard/Earning/TransactionList")
+  }
 };
 </script>
 
@@ -32,6 +39,7 @@ export default {
   }
   &__list {
     grid-area: list;
+    margin-bottom: 1rem;
   }
 }
 </style>

@@ -4,6 +4,7 @@
       <svg-icon
         name="crown"
         class="currency__icon"
+        :style="{fill: color}"
         :class="{'currency__icon--large':size === 'large','currency__icon--small':size === 'small'}"
       ></svg-icon>
     </div>
@@ -18,7 +19,8 @@
 export default {
   props: {
     size: String,
-    amount: Number
+    amount: Number,
+    color: String
   },
   components: {}
 };

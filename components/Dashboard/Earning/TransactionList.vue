@@ -19,15 +19,46 @@
           class="transaction-list__component transaction-list__component--index"
         >{{`第${transaction.index}話`}}</div>
         <div class="transaction-list__component transaction-list__component--currency">
-          <Currency :amount="transaction.amount" size="small"></Currency>
+          <Currency
+            v-if="!transaction.redeemed"
+            color="#8860D0"
+            :amount="transaction.amount"
+            size="small"
+          ></Currency>
+          <Currency v-else :amount="transaction.amount" size="small"></Currency>
         </div>
         <div
           class="transaction-list__component transaction-list__component--created-at"
         >{{ $moment(transaction.created_at).startOf('second').fromNow() }}</div>
+        <div
+          class="transaction-list__component transaction-list__component--redeem transaction-list__component--redeem--true"
+          v-if="transaction.redeemed"
+        >
+          <div class="transaction-list__button transaction-list__button--redeemed">清算済み</div>
+        </div>
+        <div
+          class="transaction-list__component transaction-list__component--redeem transaction-list__component--redeem--false"
+          v-else
+        >
+          <div class="transaction-list__button" @click="openRedeem(transaction.id)">清算する</div>
+        </div>
       </div>
       <no-ssr>
         <infinite-loading @infinite="infiniteHandler"></infinite-loading>
       </no-ssr>
+      <v-dialog v-model="redeem" max-width="290">
+        <v-card>
+          <v-card-title class="headline">クラウンコイン化する</v-card-title>
+          <v-card-text>選んだ購入履歴をクラウンコイン化することにより、この履歴は清算されたこのになり今月の支払い金から抜くことになります。</v-card-text>
+          <v-card-text>*クラウン化した場合取り戻しはできなくなります</v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="red darken-1" flat="flat" @click="redeem = false">キャンセル</v-btn>
+
+            <v-btn color="blue darken-1" flat="flat" @click="redeemTransaction()">クラウン化します</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
     </div>
   </div>
 </template>
@@ -42,10 +73,13 @@ export default {
         { text: "タイトル", value: "title", sortable: false },
         { text: "何話", value: "chapter", sortable: false },
         { text: "金額", value: "amount", sortable: false },
-        { text: "時間", value: "date", sortable: false }
+        { text: "時間", value: "date", sortable: false },
+        { text: "清算", value: "redeem", sortable: false }
       ],
       loading: false,
-      page: 2
+      page: 2,
+      transactionId: "",
+      redeem: false
     };
   },
   computed: {
@@ -54,6 +88,24 @@ export default {
     }
   },
   methods: {
+    async redeemTransaction() {
+      try {
+        const redeem = await this.$store.dispatch("wallet/patchRedeem", {
+          transactionId: this.transactionId
+        });
+        await this.$store.dispatch("dashboard/fetchTransactionList", {
+          page: 1
+        });
+        this.redeem = false;
+      } catch (error) {
+        console.log(error);
+        this.$message({ message: "清算に失敗しました", type: "error" });
+      }
+    },
+    async openRedeem(id) {
+      this.transactionId = id;
+      this.redeem = true;
+    },
     async infiniteHandler($state) {
       const transaction = await this.$store.dispatch(
         "dashboard/fetchTransactionList",
@@ -107,6 +159,12 @@ export default {
     height: 10rem;
     overflow: auto;
   }
+  .v-card__text {
+    font-size: 1.4rem;
+  }
+  .v-btn__content {
+    font-size: 1.4rem;
+  }
   &__item {
     display: flex;
     justify-content: space-evenly;
@@ -119,7 +177,7 @@ export default {
     white-space: nowrap;
     text-overflow: ellipsis;
     &:hover {
-      cursor: pointer;
+      // cursor: pointer;
       box-shadow: 0 2px 5px 0 rgba(60, 66, 87, 0.1),
         0 1px 1px 0 rgba(0, 0, 0, 0.07);
     }
@@ -160,6 +218,32 @@ export default {
       }
       &--created-at {
         width: 10%;
+      }
+      #{$self}__button {
+        padding: 1rem 1.25rem;
+        font-size: 1.2rem;
+        background-color: #6772e5;
+        color: white;
+        border-radius: 0.4rem;
+        transition: 300ms;
+        &--redeemed {
+          color: #6772e5;
+          background-color: #fff;
+          transition: 300ms;
+          box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11),
+            0 1px 3px rgba(0, 0, 0, 0.08);
+          &:hover {
+            cursor: default;
+          }
+        }
+        &:hover {
+          color: #6772e5;
+          background-color: #fff;
+          transition: 300ms;
+          box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11),
+            0 1px 3px rgba(0, 0, 0, 0.08);
+          cursor: pointer;
+        }
       }
     }
     // &--title {

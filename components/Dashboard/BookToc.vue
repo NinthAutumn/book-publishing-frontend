@@ -40,15 +40,13 @@
           v-for="(chapter,index) in volume.chapters"
           :key="index"
           v-ripple
-          @mouseenter="deleteButton = index"
-          @mouseleave="deleteButton = null"
         >
           <div class="flex-divider flex-row">
             <div class="book-toc__index">{{chapter.index}}</div>
             <div class="book-toc__title">{{chapter.title}}</div>
           </div>
           <div class="flex-divider flex-row flex--align">
-            <div class="book-toc__delete" v-show="deleteButton === index">削除</div>
+            <!-- <div class="book-toc__delete">削除</div> -->
             <div class="book-toc__created-at">{{chapter.created_at}}</div>
           </div>
         </div>

@@ -124,7 +124,7 @@ export default {
   methods: {
     async reviewOpen() {
       if (!this.$store.getters.isAuthenticated) {
-        return $store.commit("LOGIN_STATE");
+        return this.$store.commit("LOGIN_STATE");
       }
       if (this.reviewed) {
         await this.$store.dispatch("review/myReview", {

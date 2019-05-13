@@ -2,6 +2,10 @@
   <div class="vote-graph">
     <div class="vote-graph__header">
       <div class="vote-graph__title">作品グラフ</div>
+      <p
+        class="vote-graph__message"
+        v-if="dataSelected===4"
+      >評価: 5☆ = 4ポイント, 4☆ =2ポイント, 3☆ =0ポイント, 2☆ = -2 ポイント,1☆ = -4ポイント</p>
       <div class="vote-graph__select flex-row">
         <Select
           :width="100"
@@ -12,13 +16,31 @@
           def="投票"
         ></Select>
         <Select
+          v-if="interval === 0"
           :width="100"
           v-model="type"
-          name="時間"
-          :object="sort_type"
+          name="期間"
+          :object="day_interval"
           transition="grow-shrink"
           def="今週"
         ></Select>
+        <Select
+          v-if="interval === 1"
+          :width="100"
+          v-model="type"
+          name="期間"
+          :object="week_interval"
+          transition="grow-shrink"
+          def="今月"
+        ></Select>
+        <!-- <Select
+          :width="100"
+          v-model="interval"
+          name="絶え間"
+          :object="time_type"
+          transition="grow-shrink"
+          def="日間"
+        ></Select>-->
         <Select
           :width="100"
           v-model="graph"
@@ -57,24 +79,38 @@
 export default {
   data() {
     return {
-      sort_type: [
+      day_interval: [
         // { key: "視聴回数", value: "views" },
         { key: "今週", value: 7 },
         { key: "今月", value: 31 },
         { key: "今年", value: 365 }
         // { key: "全体", value: "total" }
       ],
+      week_interval: [
+        { key: "今月", value: 4 },
+        { key: "半年", value: 12 },
+        { key: "半年", value: 24 },
+        { key: "今年", value: 48 }
+      ],
+      time_type: [
+        { key: "日間", value: 0 },
+        { key: "週間", value: 1 }
+        // { key: "月間", value: 2 }
+      ],
       data_type: [
         { key: "投票", value: 0 },
         { key: "視聴回数", value: 1 },
         { key: "購入履歴", value: 2 },
-        { key: "ブックマーク", value: 3 }
+        { key: "ブックマーク", value: 3 },
+        { key: "評価", value: 4 }
       ],
+      interval: 0,
       type: 7,
       dataSelected: 0,
       chartSetting: {
         nullAddZero: true,
-        area: true
+        area: true,
+        dataType: "票"
         // scale: [true, true]
       },
       toolbox: {
@@ -122,6 +158,12 @@ export default {
       this.loading = true;
       this.getAnalytics();
       this.loading = false;
+    },
+    interval: function(val) {
+      this.loading = true;
+      this.type = 4;
+      this.getAnalytics();
+      this.loading = false;
     }
   },
   methods: {
@@ -129,7 +171,8 @@ export default {
       this.$store
         .dispatch("dashboard/fetchMainAnalytics", {
           time: this.type,
-          type: this.dataSelected
+          type: this.dataSelected,
+          interval: this.interval
         })
         .then(time => {
           let row = Object.keys(time);
@@ -168,7 +211,10 @@ export default {
     },
     changeDateTransaction: async function() {
       this.$store
-        .dispatch("dashboard/fetchTransactionGraph", { time: this.type })
+        .dispatch("dashboard/fetchTransactionGraph", {
+          time: this.type,
+          interval: 0
+        })
         .then(transaction => {
           let row = Object.keys(transaction);
           let i = this.type - 1;
@@ -281,7 +327,8 @@ export default {
     this.$store
       .dispatch("dashboard/fetchMainAnalytics", {
         time: this.type,
-        type: this.dataSelected
+        type: this.dataSelected,
+        interval: 0
       })
       .then(time => {
         let row = Object.keys(time);

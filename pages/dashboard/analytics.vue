@@ -4,6 +4,7 @@
     <main-graph></main-graph>
     <div class="flex-divider flex-row flex--between">
       <!-- <transaction-graph class="analytic-page__graph"></transaction-graph> -->
+      <funnel-graph></funnel-graph>
       <pie-graph class="analytic-page__pie"></pie-graph>
     </div>
     <transaction-list class="analytic-page__list"></transaction-list>
@@ -18,10 +19,9 @@ export default {
     await store.dispatch("dashboard/fetchTransactionPie");
   },
   components: {
-    TransactionList: () =>
-      import("@/components/Dashboard/Earning/TransactionList"),
     PieGraph: () => import("@/components/Dashboard/Graphs/Pie"),
-    MainGraph: () => import("@/components/Dashboard/Graphs/Main")
+    MainGraph: () => import("@/components/Dashboard/Graphs/Main"),
+    FunnelGraph: () => import("@/components/Dashboard/Graphs/Funnel")
   }
 };
 </script>
@@ -40,6 +40,7 @@ export default {
   }
   &__pie {
     grid-area: pie;
+    margin-bottom: 1rem;
   }
   &__list {
     grid-area: list;

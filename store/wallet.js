@@ -68,5 +68,19 @@ export const actions = {
     } catch (error) {
 
     }
+  },
+  async patchRedeem({
+    commit
+  }, {
+    transactionId
+  }) {
+    try {
+      const res = await this.$axios.patch(`/transaction/redeem?`, {
+        transactionId
+      })
+      return Promise.resolve()
+    } catch (error) {
+      return Promise.reject(error)
+    }
   }
 }

@@ -249,10 +249,10 @@ export const actions = {
     commit
   }, {
     bookId,
-    volume_index = ""
+    volumeId = ""
   }) {
     try {
-      const res = await this.$axios.get(`/book/chapter/latestIndex?bookId=${bookId}&volume_index=${volume_index}`)
+      const res = await this.$axios.get(`/book/chapter/latestIndex?bookId=${bookId}&volumeId=${volumeId}`)
       const {
         index
       } = res.data

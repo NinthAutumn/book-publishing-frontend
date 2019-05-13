@@ -27,10 +27,7 @@
       <transition name="slide-fade">
         <div class="chapter-form__content-subject">
           <div class="form-control flex-row flex--align">
-            <p
-              v-if="form.volume > 0"
-              class="chapter-index"
-            >第{{this.$store.getters["chapter/getNewIndex"]}}話</p>
+            <p v-if="form.volume" class="chapter-index">第{{latestIndex}}話</p>
             <p v-else class="chapter-index">第{{0}}話</p>
             <input
               placeholder="タイトル"
@@ -201,9 +198,6 @@
 </template>
 
 <script>
-import TextEditor from "@/components/TextEditor";
-import Select from "@/components/All/Select";
-import Currency from "@/components/All/Currency";
 export default {
   components: {
     TextEditor: () => import("@/components/TextEditor"),
@@ -213,18 +207,33 @@ export default {
   created() {
     this.$store.getters["chapter/getVolumeList"].forEach((volume, index) => {
       if (index === 0) {
-        this.volumes.push({ key: volume.title, value: volume.index });
+        this.volumes.push({
+          key: volume.title,
+          value: { id: volume.id, index: volume.index }
+        });
       } else {
         if (volume.index < 10) {
-          this.volumes.push({ key: `00${volume.index}`, value: volume.index });
+          this.volumes.push({
+            key: `00${volume.index}`,
+            value: { id: volume.id, index: volume.index }
+          });
         } else if (volume.index < 100) {
-          this.volumes.push({ key: `0${volume.index}`, value: volume.index });
+          this.volumes.push({
+            key: `0${volume.index}`,
+            value: { id: volume.id, index: volume.index }
+          });
         } else {
-          this.volumes.push({ key: `${volume.index}`, value: volume.index });
+          this.volumes.push({
+            key: `${volume.index}`,
+            value: { id: volume.id, index: volume.index }
+          });
         }
       }
     });
-    this.form.volume = this.volumes[this.volumes.length - 1].value;
+    this.form.volume = {
+      id: this.volumes[this.volumes.length - 1].value,
+      index: this.volumes[this.volumes.length - 1].index
+    };
   },
   watch: {
     "form.content": function(val) {
@@ -235,6 +244,11 @@ export default {
     },
     "form.volume": async function(val) {
       this.getNewLatestChapter();
+    }
+  },
+  computed: {
+    latestIndex() {
+      return this.$store.getters["chapter/getNewIndex"];
     }
   },
   data() {
@@ -314,7 +328,7 @@ export default {
     async getNewLatestChapter() {
       await this.$store.dispatch("chapter/fetchLatestIndex", {
         bookId: this.$route.params.id,
-        volume_index: this.form.volume
+        volumeId: this.form.volume.id
       });
     },
     contentFocus() {
@@ -385,7 +399,7 @@ export default {
         content: this.form.content,
         wordCount: this.form.wordCount.length,
         locked: this.form.locked,
-        volume: this.form.volume,
+        volumeId: this.form.volume.id,
         index: this.$store.getters["chapter/getNewIndex"],
         state,
         header: this.form.header,
@@ -394,7 +408,6 @@ export default {
         bookId
       };
       // chapter.extra.drawings = this.$store.state.upload.urls;
-
       await this.$store.dispatch("chapter/createChapter", {
         chapter,
         date: this.form.date

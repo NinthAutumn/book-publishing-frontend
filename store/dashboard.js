@@ -5,7 +5,9 @@ export const state = () => ({
   transactionPie: [],
   votesBar: {},
   banks: [],
-  shops: []
+  shops: [],
+  totalCoins: 0,
+  totalEarning: 0
 })
 
 export const getters = {
@@ -15,7 +17,9 @@ export const getters = {
   getTransactionPie: state => state.transactionPie,
   getVotesBar: state => state.votesBar,
   getBanks: state => state.banks,
-  getShops: state => state.shops
+  getShops: state => state.shops,
+  getTotalCoins: state => state.totalCoins,
+  getTotalEarning: state => state.totalEarning
 }
 
 export const mutations = {
@@ -44,6 +48,12 @@ export const mutations = {
   },
   SET_SHOPS: function (state, shops) {
     state.shops = shops
+  },
+  SET_TOTAL_COINS: function (state, totalCoins) {
+    state.totalCoins = totalCoins
+  },
+  SET_TOTAL_EARNING: function (state, totalEarning) {
+    state.totalEarning = totalEarning
   }
 }
 export const actions = {
@@ -110,10 +120,11 @@ export const actions = {
     commit
   }, {
     time,
-    type
+    type,
+    interval
   }) {
     try {
-      const res = await this.$axios.get(`/analytic/dashboard/main?time=${time}&type=${type}`)
+      const res = await this.$axios.get(`/analytic/dashboard/main?time=${time}&type=${type}&interval=${interval}`)
       return Promise.resolve(res.data)
     } catch (error) {
       return Promise.reject(error)
@@ -156,5 +167,46 @@ export const actions = {
     } catch (error) {
       return Promise.reject(error)
     }
-  }
+  },
+  async fetchTotalCoins({
+    commit
+  }, {
+    days
+  }) {
+    try {
+      const {
+        data
+      } = await this.$axios.get(`/analytic/dashboard/earning/total`)
+      commit('SET_TOTAL_COINS', data.total)
+    } catch (error) {
+      return Promise.reject(error)
+    }
+  },
+  async fetchTotalEarning({
+    commit
+  }) {
+    try {
+      const {
+        data
+      } = await this.$axios.get(`/analytic/dashboard/earning/totalEarning`)
+      commit('SET_TOTAL_EARNING', data.total)
+    } catch (error) {
+      return Promise.reject(error)
+    }
+  },
+  async fetchBookFunnel({
+    commit
+  }, {
+    bookId
+  }) {
+    try {
+      const {
+        data
+      } = await this.$axios.get(`/analytic/dashboard/funnel?bookId=${bookId}`)
+      return Promise.resolve(data)
+    } catch (error) {
+      return Promise.reject(error)
+    }
+  },
+
 }

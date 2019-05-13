@@ -190,7 +190,7 @@ module.exports = {
       publishableKey: process.env.STRIPE_KEY,
       version: 'v3', // Default
     }],
-
+    "nuxt-compress"
   ],
   /*
    ** Axios module configuration
@@ -203,7 +203,7 @@ module.exports = {
     strategies: {
       google: {
         client_id: process.env.GOOGLE_CLIENT_ID,
-        user: true,
+        user: false,
         redirect_uri: 'http://127.0.0.1:3000/'
       },
       facebook: {
@@ -245,6 +245,11 @@ module.exports = {
     google: {
       families: ['IBM Plex Sans:300,400,700', 'Noto Sans JP:400,500', 'Sniglet:400,800'] //Loads Lato font with weights 400 and 700
     }
+  },
+  'manifest': {
+    name: 'ノーブル　小説',
+    short_name: 'ノーブル',
+    lang: 'ja'
   },
   /*
    ** Build configuration

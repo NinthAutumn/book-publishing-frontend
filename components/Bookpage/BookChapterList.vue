@@ -79,7 +79,7 @@ export default {
     this.today = this.$moment().toDate();
   },
   async mounted() {
-    this.$store.dispatch("chapter/fetchPublishedList", {
+    await this.$store.dispatch("chapter/fetchPublishedList", {
       bookId: this.$route.params.id
     });
   },
