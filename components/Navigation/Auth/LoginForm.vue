@@ -42,7 +42,6 @@
         <div class="flex-divider flex-row flex--right">
           <v-btn color="#8860d0" type="submit">ログイン</v-btn>
         </div>
-
         <!-- <input class="form-submit login__submit form-submit--primary" value="ログイン"> -->
       </form>
       <div class="text--center">

@@ -106,7 +106,9 @@ export default {
   .book-upload {
   }
   .croppa-container {
-    border-radius: 100px;
+    // border-radius: 100px;
+    border: 1px solid rgb(219, 219, 219);
+    // box-shadow: inset 1px 1px 5px rgb(238, 238, 238);
   }
   .v-btn__content {
     font-size: 1.4rem !important;

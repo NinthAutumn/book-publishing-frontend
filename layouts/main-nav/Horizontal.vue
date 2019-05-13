@@ -50,6 +50,7 @@
         <product-modal></product-modal>
       </div>
     </transition>
+    <setting-form></setting-form>
   </div>
 </template>
 <script>
@@ -65,7 +66,8 @@ export default {
     SearchBar: () => import("@/components/Navigation/SearchBar"),
     AuthModal: () => import("@/components/Navigation/Auth/AuthModal"),
     Dropdown: () => import("@/components/Navigation/Dropdown"),
-    ProductModal: () => import("@/components/Navigation/Stripe/ProductModal")
+    ProductModal: () => import("@/components/Navigation/Stripe/ProductModal"),
+    SettingForm: () => import("@/components/Navigation/Setting")
   },
   computed: {
     user() {

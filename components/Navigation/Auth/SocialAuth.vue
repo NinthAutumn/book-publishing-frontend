@@ -29,7 +29,7 @@
 
 <script>
 export default {
-  data() {
+  data: function() {
     return {
       social_auth: [
         {

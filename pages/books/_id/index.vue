@@ -69,6 +69,7 @@
             class="book-content__buttons__item book-content__buttons__item--vote button button--primary--open button--shadow button--big"
             v-ripple
             @click="voteHandler"
+            v-if="$store.getters.isAuthenticated"
           >
             <div v-if="loading" class="lds-ellipsis">
               <div></div>
@@ -76,6 +77,20 @@
               <div></div>
               <div></div>
             </div>
+            <fa
+              v-if="!loading"
+              class="book-content__buttons__item__icon"
+              style="font-size:15px;"
+              icon="bolt"
+            ></fa>
+            <span v-if="!loading">投票をかける</span>
+          </span>
+          <span
+            class="book-content__buttons__item book-content__buttons__item--vote button button--primary--open button--shadow button--big"
+            v-ripple
+            @click.stop="$store.commit('LOGIN_STATE')"
+            v-else
+          >
             <fa
               v-if="!loading"
               class="book-content__buttons__item__icon"

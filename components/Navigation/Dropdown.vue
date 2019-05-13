@@ -46,6 +46,13 @@
             class="profile-dropdown__nav-link flex flex--align"
             v-text="item.title"
           ></nuxt-link>
+          <div
+            v-else-if="item.title === '設定'"
+            tag="div"
+            class="profile-dropdown__nav-link flex flex--align"
+            v-text="item.title"
+            @click="$store.commit('TOGGLE_SETTING_MODAL')"
+          ></div>
           <nuxt-link
             v-else
             :to="item.link"

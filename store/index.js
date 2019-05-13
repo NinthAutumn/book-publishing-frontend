@@ -16,7 +16,8 @@ export const state = () => ({
   loginForm: false,
   productModal: false,
   contractModal: false,
-  contractStep: 0
+  contractStep: 0,
+  settingModal: false,
 })
 
 
@@ -33,7 +34,8 @@ export const getters = {
   },
   getProductModalState: state => state.productModal,
   getContractModalState: state => state.contractModal,
-  getContractStep: state => state.contractStep
+  getContractStep: state => state.contractStep,
+  getSettingModal: state => state.settingModal
 }
 
 
@@ -92,6 +94,9 @@ export const mutations = {
   },
   SET_CONTRACT_MODAL_STATE(state) {
     state.contractModal = !state.contractModal
+  },
+  TOGGLE_SETTING_MODAL(state) {
+    state.settingModal = !state.settingModal
   }
 }
 
