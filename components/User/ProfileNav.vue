@@ -4,7 +4,11 @@
     <div class="profile-nav__container" :class="{'profile-nav__container--fixed': scrolled}">
       <transition name="reverse-twitter-nav">
         <div class="profile-nav__avatar" v-if="!scrolled">
-          <v-avatar :size="180" class="profile-nav__avatar-img">
+          <v-avatar
+            :size="180"
+            class="profile-nav__avatar-img"
+            @click.stop="$store.commit('TOGGLE_SETTING_MODAL')"
+          >
             <!-- <img
             :src="`https://storage.googleapis.com/theta-images/${user.avatar}`"
             alt="user profile picture"

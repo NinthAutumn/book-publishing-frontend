@@ -51,7 +51,7 @@
             tag="div"
             class="profile-dropdown__nav-link flex flex--align"
             v-text="item.title"
-            @click="$store.commit('TOGGLE_SETTING_MODAL')"
+            @click.stop="$store.commit('TOGGLE_SETTING_MODAL')"
           ></div>
           <nuxt-link
             v-else
@@ -103,6 +103,7 @@ export default {
     async logOut() {
       await this.$auth.logout();
       this.$axios.setHeader("Authorization", null);
+      this.$router.go(0);
     }
   }
   // loading: false

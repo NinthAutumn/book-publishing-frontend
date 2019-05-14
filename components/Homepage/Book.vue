@@ -27,7 +27,7 @@
         </transition>
       </div>
       <nuxt-link tag="div" :to="'/books/' + book.id" class="text-info">
-        <p v-clampy="3" class="book-title full" ref="texting">{{book.title}}</p>
+        <p v-clampy="3" class="book-title" ref="texting">{{book.title}}</p>
         <span class="p-ending"></span>
         <div class="flex-divider flex-row flex--align">
           <!-- <div class="book-rating" v-if="book.ratings" v-text="`(${+book.ratings.toFixed(2)})`"></div>
@@ -225,6 +225,7 @@ export default {
       margin: 0;
       font-weight: 400;
       padding: 0;
+      word-break: break-all;
       a {
         font-size: 1.4rem;
         color: black;

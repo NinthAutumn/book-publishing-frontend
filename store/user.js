@@ -16,6 +16,8 @@ export const state = () => ({
   username: false,
   profile: {},
   stats: {},
+  commentNotification: [],
+  commentNotificationCount: 0
 })
 
 export const getters = {
@@ -54,6 +56,8 @@ export const getters = {
   isUsernameAvailable: state => state.username,
   getProfileStats: state => state.stats,
   getAuthor: state => state.author,
+  getCommentNotification: state => state.commentNotification,
+  getCommentNotificationCount: state => state.commentNotificationCount
 
 }
 
@@ -106,7 +110,12 @@ export const mutations = {
   SET_PROFILE_STATS: async (state, stats) => {
     state.stats = stats
   },
-
+  SET_COMMENT_NOTIFICATION: (state, notifications) => {
+    state.commentNotification = notifications
+  },
+  SET_COMMENT_NOTIFICATION_COUNT: (state, count) => {
+    state.commentNotificationCount = count
+  }
 }
 export const actions = {
   async getBooks({
@@ -280,7 +289,42 @@ export const actions = {
       return Promise.reject(error)
     }
   },
-
+  async fetchCommentNotifications({
+    commit
+  }) {
+    try {
+      const {
+        data
+      } = await this.$axios.get(`/notification/comment`)
+      commit('SET_COMMENT_NOTIFICATION', data)
+    } catch (error) {
+      return Promise.reject(error)
+    }
+  },
+  async fetchCommentNotificationsCount({
+    commit
+  }) {
+    try {
+      const {
+        data
+      } = await this.$axios.get(`/notification/comment/count`)
+      commit('SET_COMMENT_NOTIFICATION_COUNT', data.count)
+    } catch (error) {
+      return Promise.reject(error)
+    }
+  },
+  async patchCommentNotificationRead({
+    commit,
+    dispatch
+  }) {
+    try {
+      this.$axios.patch(`/notification/comment/read`).then(() => {
+        dispatch('fetchCommentNotificationsCount')
+      })
+    } catch (error) {
+      return Promise.reject(error)
+    }
+  }
   // async signUpGoogle({
   //   commit
   // }){

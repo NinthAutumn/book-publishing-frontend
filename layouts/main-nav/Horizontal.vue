@@ -15,9 +15,21 @@
       </div>
       <SearchBar class="searchbar"></SearchBar>
       <div class="user-nav flex-row flex--align">
-        <div v-ripple class="inbox-icon flex flex--align flex--center">
+        <div
+          v-ripple
+          class="inbox-icon flex flex--align flex--center"
+          @click.stop="notification = !notification"
+        >
+          <span v-if="notificationCount > 0">
+            <div class="inbox-icon__count" v-if="notificationCount < 9">{{notificationCount}}</div>
+            <div class="inbox-icon__count" v-else>9+</div>
+          </span>
+
           <fa icon="bell"></fa>
         </div>
+        <transition name="grow-shrink">
+          <notification-list v-if="notification" v-click-outside="closeNotification"></notification-list>
+        </transition>
         <div v-if="loggedIn" style="z-index:3000;" id="prof">
           <div class="profile-pic">
             <v-avatar size="40">
@@ -54,12 +66,14 @@
   </div>
 </template>
 <script>
+import { mapGetters } from "vuex";
 export default {
   name: "Horizontal",
   data() {
     return {
       menuStates: "menu-inactive",
-      profile: false
+      profile: false,
+      notification: false
     };
   },
   components: {
@@ -67,21 +81,22 @@ export default {
     AuthModal: () => import("@/components/Navigation/Auth/AuthModal"),
     Dropdown: () => import("@/components/Navigation/Dropdown"),
     ProductModal: () => import("@/components/Navigation/Stripe/ProductModal"),
-    SettingForm: () => import("@/components/Navigation/Setting")
+    SettingForm: () => import("@/components/Navigation/Setting"),
+    NotificationList: () => import("@/components/Navigation/Notification")
   },
   computed: {
-    user() {
-      // console.log(this.$store.state.auth.user);
-      return this.$store.getters.loggedInUser;
-    },
-    loggedIn() {
-      return this.$store.getters.isAuthenticated;
-    },
-    loginState() {
-      return this.$store.state.loginForm;
-    },
-    productState() {
-      return this.$store.getters.getProductModalState;
+    ...mapGetters({
+      user: "loggedInUser",
+      loggedIn: "isAuthenticated",
+      loginState: "getLoginFormState",
+      productState: "getProductModalState",
+      notificationCount: "user/getCommentNotificationCount"
+    })
+  },
+  async mounted() {
+    if (this.$store.getters.isAuthenticated) {
+      console.log("this nibba crazy");
+      await this.$store.dispatch("user/fetchCommentNotificationsCount");
     }
   },
   methods: {
@@ -102,12 +117,17 @@ export default {
     },
     loginInState() {
       this.$store.commit("LOGIN_STATE");
+    },
+    closeNotification() {
+      this.notification = !this.notification;
     }
   }
 };
 </script>
 <style lang="scss" scoped>
 .inbox-icon {
+  position: relative !important;
+
   font-size: 20px;
   margin-right: 0.5rem;
   color: rgb(85, 85, 85);
@@ -115,12 +135,17 @@ export default {
   border-radius: 100px;
   height: 35px;
   transition: 200ms;
+  &__count {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 0.1rem 0.5rem;
+    border-radius: 10rem;
+    background-color: red;
+    color: white;
+  }
   &:hover {
     cursor: pointer;
-  }
-  &:active {
-    // background-color: rgb(214, 214, 214);
-    // transition: 200ms;
   }
 }
 .loginform {

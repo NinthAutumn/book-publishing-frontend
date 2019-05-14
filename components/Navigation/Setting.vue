@@ -15,8 +15,7 @@
         ></croppa>
       </div>
 
-      <label for="username">ユーザー名</label>
-      <input type="text" name="username" v-model="user.username">
+      <v-text-field v-model="user.username" label="ユーザー名" required></v-text-field>
       <v-radio-group v-model="user.gender" row>
         <v-radio v-for="n in genders" :key="n" :label="`${n}`" :value="n" color="#566CD6"></v-radio>
       </v-radio-group>
@@ -63,6 +62,19 @@ export default {
     #{$self}__avatar {
       width: 100%;
     }
+    #{$self}__header {
+      font-size: 2rem;
+
+      #{$self}__title {
+        font-size: inherit;
+      }
+    }
+  }
+  textarea {
+    font-size: 1.6rem;
+  }
+  input {
+    font-size: 1.6rem;
   }
   .v-dialog {
     background-color: #fff;

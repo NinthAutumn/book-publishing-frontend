@@ -22,11 +22,11 @@
       <div ref="review" class="reviews-content-text flex flex-column flex--between">
         <div v-if="!readMore" v-html="truncate(review.content, 372)"></div>
         <div v-if="readMore" v-html="review.content"></div>
-        <div
+        <!-- <div
           class="reviews-content-text--html"
           v-html="review.content"
           :class="{readmore: readMore}"
-        ></div>
+        ></div>-->
         <div v-if="review.content.length > 372" class="buts">
           <a @click="toggleCollapse" v-if="!readMore" class="reviews-content-text-more">>>詳細</a>
           <a @click="toggleCollapse" v-else class="reviews-content-text-more">{{'<<'}}一部を表示</a>
@@ -77,13 +77,19 @@ export default {
   props: {
     review: Object
   },
-  watch: {},
+  watch: {
+    review: function(val) {
+      this.liked = this.review.voted > 0;
+      this.disliked = this.review.voted < 0;
+      this.likeNumber = this.review.likes;
+    }
+  },
   data() {
     return {
       readMore: false,
-      liked: this.review.voted > 0,
-      disliked: this.review.voted < 0,
-      likeNumber: this.review.likes,
+      liked: false,
+      disliked: false,
+      likeNumber: 0,
       deleteModal: false,
       loading: false
     };
@@ -185,7 +191,11 @@ export default {
       }
     }
   },
-  mounted: function() {}
+  mounted: function() {
+    this.liked = this.review.voted > 0;
+    this.disliked = this.review.voted < 0;
+    this.likeNumber = this.review.likes;
+  }
 };
 </script>
 

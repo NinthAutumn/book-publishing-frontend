@@ -22,27 +22,44 @@
           <div class="nav-title__progress" v-text="`${progress.toFixed(2)}%`"></div>
         </div>
       </div>
-      <span v-if="loggedIn" style="z-index:3000;" id="prof" v-click-outside="dropOff">
-        <img
-          @click.stop="stateDropChange"
-          class="profile-pic"
-          style="width: 40px;"
-          :src="user.avatar"
+      <div class="user-nav flex-row flex--align">
+        <div
+          v-ripple
+          class="inbox-icon flex flex--align flex--center"
+          @click.stop="notification = !notification"
         >
-        <div :class="$store.state.dropdownState">
-          <div>
-            <transition name="grow-shrink">
-              <Dropdown v-if="$store.state.dropdownState"></Dropdown>
-            </transition>
-          </div>
+          <span v-if="notificationCount > 0">
+            <div class="inbox-icon__count" v-if="notificationCount < 9">{{notificationCount}}</div>
+            <div class="inbox-icon__count" v-else>9+</div>
+          </span>
+
+          <fa icon="bell"></fa>
         </div>
-      </span>
-      <div class="not-loggedin" v-else>
-        <img
-          class="not-loggedin__img text--link"
-          src="~/assets/profile.png"
-          @click.stop="loginInState"
-        >
+        <transition name="grow-shrink">
+          <notification-list v-if="notification" v-click-outside="closeNotification"></notification-list>
+        </transition>
+        <span v-if="loggedIn" style="z-index:3000;" id="prof" v-click-outside="dropOff">
+          <img
+            @click.stop="stateDropChange"
+            class="profile-pic"
+            style="width: 40px;"
+            :src="user.avatar"
+          >
+          <div :class="$store.state.dropdownState">
+            <div>
+              <transition name="grow-shrink">
+                <Dropdown v-if="$store.state.dropdownState"></Dropdown>
+              </transition>
+            </div>
+          </div>
+        </span>
+        <div class="not-loggedin" v-else>
+          <img
+            class="not-loggedin__img text--link"
+            src="~/assets/profile.png"
+            @click.stop="loginInState"
+          >
+        </div>
       </div>
     </nav>
     <transition name="grow-shrink">
@@ -62,21 +79,30 @@ export default {
   name: "Horizontal",
   data() {
     return {
-      menuStates: "menu-inactive"
-      // signUpForm: ""
+      menuStates: "menu-inactive",
+      notification: false
+
+      // signUpForm: "",
     };
   },
   async mounted() {
     await this.$store.dispatch("chapter/fetchChapterBookTitle", {
       bookId: this.$route.params.id
     });
+    if (this.$store.getters.isAuthenticated) {
+      await this.$store.dispatch("user/fetchCommentNotificationsCount");
+    }
   },
   components: {
     AuthModal: () => import("@/components/Navigation/Auth/AuthModal"),
     Dropdown: () => import("@/components/Navigation/Dropdown"),
-    ProductModal: () => import("@/components/Navigation/Stripe/ProductModal")
+    ProductModal: () => import("@/components/Navigation/Stripe/ProductModal"),
+    NotificationList: () => import("@/components/Navigation/Notification")
   },
   computed: {
+    notificationCount() {
+      return this.$store.getters["user/getCommentNotificationCount"];
+    },
     user() {
       return this.$store.getters.loggedInUser;
     },
@@ -121,11 +147,37 @@ export default {
     },
     loginInState() {
       this.$store.commit("LOGIN_STATE");
+    },
+    closeNotification() {
+      this.notification = !this.notification;
     }
   }
 };
 </script>
 <style lang="scss" scoped>
+.inbox-icon {
+  position: relative !important;
+
+  font-size: 20px;
+  margin-right: 0.5rem;
+  color: rgb(85, 85, 85);
+  width: 35px;
+  border-radius: 100px;
+  height: 35px;
+  transition: 200ms;
+  &__count {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 0.1rem 0.5rem;
+    border-radius: 10rem;
+    background-color: red;
+    color: white;
+  }
+  &:hover {
+    cursor: pointer;
+  }
+}
 @media screen and (max-width: 856px) {
   .site-logo {
     display: none !important;
@@ -246,6 +298,16 @@ export default {
     background-color: #1a1a1b;
     box-shadow: none;
     border-bottom: 1px solid black;
+    .inbox-icon {
+      color: rgb(215, 218, 220);
+      &__count {
+        background-color: red;
+        color: white;
+      }
+      &:hover {
+        cursor: pointer;
+      }
+    }
     .nav-title {
       color: rgb(215, 218, 220);
     }

@@ -1,14 +1,16 @@
 <template>
   <div class="contract-component">
     <div class="contract-component__modal">
-      <div
-        class="contract-component__title flex-row flex--between flex--align"
-        @click="$store.commit('SET_CONTRACT_MODAL_STATE')"
-      >
+      <div class="contract-component__title flex-row flex--between flex--align">
         <span>
           <fa icon="file-contract" class style="margin-right:5px;"></fa>契約を結ぶ
         </span>
-        <fa icon="times" class="contract-component__icon" style></fa>
+        <fa
+          icon="times"
+          class="contract-component__icon"
+          style
+          @click="$store.commit('SET_CONTRACT_MODAL_STATE')"
+        ></fa>
       </div>
       <Profile v-if="contractStep === 0"></Profile>
       <Bank v-if="contractStep === 1"></Bank>

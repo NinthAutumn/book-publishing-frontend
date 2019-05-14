@@ -1,0 +1,108 @@
+<template>
+  <div class="notification-component" v-loading="loading">
+    <div class="notification-component__header">
+      <div class="notification-component__title">通知</div>
+    </div>
+    <ul class="notification-component__list">
+      <li
+        class="notification-component__item flex-row"
+        v-for="notification in notifications"
+        :key="notification.notification_object_id"
+      >
+        <div class="notification-component__avatar">
+          <v-avatar>
+            <v-img :src="notification.avatar"></v-img>
+          </v-avatar>
+        </div>
+        <div class="nofitication-component__meta">
+          <p
+            class="notification-component__content"
+          >{{`${notification.username} さんが: "${notification.content}" とあなたのコメントに返事をしました`}}</p>
+          <span
+            class="notification-component__created-at"
+          >{{$moment(notification.created_at).startOf('second').fromNow()}}</span>
+        </div>
+      </li>
+    </ul>
+  </div>
+</template>
+
+<script>
+import { mapGetters } from "vuex";
+export default {
+  data() {
+    return {
+      loading: false
+    };
+  },
+  computed: {
+    ...mapGetters({
+      notifications: "user/getCommentNotification"
+    })
+  },
+  async mounted() {
+    this.loading = true;
+    await this.$store.dispatch("user/fetchCommentNotifications");
+    await this.$store.dispatch("user/patchCommentNotificationRead");
+    this.loading = false;
+  }
+};
+</script>
+
+<style lang="scss">
+.notification-component {
+  position: fixed;
+  top: 5rem;
+  width: 40rem;
+  right: 4rem;
+  background-color: #fff;
+  box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14),
+    0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.4);
+  $self: &;
+  &__header {
+    font-size: 1.8rem;
+    #{$self}__title {
+      font-size: inherit;
+    }
+    padding: 1.6rem;
+  }
+  &__list {
+    #{$self}__item {
+      padding: 1.6rem;
+      background-color: #fff;
+      transition: background-color 150ms ease;
+
+      &:hover {
+        background-color: rgb(243, 243, 243);
+        cursor: pointer;
+        user-select: none;
+        transition: background-color 150ms ease;
+      }
+      #{$self}__content {
+        font-size: 1.6rem;
+      }
+      #{$self}__created-at {
+        font-size: 1.4rem;
+        color: grey;
+      }
+      #{$self}__avatar {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        margin-right: 1.6rem;
+        .v-avatar {
+          box-shadow: 0 1px 3px 0 #e6ebf1;
+
+          transition: box-shadow 150ms ease, border 200ms ease,
+            -webkit-transform 150ms ease;
+          transition: box-shadow 150ms ease, transform 150ms ease,
+            border 200ms ease;
+          transition: box-shadow 150ms ease, transform 150ms ease,
+            border 200ms ease, -webkit-transform 150ms ease;
+          -webkit-user-select: none;
+        }
+      }
+    }
+  }
+}
+</style>

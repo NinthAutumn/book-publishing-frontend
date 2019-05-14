@@ -2,6 +2,7 @@
   <section class="comment-modal">
     <article class="comment-modal__container" v-if="showChildren">
       <div :style="indent" class="divider flex">
+        <a :href="`#${comment.id}`"></a>
         <div class="comment-modal__avatar flex-column flex--align flex--left">
           <v-avatar size="40" v-if="!comment.deleted">
             <img :src="comment.avatar">
@@ -310,6 +311,7 @@ export default {
 
   // overflow: hidden;/
   &__avatar {
+    margin-right: 1rem;
     width: 4rem;
   }
   &__container {

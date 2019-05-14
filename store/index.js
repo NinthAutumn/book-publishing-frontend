@@ -35,7 +35,8 @@ export const getters = {
   getProductModalState: state => state.productModal,
   getContractModalState: state => state.contractModal,
   getContractStep: state => state.contractStep,
-  getSettingModal: state => state.settingModal
+  getSettingModal: state => state.settingModal,
+  getLoginFormState: state => state.loginForm
 }
 
 

@@ -170,6 +170,7 @@ export const actions = {
         reviewId: reviewId,
         data: data
       })
+      // commit('CHANGE_LIKES')
       Promise.resolve()
     } catch (error) {
       Promise.reject(error)

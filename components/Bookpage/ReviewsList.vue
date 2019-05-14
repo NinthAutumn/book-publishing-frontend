@@ -51,6 +51,7 @@
         　name="並び替え"
         class="reviews-list__sort"
         :object="sort_type"
+        v-model="sort"
       ></Select>
       <li class="show" v-for="(review, index) in reviews" :key="index">
         <Review :review="review"></Review>
@@ -64,11 +65,6 @@
 </template>
 
 <script>
-import Review from "./Review";
-import ReviewsForm from "@/components/Bookpage/ReviewForm";
-import Select from "@/components/All/Select";
-import { EFAULT } from "constants";
-
 export default {
   props: {
     rating: Number
@@ -81,6 +77,7 @@ export default {
         { key: "問題的論順", value: 1 },
         { key: "最新順", value: 2 }
       ],
+      sort: 0,
       limit: 10,
       page: 2
     };
@@ -97,31 +94,38 @@ export default {
     }
   },
   watch: {
-    // reviews: {
-    //   immediate: true,
-    //   handler: function(newReview, oldREview) {
-    //     return newReview;
-    //   }
-    // }
+    sort: {
+      immediate: true,
+      handler: function(newReview, oldREview) {
+        this.sortReview();
+      }
+    }
   },
   async mounted() {
     await this.$store.dispatch("review/showAll", {
       bookId: this.$route.params.id,
       page: 1,
       limit: 10,
-      direction: "desc",
-      type: "likes"
+      type: 0
     });
     await this.$store.dispatch("review/fetchIsReviewed", {
       bookId: this.$route.params.id
     });
   },
   components: {
-    Review,
-    ReviewsForm,
-    Select
+    Review: () => import("./Review"),
+    ReviewsForm: () => import("./ReviewForm"),
+    Select: () => import("@/components/All/Select")
   },
   methods: {
+    async sortReview() {
+      await this.$store.dispatch("review/showAll", {
+        bookId: this.$route.params.id,
+        page: 1,
+        limit: 10,
+        type: this.sort
+      });
+    },
     async reviewOpen() {
       if (!this.$store.getters.isAuthenticated) {
         return this.$store.commit("LOGIN_STATE");
@@ -182,7 +186,7 @@ li {
   transition: 300ms;
 }
 .reviews-list__sort {
-  margin: 1rem 0;
+  margin: 1rem 0 !important;
 }
 .review-form-modal {
   background-color: #f1f3f7;

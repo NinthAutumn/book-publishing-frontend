@@ -61,6 +61,7 @@
     "vue-loaders": "^2.0.0",
     "vue-match-media": "^1.0.3",
     "vue-scrollama": "^1.1.1",
+    "vue-scrollto": "^2.15.0",
     "vue-server-renderer": "^2.6.10",
     "vue-swipe-tab": "^2.0.2",
     "vue-template-compiler": "^2.6.10",
