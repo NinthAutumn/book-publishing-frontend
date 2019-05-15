@@ -29,11 +29,11 @@ export const mutations = {
   SET_NEXT_REVIEWS(state, reviews) {
     reviews.forEach((review) => {
       state.reviews.push(review)
-
     })
   },
   SET_REVIEWS(state, reviews) {
     state.reviews = reviews
+
   },
   ADD_REVIEW(
     state, {
@@ -42,41 +42,16 @@ export const mutations = {
   ) {
     state.reviews.unshift(reviews)
   },
-  LIKED_REVIEWS(state, reviewId) {
-    state.reviews.forEach((review) => {
-      if (review._id === reviewId) {
-        review.like = review.like + 1
-      }
-    })
-  },
-  UNLIKED_REVIEWS(state, reviewId) {
-    state.reviews.forEach((review) => {
-      if (review._id === reviewId) {
-        review.like = review.like - 1
-      }
-    })
-  },
-  USER_LIKED_REVIEWS(state, userId) {
-    state.reviews.forEach((review) => {
-      if (review.ratedBy) {
-        review.ratedBy.forEach((rate) => {
-          if (rate.userId === userId) {
-            if (rate.type === 'like') {
-              review.liked = true
-            } else {
-              review.disliked = true
-            }
-          }
-        })
-      }
+  GET_GOOD_REVIEWS(state, goodReviews) {
+    goodReviews.forEach((review) => {
+      state.goodReviews.push(review)
 
     })
   },
-  GET_GOOD_REVIEWS(state, goodReviews) {
-    state.goodReviews = goodReviews
-  },
   GET_MYREVIEWS(state, reviews) {
-    state.myReviews = reviews
+    reviews.forEach((review) => {
+      state.myReviews.push(review)
+    })
   },
   GET_USER_REVIEW(state, review) {
     state.myReview = review
@@ -85,7 +60,9 @@ export const mutations = {
     state.nextChapterLength = count
   },
   SET_TRENDING(state, reviews) {
-    state.trending = reviews
+    reviews.forEach((review) => {
+      state.trending.push(review)
+    })
   },
   SET_REVIEW_LENGTH(state, count) {
     state.count = count
@@ -130,10 +107,9 @@ export const actions = {
     if (next) {
       commit('SET_NEXT_REVIEWS', res.data.reviews)
       return Promise.resolve(res.data.reviews)
-    } else {
-      commit('SET_REVIEWS', res.data.reviews)
-      commit('SET_REVIEW_LENGTH', res.data.review_count)
     }
+    commit('SET_REVIEWS', res.data.reviews)
+    return Promise.resolve(res.data.reviews)
   },
   async addReview({
     commit,

@@ -132,7 +132,8 @@ export default {
   position: relative;
   padding: 20px;
   padding-top: 10px;
-  box-shadow: 1px 1px 10px 0px rgb(207, 207, 207);
+  box-shadow: 0 7px 14px 0 rgba(60, 66, 87, 0.1),
+    0 3px 6px 0 rgba(0, 0, 0, 0.07);
   font-family: "Noto Sans JP" !important;
   &--header {
     margin-bottom: 10px;

@@ -3,6 +3,7 @@ function parseJwt(token) {
   let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
   return JSON.parse(window.atob(base64));
 };
+import Cookies from 'js-cookie'
 export default async function ({
   store,
   app,
@@ -13,11 +14,32 @@ export default async function ({
     $axios,
 
   } = app
-  if (!$auth.loggedIn) {
-    return
+  if (process.client) {
+
+
   }
 
+
   if (process.client) {
+    const token = Cookies.get('token');
+    const track_id = Cookies.get('track_id')
+    if (token) {
+      $axios.defaults.headers.common['Authorization'] = token;
+    }
+    $axios.defaults.headers.common['TrackId'] = track_id
+    window.onNuxtReady(() => {
+      const token = Cookies.get('token');
+      const track_id = Cookies.get('track_id')
+      if (token) {
+        $axios.defaults.headers.common['Authorization'] = token;
+      }
+      $axios.defaults.headers.common['TrackId'] = track_id
+    })
+
+    if (!$auth.loggedIn) {
+      return
+    }
+
     if (!$auth.loggedIn) {
       return
     }

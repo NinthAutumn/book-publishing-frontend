@@ -4,7 +4,7 @@ import {
   serialize,
   parse
 } from 'cookie'
-var cookie = require('cookie');
+// var cookie = require('cookie');
 
 
 export const state = () => ({
@@ -128,7 +128,7 @@ export const actions = {
     res
   }) {
     if (req.headers.cookie) {
-      const track_id = cookie.parse(req.headers.cookie).track_id
+      const track_id = parse(req.headers.cookie).track_id
       if (!track_id) {
         const id = uuid()
         res.setHeader('Set-Cookie', [serialize('track_id', id)])
@@ -136,23 +136,6 @@ export const actions = {
       } else {
         this.$axios.defaults.headers.common['TrackId'] = track_id
       }
-      // if (refresh) {
-      //   return await dispatch('auth/refresh')
-      // }
-      // if (token) {
-      //   this.$axios.defaults.headers.common['Authorization'] = token;
-      //   await this.$axios.get('/user/show').then((res) => {
-      //     commit('auth/AUTH_SUCCESS', {
-      //       token: token,
-      //       user: res.data
-      //     });
-      //   }).catch((e) => {
-      //     console.log(e)
-      //   })
-
-      // } else {
-      //   commit('auth/AUTH_LOGOUT')
-      // }
     }
 
   }

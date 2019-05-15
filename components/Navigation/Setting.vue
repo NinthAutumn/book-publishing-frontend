@@ -34,7 +34,7 @@ export default {
         gender: "",
         bio: ""
       },
-      genders: ["男性", "女性", "内緒"]
+      genders: ["男性", "女性", "非公開"]
     };
   },
   computed: {
