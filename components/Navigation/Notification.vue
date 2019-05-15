@@ -6,8 +6,8 @@
     <ul class="notification-component__list">
       <li
         class="notification-component__item flex-row"
-        v-for="notification in notifications"
-        :key="notification.notification_object_id"
+        v-for="(notification,index) in notifications"
+        :key="index"
       >
         <div class="notification-component__avatar">
           <v-avatar>
@@ -24,6 +24,9 @@
         </div>
       </li>
     </ul>
+    <no-ssr>
+      <infinite-loading @infinite="infiniteHandler"></infinite-loading>
+    </no-ssr>
   </div>
 </template>
 
@@ -32,7 +35,8 @@ import { mapGetters } from "vuex";
 export default {
   data() {
     return {
-      loading: false
+      loading: false,
+      page: 1
     };
   },
   computed: {
@@ -40,9 +44,25 @@ export default {
       notifications: "user/getCommentNotification"
     })
   },
+  methods: {
+    async infiniteHandler($state) {
+      let notifications = await this.$store.dispatch(
+        "user/fetchCommentNotifications",
+        {
+          page: this.page++,
+          infinite: true
+        }
+      );
+      if (notifications.length > 0) {
+        $state.loaded();
+      } else {
+        $state.complete();
+      }
+    }
+  },
   async mounted() {
     this.loading = true;
-    await this.$store.dispatch("user/fetchCommentNotifications");
+    await this.$store.dispatch("user/fetchCommentNotifications", { page: 1 });
     await this.$store.dispatch("user/patchCommentNotificationRead");
     this.loading = false;
   }
@@ -55,6 +75,8 @@ export default {
   top: 5rem;
   width: 40rem;
   right: 4rem;
+  height: 50rem;
+  overflow: auto;
   background-color: #fff;
   box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14),
     0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.4);
@@ -79,6 +101,7 @@ export default {
         transition: background-color 150ms ease;
       }
       #{$self}__content {
+        word-break: break-all;
         font-size: 1.6rem;
       }
       #{$self}__created-at {

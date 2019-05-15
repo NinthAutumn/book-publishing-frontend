@@ -2,7 +2,7 @@
   <section class="divider" style="padding: 0 10px;">
     <v-progress-linear
       style="position:fixed!important; top:40px!important;left:0!important;"
-      color="purple"
+      color="grey"
       height="5"
       :value="currStepProgress * 100"
       v-if="!modal&&!chapter.locked"

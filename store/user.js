@@ -111,7 +111,10 @@ export const mutations = {
     state.stats = stats
   },
   SET_COMMENT_NOTIFICATION: (state, notifications) => {
-    state.commentNotification = notifications
+    notifications.forEach((notification) => {
+      state.commentNotification.push(notification)
+
+    })
   },
   SET_COMMENT_NOTIFICATION_COUNT: (state, count) => {
     state.commentNotificationCount = count
@@ -291,12 +294,15 @@ export const actions = {
   },
   async fetchCommentNotifications({
     commit
+  }, {
+    page,
   }) {
     try {
       const {
         data
-      } = await this.$axios.get(`/notification/comment`)
+      } = await this.$axios.get(`/notification/comment?page=${page}`)
       commit('SET_COMMENT_NOTIFICATION', data)
+      return Promise.resolve(data)
     } catch (error) {
       return Promise.reject(error)
     }
@@ -309,6 +315,7 @@ export const actions = {
         data
       } = await this.$axios.get(`/notification/comment/count`)
       commit('SET_COMMENT_NOTIFICATION_COUNT', data.count)
+
     } catch (error) {
       return Promise.reject(error)
     }

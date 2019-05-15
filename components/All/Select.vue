@@ -112,7 +112,9 @@ export default {
     fontSize: Number,
     theme: String,
     selected_item: String,
-    limit: Number
+    limit: Number,
+    backgroundColor: String,
+    color: String
   },
   data() {
     return {
@@ -258,7 +260,7 @@ export default {
   position: relative;
   margin: 0 5px;
   // z-index: 1;
-
+  color: black;
   &__icon {
     margin-right: 5px;
   }

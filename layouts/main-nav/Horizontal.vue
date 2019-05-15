@@ -17,6 +17,7 @@
       <div class="user-nav flex-row flex--align">
         <div
           v-ripple
+          v-if="loggedIn"
           class="inbox-icon flex flex--align flex--center"
           @click.stop="notification = !notification"
         >
@@ -27,7 +28,7 @@
 
           <fa icon="bell"></fa>
         </div>
-        <transition name="grow-shrink">
+        <transition v-if="loggedIn" name="grow-shrink">
           <notification-list v-if="notification" v-click-outside="closeNotification"></notification-list>
         </transition>
         <div v-if="loggedIn" style="z-index:3000;" id="prof">
@@ -95,7 +96,6 @@ export default {
   },
   async mounted() {
     if (this.$store.getters.isAuthenticated) {
-      console.log("this nibba crazy");
       await this.$store.dispatch("user/fetchCommentNotificationsCount");
     }
   },

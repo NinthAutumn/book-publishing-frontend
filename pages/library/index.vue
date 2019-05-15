@@ -9,15 +9,14 @@
         @mouseenter="navLine('Bookmark')"
         class="library__nav__item"
       >ブックマーク</div>
-      <div @mouseenter="navLine('readingList')" class="library__nav__item">再生リスト</div>
+      <!-- <div @mouseenter="navLine('readingList')" class="library__nav__item">再生リスト</div>
       <div @mouseenter="navLine('review')" class="library__nav__item">レビュー</div>
-      <div @mouseenter="navLine('bought')" class="library__nav__item">購入済み</div>
+      <div @mouseenter="navLine('bought')" class="library__nav__item">購入済み</div>-->
       <div
         @click="navSelect('history')"
         @mouseenter="navLine('history')"
         class="library__nav__item"
       >歴史</div>
-
       <i class="i__line" :style="line"></i>
     </div>
     <div v-else class="library-nav__list library-nav__list--mobile flex-row">
@@ -35,7 +34,7 @@
         <div class="library-bookmark__select flex flex--align flex--right">
           <Select
             v-model="order"
-            def="入れた順"
+            def="最近読んだ順"
             transition="grow-shrink"
             icon="sort"
             name="並び替え"
@@ -80,8 +79,8 @@ export default {
         { key: "名前順", value: "2" }
       ],
       order: "入れた順",
-      selected_item: "再生リスト",
-      nav_list: ["再生リスト", "レビュー", "購入済み", "歴史"]
+      selected_item: "再生リスト"
+      // nav_list: ["再生リスト", "レビュー", "購入済み", "歴史"]
     };
   },
   watch: {
@@ -114,31 +113,31 @@ export default {
           };
           this.selectedTabName = "bookmark";
           break;
-        case "readingList":
-          this.selectedTab = {
-            width: "80px",
-            left: "106px"
-          };
-          this.selectedTabName = "readingList";
-          break;
-        case "review":
-          this.selectedTab = {
-            width: "64px",
-            left: "196px"
-          };
-          this.selectedTabName = "review";
-          break;
-        case "bought":
-          this.selectedTab = {
-            width: "64px",
-            left: "270px"
-          };
-          this.selectedTabName = "bought";
-          break;
+        // case "readingList":
+        //   this.selectedTab = {
+        //     width: "80px",
+        //     left: "106px"
+        //   };
+        //   this.selectedTabName = "readingList";
+        //   break;
+        // case "review":
+        //   this.selectedTab = {
+        //     width: "64px",
+        //     left: "196px"
+        //   };
+        //   this.selectedTabName = "review";
+        //   break;
+        // case "bought":
+        //   this.selectedTab = {
+        //     width: "64px",
+        //     left: "270px"
+        //   };
+        //   this.selectedTabName = "bought";
+        //   break;
         case "history":
           this.selectedTab = {
             width: "32px",
-            left: "344px"
+            left: "106px"
           };
           this.selectedTabName = "history";
           await this.$store.dispatch("library/getHistory");
@@ -153,38 +152,35 @@ export default {
             left: "0px"
           };
           break;
-        case "readingList":
-          this.line = {
-            width: "80px",
-            left: "106px"
-          };
+        // case "readingList":
+        //   this.line = {
+        //     width: "80px",
+        //     left: "106px"
+        //   };
 
-          break;
-        case "review":
-          this.line = {
-            width: "64px",
-            left: "196px"
-          };
-          break;
-        case "bought":
-          this.line = {
-            width: "64px",
-            left: "270px"
-          };
-          break;
+        //   break;
+        // case "review":
+        //   this.line = {
+        //     width: "64px",
+        //     left: "196px"
+        //   };
+        //   break;
+        // case "bought":
+        //   this.line = {
+        //     width: "64px",
+        //     left: "270px"
+        //   };
+        //   break;
         case "history":
           this.line = {
             width: "32px",
-            left: "344px"
+            left: "106px"
           };
           break;
       }
     },
     async change_tab(item) {
       this.selected_item = item;
-      if (item === "歴史") {
-        await this.$store.dispatch("library/getHistory");
-      }
     }
   },
   async fetch({ store }) {

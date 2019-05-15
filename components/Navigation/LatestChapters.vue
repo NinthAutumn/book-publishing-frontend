@@ -93,7 +93,7 @@ export default {
     #{$self}__chapter-title {
       width: 95%;
       font-size: 13px;
-      margin-bottom: 5px;
+      margin-bottom: 1rem;
       // width: 200px;
 
       p {

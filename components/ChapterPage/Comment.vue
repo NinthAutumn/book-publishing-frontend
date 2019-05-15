@@ -64,18 +64,9 @@
             class="comment-reply-form flex-column"
             v-if="replyForm"
           >
-            <textarea
-              required
-              v-model="content"
-              class="form-input comment-reply-content"
-              placeholder="コメントを書く"
-            ></textarea>
+            <textarea required v-model="content" placeholder="コメントを書く"></textarea>
             <div class="divider flex-row flex--right">
-              <input
-                type="submit"
-                class="form-submit form-submit--primary comment-form__submit flex--align flex-row flex--center"
-                value="投稿"
-              >
+              <input type="submit" class="comment-form__submit" value="投稿">
             </div>
           </form>
         </div>
@@ -169,10 +160,10 @@ export default {
             message: "返信の投稿に成功しました",
             type: "success"
           });
-          await this.$store.dispatch("comment/fetchCommentList", {
-            chapterId: this.$route.params.chaptersId,
-            userId: this.$store.getters["loggedInUser"].id
-          });
+          // await this.$store.dispatch("comment/fetchCommentList", {
+          //   chapterId: this.$route.params.chaptersId,
+          //   userId: this.$store.getters["loggedInUser"].id
+          // });
           this.replyForm = false;
           this.content = "";
         })
@@ -233,12 +224,14 @@ export default {
 
 <style lang="scss">
 .comment-reply-form {
-  .comment-reply-content {
-    border: 2px solid #b4b7b9;
+  textarea {
     resize: none;
+    border: 1px solid grey;
     height: 75px;
     margin-bottom: 5px;
-    font-size: 12px;
+    margin-top: 1rem;
+    padding: 1rem 1.2rem;
+    font-size: 1.4rem;
     &:focus {
       outline: none;
     }

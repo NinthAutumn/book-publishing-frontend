@@ -172,8 +172,8 @@ export default {
     width: 50px;
     height: 100%;
     top: 0;
-    color: $primary;
-    background-color: rgb(241, 226, 248);
+    color: #d7dadc;
+    background-color: #19191a;
   }
   .nav-icons {
     width: 100%;
@@ -204,7 +204,7 @@ export default {
       right: 2px;
     }
     &:hover {
-      background-color: $primary;
+      background-color: #8b8d96;
       color: white;
       cursor: pointer;
     }
@@ -226,7 +226,7 @@ export default {
           transition: 300ms;
         }
       }
-      font-size: 30px;
+      font-size: 2rem;
     }
   }
 }

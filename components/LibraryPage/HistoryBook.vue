@@ -45,7 +45,7 @@
                 <fa icon="angle-double-right"></fa>
               </nuxt-link>
               <div class="history-book__bookmark" v-ripple>
-                <span v-if="!book.bookmarked">
+                <span v-if="!book.bookmarked" @click="bookmarkBook(book.book_id)">
                   <fa class="history-book__bookmark__icon" icon="plus"></fa>ブックマークする
                 </span>
                 <span v-else>
@@ -64,6 +64,28 @@
 export default {
   props: {
     books: Array
+  },
+  async mounted() {
+    await this.$store.dispatch("library/getHistory");
+  },
+  methods: {
+    async bookmarkBook(id) {
+      const store = {
+        type: "bookmark",
+        bookId: id
+      };
+      try {
+        const addStore = await this.$store.dispatch("library/patchStore", {
+          store
+        });
+        await this.$store.dispatch("library/getHistory");
+      } catch (error) {
+        this.$message({
+          message: `ブックマークを失敗しました`,
+          type: "error"
+        });
+      }
+    }
   }
 };
 </script>

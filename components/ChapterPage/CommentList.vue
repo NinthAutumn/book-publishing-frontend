@@ -30,7 +30,14 @@
       </div>
       <div class="comment-unordered-list" v-if="comments.length > 0">
         <div class="comment-list__select flex-row flex--align" v-if="comments.length > 1">
-          <Select def="いいね数" transition="grow-shrink" name="並び替え" :object="sort_list"></Select>
+          <Select
+            fontSize="14"
+            width="100px"
+            def="いいね数"
+            transition="grow-shrink"
+            name="並び替え"
+            :object="sort_list"
+          ></Select>
         </div>
         <li v-for="(comment, index) in comments" :key="index">
           <Comment :comment="comment" :depth="0" :children="comment.children"></Comment>
@@ -57,7 +64,7 @@ export default {
       sort_list: [
         { key: "いいね数", value: "likes" },
         { key: "最新順", value: "latest" },
-        { key: "古い順", value: "oldest" }
+        { key: "問題的順", value: "oldest" }
       ],
       content: "",
       error: false
@@ -108,6 +115,9 @@ export default {
 
 <style lang="scss">
 .comment-list {
+  .select-component__name {
+    color: black;
+  }
   .comment-form__submit {
     // align-items:lef/
     width: 10rem;
@@ -118,15 +128,21 @@ export default {
     box-sizing: border-box;
     font-size: 1.2rem !important;
     margin-top: 0;
+    background-color: #32325d;
     color: white;
-    background-color: $secondary-light;
+    transition: 300ms;
+    border-radius: 0.4rem;
+    // margin-top: 3rem;
     padding: 1rem;
+    box-shadow: 0px 2px 3px 0px #f5e2f5;
+    box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2),
+      0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12) !important;
     transition: 200ms;
     &:hover {
-      transition: 200ms;
-      color: $secondary-light;
-      background-color: #fff;
-      border: 0.1rem solid $secondary-light;
+      color: #32325d;
+      background-color: white;
+      transition: 300ms;
+
       user-select: none;
       cursor: pointer;
     }
@@ -152,6 +168,7 @@ export default {
     margin-bottom: 1rem;
   }
   .content-textarea {
+    margin-top: 0.5rem !important;
     resize: none;
     width: 100%;
     margin-bottom: 0.5rem;
@@ -159,10 +176,7 @@ export default {
     height: 10rem;
     padding: 1rem;
     transition: 100ms;
-    &:focus {
-      outline: none;
-      box-shadow: 1px 1px 5px 0px rgb(214, 214, 214);
-    }
+
     border: 2px solid #b4b7b9;
   }
   &__item {

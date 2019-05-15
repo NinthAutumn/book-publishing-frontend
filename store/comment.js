@@ -6,25 +6,23 @@ export const getters = {
   getComments: state => state.comments
 }
 
-function findObjectById(items, id, object) {
-  items.forEach((item) => {
-    if (item.id === id) {
-      return item.children.unshift(object)
-    }
-    if (item.id !== id) {
-
-      item.children.forEach((child) => {
-        if (child.id === id) {
-          return child.children.unshift(object)
-        }
-        if (child.id !== id) {
-          findObjectById(item.children, id, object)
-        }
+const findParent = ({
+  comments,
+  id,
+  object
+}) => {
+  comments.forEach((comment) => {
+    if (comment.id === id) {
+      return comment['children'].unshift(object)
+    } else if (comment['children']) {
+      return findParent({
+        comments: comment['children'],
+        id,
+        object
       })
     }
   })
 };
-
 
 
 const filterParent = function (items, id = undefined) {
@@ -32,7 +30,7 @@ const filterParent = function (items, id = undefined) {
     return item.parent === id
   }).map((filteredItem) => ({
     ...filteredItem,
-    children: filterParent(items, filteredItem._id)
+    children: filterParent(items, filteredItem.id)
   }))
 }
 
@@ -41,10 +39,14 @@ export const mutations = {
   SET_COMMENTS(state, comments) {
     state.comments = comments
   },
-  PUSH_COMMENT(state, comment) {
+  PUSH_COMMENT(state, comment, parentId) {
     // console.log(comment.parentId);
     try {
-      // findObjectById(state.comments, comment.parentId, comment);
+      const object = findParent({
+        comments: state.comments,
+        id: comment.parent_id,
+        object: comment
+      });
 
     } catch (error) {
       console.log(error);
@@ -87,7 +89,8 @@ export const actions = {
         parentId
       })
       // console.log();
-      commit('PUSH_COMMENT', res.data)
+      // let comment = {}
+      commit('PUSH_COMMENT', res.data, parentId)
     } catch (error) {
 
     }

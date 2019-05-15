@@ -265,6 +265,7 @@ export default {
     padding: 5px;
     p {
       text-align: center;
+      margin-bottom: 1rem;
     }
   }
   &-chapter {
