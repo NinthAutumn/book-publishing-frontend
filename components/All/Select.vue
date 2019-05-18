@@ -253,6 +253,7 @@ export default {
 
 .select-component {
   $self: &;
+  border-radius: 0.4rem;
   user-select: none;
   // width: 100%;
   // width: 100%;
@@ -270,7 +271,7 @@ export default {
     font-size: 14px;
     width: 100px;
     height: 30px;
-
+    border-radius: 0.4rem;
     &--multiple {
       width: 120px;
     }
@@ -289,6 +290,7 @@ export default {
     top: -400px;
   }
   &__list {
+    border-radius: 0.4rem;
     z-index: 10000;
     background-color: #fff;
     box-shadow: 0 2px 5px 0 rgba(60, 66, 87, 0.1),
@@ -357,6 +359,7 @@ export default {
     color: #f4648a;
   }
   &__option {
+    border-radius: 0.4rem;
     font-size: 14px;
     z-index: 10000;
     &--name {

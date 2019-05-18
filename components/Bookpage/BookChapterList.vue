@@ -20,7 +20,7 @@
             class="book-chapters__chapter-item"
             v-for="(chapter) in volume.chapters"
             :key="chapter.index"
-            :to="{path: `/books/${ $route.params.id}/${chapter.id}`}"
+            :to="{path: `/books/${ chapter.book_id}/${chapter.id}`}"
             v-ripple
           >
             <div class="flex-divider flex" style="height:100%;">
@@ -114,8 +114,23 @@ export default {
 
 @media screen and (max-width: 882px) {
   .book-chapters {
+    $self: &;
     &__chapter-list {
       grid-template-columns: repeat(auto-fill, 100%) !important;
+      #{$self}__chapter-item {
+        &:nth-child(even) {
+          background-color: #f6f9fc !important;
+          &:hover {
+            background-color: #fff !important;
+          }
+        }
+        &:nth-child(odd) {
+          background-color: #fff8f8 !important;
+          &:hover {
+            background-color: #fff !important;
+          }
+        }
+      }
     }
   }
 }
@@ -138,16 +153,25 @@ export default {
 
   &__chapter-list {
     // grid-area: content;
-    // display: grid;
-    // grid-template-columns: repeat(auto-fill, 50%);
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
     // grid-template-rows: auto;
     user-select: none;
 
     #{$self}__chapter-item {
+      &:nth-child(4n - 1),
+      &:nth-child(4n) {
+        background-color: #f6f9fc;
+        &:hover {
+          background-color: #fff;
+        }
+      }
+      border-radius: 1rem;
+      background-color: #fff8f8;
       max-width: 100%;
       margin: 0.3rem 0.3rem;
       padding: 0.5rem 0;
-      border-bottom: 1px solid grey;
+      // border-bottom: 1px solid grey;
       height: 6rem;
       &:hover {
         cursor: pointer;

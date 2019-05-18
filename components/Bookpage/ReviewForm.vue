@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import TextEditor from "@/components/TextEditor";
+// import TextEditor from ;
 export default {
   props: {
     ptitle: String,
@@ -57,7 +57,7 @@ export default {
     };
   },
   components: {
-    TextEditor
+    TextEditor: () => import("@/components/TextEditor")
   },
   watch: {},
   methods: {
@@ -137,7 +137,7 @@ export default {
     // border: 2px solid $review-color;
     box-shadow: 0 2px 5px 0 rgba(60, 66, 87, 0.1),
       0 1px 1px 0 rgba(0, 0, 0, 0.07);
-    // border-radius: 5px;
+    border-radius: 4px;
     // border-radius: 0.8rem;
     box-sizing: border-box;
     margin-bottom: 10px;
@@ -156,8 +156,11 @@ export default {
     // border-radius: 0.8rem;
     box-shadow: 0 2px 5px 0 rgba(60, 66, 87, 0.1),
       0 1px 1px 0 rgba(0, 0, 0, 0.07);
+    border-radius: 4px;
+
     textarea {
       border: 0px solid white !important;
+      border-radius: 4px;
     }
 
     // border: 2px solid $review-color;
@@ -209,6 +212,8 @@ export default {
       0 1px 1px 0 rgba(0, 0, 0, 0.07);
     background-color: #fff;
     // border-radius: 0.8rem;
+    border-radius: 4px;
+
     padding: 0.5rem 1rem;
   }
   .review-submit {

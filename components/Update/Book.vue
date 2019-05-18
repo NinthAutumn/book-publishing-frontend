@@ -5,13 +5,14 @@
         :aspect-ratio="1/1.5"
         max-width="15rem"
         class="update-book__img"
-        :src="`https://storage.googleapis.com/theta-images/${book[0].cover}`"
+        :src="book.cover"
+        style=" border-radius: 0.4rem;"
       ></v-img>
       <span class="update-book__cover-meta">{{book.length}}</span>
     </nuxt-link>
     <div class="update-book__meta">
       <div class="update-book__title">
-        <p v-clampy="3">{{book[0].title}}</p>
+        <p v-line-clamp="2">{{book[0].title}}</p>
       </div>
       <div class="flex-divider flex-row flex--align flex--between">
         <div class="update-book__author">{{book[0].author}}</div>
@@ -70,6 +71,7 @@ export default {
       padding: 2px 10px;
       font-size: 1.3rem;
       background-color: rgb(255, 70, 37);
+      border-radius: 0.4rem;
       color: white;
       top: 0;
       left: 0;

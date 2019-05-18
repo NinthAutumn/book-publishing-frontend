@@ -1,6 +1,39 @@
 <template>
-  <div class="review-card flex flex-row--between" :class="{'review-card--mobile':mobile}">
-    <div class="review-card__profile flex-column">
+  <div class="review-card" ref="review" :class="{'review-card--mobile':mobile}">
+    <div class="review-clip"></div>
+    <div class="review-card__cover">
+      <v-img
+        class="review-card__image"
+        :aspect-ratio="1/1.5"
+        min-width="90"
+        :width="imageWidth"
+        min-height="135"
+        :height="imageHeight"
+        :src="review.cover"
+      ></v-img>
+    </div>
+    <div class="review-card__meta">
+      <div class="review-card__title" :style="{maxWidth:width/1.8 + 'px'}">
+        <fa
+          :style="{marginRight:iconMargin+'px' }"
+          class="review-card__icon review-card__icon--left"
+          icon="quote-left"
+        ></fa>
+        <p>{{review.title}}</p>
+        <fa
+          :style="{marginLeft:iconMargin+'px' }"
+          class="review-card__icon review-card__icon--right"
+          icon="quote-right"
+        ></fa>
+      </div>
+      <div class="review-card__content" v-html="truncate(review.content,wordCount)"></div>
+    </div>
+    <div class="review-card__author">
+      <v-avatar :size="imgSize" class="review-card__avatar">
+        <v-img :src="review.avatar"></v-img>
+      </v-avatar>
+    </div>
+    <!-- <div class="review-card__profile flex-column">
       <div class="divider">
         <img class="review-card__profile__pic" :src="review.avatar" alt>
       </div>
@@ -34,7 +67,7 @@
         tag="div"
         class="review-card__button button button--small button--primary--open"
       >Read</nuxt-link>
-    </div>
+    </div>-->
   </div>
 </template>
 
@@ -44,23 +77,147 @@ export default {
     review: Object,
     mobile: Boolean,
     user: Object,
-    book: Object
+    book: Object,
+    height: Number
+  },
+  data() {
+    return {
+      width: 0,
+      imageWidth: 130,
+      wordCount: 100,
+      imgSize: 60,
+      iconMargin: 10,
+      imageHeight: 202.5
+    };
+  },
+  updated() {
+    this.handleResize();
   },
   created() {},
-  filters: {
+  mounted() {
+    this.handleResize();
+    // window.addEventListener("onload", this.handleResize);
+    window.addEventListener("resize", this.handleResize);
+  },
+  destroyed() {
+    window.removeEventListener("resize", this.handleResize);
+    // window.removeEventListener("onload", this.handleResize);
+  },
+  methods: {
+    handleResize: function() {
+      this.width = this.$refs.review.clientWidth;
+
+      this.imageWidth = this.width / 4;
+      this.imageHeight = (this.width / 4) * 1.5;
+      this.wordCount = this.width / 6;
+      this.imgSize = this.width / 10;
+    },
     truncate: (string, number) => {
-      if (string.length > 8) {
+      if (string.length > number) {
         return (string || "").substring(0, number) + "…";
       } else {
         return string;
       }
     }
-  }
+  },
+  filters: {}
 };
 </script>
 
 <style lang="scss">
 .review-card {
+  $self: &;
+  display: flex;
+  align-items: center;
+  background-color: #f7fcff;
+  position: relative;
+  min-height: 15rem;
+  min-width: 34rem;
+  .review-clip {
+    -webkit-clip-path: polygon(54% 53%, 0 0, 0 100%);
+    clip-path: polygon(54% 53%, 0 0, 0 100%);
+    background-color: #fff;
+    position: absolute;
+    height: 70%;
+    width: 100%;
+    z-index: 0;
+    right: 1rem;
+    transform: rotate(180deg);
+  }
+
+  &:hover {
+    #{$self}__cover {
+      // transform:
+      clip-path: none;
+      // transition: clip-path 300ms;
+      #{$self}__image {
+        transform: scale(0.9) perspective(2910px) rotateY(20deg) rotateX(5deg)
+          rotate(-1deg);
+        &::after {
+        }
+      }
+    }
+  }
+  &__cover {
+    z-index: 1;
+    position: relative;
+    clip-path: ellipse(130px 140px at 10% 20%);
+    transition: clip-path 300ms;
+    #{$self}__image {
+      // position:absolute;
+      border-radius: 0.6rem;
+      transform: translateY(-3rem);
+      transition: transform 200ms;
+      box-shadow: 0 12px 18px 0 rgba(50, 50, 93, 0.11),
+        0 3px 9px 0 rgba(0, 0, 0, 0.08);
+    }
+    margin-right: 2rem;
+  }
+  &__author {
+    position: absolute;
+    right: 1rem;
+    bottom: 1rem;
+    #{$self}__avatar {
+      box-shadow: 0 12px 18px 0 rgba(50, 50, 93, 0.11),
+        0 3px 9px 0 rgba(0, 0, 0, 0.08);
+    }
+  }
+  &__meta {
+    z-index: 1;
+    display: flex;
+    align-self: flex-start;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: 100%;
+    #{$self}__title {
+      #{$self}__icon {
+        &--left {
+          margin-right: 1rem;
+        }
+        &--right {
+          margin-left: 1rem;
+        }
+      }
+
+      display: flex;
+      p {
+        max-width: 100%;
+        font-size: 1.7rem;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+      }
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+      margin-bottom: 2rem;
+    }
+    #{$self}__content {
+      p {
+        font-size: 1.5rem;
+      }
+    }
+  }
   .v-icon {
     padding: 0 !important;
   }
@@ -95,17 +252,32 @@ export default {
     transition: 300ms;
   }
   // background-color: $review-color;
-  margin: 10px 5px;
-  margin-left: 1px;
-  margin-right: 10px;
+  // margin: 2rem 1rem;
+  // margin-left: 1px;
+  // margin-bottom: 5rem;
+  // margin-right: 10px;
   // border-radius: 5px;
-  -webkit-box-shadow: 1px 1px 5px 0px rgba(186, 186, 186, 1);
-  -moz-box-shadow: 1px 1px 5px 0px rgba(186, 186, 186, 1);
-  box-shadow: 1px 1px 5px 0px rgba(186, 186, 186, 1);
+
   // height: 20vh;
   // width: 40%;
   /* margin-right: 10px; */
+  margin-top: 2rem;
+  margin: 2rem;
+
   padding: 10px;
+  border-radius: 0.4rem;
+  box-shadow: 0 12px 18px 0 rgba(50, 50, 93, 0.11),
+    0 3px 9px 0 rgba(0, 0, 0, 0.08);
+  // position: relative;
+  -webkit-transition-property: color, background-color, -webkit-box-shadow,
+    -webkit-transform;
+  transition-property: color, background-color, -webkit-box-shadow,
+    -webkit-transform;
+  transition-property: color, background-color, box-shadow, transform;
+  transition-property: color, background-color, box-shadow, transform,
+    -webkit-box-shadow, -webkit-transform;
+  -webkit-transition-duration: 0.15s;
+  transition-duration: 0.15s;
   // box-sizing: border-box;
   // align-items: center;
 
@@ -148,7 +320,7 @@ export default {
           font-size: 13px;
         }
       }
-      overflow: scroll;
+      overflow: hidden;
       line-height: 28px;
       height: 180px;
       word-break: break-word;

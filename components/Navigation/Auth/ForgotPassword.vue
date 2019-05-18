@@ -77,7 +77,7 @@ export default {
     color: #32325d;
     background-color: white;
     border: 1px solid transparent;
-    // border-radius: 4px;
+    border-radius: 4px;
     // box-shadow: 0 1px 3px 0 #d9d1dd;
     -webkit-transition: box-shadow 150ms ease;
     transition: box-shadow 150ms ease;

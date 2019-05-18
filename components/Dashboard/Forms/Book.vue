@@ -183,24 +183,23 @@ export default {
       }
 
       try {
-        const uploaded = await this.$store.dispatch(
-          "upload/image",
-          this.form.cover
-        );
-        const book = {
+        let book = {
           title: this.form.title,
           tags: this.form.tags,
           genres: this.form.genre,
-          synopsis: this.form.synopsis,
-          cover: this.url
+          synopsis: this.form.synopsis
+          //   cover: url.url,
+          //   cover_path: url.path
         };
+        const url = await this.$store.dispatch("upload/image", this.form.cover);
+        book["cover"] = url.url;
+        book["coverPath"] = url.path;
         await this.$store.dispatch("book/addBook", book);
         this.$message({
           message: "本の投稿に成功しました",
           type: "success"
         });
         this.$router.go(-1);
-        this.$store.commit("REMOVE_URL");
       } catch (error) {
         this.$message({
           message: `本の投稿に失敗しました！${error}`,

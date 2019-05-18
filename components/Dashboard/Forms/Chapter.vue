@@ -27,7 +27,7 @@
       <transition name="slide-fade">
         <div class="chapter-form__content-subject">
           <div class="form-control flex-row flex--align">
-            <p v-if="form.volume" class="chapter-index">第{{latestIndex}}話</p>
+            <p v-if="form.volume.index" class="chapter-index">第{{latestIndex}}話</p>
             <p v-else class="chapter-index">第{{0}}話</p>
             <input
               placeholder="タイトル"
@@ -153,7 +153,7 @@
           <div class="form-control flex-row flex--between">
             <div class="chapter-form__submit-form__chapter-title" style="margin-top:10px;">
               <span class="chapter-title__placeholder">話の章</span>
-              <span class="chapter-title__content">第{{form.volume}}章</span>
+              <span class="chapter-title__content">第{{form.volume.index}}章</span>
             </div>
             <div class="chapter-form__submit-form__chapter-title" style="margin-top:10px;">
               <span class="chapter-title__placeholder">話の字数</span>

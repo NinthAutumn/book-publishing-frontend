@@ -56,16 +56,17 @@ export default {
   },
   methods: {
     infiniteHandler: async function($state) {
-      const array = await this.$store.dispatch("book/fetchMoreLatestBooks", {
+      const array = await this.$store.dispatch("book/fetchLatestBooks", {
         page: this.page++,
-        limit: 30
+        limit: 30,
+        infinite: true
       });
       console.log(array);
-      // if (array.length < 1) {
-      //   $state.complete();
-      // } else {
-      $state.loaded();
-      // }
+      if (array.length < 1) {
+        $state.complete();
+      } else {
+        $state.loaded();
+      }
     },
     updateView: async function(setting) {
       if (!this.loggedIn) {

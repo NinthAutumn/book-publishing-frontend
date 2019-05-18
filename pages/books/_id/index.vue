@@ -3,15 +3,16 @@
     <div class="book__container">
       <v-img
         class="book__cover"
-        :src="`https://storage.googleapis.com/theta-images/${book.cover}`"
+        :src="book.cover"
         alt="book cover"
-        width="20rem"
+        max-width="20rem"
+        min-width="10rem"
         :aspect-ratio="1/1.5"
       ></v-img>
       <div class="book__info flex flex-column flex--around">
         <header class="book__title">{{book.title}}</header>
         <div class="book__title--more-info" v-if="$device.isMobile">
-          <div class="book__title__author">{{book.author}}</div>
+          <div class="book__title__author">作者: {{book.pen_name}}</div>
         </div>
         <div class="book__meta flex-row">
           <nuxt-link
@@ -28,14 +29,20 @@
         </div>
         <div class="book__rating">
           <no-ssr>
-            <v-rating half-increments color="#FF8D29" :readonly="true" medium :value="+book.rating"></v-rating>
+            <v-rating
+              half-increments
+              color="#FF8D29"
+              :readonly="true"
+              :size="star"
+              :value="+book.rating"
+            ></v-rating>
             <!-- <v-rating medium color="#FF8D29" v-else :readonly="true" :value="0"></v-rating> -->
           </no-ssr>
         </div>
       </div>
 
       <div class="book__avatar">
-        <v-img class="book-author" :src="$store.state.book.book.avatar" alt="author avatar"></v-img>
+        <v-img v-if="book.avatar" class="book-author" :src="book.avatar" alt="author avatar"></v-img>
       </div>
       <div @mouseleave="navLeave" class="book__content-nav book-showtab　flex flex-row">
         <div
@@ -134,6 +141,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   auth: false,
   async asyncData({ params, store }) {},
@@ -158,28 +166,24 @@ export default {
     }
   },
   computed: {
-    // ...MapGetters({})
+    ...mapGetters({
+      book: "book/getBook",
+      view: "book/getBookView",
+      chapterCount: "book/getBookChapterCount"
+    }),
     bookmarkedText() {
       if (!this.bookmarked) {
         return "ブックマーク";
       } else {
         return "ブックマーク済み";
       }
-    },
-    book() {
-      return this.$store.getters["book/getBook"];
-    },
-    view() {
-      return this.$store.getters["book/getBookView"];
-    },
-    chapterCount() {
-      return this.$store.getters["book/getBookChapterCount"];
     }
   },
   data() {
     return {
       reviews: [],
       bookmarked: this.$store.getters["book/getBook"].bookmarked,
+      star: 20,
       tabs: {
         review: "",
         toc: "",
@@ -187,6 +191,7 @@ export default {
           width: "",
           left: 0
         },
+
         selected: {},
         open: "review"
       },
@@ -497,12 +502,12 @@ input[type="number"]::-webkit-outer-spin-button {
   &--mobile {
     #{$self}__container {
       grid-template-rows: auto;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(2, 1fr);
       grid-template-areas:
-        ". cover ."
-        "title title title "
-        "summary summary summray"
-        "content content content" !important;
+        "cover title"
+        "cover title"
+        "summary summary "
+        "content content " !important;
       .book-info {
         width: 100%;
       }
@@ -510,21 +515,30 @@ input[type="number"]::-webkit-outer-spin-button {
     .book__announcements {
     }
     .book__info {
-      display: block;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
     .book-content {
       padding: 0 !important;
       height: 100%;
     }
     .book__synopsis {
-      height: 100%;
+      // height: 100%;
     }
     .book__title {
-      text-align: center;
+      text-align: left;
       font-size: 1.5rem;
+      margin-bottom: 1rem;
+      .book__title__author {
+        font-size: 1.3rem;
+        color: #b7b7b7;
+      }
       &--more-info {
+        margin-bottom: 1rem;
         width: 100%;
-        text-align: center;
+        text-align: left;
       }
     }
     #{$self}__meta {
@@ -534,8 +548,13 @@ input[type="number"]::-webkit-outer-spin-button {
       display: none;
     }
     .book__cover {
-      border-radius: 5px;
+      border-radius: 0.5rem;
       justify-self: center;
+      width: 15rem;
+      .v-image__image {
+        box-shadow: 0 12px 18px 0 rgba(50, 50, 93, 0.11),
+          0 3px 9px 0 rgba(0, 0, 0, 0.08);
+      }
     }
   }
   .ql-snow,
@@ -544,7 +563,10 @@ input[type="number"]::-webkit-outer-spin-button {
     box-sizing: border-box;
     font-size: 16px;
   }
-
+  &__cover {
+    border-radius: 0.5rem;
+    // margin-right: 2rem;
+  }
   &__container {
     // padding: 10px;
     .vue-star-rating-rating-text {
@@ -554,7 +576,7 @@ input[type="number"]::-webkit-outer-spin-button {
     display: grid;
     grid-template-columns: 20rem 1fr 1fr 10rem;
     grid-template-rows: 100px 1fr auto;
-
+    grid-gap: 1rem;
     grid-template-areas:
       "cover title title avatar"
       "cover announcements . meta"
@@ -631,8 +653,8 @@ input[type="number"]::-webkit-outer-spin-button {
   }
   &__cover {
     grid-area: cover;
-    width: 20rem;
-    height: 30rem;
+    // width: 20rem;
+    // height: 30rem;
   }
   &__info {
     justify-self: stretch;
@@ -727,6 +749,23 @@ input[type="number"]::-webkit-outer-spin-button {
       font-size: 2.2rem;
       // margin-bottom: 1.5rem;
     }
+  }
+}
+
+@media screen and (max-width: 1048px) {
+  .book__avatar {
+    display: none;
+  }
+  .book__announcements {
+    display: none;
+  }
+  .book__container {
+    grid-template-areas:
+      "cover title title title"
+      "cover announcements . meta"
+      "summary summary summary summary "
+      "content content content content ";
+    // "summary summary summary summary";
   }
 }
 </style>

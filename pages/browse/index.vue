@@ -98,6 +98,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   auth: false,
   components: {
@@ -106,9 +107,9 @@ export default {
     TagCreate: () => import("@/components/Browse/TagCreate")
   },
   computed: {
-    books() {
-      return this.$store.state.book.browse;
-    }
+    ...mapGetters({
+      books: "book/getBrowseBooks"
+    })
   },
   methods: {
     async refresh() {

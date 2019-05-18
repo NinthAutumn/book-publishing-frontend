@@ -47,12 +47,12 @@
             style="margin-bottom:1rem;"
           >
             <v-avatar size="130" class="elevation-1">
-              <v-img :src="$store.state.auth.user.avatar"></v-img>
+              <v-img :src="author.avatar"></v-img>
             </v-avatar>
           </div>
           <div v-else class="flex-row flex--align flex--center" style="margin-bottom:1rem;">
             <v-avatar size="40" class="elevation-1">
-              <v-img :src="$store.state.auth.user.avatar"></v-img>
+              <v-img :src="author.avatar"></v-img>
             </v-avatar>
           </div>
         </li>
@@ -74,18 +74,19 @@
 // import HomeIcon from "../../assets/home-icon";
 // import { fas } from "@fortawesome/free-solid-svg-icons";
 // import { faGithub } from '@fortawesome/free-brands-svg-icons'
+import { mapGetters } from "vuex";
 
 export default {
   name: "Vertical",
   props: ["value"],
   async mounted() {
-    console.log(this.$refs);
-    await this.$store.dispatch("user/fetchAuthor");
+    // await this.$store.dispatch("user/fetchAuthor");
   },
   data() {
     return {
       draw: null,
       writeBookState: false,
+      // avatarFixed: this.avatar,
       menus: [
         {
           title: "ダッシュボード",
@@ -126,12 +127,10 @@ export default {
     // }
   },
   computed: {
-    author() {
-      return this.$store.getters["user/getAuthor"];
-    },
-    contract() {
-      return this.$store.getters["getContractModalState"];
-    }
+    ...mapGetters({
+      author: "user/getAuthor",
+      contract: "getContractModalState"
+    })
   },
   methods: {
     menuDrawer() {

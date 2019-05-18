@@ -47,11 +47,13 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   computed: {
-    user() {
-      return this.$store.getters.loggedInUser;
-    }
+    ...mapGetters({
+      user: "loggedInUser"
+    })
   }
 };
 </script>

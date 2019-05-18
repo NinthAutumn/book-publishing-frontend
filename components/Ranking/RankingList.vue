@@ -91,6 +91,8 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   components: {
     RankingItem: () => import("./RankingItem"),
@@ -153,15 +155,11 @@ export default {
     };
   },
   computed: {
-    list() {
-      return this.$store.getters["analytic/getRankingList"];
-    },
-    trending() {
-      return this.$store.getters["analytic/getTrendingList"];
-    },
-    vote() {
-      return this.$store.getters["analytic/getVoteRanking"];
-    }
+    ...mapGetters({
+      list: "analytic/getRankingList",
+      trending: "analytict/getTrendingList",
+      vote: "analytic/getVoteRanking"
+    })
   },
   async mounted() {
     await this.$store.dispatch("analytic/fetchRanking", {

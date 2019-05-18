@@ -23,10 +23,10 @@
           >{{$moment(notification.created_at).startOf('second').fromNow()}}</span>
         </div>
       </li>
+      <no-ssr>
+        <infinite-loading @infinite="infiniteHandler"></infinite-loading>
+      </no-ssr>
     </ul>
-    <no-ssr>
-      <infinite-loading @infinite="infiniteHandler"></infinite-loading>
-    </no-ssr>
   </div>
 </template>
 
@@ -75,8 +75,8 @@ export default {
   top: 5rem;
   width: 40rem;
   right: 4rem;
-  height: 50rem;
-  overflow: auto;
+
+  border-radius: 0.4rem;
   background-color: #fff;
   box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14),
     0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.4);
@@ -89,6 +89,8 @@ export default {
     padding: 1.6rem;
   }
   &__list {
+    height: 40rem;
+    overflow: auto;
     #{$self}__item {
       padding: 1.6rem;
       background-color: #fff;

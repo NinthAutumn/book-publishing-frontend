@@ -5,10 +5,11 @@
         <span class="star-rating"></span>
         <nuxt-link class="book-img-div" tag="div" :to="'/books/' + book.id">
           <v-img
-            :src="`https://storage.googleapis.com/theta-images/${book.cover}`"
+            :src="book.cover"
             :aspect-ratio="1/1.5"
             max-width="14rem"
             alt="Book cover"
+            style="border-radius: 0.4rem;"
           ></v-img>
         </nuxt-link>
         <div
@@ -27,7 +28,7 @@
         </transition>
       </div>
       <nuxt-link tag="div" :to="'/books/' + book.id" class="text-info">
-        <p v-clampy="3" class="book-title" ref="texting">{{book.title}}</p>
+        <p v-line-clamp="2" class="book-title" ref="texting">{{book.title}}</p>
         <span class="p-ending"></span>
         <div class="flex-divider flex-row flex--align">
           <!-- <div class="book-rating" v-if="book.ratings" v-text="`(${+book.ratings.toFixed(2)})`"></div>
@@ -122,6 +123,7 @@ export default {
     height: 2.5rem;
     &__modal {
       position: absolute;
+
       // right: -118px;
       right: 0 !important;
       top: 0px;
@@ -169,22 +171,24 @@ export default {
     // box-shadow: 1px 1px 1px 0px rgba(153, 153, 153, 0.75);
     // border-radius: 5px;
     .book-img-div {
+      border-radius: 0.4rem;
       &:hover {
         cursor: pointer;
-        -webkit-box-shadow: 0 13px 27px -5px rgba(50, 50, 93, 0.25),
-          0 8px 16px -8px rgba(0, 0, 0, 0.3),
-          0 -6px 16px -6px rgba(0, 0, 0, 0.025);
-        box-shadow: 0 13px 27px -5px rgba(50, 50, 93, 0.25),
-          0 8px 16px -8px rgba(0, 0, 0, 0.3),
-          0 -6px 16px -6px rgba(0, 0, 0, 0.025);
-        -webkit-transition-property: color, background-color, -webkit-box-shadow,
-          -webkit-transform;
-        transition-property: color, background-color, -webkit-box-shadow,
-          -webkit-transform;
-        transition-property: color, background-color, box-shadow, transform;
-        transition-property: color, background-color, box-shadow, transform,
-          -webkit-box-shadow, -webkit-transform;
+        // -webkit-box-shadow: 0 13px 27px -5px rgba(50, 50, 93, 0.25),
+        //   0 8px 16px -8px rgba(0, 0, 0, 0.3),
+        //   0 -6px 16px -6px rgba(0, 0, 0, 0.025);
+        // box-shadow: 0 13px 27px -5px rgba(50, 50, 93, 0.25),
+        //   0 8px 16px -8px rgba(0, 0, 0, 0.3),
+        //   0 -6px 16px -6px rgba(0, 0, 0, 0.025);
+        // -webkit-transition-property: color, background-color, -webkit-box-shadow,
+        //   -webkit-transform;
+        // transition-property: color, background-color, -webkit-box-shadow,
+        //   -webkit-transform;
+        // transition-property: color, background-color, box-shadow, transform;
+        // transition-property: color, background-color, box-shadow, transform,
+        //   -webkit-box-shadow, -webkit-transform;
         &::after {
+          border-radius: 0.4rem;
           position: absolute;
           background: black;
           top: 0;

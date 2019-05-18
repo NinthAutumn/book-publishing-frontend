@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import Dashboard from "./Dashboard";
+import { mapGetters } from "vuex";
 
 export default {
   components: {
@@ -18,9 +18,9 @@ export default {
     await this.$store.dispatch("user/fetchAuthor");
   },
   computed: {
-    menu() {
-      return this.$store.getters.getDMenuState;
-    }
+    ...mapGetters({
+      menu: "getDMenuState"
+    })
   },
   data() {
     return {

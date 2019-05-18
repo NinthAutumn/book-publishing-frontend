@@ -4,20 +4,17 @@
       <div
         class="book-ranking"
         :class="{first:index === 0,second:index === 1,third:index === 2, other:index > 2}"
-        v-if="!book.rank"
+        v-if="!book.dense_rank"
       >{{index + 1}}</div>
       <div
         class="book-ranking"
         :class="{first:index === 0,second:index === 1,third:index === 2, other:index > 2}"
         v-else
-      >{{book.rank }}</div>
+      >{{book.dense_rank }}</div>
       <div class="book-cover">
-        <v-img
-          :src="`https://storage.googleapis.com/theta-images/${book.cover}`"
-          alt="Book cover"
-          :aspect-ratio="1/1.5"
-          max-width="15rem"
-        ></v-img>
+        <!-- :src="`https://storage.googleapis.com/theta-images/${book.cover}`" -->
+
+        <v-img :src="book.cover" alt="Book cover" :aspect-ratio="1/1.5" max-width="15rem"></v-img>
       </div>
       <div class="book-meta">
         <div class="book-title">

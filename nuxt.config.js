@@ -116,7 +116,7 @@ module.exports = {
       src: '@/plugins/infinite',
       ssr: false
     }, {
-      src: '@/plugins/lazy-load',
+      src: '@/plugins/vueClamp',
       ssr: false
     }, {
       src: '@/plugins/watchMedia',

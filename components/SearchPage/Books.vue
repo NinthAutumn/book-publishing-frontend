@@ -6,7 +6,7 @@
           <nuxt-link :to="{path: `books/${book.id}`}">
             <v-img
               class="book-cover-img"
-              :src="`https://storage.googleapis.com/theta-images/${book.cover}`"
+              :src="book.cover"
               :aspect-ratio="1/1.5"
               max-width="14rem"
               min-width="12rem"

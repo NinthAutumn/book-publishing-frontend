@@ -12,7 +12,7 @@
       <h3 class="login__header text--center text--large">ノーブル</h3>
 
       <form @submit.prevent="login" class="flex flex-column" style="padding-top:20px;">
-        <label for="username">ユーザー名</label>
+        <label for="username">ユーザー名・Eメール</label>
         <input
           class="login-form__input elevation-1"
           type="text"
@@ -20,9 +20,9 @@
           name="username"
           v-model="form.username"
           autocomplete="username"
-          style="margin-bottom:15px;"
-          placeholder="ユーザー名"
+          placeholder="ユーザー名・Eメール"
         >
+
         <label for="password">パスワード</label>
         <input
           class="login-form__input elevation-1"
@@ -148,19 +148,28 @@ export default {
   $self: &;
   &__item {
     // border-radius: 10px;
+    #{$self}__container {
+    }
     #{$self}__input {
       height: 47px;
       padding: 12px 14px;
       color: #32325d;
       background-color: white;
       border: 1px solid transparent;
-      // border-radius: 4px;
+      border-radius: 4px;
       // box-shadow: 0 1px 3px 0 #d9d1dd;
       -webkit-transition: box-shadow 150ms ease;
       transition: box-shadow 150ms ease;
       font-size: 1.6rem;
       transition: 300ms;
       margin-bottom: 2rem;
+      border-left: 5px solid #f5f5f5;
+      &--error {
+        border-left: 5px solid #ff6160;
+      }
+      &:focus {
+        border-left: 5px solid $secondary;
+      }
       &:focus,
       &:hover {
         outline: none;

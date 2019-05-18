@@ -92,12 +92,13 @@ export const actions = {
     time,
     page,
     genre,
+    limit = 10,
     infinite
   }) {
     try {
       let res = ""
       if (genre) {
-        res = await this.$axios.get(`/analytic/ranking/genre?time=${time}&page=${page}&genre=${genre}`)
+        res = await this.$axios.get(`/analytic/ranking/genre?time=${time}&page=${page}&genre=${genre}&limit=${limit}`)
       } else {
         res = await this.$axios.get(`/analytic/ranking?time=${time}&page=${page}`)
       }
@@ -189,10 +190,11 @@ export const actions = {
   }, {
     time,
     page,
-    infinite
+    infinite,
+    limit = 10
   }) {
     try {
-      const res = await this.$axios.get(`/analytic/vote?time=${time}&page=${page}`)
+      const res = await this.$axios.get(`/analytic/vote?time=${time}&page=${page}&limit=${limit}`)
       if (infinite) {
         commit('PUSH_VOTE_RANKING', res.data)
       } else {

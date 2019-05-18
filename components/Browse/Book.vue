@@ -11,7 +11,13 @@
         </div>
         <nuxt-link class="book-browse__image" tag="div" :to="`/books/${book.id}`">
           <!-- :src="`https://storage.googleapis.com/theta-images/${book.cover}`" -->
-          <v-img :src="book.cover" alt="Book cover" :aspect-ratio="1/1.5" max-width="15rem"></v-img>
+          <v-img
+            :src="book.cover"
+            alt="Book cover"
+            :aspect-ratio="1/1.5"
+            max-width="15rem"
+            style=" border-radius: 0.4rem;"
+          ></v-img>
         </nuxt-link>
         <div
           @click.stop="menu_modal=true"
@@ -29,7 +35,7 @@
         </transition>
       </div>
       <div class="book-browse__text-info">
-        <p v-clampy="3" class="book-browse__book-title full" ref="texting">{{book.title }}</p>
+        <p v-line-clamp="2" class="book-browse__book-title full" ref="texting">{{book.title }}</p>
         <p class="book-browse__author">{{book.status}}</p>
       </div>
     </div>
@@ -134,6 +140,7 @@ export default {
     &:hover {
       cursor: pointer;
       &::after {
+        border-radius: 0.4rem;
         position: absolute;
         background: black;
         top: 0;
@@ -153,6 +160,7 @@ export default {
     z-index: 100;
     // width: 100\\px;
     font-size: 0.9rem;
+    border-radius: 0.4rem;
     width: 4rem;
     height: 1.9rem;
     // border-radius: 100px;

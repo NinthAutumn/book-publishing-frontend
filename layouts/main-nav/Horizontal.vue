@@ -197,6 +197,9 @@ export default {
 }
 
 .h-nav {
+  // background-color: #141B39;
+  border-bottom-right-radius: 1rem;
+  border-bottom-left-radius: 1rem;
   &--black {
     background-color: #1a1a1b;
     -webkit-box-shadow: 0px 2px 3px 0px #464646;

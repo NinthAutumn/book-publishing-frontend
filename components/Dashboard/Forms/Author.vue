@@ -40,6 +40,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   data() {
     return {
@@ -50,29 +51,34 @@ export default {
     };
   },
   computed: {
-    isAuthor() {
-      return this.$store.getters["user/isAuthor"];
-    }
+    ...mapGetters({
+      isAuthor: "user/isAuthor",
+      url: "upload/getUrl"
+    })
   },
   methods: {
     async createAuthor() {
-      const author = {
-        avatar: this.$store.state.upload.url,
-        penname: this.author.penname
-      };
-      console.log(this.author.penname);
       // return;
       try {
-        const uploaded = await this.$store.dispatch(
-          "upload/image",
-          this.author.avatar.chosenFile
+        this.author.avatar.generateBlob(
+          blob => {
+            this.$store.dispatch("upload/image", blob).then(url => {
+              console.log(url);
+              const author = {
+                avatar: url.url,
+                avatar_path: url.path,
+                penname: this.author.penname
+              };
+              this.$store.dispatch("user/postAuthor", { author });
+              this.$message({
+                message: "おめでとうございます、あなたは作者になりました",
+                type: "success"
+              });
+            });
+          },
+          "image/jpeg",
+          0.8
         );
-
-        await this.$store.dispatch("user/postAuthor", { author });
-        this.$message({
-          message: "おめでとうございます、あなたは作者になりました",
-          type: "success"
-        });
       } catch (error) {
         this.$message({
           message: "作者の作成に失敗しました",

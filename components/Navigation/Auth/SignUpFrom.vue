@@ -20,6 +20,7 @@
           placeholder="ユーザー名"
           data-vv-as="ユーザー名"
           class="signup-form__input signup-form__input--username elevation-1"
+          :class="{'signup-form__input--error': errors.has('username')}"
           type="text"
           v-model="username"
         >
@@ -38,6 +39,7 @@
           type="email"
           placeholder="メールアドレス"
           data-vv-as="記入されたメールアドレス"
+          :class="{'signup-form__input--error': errors.has('email')}"
           v-model="email"
         >
         <span class="help is-danger">{{ errors.first('email') }}</span>
@@ -49,7 +51,7 @@
           name="password"
           v-validate="'required||min:6'"
           type="password"
-          :class="{'is-danger': errors.has('password')}"
+          :class="{'signup-form__input--error': errors.has('password')}"
           v-model="password"
           placeholder="パスワード"
           data-vv-as="パスワード"
@@ -72,6 +74,8 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   data() {
     return {
@@ -94,9 +98,9 @@ export default {
     isFormInValid() {
       return Object.keys(this.fields).some(key => this.fields[key].invalid);
     },
-    usernameAvailable() {
-      return this.$store.getters["user/isUsernameAvailable"];
-    }
+    ...mapGetters({
+      usernameAvailable: "user/isUsernameAvailable"
+    })
   },
   methods: {
     async google() {
@@ -174,13 +178,23 @@ export default {
     background-color: white;
     border: 1px solid transparent;
     width: 100%;
-    // border-radius: 4px;
+    border-radius: 4px;
     // box-shadow: 0 1px 3px 0 #d9d1dd;
     -webkit-transition: box-shadow 150ms ease;
     transition: box-shadow 150ms ease;
     font-size: 1.6rem;
     transition: 300ms;
     // margin-bottom: 2rem;
+    border-left: 5px solid #f5f5f5;
+    &--error {
+      border-left: 5px solid #ff6160;
+      &:focus {
+        border-left: 5px solid #ff6160 !important;
+      }
+    }
+    &:focus {
+      border-left: 5px solid $secondary;
+    }
     &:focus,
     &:hover {
       outline: none;

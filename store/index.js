@@ -12,7 +12,7 @@ export const state = () => ({
   menuState: "menu-active",
   dashboardMenuState: "dashboard-inactive",
   dropdownState: false,
-  authed: 0,
+  authStep: 0,
   loginForm: false,
   productModal: false,
   contractModal: false,
@@ -36,32 +36,33 @@ export const getters = {
   getContractModalState: state => state.contractModal,
   getContractStep: state => state.contractStep,
   getSettingModal: state => state.settingModal,
-  getLoginFormState: state => state.loginForm
+  getLoginFormState: state => state.loginForm,
+  getAuthStep: state => state.authStep
 }
 
 
 export const mutations = {
   SIGNUP_STATE(state) {
-    state.authed = 1;
+    state.authStep = 1;
   },
   TOGGLE_PRODUCT_MODAL(state) {
     state.productModal = !state.productModal
   },
   SET_AUTH_PAGE(state, page) {
-    state.authed = page
+    state.authStep = page
   },
   SET_CONTRACT_STEP(state, step) {
     state.contractStep = step
   },
   START(state) {
-    state.authed = 0
+    state.authStep = 0
   },
   LOGIN_STATE(state) {
     if (state.loginForm) {
       state.loginForm = false
     } else {
       state.loginForm = true
-      state.authed = 0;
+      state.authStep = 0;
     }
   },
   LOGIN_FALSE(state) {

@@ -1,6 +1,45 @@
 <template>
   <div class="dash-book">
-    <div class="dash-booklist__cover" @mouseenter="image = !image" @mouseleave="image = !image">
+    <div class="dash-book__cover">
+      <v-img :src="book.cover" :aspect-ratio="1/1.5" min-width="12rem" class="dash-book__image"></v-img>
+    </div>
+    <div class="dash-book__meta">
+      <div class="dash-book__title">{{book.title}}</div>
+      <div class="dash-book__stats">
+        <div class="dash-book__select flex-row flex--between">
+          <div class="dash-book__total"></div>
+          <select-list
+            :width="100"
+            v-model="type"
+            name="詳細条件"
+            :object="select_data"
+            transition="grow-shrink"
+            def="投票"
+          ></select-list>
+        </div>
+        <v-sparkline
+          fill
+          :key="String(160)"
+          :value="value"
+          :padding="padding"
+          :smooth="radius || false"
+          :gradient="['#6fa8dc', '#42b983']"
+          line-width="2"
+        ></v-sparkline>
+
+        <!-- <no-ssr>
+          <bars :data="value" :gradient="['#6fa8dc', '#42b983']"></bars>
+        </no-ssr>-->
+      </div>
+    </div>
+    <div class="dash-book__buttons">
+      <nuxt-link
+        tag="div"
+        :to="`/dashboard/books/${book.id}/published`"
+        class="dash-book__button dash-book__button--chapter"
+      >話を作る</nuxt-link>
+    </div>
+    <!-- <div class="dash-booklist__cover" @mouseenter="image = !image" @mouseleave="image = !image">
       <v-img
         :src="`https://storage.googleapis.com/theta-images/${book.cover}`"
         :aspect-ratio="1/1.5"
@@ -50,7 +89,7 @@
         class="dash-booklist__button dash-booklist__button--create-chapter"
         v-ripple
       >話を作る</nuxt-link>
-    </div>
+    </div>-->
     <v-dialog v-model="dialog" persistent max-width="600px">
       <v-card>
         <v-card-title>
@@ -92,8 +131,39 @@ export default {
   props: {
     book: Object
   },
+  components: {
+    SelectList: () => import("@/components/All/Select")
+  },
+  watch: {
+    type: function(val) {
+      this.changeStat();
+    }
+  },
   data() {
     return {
+      width: 2,
+      radius: 10,
+      padding: 8,
+      lineCap: "round",
+      gradient: ["#00c6ff", "#F0F", "#FF0"],
+      value: [1],
+      type: 0,
+      gradientDirection: "top",
+      select_data: [
+        { key: "投票", value: 0 },
+        { key: "ブックマーク", value: 1 },
+        { key: "評価", value: 2 },
+        { key: "購入", value: 3 },
+        { key: "視聴回数", value: 4 }
+      ],
+      gradients: [
+        ["#222"],
+        ["#42b3f4"],
+        ["red", "orange", "yellow"],
+        ["purple", "violet"],
+        ["#00c6ff", "#F0F", "#FF0"],
+        ["#f72047", "#ffd200", "#1feaea"]
+      ],
       image: false,
       dialog: false,
       announcement: {
@@ -102,9 +172,35 @@ export default {
       }
     };
   },
+  async mounted() {
+    this.$store
+      .dispatch("dashboard/fetchBookStats", {
+        bookId: this.book.id,
+        type: 0
+      })
+      .then(book => {
+        this.value = [];
+        book.stat.forEach(stat => {
+          this.value.push(stat.data);
+        });
+      });
+  },
   methods: {
     async openForm() {
       this.dialog = !this.dialog;
+    },
+    async changeStat() {
+      this.$store
+        .dispatch("dashboard/fetchBookStats", {
+          bookId: this.book.id,
+          type: this.type
+        })
+        .then(book => {
+          this.value = [];
+          book.stat.forEach(stat => {
+            this.value.push(stat.data);
+          });
+        });
     },
     async postAnnouncement() {
       try {
@@ -133,6 +229,39 @@ export default {
 
 <style lang="scss">
 .dash-book {
+  $self: &;
+  margin-top: 5rem;
+  margin-left: 5rem;
+  box-shadow: 0 2px 5px 0 rgba(60, 66, 87, 0.1), 0 1px 1px 0 rgba(0, 0, 0, 0.07);
+  background-color: #fff;
+  display: flex;
+  min-width: 10rem;
+  padding: 1rem;
+  position: relative;
+  &__meta {
+    width: 100%;
+    height: 100%;
+    #{$self}__stats {
+      // padding-right: 2rem;
+    }
+    #{$self}__title {
+      font-size: 1.6rem;
+    }
+  }
+  #{$self}__button {
+    position: absolute;
+    bottom: 0;
+    right: 10px;
+  }
+  &__cover {
+    position: relative;
+    #{$self}__image {
+      border-radius: 0.4rem;
+      box-shadow: 0 12px 18px 0 rgba(50, 50, 93, 0.11),
+        0 3px 9px 0 rgba(0, 0, 0, 0.08);
+      transform: translateX(-5rem) translateY(-5rem);
+    }
+  }
   &:hover {
     // background-color: grey;
   }

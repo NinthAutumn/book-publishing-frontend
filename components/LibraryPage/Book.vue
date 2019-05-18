@@ -3,23 +3,35 @@
     <nuxt-link tag="div" :to="`books/${book.book_id}`" id="book-library__container">
       <div class="book-library__cover">
         <span class="star-rating"></span>
+        <!-- :src="`https://storage.googleapis.com/theta-images/${book.cover}`" -->
 
         <v-img
-          :src="`https://storage.googleapis.com/theta-images/${book.cover}`"
+          :src="book.cover"
           alt="Book cover"
           :aspect-ratio="1/1.5"
           max-width="13.5rem"
+          style=" border-radius: 0.4rem;"
         ></v-img>
       </div>
       <div class="book-library__text-info">
-        <p v-clampy="3" class="book-library__book-title full" ref="texting">{{book.title}}</p>
-        <div class="book-library__more-info flex-row flex--align">
-          <div class="book-library__author">{{book.author}}</div>
+        <div class="book-library__progress-bar">
+          <v-progress-linear
+            class="book-library__progress-line"
+            color="#F05A77"
+            height="4"
+            v-if="book.chapter_count"
+            :value="(book.read/book.chapter_count)*100"
+          ></v-progress-linear>
           <span
             class="book-library__progress"
             v-if="book.chapter_count"
-            v-text="'栞: '+book.read + '/' + book.chapter_count"
+            v-text="`${(book.read/book.chapter_count)*100}%`"
           ></span>
+        </div>
+        <p v-line-clamp="2" class="book-library__book-title full" ref="texting">{{book.title}}</p>
+        <div class="book-library__more-info flex-row flex--align">
+          <div class="book-library__author">{{book.author}}</div>
+
           <!-- <span class="book-library__progress" v-else v-text="'栞: '+0+ '/' + book.id"></span> -->
         </div>
       </div>
@@ -75,22 +87,24 @@ export default {
     margin: 0 !important;
     max-width: 13.5rem;
     position: relative;
+    border-radius: 0.4rem;
     &:hover {
       cursor: pointer;
-      -webkit-box-shadow: 0 13px 27px -5px rgba(50, 50, 93, 0.25),
-        0 8px 16px -8px rgba(0, 0, 0, 0.3),
-        0 -6px 16px -6px rgba(0, 0, 0, 0.025);
-      box-shadow: 0 13px 27px -5px rgba(50, 50, 93, 0.25),
-        0 8px 16px -8px rgba(0, 0, 0, 0.3),
-        0 -6px 16px -6px rgba(0, 0, 0, 0.025);
-      -webkit-transition-property: color, background-color, -webkit-box-shadow,
-        -webkit-transform;
-      transition-property: color, background-color, -webkit-box-shadow,
-        -webkit-transform;
-      transition-property: color, background-color, box-shadow, transform;
-      transition-property: color, background-color, box-shadow, transform,
-        -webkit-box-shadow, -webkit-transform;
+      // -webkit-box-shadow: 0 13px 27px -5px rgba(50, 50, 93, 0.25),
+      //   0 8px 16px -8px rgba(0, 0, 0, 0.3),
+      //   0 -6px 16px -6px rgba(0, 0, 0, 0.025);
+      // box-shadow: 0 13px 27px -5px rgba(50, 50, 93, 0.25),
+      //   0 8px 16px -8px rgba(0, 0, 0, 0.3),
+      //   0 -6px 16px -6px rgba(0, 0, 0, 0.025);
+      // -webkit-transition-property: color, background-color, -webkit-box-shadow,
+      //   -webkit-transform;
+      // transition-property: color, background-color, -webkit-box-shadow,
+      //   -webkit-transform;
+      // transition-property: color, background-color, box-shadow, transform;
+      // transition-property: color, background-color, box-shadow, transform,
+      //   -webkit-box-shadow, -webkit-transform;
       &::after {
+        border-radius: 0.4rem;
         position: absolute;
         background: black;
         top: 0;
@@ -131,8 +145,18 @@ export default {
   &__author {
     font-size: 12px;
   }
+  $self: &;
+  &__progress-bar {
+    #{$self}__progress-line {
+      border-radius: 100px;
+    }
+    width: 100%;
+    display: flex;
+    align-items: center;
+  }
   &__progress {
     font-size: 13px;
+    margin-left: 0.25rem;
     color: #83848f;
   }
 }

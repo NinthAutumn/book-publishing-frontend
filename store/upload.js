@@ -7,18 +7,27 @@ export const state = () => ({
 })
 
 export const getters = {
-
+  getUrl: state => state.url
 }
 
 export const mutations = {
   ADD_URL(state, url) {
-    state.url = url
+    state.url = {
+      url: `https://storage.googleapis.com/theta-images/${url}`,
+      path: url
+    }
   },
   PUSH_URL(state, url) {
-    state.urls.push(url)
+    state.urls.push({
+      url: `https://storage.googleapis.com/theta-images/${url}`,
+      path: url
+    })
   },
   REMOVE_URL(state, url) {
     state.url = ""
+  },
+  REMOVE_URLS(state) {
+    state.urls = []
   }
 }
 
@@ -26,18 +35,35 @@ export const actions = {
   async image({
     commit
   }, file) {
-    const uploadConfig = await this.$axios.get('/upload')
-    await this.$axios.put(uploadConfig.data.url, file, {
-      headers: {
-        'Content-Type': 'image',
-        "Authorization": null,
-        "TrackId": null
-      }
-    }).then(() => {
+    try {
+      const uploadConfig = await this.$axios.get('/upload')
+      await this.$axios.put(uploadConfig.data.url, file, {
+        headers: {
+          'Content-Type': 'image',
+          "Authorization": null,
+          "TrackId": null
+        }
+      })
       commit('ADD_URL', uploadConfig.data.filename)
-    }).catch((e) => {
-      console.log(e);
-    })
+      return Promise.resolve({
+        url: `https://storage.googleapis.com/theta-images/${uploadConfig.data.filename}`,
+        path: uploadConfig.data.filename
+      })
+    } catch (error) {
+
+    }
+
+
+    // this.$axios.put(uploadConfig.data.url, file, {
+    //   headers: {
+    //     'Content-Type': 'image',
+    //     "Authorization": null,
+    //     "TrackId": null
+    //   }
+    // }).then((res) => {
+    //   console.log("in here yo");
+
+    // })
 
   },
   async multiImage({
@@ -45,8 +71,9 @@ export const actions = {
   }, file) {
     // delete this.$axios.defaults.headers.common['Authorization'];
     // delete this.$axios.defaults.headers.common['TrackId'];
+    commit('REMOVE_URLS')
     const uploadConfig = await this.$axios.get('/upload')
-    await this.$axios.put(uploadConfig.data.url, file, {
+    this.$axios.put(uploadConfig.data.url, file, {
       headers: {
         'Content-Type': 'image',
         "Authorization": null,

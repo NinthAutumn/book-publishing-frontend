@@ -246,6 +246,8 @@ export default {
 }
 
 .h-nav {
+  border-bottom-right-radius: 1rem;
+  border-bottom-left-radius: 1rem;
   .nav-title {
     max-width: 100%;
     white-space: nowrap;

@@ -125,7 +125,7 @@ export const actions = {
     bookId
   }) {
     try {
-      const res = await this.$axios.get(`book/chapter?chapterId=${chapterId}&userId=${userId}`)
+      const res = await this.$axios.get(`/chapter?chapterId=${chapterId}&userId=${userId}`)
       const {
         next,
         prev,
@@ -135,7 +135,7 @@ export const actions = {
 
 
       if (!state.count) {
-        const res = await this.$axios.get(`book/chapter/count?bookId=${bookId}`)
+        const res = await this.$axios.get(`/chapter/count?bookId=${bookId}`)
         commit('SET_CHAPTER_COUNT', res.data.count)
       }
     } catch (error) {
@@ -152,7 +152,7 @@ export const actions = {
   }) {
     // const nextindex = index
     try {
-      const res = await this.$axios.get(`book/chapter?chapterId=${chapterId}&userId=${userId}`)
+      const res = await this.$axios.get(`/chapter?chapterId=${chapterId}&userId=${userId}`)
       const {
         next,
         prev,
@@ -162,7 +162,7 @@ export const actions = {
 
 
       if (!state.count) {
-        const res = await this.$axios.get(`book/chapter/count?bookId=${bookId}`)
+        const res = await this.$axios.get(`/chapter/count?bookId=${bookId}`)
         commit('SET_CHAPTER_COUNT', res.data.count)
       }
     } catch (error) {
@@ -178,7 +178,7 @@ export const actions = {
     settingIndex
   }) {
     try {
-      const res = await this.$axios.get(`/book/chapter/nav?index=${index}&bookId=${bookId}&settingIndex=${settingIndex}`)
+      const res = await this.$axios.get(`/chapter/nav?index=${index}&bookId=${bookId}&settingIndex=${settingIndex}`)
       const {
         next,
         prev,
@@ -198,7 +198,7 @@ export const actions = {
     bookId
   }) {
     try {
-      const res = await this.$axios.get(`/book/chapter/notpublished?bookId=${bookId}`)
+      const res = await this.$axios.get(`/chapter/notpublished?bookId=${bookId}`)
       commit('SET_NOT_CHAPTER_LIST', res.data)
     } catch (error) {
       return Promise.reject(error)
@@ -211,7 +211,7 @@ export const actions = {
     bookId
   }) {
     try {
-      const res = await this.$axios.get(`/book/chapter/published/list?bookId=${bookId}`)
+      const res = await this.$axios.get(`/chapter/published/list?bookId=${bookId}`)
       commit('SET_CHAPTER_LIST', res.data)
     } catch (error) {
       return Promise.reject(error)
@@ -222,7 +222,7 @@ export const actions = {
     commit
   }, bookId) {
     try {
-      const res = await this.$axios.get(`/book/volume/list?bookId=${bookId}`)
+      const res = await this.$axios.get(`/chapter/volume/list?bookId=${bookId}`)
       commit('SET_VOLUME_LIST', res.data)
     } catch (error) {
       return Promise.reject(error)
@@ -236,7 +236,7 @@ export const actions = {
     date
   }) {
     try {
-      await this.$axios.post('/book/chapter', {
+      await this.$axios.post('/chapter', {
         chapter,
         date
       })
@@ -252,7 +252,7 @@ export const actions = {
     volumeId = ""
   }) {
     try {
-      const res = await this.$axios.get(`/book/chapter/latestIndex?bookId=${bookId}&volumeId=${volumeId}`)
+      const res = await this.$axios.get(`/chapter/latestIndex?bookId=${bookId}&volumeId=${volumeId}`)
       const {
         index
       } = res.data

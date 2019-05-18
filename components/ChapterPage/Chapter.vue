@@ -14,11 +14,7 @@
         :style="{'font-family':fontStyle}"
         v-if="chapter.index"
       >{{`第${chapter.index}話: ${chapter.title}`}}</header>
-      <header
-        v-else
-        class="chapter-title__item"
-        :style="{'font-family':fontStyle}"
-      >{{chapter.title}}</header>
+      <header v-else class :style="{'font-family':fontStyle}">{{chapter.title}}</header>
     </div>
     <div class="chapter-announcement chapter-announcement--header" v-if="chapter.header">
       <h4>
@@ -185,7 +181,7 @@ export default {
 
 .chapter-content {
   line-height: 30px;
-  display: inline-block;
+  // display: inline-block;
   // ::after {
   //   content: "";
   //   position: relative;

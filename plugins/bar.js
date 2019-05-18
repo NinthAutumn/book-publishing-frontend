@@ -1,4 +1,4 @@
-import VueTheMask from 'vue-the-mask'
-import Vue from 'vue'
+// import Vue from 'vue'
+// import Bars from 'vuebars'
 
-Vue.use(VueTheMask);
+// Vue.use(Bars)

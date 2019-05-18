@@ -106,9 +106,7 @@
 </template>
 
 <script>
-import Horizontal from "./Horizontal";
-import LeftV from "./Left-V";
-import RightV from "./Right-V";
+import { mapGetters } from "vuex";
 
 export default {
   data() {
@@ -122,18 +120,12 @@ export default {
     RightV: () => import("./Right-V")
   },
   computed: {
-    modal() {
-      return this.$store.state.chapter.modal;
-    },
-    theme() {
-      return this.$store.state.user.theme;
-    },
-    next() {
-      return this.$store.getters["chapter/getNextChapter"];
-    },
-    prev() {
-      return this.$store.getters["chapter/getPrevChapter"];
-    }
+    ...mapGetters({
+      next: "chapter/getNextChapter",
+      prev: "chapter/getPrevChapter",
+      theme: "user/getTheme",
+      modal: "chapter/getModalState"
+    })
   },
   methods: {
     closeImageDialog() {

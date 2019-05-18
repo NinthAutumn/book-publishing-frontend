@@ -208,5 +208,20 @@ export const actions = {
       return Promise.reject(error)
     }
   },
+  async fetchBookStats({
+    commit
+  }, {
+    bookId,
+    type
+  }) {
+    try {
+      const {
+        data
+      } = await this.$axios.get(`/analytic/dashboard/book?bookId=${bookId}&type=${type}`)
+      return Promise.resolve(data)
+    } catch (error) {
+      return Promise.reject(error)
+    }
+  }
 
 }

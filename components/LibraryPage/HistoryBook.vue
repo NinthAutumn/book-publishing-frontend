@@ -3,11 +3,9 @@
     <ul class="history-book__list">
       <li class="history-book__item" v-for="(book,index) in books" :key="index">
         <div class="history-book__cover">
-          <v-img
-            :aspect-ratio="1/1.5"
-            max-width="14rem"
-            :src="`https://storage.googleapis.com/theta-images/${book.cover}`"
-          ></v-img>
+          <!--             :src="`https://storage.googleapis.com/theta-images/${book.cover}`"
+          -->
+          <v-img :src="book.cover" :aspect-ratio="1/1.5" max-width="14rem"></v-img>
         </div>
         <div class="history-book__meta">
           <nuxt-link

@@ -3,7 +3,7 @@
     <div v-swiper:mySwiper="swiperOption" v-if="!$device.isMobile">
       <div class="swiper-wrapper">
         <div class="swiper-slide" v-for="(review,index) in reviews" :key="index">
-          <Review :review="review"></Review>
+          <Review :height="height" :review="review"></Review>
         </div>
       </div>
       <div class="background">
@@ -25,7 +25,7 @@
 <script>
 import Review from "./Review";
 export default {
-  props: {},
+  props: ["height"],
   created() {},
   computed: {
     reviews() {
@@ -37,7 +37,7 @@ export default {
       // slidesNumber: 2,
       mobileOption: {
         // loop: true,
-        slidesPerView: 1.1,
+        slidesPerView: 1,
         freeMode: true,
         mousewheel: {
           invert: true,
@@ -50,6 +50,7 @@ export default {
       },
       swiperOption: {
         // loop: true,
+        autoHeight: true,
         slidesPerView: 2,
         freeMode: true,
         mousewheel: {
@@ -90,7 +91,7 @@ export default {
   height: 100%;
 }
 .my-swiper {
-  height: 100%;
+  // height: 110%;/
 
   // width: 80% !important;
   .swiper-slide {

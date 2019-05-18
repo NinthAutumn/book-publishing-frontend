@@ -36,7 +36,8 @@ export const getters = {
   getTagList: state => state.tagList,
   getRecommended: state => state.recommended,
   getLatest: state => state.latest,
-  getAnnouncements: state => state.announcements
+  getAnnouncements: state => state.announcements,
+  getBrowseBooks: state => state.browse
 }
 
 export const actions = {
@@ -75,14 +76,10 @@ export const actions = {
     try {
       const {
         res,
-        error
       } = await this.$axios.post('/book/add', book)
-      if (error) {
-        return Promise.reject(error)
-      }
-      if (res.data.noAuthor) {
-        return commit('CHANGE_AUTHOR_STATE')
-      }
+      // if (res.data.noAuthor) {
+      //   return commit('CHANGE_AUTHOR_STATE')
+      // }
       return Promise.resolve()
     } catch (error) {
       return Promise.reject(error)
@@ -176,11 +173,17 @@ export const actions = {
     commit
   }, {
     page,
-    limit
+    limit,
+    infinite = false
   }) {
     try {
       const res = await this.$axios.get(`/book/update?limit=${limit}&page=${page}`)
-      commit('SET_LATEST_BOOKS', res.data)
+      if (infinite) {
+        commit('SET_MORE_LATEST_BOOKS', res.data)
+      } else {
+        commit('SET_LATEST_BOOKS', res.data)
+      }
+
       return Promise.resolve(res.data)
     } catch (error) {
       return Promise.reject(error)
