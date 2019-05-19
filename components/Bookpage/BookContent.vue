@@ -6,9 +6,12 @@
           <div v-show="bookSynopsis" class="book-content--text__summary">
             <h4>あらすじ</h4>
             <div class="flex-divider"></div>
-            <p v-if="read" class="book-content--text__summary--text">{{book.synopsis|truncate(300)}}</p>
+            <p
+              v-if="read"
+              class="book-content--text__summary--text"
+            >{{book.synopsis|truncate(limit-1)}}</p>
             <p v-else class="book-content--text__summary--text">{{book.synopsis}}</p>
-            <div class="book-content__truncate-nav" v-if="book.synopsis.length > 299">
+            <div class="book-content__truncate-nav" v-if="book.synopsis.length > limit">
               <div class="book-content__read-more" @click="read=!read" v-if="read">>>詳細</div>
               <div class="book-content__read-less" @click="read=!read" v-else><<一部を表示</div>
             </div>
@@ -43,7 +46,8 @@ export default {
   data() {
     return {
       text: "",
-      read: true
+      read: true,
+      limit: 250
     };
   },
   computed: {
@@ -57,7 +61,11 @@ export default {
   methods: {},
   created() {
     this.text = this.bookmarkedText;
+    if (this.$device.isMobile) {
+      this.limit = 50;
+    }
   },
+  mounted() {},
   filters: {
     truncate: (string, number) => {
       if (string.length > number) {

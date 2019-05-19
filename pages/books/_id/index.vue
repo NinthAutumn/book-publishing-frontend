@@ -502,15 +502,24 @@ input[type="number"]::-webkit-outer-spin-button {
   &--mobile {
     #{$self}__container {
       grid-template-rows: auto;
+
       grid-template-columns: repeat(2, 1fr);
       grid-template-areas:
         "cover title"
         "cover title"
         "summary summary "
         "content content " !important;
+      grid-row-gap: 2rem;
       .book-info {
         width: 100%;
       }
+    }
+    .book__content-nav {
+      text-align: center;
+      // font-size: 1.4rem;
+    }
+    .book__content-nav__line {
+      border: 2px solid #ff8d29;
     }
     .book__announcements {
     }
@@ -527,14 +536,15 @@ input[type="number"]::-webkit-outer-spin-button {
     .book__synopsis {
       // height: 100%;
     }
+    .book__title__author {
+      font-size: 1.4rem;
+      color: #adacac;
+    }
     .book__title {
       text-align: left;
       font-size: 1.5rem;
       margin-bottom: 1rem;
-      .book__title__author {
-        font-size: 1.3rem;
-        color: #b7b7b7;
-      }
+
       &--more-info {
         margin-bottom: 1rem;
         width: 100%;
@@ -551,9 +561,17 @@ input[type="number"]::-webkit-outer-spin-button {
       border-radius: 0.5rem;
       justify-self: center;
       width: 15rem;
+      -webkit-box-shadow: 0 13px 27px -5px rgba(50, 50, 93, 0.25),
+        0 8px 16px -8px rgba(0, 0, 0, 0.3),
+        0 -6px 16px -6px rgba(0, 0, 0, 0.025);
+      box-shadow: 0 13px 27px -5px rgba(50, 50, 93, 0.25),
+        0 8px 16px -8px rgba(0, 0, 0, 0.3),
+        0 -6px 16px -6px rgba(0, 0, 0, 0.025);
+      -webkit-transition-property: color, background-color, -webkit-box-shadow,
+        -webkit-transform;
+
+      transition-duration: 0.15s;
       .v-image__image {
-        box-shadow: 0 12px 18px 0 rgba(50, 50, 93, 0.11),
-          0 3px 9px 0 rgba(0, 0, 0, 0.08);
       }
     }
   }
@@ -724,6 +742,7 @@ input[type="number"]::-webkit-outer-spin-button {
       position: absolute;
       top: 100%;
       transition: 300ms;
+      border-radius: 0.5rem;
     }
     &__item {
       user-select: none;

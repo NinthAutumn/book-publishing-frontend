@@ -34,7 +34,7 @@
           <v-rating size="20" color="#FF8D29" v-else :readonly="true" :value="0"></v-rating>
         </div>
         <div class="user-books__meta user-books__meta--synopsis">
-          <p v-clampy="3">{{book.synopsis}}</p>
+          <p v-line-clamp="3">{{book.synopsis}}</p>
         </div>
       </li>
     </ul>

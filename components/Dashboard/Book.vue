@@ -19,12 +19,13 @@
         </div>
         <v-sparkline
           fill
+          type="bar"
           :key="String(160)"
           :value="value"
           :padding="padding"
-          :smooth="radius || false"
+          :smooth="false"
+          :line-width="5"
           :gradient="['#6fa8dc', '#42b983']"
-          line-width="2"
         ></v-sparkline>
 
         <!-- <no-ssr>
@@ -33,10 +34,18 @@
       </div>
     </div>
     <div class="dash-book__buttons">
+      <div class="dash-book__button dash-book__button--announcement" @click="openForm" v-ripple>報告する</div>
+      <nuxt-link
+        tag="div"
+        :to="`/dashboard/books/${book.id}/published`"
+        class="dash-book__button dash-book__button--chapter-list"
+        v-ripple
+      >目次</nuxt-link>
       <nuxt-link
         tag="div"
         :to="`/dashboard/books/${book.id}/published`"
         class="dash-book__button dash-book__button--chapter"
+        v-ripple
       >話を作る</nuxt-link>
     </div>
     <!-- <div class="dash-booklist__cover" @mouseenter="image = !image" @mouseleave="image = !image">
@@ -248,10 +257,48 @@ export default {
       font-size: 1.6rem;
     }
   }
-  #{$self}__button {
+  #{$self}__buttons {
     position: absolute;
-    bottom: 0;
+    bottom: -2rem;
     right: 10px;
+    display: flex;
+    #{$self}__button {
+      padding: 0.8rem 1.5rem;
+      font-size: 1.3rem;
+      border-radius: 0.4rem;
+      color: white;
+      transition: color 300ms, box-shadow 300ms;
+      user-select: none;
+      &:hover {
+        cursor: pointer;
+        transition: color 300ms, box-shadow 300ms;
+        box-shadow: 0 7px 14px 0 rgba(60, 66, 87, 0.1),
+          0 3px 6px 0 rgba(0, 0, 0, 0.07);
+      }
+      &--chapter {
+        background-color: #7231c0;
+        margin-left: 1rem;
+        &:hover {
+          color: #7231c0;
+          background-color: #fff;
+        }
+      }
+      &--chapter-list {
+        background-color: #6772e5;
+        margin-left: 1rem;
+        &:hover {
+          color: #6772e5;
+          background-color: #fff;
+        }
+      }
+      &--announcement {
+        background-color: #00d3d7;
+        &:hover {
+          color: #00d3d7;
+          background-color: #fff;
+        }
+      }
+    }
   }
   &__cover {
     position: relative;

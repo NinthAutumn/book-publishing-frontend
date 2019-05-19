@@ -1,18 +1,14 @@
 <template>
-  <div class="search-bar">
-    <form action @submit.prevent="searchOutput" class="search-form">
-      <!-- <span>
-        <i class="el-icon-search"></i>
-      </span>-->
+  <div class="search-bar" v-click-outside="clickedSearch">
+    <form action @submit.prevent="searchOutput" class="search-bar__form">
       <input
         type="text"
-        class="search-input"
-        placeholder="本を探す"
+        class="search-bar__input"
+        placeholder="本を名前、ジャンル、タグなどで検索..."
         v-model="searchItem"
         @focus="clickedSearch"
-        @blur="clickedSearch"
       >
-      <input type="submit" class="btn btn-search" value="Search">
+      <input type="submit" class="search-bar__button" value="検索">
     </form>
   </div>
 </template>
@@ -22,24 +18,17 @@ export default {
   data() {
     return {
       searchItem: "",
-      inputclicked: false
+      button: false
     };
   },
   methods: {
     async searchOutput() {
-      await this.$store
-        .dispatch("search/searchBooks", this.searchItem)
-        .then(() => {
-          this.$router.push("/search?query=" + this.searchItem);
-        });
+      await this.$store.dispatch("search/searchBooks", this.searchItem);
+      this.$router.push("/search?query=" + this.searchItem);
+      this.button = !this.button;
     },
     clickedSearch() {
-      this.inputclicked = !this.inputclicked;
-      if (this.inputclicked) {
-        this.show = "show";
-      } else {
-        this.show = "noShow";
-      }
+      this.button = !this.button;
     },
     dropOff() {
       this.$store.commit("DROPDOWN_FALSE");
@@ -49,141 +38,51 @@ export default {
 </script>
 <style lang="scss" >
 .search-bar {
-  /* display: flex; */
-  .search-form {
-    height: 32px;
-    // border-radius: 10px;
-    /* padding: 0 2px; */
+  $self: &;
+  // width: 100%;
+  // height: 100%;
+  // padding-left: 12rem;
+  &__form {
+    // height: 100%;
+    // width:
     display: flex;
-    align-items: center;
-    min-width: 45vw;
-    max-width: 100%;
-    /* position: relative; */
-    border: 1px solid $primary;
-    animation: stay 200ms ease-out 1s;
-    transition: height 200ms ease-out, width 200ms ease-out;
-    position: relative;
+    #{$self}__input {
+      width: 40vw;
+      padding: 0.8rem 1.5rem;
+      padding-right: 7.5rem;
+      // box-shadow: 0 2px 5px 0 rgba(60, 66, 87, 0.1),
+      //   0 1px 1px 0 rgba(0, 0, 0, 0.07);
+      border-radius: 0.4rem;
+      height: 100%;
+      // width: 80vw;
+      border: 1px solid rgb(236, 236, 236);
 
-    &:focus-within,
-    &:hover {
+      transition: 200ms;
+      font-size: 1.4rem;
+      &:focus {
+        outline: none;
+        box-shadow: 0 2px 5px 0 rgba(60, 66, 87, 0.1),
+          0 1px 1px 0 rgba(0, 0, 0, 0.07);
+        transition: 200ms;
+      }
+    }
+    #{$self}__placeholder {
+      width: 7.5rem;
+      content: "";
+      padding: 0.8rem 1.5rem;
+      height: 100%;
+    }
+    #{$self}__button {
+      padding: 0.8rem 1.5rem;
+      font-size: 1.4rem;
+      width: 7.5rem;
+      transform: translateX(-7.5rem);
+
+      &:active,
+      &:focus {
+        outline: none;
+      }
     }
   }
-}
-.search-input {
-  height: 100%;
-  width: 100%;
-  border: none;
-  // border-radius: 14px;
-  font-size: 14px;
-  background: url("");
-  /* margin-left: 10px; */
-  padding: 10px;
-  color: $primary;
-  font-weight: 500;
-  transition: 200ms;
-  &:focus,
-  &:hover {
-    // font-size: 16px;
-    // transition: 200ms;
-  }
-}
-
-@keyframes disappearrmenu {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
-}
-@keyframes appearmenu {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes shadowes {
-  from {
-    /* -webkit-box-shadow: 0px 1px 0px 0px rgba(122, 122, 122, 0.48);
-    -moz-box-shadow: 0px 1px 0px 0px rgba(122, 122, 122, 0.48);
-    box-shadow: 0 1px 0px 0 rgba(32, 33, 36, 0.28); */
-  }
-
-  to {
-    -webkit-box-shadow: 0px 0px 10px 0px rgba(122, 122, 122, 0.48);
-    -moz-box-shadow: 0px 0px 10px 0px rgba(122, 122, 122, 0.48);
-    box-shadow: 0 1px 6px 0 rgba(32, 33, 36, 0.28);
-  }
-}
-
-.search-form:hover {
-  /* animation: underNav 1000ms ease-out; */
-}
-
-.search-bar {
-  /* width: 700px; */
-}
-
-.bar-icon {
-  /* position: absolute;
-  top: 2px;
-  left: 3px; */
-}
-
-.search-icon {
-  font-weight: 700;
-  font-size: 30px;
-  color: #8860d0;
-  opacity: 0.5;
-}
-
-.search-bar span {
-  padding: 0 1rem;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  /* border: 1px solid red; */
-  border-top-left-radius: 1rem;
-  border-bottom-left-radius: 1rem;
-  margin: 0;
-  /* font-size: 17px; */
-  background-color: #f9f9fc;
-}
-.search-bar span i {
-  color: #a16dff;
-  opacity: 0.5;
-  font-weight: bold;
-  font-size: 2rem;
-}
-input:focus {
-  outline: none;
-}
-
-@keyframes underNav {
-  0% {
-    border-bottom: 1rem solid #a16dff;
-  }
-  100% {
-    border: 0.5rem solid #a16dff;
-  }
-}
-
-.btn {
-  width: 8rem;
-  height: 100%;
-  // border-top-right-radius: 0.8rem;
-  // border-bottom-right-radius: 0.8rem;
-  /* padding: 10px; */
-  color: white;
-  background-color: $primary;
-  border: 2px solid $primary;
-  /* font-weight: bold; */
-  font-size: 14px;
-}
-.btn:hover {
-  cursor: pointer;
 }
 </style>

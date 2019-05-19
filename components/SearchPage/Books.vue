@@ -1,62 +1,22 @@
 <template>
-  <section class="search-books">
-    <div class="book-container flex-row flex-row--betweeen">
-      <div class="flex-column">
-        <div class="book-cover">
-          <nuxt-link :to="{path: `books/${book.id}`}">
-            <v-img
-              class="book-cover-img"
-              :src="book.cover"
-              :aspect-ratio="1/1.5"
-              max-width="14rem"
-              min-width="12rem"
-              alt="Book cover"
-            ></v-img>
-          </nuxt-link>
-        </div>
-        <div class="book-rating">
-          <v-rating color="#FF8D29" readonly size="20" half-increments :value="+book.rating"></v-rating>
-        </div>
-      </div>
-
-      <div class="book-info flex-column" :class="readMore">
-        <div class="book-title">
-          <nuxt-link :to="{path: `books/${book.id}`}">
-            <header class="book-title--text">{{book.title}}</header>
-          </nuxt-link>
-        </div>
-        <div class="book-genres">
-          <ul class="genre-list flex-row">
-            <li
-              v-for="(genre,index) in book.genres"
-              :key="index"
-              class="pill pill-secondary-open pill-round"
-            >
-              <div class="pill-text">
-                <p>{{genre}}</p>
-              </div>
-            </li>
-          </ul>
-        </div>
-        <div class="book-header flex-row flex-row--between"></div>
-        <div class="book-synopsis">
-          <p class="synopsis" v-clampy="3">{{book.synopsis}}</p>
-        </div>
-      </div>
-    </div>
-  </section>
+  <ul class="search-books">
+    <Book :book="book" v-for="book in books" :key="book.id"></Book>
+  </ul>
 </template>
 
 <script>
 export default {
   props: {
-    book: Object
+    books: Array
   },
   computed: {},
   data() {
     return {
       readMore: null
     };
+  },
+  components: {
+    Book: () => import("./Book")
   },
   methods: {
     openState() {
@@ -68,11 +28,11 @@ export default {
     }
   },
   created() {
-    if (this.book.synopsis.length > 340) {
-      this.readMore = "open";
-    } else {
-      this.readMore = "";
-    }
+    // if (this.book.synopsis.length > 340) {
+    //   this.readMore = "open";
+    // } else {
+    //   this.readMore = "";
+    // }
   }
 };
 </script>

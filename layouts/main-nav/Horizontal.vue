@@ -9,9 +9,7 @@
           tag="div"
           to="/"
           class="site-logo"
-        >
-          <fa icon="pen"></fa>ノーブル
-        </nuxt-link>
+        >ノーブル</nuxt-link>
       </div>
       <SearchBar class="searchbar"></SearchBar>
       <div class="user-nav flex-row flex--align">
@@ -31,11 +29,21 @@
         <transition v-if="loggedIn" name="grow-shrink">
           <notification-list v-if="notification" v-click-outside="closeNotification"></notification-list>
         </transition>
-        <div v-if="loggedIn" style="z-index:3000;" id="prof">
-          <div class="profile-pic">
-            <v-avatar size="40">
-              <img @click.stop="userProfile" :src="user.avatar">
+        <div v-if="loggedIn" class="flex-row" style="z-index:3000;" id="prof">
+          <div class="profile-pic" @click.stop="userProfile">
+            <v-avatar size="30" class="profile-pic__avatar">
+              <img :src="user.avatar">
             </v-avatar>
+            <div class="profile-pic__info">
+              <div class="profile-pic__meta">
+                <div class="profile-pic__username">{{user.username}}</div>
+                <div class="profile-pic__money">
+                  <Currency small :amount="wealth"></Currency>
+                </div>
+              </div>
+
+              <fa class="profile-pic__icon" icon="caret-down"></fa>
+            </div>
           </div>
 
           <div class>
@@ -83,7 +91,8 @@ export default {
     Dropdown: () => import("@/components/Navigation/Dropdown"),
     ProductModal: () => import("@/components/Navigation/Stripe/ProductModal"),
     SettingForm: () => import("@/components/Navigation/Setting"),
-    NotificationList: () => import("@/components/Navigation/Notification")
+    NotificationList: () => import("@/components/Navigation/Notification"),
+    Currency: () => import("@/components/All/Currency")
   },
   computed: {
     ...mapGetters({
@@ -91,12 +100,14 @@ export default {
       loggedIn: "isAuthenticated",
       loginState: "getLoginFormState",
       productState: "getProductModalState",
-      notificationCount: "user/getCommentNotificationCount"
+      notificationCount: "user/getCommentNotificationCount",
+      wealth: "wallet/getWealth"
     })
   },
   async mounted() {
     if (this.$store.getters.isAuthenticated) {
       await this.$store.dispatch("user/fetchCommentNotificationsCount");
+      await this.$store.dispatch("wallet/wealth");
     }
   },
   methods: {
@@ -129,7 +140,7 @@ export default {
   position: relative !important;
 
   font-size: 20px;
-  margin-right: 0.5rem;
+  // margin-right: 0.5rem;
   color: rgb(85, 85, 85);
   width: 35px;
   border-radius: 100px;
@@ -231,36 +242,63 @@ nav {
 // }
 .el-icon-menu {
   font-size: 32px;
-  color: $primary;
+  color: black;
 }
 .el-icon-menu:hover {
   cursor: pointer;
 }
 .menu-active {
-  background-color: #eaecf5;
+  border-radius: 0.5rem;
+  background-color: #e6e6e6;
+  transition: 300ms;
 }
 .menu-inactive {
-  -webkit-animation: flip-diagonal-2-br 300ms
-    cubic-bezier(0.455, 0.03, 0.515, 0.955) both;
-  animation: flip-diagonal-2-br 300ms cubic-bezier(0.455, 0.03, 0.515, 0.955)
-    both;
   /* animation: forwards; */
+  transition: 300ms;
 }
 .left-menu {
   // height: 100%;
 }
 .profile-pic {
   position: relative;
-  border-radius: 100px;
+  // border-radius: 100px;
+  min-width: 10rem;
+  height: 4rem;
+  display: flex;
+  align-items: center;
+  $self: &;
+  // border-radius:
+  padding: 0 1rem;
+  border-radius: 0.5rem;
   &:hover {
-    -webkit-box-shadow: 0px 2px 4px 0px rgba(217, 217, 217, 1);
-    -moz-box-shadow: 0px 2px 4px 0px rgba(217, 217, 217, 1);
-    box-shadow: 0px 2px 4px 0px rgba(217, 217, 217, 1);
+    cursor: pointer;
+
+    box-shadow: 0 7px 14px 0 rgba(60, 66, 87, 0.1),
+      0 3px 6px 0 rgba(0, 0, 0, 0.07);
+  }
+  &__avatar {
+    box-shadow: 0 2px 5px 0 rgba(60, 66, 87, 0.1),
+      0 1px 1px 0 rgba(0, 0, 0, 0.07);
+    margin-right: 1rem;
+  }
+  &__info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 10rem;
+    #{$self}__username {
+      font-size: 1.2rem;
+      // margin-right: 2rem;
+    }
+    #{$self}__icon {
+      font-size: 1.4rem;
+      color:#555555;
+    }
+    // margin-right: 2rem;
+  }
+  &:hover {
   }
   &:focus {
-    -webkit-box-shadow: 0px 0px 4px 0px rgba(217, 217, 217, 1);
-    -moz-box-shadow: 0px 0px 4px 0px rgba(217, 217, 217, 1);
-    box-shadow: 0px 0px 4px 0px rgba(217, 217, 217, 1);
   }
 }
 

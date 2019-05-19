@@ -20,14 +20,14 @@
         <div class="reviews-author"></div>
       </div>
       <div ref="review" class="reviews-content-text flex flex-column flex--between">
-        <div v-if="!readMore" v-html="truncate(review.content, 372)"></div>
+        <div v-if="!readMore" v-html="truncate(review.content, limit-1)"></div>
         <div v-if="readMore" v-html="review.content"></div>
         <!-- <div
           class="reviews-content-text--html"
           v-html="review.content"
           :class="{readmore: readMore}"
         ></div>-->
-        <div v-if="review.content.length > 372" class="buts">
+        <div v-if="review.content.length > limit" class="buts">
           <a @click="toggleCollapse" v-if="!readMore" class="reviews-content-text-more">>>詳細</a>
           <a @click="toggleCollapse" v-else class="reviews-content-text-more">{{'<<'}}一部を表示</a>
         </div>
@@ -91,7 +91,8 @@ export default {
       disliked: false,
       likeNumber: 0,
       deleteModal: false,
-      loading: false
+      loading: false,
+      limit: 370
     };
   },
   components: {},
@@ -195,6 +196,9 @@ export default {
     this.liked = this.review.voted > 0;
     this.disliked = this.review.voted < 0;
     this.likeNumber = this.review.likes;
+    if (this.$device.isMobile) {
+      this.limit = 50;
+    }
   }
 };
 </script>

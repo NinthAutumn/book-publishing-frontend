@@ -22,17 +22,16 @@ a:visited {
 
 .site-logo {
   padding: 2px 8px;
-  font-size: 18px;
+  font-size: 2rem;
   height: 100%;
+  // min-width: 10rem;
 
   &:hover {
     user-select: none;
     cursor: pointer;
   }
 
-  color:$secondary;
   transition:300ms;
-  border:2px solid $secondary;
   margin-left: 10px;
   font-family: Snigglet;
   // background-color: $secondary;
@@ -54,9 +53,9 @@ body {
   }
 }
 
-@media screen and (max-width:450px) {
+@media screen and (max-width:500px) {
   .page-padding {
-    padding: 10px !important;
+    padding: 2rem !important;
   }
 }
 

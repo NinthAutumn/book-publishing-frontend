@@ -258,7 +258,6 @@ module.exports = {
     /*
      ** You can extend webpack config here
      */
-    vendor: ['vue-star-rating'],
     extend(config, ctx) {
 
     },
@@ -274,6 +273,7 @@ module.exports = {
         // Except `patterns` property
       }
     },
+    transpile: ['vue-clamp', 'resize-detector'],
     postcss: [
       require('postcss-gap-properties')(),
       require('autoprefixer')({

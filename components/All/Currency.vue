@@ -1,16 +1,19 @@
 <template>
   <div class="currency flex-row flex--align" :class="{'currency--large':size === 'large'}">
-    <div class="currency__type" :class="{'currency__type--large':size === 'large'}">
+    <div
+      class="currency__type"
+      :class="{'currency__type--large':size === 'large','currency__icon--small':small}"
+    >
       <svg-icon
         name="crown"
         class="currency__icon"
         :style="{fill: color}"
-        :class="{'currency__icon--large':size === 'large','currency__icon--small':size === 'small'}"
+        :class="{'currency__icon--large':size === 'large','currency__icon--small':small}"
       ></svg-icon>
     </div>
     <div
       class="currency__number"
-      :class="{'currency__number--large':size === 'large','currency__number--small':size === 'small'}"
+      :class="{'currency__number--large':size === 'large','currency__number--small':small}"
     >{{amount}}</div>
   </div>
 </template>
@@ -19,8 +22,9 @@
 export default {
   props: {
     size: String,
-    amount: Number,
-    color: String
+    amount: [String, Number],
+    color: String,
+    small: Boolean
   },
   components: {}
 };
@@ -45,7 +49,8 @@ export default {
       font-size: 25px;
     }
     &--small {
-      font-size: 1.3rem;
+      font-size: 1.2rem;
+      color: #b0b2b3;
     }
   }
   &__type {
@@ -58,6 +63,10 @@ export default {
       height: 45px;
       margin: 0;
       margin-bottom: 10px;
+    }
+    &--small {
+      width: 1rem;
+      height: 1rem !important;
     }
     margin-right: 5px;
   }
@@ -85,8 +94,8 @@ export default {
       height: 45px;
     }
     &--small {
-      width: 2rem;
-      height: 2rem;
+      width: 1.2rem;
+      height: 1.2rem;
     }
 
     &:hover {

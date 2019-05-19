@@ -62,11 +62,14 @@ export default {
   overflow: auto;
   &__list {
     width: inherit;
+    padding: 0.5rem;
   }
   &__item {
     position: relative;
     width: inherit;
     // height: 55px;
+    border-radius: 1rem;
+
     padding: 8px;
     box-sizing: border-box;
     background-color: rgb(245, 245, 245);

@@ -4,24 +4,7 @@ export const state = () => ({
 })
 
 export const getters = {
-  sortAgeASC: (state) => {
-
-  },
-  sortAgeDESC: (state) => {
-
-  },
-  sortViewASC: (state) => {
-
-  },
-  sortViewDESC: (state) => {
-
-  },
-  sortRatingASC: (state) => {
-
-  },
-  sortRatingDESC: (state) => {
-
-  }
+  getBookList: state => state.books
 }
 
 export const mutations = {

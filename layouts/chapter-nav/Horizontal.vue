@@ -39,12 +39,22 @@
           <notification-list v-if="notification" v-click-outside="closeNotification"></notification-list>
         </transition>
         <span v-if="loggedIn" style="z-index:3000;" id="prof" v-click-outside="dropOff">
-          <img
-            @click.stop="stateDropChange"
-            class="profile-pic"
-            style="width: 40px;"
-            :src="user.avatar"
-          >
+          <div class="profile-pic" @click.stop="stateDropChange">
+            <v-avatar size="30" class="profile-pic__avatar">
+              <img :src="user.avatar">
+            </v-avatar>
+            <div class="profile-pic__info">
+              <div class="profile-pic__meta">
+                <div class="profile-pic__username">{{user.username}}</div>
+                <div class="profile-pic__money">
+                  <Currency small :amount="wealth"></Currency>
+                </div>
+              </div>
+
+              <fa class="profile-pic__icon" icon="caret-down"></fa>
+            </div>
+          </div>
+
           <div :class="$store.state.dropdownState">
             <div>
               <transition name="grow-shrink">
@@ -97,7 +107,8 @@ export default {
     AuthModal: () => import("@/components/Navigation/Auth/AuthModal"),
     Dropdown: () => import("@/components/Navigation/Dropdown"),
     ProductModal: () => import("@/components/Navigation/Stripe/ProductModal"),
-    NotificationList: () => import("@/components/Navigation/Notification")
+    NotificationList: () => import("@/components/Navigation/Notification"),
+    Currency: () => import("@/components/All/Currency")
   },
   computed: {
     notificationCount() {
@@ -127,6 +138,9 @@ export default {
     },
     title() {
       return this.$store.getters["chapter/getChapterBookTitle"];
+    },
+    wealth() {
+      return this.$store.getters["wallet/getWealth"];
     }
   },
   methods: {
@@ -197,7 +211,7 @@ export default {
 .not-loggedin {
   &__img {
     width: 40px;
-    border-radius: 100px;
+    // border-radius: 100px;
     box-shadow: 1px 1px 5px 0px rgb(201, 200, 200);
     transition: 300ms;
     margin-right: 5px;
@@ -224,6 +238,47 @@ export default {
     }
   }
 }
+.profile-pic {
+  position: relative;
+  // border-radius: 100px;
+  min-width: 10rem;
+  height: 4rem;
+  display: flex;
+  align-items: center;
+  $self: &;
+  // border-radius:
+  padding: 0 1rem;
+  border-radius: 0.5rem;
+  &:hover {
+    cursor: pointer;
+
+    box-shadow: 0 7px 14px 0 rgba(60, 66, 87, 0.1),
+      0 3px 6px 0 rgba(0, 0, 0, 0.07);
+  }
+  &__avatar {
+    box-shadow: 0 2px 5px 0 rgba(60, 66, 87, 0.1),
+      0 1px 1px 0 rgba(0, 0, 0, 0.07);
+    margin-right: 1rem;
+  }
+  &__info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 10rem;
+    #{$self}__username {
+      font-size: 1.2rem;
+      // margin-right: 2rem;
+    }
+    #{$self}__icon {
+      font-size: 1.4rem;
+    }
+    // margin-right: 2rem;
+  }
+  &:hover {
+  }
+  &:focus {
+  }
+}
 .dropdown-inactive {
   position: fixed;
   top: -1111px;
@@ -246,8 +301,8 @@ export default {
 }
 
 .h-nav {
-  border-bottom-right-radius: 1rem;
-  border-bottom-left-radius: 1rem;
+  // border-bottom-right-radius: 1rem;
+  // border-bottom-left-radius: 1rem;
   .nav-title {
     max-width: 100%;
     white-space: nowrap;
@@ -300,6 +355,7 @@ export default {
     background-color: #1a1a1b;
     box-shadow: none;
     border-bottom: 1px solid black;
+    color: rgb(215, 218, 220);
     .inbox-icon {
       color: rgb(215, 218, 220);
       &__count {
@@ -366,24 +422,24 @@ ul {
   margin-left: 10px;
   max-width: 100%;
 }
-.profile-pic {
-  border-radius: 100px;
-  margin-right: 10px;
-  max-width: 45px;
+// .profile-pic {
+//   border-radius: 100px;
+//   margin-right: 10px;
+//   max-width: 45px;
 
-  position: relative;
-  border: 1px solid #ffd700;
-  &:hover {
-    -webkit-box-shadow: 0px 2px 4px 0px rgba(217, 217, 217, 1);
-    -moz-box-shadow: 0px 2px 4px 0px rgba(217, 217, 217, 1);
-    box-shadow: 0px 2px 4px 0px rgba(217, 217, 217, 1);
-  }
-  &:focus {
-    -webkit-box-shadow: 0px 0px 4px 0px rgba(217, 217, 217, 1);
-    -moz-box-shadow: 0px 0px 4px 0px rgba(217, 217, 217, 1);
-    box-shadow: 0px 0px 4px 0px rgba(217, 217, 217, 1);
-  }
-}
+//   position: relative;
+//   border: 1px solid #ffd700;
+//   &:hover {
+//     -webkit-box-shadow: 0px 2px 4px 0px rgba(217, 217, 217, 1);
+//     -moz-box-shadow: 0px 2px 4px 0px rgba(217, 217, 217, 1);
+//     box-shadow: 0px 2px 4px 0px rgba(217, 217, 217, 1);
+//   }
+//   &:focus {
+//     -webkit-box-shadow: 0px 0px 4px 0px rgba(217, 217, 217, 1);
+//     -moz-box-shadow: 0px 0px 4px 0px rgba(217, 217, 217, 1);
+//     box-shadow: 0px 0px 4px 0px rgba(217, 217, 217, 1);
+//   }
+// }
 
 .profile-info {
   display: flex;

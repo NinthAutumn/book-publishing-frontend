@@ -119,7 +119,7 @@ export default {
     grid-template-columns: repeat(auto-fit, minmax(10rem, 15rem));
     grid-gap: 0.5rem;
   }
-  @media screen and (max-width: 400px) {
+  @media screen and (max-width: 500px) {
     &__list {
       grid-template-columns: repeat(3, minmax(5rem, 15rem));
     }

@@ -1,22 +1,19 @@
 <template>
   <div id="search " class="page-padding">
-    <ul>
-      <li class="search-book-item" v-for="(book, index) in searchBooks" :key="index">
-        <Books :book="book"></Books>
-      </li>
-    </ul>
+    <Books :books="books"></Books>
   </div>
 </template>
 <script>
+import { mapGetters } from "vuex";
 export default {
   name: "search",
   components: {
     Books: () => import("@/components/SearchPage/Books")
   },
   computed: {
-    searchBooks() {
-      return this.$store.state.search.books;
-    }
+    ...mapGetters({
+      books: "search/getBookList"
+    })
   },
   data() {
     return {};

@@ -107,7 +107,7 @@ export default {
       grid-row: auto;
     }
   }
-  @media screen and (max-width: 400px) {
+  @media screen and (max-width: 500px) {
     &__list {
       grid-template-columns: repeat(3, minmax(5rem, 15rem));
     }
