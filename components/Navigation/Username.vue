@@ -1,17 +1,26 @@
 <template>
-  <v-dialog class="username-form" v-model="open" persistent>
-    <!-- <div class="flex-divider flex-row flex--align flex--center">
-      <croppa
-        :accept="'image/*'"
-        :canvas-color="'default'"
-        :placeholder="'作者としてのアバター'"
-        v-model="user.avatar"
-      ></croppa>
-    </div>-->
-    <div class="username-form__username">
-      <input type="text" v-model="user.username">
+  <div class="username-form dialog dialog__container" v-if="open">
+    <div class="username-form__container dialog__content">
+      <div class="flex-divider flex-row flex--align flex--center" style="margin-bottom:1rem;">
+        <no-ssr>
+          <croppa
+            :accept="'image/*'"
+            :canvas-color="'default'"
+            :placeholder="'ユーザーアバター'"
+            v-model="user.avatar"
+            :width="150"
+            :height="150"
+          ></croppa>
+        </no-ssr>
+      </div>
+      <div class="username-form__username">
+        <v-text-field v-model="user.username" label="ユーザー名*" required></v-text-field>
+      </div>
+      <div class="username-form__submit">
+        <div class="username-form__button" v-ripple @click="setUsername">更新</div>
+      </div>
     </div>
-  </v-dialog>
+  </div>
 </template>
 
 <script>
@@ -19,14 +28,37 @@ export default {
   data() {
     return {
       open: false,
+      blob: "",
       user: {
-        avatar: "",
-        username: ""
+        avatar: {},
+        username: "",
+        avatar_path: ""
       }
     };
   },
+  methods: {
+    async setUsername() {
+      try {
+        this.user.avatar.generateBlob(
+          async function(blob) {
+            this.blob = blob;
+          }
+        );
+        const url = await this.$store.dispatch("upload/image", this.blob);
+        this.user["avatar"] = url.url;
+        this.user["avatar_path"] = url.path;
+        await this.$store.dispatch("user/patchUser", { user: this.user });
+        await this.$auth.fetchUser();
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  },
   async mounted() {
-    if (!this.$store.getters.loggedInUser.username) {
+    if (
+      this.$store.getters.isAuthenticated &&
+      !this.$store.getters.loggedInUser.username
+    ) {
       this.open = true;
     }
   }
@@ -34,4 +66,34 @@ export default {
 </script>
 
 <style lang="scss">
+.username-form {
+  &__container {
+    min-width: 30rem;
+  }
+  $self: &;
+  input {
+    font-size: 1.4rem;
+  }
+  &__submit {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    #{$self}__button {
+      font-size: 1.4rem;
+      padding: 0.5rem 1rem;
+      box-shadow: rgba(42, 47, 69, 0.16) 0px 0px 0px 1px,
+        rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px,
+        rgba(0, 0, 0, 0.12) 0px 1px 1px 0px,
+        rgba(42, 47, 69, 0.12) 0px 2px 5px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px,
+        rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px,
+        rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px;
+      border-radius: 0.4rem;
+      &:hover {
+        cursor: pointer;
+        user-select: none;
+      }
+    }
+  }
+}
 </style>

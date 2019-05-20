@@ -1,13 +1,13 @@
 <template>
   <div class="latest-chapters">
     <ul class="latest-chapters__list">
-      <nuxt-link
+      <li
         tag="li"
         class="latest-chapters__item"
         v-ripple
         v-for="(notification,index) in notifications"
         :key="index"
-        :to="`/books/${notification.book_id}/${notification.chapter_id}`"
+        @click="clickHandler(notification.book_id,notification.chapter_id,notification.notification_object_id)"
       >
         <div class="latest-chapters__cover">
           <v-img
@@ -40,18 +40,28 @@
           >{{$moment(notification.created_at).startOf('minute').fromNow()}}</div>
         </div>-->
         <div v-if="!notification.read" class="latest-chapters__notification"></div>
-      </nuxt-link>
+      </li>
+      <no-ssr>
+        <no-ssr>
+          <infinite-loading @infinite="infiniteHandler"></infinite-loading>
+        </no-ssr>
+      </no-ssr>
     </ul>
   </div>
 </template>
 
 <script>
 export default {
+  data() {
+    return {
+      page: 2
+    };
+  },
   async mounted() {
     if (this.$store.state.auth.loggedIn) {
       await this.$store.dispatch("user/fetchNotifications", {
         page: 1,
-        limit: 5
+        limit: 7
       });
     }
   },
@@ -64,6 +74,25 @@ export default {
     async removeInbox(chapterId, bookId) {
       await this.$store.dispatch("library/patchLatestChapters", { chapterId });
       this.$router.push("/books/" + bookId + "/" + chapterId);
+    },
+    async clickHandler(bookId, chapterId, id) {
+      console.log(id);
+      //  :to="`/books/${notification.book_id}/${notification.chapter_id}`"
+      await this.$axios.patch(`/notification/chapter/read?objectId=${id}`);
+      this.$router.push(`/books/${bookId}/${chapterId}`);
+    },
+    async infiniteHandler($state) {
+      let notification = await this.$store.dispatch("user/fetchNotifications", {
+        page: this.page++,
+        limit: 7,
+        infinite: true
+      });
+
+      if (notification.length > 0) {
+        $state.loaded();
+      } else {
+        $state.complete();
+      }
     }
   },
   filters: {

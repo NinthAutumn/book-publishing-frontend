@@ -1,6 +1,6 @@
 <template>
-  <v-dialog class="setting-form" v-model="dialog" max-width="500px" persistent>
-    <div class="setting-form__container">
+  <div class="setting-form dialog dialog__container" max-width="500px" persistent>
+    <div class="setting-form__container dialog__content">
       <div class="setting-form__header flex-row flex--between flex--align">
         <div class="setting-form__title">設定</div>
         <fa @click="closeModal" icon="times"></fa>
@@ -11,7 +11,7 @@
           :canvas-color="'default'"
           :placeholder="'アバター'"
           v-model="user.avatar"
-          initial-image
+          :initial-image="current.avatar"
         ></croppa>
       </div>
 
@@ -21,10 +21,11 @@
       </v-radio-group>
       <v-textarea label="自己紹介" v-model="user.bio" hint="好きな食べ物など"></v-textarea>
     </div>
-  </v-dialog>
+  </div>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   data() {
     return {
@@ -38,9 +39,12 @@ export default {
     };
   },
   computed: {
-    dialog() {
-      return this.$store.getters["getSettingModal"];
-    }
+    ...mapGetters({
+      current: "loggedInUser"
+    })
+  },
+  mounted() {
+    this.user.username = this.current.username;
   },
   methods: {
     closeModal() {
@@ -53,9 +57,11 @@ export default {
 <style lang="scss">
 .setting-form {
   $self: &;
+
   &__container {
     padding: 2rem;
     display: flex;
+    min-width: 50rem;
     // align-items: center;
     // justify-content: center;
     flex-direction: column;

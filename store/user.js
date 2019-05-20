@@ -98,6 +98,11 @@ export const mutations = {
   SET_NOTIFICATION: (state, notification) => {
     state.notification = notification
   },
+  PUSH_NOTIFICATION: (state, notifications) => {
+    notifications.forEach((notification) => {
+      state.notification.push(notification)
+    })
+  },
   SET_AUTHOR: async (state, author) => {
     state.author = author
   },
@@ -111,9 +116,11 @@ export const mutations = {
     state.stats = stats
   },
   SET_COMMENT_NOTIFICATION: (state, notifications) => {
+    state.commentNotification = notifications
+  },
+  PUSH_COMMENT_NOTIFICATION: (state, notifications) => {
     notifications.forEach((notification) => {
       state.commentNotification.push(notification)
-
     })
   },
   SET_COMMENT_NOTIFICATION_COUNT: (state, count) => {
@@ -252,10 +259,15 @@ export const actions = {
     commit
   }, {
     page,
-    limit
+    limit,
+    infinite = false
   }) {
     try {
       const res = await this.$axios.get(`/notification/chapter?page=${page}&limit=${limit}`)
+      if (infinite) {
+        commit('PUSH_NOTIFICATION', get(res, 'data'))
+        return Promise.resolve(get(res, 'data'))
+      }
       commit('SET_NOTIFICATION', get(res, 'data'))
     } catch (error) {}
   },
@@ -299,12 +311,18 @@ export const actions = {
     commit
   }, {
     page,
+    infinite = false
   }) {
     try {
       const {
         data
       } = await this.$axios.get(`/notification/comment?page=${page}`)
-      commit('SET_COMMENT_NOTIFICATION', data)
+      if (infinite) {
+        commit('PUSH_COMMENT_NOTIFICATION', data)
+      } else {
+        commit('SET_COMMENT_NOTIFICATION', data)
+      }
+
       return Promise.resolve(data)
     } catch (error) {
       return Promise.reject(error)
@@ -331,6 +349,17 @@ export const actions = {
       this.$axios.patch(`/notification/comment/read`).then(() => {
         dispatch('fetchCommentNotificationsCount')
       })
+    } catch (error) {
+      return Promise.reject(error)
+    }
+  },
+  async patchUser({
+    commit
+  }, {
+    user
+  }) {
+    try {
+      await this.$axios.patch('/user', user)
     } catch (error) {
       return Promise.reject(error)
     }

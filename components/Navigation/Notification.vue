@@ -36,7 +36,7 @@ export default {
   data() {
     return {
       loading: false,
-      page: 1
+      page: 2
     };
   },
   computed: {
@@ -74,7 +74,7 @@ export default {
   position: fixed;
   top: 5rem;
   width: 40rem;
-  right: 4rem;
+  right: 15rem;
 
   border-radius: 0.4rem;
   background-color: #fff;

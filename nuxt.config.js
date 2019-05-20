@@ -201,7 +201,6 @@ module.exports = {
    */
   axios: {
     baseURL: process.env.SERVER_URL || 'http://localhost:4000/api',
-    credentials: false
   },
 
   auth: {

@@ -33,11 +33,19 @@
                 <fa icon="anchor"></fa>
               </div>
             </div>
-            <div class="comment-modal__subject flex-row">
+            <div class="comment-modal__subject flex-row" v-if="!edit">
               <div class="content deleted" v-if="comment.deleted">[削除されました]</div>
               <div class="content" v-else>{{comment.content}}</div>
             </div>
-            <div v-if="!comment.deleted" class="comment-modal__operations flex flex--align">
+            <div class="comment-modal__subject" v-else>
+              <textarea v-model="editContent"></textarea>
+              <div class="flex-divider flex-row flex--right">
+                <button type class="comment-form__submit" @click="edit=!edit">キャンセル</button>
+
+                <button type="submit" class="comment-form__submit">更新</button>
+              </div>
+            </div>
+            <div v-if="!comment.deleted&&!edit" class="comment-modal__operations flex flex--align">
               <div class="comment-modal__rate">
                 <div
                   class="comment-modal__rate__item comment-modal__rate__item--like"
@@ -57,6 +65,13 @@
               </div>
               <div class="comment-modal__media">シェア</div>
               <div class="comment-modal__report">レポート</div>
+              <div v-if="logged">
+                <div
+                  v-if="user.id === comment.user_id"
+                  class="comment-modal__edit"
+                  @click="edit= !edit"
+                >編集</div>
+              </div>
             </div>
           </div>
           <form
@@ -66,7 +81,7 @@
           >
             <textarea required v-model="content" placeholder="コメントを書く"></textarea>
             <div class="divider flex-row flex--right">
-              <input type="submit" class="comment-form__submit" value="投稿">
+              <button class="comment-form__submit">投稿</button>
             </div>
           </form>
         </div>
@@ -101,6 +116,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   name: "comment-modal",
   props: { children: Array, comment: Object, depth: Number },
@@ -112,7 +128,9 @@ export default {
       replyForm: false,
       liked: this.comment.voted > 0,
       disliked: this.comment.voted < 0,
-      likeNumber: this.comment.likes
+      likeNumber: this.comment.likes,
+      edit: false,
+      editContent: this.comment.content
     };
   },
   computed: {
@@ -125,9 +143,11 @@ export default {
     blue() {
       return this.likeNumber < 1;
     },
-    theme() {
-      return this.$store.state.user.theme;
-    }
+    ...mapGetters({
+      theme: "user/getTheme",
+      logged: "isAuthenticated",
+      user: "loggedInUser"
+    })
   },
   methods: {
     toggleChildren() {
@@ -225,8 +245,9 @@ export default {
 <style lang="scss">
 .comment-reply-form {
   textarea {
+    border-radius: 0.4rem;
     resize: none;
-    border: 1px solid grey;
+    border: 2px solid;
     height: 75px;
     margin-bottom: 5px;
     margin-top: 1rem;
@@ -297,11 +318,33 @@ export default {
 .rate-up {
   width: 18px;
 }
-
+@keyframes godown {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
 .comment-modal {
   font-size: 14px;
   // display: inline-block;
-
+  textarea {
+    animation: godown 300ms ease-out;
+    animation-fill-mode: backwards;
+    border-radius: 0.4rem;
+    resize: none;
+    border: 2px solid;
+    height: 75px;
+    margin-bottom: 5px;
+    margin-top: 1rem;
+    padding: 1rem 1.2rem;
+    font-size: 1.4rem;
+    width: 100%;
+    &:focus {
+      outline: none;
+    }
+  }
   // overflow: hidden;/
   &__avatar {
     margin-right: 1rem;
@@ -404,6 +447,13 @@ export default {
   &__report {
     font-size: 12px;
     margin-right: 10px;
+  }
+  &__edit {
+    font-size: 12px;
+    margin-right: 10px;
+    &:hover {
+      cursor: pointer;
+    }
   }
 }
 </style>

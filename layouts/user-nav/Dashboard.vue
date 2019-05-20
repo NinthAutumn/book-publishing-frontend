@@ -68,8 +68,12 @@
       <hr>
     </nav>
     <create-author></create-author>
-    <ContractForm v-if="contract"></ContractForm>
-    <volume-form v-if="volume"></volume-form>
+    <transition name="grow-shrink">
+      <ContractForm v-if="contract"></ContractForm>
+    </transition>
+    <transition name="grow-shrink">
+      <volume-form v-if="volume"></volume-form>
+    </transition>
   </div>
 </template>
 <script>

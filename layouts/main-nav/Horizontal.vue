@@ -71,7 +71,10 @@
         <product-modal></product-modal>
       </div>
     </transition>
-    <setting-form></setting-form>
+    <transition name="grow-shrink">
+      <setting-form v-if="dialog"></setting-form>
+    </transition>
+    <Username></Username>
   </div>
 </template>
 <script>
@@ -92,7 +95,8 @@ export default {
     ProductModal: () => import("@/components/Navigation/Stripe/ProductModal"),
     SettingForm: () => import("@/components/Navigation/Setting"),
     NotificationList: () => import("@/components/Navigation/Notification"),
-    Currency: () => import("@/components/All/Currency")
+    Currency: () => import("@/components/All/Currency"),
+    Username: () => import("@/components/Navigation/Username")
   },
   computed: {
     ...mapGetters({
@@ -101,7 +105,8 @@ export default {
       loginState: "getLoginFormState",
       productState: "getProductModalState",
       notificationCount: "user/getCommentNotificationCount",
-      wealth: "wallet/getWealth"
+      wealth: "wallet/getWealth",
+      dialog: "getSettingModal"
     })
   },
   async mounted() {

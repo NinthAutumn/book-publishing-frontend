@@ -4,7 +4,8 @@
       <li class="user-books__item" v-for="(book, index) in books" :key="index">
         <nuxt-link tag="div" :to="`/books/${book.id}`" class="user-books__cover">
           <v-img
-            :src="`https://storage.googleapis.com/theta-images/${book.cover}`"
+            style="border-radius:0.4rem;"
+            :src="book.cover"
             :aspect-ratio="1/1.5"
             max-width="11rem"
           ></v-img>
