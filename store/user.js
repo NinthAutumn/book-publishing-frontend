@@ -250,9 +250,12 @@ export const actions = {
   },
   async fetchNotifications({
     commit
+  }, {
+    page,
+    limit
   }) {
     try {
-      const res = await this.$axios.get(`/notification/chapter`)
+      const res = await this.$axios.get(`/notification/chapter?page=${page}&limit=${limit}`)
       commit('SET_NOTIFICATION', get(res, 'data'))
     } catch (error) {}
   },

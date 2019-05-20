@@ -19,7 +19,7 @@
             tag="li"
             class="book-chapters__chapter-item"
             v-for="(chapter) in volume.chapters"
-            :key="chapter.index"
+            :key="chapter.id"
             :to="{path: `/books/${ chapter.book_id}/${chapter.id}`}"
             v-ripple
           >

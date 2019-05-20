@@ -134,6 +134,7 @@ export default {
     overflow: auto;
     #{$self}__item {
       padding: 5px;
+      height:3rem;
       color: grey;
       font-size: 12px;
       border: 1px solid grey;

@@ -292,7 +292,7 @@ nav {
     }
     #{$self}__icon {
       font-size: 1.4rem;
-      color:#555555;
+      color: #555555;
     }
     // margin-right: 2rem;
   }

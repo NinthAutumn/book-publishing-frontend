@@ -14,31 +14,23 @@ export default async function ({
     $axios,
 
   } = app
-  if (process.client) {
+  $axios.onError(async error => {
+    if (error.config && error.response && error.response.status === 401) {
 
+      if ($auth.user.username) {
+        $auth.logout()
+      }
+      return
 
-  }
-
-
-  if (process.client) {
-    const token = Cookies.get('token');
-    const track_id = Cookies.get('track_id')
-    if (token) {
-      $axios.defaults.headers.common['Authorization'] = token;
     }
+  })
+  if (process.client) {
+    const track_id = Cookies.get('track_id')
     $axios.defaults.headers.common['TrackId'] = track_id
     window.onNuxtReady(() => {
-      const token = Cookies.get('token');
       const track_id = Cookies.get('track_id')
-      if (token) {
-        $axios.defaults.headers.common['Authorization'] = token;
-      }
       $axios.defaults.headers.common['TrackId'] = track_id
     })
-
-    if (!$auth.loggedIn) {
-      return
-    }
 
     if (!$auth.loggedIn) {
       return
@@ -63,9 +55,6 @@ export default async function ({
             await $auth.fetchUser();
           })
         });
-        return
-        // window.location.reload(true)
-
       } catch (e) {
         console.log(e);
       }
@@ -107,35 +96,8 @@ export default async function ({
 
 
 
-  // $axios.onResponse(async response => {
-  //   if (response.status === 266) {
-  //     const originalRequest = response.config
-  //     originalRequest.baseURL = ''
-  //     originalRequest._retry = true
-  //     $axios.patch('/auth/token', {
-  //       refresh: $auth.getRefreshToken('local')
-  //     }).then((res) => {
-  //       const {
-  //         token
-  //       } = res.data
-  //       originalRequest.headers['Authorization'] = `Bearer ${token}`
-  //       $auth.setToken('Bearer ' + token)
-  //       $auth.setToken('local', 'Bearer ' + token)
-  //       window.location.reload(true);
-  //       return $axios(originalRequest)
-  //     })
-  //   } else {
-  //     return response
-  //   }
-  // })
-  $axios.onError(async error => {
-    if (error.config && error.response && error.response.status === 401) {
-      if ($auth.user.username) {
-        $auth.logout()
-      }
 
-    }
-  })
+
 }
 
 // Properly encode data

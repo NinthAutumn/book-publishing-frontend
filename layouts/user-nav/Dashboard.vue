@@ -18,10 +18,11 @@
           </div>
           <nuxt-link
             v-if="$route.name ==='dashboard-books-id-index-draft'||$route.name ==='dashboard-books-id-index-published'||$route.name ==='dashboard-books-id-index'||$route.name ==='dashboard-books-id-index-deleted'||$route.name ==='dashboard-books-id-new'"
-            class="write-chapter button--shadow button button--secondary--open"
+            class="write-chapter"
             :to="{path: `new`}"
+            v-ripple
           >
-            <fa icon="pen-nib" style="margin-right:5px;"></fa>新しい話を書く
+            <fa icon="pen-nib" style="margin-right:1rem;"></fa>新しい話を書く
           </nuxt-link>
 
           <nuxt-link
@@ -68,6 +69,7 @@
     </nav>
     <create-author></create-author>
     <ContractForm v-if="contract"></ContractForm>
+    <volume-form v-if="volume"></volume-form>
   </div>
 </template>
 <script>
@@ -119,7 +121,8 @@ export default {
     // HomeIcon
     BookForm: () => import("@/components/Dashboard/Forms/Book"),
     CreateAuthor: () => import("@/components/Dashboard/Forms/Author"),
-    ContractForm: () => import("@/components/Dashboard/Forms/Contract")
+    ContractForm: () => import("@/components/Dashboard/Forms/Contract"),
+    VolumeForm: () => import("@/components/Dashboard/Forms/Volume")
   },
   watch: {
     // fetchUserId: function() {
@@ -129,7 +132,8 @@ export default {
   computed: {
     ...mapGetters({
       author: "user/getAuthor",
-      contract: "getContractModalState"
+      contract: "getContractModalState",
+      volume: "getVolumeModalState"
     })
   },
   methods: {
@@ -156,18 +160,24 @@ export default {
   color: white !important;
 }
 .write-chapter.nuxt-link-exact-active {
-  background-color: $secondary !important;
-  color: white !important;
+  // background-color: $secondary !important;
+  // color: white !important;
 }
 .write-chapter {
-  height: 40px;
-  width: 150px;
-  font-size: 16px;
-  margin-right: 45px;
-  color: $secondary;
-  &:hover {
-    color: white;
-  }
+  font-size: 1.6rem;
+  padding: 0.8rem 2rem;
+  background-color: #f6f9fc;
+  // displa
+  color: #4f566b;
+  box-shadow: rgba(42, 47, 69, 0.16) 0px 0px 0px 1px,
+    rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px,
+    rgba(0, 0, 0, 0.12) 0px 1px 1px 0px, rgba(42, 47, 69, 0.12) 0px 2px 5px 0px,
+    rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px,
+    rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px,
+    rgba(0, 0, 0, 0) 0px 0px 0px 0px;
+  background-color: rgb(255, 255, 255);
+  border-radius: 4px;
+  margin-right: 4.5rem;
 }
 .create-books {
   // position: fixed;

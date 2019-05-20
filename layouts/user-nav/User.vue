@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="dashboard-page">
     <Dashboard></Dashboard>
     <div class="dashboards">
       <nuxt :class="menu"></nuxt>
@@ -31,6 +31,9 @@ export default {
 </script>
 
 <style lang="scss">
+.dashboard-page {
+  background-color: #fbf9f9;
+}
 .d-nav-v {
   z-index: 100;
   background-color: #fff;
@@ -46,13 +49,14 @@ export default {
   z-index: 10;
 }
 .dashboards .dashboard-inactive {
-  margin-top: 50px;
   margin-left: 50px;
+  margin-top: 50px;
   padding: 0 45px;
   padding-top: 10px;
   min-height: 100vh;
   background-color: #fbf9f9;
   transition: 200ms;
+  z-index: 10;
 }
 @media screen and (max-width: 1300px) {
   .d-nav-v {

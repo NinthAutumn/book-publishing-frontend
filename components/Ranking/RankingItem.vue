@@ -24,34 +24,7 @@
           <p>{{book.author}}</p>
         </div>
         <div class="book-rating">
-          <no-ssr>
-            <star-rating
-              v-if="book.rating"
-              :rating="book.rating"
-              :star-size="18"
-              :read-only="true"
-              inactive-color="#D8D7D5"
-              active-color="#FFB727"
-              :increment="0.01"
-              :round-start-rating="false"
-              border-color="#FFB727"
-              :glow="1"
-              class="star-rating"
-            ></star-rating>
-            <star-rating
-              v-else
-              :show-rating="false"
-              :rating="0"
-              :star-size="18"
-              :read-only="true"
-              inactive-color="#D8D7D5"
-              active-color="#FFB727"
-              :increment="0.01"
-              :round-start-rating="false"
-              border-color="#FFB727"
-              class="star-rating"
-            ></star-rating>
-          </no-ssr>
+          <v-rating color="#FF8D29" readonly size="20" half-increments :value="+book.rating"></v-rating>
         </div>
       </div>
       <div v-if="score" class="book-score">
@@ -69,7 +42,7 @@ export default {
   props: {
     book: Object,
     index: Number,
-    score: Number,
+    score: [Number, String],
     trending: Boolean,
     vote: Boolean
   },
@@ -82,6 +55,9 @@ export default {
 
 <style lang="scss">
 .ranking-item {
+  .v-icon {
+    padding: 0;
+  }
   user-select: none;
   margin-bottom: 10px;
   border-radius: 0.8rem;

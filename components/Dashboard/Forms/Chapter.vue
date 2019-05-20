@@ -8,7 +8,7 @@
         </div>
       </div>
       <div class="chapter-form__options flex">
-        <Select v-model="form.volume" name="章を選ぶ" icon="archive" :object="volumes"></Select>
+        <Select v-model="form.volume" name="章を選ぶ" icon="archive" :object="volumes" volume></Select>
         <!-- <Select v-model="form.locked" def="無料" icon="yen-sign" name="時価" :object="locked"></Select> -->
         <div
           class="chapter-form__options__user-news flex-row flex--align flex--center"
@@ -27,7 +27,7 @@
       <transition name="slide-fade">
         <div class="chapter-form__content-subject">
           <div class="form-control flex-row flex--align">
-            <p v-if="form.volume.index" class="chapter-index">第{{latestIndex}}話</p>
+            <p v-if="form.volume.index !== 0" class="chapter-index">第{{latestIndex}}話</p>
             <p v-else class="chapter-index">第{{0}}話</p>
             <input
               placeholder="タイトル"
@@ -75,20 +75,6 @@
                 <fa class="chapter-form__image-btn__close" icon="times"></fa>
               </v-img>
             </div>
-
-            <!-- <el-upload
-                class="upload-demo"
-                action
-                :on-preview="handlePreview"
-                :on-remove="handleRemove"
-                :on-success="successPhoto"
-                list-type="picture-card"
-                :limit="3"
-                :on-exceed="handleExceed"
-                accept="image/*"
-              >
-                <div slot="tip" class="el-upload__tip">jpeg などイメージフォーマットでお願いします</div>
-            </el-upload>-->
           </div>
         </transition>
       </v-dialog>
@@ -231,9 +217,10 @@ export default {
       }
     });
     this.form.volume = {
-      id: this.volumes[this.volumes.length - 1].value,
+      id: this.volumes[this.volumes.length - 1].value.id,
       index: this.volumes[this.volumes.length - 1].index
     };
+    // this.getNewLatestChapter();
   },
   watch: {
     "form.content": function(val) {
@@ -282,7 +269,7 @@ export default {
         content: "",
         date: "",
         wordCount: "",
-        volume: "",
+        volume: {},
         bookId: this.$route.params.id,
         locked: false,
         drawings: [],
@@ -326,6 +313,7 @@ export default {
       }
     },
     async getNewLatestChapter() {
+      console.log(this.form.volume.id);
       await this.$store.dispatch("chapter/fetchLatestIndex", {
         bookId: this.$route.params.id,
         volumeId: this.form.volume.id

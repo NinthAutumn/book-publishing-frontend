@@ -311,10 +311,36 @@ export const actions = {
   }) {
     try {
       const res = await this.$axios.get(`/book/title?bookId=${bookId}`)
+
       commit('SET_BOOK_TITLE', res.data.title)
     } catch (error) {
       return Promise.reject(error)
     }
+
+  },
+  async postVolume({
+    commit
+  }, {
+    volume
+  }) {
+    try {
+      const res = await this.$axios.post(`/chapter/volume`, volume)
+      if (res.data.error) {
+        return {
+          error: res.data.error
+        }
+      } else {
+        return res.data
+      }
+    } catch (error) {
+
+    }
+
+    // console.log(res);
+    // if (res) {
+
+    //   return Promise.reject(error)
+    // }
 
   }
 

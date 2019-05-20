@@ -29,7 +29,7 @@ export default {
   data() {
     return {
       user: {
-        avatar: "",
+        avatar: {},
         username: "",
         gender: "",
         bio: ""

@@ -114,7 +114,10 @@ export default {
     selected_item: String,
     limit: Number,
     backgroundColor: String,
-    color: String
+    color: String,
+    value: [Object, String, Array, Number],
+    volume: Boolean,
+    disabled: Boolean
   },
   data() {
     return {
@@ -164,7 +167,10 @@ export default {
       this.$emit("input", this.selectedData);
     },
     openModal: function() {
-      this.modal = true;
+      if (this.disabled) {
+      } else {
+        this.modal = true;
+      }
     },
     closeModal: function() {
       this.modal = false;
@@ -226,6 +232,39 @@ export default {
     }
   },
   mounted() {
+    if (this.value && this.volume) {
+      this.multiData.forEach((e, n) => {
+        if (e.value.id === this.value.id) {
+          if (e.selected) {
+            this.selectD = "";
+          } else {
+            this.selectD = e.key;
+            // this.modal = false;
+          }
+          e.selected = !e.selected;
+          // this.$emit("input", e.value);
+        }
+      });
+    } else if (this.value) {
+      if (this.object) {
+        this.multiData.forEach((e, n) => {
+          if (e.value === this.value) {
+            this.selectD = e.key;
+
+            e.selected = !e.selected;
+            // this.$emit("input", e.value);
+          }
+        });
+      } else {
+        this.multiData.forEach((e, n) => {
+          if (e === this.value) {
+            this.selectD = e.key;
+
+            e.selected = !e.selected;
+          }
+        });
+      }
+    }
     if (
       this.selected_item &&
       this.selected_item !== "undefined" &&

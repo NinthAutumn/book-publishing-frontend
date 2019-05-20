@@ -14,7 +14,7 @@
         @mouseenter="deleteButton = index"
         @mouseleave="deleteButton = null"
       >
-        <div class="flex-divider flex-row">
+        <div class="flex-divider flex-row flex--align">
           <div class="book-toc__index">{{chapter.index}}</div>
           <div class="book-toc__title">{{chapter.title}}</div>
         </div>
@@ -24,9 +24,10 @@
         </div>
       </div>
     </div>
+
     <div class="book-toc__volume" v-for="(volume,index) in toc" :key="index" v-else>
       <div class="book-toc__volume-meta">
-        <div class="book-toc__volume-index">第{{volume.volume}}章</div>
+        <div class="book-toc__volume-index">{{`第${volume.volume}章`}}</div>
         <div class="book-toc__volume-title">{{volume.volume_title}}</div>
         <div class="book-toc__volume-edit">編集</div>
       </div>
@@ -41,13 +42,13 @@
           :key="index"
           v-ripple
         >
-          <div class="flex-divider flex-row">
+          <div class="flex-divider flex-row flex--align">
             <div class="book-toc__index">{{chapter.index}}</div>
             <div class="book-toc__title">{{chapter.title}}</div>
           </div>
           <div class="flex-divider flex-row flex--align">
             <!-- <div class="book-toc__delete">削除</div> -->
-            <div class="book-toc__created-at">{{chapter.created_at}}</div>
+            <div class="book-toc__created-at">{{$moment(chapter.created_at).calendar()}}</div>
           </div>
         </div>
       </div>
@@ -90,6 +91,7 @@ export default {
       }
       #{$self}__volume-index {
         font-size: 1.4rem;
+        margin-right: 1rem;
         color: #41465a;
       }
       #{$self}__volume-edit {
