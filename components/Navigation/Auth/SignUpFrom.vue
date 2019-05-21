@@ -16,7 +16,7 @@
         <input
           ref="username"
           name="username"
-          v-validate="'required'"
+          v-validate="'required|min:3'"
           placeholder="ユーザー名"
           data-vv-as="ユーザー名"
           class="signup-form__input signup-form__input--username elevation-1"

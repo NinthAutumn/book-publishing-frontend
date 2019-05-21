@@ -2,18 +2,15 @@
   <div class="book-tags">
     <p class="book-tags__title">作品のタグ</p>
     <ul class="book-tags__list flex-row">
-      <li
-        class="book-tags__item"
-        v-for="(tag, index) in $store.state.book.book.tags"
-        :key="index"
-        v-ripple
-      >{{tag}}</li>
+      <li class="book-tags__item" v-for="(tag, index) in tags" :key="index" v-ripple>{{tag.name}}</li>
     </ul>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  props: ["tags"]
+};
 </script>
 
 <style lang="scss">

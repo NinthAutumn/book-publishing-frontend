@@ -5,7 +5,7 @@
         :aspect-ratio="1/1.5"
         max-width="15rem"
         class="update-book__img"
-        :src="book.cover"
+        :src="book[0].cover"
         style=" border-radius: 0.4rem;"
       ></v-img>
       <span class="update-book__cover-meta">{{book.length}}</span>

@@ -17,9 +17,9 @@
               <nuxt-link
                 v-if="!$device.isMobile"
                 tag="td"
-                :to="'/browse?genre=' + book[0].genres[0]"
+                :to="'/browse?genre=' + book[0].name"
                 class="book-table__row-header book-table__row-header--genres"
-              >{{book[0].genres[0]}}</nuxt-link>
+              >{{book[0].name}}</nuxt-link>
               <nuxt-link
                 tag="td"
                 :to="`/books/${book[0].book_id}`"

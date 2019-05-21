@@ -61,7 +61,7 @@
       </div>
       <div class="book__synopsis" v-show="tabs.open === 'review'">
         <BookContent :book="book"></BookContent>
-        <Tags v-if="!$device.isMobile"></Tags>
+        <Tags :tags="tags" v-if="!$device.isMobile"></Tags>
         <section class="book__reviews">
           <div class="book__reviews__title">レビュー({{reviewCount}})</div>
           <ReviewsList :rating="book.rating"></ReviewsList>
@@ -144,7 +144,9 @@
 import { mapGetters } from "vuex";
 export default {
   auth: false,
-  async asyncData({ params, store }) {},
+  async asyncData({ store, params }) {
+    await store.dispatch("book/fetchBookGenreAndTags", params.id);
+  },
   async created() {
     // await this.$store.dispatch("book/fetchBookView", this.$route.params.id);
     // await this.$store.dispatch(
@@ -170,7 +172,9 @@ export default {
       book: "book/getBook",
       view: "book/getBookView",
       chapterCount: "book/getBookChapterCount",
-      reviewCount: "review/getReviewCount"
+      reviewCount: "review/getReviewCount",
+      genres: "book/getBookGenres",
+      tags: "book/getBookTags"
     }),
     bookmarkedText() {
       if (!this.bookmarked) {
@@ -197,12 +201,12 @@ export default {
         open: "review"
       },
       meta: [
-        // {
-        //   key: this.$store.getters["book/getBook"].genres[0] || "ファンタ",
-        //   icon: "landmark",
-        //   type: "genre",
-        //   url: `/browse?genre=${this.$store.getters["book/getBook"].genres[0]}`
-        // },
+        {
+          key: this.$store.getters["book/getBook"].name || "ファンタ",
+          icon: "landmark",
+          type: "genre",
+          url: `/browse?genre=${this.$store.getters["book/getBook"].name}`
+        },
         {
           key: this.$store.getters["book/getBookChapterCount"] + "話",
           icon: "scroll",

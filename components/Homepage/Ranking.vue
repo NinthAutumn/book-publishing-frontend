@@ -1,7 +1,12 @@
 <template>
   <div class="recommendation-books__ranking">
     <div class="recommendation-books__ranking__list">
-      <div class="recommendation-books__ranking__item" v-for="book in ranking" :key="book.id">
+      <nuxt-link
+        :to="`/books/${book.id}`"
+        class="recommendation-books__ranking__item"
+        v-for="book in ranking"
+        :key="book.id"
+      >
         <div class="recommendation-books__ranking__index">{{book.dense_rank}}.</div>
         <!-- <div class="recommendation-books__ranking__cover"> -->
         <v-img
@@ -19,7 +24,7 @@
           <div class="recommendation-books__ranking__title">{{book.title}}</div>
           <div class="recommendation-books__ranking__author">うん戦乱</div>
         </div>
-      </div>
+      </nuxt-link>
     </div>
   </div>
 </template>

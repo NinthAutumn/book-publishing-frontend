@@ -22,7 +22,7 @@
           fill
           :value="value"
           :padding="padding"
-          :smooth="false"
+          :smooth="true"
           :line-width="5"
           :gradient="['#6fa8dc', '#42b983']"
         ></v-sparkline>

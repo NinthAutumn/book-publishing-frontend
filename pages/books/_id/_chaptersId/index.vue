@@ -25,7 +25,6 @@ export default {
   },
   async mounted() {
     if (this.$route.query.comment) {
-      console.log(this.$route.query.comment);
       this.nochapter = true;
     }
 

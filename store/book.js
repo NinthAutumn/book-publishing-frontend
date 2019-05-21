@@ -16,6 +16,7 @@ export const state = () => ({
   loading: false,
   browse: [],
   tags: [],
+  genres: [],
   chapterCount: 0,
   latest: [],
   createAuthor: false,
@@ -37,7 +38,9 @@ export const getters = {
   getRecommended: state => state.recommended,
   getLatest: state => state.latest,
   getAnnouncements: state => state.announcements,
-  getBrowseBooks: state => state.browse
+  getBrowseBooks: state => state.browse,
+  getBookTags: state => state.tags,
+  getBookGenres: state => state.genres
 }
 
 export const actions = {
@@ -50,7 +53,6 @@ export const actions = {
   }) {
     await this.$axios.get(`book/show?id=${id}&userId=${userId}`).then((res) => {
       commit('SET_BOOK', res.data.book)
-      commit('SET_TAGS', res.data.tags)
     })
     // await dispatch('fetchBookView', id)
     // await dispatch('fetchBookChapterCount', id)
@@ -256,6 +258,17 @@ export const actions = {
     } catch (error) {
       return Promise.reject(error)
     }
+  },
+  async fetchBookGenreAndTags({
+    commit
+  }, bookId) {
+    try {
+      const res = await this.$axios.get(`/book/category?bookId=${bookId}`)
+      commit('SET_BOOK_GENRES', res.data.genres)
+      commit('SET_BOOK_TAGS', res.data.tags)
+    } catch (error) {
+
+    }
   }
 }
 
@@ -263,9 +276,13 @@ export const mutations = {
   ADD(state, book) {
     state.books.push(book)
   },
-  SET_TAGS(state, tags) {
+  SET_BOOK_TAGS(state, tags) {
     state.tags = tags
   },
+  SET_BOOK_GENRES(state, genres) {
+    state.genres = genres
+  },
+
   SET_RECOMMENDED(state, books) {
     state.recommended = books
   },

@@ -1,5 +1,5 @@
 <template>
-  <div class="swiping-page">
+  <div class="swiping-page" v-cloak>
     <div v-swiper:mySwiper="swiperOption" v-if="!$device.isMobile">
       <div class="swiper-wrapper">
         <div class="swiper-slide" v-for="(review,index) in reviews" :key="index">

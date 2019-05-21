@@ -30,7 +30,7 @@ export default {
   },
   async mounted() {
     await this.$store
-      .dispatch("dashboard/fetchBookFunnel", { bookId: 577 })
+      .dispatch("dashboard/fetchBookFunnel", { bookId: 2 })
       .then(data => {
         let row = Object.keys(data);
         row.forEach(item => {

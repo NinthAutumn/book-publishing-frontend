@@ -1,5 +1,5 @@
 <template>
-  <div class="swiping-page" :class="{'swiping-page--mobile': $device.isMobile}">
+  <div class="swiping-page" :class="{'swiping-page--mobile': $device.isMobile}" v-cloak>
     <div v-if="trendings&&!$device.isMobile" v-swiper:mySwiper="swiperOption">
       <div class="swiper-wrapper">
         <div class="swiper-slide" v-for="(book,index) in trendings" :key="book.id">
