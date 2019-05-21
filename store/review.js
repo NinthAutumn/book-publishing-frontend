@@ -108,6 +108,7 @@ export const actions = {
       commit('SET_NEXT_REVIEWS', res.data.reviews)
       return Promise.resolve(res.data.reviews)
     }
+    commit('SET_REVIEW_LENGTH', res.data.review_count)
     commit('SET_REVIEWS', res.data.reviews)
     return Promise.resolve(res.data.reviews)
   },

@@ -136,5 +136,16 @@ export const actions = {
     } catch (error) {
       return Promise.reject(error)
     }
+  },
+  patchComment: async function ({
+    commit
+  }, {
+    comment
+  }) {
+    try {
+      const res = await this.$axios.patch(`/comment`, comment)
+    } catch (error) {
+
+    }
   }
 }

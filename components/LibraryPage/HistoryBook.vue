@@ -26,7 +26,7 @@
             <span>{{book.rating}}</span>
           </div>
           <div class="history-book_synopsis-wrapper" style="height:5rem;">
-            <p class="history-book__synopsis" v-clampy="2.5">{{book.synopsis}}</p>
+            <p class="history-book__synopsis" v-line-clamp="2">{{book.synopsis}}</p>
           </div>
           <div class="history-book__position">
             <div class="history-book__progress">
@@ -129,6 +129,7 @@ export default {
           border-radius: 0.5rem;
           border: 1px solid $secondary;
           color: $secondary;
+          margin-right: 1rem;
         }
       }
       #{$self}__title {

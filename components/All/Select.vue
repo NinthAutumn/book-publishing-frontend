@@ -67,7 +67,7 @@
 
         <div
           class="select-component__list select-component__list--multiple"
-          :class="{modalDR: modalD === 'right',modalDL: modalD !== 'right',top: top, bottom: bottom }"
+          :class="{modalDR: modalD === 'right',modalDL: modalD !== 'right',top: top, bottom: bottom}"
           v-if="multiple && modal"
           :style="gridSetting"
           v-click-outside="closeModal"
@@ -80,11 +80,11 @@
           >{{name}}</div>
           <div
             class="select-component__option flex flex--align flex--around"
-            :class="{selected: item.selected}"
+            :class="{selected: item.selected, disable: item.key === disable}"
             v-for="(item, index) in multiData"
             :key="index"
             v-text="item.key"
-            @click="selected(index)"
+            @click="selected(index,item.key === disable )"
           ></div>
         </div>
       </transition>
@@ -117,7 +117,9 @@ export default {
     color: String,
     value: [Object, String, Array, Number],
     volume: Boolean,
-    disabled: Boolean
+    disable: [Array, String],
+    disabled: Boolean,
+    disableMessage: String
   },
   data() {
     return {
@@ -132,7 +134,10 @@ export default {
     };
   },
   methods: {
-    selected: function(index) {
+    selected: function(index, disable) {
+      if (disable) {
+        return;
+      }
       this.multiData.forEach((item, n) => {
         if (n === index) {
           item.selected = !item.selected;
@@ -168,6 +173,10 @@ export default {
     },
     openModal: function() {
       if (this.disabled) {
+        this.$message({
+          message: this.disableMessage,
+          type: "error"
+        });
       } else {
         this.modal = true;
       }
@@ -223,10 +232,13 @@ export default {
       });
     } else {
       this.object.forEach(item => {
+        let disable = false;
+
         this.multiData.push({
           key: item.key,
           value: item.value,
-          selected: false
+          selected: false,
+          disable
         });
       });
     }
@@ -395,6 +407,9 @@ export default {
     }
   }
   .selected {
+    color: #f4648a;
+  }
+  .disable {
     color: #f4648a;
   }
   &__option {

@@ -17,10 +17,9 @@
             def="投票"
           ></select-list>
         </div>
+        <!-- {{labels}} -->
         <v-sparkline
           fill
-          type="bar"
-          :key="String(160)"
           :value="value"
           :padding="padding"
           :smooth="false"
@@ -155,7 +154,7 @@ export default {
       padding: 8,
       lineCap: "round",
       gradient: ["#00c6ff", "#F0F", "#FF0"],
-      value: [1],
+      value: [],
       type: 0,
       gradientDirection: "top",
       select_data: [
@@ -178,10 +177,23 @@ export default {
       announcement: {
         title: "",
         content: ""
-      }
+      },
+      labels: []
     };
   },
   async mounted() {
+    let i = 6;
+    while (i >= 0) {
+      let date = this.$moment()
+        .subtract(i, "days")
+        .format("dddd");
+
+      // .format("YYYY-MM-DD")
+      this.labels.push(date);
+
+      i--;
+    }
+    // console.log(this.labels);
     this.$store
       .dispatch("dashboard/fetchBookStats", {
         bookId: this.book.id,
@@ -189,8 +201,16 @@ export default {
       })
       .then(book => {
         this.value = [];
-        book.stat.forEach(stat => {
-          this.value.push(stat.data);
+        this.labels.forEach((day, index) => {
+          book.stat.forEach(stat => {
+            // console.log(this.$moment(stat.day).format("dddd"));
+            if (day === this.$moment(stat.day).format("dddd")) {
+              this.value.push(stat.data);
+            }
+          });
+          if (!this.value[index]) {
+            this.value[index] = 0;
+          }
         });
       });
   },
@@ -206,8 +226,16 @@ export default {
         })
         .then(book => {
           this.value = [];
-          book.stat.forEach(stat => {
-            this.value.push(stat.data);
+          this.labels.forEach((day, index) => {
+            book.stat.forEach(stat => {
+              // console.log(this.$moment(stat.day).format("dddd"));
+              if (day === this.$moment(stat.day).format("dddd")) {
+                this.value.push(stat.data);
+              }
+            });
+            if (!this.value[index]) {
+              this.value[index] = 0;
+            }
           });
         });
     },

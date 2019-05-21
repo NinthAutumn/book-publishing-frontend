@@ -1,8 +1,13 @@
 <template>
   <section class="comment-modal">
     <article class="comment-modal__container" v-if="showChildren">
-      <div :style="indent" class="divider flex">
-        <a :href="`#${comment.id}`"></a>
+      <div
+        :id="`#comment${comment.id}`"
+        :style="indent"
+        class="divider flex-row"
+        :class="{'comment-modal__selected':$route.query.comment === `${comment.id}`}"
+      >
+        <a :href="`#comment${comment.id}`"></a>
         <div class="comment-modal__avatar flex-column flex--align flex--left">
           <v-avatar size="40" v-if="!comment.deleted">
             <img :src="comment.avatar">
@@ -35,14 +40,17 @@
             </div>
             <div class="comment-modal__subject flex-row" v-if="!edit">
               <div class="content deleted" v-if="comment.deleted">[削除されました]</div>
-              <div class="content" v-else>{{comment.content}}</div>
+              <div class="content" v-else>{{current}}</div>
             </div>
             <div class="comment-modal__subject" v-else>
               <textarea v-model="editContent"></textarea>
               <div class="flex-divider flex-row flex--right">
-                <button type class="comment-form__submit" @click="edit=!edit">キャンセル</button>
-
-                <button type="submit" class="comment-form__submit">更新</button>
+                <button
+                  type
+                  class="comment-form__submit comment-form__submit--cancel"
+                  @click="cancelEdit"
+                >キャンセル</button>
+                <button @click="patchComment" class="comment-form__submit">更新</button>
               </div>
             </div>
             <div v-if="!comment.deleted&&!edit" class="comment-modal__operations flex flex--align">
@@ -126,6 +134,7 @@ export default {
       hideContent: true,
       content: "",
       replyForm: false,
+      current: this.comment.content,
       liked: this.comment.voted > 0,
       disliked: this.comment.voted < 0,
       likeNumber: this.comment.likes,
@@ -162,6 +171,19 @@ export default {
     },
     replyOpen() {
       this.replyForm = !this.replyForm;
+    },
+    async patchComment() {
+      let comment = {
+        content: this.editContent,
+        commentId: this.comment.id
+      };
+      this.current = this.editContent;
+      await this.$store.dispatch("comment/patchComment", { comment });
+      this.edit = false;
+    },
+    cancelEdit() {
+      this.editContent = this.current;
+      this.edit = false;
     },
     async addComment() {
       const bookId = this.$route.params.id;
@@ -329,6 +351,23 @@ export default {
 .comment-modal {
   font-size: 14px;
   // display: inline-block;
+  $self: &;
+  &__selected {
+    // background-color: rgb(238, 238, 238);
+    position: relative;
+    &::after {
+      content: "";
+      top: 0;
+      right: 0;
+      width: 8px;
+      height: 8px;
+      border-radius: 10rem;
+      background-color: $primary;
+    }
+    #{$self}__div {
+      // background-color: #fff;
+    }
+  }
   textarea {
     animation: godown 300ms ease-out;
     animation-fill-mode: backwards;

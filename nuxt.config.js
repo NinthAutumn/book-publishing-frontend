@@ -134,6 +134,9 @@ module.exports = {
     }, {
       src: '@/plugins/chartLine',
       ssr: false
+    }, {
+      src: '@/plugins/scrollTo',
+      ssr: false
     },
   ],
 

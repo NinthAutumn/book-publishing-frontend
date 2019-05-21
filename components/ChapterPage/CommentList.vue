@@ -1,5 +1,5 @@
 <template>
-  <div class="comment-list">
+  <div class="comment-list" id="comments">
     <div class="divider flex-row chapter-hr">
       <fa class="chapter-end-hr" icon="book-open"></fa>
     </div>
@@ -138,6 +138,11 @@ export default {
     box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2),
       0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12) !important;
     transition: 200ms;
+    &--cancel {
+      margin-right: 1rem;
+      background-color: #fff;
+      color: #32325d;
+    }
     &:hover {
       color: #32325d;
       background-color: white;
@@ -176,8 +181,11 @@ export default {
     height: 10rem;
     padding: 1rem;
     transition: 100ms;
-
+    border-radius: 0.4rem;
     border: 2px solid #b4b7b9;
+    &:focus {
+      outline: none;
+    }
   }
   &__item {
     // padding-top: 10px;

@@ -4,10 +4,12 @@
       <div class="notification-component__title">通知</div>
     </div>
     <ul class="notification-component__list">
-      <li
+      <nuxt-link
         class="notification-component__item flex-row"
         v-for="(notification,index) in notifications"
         :key="index"
+        tag="li"
+        :to="`/books/${notification.book_id}/${notification.chapter_id}?comment=${notification.comment_id}#comments`"
       >
         <div class="notification-component__avatar">
           <v-avatar>
@@ -22,7 +24,7 @@
             class="notification-component__created-at"
           >{{$moment(notification.created_at).startOf('second').fromNow()}}</span>
         </div>
-      </li>
+      </nuxt-link>
       <no-ssr>
         <infinite-loading @infinite="infiniteHandler"></infinite-loading>
       </no-ssr>
@@ -75,7 +77,7 @@ export default {
   top: 5rem;
   width: 40rem;
   right: 15rem;
-
+  color: black;
   border-radius: 0.4rem;
   background-color: #fff;
   box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14),

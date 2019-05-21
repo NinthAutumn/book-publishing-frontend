@@ -63,7 +63,7 @@
         <BookContent :book="book"></BookContent>
         <Tags v-if="!$device.isMobile"></Tags>
         <section class="book__reviews">
-          <div class="book__reviews__title">レビュー({{this.$store.getters["review/getReviewCount"]}})</div>
+          <div class="book__reviews__title">レビュー({{reviewCount}})</div>
           <ReviewsList :rating="book.rating"></ReviewsList>
         </section>
       </div>
@@ -169,7 +169,8 @@ export default {
     ...mapGetters({
       book: "book/getBook",
       view: "book/getBookView",
-      chapterCount: "book/getBookChapterCount"
+      chapterCount: "book/getBookChapterCount",
+      reviewCount: "review/getReviewCount"
     }),
     bookmarkedText() {
       if (!this.bookmarked) {

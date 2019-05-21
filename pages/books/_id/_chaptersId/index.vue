@@ -1,7 +1,11 @@
 <template>
   <div class="divider chapter-wrapper">
     <main class="divider chapter-container">
-      <Chapter></Chapter>
+      <Chapter v-if="!nochapter"></Chapter>
+      <div v-else class="chapter-closed" @click="nochapter=false">
+        <fa icon="expand-arrows-alt"></fa>
+      </div>
+
       <CommentList v-if="!$device.isMobile"></CommentList>
     </main>
   </div>
@@ -11,7 +15,8 @@
 export default {
   data() {
     return {
-      bottom: false
+      bottom: false,
+      nochapter: false
     };
   },
   components: {
@@ -19,6 +24,11 @@ export default {
     CommentList: () => import("@/components/ChapterPage/CommentList")
   },
   async mounted() {
+    if (this.$route.query.comment) {
+      console.log(this.$route.query.comment);
+      this.nochapter = true;
+    }
+
     await this.$store.dispatch("chapter/fetchChapterNav", {
       index: this.$store.getters["chapter/getChapter"].index,
       bookId: this.$route.params.id,
@@ -71,7 +81,7 @@ export default {
     }
   },
   auth: false,
-  async fetch({ store, params }) {
+  async fetch({ store, params, query }) {
     const index = params.chaptersId;
     if (store.state.auth.loggedIn) {
       await store.dispatch("chapter/fetchChapter", {
@@ -80,10 +90,12 @@ export default {
         bookId: params.id
       });
       await store.dispatch("user/fetchUserSettings");
-      await store.dispatch("library/postHistory", {
-        chapterId: params.chaptersId,
-        bookId: params.id
-      });
+      if (query.comment) {
+        await store.dispatch("library/postHistory", {
+          chapterId: params.chaptersId,
+          bookId: params.id
+        });
+      }
     } else {
       await store.dispatch("chapter/fetchChapter", {
         chapterId: params.chaptersId,
@@ -107,6 +119,13 @@ export default {
 .chapter {
   display: flex;
   justify-content: space-around;
+  .chapter-closed {
+    padding: 1rem;
+    font-size: 2.5rem;
+    &:hover {
+      cursor: pointer;
+    }
+  }
   .chapter-wrapper {
     position: relative;
     display: flex;

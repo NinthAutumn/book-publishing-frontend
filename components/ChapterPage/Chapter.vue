@@ -59,7 +59,6 @@ export default {
   components: {
     Currency: () => import("@/components/All/Currency")
   },
-  created() {},
   computed: {
     fontSize() {
       return this.$store.getters["user/getFontSize"] + "px";

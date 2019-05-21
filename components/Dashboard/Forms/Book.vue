@@ -44,7 +44,37 @@
               v-model="form.synopsis"
             ></textarea>
           </div>
+          <div class="book-form__main-genre">
+            <Select
+              transition="grow-shrink"
+              name="メインジャンル"
+              multiple
+              :data="items"
+              icon="location-arrow"
+              v-model="form.main_genre"
+              top
+              :limit="1"
+              style="margin-bottom:2rem;"
+              :disabled="form.genre.length > 0"
+              disableMessage="メインジャンルをまた選ぶには関連ジャンルを全部選択解除してください"
+            ></Select>
+          </div>
+        </div>
+        <div class="book-form__genre">
+          <label for>メインジャンル</label>
+          <transition-group tag="ul" name="list" class="book-form__genre-list">
+            <li
+              class="book-form__genre-item"
+              v-for="(genre) in form.main_genre"
+              :key="genre"
+              v-text="genre"
+            ></li>
+          </transition-group>
+          <span>作品のメインジャンル *必ず1ジャンルを選択</span>
+        </div>
+        <div class="book-form__genre">
           <Select
+            :disable="form.main_genre[0]"
             transition="grow-shrink"
             name="ジャンル"
             multiple
@@ -55,9 +85,7 @@
             :limit="6"
             style="margin-bottom:2rem;"
           ></Select>
-        </div>
-        <div class="book-form__genre">
-          <label for>ジャンル</label>
+          <label for>関連ジャンル</label>
           <transition-group tag="ul" name="list" class="book-form__genre-list">
             <li
               class="book-form__genre-item"
@@ -106,7 +134,7 @@ export default {
         synopsis: "",
         title: "",
         tags: [],
-        mgenre: "",
+        main_genre: [],
         genre: [],
         cover: {}
       },
@@ -175,9 +203,14 @@ export default {
     },
     beforeAvatarUpload(file) {},
     async postBook() {
-      if (this.form.genre.length < 1 || this.form.tags.length < 1) {
+      if (
+        this.form.genre.length < 1 ||
+        this.form.tags.length < 1 ||
+        this.form.main_genre.length < 1
+      ) {
         return this.$message({
-          message: "ジャンルまたはタグは必ず一個以上選択してください",
+          message:
+            "関連ジャンル・メインジャンル・タグは必ず一個以上選択してください",
           type: "error"
         });
       }
@@ -187,7 +220,8 @@ export default {
           title: this.form.title,
           tags: this.form.tags,
           genres: this.form.genre,
-          synopsis: this.form.synopsis
+          synopsis: this.form.synopsis,
+          main_genre: this.form.main_genre[0]
           //   cover: url.url,
           //   cover_path: url.path
         };
