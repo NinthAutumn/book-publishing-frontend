@@ -138,6 +138,7 @@ module.exports = {
       src: '@/plugins/scrollTo',
       ssr: false
     },
+
   ],
 
   /*
@@ -192,6 +193,10 @@ module.exports = {
     }],
     ['@nuxtjs/dotenv', {
       /* module options */
+    }],
+    ['@nuxtjs/toast', {
+      position: 'top-right',
+      duration: 5000
     }],
     ['nuxt-stripe-module', {
       publishableKey: process.env.STRIPE_KEY,

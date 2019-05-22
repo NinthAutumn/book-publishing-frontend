@@ -151,9 +151,11 @@ export default {
         }
       });
       if (this.selectedData.length > this.limit) {
-        this.$message({
-          type: "error",
-          message: "これ以上選べません"
+        this.$toast.show(`これ以上選べません`, {
+          theme: "toasted-primary",
+          position: "top-right",
+          duration: 1000,
+          icon: "extension"
         });
         this.selectedData.pop();
         this.multiData.forEach((item, n) => {
@@ -173,9 +175,11 @@ export default {
     },
     openModal: function() {
       if (this.disabled) {
-        this.$message({
-          message: this.disableMessage,
-          type: "error"
+        this.$toast.show(this.disableMessage, {
+          theme: "toasted-primary",
+          position: "top-right",
+          duration: 3000,
+          icon: "extension"
         });
       } else {
         this.modal = true;

@@ -14,46 +14,51 @@
           v-if="volume.chapters.length> 0"
           class="book-chapters__volume-item__content"
         >{{volume.volume_title || `第${volume.volume}章`}}</div>
-        <transition-group name="list-complete" tag="ul" class="book-chapters__chapter-list">
-          <nuxt-link
-            tag="li"
-            class="book-chapters__chapter-item"
-            v-for="(chapter) in volume.chapters"
-            :key="chapter.id"
-            :to="{path: `/books/${ chapter.book_id}/${chapter.id}`}"
-            v-ripple
-          >
-            <div class="flex-divider flex" style="height:100%;">
-              <div class="book-chapters__chapter-item__content--index">{{chapter.index}}</div>
-              <div
-                class="flex-divider flex--between flex-column book-chapters__chapter-item__content book-chapters__chapter-item__content--divider"
-              >
+        <div class="book-chapters__container" v-if="volume.chapters[0].id">
+          <transition-group name="list-complete" tag="ul" class="book-chapters__chapter-list">
+            <nuxt-link
+              tag="li"
+              class="book-chapters__chapter-item"
+              v-for="(chapter) in volume.chapters"
+              :key="chapter.id"
+              :to="{path: `/books/${ chapter.book_id}/${chapter.id}`}"
+              v-ripple
+            >
+              <div class="flex-divider flex" style="height:100%;">
+                <div class="book-chapters__chapter-item__content--index">{{chapter.index}}</div>
                 <div
-                  class="book-chapters__chapter-item__content book-chapters__chapter-item__content--title"
+                  class="flex-divider flex--between flex-column book-chapters__chapter-item__content book-chapters__chapter-item__content--divider"
                 >
-                  <p>{{chapter.title}}</p>
-                </div>
-                <div
-                  class="book-chapters__chapter-item__content book-chapters__chapter-item__content--chapter-meta"
-                >
-                  <p
-                    class="book-chapters__chapter-item__content book-chapters__chapter-item__content--createdAt"
-                    v-if="today < $moment(chapter.created_at).add(6, 'days').toDate()"
-                  >{{$moment(chapter.created_at).startOf('minute').fromNow()}}</p>
-                  <p
-                    class="book-chapters__chapter-item__content--createdAt"
-                    v-else
-                  >{{$moment(chapter.created_at).format('l')}}</p>
-                  <fa
-                    class="book-chapters_chapter-item__content--locked"
-                    icon="lock"
-                    v-if="chapter.locked"
-                  ></fa>
+                  <div
+                    class="book-chapters__chapter-item__content book-chapters__chapter-item__content--title"
+                  >
+                    <p>{{chapter.title}}</p>
+                  </div>
+                  <div
+                    class="book-chapters__chapter-item__content book-chapters__chapter-item__content--chapter-meta"
+                  >
+                    <p
+                      class="book-chapters__chapter-item__content book-chapters__chapter-item__content--createdAt"
+                      v-if="today < $moment(chapter.created_at).add(6, 'days').toDate()"
+                    >{{$moment(chapter.created_at).startOf('minute').fromNow()}}</p>
+                    <p
+                      class="book-chapters__chapter-item__content--createdAt"
+                      v-else
+                    >{{$moment(chapter.created_at).format('l')}}</p>
+                    <fa
+                      class="book-chapters_chapter-item__content--locked"
+                      icon="lock"
+                      v-if="chapter.locked"
+                    ></fa>
+                  </div>
                 </div>
               </div>
-            </div>
-          </nuxt-link>
-        </transition-group>
+            </nuxt-link>
+          </transition-group>
+        </div>
+        <div class="book-chapters__chapter-list book-chapters__chapter-list--no" v-else>
+          <div class="book-chapters__no-chapter">まだこの章に話はありません</div>
+        </div>
       </li>
     </transition-group>
   </div>
@@ -156,6 +161,15 @@ export default {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     // grid-template-rows: auto;
+    &--no {
+      #{$self}__no-chapter {
+        font-size: 1.6rem;
+        height: 4rem;
+        display: flex;
+        align-items: center;
+        color: grey;
+      }
+    }
     user-select: none;
 
     #{$self}__chapter-item {

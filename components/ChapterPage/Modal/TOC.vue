@@ -4,7 +4,7 @@
     <ul class="table-content__volume-list" v-else>
       <li class="table-content__volume-item" v-for="(volume, index) in toc" :key="index">
         <h3>第{{volume.volume}}章 {{volume.title}}</h3>
-        <ul class="table-content__chapter-list">
+        <ul class="table-content__chapter-list" v-if="volume.chapters[0].id">
           <nuxt-link
             tag="li"
             v-ripple="{class:'ripple-color'}"

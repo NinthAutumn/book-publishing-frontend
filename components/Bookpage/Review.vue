@@ -175,9 +175,11 @@ export default {
         this.deleteModal = !this.deleteModal;
         this.loading = false;
       } catch (error) {
-        return this.$message({
-          message: "レビューの削除に失敗しました",
-          type: "error"
+        this.$toast.show("レビューの削除に失敗しました", {
+          theme: "toasted-primary",
+          position: "top-right",
+          duration: 1000,
+          icon: "extension"
         });
       }
     }

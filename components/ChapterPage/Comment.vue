@@ -198,9 +198,11 @@ export default {
           parentId
         })
         .then(async () => {
-          this.$message({
-            message: "返信の投稿に成功しました",
-            type: "success"
+          this.$toast.show("返信の投稿に成功しました", {
+            theme: "toasted-primary",
+            position: "top-right",
+            duration: 1000,
+            icon: "extension"
           });
           // await this.$store.dispatch("comment/fetchCommentList", {
           //   chapterId: this.$route.params.chaptersId,
@@ -210,9 +212,11 @@ export default {
           this.content = "";
         })
         .catch(() => {
-          this.$message({
-            message: "返信の投稿に成功しました",
-            type: "error"
+          this.$toast.show("返信の投稿に失敗しました", {
+            theme: "toasted-primary",
+            position: "top-right",
+            duration: 1000,
+            icon: "extension"
           });
         });
     },

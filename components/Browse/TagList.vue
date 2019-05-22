@@ -129,9 +129,11 @@ export default {
           let tagExistsi = this.tags.include.filter(ele => ele === this.tag);
           let tagExistse = this.tags.exclude.filter(ele => ele === this.tag);
           if (tagExistsi.length > 0 || tagExistse.length > 0) {
-            return this.$message({
-              message: "タグがもう存在してっしょ",
-              type: "error"
+            return this.$toast.show("タグがもう存在しています", {
+              theme: "toasted-primary",
+              position: "top-right",
+              duration: 1000,
+              icon: "extension"
             });
           }
           this.tags.include.push(this.tag);
@@ -144,9 +146,11 @@ export default {
           let tagExistsi = this.tags.include.filter(ele => ele === this.tag);
           let tagExistse = this.tags.exclude.filter(ele => ele === this.tag);
           if (tagExistsi.length > 0 || tagExistse.length > 0) {
-            return this.$message({
-              message: "タグがもう存在してっしょ",
-              type: "error"
+            return this.$toast.show("タグがもう存在しています", {
+              theme: "toasted-primary",
+              position: "top-right",
+              duration: 1000,
+              icon: "extension"
             });
           }
 

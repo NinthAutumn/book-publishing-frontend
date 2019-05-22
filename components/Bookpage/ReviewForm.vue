@@ -72,18 +72,22 @@ export default {
             bookId: this.$route.params.id
           });
         } catch (error) {
-          this.$message({
-            message: "レビューの投稿に失敗しました",
-            type: "error"
+          this.$toast.show("レビューの投稿に失敗しました", {
+            theme: "toasted-primary",
+            position: "top-right",
+            duration: 1000,
+            icon: "extension"
           });
           console.log(error);
         }
       } else {
         try {
           if (!this.review.rating) {
-            return this.$message({
-              message: "レビューを投稿するには投票が必要です",
-              type: "error"
+            this.$toast.show("レビューを投稿するには投票が必要です", {
+              theme: "toasted-primary",
+              position: "top-right",
+              duration: 1000,
+              icon: "extension"
             });
           }
           await this.$store.dispatch("review/addReview", {
@@ -98,15 +102,20 @@ export default {
             direction: "desc",
             type: "likes"
           });
-          this.$message({
-            message: "レビューの投稿に成功しました",
-            type: "success"
+          this.$toast.show("レビューの投稿に成功しました", {
+            theme: "toasted-primary",
+            position: "top-right",
+            duration: 1000,
+            icon: "extension"
           });
+
           this.$emit("input", false);
         } catch (error) {
-          this.$message({
-            message: "レビューの投稿に失敗しました" + error,
-            type: "error"
+          this.$toast.show("レビューの投稿に失敗しました", {
+            theme: "toasted-primary",
+            position: "top-right",
+            duration: 1000,
+            icon: "extension"
           });
           console.log(error);
         }

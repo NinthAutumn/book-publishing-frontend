@@ -45,7 +45,7 @@
         :to="`/dashboard/books/${book.id}/published`"
         class="dash-book__button dash-book__button--chapter"
         v-ripple
-      >話を作る</nuxt-link>
+      >話を投稿</nuxt-link>
     </div>
     <!-- <div class="dash-booklist__cover" @mouseenter="image = !image" @mouseleave="image = !image">
       <v-img

@@ -1,19 +1,23 @@
 <template>
   <div class="recommendation-books" :class="{'recommendation-books--mobile': $device.isMobile}">
     <div class="recommendation-books__list">
-      <div class="recommendation-books__item" v-for="book in books" :key="book.id">
+      <nuxt-link
+        tag="div"
+        :to="'/books/' + book.id"
+        class="recommendation-books__item"
+        v-for="book in books"
+        :key="book.id"
+      >
         <div class="recommendation-books__cover">
-          <nuxt-link tag="div" :to="'/books/' + book.id">
-            <!-- :src="`https://storage.googleapis.com/theta-images/${book.cover}`" -->
-            <v-img
-              :src="book.cover"
-              :aspect-ratio="1/1.5"
-              max-width="14rem"
-              min-width="12rem"
-              alt="Book cover"
-              style="border-radius: 0.4rem;  "
-            ></v-img>
-          </nuxt-link>
+          <!-- :src="`https://storage.googleapis.com/theta-images/${book.cover}`" -->
+          <v-img
+            :src="book.cover"
+            :aspect-ratio="1/1.5"
+            max-width="14rem"
+            min-width="12rem"
+            alt="Book cover"
+            style="border-radius: 0.4rem;  "
+          ></v-img>
         </div>
         <div class="recommendation-books__meta">
           <div class="recommendation-books__rating" v-if="!$device.isMobile">
@@ -39,7 +43,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </nuxt-link>
     </div>
   </div>
 </template>
@@ -107,8 +111,19 @@ export default {
     padding-right: 2rem;
     #{$self}__item {
       display: flex;
+      transform: scale(1);
+      transition: transform 200ms ease-out;
       // align-items: center;
-
+      &:hover {
+        cursor: pointer;
+        transform: scale(1.05);
+        transition: transform 200ms ease-out;
+      }
+      &:focus,
+      &:active {
+        transform: scale(0.95);
+        transition: transform 200ms ease-out;
+      }
       #{$self}__cover {
         margin-right: 2rem;
       }

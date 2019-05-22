@@ -297,10 +297,16 @@ export default {
         bookId: this.book.id
       };
       if (this.$store.state.loggedIn === false) {
-        this.$message({
-          message: `ブックマークをするにはログインかアカウント作成が必要です`,
-          type: "error"
-        });
+        this.$toast.show(
+          `ブックマークをするにはログインかアカウント作成が必要です`,
+          {
+            theme: "toasted-primary",
+            position: "top-right",
+            duration: 1000,
+            icon: "extension"
+          }
+        );
+
         return this.$store.commit("LOGIN_STATE");
       } else {
         if (this.bookmarked) {
@@ -310,9 +316,11 @@ export default {
             });
             this.bookmarked = false;
           } catch (error) {
-            this.$message({
-              message: `ブックマーク解除に失敗しました`,
-              type: "error"
+            this.$toast.show(`ブックマーク解除に失敗しました`, {
+              theme: "toasted-primary",
+              position: "top-right",
+              duration: 1000,
+              icon: "extension"
             });
           }
         } else {
@@ -322,9 +330,11 @@ export default {
             });
             this.bookmarked = true;
           } catch (error) {
-            this.$message({
-              message: `ブックマークを失敗しました`,
-              type: "error"
+            this.$toast.show(`ブックマークを失敗しました`, {
+              theme: "toasted-primary",
+              position: "top-right",
+              duration: 1000,
+              icon: "extension"
             });
           }
         }
@@ -337,9 +347,11 @@ export default {
           bookId: this.$route.params.id
         });
         if (error) {
-          this.$message({
-            message: error,
-            type: "error"
+          this.$toast.show(`${error}`, {
+            theme: "toasted-primary",
+            position: "top-right",
+            duration: 1000,
+            icon: "extension"
           });
         }
       } catch (error) {

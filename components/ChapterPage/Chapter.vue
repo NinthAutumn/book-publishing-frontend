@@ -94,9 +94,11 @@ export default {
           bookId: this.$route.params.id
         });
       } catch (error) {
-        this.$message({
-          message: error,
-          type: "error"
+        return this.$toast.show(error, {
+          theme: "toasted-primary",
+          position: "top-right",
+          duration: 1000,
+          icon: "extension"
         });
       }
     },
