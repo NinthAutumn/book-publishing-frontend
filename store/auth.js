@@ -29,6 +29,7 @@ export const mutations = {
     state.loggedIn = false
     state.token = ""
     state.refresh_token = ""
+    state.strategy = ""
   },
 }
 
@@ -56,18 +57,44 @@ export const actions = {
 
       this.$storage.setUniversal('access_token', data.access_token)
       this.$storage.setUniversal('refresh_token', data.refresh_token)
+      this.$storage.setUniversal('strategy', strategy)
       this.$axios.defaults.headers.common['Authorization'] = 'Bearer ' + data.access_token
+      this.$router.go(0)
     } catch (error) {
 
     }
   },
-  async logOut({
+  async socialAuth({
+    commit
+  }, {
+    strategy,
+    token
+  }) {
+    const {
+      data
+    } = await this.$axios.post(`/auth/social/${strategy}?token=${token}`)
+    commit('SET_AUTH', {
+      access_token: data.access_token,
+      refresh_token: data.refresh_token,
+      strategy: strategy
+    })
+    this.$storage.setUniversal('access_token', data.access_token)
+    this.$storage.setUniversal('refresh_token', data.refresh_token)
+    this.$storage.setUniversal('strategy', strategy)
+    this.$axios.defaults.headers.common['Authorization'] = 'Bearer ' + data.access_token
+    this.$router.go(0)
+    // accessToken/idToken
+
+  },
+  async logout({
     commit
   }) {
-    Cookies.remove('token')
+    this.$storage.removeUniversal('access_token')
+    this.$storage.removeUniversal('refresh_token')
+    this.$storage.removeUniversal('strategy')
     delete this.$axios.defaults.headers.common['Authorization']
-    delete this.$axios.defaults.headers.common['']
     commit("AUTH_LOGOUT");
+    this.$router.go(0)
   },
   async signup({
     commit

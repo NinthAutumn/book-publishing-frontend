@@ -101,9 +101,8 @@ export default {
   },
   methods: {
     async logOut() {
-      await this.$auth.logout();
+      await this.$store.dispatch("auth/logout");
       this.$axios.setHeader("Authorization", null);
-      this.$router.go(0);
     }
   }
   // loading: false

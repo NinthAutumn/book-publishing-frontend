@@ -7,7 +7,7 @@
             :accept="'image/*'"
             :canvas-color="'default'"
             :placeholder="'ユーザーアバター'"
-            v-model="user.avatar"
+            v-model="avatar"
             :width="150"
             :height="150"
           ></croppa>
@@ -29,6 +29,7 @@ export default {
     return {
       open: false,
       blob: "",
+      avatar: {},
       user: {
         avatar: {},
         username: "",
@@ -39,13 +40,13 @@ export default {
   methods: {
     async setUsername() {
       try {
-        this.user.avatar.generateBlob(async function(blob) {
-          this.blob = blob;
+        this.avatar.generateBlob(async blob => {
+          const url = await this.$store.dispatch("upload/image", blob);
+          this.user["avatar"] = url.url;
+          this.user["avatar_path"] = url.path;
+          await this.$store.dispatch("user/patchUser", { user: this.user });
         });
-        const url = await this.$store.dispatch("upload/image", this.blob);
-        this.user["avatar"] = url.url;
-        this.user["avatar_path"] = url.path;
-        await this.$store.dispatch("user/patchUser", { user: this.user });
+
         // await this.$auth.fetchUser();
       } catch (error) {
         console.log(error);

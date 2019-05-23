@@ -19,6 +19,8 @@
         <svg-icon class="social-auth__icon social-auth__icon--google" name="google" v-else></svg-icon>
         <div class="social-auth__key">{{social.key}}</div>
       </li>
+      <!-- <div class="g-signin2" :data-onsuccess="socialGoogle"></div> -->
+      <!-- <GoogleLogin :params="params" :onSuccess="googleAuth">Login</GoogleLogin> -->
     </ul>
     <div class="social-auth__create-account">
       アカウントを持っていない?
@@ -28,6 +30,7 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 export default {
   data: function() {
     return {
@@ -56,18 +59,98 @@ export default {
           icon: "envelope",
           pref: "fas"
         }
-      ]
+      ],
+      info: {
+        token: "",
+        value: ""
+      },
+      params: {
+        client_id: ""
+      },
+      alert: null,
+      loading: false,
+      google_loading: false,
+      google_ready: false
     };
   },
+  async mounted() {},
   methods: {
+    ...mapActions({
+      auth: "auth/socialAuth"
+    }),
     async socialLogin(value) {
-      if (value === "local") {
-        return this.$store.commit("SET_AUTH_PAGE", 1);
+      switch (value) {
+        case "local":
+          return this.$store.commit("SET_AUTH_PAGE", 1);
+          break;
+        case "facebook":
+          try {
+            //  console.log(res.authResponse);
+            window.FB.login(
+              async res => {
+                console.log(res);
+                if (res.authResponse) {
+                  let token = res.authResponse.accessToken;
+
+                  await this.auth({ token: token, strategy: "facebook" });
+                } else {
+                  // console.log(errpr);
+                  this.$toast.show(`フェースブックのログインに失敗しました`, {
+                    theme: "toasted-primary",
+                    position: "top-right",
+                    duration: 1000,
+                    icon: "extension"
+                  });
+                }
+              },
+              {
+                scope: "public_profile,email"
+              }
+            );
+            // console.log("dasfadsfadsfasdfadsfasdf");
+          } catch (error) {
+            console.log(error);
+            this.$toast.show(`フェースブックのログインに失敗しました`, {
+              theme: "toasted-primary",
+              position: "top-right",
+              duration: 1000,
+              icon: "extension"
+            });
+          }
+          break;
+        case "google":
+          this.google_submit();
+          break;
+        case "twitter":
+          this.$toast.show(`ツイッターの対応は現在工作通です`, {
+            theme: "toasted-primary",
+            position: "top-right",
+            duration: 2000,
+            icon: "extension"
+          });
+          break;
+        default:
+          break;
       }
-      this.$auth.loginWith(value);
+      if (value === "local") {
+      } else {
+      }
+      // this.$auth.loginWith(value);
     },
     async changeStep() {
       this.$store.commit("SET_AUTH_PAGE", 2);
+    },
+    async googleAuth(googleUser) {
+      console.log(googleUser);
+    },
+    async google_submit() {
+      await window.google_auth2.signIn().then(
+        async val =>
+          await this.auth({
+            token: val.Zi.access_token,
+            strategy: "google"
+          })
+      );
     }
   }
 };
@@ -102,7 +185,7 @@ export default {
       &:hover {
         box-shadow: 0 7px 14px 0 rgba(60, 66, 87, 0.1),
           0 3px 6px 0 rgba(0, 0, 0, 0.07);
-
+        cursor: pointer;
         transition: box-shadow 150ms ease;
       }
       &:active,
@@ -127,7 +210,14 @@ export default {
       }
       &--twitter {
         color: #059ff5;
-        border-color: rgb(247, 247, 247);
+        background-color: rgb(182, 182, 182);
+        // box-shadow: none;
+        cursor: default;
+        &:hover {
+          cursor: default;
+          box-shadow: 0 2px 5px 0 rgba(60, 66, 87, 0.1),
+            0 1px 1px 0 rgba(0, 0, 0, 0.07);
+        }
       }
       #{$self}__icon {
         // margin-right: 3rem;
@@ -145,7 +235,6 @@ export default {
         justify-self: right;
       }
       &:hover {
-        cursor: pointer;
       }
     }
   }

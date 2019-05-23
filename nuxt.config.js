@@ -41,6 +41,11 @@ module.exports = {
     }, {
       rel: 'stylesheet',
       href: 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'
+    }],
+    script: [{
+      src: '/js/fb-sdk.js'
+    }, {
+      src: '/js/gg-sdk.js'
     }]
   },
 
@@ -111,9 +116,6 @@ module.exports = {
       src: '@/plugins/vuelineclamp',
       ssr: false
     }, {
-      src: '@/plugins/bar',
-      ssr: false
-    }, {
       src: '@/plugins/graphs',
       ssr: false
     }, {
@@ -137,10 +139,12 @@ module.exports = {
     }, {
       src: '@/plugins/scrollTo',
       ssr: false
+    }, {
+      src: '@/plugins/gAuth',
+      ssr: false,
     },
     {
       src: '@/plugins/auth',
-
     }
 
   ],
@@ -214,13 +218,13 @@ module.exports = {
       publishableKey: process.env.STRIPE_KEY,
       version: 'v3', // Default
     }],
-    "nuxt-compress"
+    "nuxt-compress",
   ],
   /*
    ** Axios module configuration
    */
   axios: {
-    baseURL: process.env.SERVER_URL || 'http://localhost:4000/api',
+    baseURL: process.env.SERVER_URL || 'http://localhost:5000/api',
   },
 
   auth: {

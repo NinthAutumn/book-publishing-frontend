@@ -17,6 +17,7 @@ export default async function ({
     $axios,
 
   } = app
+
   $axios.onError(async error => {
     if (error.config && error.response && error.response.status === 401) {
       return
@@ -24,37 +25,40 @@ export default async function ({
   })
   let token = $storage.getUniversal('access_token')
   const refresh = $storage.getUniversal('refresh_token')
+  let strategy = $storage.getUniversal('strategy')
   if (token) {
     $axios.defaults.headers.common['Authorization'] = 'Bearer ' + token
     store.commit('auth/SET_AUTH', {
       refresh_token: refresh,
       access_token: token,
-      strategy: 'local'
+      strategy: strategy
     })
     await store.dispatch('user/fetchUser')
+    const decoded = parseJwt(token)
+    let expdate = ((decoded.exp * 1000) - (Date.now()))
+    setInterval(async function () {
+      await $axios.patch('/auth/token', {
+        refresh
+      }).then((res) => {
+        newToken = res.data.token
+        $axios.defaults.headers.common['Authorization'] = 'Bearer ' + newToken
+        store.commit('auth/SET_AUTH', {
+          refresh_token: refresh,
+          access_token: newToken,
+          strategy: 'local'
+        })
+        $storage.setUniversal('access_token', newToken)
+      })
+    }, expdate * 0.7);
   }
   let track_id = $storage.getUniversal('track_id')
   if (!track_id) {
     track_id = uuid()
     $storage.setUniversal('track_id', track_id)
   }
+
   $axios.defaults.headers.common['TrackId'] = track_id
-  const decoded = parseJwt(token)
-  let expdate = ((decoded.exp * 1000) - (Date.now()))
-  setInterval(async function () {
-    await $axios.patch('/auth/token', {
-      refresh
-    }).then((res) => {
-      newToken = res.data.token
-      $axios.defaults.headers.common['Authorization'] = 'Bearer ' + newToken
-      store.commit('auth/SET_AUTH', {
-        refresh_token: refresh,
-        access_token: newToken,
-        strategy: 'local'
-      })
-      $storage.setUniversal('access_token', newToken)
-    })
-  }, expdate * 0.7);
+
 
 
 
