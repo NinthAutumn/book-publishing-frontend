@@ -52,7 +52,7 @@ import { mapGetters } from "vuex";
 export default {
   computed: {
     ...mapGetters({
-      user: "loggedInUser"
+      user: "user/loggedInUser"
     })
   }
 };

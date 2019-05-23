@@ -76,7 +76,7 @@ export default {
       stripe: this.$stripe.import(),
       form: {
         phone: "",
-        email: this.$store.getters.loggedInUser.email,
+        email: this.$store.getters["user/loggedInUser"].email,
         fullname: "",
         firstname: "",
         lastname: ""

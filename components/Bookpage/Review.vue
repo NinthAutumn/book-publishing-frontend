@@ -47,7 +47,7 @@
           style="width:100%;"
           v-if="$store.getters.isAuthenticated"
         >
-          <div v-if="$store.getters.loggedInUser.id === review.user_id">
+          <div v-if="$store.getters['user/loggedInUser'].id === review.user_id">
             <span>編集</span>|
             <span @click="toggleWarning">削除</span>
             <v-dialog v-model="deleteModal" persistent max-width="290">

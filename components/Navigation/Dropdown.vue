@@ -78,7 +78,7 @@ export default {
   },
   computed: {
     user() {
-      return this.$store.getters.loggedInUser;
+      return this.$store.getters["user/loggedInUser"];
     },
     wealth() {
       return this.$store.getters["wallet/getWealth"];
@@ -101,9 +101,8 @@ export default {
   },
   methods: {
     async logOut() {
-      await this.$auth.logout();
+      await this.$store.dispatch("auth/logout");
       this.$axios.setHeader("Authorization", null);
-      this.$router.go(0);
     }
   }
   // loading: false

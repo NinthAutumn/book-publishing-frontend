@@ -74,7 +74,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   data() {
@@ -106,6 +106,10 @@ export default {
     async google() {
       // this.$auth.loginWith("google");
     },
+    ...mapActions({
+      create: "auth/signup",
+      user: "user/fetchUser"
+    }),
     async signUp() {
       // const isValid = await this.$refs.observer.validate();
       await this.$validator.validateAll();
@@ -116,14 +120,9 @@ export default {
             email: this.email,
             password: this.password
           };
-          const postUser = await this.$store.dispatch("postUser", { user });
-          const succ = await this.$auth.loginWith("local", {
-            data: {
-              username: this.username,
-              password: this.password
-            }
-          });
-          this.$router.go(0);
+          const postUser = await this.$store.dispatch("auth/signup", { user });
+
+          // this.$router.go(0);
         } catch (error) {
           this.$message({
             message: "アカウント作成に失敗",

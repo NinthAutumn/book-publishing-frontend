@@ -75,7 +75,7 @@ export default {
     if (this.$store.getters.isAuthenticated) {
       await this.$store.dispatch("comment/fetchCommentList", {
         chapterId: this.$route.params.chaptersId,
-        userId: this.$store.getters["loggedInUser"].id
+        userId: this.$store.getters["user/loggedInUser"].id
       });
     } else {
       await this.$store.dispatch("comment/fetchCommentList", {
@@ -103,7 +103,7 @@ export default {
           });
           await this.$store.dispatch("comment/fetchCommentList", {
             chapterId: this.$route.params.chaptersId,
-            userId: this.$store.getters["loggedInUser"].id
+            userId: this.$store.getters["user/loggedInUser"].id
           });
           this.newComment.content = "";
         })

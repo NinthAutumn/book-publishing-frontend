@@ -109,22 +109,7 @@ export const mutations = {
 
 
 export const actions = {
-  async postUser({
-    commit
-  }, {
-    user
-  }) {
-    try {
-      const res = await this.$axios.post("/auth/signup", {
-        username: user.username,
-        email: user.email,
-        password: user.password
-      });
-      return Promise.resolve(res.data)
-    } catch (error) {
-      return Promise.reject(error)
-    }
-  },
+
   async nuxtServerInit({
     commit,
     state,
@@ -133,16 +118,7 @@ export const actions = {
     req,
     res
   }) {
-    if (req.headers.cookie) {
-      const track_id = parse(req.headers.cookie).track_id
-      if (!track_id) {
-        const id = uuid()
-        res.setHeader('Set-Cookie', [serialize('track_id', id)])
-        this.$axios.defaults.headers.common['TrackId'] = id
-      } else {
-        this.$axios.defaults.headers.common['TrackId'] = track_id
-      }
-    }
+
 
   }
 }

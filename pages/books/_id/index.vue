@@ -158,7 +158,7 @@ export default {
     if (store.getters.isAuthenticated) {
       await store.dispatch("book/fetchBook", {
         id: params.id,
-        userId: store.getters["loggedInUser"].id
+        userId: store.getters["user/loggedInUser"].id
       });
       // await store.dispatch("review/reviewedStatus", params.id);
       // await store.dispatch("library/checkBookmark", params.id);

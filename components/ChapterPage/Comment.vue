@@ -155,7 +155,7 @@ export default {
     ...mapGetters({
       theme: "user/getTheme",
       logged: "isAuthenticated",
-      user: "loggedInUser"
+      user: "user/loggedInUser"
     })
   },
   methods: {
@@ -204,10 +204,7 @@ export default {
             duration: 1000,
             icon: "extension"
           });
-          // await this.$store.dispatch("comment/fetchCommentList", {
-          //   chapterId: this.$route.params.chaptersId,
-          //   userId: this.$store.getters["loggedInUser"].id
-          // });
+
           this.replyForm = false;
           this.content = "";
         })
