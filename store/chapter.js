@@ -147,12 +147,11 @@ export const actions = {
     state
   }, {
     chapterId,
-    userId = "",
     bookId
   }) {
     // const nextindex = index
     try {
-      const res = await this.$axios.get(`/chapter?chapterId=${chapterId}&userId=${userId}`)
+      const res = await this.$axios.get(`/chapter?chapterId=${chapterId}`)
       const {
         next,
         prev,
@@ -168,7 +167,21 @@ export const actions = {
     } catch (error) {
       return Promise.reject(error.response.message)
     }
+  },
+  async fetchChapterDetail({
+    commit
+  }, {
+    chapterId
+  }) {
+    try {
+      const {
+        data
+      } = await this.$axios.get(`/chapter/show?chapterId=${chapterId}`)
+      commit('SET_CHAPTER', data)
 
+    } catch (error) {
+
+    }
   },
   async fetchChapterNav({
     commit

@@ -1,88 +1,69 @@
 import Cookies from 'js-cookie';
 
 export const state = () => ({
-  userId: "",
-  token: Cookies.get('token') || '',
-  status: "",
-  user: {},
-  loggedIn: false
+  token: this.$storage.getUniversal('access_token') || '',
+  loggedIn: false,
+  refresh_token: this.$storage.getUniversal('refresh_token') || "",
+  strategy: ""
 })
 
 export const getters = {
-  isAuthenticated: (state) => {
-    return !!state.token
-  },
-  authStatus: (state) => {
-    return state.status
-  },
-  getToken: (state) => {
-    return state.token
-  }
+  isAuthenticated: state => state.loggedIn,
+  getStrategy: state => state.strategy,
+  getAccessToken: state => state.token,
+  getRefreshToken: state => state.refresh_token,
 }
 
 export const mutations = {
-
-  AUTH_REQUEST(state) {
-    state.status = 'loading'
-  },
-  AUTH_SUCCESS(state, {
-    token,
-    user
-  }) {
-    state.user = user
-
-    state.token = token
+  SET_AUTH: (state, {
+    access_token,
+    refresh_token,
+    strategy
+  }) => {
+    state.token = access_token,
+      state.refresh_token = refresh_token
     state.loggedIn = true
-
-    // state.userId = userId
-
-  },
-  AUTH_SUCCESS_USER(state, user) {},
-  AUTH_ERROR(state) {
-    state.status = 'error'
+    state.strategy = strategy
   },
   AUTH_LOGOUT(state) {
     state.loggedIn = false
-    state.user = ""
     state.token = ""
-  }
-
+    state.refresh_token = ""
+  },
 }
 
 export const actions = {
   async login({
     commit,
-    state
+    dispatch
   }, user) {
-    const thirty = 1 / 48
-    await this.$axios.post('/auth/login', {
-      username: user.username,
-      password: user.password
-    }).then((res) => {
-      try {
-        // commit("AUTH_SUCCESS", {
-        //   token: token,
-        //   user: res.data
-        // });
+    try {
+      const {
+        data
+      } = await this.$axios.post('/auth/login', {
+        username: user.username,
+        password: user.password
+      })
 
-        return res.data
-      } catch (error) {
-        return null
-      }
-    })
+      commit('SET_AUTH', {
+        access_token: data.access_token,
+        refresh_token: data.refresh_token,
+        strategy: 'local'
+      })
+      this.$storage.setUniversal('access_token', data.access_token)
+      this.$storage.setUniversal('refresh_token', data.refresh_token)
+      this.$axios.defaults.headers.common['Authorization'] = 'Bearer ' + data.access_token
+    } catch (error) {
 
+    }
   },
   async logOut({
     commit
   }) {
     Cookies.remove('token')
     delete this.$axios.defaults.headers.common['Authorization']
+    delete this.$axios.defaults.headers.common['']
     commit("AUTH_LOGOUT");
-    // await this.$axios.delete(process.env.baseUrl + '/users/logout').then((res) => {
-
-    // }).catch((e) => {
-    //   console.log(e);
-    // })
   },
   async signUp({
     commit
@@ -107,7 +88,6 @@ export const actions = {
       const token = res.headers.authorization
       if (token) {
         this.$axios.defaults.headers.common['Authorization'] = token
-        this.$axios.defaults.headers.common['refresh'] = refresh
         Cookies.set("token", token)
         Cookies.set("refresh", refresh)
         commit("AUTH_SUCCESS", {

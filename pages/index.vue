@@ -31,11 +31,16 @@
         <h3>更新された作品</h3>
       </div>
       <BooksList :trendings="latest"></BooksList>
+      <div class="card-title">
+        <h3>更新頻度が高い</h3>
+      </div>
+      <BooksList :trendings="frequent"></BooksList>
     </div>
   </div>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   components: {
     BooksList: () => import("@/components/Homepage/BooksList"),
@@ -47,7 +52,9 @@ export default {
     SearchBar: () => import("@/components/Navigation/SearchBar"),
     Recommended: () => import("@/components/Homepage/Recommended")
   },
-
+  async asyncData({ store }) {
+    await store.dispatch("analytic/fetchHighFrequent");
+  },
   async fetch({ store }) {
     // await store.dispatch("review/mostLiked");
     await store.dispatch("analytic/fetchTrending", { time: "weekly", page: 1 });
@@ -97,15 +104,12 @@ export default {
     }
   },
   computed: {
-    trending() {
-      return this.$store.getters["analytic/getTrendingList"];
-    },
-    latest() {
-      return this.$store.getters["analytic/getLatest"];
-    },
-    recommended() {
-      return this.$store.getters["analytic/getRecommended"];
-    }
+    ...mapGetters({
+      trending: "analytic/getTrendingList",
+      latest: "analytic/getLatest",
+      recommended: "analytic/getRecommended",
+      frequent: "analytic/getFrequent"
+    })
   },
   auth: false
 };

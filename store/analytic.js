@@ -7,7 +7,8 @@ export const state = () => ({
   comments: [],
   latest: [],
   reviews: [],
-  voteRanking: []
+  voteRanking: [],
+  frequent: []
 })
 
 export const getters = {
@@ -19,7 +20,8 @@ export const getters = {
   getComments: state => state.comments,
   getLatest: state => state.latest,
   getTrendingReviews: state => state.reviews,
-  getVoteRanking: state => state.voteRanking
+  getVoteRanking: state => state.voteRanking,
+  getFrequent: state => state.frequent
 }
 
 export const mutations = {
@@ -64,6 +66,9 @@ export const mutations = {
     ranking.forEach((book) => {
       state.ranking.push(book)
     })
+  },
+  SET_FREQUENT: (state, frequent) => {
+    state.frequent = frequent
   }
 }
 export const actions = {
@@ -171,6 +176,18 @@ export const actions = {
 
     } catch (error) {
       return Promise.reject(error)
+    }
+  },
+  fetchHighFrequent: async function ({
+    commit
+  }) {
+    try {
+      const {
+        data
+      } = await this.$axios.get('/analytic/home/frequency')
+      commit('SET_FREQUENT', data)
+    } catch (error) {
+      console.log(error);
     }
   },
   fetchTrendingReviews: async function ({

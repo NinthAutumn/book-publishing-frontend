@@ -25,15 +25,16 @@ export default {
     content: String,
     placeholder: String,
     ruby: Boolean
+    // text: String
   },
   data() {
     return {
-      text: "",
       textArray: [],
       tempText: "",
       realArray: [],
       selectedText: "",
       activeE: "",
+      // text: "",
       placehold: this.placeholder
     };
   },
@@ -57,50 +58,20 @@ export default {
         .replace(/[|]/g, "")
         .replace(/[》]/g, "")
         .replace(/[《]/g, "").length;
+    },
+    text() {
+      return this.value || "";
     }
   },
+  mounted() {
+    // if (this.value) {
+    //   this.text = this.value;
+    // }
+  },
   created() {
-    if (this.content) {
-      this.text = this.content;
-      this.text = this.text.replace(/(<([^>]+)>)/gi, "");
-      this.textArray = this.text.split(/\n/);
-      this.textArray.forEach(text => {
-        text = text
-          .replace(/[|]+/g, "<ruby>")
-          .replace(/[》]+/g, "</rt></ruby>")
-          .replace(/[《]+/g, "<rt>");
-      });
-      let br = 0;
-      this.realArray = this.textArray
-        .filter((value, index) => {
-          if (value) {
-            br = 0;
-            return true;
-          } else if (br > 0) {
-            return false;
-          } else {
-            br++;
-            return true;
-          }
-        })
-        // .filter(value => value)
-        .map((value, index) => {
-          // console.log(value );
-          if (value) {
-            br = 0;
-            return `<p>${value}</p>`;
-          } else if (index === this.textArray.length - 1) {
-            return "";
-          } else {
-            return `<p><br></p>`;
-          }
-
-          // value + "dog";
-        });
-      this.tempText = this.realArray.join("");
-      // console.log(this.tempText);
-      this.$emit("input", this.tempText);
-    }
+    // if (this.content) {
+    //   this.text = this.content;
+    // }
   },
   methods: {
     createRuby() {

@@ -8,7 +8,14 @@
         </div>
       </div>
       <div class="chapter-form__options flex">
-        <Select v-model="form.volume" name="章を選ぶ" icon="archive" :object="volumes" volume></Select>
+        <Select
+          v-model="form.volume"
+          name="章を選ぶ"
+          icon="archive"
+          :object="volumes"
+          volume
+          :disabled="disableVolume"
+        ></Select>
         <!-- <Select v-model="form.locked" def="無料" icon="yen-sign" name="時価" :object="locked"></Select> -->
         <div
           class="chapter-form__options__user-news flex-row flex--align flex--center"
@@ -27,8 +34,11 @@
       <transition name="slide-fade">
         <div class="chapter-form__content-subject">
           <div class="form-control flex-row flex--align">
-            <p v-if="form.volume.index !== 0" class="chapter-index">第{{latestIndex}}話</p>
-            <p v-else class="chapter-index">第{{0}}話</p>
+            <div class="divider" v-if="!$route.query.chapterId">
+              <p v-if="form.volume.index !== 0" class="chapter-index">第{{latestIndex}}話</p>
+              <p v-else class="chapter-index">第{{0}}話</p>
+            </div>
+            <p class="chapter-index">話{{chapter.index}}話</p>
             <input
               placeholder="タイトル"
               type="text"
@@ -44,6 +54,7 @@
               v-model="form.content"
               :placeholder="contentHolder"
               ruby
+              :value="form.content"
               required
             ></TextEditor>
           </div>
@@ -190,6 +201,25 @@ export default {
     Select: () => import("@/components/All/Select"),
     Currency: () => import("@/components/All/Currency")
   },
+  computed: {
+    latestIndex() {
+      return this.$store.getters["chapter/getNewIndex"];
+    },
+    chapter() {
+      return this.$store.getters["chapter/getChapter"];
+    }
+  },
+  mounted: async function() {
+    if (this.$route.query.chapterId) {
+      this.form.content = this.chapter.content;
+      this.form.title = this.chapter.title;
+      this.form.header = this.chapter.header;
+      this.form.footer = this.chapter.footer;
+      this.form.drawings = this.chapter.drawings;
+      // this.form.
+      this.disableVolume = true;
+    }
+  },
   created() {
     this.$store.getters["chapter/getVolumeList"].forEach((volume, index) => {
       if (index === 0) {
@@ -216,10 +246,18 @@ export default {
         }
       }
     });
-    this.form.volume = {
-      id: this.volumes[this.volumes.length - 1].value.id,
-      index: this.volumes[this.volumes.length - 1].index
-    };
+    if (this.$route.query.chapterId) {
+      this.form.volume = {
+        id: this.chapter.volume_id,
+        index: this.chapter.index
+      };
+    } else {
+      this.form.volume = {
+        id: this.volumes[this.volumes.length - 1].value.id,
+        index: this.volumes[this.volumes.length - 1].index
+      };
+    }
+
     // this.getNewLatestChapter();
   },
   watch: {
@@ -233,11 +271,7 @@ export default {
       this.getNewLatestChapter();
     }
   },
-  computed: {
-    latestIndex() {
-      return this.$store.getters["chapter/getNewIndex"];
-    }
-  },
+
   data() {
     return {
       volumes: [],
@@ -263,6 +297,7 @@ export default {
         content: false,
         title: false
       },
+      disableVolume: false,
       submitForm: false,
       form: {
         title: "",
@@ -313,7 +348,7 @@ export default {
       }
     },
     async getNewLatestChapter() {
-      console.log(this.form.volume.id);
+      // console.log(this.form.volume.id);
       await this.$store.dispatch("chapter/fetchLatestIndex", {
         bookId: this.$route.params.id,
         volumeId: this.form.volume.id

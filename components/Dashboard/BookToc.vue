@@ -41,6 +41,7 @@
           v-for="(chapter,index) in volume.chapters"
           :key="index"
           v-ripple
+          @click="editChapter(chapter.id)"
         >
           <div class="flex-divider flex-row flex--align">
             <div class="book-toc__index">{{chapter.index}}</div>
@@ -68,7 +69,14 @@ export default {
       editButton: null
     };
   },
-  methods: {}
+  methods: {
+    async editChapter(chapterId) {
+      await this.$store.dispatch("chapter/fetchChapterDetail", { chapterId });
+      this.$router.push(
+        `/dashboard/books/${this.$route.params.id}/new?chapterId=${chapterId}`
+      );
+    }
+  }
 };
 </script>
 

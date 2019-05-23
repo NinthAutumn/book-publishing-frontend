@@ -173,7 +173,6 @@ module.exports = {
     ['@nuxtjs/component-cache', {
       maxAge: 1000 * 60 * 60
     }],
-    "@nuxtjs/auth",
     'cookie-universal-nuxt',
     ['nuxt-fontawesome', {
       component: 'fa',
@@ -189,6 +188,15 @@ module.exports = {
       id: 'UA-119733183-2',
       autoTracking: {
         page: false
+      }
+    }],
+    ['nuxt-universal-storage', {
+      storage: {
+        vuex: true, // boolean or {namespace} 
+        localStorage: true, // boolean or {prefix } 
+        cookie: true, // boolean or {prefix, options } 
+        initialState: {}, // Object {}
+        ignoreExceptions: true // 
       }
     }],
     ['@nuxtjs/dotenv', {

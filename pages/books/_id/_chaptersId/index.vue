@@ -89,7 +89,7 @@ export default {
         bookId: params.id
       });
       await store.dispatch("user/fetchUserSettings");
-      if (query.comment) {
+      if (!query.comment) {
         await store.dispatch("library/postHistory", {
           chapterId: params.chaptersId,
           bookId: params.id

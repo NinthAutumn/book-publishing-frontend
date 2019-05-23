@@ -126,12 +126,14 @@ export default {
   #card-element {
   }
   &__wrapper {
+    border-radius: 0.4rem;
     #{$self}__content {
       color: black;
     }
     background-color: #fff;
     #{$self}__container {
       min-height: 55rem;
+      border-radius: 0.4rem;
       max-width: 40rem;
       color: #6b7c93;
       background-color: #f7f8f9;

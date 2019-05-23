@@ -40,7 +40,6 @@ export default async function ({
       const token = $auth.getToken(authStrategy).substr(7);
       const url = `/auth/social/${authStrategy}?token=${token}`
       try {
-
         const {
           data
         } = await $axios.post(url);
