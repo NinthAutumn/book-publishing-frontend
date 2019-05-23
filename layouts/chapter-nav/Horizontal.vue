@@ -115,7 +115,7 @@ export default {
       return this.$store.getters["user/getCommentNotificationCount"];
     },
     user() {
-      return this.$store.getters.loggedInUser;
+      return this.$store.getters["user/loggedInUser"];
     },
     loggedIn() {
       return this.$store.getters.isAuthenticated;

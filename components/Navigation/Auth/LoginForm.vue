@@ -87,14 +87,13 @@ export default {
         password: this.form.password
       };
       try {
-        await this.$auth.loginWith("local", {
-          data: {
-            username: this.form.username,
-            password: this.form.password
-          }
+        await this.$store.dispatch("auth/login", {
+          user: this.form,
+          strategy: "local"
         });
+        await this.$store.dispatch("user/fetchUser");
         this.$store.commit("LOGIN_FALSE");
-        this.$router.go(0);
+        // this.$router.go(0);
       } catch (error) {
         this.$message({
           message: "パスワードまたはユーザ名が間違っています",

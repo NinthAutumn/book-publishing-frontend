@@ -4,7 +4,7 @@ export default function ({
 }) {
 
   // If the user is not authenticated
-  if (store.state.auth.loggedIn) {
+  if (!store.state.auth.loggedIn) {
     return redirect('/')
   }
 

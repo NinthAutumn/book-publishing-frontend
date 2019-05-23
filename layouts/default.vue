@@ -35,7 +35,7 @@ export default {
   },
   computed: {
     user() {
-      return this.$store.getters.loggedInUser;
+      return this.$store.getters["user/loggedInUser"];
     }
   },
   watch: {},

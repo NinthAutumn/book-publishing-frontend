@@ -30,7 +30,7 @@ export default {
       if (this.$store.getters["isLoggedIn"]) {
         return (
           this.$store.getters["user/getUserProfile"]._id ===
-          this.$store.getters["loggedInUser"]._id
+          this.$store.getters["user/loggedInUser"].id
         );
       } else {
         return false;

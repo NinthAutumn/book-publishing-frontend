@@ -100,7 +100,7 @@ export default {
   },
   computed: {
     ...mapGetters({
-      user: "loggedInUser",
+      user: "user/loggedInUser",
       loggedIn: "isAuthenticated",
       loginState: "getLoginFormState",
       productState: "getProductModalState",

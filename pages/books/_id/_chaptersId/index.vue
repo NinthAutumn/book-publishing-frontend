@@ -44,7 +44,7 @@ export default {
         .dispatch("chapter/fetchChapter", {
           bookId,
           chapterId,
-          userId: this.$store.getters["loggedInUser"]._id
+          userId: this.$store.getters["user/loggedInUser"].id
         })
         .then(review => {
           this.$router.push(`/books/${bookId}/${chapterId}`);
@@ -57,7 +57,7 @@ export default {
         .dispatch("chapter/fetchChapter", {
           bookId,
           chapterId,
-          userId: this.$store.getters["loggedInUser"].id
+          userId: this.$store.getters["user/loggedInUser"].id
         })
         .then(review => {
           this.$router.push(`/books/${bookId}/${chapterId}`);

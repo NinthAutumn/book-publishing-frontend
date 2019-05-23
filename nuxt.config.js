@@ -138,6 +138,10 @@ module.exports = {
       src: '@/plugins/scrollTo',
       ssr: false
     },
+    {
+      src: '@/plugins/auth',
+
+    }
 
   ],
 

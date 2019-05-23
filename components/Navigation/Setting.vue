@@ -40,7 +40,7 @@ export default {
   },
   computed: {
     ...mapGetters({
-      current: "loggedInUser"
+      current: "user/loggedInUser"
     })
   },
   mounted() {

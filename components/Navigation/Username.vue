@@ -39,16 +39,14 @@ export default {
   methods: {
     async setUsername() {
       try {
-        this.user.avatar.generateBlob(
-          async function(blob) {
-            this.blob = blob;
-          }
-        );
+        this.user.avatar.generateBlob(async function(blob) {
+          this.blob = blob;
+        });
         const url = await this.$store.dispatch("upload/image", this.blob);
         this.user["avatar"] = url.url;
         this.user["avatar_path"] = url.path;
         await this.$store.dispatch("user/patchUser", { user: this.user });
-        await this.$auth.fetchUser();
+        // await this.$auth.fetchUser();
       } catch (error) {
         console.log(error);
       }
@@ -56,8 +54,8 @@ export default {
   },
   async mounted() {
     if (
-      this.$store.getters.isAuthenticated &&
-      !this.$store.getters.loggedInUser.username
+      this.$store.getters["auth/isAuthenticated"] &&
+      !this.$store.getters["user/loggedInUser"].username
     ) {
       this.open = true;
     }

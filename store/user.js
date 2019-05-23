@@ -57,14 +57,18 @@ export const getters = {
   getProfileStats: state => state.stats,
   getAuthor: state => state.author,
   getCommentNotification: state => state.commentNotification,
-  getCommentNotificationCount: state => state.commentNotificationCount
-
+  getCommentNotificationCount: state => state.commentNotificationCount,
+  loggedInUser: state => state.user
 }
 
 export const mutations = {
   SET_USER_BOOKS(state, books) {
     state.books = books
   },
+  SET_USER: (state, user) => {
+    state.user = user
+  },
+
   LOADING: (state) => {
     state.isLoading = true
   },
@@ -128,6 +132,20 @@ export const mutations = {
   }
 }
 export const actions = {
+  async fetchUser({
+    commit
+  }) {
+    try {
+      const {
+        data
+      } = await this.$axios.get('/user/show')
+      // console.log(data);
+      commit('SET_USER', data)
+    } catch (error) {
+      console.log(error);
+    }
+
+  },
   async getBooks({
     commit
   }, query) {
