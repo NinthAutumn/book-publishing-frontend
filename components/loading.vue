@@ -1,7 +1,7 @@
 <template>
   <div class="loading-component">
     <div class="loading-spinner">
-      <BallScaleRippleMultipleLoader v-if="loading" color="#8860d0" size="30px"></BallScaleRippleMultipleLoader>
+      <BallScaleRippleMultipleLoader v-show="loading" color="#8860d0" size="30px"></BallScaleRippleMultipleLoader>
     </div>
   </div>
 </template>

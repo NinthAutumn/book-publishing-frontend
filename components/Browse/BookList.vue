@@ -116,7 +116,9 @@ export default {
   }
   &__list {
     display: grid;
+    /* autoprefixer: ignore next */
     grid-template-columns: repeat(auto-fit, minmax(10rem, 15rem));
+    /* autoprefixer: ignore next */
     grid-gap: 0.5rem;
   }
   @media screen and (max-width: 500px) {

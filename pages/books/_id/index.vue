@@ -611,6 +611,7 @@ input[type="number"]::-webkit-outer-spin-button {
     display: grid;
     grid-template-columns: 20rem 1fr 1fr 10rem;
     grid-template-rows: 100px 1fr auto;
+    /* autoprefixer: ignore next */
     grid-gap: 1rem;
     grid-template-areas:
       "cover title title avatar"

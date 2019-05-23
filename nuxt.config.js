@@ -53,6 +53,7 @@ module.exports = {
    ** Customize the progress-bar color
    */
   loading: {
+
     color: '#af9bd0',
     height: '3px',
     continuous: true
@@ -160,6 +161,7 @@ module.exports = {
     '@nuxtjs/axios',
     '@nuxtjs/dotenv',
     '@nuxtjs/svg-sprite',
+    '@nuxtjs/style-resources',
 
     ['nuxt-validate', {
       lang: 'ja',
@@ -293,22 +295,22 @@ module.exports = {
       layouts: true
     },
     styleResources: {
-      scss: './assets/css/abstracts/main.scss',
-      // sass: ...,
-      // scss: ...
-      options: {
-        // See https://github.com/yenshih/style-resources-loader#options
-        // Except `patterns` property
-      }
+      sass: ['./assets/css/abstracts/main.scss']
     },
     transpile: ['vue-clamp', 'resize-detector'],
-    postcss: [
-      require('postcss-gap-properties')(),
-      require('autoprefixer')({
-        grid: true,
-        flexbox: true
-      })
-    ],
+    postcss: {
+      plugins: [
+        require('postcss-gap-properties')(),
+        require('autoprefixer')({
+          grid: true,
+          flexbox: true,
+          stats: {
+            warnings: false
+          }
+        })
+      ]
+
+    },
     plugins: [new webpack.ProvidePlugin({
       $: 'jquery',
       jQuery: 'jquery',

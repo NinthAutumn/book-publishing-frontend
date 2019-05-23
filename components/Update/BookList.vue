@@ -40,16 +40,18 @@ export default {
   }
   &__book-list {
     display: grid;
-
+    /* autoprefixer: ignore next */
     grid-template-columns: repeat(auto-fill, minmax(10rem, 15rem));
     grid-template-rows: auto;
+    /* autoprefixer: ignore next */
     grid-gap: 0.5rem;
 
     #{$self}__book-item {
     }
   }
   @supports not (
-    grid-template-columns: repeat(auto-fill, minmax(10rem, 15rem))
+    /* autoprefixer: ignore next */ grid-template-columns:
+      repeat(auto-fill, minmax(10rem, 15rem))
   ) {
     &__book-list {
       grid-template-columns: repeat(8, minmax(10rem, 15rem));
@@ -58,6 +60,7 @@ export default {
   @media screen and(max-width: 500px) {
     #{$self}__book-list {
       grid-template-columns: repeat(3, minmax(5rem, 15rem));
+      /* autoprefixer: ignore next */
       grid-gap: 3px;
 
       #{$self}__book-item {

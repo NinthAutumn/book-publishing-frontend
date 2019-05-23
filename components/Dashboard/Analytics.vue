@@ -88,6 +88,7 @@ export default {
     display: grid;
     grid-template-columns: repeat(4, minmax(10rem, 40rem));
     grid-template-rows: repeat(1, 12rem);
+    /* autoprefixer: ignore next */
     grid-gap: 5rem;
   }
   &__item {

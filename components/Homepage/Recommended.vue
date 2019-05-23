@@ -68,6 +68,7 @@ export default {
     #{$self}__list {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
+      /* autoprefixer: ignore next */
       grid-gap: 1rem;
       padding: 0;
       #{$self}__item {
@@ -107,6 +108,7 @@ export default {
   &__list {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
+    /* autoprefixer: ignore next */
     grid-gap: 1.5rem;
     padding-right: 2rem;
     #{$self}__item {

@@ -46,6 +46,7 @@ export default {
     display: grid;
     margin-top: 1rem;
     grid-template-areas: "views views views" "transactions transactions commentlist";
+    /* autoprefixer: ignore next */
     grid-gap: 10px;
     // margin-bottom: 1rem;
     padding-bottom: 10px;

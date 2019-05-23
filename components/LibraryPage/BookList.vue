@@ -100,7 +100,9 @@ export default {
   }
   &__list {
     display: grid;
+    /* autoprefixer: ignore next */
     grid-template-columns: repeat(auto-fill, minmax(10rem, 13.5rem));
+    /* autoprefixer: ignore next */
     grid-gap: 5px;
     #{$self}__item {
       grid-column: auto;
