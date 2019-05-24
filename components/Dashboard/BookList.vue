@@ -30,6 +30,7 @@ export default {
   &__list {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    /* autoprefixer: ignore next */
     grid-gap: 10px;
     #{$self}__item {
       // width: 100%;

@@ -73,6 +73,7 @@ export default {
       display: grid;
       grid-template-areas: "cover title title" "cover genres genres" "cover rating rating" "cover synopsis synopsis";
       grid-template-columns: minmax(5rem, 11rem) 1fr 1fr;
+      /* autoprefixer: ignore next */
       grid-gap: 0.5rem 1rem;
       grid-template-rows: 3.5rem 3.5rem 2rem 1fr;
     }

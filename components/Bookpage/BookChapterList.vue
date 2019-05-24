@@ -121,6 +121,7 @@ export default {
   .book-chapters {
     $self: &;
     &__chapter-list {
+          /* autoprefixer: ignore next */
       grid-template-columns: repeat(auto-fill, 100%) !important;
       #{$self}__chapter-item {
         &:nth-child(even) {

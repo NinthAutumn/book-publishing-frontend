@@ -30,7 +30,8 @@ export default {
 .analytic-page {
   // display: grid;
   // grid-template-areas: "header header" "graph pie" "list list ";
-  grid-gap: 1.5rem;
+  /* autoprefixer: ignore next */
+  // grid-gap: 1.5rem;
   &__header {
     font-size: 3rem;
     grid-area: header;
