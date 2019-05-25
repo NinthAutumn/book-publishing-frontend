@@ -79,6 +79,7 @@
             name="ジャンル"
             multiple
             :data="items"
+            :latestData="preGenre"
             icon="location-arrow"
             v-model="form.genre"
             top
@@ -123,12 +124,14 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   data() {
     return {
       content: "",
       imageUrl: "",
       rotation: 0,
+      preGenre: [],
       scale: 1,
       form: {
         synopsis: "",
@@ -178,11 +181,14 @@ export default {
   },
 
   computed: {
+    ...mapGetters({
+      url: "upload/getUrl",
+      book: "book/getBook",
+      genres: "book/getBookGenres",
+      tags: "book/getBookTags"
+    }),
     isFormInValid() {
       return Object.keys(this.fields).some(key => this.fields[key].invalid);
-    },
-    url() {
-      return this.$store.state.upload.url;
     }
   },
   watch: {
@@ -196,6 +202,23 @@ export default {
     Select: () => import("@/components/All/Select"),
     TagCreate: () => import("./Tag")
   },
+  created() {
+    if (this.$route.query.bookId) {
+      for (let genre of this.genres) {
+        this.form.genre.push(genre.name);
+        this.preGenre.push(genre.name);
+      }
+      for (let tag of this.tags) {
+        this.form.tags.push(tag.name);
+      }
+      // this.form.genre = this.form.tags;
+      this.form.main_genre = [this.book.name];
+      this.form.title = this.book.title;
+      this.form.synopsis = this.book.synopsis;
+      this.imageUrl = this.book.cover;
+    }
+  },
+  async mounted() {},
   methods: {
     handleAvatarSuccess(res, file) {
       this.form.cover = file.raw;

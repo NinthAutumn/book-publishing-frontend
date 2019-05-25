@@ -6,16 +6,13 @@
     <Horizontal></Horizontal>
     <LeftV></LeftV>
     <RightV></RightV>
-    <div
-      v-if="$store.state.neutral.openImage"
-      class="images-modal__dialog flex flex--align flex--center"
-    >
+    <div v-if="imageModal" class="images-modal__dialog flex flex--align flex--center">
       <div class="images-modal__dialog__container" v-click-outside="closeImageDialog">
         <div class="images-modal__dialog__close">
           <fa class="images-modal__dialog__close__icon" icon="times" @click="closeImageDialog"></fa>
         </div>
         <div class="images-modal__dialog__content flex flex--align flex--center">
-          <img :src="$store.state.neutral.imageUrl" alt>
+          <img :src="$store.state.imageUrl" alt>
         </div>
       </div>
     </div>
@@ -124,12 +121,13 @@ export default {
       next: "chapter/getNextChapter",
       prev: "chapter/getPrevChapter",
       theme: "user/getTheme",
-      modal: "chapter/getModalState"
+      modal: "chapter/getModalState",
+      imageModal: "getImageModalState"
     })
   },
   methods: {
     closeImageDialog() {
-      this.$store.commit("neutral/IMAGE_CLOSE");
+      this.$store.commit("TOGGLE_IMAGE");
     }
   },
   created() {}
@@ -251,6 +249,7 @@ export default {
 .chapter-page {
   // padding: 1rem 0rem;
   transition: 300ms;
+  min-height: 100vh;
   // position: relative !important;
   margin-top: 50px;
   margin-right: 50px;

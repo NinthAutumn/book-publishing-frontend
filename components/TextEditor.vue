@@ -34,13 +34,16 @@ export default {
       realArray: [],
       selectedText: "",
       activeE: "",
-      // text: "",
+      text: this.content,
       placehold: this.placeholder
     };
   },
   watch: {
     text: function(val) {
       this.changes();
+    },
+    content: function(val) {
+      this.text = val;
     }
   },
   computed: {
@@ -58,17 +61,17 @@ export default {
         .replace(/[|]/g, "")
         .replace(/[》]/g, "")
         .replace(/[《]/g, "").length;
-    },
-    text() {
-      return this.value || "";
     }
   },
   mounted() {
-    // if (this.value) {
-    //   this.text = this.value;
-    // }
+    this.text = this.content;
+    this.changes();
+    if (this.value) {
+    }
   },
   created() {
+    this.text = this.content;
+    this.changes();
     // if (this.content) {
     //   this.text = this.content;
     // }
@@ -147,7 +150,6 @@ export default {
           // value + "dog";
         });
       this.tempText = this.realArray.join("");
-      console.log(this.tempText);
       this.$emit("input", this.tempText);
     },
     selectEvent(event) {

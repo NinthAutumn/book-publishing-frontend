@@ -10,6 +10,14 @@ export default {
   layout: "user-nav/User",
   components: {
     BookForm: () => import("@/components/Dashboard/Forms/Book")
+  },
+  async fetch({ route, store }) {
+    if (route.query.bookId) {
+      await store.dispatch("book/fetchBook", {
+        id: route.query.bookId
+      });
+      await store.dispatch("book/fetchBookGenreAndTags", route.query.bookId);
+    }
   }
 };
 </script>

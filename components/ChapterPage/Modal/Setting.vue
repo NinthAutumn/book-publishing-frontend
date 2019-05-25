@@ -7,10 +7,10 @@
     <div class="theme-main">
       <h4 v-text="'テーマ'"></h4>
       <div class="themes-list flex">
-        <div class="theme__item" @click="updateTheme('')"></div>
-        <div class="theme__item theme__item--black" @click="updateTheme('black')"></div>
-        <div class="theme__item theme__item--white" @click="updateTheme('default')"></div>
-        <div class="theme__item theme__item--tan" @click="updateTheme('tan')"></div>
+        <div class="theme__item" @click.stop="updateTheme('')"></div>
+        <div class="theme__item theme__item--black" @click.stop="updateTheme('black')"></div>
+        <div class="theme__item theme__item--white" @click.stop="updateTheme('default')"></div>
+        <div class="theme__item theme__item--tan" @click.stop="updateTheme('tan')"></div>
         <!-- <div class="theme__item theme__item--ruby" @click="updateTheme('ruby')"></div>
         <div class="theme__item theme__item--sapphire" @click="updateTheme('sapphire')"></div>-->
         <!-- <div class="theme__item"></div> -->
@@ -21,11 +21,11 @@
       <div class="font-style__list flex flex--align flex--center">
         <div
           class="font-style__item font-style__item--san-serif"
-          @click="updateFontFamily(false)"
+          @click.stop="updateFontFamily(false)"
           :class="{'active-font':fontFamily === defaultFont }"
         >ゴシック</div>
         <div
-          @click="updateFontFamily(true)"
+          @click.stop="updateFontFamily(true)"
           class="font-style__item font-style__item--serif"
           :class="{'active-font':fontFamily !== defaultFont}"
         >明朝</div>
@@ -35,20 +35,20 @@
       <h4>サイズ</h4>
       <div class="font-size__select">
         <div
-          @click="updateFontSize('decrease')"
+          @click.stop="updateFontSize('decrease')"
           class="font-size__option font-size__option--decrease"
         >
           <fa icon="font"></fa>
           <p>-</p>
         </div>
         <div
-          @click="updateFontSize('default')"
+          @click.stop="updateFontSize('default')"
           class="font-size__option font-size__option--default"
         >
           <fa icon="font"></fa>
         </div>
         <div
-          @click="updateFontSize('increase')"
+          @click.stop="updateFontSize('increase')"
           class="font-size__option font-size__option--increase"
         >
           <fa icon="font"></fa>
@@ -79,6 +79,9 @@ export default {
   },
   methods: {
     async updateTheme(theme) {
+      if (!this.$store.getters["auth/isAuthenticated"]) {
+        return this.$store.commit("LOGIN_STATE");
+      }
       const setting = {
         type: "chapterTheme",
         change: theme
@@ -86,6 +89,9 @@ export default {
       await this.$store.dispatch("user/setSetting", setting);
     },
     async updateFontFamily(change) {
+      if (!this.$store.getters["auth/isAuthenticated"]) {
+        return this.$store.commit("LOGIN_STATE");
+      }
       if (change) {
         const setting = {
           type: "chapterFontFamily",
@@ -102,6 +108,9 @@ export default {
       }
     },
     async updateFontSize(type) {
+      if (!this.$store.getters["auth/isAuthenticated"]) {
+        return this.$store.commit("LOGIN_STATE");
+      }
       switch (type) {
         case "increase":
           if (this.fontSize > 24) {

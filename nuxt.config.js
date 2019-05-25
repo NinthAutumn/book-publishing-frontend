@@ -138,7 +138,7 @@ module.exports = {
       src: '@/plugins/chartLine',
       ssr: false
     }, {
-      src: '@/plugins/scrollTo',
+      src: '@/plugins/skeleton',
       ssr: false
     }, {
       src: '@/plugins/gAuth',

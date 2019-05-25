@@ -4,7 +4,11 @@
       <v-img :src="book.cover" :aspect-ratio="1/1.5" min-width="12rem" class="dash-book__image"></v-img>
     </div>
     <div class="dash-book__meta">
-      <div class="dash-book__title">{{book.title}}</div>
+      <div class="dash-book__header flex-row flex--align flex--between">
+        <div class="dash-book__title">{{book.title}}</div>
+
+        <fa @click="editBook(book.id)" class="dash-book__icon" icon="cog"></fa>
+      </div>
       <div class="dash-book__stats">
         <div class="dash-book__select flex-row flex--between">
           <div class="dash-book__total"></div>
@@ -42,7 +46,7 @@
       >目次</nuxt-link>
       <nuxt-link
         tag="div"
-        :to="`/dashboard/books/${book.id}/published`"
+        :to="`/dashboard/books/${book.id}/new`"
         class="dash-book__button dash-book__button--chapter"
         v-ripple
       >話を投稿</nuxt-link>
@@ -218,6 +222,9 @@ export default {
     async openForm() {
       this.dialog = !this.dialog;
     },
+    editBook(id) {
+      this.$router.push("/dashboard/books/new?bookId=" + id);
+    },
     async changeStat() {
       this.$store
         .dispatch("dashboard/fetchBookStats", {
@@ -280,6 +287,16 @@ export default {
     height: 100%;
     #{$self}__stats {
       // padding-right: 2rem;
+    }
+    #{$self}__header {
+      font-size: 1.6rem;
+      margin-bottom: 1rem;
+      #{$self}__icon {
+        color: rgb(49, 49, 49);
+        &:hover {
+          cursor: pointer;
+        }
+      }
     }
     #{$self}__title {
       font-size: 1.6rem;

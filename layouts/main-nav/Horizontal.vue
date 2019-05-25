@@ -32,7 +32,7 @@
         <div v-if="loggedIn" class="flex-row" style="z-index:3000;" id="prof">
           <div class="profile-pic" @click.stop="userProfile">
             <v-avatar size="30" class="profile-pic__avatar">
-              <img :src="user.avatar">
+              <v-img :src="user.avatar"></v-img>
             </v-avatar>
             <div class="profile-pic__info">
               <div class="profile-pic__meta">
@@ -55,6 +55,7 @@
         <div class="not-loggedin" v-else>
           <img
             class="not-loggedin__img text--link"
+            style="border-radius:10rem;"
             src="~/assets/profile.png"
             @click.stop="loginInState"
           >

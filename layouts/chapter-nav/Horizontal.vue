@@ -26,7 +26,7 @@
         <div
           v-ripple
           class="inbox-icon flex flex--align flex--center"
-          @click.stop="notification = !notification"
+          @click.stop="closeNotification"
         >
           <span v-if="notificationCount > 0">
             <div class="inbox-icon__count" v-if="notificationCount < 9">{{notificationCount}}</div>
@@ -67,6 +67,7 @@
           <img
             class="not-loggedin__img text--link"
             src="~/assets/profile.png"
+            style="border-radius:10rem;"
             @click.stop="loginInState"
           >
         </div>
@@ -163,6 +164,9 @@ export default {
       this.$store.commit("LOGIN_STATE");
     },
     closeNotification() {
+      if (!this.$store.getters["auth/isAuthenticated"]) {
+        return this.$store.commit("LOGIN_STATE");
+      }
       this.notification = !this.notification;
     }
   }

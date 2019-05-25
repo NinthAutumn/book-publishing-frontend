@@ -7,7 +7,8 @@ export const state = () => ({
 })
 
 export const getters = {
-  getUrl: state => state.url
+  getUrl: state => state.url,
+  getMultipleFile: state => state.urls
 }
 
 export const mutations = {
@@ -18,10 +19,7 @@ export const mutations = {
     }
   },
   PUSH_URL(state, url) {
-    state.urls.push({
-      url: `https://storage.googleapis.com/theta-images/${url}`,
-      path: url
-    })
+    state.urls.push(`https://storage.googleapis.com/theta-images/${url}`)
   },
   REMOVE_URL(state, url) {
     state.url = ""
@@ -69,25 +67,31 @@ export const actions = {
   async multiImage({
     commit
   }, file) {
-    // delete this.$axios.defaults.headers.common['Authorization'];
-    // delete this.$axios.defaults.headers.common['TrackId'];
-    commit('REMOVE_URLS')
-    const uploadConfig = await this.$axios.get('/upload')
-    this.$axios.put(uploadConfig.data.url, file, {
-      headers: {
-        'Content-Type': 'image',
-        "Authorization": null,
-        "TrackId": null
-      }
-    }).then(() => {
+    try {
+      const uploadConfig = await this.$axios.get('/upload')
+      // delete this.$axios.defaults.headers.common["Authorization"]
+      // delete this.$axios.defaults.headers.common["TrackId"]
+      await this.$axios.put(uploadConfig.data.url, file, {
+        headers: {
+          'Content-Type': 'image',
+          "Authorization": null,
+          "TrackId": null
+        }
+      }).catch((bal) => {
+        console.log(bal);
+      })
       commit('PUSH_URL', uploadConfig.data.filename)
-    }).catch((e) => {
-      console.log(e);
-    })
-    // const token = Cookies.get('token');
-    // const uuid = Cookies.get('track_id');
-    // this.$axios.defaults.headers.common['TrackId'] = uuid
-    // this.$axios.defaults.headers.common['Authorization'] = token;
+      // const token = this.$storage.getUniversal('access_token')
+      // let track_id = $storage.getUniversal('track_id')
+      // this.$axios.defaults.headers.common['Authorization'] = token
+      // this.$axios.defaults.headers.common["TrackId"] = track_id
+      return Promise.resolve()
+
+    } catch (error) {
+
+    }
+
+
 
   }
 

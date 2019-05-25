@@ -25,8 +25,8 @@
           <div @click="addComment" class="comment-form__submit flex-row flex--align flex--center">投稿</div>
         </div>
       </div>
-      <div class="comment-not" v-else>
-        <button>ログインまたはアカウント作成</button>
+      <div class="flex-row flex--right" v-else>
+        <button class="comment-not" @click.stop="$store.commit('LOGIN_STATE')">ログインまたはアカウント作成</button>
       </div>
       <div class="comment-unordered-list" v-if="comments.length > 0">
         <div class="comment-list__select flex-row flex--align" v-if="comments.length > 1">
@@ -190,6 +190,14 @@ export default {
   &__item {
     // padding-top: 10px;
   }
+}
+.comment-not {
+  font-size: 1.4rem;
+  padding: 1rem;
+  background-color: #32315e;
+  color: white;
+  border-radius: 0.4rem;
+  margin-bottom: 5px;
 }
 .chapter-hr {
   position: relative;

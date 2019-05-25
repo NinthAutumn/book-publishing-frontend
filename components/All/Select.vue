@@ -95,6 +95,7 @@
 <script>
 export default {
   props: {
+    latestData: Array,
     multiple: Boolean,
     data: Array,
     name: String,
@@ -132,6 +133,19 @@ export default {
         width: `${this.width || 350}px`
       }
     };
+  },
+  watch: {
+    latestData: function(val) {
+      console.log("in here");
+      console.log(this.latestData);
+      for (let store of this.latestData) {
+        for (let val of this.multiData) {
+          if (store === val) {
+            val.selected = !val.selected;
+          }
+        }
+      }
+    }
   },
   methods: {
     selected: function(index, disable) {
@@ -248,7 +262,15 @@ export default {
     }
   },
   mounted() {
-    if (this.value && this.volume) {
+    if (this.data && this.value) {
+      for (let store of this.value) {
+        for (let val of this.multiData) {
+          if (store === val) {
+            val.selected = !val.selected;
+          }
+        }
+      }
+    } else if (this.value && this.volume) {
       this.multiData.forEach((e, n) => {
         if (e.value.id === this.value.id) {
           if (e.selected) {

@@ -340,6 +340,7 @@ export default {
       }
     }
     &-username {
+      margin-top: 0.5rem;
     }
     &-title {
       margin-bottom: 5px;

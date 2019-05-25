@@ -31,7 +31,7 @@
     >
       <div
         data-step="1"
-        :style="{'font-size':fontSize, 'font-family':fontStyle}"
+        :style="{'font-size':font + 'px', 'font-family':fontStyle}"
         class="chapter-content step1"
         v-html="chapter.content"
       ></div>
@@ -55,23 +55,19 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   components: {
     Currency: () => import("@/components/All/Currency")
   },
   computed: {
-    fontSize() {
-      return this.$store.getters["user/getFontSize"] + "px";
-    },
-    fontStyle() {
-      return this.$store.getters["user/getFontFamily"];
-    },
-    modal() {
-      return this.$store.getters["chapter/getModalState"];
-    },
-    chapter() {
-      return this.$store.getters["chapter/getChapter"];
-    }
+    ...mapGetters({
+      fontStyle: "user/getFontFamily",
+      modal: "chapter/getModalState",
+      chapter: "chapter/getChapter",
+      user: "user/getUser",
+      font: "user/getFontSize"
+    })
   },
   watch: {},
   data() {
@@ -90,7 +86,7 @@ export default {
         });
         await this.$store.dispatch("chapter/fetchChapter", {
           chapterId: this.$route.params.chaptersId,
-          userId: this.$store.state.auth.user.id,
+          userId: this.user.id,
           bookId: this.$route.params.id
         });
       } catch (error) {
@@ -188,6 +184,7 @@ export default {
   //   position: relative;
   //   width: 100vw;
   // }
+  word-break: break-all;
   ruby {
     font-family: inherit;
     font-size: inherit;

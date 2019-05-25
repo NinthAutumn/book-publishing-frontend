@@ -355,6 +355,21 @@ export const actions = {
     //   return Promise.reject(error)
     // }
 
+  },
+  async patchChapter({
+    commit
+  }, {
+    chapterId,
+    chapter
+  }) {
+    try {
+      await this.$axios.patch('/chapter', {
+        chapter,
+        chapterId
+      })
+    } catch (error) {
+
+    }
   }
 
 }

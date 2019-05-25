@@ -2,8 +2,6 @@
 //   axios
 // } from 'axios'
 
-const moment = require('moment');
-
 export const state = () => ({
   // books: [],
   recommended: [],

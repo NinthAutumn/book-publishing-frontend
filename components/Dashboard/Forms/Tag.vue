@@ -53,9 +53,9 @@ export default {
       search: this.search
     });
     let object = [];
-    this.tags.forEach(item => {
-      object.push({ key: item.name, sum: item.books, selected: false });
-    });
+    for (let tag of this.tags) {
+      object.push({ key: tag.name, sum: tag.books, selected: false });
+    }
     this.selected = object;
   },
   methods: {
@@ -134,7 +134,7 @@ export default {
     overflow: auto;
     #{$self}__item {
       padding: 5px;
-      height:3rem;
+      height: 3rem;
       color: grey;
       font-size: 12px;
       border: 1px solid grey;

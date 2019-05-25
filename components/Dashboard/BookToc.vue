@@ -26,33 +26,7 @@
     </div>
 
     <div class="book-toc__volume" v-for="(volume,index) in toc" :key="index" v-else>
-      <div class="book-toc__volume-meta">
-        <div class="book-toc__volume-index">{{`第${volume.volume}章`}}</div>
-        <div class="book-toc__volume-title">{{volume.volume_title}}</div>
-        <div class="book-toc__volume-edit">編集</div>
-      </div>
-      <div class="book-toc__chapter-list">
-        <div class="book-toc__chapter-item" v-if="!volume.chapters[0].id">
-          <div class="book-toc__title">まだ話はありません</div>
-        </div>
-        <div
-          class="book-toc__chapter-item"
-          v-else
-          v-for="(chapter,index) in volume.chapters"
-          :key="index"
-          v-ripple
-          @click="editChapter(chapter.id)"
-        >
-          <div class="flex-divider flex-row flex--align">
-            <div class="book-toc__index">{{chapter.index}}</div>
-            <div class="book-toc__title">{{chapter.title}}</div>
-          </div>
-          <div class="flex-divider flex-row flex--align">
-            <!-- <div class="book-toc__delete">削除</div> -->
-            <div class="book-toc__created-at">{{$moment(chapter.created_at).calendar()}}</div>
-          </div>
-        </div>
-      </div>
+      <book-toc-volume :volume="volume"></book-toc-volume>
     </div>
   </div>
 </template>
@@ -63,20 +37,16 @@ export default {
     toc: Array,
     published: Boolean
   },
+  components: {
+    BookTocVolume: () => import("./BookTocVolume")
+  },
   data() {
     return {
       deleteButton: null,
       editButton: null
     };
   },
-  methods: {
-    async editChapter(chapterId) {
-      await this.$store.dispatch("chapter/fetchChapterDetail", { chapterId });
-      this.$router.push(
-        `/dashboard/books/${this.$route.params.id}/new?chapterId=${chapterId}`
-      );
-    }
-  }
+  methods: {}
 };
 </script>
 

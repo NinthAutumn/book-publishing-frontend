@@ -23,6 +23,9 @@ export default async function ({
       return
     }
   })
+  // if (!store.getters['auth/isAuthenticated']) {
+  //   return
+  // }
   let token = $storage.getUniversal('access_token')
   const refresh = $storage.getUniversal('refresh_token')
   let strategy = $storage.getUniversal('strategy')
@@ -33,23 +36,35 @@ export default async function ({
       access_token: token,
       strategy: strategy
     })
-    await store.dispatch('user/fetchUser')
-    const decoded = parseJwt(token)
-    let expdate = ((decoded.exp * 1000) - (Date.now()))
-    setInterval(async function () {
-      await $axios.patch('/auth/token', {
-        refresh
-      }).then((res) => {
-        newToken = res.data.token
-        $axios.defaults.headers.common['Authorization'] = 'Bearer ' + newToken
-        store.commit('auth/SET_AUTH', {
-          refresh_token: refresh,
-          access_token: newToken,
-          strategy: 'local'
-        })
-        $storage.setUniversal('access_token', newToken)
-      })
-    }, expdate * 0.7);
+    try {
+      await store.dispatch('user/fetchUser')
+
+      const decoded = parseJwt(token)
+      let expdate = ((decoded.exp * 1000) - (Date.now()))
+      if (refresh) {
+        setInterval(async function () {
+          await $axios.patch('/auth/token', {
+            refresh
+          }).then((res) => {
+            newToken = res.data.token
+            $axios.defaults.headers.common['Authorization'] = 'Bearer ' + newToken
+            store.commit('auth/SET_AUTH', {
+              refresh_token: refresh,
+              access_token: newToken,
+              strategy: strategy
+            })
+            $storage.setUniversal('access_token', newToken)
+          })
+        }, expdate * 0.7);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+
+
+
+
+
   }
   let track_id = $storage.getUniversal('track_id')
   if (!track_id) {

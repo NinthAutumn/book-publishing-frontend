@@ -57,18 +57,18 @@
               <div class="comment-modal__rate">
                 <div
                   class="comment-modal__rate__item comment-modal__rate__item--like"
-                  @click="likedComment"
+                  @click.stop="likedComment"
                 >
                   <fa icon="thumbs-up" class :class="{liked: liked}"></fa>
                 </div>
                 <div
                   class="comment-modal__rate__item comment-modal__rate__item--dislike"
-                  @click="dislikedComment"
+                  @click.stop="dislikedComment"
                 >
                   <fa icon="thumbs-up" :class="{disliked: disliked}"></fa>
                 </div>
               </div>
-              <div class="comment-modal__reply" @click="replyOpen">
+              <div class="comment-modal__reply" @click.stop="replyOpen">
                 <fa icon="comment-alt" style="transform:rotateY(180deg);margin-right:2px;"></fa>返信
               </div>
               <div class="comment-modal__media">シェア</div>
@@ -170,7 +170,11 @@ export default {
       this.hideContent = true;
     },
     replyOpen() {
-      this.replyForm = !this.replyForm;
+      if (this.$store.getters["auth/isAuthenticated"]) {
+        this.replyForm = !this.replyForm;
+      } else {
+        this.$store.commit("LOGIN_STATE");
+      }
     },
     async patchComment() {
       let comment = {
@@ -218,6 +222,9 @@ export default {
         });
     },
     async likedComment() {
+      if (!this.$store.getters["auth/isAuthenticated"]) {
+        return this.$store.commit("LOGIN_STATE");
+      }
       if (this.liked) {
         await this.$store.dispatch("comment/likeComment", {
           commentId: this.comment.id,
@@ -240,6 +247,9 @@ export default {
       }
     },
     async dislikedComment() {
+      if (!this.$store.getters["auth/isAuthenticated"]) {
+        return this.$store.commit("LOGIN_STATE");
+      }
       if (this.disliked) {
         await this.$store.dispatch("comment/likeComment", {
           commentId: this.comment.id,

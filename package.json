@@ -52,6 +52,7 @@
     "nuxt-webfontloader": "^1.0.0",
     "swiper": "^4.4.2",
     "tar": "^4.4.8",
+    "tb-skeleton": "^0.3.6",
     "uuid": "^3.3.2",
     "v-charts": "^1.19.0",
     "v-click-outside-x": "^3.5.6",

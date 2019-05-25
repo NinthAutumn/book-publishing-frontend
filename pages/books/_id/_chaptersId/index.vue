@@ -43,8 +43,8 @@ export default {
       await this.$store
         .dispatch("chapter/fetchChapter", {
           bookId,
-          chapterId,
-          userId: this.$store.getters["user/loggedInUser"].id
+          chapterId
+          // userId: this.$store.getters["user/loggedInUser"].id
         })
         .then(review => {
           this.$router.push(`/books/${bookId}/${chapterId}`);
@@ -56,8 +56,8 @@ export default {
       await this.$store
         .dispatch("chapter/fetchChapter", {
           bookId,
-          chapterId,
-          userId: this.$store.getters["user/loggedInUser"].id
+          chapterId
+          // userId: this.$store.getters["user/loggedInUser"].id
         })
         .then(review => {
           this.$router.push(`/books/${bookId}/${chapterId}`);
@@ -85,7 +85,7 @@ export default {
     if (store.state.auth.loggedIn) {
       await store.dispatch("chapter/fetchChapter", {
         chapterId: params.chaptersId,
-        userId: store.state.auth.user.id,
+        // userId: store.getters["user/getUser"].id,
         bookId: params.id
       });
       await store.dispatch("user/fetchUserSettings");

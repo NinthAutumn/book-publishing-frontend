@@ -1,9 +1,3 @@
-import Cookies from 'js-cookie';
-import uuid from 'uuid'
-import {
-  serialize,
-  parse
-} from 'cookie'
 // var cookie = require('cookie');
 
 
@@ -18,7 +12,9 @@ export const state = () => ({
   contractModal: false,
   contractStep: 0,
   settingModal: false,
-  volumeModal: false
+  volumeModal: false,
+  imageUrl: "",
+  imageModal: false
 })
 
 
@@ -39,7 +35,8 @@ export const getters = {
   getSettingModal: state => state.settingModal,
   getLoginFormState: state => state.loginForm,
   getAuthStep: state => state.authStep,
-  getVolumeModalState: state => state.volumeModal
+  getVolumeModalState: state => state.volumeModal,
+  getImageModalState: state => state.imageModal
 }
 
 
@@ -104,7 +101,14 @@ export const mutations = {
   },
   TOGGLE_SETTING_MODAL(state) {
     state.settingModal = !state.settingModal
-  }
+  },
+  SET_IMAGE_URL(state, imageUrl) {
+    state.imageUrl = imageUrl
+  },
+  TOGGLE_IMAGE(state) {
+    state.imageModal = !state.imageModal
+  },
+
 }
 
 

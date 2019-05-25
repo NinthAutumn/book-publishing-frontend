@@ -119,7 +119,7 @@ export const actions = {
     dispatch
   }) {
     try {
-      const res = await this.$axios.get('/auth/token')
+      // const res = await this.$axios.get('/auth/token')
       const token = res.headers.authorization
       if (token) {
         this.$axios.defaults.headers.common['Authorization'] = token

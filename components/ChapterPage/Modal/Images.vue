@@ -1,36 +1,26 @@
 <template>
   <div class="images-modal">
-    <ul class="images-modal__list" v-if="modal === 'image'&&chapters.extra">
-      <li
-        class="images-modal__item"
-        v-for="(drawing, index) in chapters.extra.drawings"
-        :key="index"
-      >
-        <img
-          class="images-modal__img"
-          :src="`https://storage.googleapis.com/theta-images/${drawing}`"
-          alt
-          @click="openImage(`https://storage.googleapis.com/theta-images/${drawing}`)"
-        >
+    <ul class="images-modal__list" v-if="modal === 'image'&&chapter.drawings">
+      <li class="images-modal__item" v-for="(drawing, index) in chapter.drawings" :key="index">
+        <img class="images-modal__img" :src="drawing" @click.stop="openImage(drawing)">
       </li>
     </ul>
   </div>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   computed: {
-    chapters() {
-      return this.$store.state.chapter.chapter;
-    },
-    modal() {
-      return this.$store.state.chapter.modal;
-    }
+    ...mapGetters({
+      modal: "chapter/getModalState",
+      chapter: "chapter/getChapter"
+    })
   },
   methods: {
     openImage(url) {
-      this.$store.commit("neutral/IMAGE_OPEN");
-      this.$store.commit("neutral/SET_IMAGE", url);
+      this.$store.commit("TOGGLE_IMAGE");
+      this.$store.commit("SET_IMAGE_URL", url);
     }
   }
 };
@@ -55,7 +45,8 @@ export default {
     top: 0 !important;
 
     img {
-      max-width: 800px;
+      max-width: 80vw;
+      max-height: 70vh;
       box-shadow: 1px 1px 5px rgb(238, 236, 236);
     }
     &__container {

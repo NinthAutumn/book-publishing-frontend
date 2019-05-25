@@ -1,10 +1,10 @@
 
 <template>
-  <div class="chapter-form">
-    <form action class="flex flex-column chapter-new" @submit.prevent="createChapter">
+  <div v-loading="loading" class="chapter-form">
+    <div action class="flex flex-column chapter-new">
       <div class="chapter-form__save-draft flex-row flex--align flex--right">
         <div class="chapter-form__save-draft__button flex-row flex--align flex--center">
-          <fa class="chapter-form__save-draft__icon" icon="save"></fa>保存
+          <fa class="chapter-form__save-draft__icon" v-if="!$route.query.chapterId" icon="save"></fa>保存
         </div>
       </div>
       <div class="chapter-form__options flex">
@@ -38,7 +38,7 @@
               <p v-if="form.volume.index !== 0" class="chapter-index">第{{latestIndex}}話</p>
               <p v-else class="chapter-index">第{{0}}話</p>
             </div>
-            <p class="chapter-index">話{{chapter.index}}話</p>
+            <p v-else class="chapter-index">話{{chapter.index}}話</p>
             <input
               placeholder="タイトル"
               type="text"
@@ -54,7 +54,7 @@
               v-model="form.content"
               :placeholder="contentHolder"
               ruby
-              :value="form.content"
+              :content="pcontent"
               required
             ></TextEditor>
           </div>
@@ -133,11 +133,22 @@
 
       <div class="flex-row flex--right">
         <button
-          @click.prevent="openSubmitForm"
+          @click.stop="openSubmitForm"
+          v-if="!$route.query.chapterId"
           class="form-submit form-submit--primary chapter-new-submit"
         >話を投稿</button>
+        <button
+          @click="updateChapter"
+          class="form-submit form-submit--primary chapter-new-submit"
+          v-else
+        >更新</button>
       </div>
-      <v-dialog class="chapter-form__submit-form" v-model="submitForm" width="50rem">
+      <v-dialog
+        v-loading="loading"
+        class="chapter-form__submit-form"
+        v-model="submitForm"
+        width="50rem"
+      >
         <div class="chapter-form__submit-form__title flex-row flex--align flex--between">
           <h3>話を公開する</h3>
           <fa class="close-icon" icon="times" @click="submitForm = !submitForm"></fa>
@@ -190,11 +201,12 @@
           </div>
         </div>
       </v-dialog>
-    </form>
+    </div>
   </div>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   components: {
     TextEditor: () => import("@/components/TextEditor"),
@@ -202,20 +214,25 @@ export default {
     Currency: () => import("@/components/All/Currency")
   },
   computed: {
-    latestIndex() {
-      return this.$store.getters["chapter/getNewIndex"];
-    },
-    chapter() {
-      return this.$store.getters["chapter/getChapter"];
-    }
+    ...mapGetters({
+      latestIndex: "chapter/getNewIndex",
+      chapter: "chapter/getChapter",
+      drawings: "upload/getMultipleFile"
+    })
   },
   mounted: async function() {
     if (this.$route.query.chapterId) {
-      this.form.content = this.chapter.content;
+      this.pcontent = this.chapter.content;
       this.form.title = this.chapter.title;
       this.form.header = this.chapter.header;
       this.form.footer = this.chapter.footer;
-      this.form.drawings = this.chapter.drawings;
+      if (this.chapter.drawings) {
+        this.chapter.drawings.forEach(image => {
+          this.form.drawings.push({ file: image, old: true, url: image });
+          this.fileList.push({ url: image, file: image });
+        });
+      }
+
       // this.form.
       this.disableVolume = true;
     }
@@ -274,6 +291,7 @@ export default {
 
   data() {
     return {
+      loading: false,
       volumes: [],
       locked: [
         {
@@ -297,6 +315,7 @@ export default {
         content: false,
         title: false
       },
+      pcontent: "",
       disableVolume: false,
       submitForm: false,
       form: {
@@ -366,18 +385,25 @@ export default {
       // files.forEach(file => {
       //
       // });
+
       const reader = new FileReader();
       store.forEach(file => {
-        this.form.drawings.push(file);
+        this.form.drawings.push({
+          file: file,
+          old: false,
+          url: URL.createObjectURL(file)
+        });
         this.fileList.push({ url: URL.createObjectURL(file), file: file });
       });
-
-      console.log(this.fileList);
     },
     deleteImage(url) {
       this.fileList = this.fileList.filter(file => {
         return file.url !== url;
       });
+      this.form.drawings = this.form.drawings.filter(file => {
+        return file.url !== url;
+      });
+      console.log(this.form.drawings);
     },
     contentBlur() {
       this.contentHolder = "本文";
@@ -405,12 +431,26 @@ export default {
       this.submitForm = !this.submitForm;
     },
     async createChapter() {
-      if (this.form.drawings) {
-        this.form.drawings.forEach(async image => {
-          await this.$store.dispatch("upload/multiImage", image);
-        });
-      }
+      this.loading = true;
+      this.$store.commit("upload/REMOVE_URLS");
 
+      if (this.form.drawings) {
+        try {
+          let val;
+          for (let image of this.form.drawings) {
+            if (!image.old) {
+              await this.$store.dispatch("upload/multiImage", image.file);
+            }
+          }
+          this.postChapter();
+        } catch (error) {}
+      } else {
+        this.postChapter();
+      }
+      this.loading = false;
+      this.$router.push(`/dashboard/books/${this.$route.params.id}/published`);
+    },
+    async postChapter(val) {
       let state = "published";
       if (this.schedule) {
         state = "scheduled";
@@ -427,21 +467,42 @@ export default {
         state,
         header: this.form.header,
         footer: this.form.footer,
-        drawings: this.$store.state.upload.urls,
-        bookId
+        bookId,
+        drawings: this.drawings
       };
-      // chapter.extra.drawings = this.$store.state.upload.urls;
       await this.$store.dispatch("chapter/createChapter", {
         chapter,
         date: this.form.date
       });
     },
-    handleExceed(files, fileList) {
-      this.$message.warning(
-        `The limit is 3, you selected ${
-          files.length
-        } files this time, add up to ${files.length + fileList.length} totally`
-      );
+    handleExceed(files, fileList) {},
+    async updateChapter() {
+      this.loading = true;
+      let bookId = this.$route.params.id;
+      let state = "published";
+      let drawings = [];
+      this.form.drawings.forEach(val => {
+        if (val.old) {
+          drawings.push(val.url);
+        }
+      });
+      this.drawings.forEach(drawing => {
+        drawings.push(drawing);
+      });
+      let chapter = {
+        title: this.form.title,
+        content: this.form.content,
+        wordCount: this.form.wordCount.length,
+        header: this.form.header,
+        footer: this.form.footer,
+        drawings: drawings
+      };
+      await this.$store.dispatch("chapter/patchChapter", {
+        chapter,
+        chapterId: this.$route.query.chapterId
+      });
+      this.loading = false;
+      this.$router.push("/dashboard/books/");
     }
   }
 };
