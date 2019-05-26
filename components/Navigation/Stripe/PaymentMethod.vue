@@ -141,7 +141,7 @@ export default {
       this.loading = true;
       let res;
       res = await this.$store.dispatch("stripe/postPaymentIntent", {
-        customerId: this.$store.getters["loggedInUser"].stripeCustomerId,
+        customerId: this.$store.getters["user/loggedInUser"].stripeCustomerId,
         payment_method_id: this.selectedCard.id,
         amount: this.price,
         skuId: this.skuId

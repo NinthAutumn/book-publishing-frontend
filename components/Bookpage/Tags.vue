@@ -4,12 +4,16 @@
     <ul class="book-tags__list flex-row">
       <li class="book-tags__item" v-for="(tag, index) in tags" :key="index" v-ripple>{{tag.name}}</li>
     </ul>
+    <p class="book-tags__title">作品のジャンル</p>
+    <ul class="book-tags__list flex-row">
+      <li class="book-tags__item" v-for="(tag, index) in genres" :key="index" v-ripple>{{tag.name}}</li>
+    </ul>
   </div>
 </template>
 
 <script>
 export default {
-  props: ["tags"]
+  props: ["tags", "genres"]
 };
 </script>
 

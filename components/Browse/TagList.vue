@@ -246,6 +246,7 @@ export default {
     // grid-template-columns: repeat(auto-fill, 100px);
     flex-wrap: wrap;
   }
+
   &__add-input {
     input {
       height: 25px;

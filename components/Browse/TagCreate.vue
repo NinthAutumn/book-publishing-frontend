@@ -118,8 +118,10 @@ export default {
     display: flex;
     flex-wrap: wrap;
     overflow: auto;
-    height: 400px;
+    justify-content: flex-start;
+    max-height: 400px;
     #{$self}__item {
+      height: 25px;
       padding: 5px;
       color: grey;
       font-size: 12px;

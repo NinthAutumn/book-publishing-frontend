@@ -143,12 +143,7 @@
           v-else
         >更新</button>
       </div>
-      <v-dialog
-        v-loading="loading"
-        class="chapter-form__submit-form"
-        v-model="submitForm"
-        width="50rem"
-      >
+      <v-dialog class="chapter-form__submit-form" v-model="submitForm" width="50rem">
         <div class="chapter-form__submit-form__title flex-row flex--align flex--between">
           <h3>話を公開する</h3>
           <fa class="close-icon" icon="times" @click="submitForm = !submitForm"></fa>

@@ -135,7 +135,7 @@ export default {
 
       if (this.saveCard) {
         await this.$store.dispatch("stripe/savePaymentMethod", {
-          customerId: this.$store.getters["loggedInUser"].stripeCustomerId,
+          customerId: this.$store.getters["user/loggedInUser"].stripeCustomerId,
           paymentMethodId: paymentMethod.id
         });
       }
@@ -144,7 +144,7 @@ export default {
         res = await this.$store.dispatch("stripe/postPaymentIntent", {
           customerId:
             this.customer.id ||
-            this.$store.getters["loggedInUser"].stripeCustomerId,
+            this.$store.getters["user/loggedInUser"].stripeCustomerId,
           payment_method_id: paymentMethod.id,
           amount: this.price,
           skuId: this.skuId

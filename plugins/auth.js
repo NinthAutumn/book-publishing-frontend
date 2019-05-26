@@ -42,20 +42,20 @@ export default async function ({
       const decoded = parseJwt(token)
       let expdate = ((decoded.exp * 1000) - (Date.now()))
       if (refresh) {
-        setInterval(async function () {
-          await $axios.patch('/auth/token', {
-            refresh
-          }).then((res) => {
-            newToken = res.data.token
-            $axios.defaults.headers.common['Authorization'] = 'Bearer ' + newToken
-            store.commit('auth/SET_AUTH', {
-              refresh_token: refresh,
-              access_token: newToken,
-              strategy: strategy
-            })
-            $storage.setUniversal('access_token', newToken)
-          })
-        }, expdate * 0.7);
+        // setInterval(async function () {
+        //   await $axios.patch('/auth/token', {
+        //     refresh
+        //   }).then((res) => {
+        //     newToken = res.data.token
+        //     $axios.defaults.headers.common['Authorization'] = 'Bearer ' + newToken
+        //     store.commit('auth/SET_AUTH', {
+        //       refresh_token: refresh,
+        //       access_token: newToken,
+        //       strategy: strategy
+        //     })
+        //     $storage.setUniversal('access_token', newToken)
+        //   })
+        // }, expdate * 0.7);
       }
     } catch (error) {
       console.log(error);

@@ -25,7 +25,7 @@
           <span
             class="book-library__progress"
             v-if="book.chapter_count"
-            v-text="`${(book.read/book.chapter_count)*100}%`"
+            v-text="`${((book.read/book.chapter_count)*100).toFixed(0)}%`"
           ></span>
         </div>
         <p v-line-clamp="2" class="book-library__book-title full" ref="texting">{{book.title}}</p>

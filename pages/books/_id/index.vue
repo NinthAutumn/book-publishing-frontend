@@ -61,7 +61,7 @@
       </div>
       <div class="book__synopsis" v-show="tabs.open === 'review'">
         <BookContent :book="book"></BookContent>
-        <Tags :tags="tags" v-if="!$device.isMobile"></Tags>
+        <Tags :tags="tags" :genres="genres" v-if="!$device.isMobile"></Tags>
         <section class="book__reviews">
           <div class="book__reviews__title">レビュー({{reviewCount}})</div>
           <ReviewsList :rating="book.rating"></ReviewsList>

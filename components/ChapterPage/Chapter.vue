@@ -65,7 +65,7 @@ export default {
       fontStyle: "user/getFontFamily",
       modal: "chapter/getModalState",
       chapter: "chapter/getChapter",
-      user: "user/getUser",
+      user: "user/loggedInUser",
       font: "user/getFontSize"
     })
   },
@@ -86,7 +86,6 @@ export default {
         });
         await this.$store.dispatch("chapter/fetchChapter", {
           chapterId: this.$route.params.chaptersId,
-          userId: this.user.id,
           bookId: this.$route.params.id
         });
       } catch (error) {

@@ -14,7 +14,7 @@ export const state = () => ({
   loading: false,
   browse: [],
   tags: [],
-  genres: [],
+  bookGenres: [],
   chapterCount: 0,
   latest: [],
   createAuthor: false,
@@ -38,7 +38,7 @@ export const getters = {
   getAnnouncements: state => state.announcements,
   getBrowseBooks: state => state.browse,
   getBookTags: state => state.tags,
-  getBookGenres: state => state.genres
+  getBookGenres: state => state.bookGenres
 }
 
 export const actions = {
@@ -267,6 +267,16 @@ export const actions = {
     } catch (error) {
 
     }
+  },
+  async fetchAllGenres({
+    commit
+  }) {
+    try {
+      const res = await this.$axios.get(`/book/genres`)
+      commit
+    } catch (error) {
+
+    }
   }
 }
 
@@ -278,6 +288,9 @@ export const mutations = {
     state.tags = tags
   },
   SET_BOOK_GENRES(state, genres) {
+    state.bookGenres = genres
+  },
+  SET_GENRES(state, genres) {
     state.genres = genres
   },
 
