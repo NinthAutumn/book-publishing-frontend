@@ -1,5 +1,3 @@
-import Cookies from 'js-cookie';
-
 export default function ({
   store,
   $axios,

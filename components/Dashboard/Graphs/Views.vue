@@ -82,9 +82,6 @@ export default {
     },
     menu: function(val) {
       // console.log(this.widthBar);
-      this.$refs[`view-bar`].echarts.resize({
-        width: "auto"
-      });
       // this.$nextTick(_ => {
       //   console.log("object");
       //   this.$refs[`view-bar`].echarts.resize();
@@ -200,7 +197,6 @@ export default {
   &__title {
   }
   &__graph {
-    max-width: 100%;
     // display: flex;
     // align-items: center;
     // justify-content: center;

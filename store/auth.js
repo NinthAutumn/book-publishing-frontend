@@ -20,8 +20,8 @@ export const mutations = {
     refresh_token,
     strategy
   }) => {
-    state.token = access_token,
-      state.refresh_token = refresh_token
+    state.token = access_token
+    state.refresh_token = refresh_token
     state.loggedIn = true
     state.strategy = strategy
   },

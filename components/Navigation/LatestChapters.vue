@@ -156,7 +156,8 @@ export default {
     }
     #{$self}__chapter-meta {
       // padding: 0.4rem 0.1rem;
-      padding-left: 1rem;
+      width: 100%;
+      padding: 0 1rem;
     }
     #{$self}__notification {
       content: "";

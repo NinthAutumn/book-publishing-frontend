@@ -106,7 +106,6 @@ export default {
   },
   async mounted() {
     await this.$store.dispatch("stripe/fetchPaymentMethods", {
-      customerId: this.$store.getters["user/loggedInUser"].stripeCustomerId,
       type: "card"
     });
   }

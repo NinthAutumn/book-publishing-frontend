@@ -1,5 +1,5 @@
 <template>
-  <div class="product-modal__payment" v-loading="loading">
+  <div class="product-modal__payment">
     <div class="product-modal__buy-price">{{`合計 ¥${price}円`}}</div>
     <div class="product-modal__select-payment">
       <!-- <div
@@ -59,7 +59,12 @@
     <div id="card-element"></div>
     <div id="card-errors" role="alert" v-text="cardError"></div>
     <v-checkbox v-model="saveCard" :label="`カードを保存する`"></v-checkbox>
-    <div v-ripple @click="buttonSelect" class="product-modal__buy-button">{{`¥${price}円払う`}}</div>
+    <div
+      v-loading="loading"
+      v-ripple
+      @click="buttonSelect"
+      class="product-modal__buy-button"
+    >{{`¥${price}円払う`}}</div>
   </div>
 </template>
 
@@ -182,9 +187,11 @@ export default {
           this.paymentIntent.client_secret
         );
         if (result.error) {
-          return this.$message({
-            message: "クラウンコインの購入に失敗しました",
-            type: "error"
+          return this.$toast.show("クラウンコインの購入に失敗しました", {
+            icon: "extension",
+            duration: 1000,
+            position: "top-right",
+            theme: "toasted-primary"
           });
         } else {
           const res = await this.$axios.get("/stripe/confirmPayment", {
@@ -201,7 +208,14 @@ export default {
         };
         await this.$store.dispatch("wallet/buyCoin", { form });
         this.$store.commit("TOGGLE_PRODUCT_MODAL");
-        return this.$message({
+        return this.$toast.show("クラウンコインの購入に成功しました", {
+          icon: "check_circle",
+          duration: 1000,
+          position: "top-right",
+          theme: "toasted-primary"
+        });
+
+        this.$message({
           message: "クラウンコインの購入に成功しました",
           type: "success"
         });

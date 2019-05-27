@@ -32,9 +32,13 @@ export default async function ({
       access_token: token,
       strategy: strategy
     })
+    await store.dispatch('user/fetchUser')
+  }
+  if (store.getters['auth/isAuthenticated']) {
+
     try {
 
-      await store.dispatch('user/fetchUser')
+
       let refresh_token = $storage.getUniversal('refresh_token')
       if (!refresh_token || !token) {
         return
