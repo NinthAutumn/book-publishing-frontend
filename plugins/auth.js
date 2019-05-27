@@ -18,11 +18,7 @@ export default async function ({
 
   } = app
 
-  $axios.onError(async error => {
-    if (error.config && error.response && error.response.status === 401) {
-      return
-    }
-  })
+
   // if (!store.getters['auth/isAuthenticated']) {
   //   return
   // }
@@ -37,26 +33,39 @@ export default async function ({
       strategy: strategy
     })
     try {
-      await store.dispatch('user/fetchUser')
 
-      const decoded = parseJwt(token)
-      let expdate = ((decoded.exp * 1000) - (Date.now()))
-      if (refresh) {
-        // setInterval(async function () {
-        //   await $axios.patch('/auth/token', {
-        //     refresh
-        //   }).then((res) => {
-        //     newToken = res.data.token
-        //     $axios.defaults.headers.common['Authorization'] = 'Bearer ' + newToken
-        //     store.commit('auth/SET_AUTH', {
-        //       refresh_token: refresh,
-        //       access_token: newToken,
-        //       strategy: strategy
-        //     })
-        //     $storage.setUniversal('access_token', newToken)
-        //   })
-        // }, expdate * 0.7);
+      await store.dispatch('user/fetchUser')
+      let refresh_token = $storage.getUniversal('refresh_token')
+      if (!refresh_token || !token) {
+        return
       }
+      const decoded = parseJwt(token)
+      let expdate = ((decoded.exp * 1000) - (Date.now())) * 0.75
+      if (expdate < 10000) {
+        refreshInterval = 10000
+      }
+
+      let refresher = setInterval(async function () {
+        try {
+          const res = await $axios.patch('/auth/token', {
+            refresh: refresh_token
+          })
+          let access_token = res.data.token
+          store.commit('auth/SET_AUTH', {
+            refresh_token,
+            access_token,
+            strategy: strategy
+          })
+          $storage.setUniversal('access_token', access_token)
+          $axios.defaults.headers.common['Authorization'] = 'Bearer ' + access_token
+        } catch (error) {
+          // store.commit('auth/')
+          throw new Error('トークンの再生に失敗した')
+          // refresher.close()
+        }
+
+      }, expdate);
+
     } catch (error) {
       console.log(error);
     }

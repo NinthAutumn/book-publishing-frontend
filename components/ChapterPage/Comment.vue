@@ -142,6 +142,15 @@ export default {
       editContent: this.comment.content
     };
   },
+  watch: {
+    comment: function(val) {
+      this.liked = this.comment.voted > 0;
+      this.disliked = this.comment.voted < 0;
+      this.likeNumber = this.comment.likes;
+      this.editContent = this.comment.content;
+      this.current = this.comment.content;
+    }
+  },
   computed: {
     indent() {
       return { "padding-left": `${this.depth * 30}px` };

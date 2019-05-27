@@ -29,7 +29,7 @@
         <button class="comment-not" @click.stop="$store.commit('LOGIN_STATE')">ログインまたはアカウント作成</button>
       </div>
       <div class="comment-unordered-list" v-if="comments.length > 0">
-        <div class="comment-list__select flex-row flex--align" v-if="comments.length > 1">
+        <div class="comment-list__select flex-row flex--align" v-if="comments.length > 0">
           <Select
             fontSize="14"
             width="100px"
@@ -37,6 +37,7 @@
             transition="grow-shrink"
             name="並び替え"
             :object="sort_list"
+            v-model="sort_by"
           ></Select>
         </div>
         <li v-for="(comment, index) in comments" :key="index">
@@ -48,11 +49,12 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   computed: {
-    comments() {
-      return this.$store.getters["comment/getComments"];
-    }
+    ...mapGetters({
+      comments: "comment/getComments"
+    })
   },
   components: {
     Comment: () => import("@/components/ChapterPage/Comment"),
@@ -62,26 +64,35 @@ export default {
   data() {
     return {
       sort_list: [
-        { key: "いいね数", value: "likes" },
-        { key: "最新順", value: "latest" },
-        { key: "問題的順", value: "oldest" }
+        { key: "いいね数", value: 0 },
+        { key: "最新順", value: 1 },
+        { key: "問題的順", value: 2 }
       ],
+      sort_by: 0,
       content: "",
-      error: false
+      error: false,
+      page: 2
     };
   },
-  async created() {},
-  async mounted() {
-    if (this.$store.getters.isAuthenticated) {
+  watch: {
+    sort_by: async function(val) {
       await this.$store.dispatch("comment/fetchCommentList", {
         chapterId: this.$route.params.chaptersId,
-        userId: this.$store.getters["user/loggedInUser"].id
-      });
-    } else {
-      await this.$store.dispatch("comment/fetchCommentList", {
-        chapterId: this.$route.params.chaptersId
+        sortBy: this.sort_by,
+        page: 1,
+        limit: 10,
+        direction: 0
       });
     }
+  },
+  async mounted() {
+    await this.$store.dispatch("comment/fetchCommentList", {
+      chapterId: this.$route.params.chaptersId,
+      sortBy: this.sort_by,
+      page: 1,
+      limit: 10,
+      direction: 0
+    });
   },
   methods: {
     async addComment() {

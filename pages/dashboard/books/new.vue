@@ -12,6 +12,7 @@ export default {
     BookForm: () => import("@/components/Dashboard/Forms/Book")
   },
   async fetch({ route, store }) {
+    await store.dispatch("book/fetchAllGenres");
     if (route.query.bookId) {
       await store.dispatch("book/fetchBook", {
         id: route.query.bookId

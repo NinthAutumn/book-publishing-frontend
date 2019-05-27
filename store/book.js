@@ -18,7 +18,8 @@ export const state = () => ({
   chapterCount: 0,
   latest: [],
   createAuthor: false,
-  announcements: []
+  announcements: [],
+  genres: []
 })
 
 export const getters = {
@@ -38,7 +39,8 @@ export const getters = {
   getAnnouncements: state => state.announcements,
   getBrowseBooks: state => state.browse,
   getBookTags: state => state.tags,
-  getBookGenres: state => state.bookGenres
+  getBookGenres: state => state.bookGenres,
+  getGenres: state => state.genres
 }
 
 export const actions = {
@@ -273,7 +275,20 @@ export const actions = {
   }) {
     try {
       const res = await this.$axios.get(`/book/genres`)
-      commit
+      commit('SET_GENRES', res.data)
+    } catch (error) {
+
+    }
+  },
+  async updateBook({
+    commit
+  }, {
+    book
+  }) {
+    try {
+      const res = await this.$axios.patch('/book/', {
+        book
+      })
     } catch (error) {
 
     }

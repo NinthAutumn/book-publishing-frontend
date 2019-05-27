@@ -67,9 +67,10 @@ export const actions = {
     limit = 10,
     page = 1,
     type = 'likes',
-    direction = 'desc'
+    direction = 'desc',
+    sortBy = 0
   }) {
-    await this.$axios.get(`/comment/chapter?type=${type}&direction=${direction}&page=${page}&limit=${limit}&chapterId=${chapterId}&userId=${userId}`).then(async (res) => {
+    await this.$axios.get(`/comment/chapter?sortBy=${sortBy}&type=${type}&direction=${direction}&page=${page}&limit=${limit}&chapterId=${chapterId}&userId=${userId}`).then(async (res) => {
       commit('SET_COMMENTS', res.data)
     })
   },

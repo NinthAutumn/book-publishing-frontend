@@ -68,7 +68,7 @@
         <div
           class="select-component__list select-component__list--multiple"
           :class="{modalDR: modalD === 'right',modalDL: modalD !== 'right',top: top, bottom: bottom}"
-          v-if="multiple && modal"
+          v-if="multiple && modal&&genre"
           :style="gridSetting"
           v-click-outside="closeModal"
         >
@@ -80,11 +80,33 @@
           >{{name}}</div>
           <div
             class="select-component__option flex flex--align flex--around"
-            :class="{selected: item.selected, disable: item.key === disable}"
+            :class="{selected: item.selected, disable: item.key === disable.name}"
             v-for="(item, index) in multiData"
             :key="index"
             v-text="item.key"
-            @click="selected(index,item.key === disable )"
+            @click="selected(index,item.key === disable.name )"
+          ></div>
+        </div>
+        <div
+          class="select-component__list select-component__list--multiple"
+          :class="{modalDR: modalD === 'right',modalDL: modalD !== 'right',top: top, bottom: bottom}"
+          v-if="multiple && modal&&!genre"
+          :style="gridSetting"
+          v-click-outside="closeModal"
+        >
+          <div class="select-component__refresh" @click="reset">
+            <fa icon="sync-alt"></fa>
+          </div>
+          <div
+            class="select-component__option select-component__option--title flex flex--align flex--center"
+          >{{name}}</div>
+          <div
+            class="select-component__option flex flex--align flex--around"
+            :class="{selected: item.selected}"
+            v-for="(item, index) in multiData"
+            :key="index"
+            v-text="item.key"
+            @click="selected(index)"
           ></div>
         </div>
       </transition>
@@ -93,6 +115,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   props: {
     latestData: Array,
@@ -118,9 +141,10 @@ export default {
     color: String,
     value: [Object, String, Array, Number],
     volume: Boolean,
-    disable: [Array, String],
+    disable: [Array, String, Object],
     disabled: Boolean,
-    disableMessage: String
+    disableMessage: String,
+    genre: Boolean
   },
   data() {
     return {
@@ -133,6 +157,11 @@ export default {
         width: `${this.width || 350}px`
       }
     };
+  },
+  computed: {
+    ...mapGetters({
+      genres: "book/getGenres"
+    })
   },
   watch: {
     latestData: function(val) {
@@ -152,18 +181,34 @@ export default {
       if (disable) {
         return;
       }
-      this.multiData.forEach((item, n) => {
-        if (n === index) {
-          item.selected = !item.selected;
-          if (item.selected) {
-            this.selectedData.push(item.key);
-          } else {
-            this.selectedData = this.selectedData.filter(
-              element => element !== item.key
-            );
+      if (this.genre) {
+        this.multiData.forEach((item, n) => {
+          if (n === index) {
+            item.selected = !item.selected;
+            if (item.selected) {
+              this.selectedData.push({ name: item.key, id: item.value });
+            } else {
+              this.selectedData = this.selectedData.filter(
+                element => element !== item.key
+              );
+            }
           }
-        }
-      });
+        });
+      } else {
+        this.multiData.forEach((item, n) => {
+          if (n === index) {
+            item.selected = !item.selected;
+            if (item.selected) {
+              this.selectedData.push(item.key);
+            } else {
+              this.selectedData = this.selectedData.filter(
+                element => element !== item.key
+              );
+            }
+          }
+        });
+      }
+
       if (this.selectedData.length > this.limit) {
         this.$toast.show(`これ以上選べません`, {
           theme: "toasted-primary",
@@ -176,7 +221,7 @@ export default {
           if (n === index) {
             item.selected = !item.selected;
             if (item.selected) {
-              this.selectedData.push(item.key);
+              this.selectedData.push();
             } else {
               this.selectedData = this.selectedData.filter(
                 element => element !== item.key
@@ -244,7 +289,15 @@ export default {
     }
   },
   created() {
-    if (!this.object) {
+    if (this.genre) {
+      this.genres.forEach(genre => {
+        this.multiData.push({
+          key: genre.name,
+          value: genre.id,
+          selected: false
+        });
+      });
+    } else if (!this.object) {
       this.data.forEach(item => {
         this.multiData.push({ key: item, selected: false });
       });

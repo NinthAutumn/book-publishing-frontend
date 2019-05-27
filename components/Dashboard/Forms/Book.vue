@@ -2,7 +2,7 @@
   <div class="book-form">
     <div class="book-form__container">
       <h3 class="book-form__title">本の情報</h3>
-      <form ref="form" @submit.prevent class="flex flex-column">
+      <form ref="form" @submit.prevent class="flex flex-column" v-loading.fullscreen="loading">
         <div class="divider">
           <div class="divider" style="margin-right:10px;">
             <label for="avatar-uploader">本のカバー</label>
@@ -53,6 +53,7 @@
               icon="location-arrow"
               v-model="form.main_genre"
               top
+              genre
               :limit="1"
               style="margin-bottom:2rem;"
               :disabled="form.genre.length > 0"
@@ -66,8 +67,8 @@
             <li
               class="book-form__genre-item"
               v-for="(genre) in form.main_genre"
-              :key="genre"
-              v-text="genre"
+              :key="genre.name"
+              v-text="genre.name"
             ></li>
           </transition-group>
           <span>作品のメインジャンル *必ず1ジャンルを選択</span>
@@ -83,6 +84,7 @@
             icon="location-arrow"
             v-model="form.genre"
             top
+            genre
             :limit="6"
             style="margin-bottom:2rem;"
           ></Select>
@@ -91,8 +93,8 @@
             <li
               class="book-form__genre-item"
               v-for="(genre) in form.genre"
-              :key="genre"
-              v-text="genre"
+              :key="genre.name"
+              v-text="genre.name"
             ></li>
           </transition-group>
           <span>*最高６ジャンルまで &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; *必ず1ジャンルを選択</span>
@@ -104,8 +106,8 @@
             <li
               class="book-form__genre-item book-form__genre-item--tag"
               v-for="(tag) in form.tags"
-              :key="tag"
-              v-text="tag"
+              :key="tag.id"
+              v-text="tag.name"
             ></li>
           </transition-group>
           <span>*最高６タグまで &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; *必ず1タグを選択</span>
@@ -128,10 +130,12 @@ import { mapGetters } from "vuex";
 export default {
   data() {
     return {
+      loading: false,
       content: "",
       imageUrl: "",
       rotation: 0,
       preGenre: [],
+      oldImageUrl: "",
       scale: 1,
       form: {
         synopsis: "",
@@ -139,12 +143,13 @@ export default {
         tags: [],
         main_genre: [],
         genre: [],
-        cover: {}
+        cover: {},
+        coverPath: ""
       },
       search: "",
       selected: [],
       items: [
-        "ファンタジー",
+        { key: "ファンタジー" },
         "恋愛",
         "文学",
         "異世界",
@@ -202,20 +207,25 @@ export default {
     Select: () => import("@/components/All/Select"),
     TagCreate: () => import("./Tag")
   },
-  created() {
+  async created() {
     if (this.$route.query.bookId) {
       for (let genre of this.genres) {
-        this.form.genre.push(genre.name);
-        this.preGenre.push(genre.name);
+        this.form.genre.push({ name: genre.name, id: genre.id });
+        this.preGenre.push({ name: genre.name, id: genre.id });
       }
       for (let tag of this.tags) {
-        this.form.tags.push(tag.name);
+        this.form.tags.push({ name: tag.name, id: tag.id });
       }
       // this.form.genre = this.form.tags;
-      this.form.main_genre = [this.book.name];
+      this.form.main_genre.push({
+        name: this.book.genre_name,
+        id: this.book.genre_id
+      });
       this.form.title = this.book.title;
       this.form.synopsis = this.book.synopsis;
       this.imageUrl = this.book.cover;
+      this.oldImageUrl = this.book.cover;
+      this.form.coverPath = this.book.cover_path;
     }
   },
   async mounted() {},
@@ -226,6 +236,7 @@ export default {
     },
     beforeAvatarUpload(file) {},
     async postBook() {
+      this.loading = true;
       if (
         this.form.genre.length < 1 ||
         this.form.tags.length < 1 ||
@@ -248,15 +259,44 @@ export default {
           //   cover: url.url,
           //   cover_path: url.path
         };
-        const url = await this.$store.dispatch("upload/image", this.form.cover);
-        book["cover"] = url.url;
-        book["coverPath"] = url.path;
+        if (this.$route.query.bookId) {
+          if (this.form.cover) {
+            const url = await this.$store.dispatch(
+              "upload/image",
+              this.form.cover
+            );
+            book["cover"] = url.url;
+            book["coverPath"] = url.path;
+          } else {
+            book["cover"] = this.oldImageUrl;
+          }
+          book["id"] = this.$route.query.bookId;
+          await this.$store.dispatch("book/updateBook", { book });
+          this.$toast.show(`作品のアップデートに成功しました`, {
+            theme: "toasted-primary",
+            position: "top-right",
+            duration: 1000,
+            icon: "extension"
+          });
+          this.loading = false;
+          return;
+        }
+        if (this.form.cover) {
+          const url = await this.$store.dispatch(
+            "upload/image",
+            this.form.cover
+          );
+          book["cover"] = url.url;
+          book["coverPath"] = url.path;
+        }
+
         await this.$store.dispatch("book/addBook", book);
         this.$message({
           message: "本の投稿に成功しました",
           type: "success"
         });
-        this.$router.go(-1);
+        this.loading = false;
+        return this.$router.go(-1);
       } catch (error) {
         this.$message({
           message: `本の投稿に失敗しました！${error}`,

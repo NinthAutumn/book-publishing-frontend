@@ -300,6 +300,10 @@ export default {
     }
     #{$self}__title {
       font-size: 1.6rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 96%;
     }
   }
   #{$self}__buttons {

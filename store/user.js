@@ -136,11 +136,9 @@ export const actions = {
     commit
   }) {
     try {
-      const {
-        data
-      } = await this.$axios.get('/user/show')
+      const res = await this.$axios.get('/user/show')
       // console.log(data);
-      commit('SET_USER', data)
+      commit('SET_USER', res.data)
     } catch (error) {
       console.log(error);
     }
@@ -332,16 +330,14 @@ export const actions = {
     infinite = false
   }) {
     try {
-      const {
-        data
-      } = await this.$axios.get(`/notification/comment?page=${page}`)
+      const res = await this.$axios.get(`/notification/comment?page=${page}`)
       if (infinite) {
-        commit('PUSH_COMMENT_NOTIFICATION', data)
+        commit('PUSH_COMMENT_NOTIFICATION', res.data)
       } else {
-        commit('SET_COMMENT_NOTIFICATION', data)
+        commit('SET_COMMENT_NOTIFICATION', res.data)
       }
 
-      return Promise.resolve(data)
+      return Promise.resolve(res.data)
     } catch (error) {
       return Promise.reject(error)
     }
@@ -350,10 +346,8 @@ export const actions = {
     commit
   }) {
     try {
-      const {
-        data
-      } = await this.$axios.get(`/notification/comment/count`)
-      commit('SET_COMMENT_NOTIFICATION_COUNT', data.count)
+      const res = await this.$axios.get(`/notification/comment/count`)
+      commit('SET_COMMENT_NOTIFICATION_COUNT', res.data.count)
 
     } catch (error) {
       return Promise.reject(error)

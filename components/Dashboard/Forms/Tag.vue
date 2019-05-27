@@ -54,7 +54,12 @@ export default {
     });
     let object = [];
     for (let tag of this.tags) {
-      object.push({ key: tag.name, sum: tag.books, selected: false });
+      object.push({
+        key: tag.name,
+        sum: tag.books,
+        selected: false,
+        value: tag.id
+      });
     }
     this.selected = object;
   },
@@ -68,7 +73,12 @@ export default {
       });
       let object = [];
       tags.forEach(item => {
-        object.push({ key: item.name, sum: item.books, selected: false });
+        object.push({
+          key: item.name,
+          value: item.id,
+          sum: item.books,
+          selected: false
+        });
       });
       this.selected = object;
       this.selected.forEach(tag => {
@@ -85,7 +95,7 @@ export default {
 
       this.selected.forEach(tag => {
         if (tag.selected) {
-          temparray.push(tag.key);
+          temparray.push({ name: tag.key, id: tag.value });
         }
       });
       if (temparray.length > this.limit) {

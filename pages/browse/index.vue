@@ -37,7 +37,7 @@
               <Select
                 v-model="selected_genre"
                 transition="grow-shrink"
-                :multiple="true"
+                multiple
                 :data="genre_list"
                 icon="filter"
                 name="ジャンル"
@@ -168,15 +168,18 @@ export default {
       this.refresh();
     }
   },
-  async fetch({ store }) {},
-  async mounted() {
-    await this.$store.dispatch("book/browseBooks", {
+  async fetch({ store }) {
+    // await store.dispatch("book/fetchAllGenres");
+    await store.dispatch("book/browseBooks", {
       type: 5,
       direction: "desc",
       genres: [],
       page: 1,
       limit: 20
     });
+  },
+  async mounted() {
+    // await
     this.loading = false;
   },
   data() {
