@@ -89,12 +89,15 @@ export const actions = {
   async logout({
     commit
   }) {
-    this.$storage.removeUniversal('access_token')
-    this.$storage.removeUniversal('refresh_token')
-    this.$storage.removeUniversal('strategy')
-    delete this.$axios.defaults.headers.common['Authorization']
-    commit("AUTH_LOGOUT");
-    this.$router.go(0)
+    if (process.client) {
+      this.$storage.removeUniversal('access_token')
+      this.$storage.removeUniversal('refresh_token')
+      this.$storage.removeUniversal('strategy')
+      delete this.$axios.defaults.headers.common['Authorization']
+      commit("AUTH_LOGOUT");
+      this.$router.go(0)
+    }
+
   },
   async signup({
     commit

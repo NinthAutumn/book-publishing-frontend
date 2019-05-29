@@ -34,11 +34,8 @@ export default async function ({
     })
     await store.dispatch('user/fetchUser')
   }
-  if (store.getters['auth/isAuthenticated']) {
-
-    try {
-
-
+  if (process.client) {
+    if (store.getters['auth/isAuthenticated']) {
       let refresh_token = $storage.getUniversal('refresh_token')
       if (!refresh_token || !token) {
         return
@@ -64,20 +61,13 @@ export default async function ({
           $axios.defaults.headers.common['Authorization'] = 'Bearer ' + access_token
         } catch (error) {
           // store.commit('auth/')
+          console.log(error);
           throw new Error('トークンの再生に失敗した')
           // refresher.close()
         }
 
       }, expdate);
-
-    } catch (error) {
-      console.log(error);
     }
-
-
-
-
-
   }
   let track_id = $storage.getUniversal('track_id')
   if (!track_id) {

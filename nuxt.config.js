@@ -183,6 +183,9 @@ module.exports = {
     ['@nuxtjs/component-cache', {
       maxAge: 1000 * 60 * 60
     }],
+    ['@nuxtjs/google-adsense', {
+      id: 'pub-4438410171989811'
+    }],
     'cookie-universal-nuxt',
     ['nuxt-fontawesome', {
       component: 'fa',

@@ -3,7 +3,10 @@
     <transition name="drop-down" appear>
       <div class="profile-dropdown__list">
         <div class="profile-dropdown__user-info flex-row flex--align">
-          <div class="profile-dropdown__profile-pic">
+          <div
+            class="profile-dropdown__profile-pic"
+            :class="{'profile-dropdown__profile-pic--bronze':user.status==='bronze'}"
+          >
             <v-avatar size="50">
               <img :src="user.avatar">
             </v-avatar>
@@ -130,6 +133,11 @@ export default {
   }
   &__profile-pic {
     margin-right: 10px;
+    &--bronze {
+      img {
+        border: 2px solid $bronze;
+      }
+    }
     img {
       box-shadow: 1px 1px 5px rgb(233, 233, 233);
     }

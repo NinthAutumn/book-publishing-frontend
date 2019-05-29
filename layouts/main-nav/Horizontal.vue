@@ -12,7 +12,11 @@
         >ノーブル</nuxt-link>
       </div>
       <SearchBar class="searchbar"></SearchBar>
+
       <div class="user-nav flex-row flex--align">
+        <div class="site-sub" @click.stop="openSubModal">
+          <fa icon="rainbow"></fa>
+        </div>
         <div
           v-ripple
           v-if="loggedIn"
@@ -23,15 +27,19 @@
             <div class="inbox-icon__count" v-if="notificationCount < 9">{{notificationCount}}</div>
             <div class="inbox-icon__count" v-else>9+</div>
           </span>
-
           <fa icon="bell"></fa>
         </div>
+
         <transition v-if="loggedIn" name="grow-shrink">
           <notification-list v-if="notification" v-click-outside="closeNotification"></notification-list>
         </transition>
         <div v-if="loggedIn" class="flex-row" style="z-index:3000;" id="prof">
           <div class="profile-pic" @click.stop="userProfile">
-            <v-avatar size="30" class="profile-pic__avatar">
+            <v-avatar
+              size="30"
+              class="profile-pic__avatar"
+              :class="{'profile-pic__avatar--bronze': user.status === 'bronze'}"
+            >
               <v-img :src="user.avatar"></v-img>
             </v-avatar>
             <div class="profile-pic__info">
@@ -76,6 +84,9 @@
       <setting-form v-if="dialog"></setting-form>
     </transition>
     <Username></Username>
+    <transition name="grow-shrink">
+      <sub-main v-if="subscribe"></sub-main>
+    </transition>
   </div>
 </template>
 <script>
@@ -97,7 +108,8 @@ export default {
     SettingForm: () => import("@/components/Navigation/Setting"),
     NotificationList: () => import("@/components/Navigation/Notification"),
     Currency: () => import("@/components/All/Currency"),
-    Username: () => import("@/components/Navigation/Username")
+    Username: () => import("@/components/Navigation/Username"),
+    SubMain: () => import("@/components/Navigation/Subscribe/SubMain")
   },
   computed: {
     ...mapGetters({
@@ -107,7 +119,8 @@ export default {
       productState: "getProductModalState",
       notificationCount: "user/getCommentNotificationCount",
       wealth: "wallet/getWealth",
-      dialog: "getSettingModal"
+      dialog: "getSettingModal",
+      subscribe: "subscription/getSiteModalState"
     })
   },
   async mounted() {
@@ -120,7 +133,12 @@ export default {
     menuDrawer() {
       this.$store.commit("menuStateChange");
     },
-
+    openSubModal() {
+      if (!this.loggedIn) {
+        return this.$store.commit("LOGIN_STATE");
+      }
+      this.$store.commit("subscription/TOGGLE_SITE_MODAL");
+    },
     stateDropChange() {
       this.$store.commit("DROPDOWN_STATE");
       // console.log("yes");
@@ -142,6 +160,14 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.site-sub {
+  font-size: 2rem;
+  color: #000000;
+  margin-right: 1rem;
+  &:hover {
+    cursor: pointer;
+  }
+}
 .inbox-icon {
   position: relative !important;
 
@@ -286,6 +312,11 @@ nav {
     box-shadow: 0 2px 5px 0 rgba(60, 66, 87, 0.1),
       0 1px 1px 0 rgba(0, 0, 0, 0.07);
     margin-right: 1rem;
+    &--bronze {
+      .v-image {
+        border: 1px solid $bronze;
+      }
+    }
   }
   &__info {
     display: flex;

@@ -36,8 +36,6 @@
         </transition>
         <transition name="slide-fade">
           <payment-method :price="price" v-model="step" v-if="step === 2" :coin="coin" :skuId="id"></payment-method>
-        </transition>
-        <transition name="slide-fade">
           <payment-form-card v-if="step === 3" :price="price" :coin="coin" :skuId="id"></payment-form-card>
         </transition>
       </div>

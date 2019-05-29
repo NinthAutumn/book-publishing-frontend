@@ -1,7 +1,7 @@
 <template>
-  <div class="product-modal__payment">
-    <div class="product-modal__buy-price">{{`合計 ¥${price}円`}}</div>
-    <div class="product-modal__select-payment">
+  <div class="payment-form">
+    <div class="payment-form__buy-price">{{`合計 ¥${price}円`}}</div>
+    <div class="payment-form__select-payment">
       <!-- <div
         class="product-modal__card-list"
         v-for="(card,index) in customer.sources.data"
@@ -13,7 +13,7 @@
         <div class="flex-control">
           <label for="fullname">姓名</label>
           <input
-            class="product-modal__input product-modal__input--name product-modal__input--firstname"
+            class="payment-form__input payment-form__input--name payment-form__input--firstname"
             v-model="form.lastname"
             type="text"
             name="fullname"
@@ -23,7 +23,7 @@
         <div class="flex-control">
           <label for="fullname">名前</label>
           <input
-            class="product-modal__input product-modal__input--name"
+            class="payment-form__input payment-form__input--name"
             v-model="form.firstname"
             type="text"
             name="fullname"
@@ -34,7 +34,7 @@
       <div class="flex-control">
         <label for="email">Eメール</label>
         <input
-          class="product-modal__input product-modal__input--email"
+          class="payment-form__input payment-form__input--email"
           v-validate="'required|email'"
           type="email"
           v-model="form.email"
@@ -46,7 +46,7 @@
       <div class="flex-control">
         <label for="phone">電話番号</label>
         <input
-          class="product-modal__input product-modal__input--phone"
+          class="payment-form__input payment-form__input--phone"
           v-model="form.phone"
           @keypress="isNumber"
           type="text"
@@ -55,7 +55,7 @@
         >
       </div>
     </div>
-    <label class="product-modal__card-label">クレジット・デビット カード</label>
+    <label class="payment-form__card-label">クレジット・デビット カード</label>
     <div id="card-element"></div>
     <div id="card-errors" role="alert" v-text="cardError"></div>
     <v-checkbox v-model="saveCard" :label="`カードを保存する`"></v-checkbox>
@@ -63,8 +63,8 @@
       v-loading="loading"
       v-ripple
       @click="buttonSelect"
-      class="product-modal__buy-button"
-    >{{`¥${price}円払う`}}</div>
+      class="payment-form__buy-button"
+    >{{price_word||`¥${price}円払う`}}</div>
   </div>
 </template>
 
@@ -74,7 +74,10 @@ export default {
   props: {
     coin: Number,
     skuId: String,
-    price: Number
+    planId: String,
+    sub: Boolean,
+    price: Number,
+    price_word: String
   },
   data() {
     return {
@@ -248,91 +251,91 @@ export default {
 </script>
 
 <style lang="scss">
-.product-modal {
+.payment-form {
   $self: &;
-  #{$self}__payment {
-    padding: 0 2rem;
-    padding-bottom: 1rem;
-    .form-container {
-      // label {
-      //   font-size: 1.6rem;
-      //   width: 10rem;
-      // }
-      .flex-control {
-        // display: flex;
-        // align-items: center;
-        // justify-content: space-between;
-      }
-    }
-    #{$self}__input {
-      height: 40px;
-      padding: 10px 12px;
-      color: #32325d;
-      background-color: white;
-      border: 1px solid transparent;
-      border-radius: 4px;
-      box-shadow: 0 1px 3px 0 #e6ebf1;
-      -webkit-transition: box-shadow 150ms ease;
-      transition: box-shadow 150ms ease;
-      font-size: 1.6rem;
+  padding: 0 2rem;
+  padding-bottom: 1rem;
 
-      margin-bottom: 2rem;
-      &--firstname {
-        // width: 80%;
-      }
-      &--name {
-        // width: 80%;
-        width: 17rem;
-      }
-      &--email {
-        width: 100%;
-      }
-      &--phone {
-        width: 100%;
-      }
-    }
-
-    &--hidden {
-      opacity: 0;
-    }
-    opacity: 1;
-    #card-element {
-      height: 40px;
-      padding: 10px 12px;
-      color: #32325d;
-      padding: 10px 12px;
-      background-color: white;
-      border: 1px solid transparent;
-      border-radius: 4px;
-      box-shadow: 0 1px 3px 0 #e6ebf1;
-      // margin-bottom: 3rem;
-    }
-    #{$self}__buy-button {
-      font-size: 1.6rem;
-      padding: 0.75rem 0;
-      box-sizing: border-box;
-      text-align: center;
-      border-radius: 0.5rem;
-      background-color: #6772e4;
-      color: white;
-      transition: box-shadow 300ms, background-color 300ms, color 300ms;
-      user-select: none;
-      box-shadow: 1px 1px 5px grey;
-      &:hover {
-        cursor: pointer;
-        color: #6772e4;
-        background-color: #cad3ff;
-        transition: box-shadow 300ms, background-color 300ms, color 300ms;
-      }
-    }
-    #{$self}__buy-price {
-      font-size: 1.6rem;
-      text-align: right;
-      margin-bottom: 1rem;
-      // margin-right: 0.5rem;
-      color: black;
+  .form-container {
+    // label {
+    //   font-size: 1.6rem;
+    //   width: 10rem;
+    // }
+    .flex-control {
+      // display: flex;
+      // align-items: center;
+      // justify-content: space-between;
     }
   }
+  &__input {
+    height: 40px;
+    padding: 10px 12px;
+    color: #32325d;
+    background-color: white;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px 0 #e6ebf1;
+    -webkit-transition: box-shadow 150ms ease;
+    transition: box-shadow 150ms ease;
+    font-size: 1.6rem;
+
+    margin-bottom: 2rem;
+    &--firstname {
+      // width: 80%;
+    }
+    &--name {
+      // width: 80%;
+      width: 17rem;
+    }
+    &--email {
+      width: 100%;
+    }
+    &--phone {
+      width: 100%;
+    }
+  }
+
+  &--hidden {
+    opacity: 0;
+  }
+  opacity: 1;
+  #card-element {
+    height: 40px;
+    padding: 10px 12px;
+    color: #32325d;
+    padding: 10px 12px;
+    background-color: white;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px 0 #e6ebf1;
+    // margin-bottom: 3rem;
+  }
+  &__buy-button {
+    font-size: 1.6rem;
+    padding: 0.75rem 0;
+    box-sizing: border-box;
+    text-align: center;
+    border-radius: 0.5rem;
+    background-color: #6772e4;
+    color: white;
+    transition: box-shadow 300ms, background-color 300ms, color 300ms;
+    user-select: none;
+    box-shadow: 1px 1px 5px grey;
+    &:hover {
+      cursor: pointer;
+      color: #6772e4;
+      background-color: #cad3ff;
+      transition: box-shadow 300ms, background-color 300ms, color 300ms;
+    }
+  }
+  &__buy-price {
+    font-size: 1.6rem;
+    text-align: right;
+    margin-bottom: 1rem;
+    // margin-right: 0.5rem;
+    color: black;
+  }
+
   label {
     display: block;
     margin-bottom: 8px;

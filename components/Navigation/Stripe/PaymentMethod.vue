@@ -1,6 +1,6 @@
 <template>
   <div class="payment-method" v-loading="loading">
-    <div class="payment-method__buy-price">{{`合計 ¥${price}円`}}</div>
+    <div class="payment-method__buy-price">{{price_word||`合計 ¥${price}円`}}</div>
     <div class="payment-method__container">
       <ul class="payment-method__stored-list">
         <li
@@ -31,7 +31,7 @@
             v-ripple
           >
             <!-- <fa class="payment-method__button__icon" ></fa> -->
-            {{`最後${selectedCard.last}桁のカードで買う`}}
+            {{`最後${selectedCard.last}桁のカードを使用`}}
           </button>
           <button
             class="payment-method__button elevation-2"
@@ -56,18 +56,27 @@
 </template>
 
 <script>
+import { get } from "lodash";
+import { mapGetters } from "vuex";
 export default {
-  props: ["value", "price", "skuId", "coin"],
+  props: {
+    value: String,
+    price: [String, Number],
+    skuId: String,
+    coin: [String, Number],
+    price_word: String,
+    sub: Boolean
+  },
   components: {
     Card: () => import("@/components/All/Card")
   },
   computed: {
-    paymentMethods() {
-      return this.$store.getters["stripe/getPaymentMethods"];
-    },
-    paymentIntent() {
-      return this.$store.getters["stripe/getPaymentIntent"];
-    }
+    ...mapGetters({
+      paymentMethods: "stripe/getPaymentMethods",
+      paymentIntent: "stripe/getPaymentIntent",
+      selectedPlan: "subscription/getSitePlan",
+      subscription: "stripe/getSubscription"
+    })
   },
   data() {
     return {
@@ -105,7 +114,7 @@ export default {
 
   async mounted() {
     // const elements = this.stripe.elements({ locale: "ja" });
-    if (this.paymentMethods.data.length < 1) {
+    if (get(this.paymentMethods, "data.length", 0) < 1) {
       this.$emit("input", 3);
     } else {
       this.selectedCard = {
@@ -140,11 +149,19 @@ export default {
     async buyButton() {
       this.loading = true;
       let res;
-      res = await this.$store.dispatch("stripe/postPaymentIntent", {
-        payment_method_id: this.selectedCard.id,
-        amount: this.price,
-        skuId: this.skuId
-      });
+      if (this.sub) {
+        res = await this.$store.dispatch("stripe/setSubscription", {
+          planId: this.selectedPlan.id,
+          stripePlanId: this.selectedPlan.stripe_plan_id,
+          paymentMethod: this.selectedCard.id
+        });
+      } else {
+        res = await this.$store.dispatch("stripe/postPaymentIntent", {
+          payment_method_id: this.selectedCard.id,
+          amount: this.price,
+          skuId: this.skuId
+        });
+      }
 
       this.handleServerResponse(res);
       this.loading = false;
@@ -163,9 +180,19 @@ export default {
           this.paymentIntent.client_secret
         );
         if (result.error) {
-          return this.$message({
-            message: "クラウンコインの購入に失敗しました",
-            type: "error"
+          if (this.sub) {
+            return this.$toast.show("会員登録に失敗しました", {
+              theme: "toasted-primary",
+              position: "top-right",
+              duration: 2000,
+              icon: "extension"
+            });
+          }
+          return this.$toast.show("クラウンコインの購入に失敗しました", {
+            theme: "toasted-primary",
+            position: "top-right",
+            duration: 2000,
+            icon: "extension"
           });
         } else {
           const res = await this.$axios.get("/stripe/confirmPayment", {
@@ -177,12 +204,29 @@ export default {
         const form = {
           skuId: this.skuId
         };
-        await this.$store.dispatch("wallet/buyCoin", { form });
-        this.$store.commit("TOGGLE_PRODUCT_MODAL");
-        return this.$message({
-          message: "クラウンコインの購入に成功しました",
-          type: "success"
-        });
+        if (this.sub) {
+          await this.$store.dispatch("subscription/setSubscription", {
+            planId: this.selectedPlan.id,
+            subscription: this.subscription
+          });
+          await this.$store.dispatch("user/fetchUser");
+
+          return this.$toast.show("プレミアム会員登録に成功しました", {
+            theme: "toasted-primary",
+            position: "top-right",
+            duration: 2000,
+            icon: "check_circle"
+          });
+        } else {
+          await this.$store.dispatch("wallet/buyCoin", { form });
+          this.$store.commit("TOGGLE_PRODUCT_MODAL");
+          return this.$toast.show("クラウンコインの購入に成功しました", {
+            theme: "toasted-primary",
+            position: "top-right",
+            duration: 2000,
+            icon: "check_circle"
+          });
+        }
       }
     }
   }

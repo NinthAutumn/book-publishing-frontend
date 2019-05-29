@@ -29,12 +29,14 @@
       :progress="true"
       @step-progress="progressHandler"
     >
+      <adsbygoogle :ad-layout="'in-article'" :ad-format="'fluid'"/>
       <div
         data-step="1"
         :style="{'font-size':font + 'px', 'font-family':fontStyle}"
         class="chapter-content step1"
         v-html="chapter.content"
       ></div>
+      <adsbygoogle :ad-layout="'in-article'" :ad-format="'fluid'"/>
     </scrollama>
     <div class="chapter-payblock" v-if="chapter.locked">
       <div class="payblock-price">
@@ -69,13 +71,14 @@ export default {
       font: "user/getFontSize"
     })
   },
+
   watch: {},
   data() {
     return {
       currStepProgress: null
     };
   },
-  created() {},
+  async mounted() {},
   methods: {
     purchase: async function() {
       try {

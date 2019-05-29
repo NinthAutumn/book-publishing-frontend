@@ -40,7 +40,11 @@
         </transition>
         <span v-if="loggedIn" style="z-index:3000;" id="prof" v-click-outside="dropOff">
           <div class="profile-pic" @click.stop="stateDropChange">
-            <v-avatar size="30" class="profile-pic__avatar">
+            <v-avatar
+              size="30"
+              class="profile-pic__avatar"
+              :class="{'profile-pic__avatar--bronze':user.status === 'bronze'}"
+            >
               <img :src="user.avatar">
             </v-avatar>
             <div class="profile-pic__info">
@@ -259,10 +263,16 @@ export default {
     box-shadow: 0 7px 14px 0 rgba(60, 66, 87, 0.1),
       0 3px 6px 0 rgba(0, 0, 0, 0.07);
   }
+
   &__avatar {
     box-shadow: 0 2px 5px 0 rgba(60, 66, 87, 0.1),
       0 1px 1px 0 rgba(0, 0, 0, 0.07);
     margin-right: 1rem;
+    &--bronze {
+      img {
+        border: 1px solid $bronze;
+      }
+    }
   }
   &__info {
     display: flex;

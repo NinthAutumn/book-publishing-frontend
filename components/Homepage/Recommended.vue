@@ -113,17 +113,17 @@ export default {
     padding-right: 2rem;
     #{$self}__item {
       display: flex;
-      transform: scale(1);
+      // transform: scale(1);
       transition: transform 200ms ease-out;
       // align-items: center;
       &:hover {
         cursor: pointer;
-        transform: scale(1.05);
+        // transform: scale(1.05);
         transition: transform 200ms ease-out;
       }
       &:focus,
       &:active {
-        transform: scale(0.95);
+        // transform: scale(0.95);
         transition: transform 200ms ease-out;
       }
       #{$self}__cover {

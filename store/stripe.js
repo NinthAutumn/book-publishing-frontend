@@ -3,14 +3,16 @@ export const state = () => ({
   paymentMethods: [],
   paymentMethod: {},
   customer: {},
-  paymentIntent: {}
+  paymentIntent: {},
+  subscription: {}
 })
 
 export const getters = {
   getPaymentMethods: state => state.paymentMethods,
   getPaymentMethod: state => state.paymentMethod,
   getCustomer: state => state.customer,
-  getPaymentIntent: state => state.paymentIntent
+  getPaymentIntent: state => state.paymentIntent,
+  getSubscription: state => state.subscription
 }
 
 export const mutations = {
@@ -25,6 +27,9 @@ export const mutations = {
   },
   SET_PAYMENT_METHOD: (state, method) => {
     state.paymentMethod = method
+  },
+  SET_SUBSCRIPTION: (state, subscription) => {
+    state.subscription = subscription
   }
 }
 export const actions = {
@@ -114,6 +119,36 @@ export const actions = {
       })
     } catch (error) {
 
+    }
+  },
+  setSubscription: async function ({
+    commit
+  }, {
+    paymentMethod,
+    stripePlanId,
+    planId
+  }) {
+    try {
+      const res = await this.$axios.post('/stripe/subscription', {
+        paymentMethod,
+        stripePlanId
+      })
+
+      commit('SET_PAYMENT_INTENT', _.get(res, 'data.payment.intent', {}))
+      commit('SET_SUBSCRIPTION', _.get(res, 'data.subscription', {}))
+      if (res.data.error) {
+        return Promise.resolve({
+          error: _.get(res, 'data.payment.error', null)
+        })
+      }
+      if (res.data.requires_action) {
+        return Promise.resolve({
+          requires_action: _.get(res, 'data.payment.requires_action', null)
+        })
+      }
+      return Promise.resolve(_.get(res, 'data.payment'))
+    } catch (error) {
+      return Promise.reject()
     }
   }
 }

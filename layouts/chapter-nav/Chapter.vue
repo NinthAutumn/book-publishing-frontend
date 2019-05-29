@@ -45,11 +45,13 @@
             </span>
           </nuxt-link>
         </div>
+        <!-- <adsbygoogle v-if="!$device.isMobile"/> -->
         <div
           v-if="prev&&!$device.isMobile"
           class="next-chapter-title flex-column flex--center flex--align"
           v-text="prev.title"
         ></div>
+
         <nuxt-link
           class="navigation-prev flex-column flex--center flex--align"
           v-if="prev&&!$device.isMobile"
