@@ -99,7 +99,7 @@ module.exports = {
       ssr: false,
       src: "~plugins/vueEditor"
     }, {
-      src: '@/plugins/vee-validate',
+      src: '@/plugins/vueMask',
       ssr: false
     }, {
       src: '@/plugins/zondiIcon',

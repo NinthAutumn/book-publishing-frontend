@@ -2,25 +2,31 @@
   &-item {
     display: inline-block;
     margin-right: 10px;
-    transition: 300ms;
+    transition: 500ms;
     position: absolute;
   }
 
   &-enter-active {
-    transition: 300ms;
+    transition: 500ms;
   }
 
   &-leave-active {
-    transition: 300ms;
     position: absolute;
   }
 
   &-enter {
     opacity: 0;
-    transform: translateY(-10px);
+    transform: scale(0.8) translateY(10rem);
+
+  }
+
+  &-leave {
+    display: none;
+
   }
 
   &-leave-to {
+    display: none;
     opacity: 0;
     // transform: translateY(10px);
   }

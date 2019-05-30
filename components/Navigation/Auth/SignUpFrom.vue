@@ -124,9 +124,11 @@ export default {
 
           // this.$router.go(0);
         } catch (error) {
-          this.$message({
-            message: "アカウント作成に失敗",
-            type: "error"
+          this.$toast.show("アカウント作成に失敗", {
+            duration: 1000,
+            theme: "toasted-primary",
+            icon: "extension",
+            position: "top-right"
           });
         }
       }

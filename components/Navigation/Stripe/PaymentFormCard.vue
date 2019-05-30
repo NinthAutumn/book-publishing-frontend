@@ -149,14 +149,19 @@ export default {
       }
       let res;
       if (this.customer) {
-        res = await this.$store.dispatch("stripe/postPaymentIntent", {
-          customerId:
-            this.customer.id ||
-            this.$store.getters["user/loggedInUser"].stripeCustomerId,
-          payment_method_id: paymentMethod.id,
-          amount: this.price,
-          skuId: this.skuId
-        });
+        if (this.sub) {
+          res = await this.$store.dispatch("stripe/setSubscription", {
+            planId: this.selectedPlan.id,
+            stripePlanId: this.selectedPlan.stripe_plan_id,
+            paymentMethod: paymentMethod.id
+          });
+        } else {
+          res = await this.$store.dispatch("stripe/postPaymentIntent", {
+            payment_method_id: paymentMethod.id,
+            amount: this.price,
+            skuId: this.skuId
+          });
+        }
       } else {
         res = await this.$store.dispatch("stripe/postPaymentIntent", {
           payment_method_id: paymentMethod.id,

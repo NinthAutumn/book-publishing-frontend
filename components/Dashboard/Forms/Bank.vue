@@ -31,7 +31,7 @@
       <div class="bank-form__select-container">
         <button
           class="bank-form__bank-select"
-          @click="toggleShopModal"
+          @click.stop="toggleShopModal"
           :class="{'bank-form__bank-select--disabled':!form.bank.name}"
         >
           {{form.shop.name||`支店を選択する・・`}}
@@ -116,11 +116,13 @@ export default {
       this.shopModal = !this.shopModal;
     },
     toggleBankModal() {
+      this.shopModal = false;
       this.bankModal = !this.bankModal;
     },
     toggleShopModal() {
       if (!this.form.bank) {
       } else {
+        this.bankModal = false;
         this.shopModal = !this.shopModal;
       }
     },
@@ -131,7 +133,7 @@ export default {
       this.bankModal = false;
     },
     closeShopModal() {
-      this.bankModal = false;
+      this.shopModal = false;
     }
   },
   computed: {
@@ -151,6 +153,7 @@ export default {
   $self: &;
   padding: 2rem;
   min-height: 30rem;
+
   // align-items: flex-end;
   justify-content: space-between;
   // align-items: baseline;

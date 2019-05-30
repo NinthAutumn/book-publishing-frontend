@@ -2,44 +2,69 @@
   <div class="profile-form">
     <div class="flex-control flex-row flex--between">
       <div class="flex-control flex-column">
-        <label for="fullname">氏名*</label>
+        <label for="fullname">姓*</label>
         <input
           class="profile-form__input profile-form__input--name profile-form__input--firstname"
           v-model="form.lastname"
           type="text"
           name="fullname"
-          placeholder="氏名"
+          v-validate="'required'"
+          data-vv-as="漢字姓"
+          placeholder="姓"
         >
         <input
           class="profile-form__input profile-form__input--name-kana"
           v-model="kana_form.lastname"
+          v-validate="'required'"
+          data-vv-as="カタカナ姓"
           type="text"
           name="fullname"
           placeholder="カタカナ*"
         >
       </div>
       <div class="flex-control flex-column">
-        <label for="fullname">名前*</label>
+        <label for="fullname">名*</label>
         <input
           class="profile-form__input profile-form__input--name"
           v-model="form.firstname"
           type="text"
+          v-validate="'required'"
+          data-vv-as="漢字名"
           name="fullname"
-          placeholder="名前"
+          placeholder="名"
         >
         <input
           class="profile-form__input profile-form__input--name-kana"
           v-model="kana_form.firstname"
+          v-validate="'required'"
+          data-vv-as="カタカナ名"
           type="text"
           name="fullname"
           placeholder="カタカナ*"
         >
       </div>
     </div>
-    <label for="gender">性別*</label>
-    <v-radio-group v-model="form.gender" row>
-      <v-radio v-for="n in genders" :key="n" :label="`${n}`" :value="n" color="#566CD6"></v-radio>
-    </v-radio-group>
+    <div class="flex flex--between flex--align">
+      <!-- <div class="flex-divider">
+        <label for="fullname">Eメール*</label>
+        <input
+          class="profile-form__input profile-form__input--email"
+          v-model="form.firstname"
+          type="text"
+          v-validate="'required'"
+          data-vv-as="漢字名"
+          name="email"
+          placeholder="example@example.com"
+        >
+      </div>-->
+      <div class="flex-divider">
+        <label for="gender">性別*</label>
+        <v-radio-group v-model="form.gender" row>
+          <v-radio v-for="n in genders" :key="n" :label="`${n}`" :value="n" color="#566CD6"></v-radio>
+        </v-radio-group>
+      </div>
+    </div>
+
     <label for="birthday">生年月日*</label>
     <date-picker
       :not-after="$moment().subtract('18', 'years')"
@@ -51,9 +76,11 @@
     ></date-picker>
     <label for="fullname">郵便番号*</label>
     <input
-      v-mask="'###-####'"
+      v-validate="'required'"
+      data-vv-as="郵便番号"
       class="profile-form__input profile-form__input--post"
       v-model="form.address.postal"
+      v-mask="'###-####'"
       type="text"
       name="line"
       placeholder="000-0000"
@@ -107,6 +134,8 @@
         <input
           class="profile-form__input profile-form__input--city profile-form__input--kanji"
           v-model="form.address.city"
+          v-validate="'required'"
+          data-vv-as="市区郡"
           type="text"
           name="city"
           placeholder="市区郡"
@@ -115,6 +144,8 @@
           class="profile-form__input profile-form__input--city-kana profile-form__input--kana"
           v-model="kana_form.address.city"
           type="text"
+          v-validate="'required'"
+          data-vv-as="カタカナ市区郡"
           name="city"
           placeholder="カタカナ*"
         >
@@ -125,6 +156,8 @@
         <input
           class="profile-form__input profile-form__input--town profile-form__input--kanji"
           v-model="form.address.town"
+          v-validate="'required'"
+          data-vv-as="町村名"
           type="text"
           name="town"
           placeholder="町村名"
@@ -133,6 +166,8 @@
           class="profile-form__input profile-form__input--town-kana profile-form__input--kana"
           v-model="kana_form.address.town"
           type="text"
+          v-validate="'required'"
+          data-vv-as="カタカナ町村名"
           name="town"
           placeholder="カタカナ*"
         >
@@ -141,11 +176,34 @@
         <label for="fullname">番地*</label>
         <input
           v-mask="'##-##'"
+          v-validate="'required'"
+          data-vv-as="番地"
           class="profile-form__input profile-form__input--line profile-form__input--kanji"
           v-model="form.address.line"
           type="text"
           name="line"
           placeholder="01-10"
+        >
+      </div>
+      <div class="flex-divider flex-column">
+        <label for="building">建物</label>
+        <input
+          class="profile-form__input profile-form__input--town profile-form__input--kanji"
+          v-model="form.address.lineTwo"
+          v-validate="'required'"
+          data-vv-as="建物"
+          type="text"
+          name="building"
+          placeholder="建物情報"
+        >
+        <input
+          class="profile-form__input profile-form__input--town-kana profile-form__input--kana"
+          v-model="kana_form.address.lineTwo"
+          type="text"
+          v-validate="'required'"
+          data-vv-as="カタカナ町村名"
+          name="building_kana"
+          placeholder="カタカナ*"
         >
       </div>
     </div>
@@ -172,6 +230,7 @@ export default {
           city: "",
           town: "",
           line: "",
+          lineTwo: "",
           postal: ""
         }
       },
@@ -182,7 +241,8 @@ export default {
           state: "",
           city: "",
           town: "",
-          line: ""
+          line: "",
+          lineTwo: ""
         }
       },
       search: "",
@@ -283,8 +343,10 @@ export default {
     };
   },
   watch: {
+    "form.address.postal": function(val) {},
     search: function(val) {
       // console.log("this");
+      val.replace("/", "");
       let rows = Object.keys(this.prefectures);
       let select = [];
       rows.forEach(row => {
@@ -311,7 +373,49 @@ export default {
     // this.date =
   },
   methods: {
-    changeStep(step) {
+    async changeStep(step) {
+      await this.$validator.validateAll();
+      if (this.errors.any()) {
+        return this.$toast.show("空欄がまだ残っています", {
+          duration: 1000,
+          theme: "toasted-primary",
+          icon: "extension",
+          position: "top-right"
+        });
+        this.form.address.postal = this.form.address.postal.replace("-", "");
+        const person = {
+          countr: "JP",
+          person: {
+            first_name_kana: this.kana_form.firstName,
+            last_name_kana: this.kana_form.lastName,
+            phone: this.form.phone,
+            dob: {
+              day: $moment(this.form.birth).date(),
+              month: moment(this.form.birth).month(),
+              year: moment(this.form.birth).year()
+            },
+            address_kana: {
+              country: "JP",
+              postal_code: this.form.address.postal,
+              state: this.form.address.state.kana,
+              city: this.kana_form.address.city,
+              town: this.kana_form.address.town,
+              line1: this.form.address.line,
+              line2: this.kana_form.address.lineTwo
+            },
+            address_kanji: {
+              country: "JP",
+              postal_code: this.form.address.postal,
+              state: this.form.address.state.name,
+              city: this.form.address.city,
+              town: this.form.address.town,
+              line1: this.form.address.line,
+              line2: this.form.address.lineTwo
+            }
+          },
+          tos_shown_and_accepted: true
+        };
+      }
       this.$store.commit("SET_CONTRACT_STEP", 1);
     },
     toggleStateModal() {
@@ -491,12 +595,15 @@ export default {
       outline: none;
     }
     margin-bottom: 2rem;
+    &--email {
+      width: 40rem;
+    }
     &--name {
       margin-bottom: 1rem;
-      width: 19.4rem;
+      width: 20rem;
       &-kana {
         font-size: 1.2rem;
-        width: 19.4rem;
+        width: 20rem;
         height: 3rem;
       }
     }

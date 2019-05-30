@@ -109,7 +109,7 @@ export default {
     }
   },
   computed: {},
-  scrollToTop: false,
+  scrollToTop: true,
   transition: "none"
 };
 </script>

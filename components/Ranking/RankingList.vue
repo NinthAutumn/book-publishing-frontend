@@ -157,16 +157,16 @@ export default {
   computed: {
     ...mapGetters({
       list: "analytic/getRankingList",
-      trending: "analytict/getTrendingList",
+      trending: "analytic/getTrendingList",
       vote: "analytic/getVoteRanking"
     })
   },
   async mounted() {
-    await this.$store.dispatch("analytic/fetchRanking", {
-      limit: 10,
-      page: 1,
-      time: "daily"
-    });
+    // await this.$store.dispatch("analytic/fetchRanking", {
+    //   limit: 10,
+    //   page: 1,
+    //   time: "daily"
+    // });
     if (this.$device.isMobile) {
       this.ranking_type = [
         { key: "総合", value: 0, selected: true, icon: "layer-group" },

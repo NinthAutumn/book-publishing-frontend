@@ -457,12 +457,12 @@ export default {
   &__username {
     font-size: 14px;
     margin-right: 10px;
-    color: $primary;
+    // color: $primary;
   }
   &__child-count {
     font-size: 12px;
     margin-right: 10px;
-    color: $primary;
+    // color: $primary;
   }
   &__likes {
     font-size: 13px;

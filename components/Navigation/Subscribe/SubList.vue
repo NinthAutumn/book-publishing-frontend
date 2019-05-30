@@ -38,7 +38,8 @@ export default {
   computed: {
     ...mapGetters({
       plans: "subscription/getSitePlans",
-      selectedPlan: "subscription/getSitePlan"
+      selectedPlan: "subscription/getSitePlan",
+      user: "user/loggedInUser"
     })
   },
   methods: {
@@ -46,6 +47,17 @@ export default {
       this.selected = e;
     },
     moveStep() {
+      if (this.selectedPlan.status === this.user.status) {
+        return this.$toast.show(
+          "もう" + this.selectedPlan.name + "のメンバーです",
+          {
+            theme: "toasted-primary",
+            position: "top-right",
+            duration: 1000,
+            icon: "extension"
+          }
+        );
+      }
       this.$emit("input", 2);
     }
   },
