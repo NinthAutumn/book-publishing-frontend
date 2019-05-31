@@ -10,7 +10,14 @@
         min-height="135"
         :height="imageHeight"
         :src="review.cover"
-      ></v-img>
+        :lazy-src="cover"
+      >
+        <template v-slot:placeholder>
+          <v-layout fill-height align-center justify-center ma-0>
+            <v-progress-circular indeterminate color="black "></v-progress-circular>
+          </v-layout>
+        </template>
+      </v-img>
     </div>
     <div class="review-card__meta">
       <div class="review-card__title" :style="{maxWidth:width/1.8 + 'px'}">
@@ -83,6 +90,7 @@ export default {
   data() {
     return {
       width: 0,
+      cover: require("~/assets/img/cover.png"),
       imageWidth: 130,
       wordCount: 100,
       imgSize: 60,

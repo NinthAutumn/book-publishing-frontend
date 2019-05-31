@@ -1,7 +1,9 @@
 // import {
 //   axios
 // } from 'axios'
-
+import {
+  get
+} from 'lodash'
 export const state = () => ({
   // books: [],
   recommended: [],
@@ -51,9 +53,13 @@ export const actions = {
     id,
     userId = ""
   }) {
-    await this.$axios.get(`book/show?id=${id}&userId=${userId}`).then((res) => {
-      commit('SET_BOOK', res.data.book)
-    })
+    try {
+      const res = await this.$axios.get(`book/show?id=${id}&userId=${userId}`)
+      commit('SET_BOOK', get(res, 'data.book', {}))
+    } catch (error) {
+
+    }
+
     // await dispatch('fetchBookView', id)
     // await dispatch('fetchBookChapterCount', id)
 
@@ -68,16 +74,20 @@ export const actions = {
   async fetchBookChapterCount({
     commit
   }, id) {
-    await this.$axios.get("/book/chapterCount?bookId=" + id).then((res) => {
-      commit('SET_BOOK_CHAPTER_COUNT', res.data.count)
+    const res = await this.$axios.get("/book/count?bookId=" + id).catch((error) => {
+      return {
+        error
+      }
     })
+    console.log(res.data.count);
+    commit('SET_BOOK_CHAPTER_COUNT', get(res, 'data.count', 0))
   },
   async addBook({
     commit
   }, book) {
     try {
       const {
-        res,
+        data
       } = await this.$axios.post('/book/add', book)
       // if (res.data.noAuthor) {
       //   return commit('CHANGE_AUTHOR_STATE')

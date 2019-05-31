@@ -11,13 +11,36 @@
         <div class="recommendation-books__cover">
           <!-- :src="`https://storage.googleapis.com/theta-images/${book.cover}`" -->
           <v-img
+            v-if="$device.isMobile"
             :src="book.cover"
             :aspect-ratio="1/1.5"
-            max-width="14rem"
+            max-width="17rem"
+            min-width="8rem"
+            alt="Book cover"
+            style="border-radius: 0.4rem;  "
+          >
+            <template v-slot:placeholder>
+              <v-layout fill-height align-center justify-center ma-0>
+                <v-progress-circular indeterminate color="black "></v-progress-circular>
+              </v-layout>
+            </template>
+          </v-img>
+          <v-img
+            v-else
+            :src="book.cover"
+            :aspect-ratio="1/1.5"
+            max-width="17rem"
             min-width="12rem"
             alt="Book cover"
             style="border-radius: 0.4rem;  "
-          ></v-img>
+            :lazy-src="cover"
+          >
+            <template v-slot:placeholder>
+              <v-layout fill-height align-center justify-center ma-0>
+                <v-progress-circular indeterminate color="black "></v-progress-circular>
+              </v-layout>
+            </template>
+          </v-img>
         </div>
         <div class="recommendation-books__meta">
           <div class="recommendation-books__rating" v-if="!$device.isMobile">
@@ -51,6 +74,11 @@
 <script>
 import { mapGetters } from "vuex";
 export default {
+  data() {
+    return {
+      cover: require("~/assets/img/cover.png")
+    };
+  },
   components: {},
   computed: {
     ...mapGetters({

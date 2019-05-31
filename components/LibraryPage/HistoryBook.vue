@@ -5,7 +5,19 @@
         <div class="history-book__cover">
           <!--             :src="`https://storage.googleapis.com/theta-images/${book.cover}`"
           -->
-          <v-img :src="book.cover" :aspect-ratio="1/1.5" max-width="14rem"></v-img>
+          <v-img
+            style=" border-radius: 0.4rem;"
+            :src="book.cover"
+            :aspect-ratio="1/1.5"
+            max-width="14rem"
+            :lazy-src="cover"
+          >
+            <template v-slot:placeholder>
+              <v-layout fill-height align-center justify-center ma-0>
+                <v-progress-circular indeterminate color="black "></v-progress-circular>
+              </v-layout>
+            </template>
+          </v-img>
         </div>
         <div class="history-book__meta">
           <nuxt-link
@@ -62,6 +74,11 @@
 export default {
   props: {
     books: Array
+  },
+  data() {
+    return {
+      cover: require("~/assets/img/cover.png")
+    };
   },
   async mounted() {
     await this.$store.dispatch("library/getHistory");

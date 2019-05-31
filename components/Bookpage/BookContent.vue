@@ -11,7 +11,7 @@
               class="book-content--text__summary--text"
             >{{book.synopsis|truncate(limit-1)}}</p>
             <p v-else class="book-content--text__summary--text">{{book.synopsis}}</p>
-            <div class="book-content__truncate-nav" v-if="book.synopsis.length > limit">
+            <div class="book-content__truncate-nav" v-if="length > limit">
               <div class="book-content__read-more" @click="read=!read" v-if="read">>>詳細</div>
               <div class="book-content__read-less" @click="read=!read" v-else><<一部を表示</div>
             </div>
@@ -30,6 +30,7 @@
 
 <script>
 import Statics from "./Statistics";
+import { get } from "lodash";
 // import clampy from "@clampy-js/vue-clampy";
 export default {
   components: {
@@ -47,7 +48,8 @@ export default {
     return {
       text: "",
       read: true,
-      limit: 250
+      limit: 250,
+      length: get(this.book, "synopsis", "").length
     };
   },
   computed: {
@@ -68,6 +70,9 @@ export default {
   mounted() {},
   filters: {
     truncate: (string, number) => {
+      if (!string) {
+        return;
+      }
       if (string.length > number) {
         return (string || "").substring(0, number) + "…";
       } else {

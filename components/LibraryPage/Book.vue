@@ -10,8 +10,15 @@
           alt="Book cover"
           :aspect-ratio="1/1.5"
           max-width="13.5rem"
+          :lazy-src="cover"
           style=" border-radius: 0.4rem;"
-        ></v-img>
+        >
+          <template v-slot:placeholder>
+            <v-layout fill-height align-center justify-center ma-0>
+              <v-progress-circular indeterminate color="black "></v-progress-circular>
+            </v-layout>
+          </template>
+        </v-img>
       </div>
       <div class="book-library__text-info">
         <div class="book-library__progress-bar">
@@ -50,7 +57,8 @@ export default {
   },
   data() {
     return {
-      rating: 3.5
+      rating: 3.5,
+      cover: require("~/assets/img/cover.png")
     };
   },
   methods: {

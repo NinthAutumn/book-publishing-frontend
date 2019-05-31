@@ -6,8 +6,15 @@
         max-width="15rem"
         class="update-book__img"
         :src="book[0].cover"
+        :lazy-src="cover"
         style=" border-radius: 0.4rem;"
-      ></v-img>
+      >
+        <template v-slot:placeholder>
+          <v-layout fill-height align-center justify-center ma-0>
+            <v-progress-circular indeterminate color="black "></v-progress-circular>
+          </v-layout>
+        </template>
+      </v-img>
       <span class="update-book__cover-meta">{{book.length}}</span>
     </nuxt-link>
     <div class="update-book__meta">
@@ -34,6 +41,11 @@ export default {
   props: {
     chapters: Array,
     book: Array
+  },
+  data() {
+    return {
+      cover: require("~/assets/img/cover.png")
+    };
   },
   filters: {
     truncate: (string, number) => {

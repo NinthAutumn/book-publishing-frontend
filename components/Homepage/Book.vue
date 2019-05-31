@@ -10,7 +10,14 @@
             max-width="14rem"
             alt="Book cover"
             style="border-radius: 0.4rem;"
-          ></v-img>
+            :lazy-src="cover"
+          >
+            <template v-slot:placeholder>
+              <v-layout fill-height align-center justify-center ma-0>
+                <v-progress-circular indeterminate color="black "></v-progress-circular>
+              </v-layout>
+            </template>
+          </v-img>
         </nuxt-link>
         <div
           @click.stop="menu_modal=true"
@@ -58,6 +65,7 @@ export default {
     return {
       rating: 3.5,
       menu: false,
+      cover: require("~/assets/img/cover.png"),
       menu_modal: false
     };
   },

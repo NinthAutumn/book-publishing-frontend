@@ -1,14 +1,36 @@
 <template>
-  <main class="book page-padding" :class="{'book--mobile': $device.isMobile}">
+  <main class="book" :class="{'book--mobile': $device.isMobile, 'page-padding': !$device.isMobile}">
     <div class="book__container">
       <v-img
+        v-if="!$device.isMobile"
         class="book__cover"
         :src="book.cover"
         alt="book cover"
         max-width="20rem"
         min-width="10rem"
+        :lazy-src="cover"
         :aspect-ratio="1/1.5"
-      ></v-img>
+      >
+        <template v-slot:placeholder>
+          <v-layout fill-height align-center justify-center ma-0>
+            <v-progress-circular indeterminate color="black "></v-progress-circular>
+          </v-layout>
+        </template>
+      </v-img>
+      <v-img
+        :lazy-src="cover"
+        height="35vh"
+        class="book__cover book__cover--mobile"
+        width="100vw"
+        v-else
+        :src="book.cover"
+      >
+        <template v-slot:placeholder>
+          <v-layout fill-height align-center justify-center ma-0>
+            <v-progress-circular indeterminate color="black "></v-progress-circular>
+          </v-layout>
+        </template>
+      </v-img>
       <div class="book__info flex flex-column flex--around">
         <header class="book__title">{{book.title}}</header>
         <div class="book__title--more-info" v-if="$device.isMobile">
@@ -27,7 +49,7 @@
             <p>{{item.key}}</p>
           </nuxt-link>
         </div>
-        <div class="book__rating">
+        <div class="book__rating flex-row flex--align" style="font-size:1.6rem;">
           <no-ssr>
             <v-rating
               half-increments
@@ -36,6 +58,7 @@
               :size="star"
               :value="+book.rating"
             ></v-rating>
+            {{`(${book.rating})`}}
             <!-- <v-rating medium color="#FF8D29" v-else :readonly="true" :value="0"></v-rating> -->
           </no-ssr>
         </div>
@@ -44,6 +67,10 @@
       <div class="book__avatar">
         <v-img v-if="book.avatar" class="book-author" :src="book.avatar" alt="author avatar"></v-img>
       </div>
+      <div class="book__mobile-info">
+        <div class="book__mobile-view"></div>
+      </div>
+
       <div @mouseleave="navLeave" class="book__content-nav book-showtab　flex flex-row">
         <div
           @mouseenter="navLine(1)"
@@ -144,15 +171,16 @@
 import { mapGetters } from "vuex";
 export default {
   auth: false,
-  async asyncData({ store, params }) {
-    await store.dispatch("book/fetchBookGenreAndTags", params.id);
+  async asyncData({ store, route }) {
+    await store.dispatch("book/fetchBookGenreAndTags", route.params.id);
+    await store.dispatch("book/fetchBookChapterCount", route.params.id);
+    return {
+      // count:
+    };
   },
   async created() {
+    // await this.$store.dispatch
     // await this.$store.dispatch("book/fetchBookView", this.$route.params.id);
-    // await this.$store.dispatch(
-    //   "book/fetchBookChapterCount",
-    //   this.$route.params.id
-    // );
   },
   async fetch({ store, params }) {
     if (store.getters.isAuthenticated) {
@@ -171,7 +199,7 @@ export default {
     ...mapGetters({
       book: "book/getBook",
       view: "book/getBookView",
-      chapterCount: "book/getBookChapterCount",
+      count: "book/getBookChapterCount",
       reviewCount: "review/getReviewCount",
       genres: "book/getBookGenres",
       tags: "book/getBookTags"
@@ -188,7 +216,9 @@ export default {
     return {
       reviews: [],
       bookmarked: this.$store.getters["book/getBook"].bookmarked,
-      star: 20,
+      star: 25,
+      cover: require("~/assets/img/cover2x.png"),
+      cover2: require("~/assets/img/cover2x.png"),
       tabs: {
         review: "",
         toc: "",
@@ -202,7 +232,7 @@ export default {
       },
       meta: [
         {
-          key: this.$store.getters["book/getBook"].name || "ファンタ",
+          key: this.$store.getters["book/getBook"].name,
           icon: "landmark",
           type: "genre",
           url: `/browse?genre=${this.$store.getters["book/getBook"].name}`
@@ -234,15 +264,21 @@ export default {
   },
   methods: {
     navLine(index) {
+      let left = 0;
+      let lefty = 0;
+      if (this.$device.isMobile) {
+        left = 10;
+        lefty = "10px";
+      }
       if (index === 1) {
         this.tabs.position = {
           width: `${this.tabs.review}px`,
-          left: 0
+          left: lefty
         };
       } else {
         this.tabs.position = {
           width: `${this.tabs.toc}px`,
-          left: `${this.tabs.review + 30}px`
+          left: `${this.tabs.review + 30 + left}px`
         };
       }
     },
@@ -251,23 +287,29 @@ export default {
     },
     navSelect(name) {
       this.tabs.open = name;
+      let left = 0;
+      let lefty = 0;
+      if (this.$device.isMobile) {
+        left = 10;
+        lefty = "10px";
+      }
       if (name === "toc") {
         this.tabs.position = {
           width: `${this.tabs.toc}px`,
-          left: `${this.tabs.review + 30}px`
+          left: `${this.tabs.review + 30 + left}px`
         };
         this.tabs.selected = {
           width: `${this.tabs.toc}px`,
-          left: `${this.tabs.review + 30}px`
+          left: `${this.tabs.review + 30 + left}px`
         };
       } else {
         this.tabs.position = {
           width: `${this.tabs.review}px`,
-          left: 0
+          left: lefty
         };
         this.tabs.selected = {
           width: `${this.tabs.review}px`,
-          left: 0
+          left: lefty
         };
       }
     },
@@ -376,13 +418,17 @@ export default {
     // }
     this.tabs.review = this.$refs.review.clientWidth;
     this.tabs.toc = this.$refs.toc.clientWidth;
+    let left = 0;
+    if (this.$device.isMobile) {
+      left = "10px";
+    }
     this.tabs.position = {
       width: `${this.tabs.review}px`,
-      left: 0
+      left: left
     };
     this.tabs.selected = {
       width: `${this.tabs.review}px`,
-      left: 0
+      left: left
     };
     if (this.bookmarked) {
       this.text = "ブックマーク済み";
@@ -513,6 +559,14 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 .book {
   $self: &;
+  @keyframes book-cover {
+    from {
+      transform: translateY(-10rem);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
   .v-icon {
     padding: 0 !important;
   }
@@ -520,18 +574,19 @@ input[type="number"]::-webkit-outer-spin-button {
     #{$self}__container {
       grid-template-rows: auto;
 
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(1, 1fr);
       grid-template-areas:
-        "cover title"
-        "cover title"
-        "summary summary "
-        "content content " !important;
+        "cover"
+        "title"
+        "summary"
+        "content" !important;
       grid-row-gap: 2rem;
       .book-info {
         width: 100%;
       }
     }
     .book__content-nav {
+      padding: 0 1rem;
       text-align: center;
       // font-size: 1.4rem;
     }
@@ -540,30 +595,37 @@ input[type="number"]::-webkit-outer-spin-button {
     }
     .book__announcements {
     }
+    .book-showtab {
+      padding: 0 1rem;
+    }
     .book__info {
+      padding: 0 1rem;
       height: 100%;
       display: flex;
       flex-direction: column;
       justify-content: center;
     }
     .book-content {
-      padding: 0 !important;
+      // padding: 0 1rem;
+      padding: 0;
       height: 100%;
     }
     .book__synopsis {
       // height: 100%;
+      padding: 0 1rem;
     }
     .book__title__author {
       font-size: 1.4rem;
-      color: #adacac;
+      color: #a5b1bd;
     }
     .book__title {
+      color: #1d2d53;
       text-align: left;
-      font-size: 1.5rem;
-      margin-bottom: 1rem;
+      font-size: 2.4rem;
+      margin-bottom: 0.2rem;
 
       &--more-info {
-        margin-bottom: 1rem;
+        margin-bottom: 0.2rem;
         width: 100%;
         text-align: left;
       }
@@ -573,6 +635,19 @@ input[type="number"]::-webkit-outer-spin-button {
     }
     #{$self}__avatar {
       display: none;
+    }
+    #{$self}__parallex {
+      // height: 35vh;
+      border-bottom-left-radius: 1rem;
+      border-bottom-right-radius: 1rem;
+      -webkit-box-shadow: 0 13px 27px -5px rgba(50, 50, 93, 0.25),
+        0 8px 16px -8px rgba(0, 0, 0, 0.3),
+        0 -6px 16px -6px rgba(0, 0, 0, 0.025);
+      box-shadow: 0 13px 27px -5px rgba(50, 50, 93, 0.25),
+        0 8px 16px -8px rgba(0, 0, 0, 0.3),
+        0 -6px 16px -6px rgba(0, 0, 0, 0.025);
+      -webkit-transition-property: color, background-color, -webkit-box-shadow,
+        -webkit-transform;
     }
     .book__cover {
       border-radius: 0.5rem;
@@ -586,7 +661,14 @@ input[type="number"]::-webkit-outer-spin-button {
         0 -6px 16px -6px rgba(0, 0, 0, 0.025);
       -webkit-transition-property: color, background-color, -webkit-box-shadow,
         -webkit-transform;
-
+      &--mobile {
+        box-shadow: 0 7px 14px 0 rgba(60, 66, 87, 0.1),
+          0 3px 6px 0 rgba(0, 0, 0, 0.07);
+        animation: book-cover 300ms ease-out;
+        border-radius: 0;
+        border-bottom-left-radius: 1rem;
+        border-bottom-right-radius: 1rem;
+      }
       transition-duration: 0.15s;
       .v-image__image {
       }

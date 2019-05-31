@@ -38,9 +38,6 @@ module.exports = {
       type: 'image/x-icon',
       href: '/favicon.ico'
 
-    }, {
-      rel: 'stylesheet',
-      href: 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'
     }],
     script: [{
       src: '/js/fb-sdk.js'
@@ -154,7 +151,9 @@ module.exports = {
    ** Nuxt.js modules
    */
   modules: [
-    '@nuxtjs/vuetify',
+    ['@nuxtjs/vuetify', {
+      treeShake: true
+    }],
     '@nuxtjs/pwa',
     'nuxt-device-detect',
     'nuxt-webfontloader',

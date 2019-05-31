@@ -17,7 +17,14 @@
             :aspect-ratio="1/1.5"
             max-width="15rem"
             style=" border-radius: 0.4rem;"
-          ></v-img>
+            :lazy-src="cover"
+          >
+            <template v-slot:placeholder>
+              <v-layout fill-height align-center justify-center ma-0>
+                <v-progress-circular indeterminate color="black "></v-progress-circular>
+              </v-layout>
+            </template>
+          </v-img>
         </nuxt-link>
         <div
           @click.stop="menu_modal=true"
@@ -55,7 +62,8 @@ export default {
     return {
       rating: 3.5,
       menu: false,
-      menu_modal: false
+      menu_modal: false,
+      cover: require("~/assets/img/cover.png")
     };
   },
   methods: {

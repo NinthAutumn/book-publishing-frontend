@@ -112,6 +112,16 @@
           </transition-group>
           <span>*最高６タグまで &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; *必ず1タグを選択</span>
         </div>
+        <div class="book-form__paid flex-divider flex--align flex-row--reverse">
+          <fa icon="question-circle" :style="{fontSize:14}" @mouseenter="toggleTip"></fa>
+          <transition name="grow-shrink">
+            <div v-if="tip" class="book-form__paid-modal" v-click-outside="toggleTip">
+              <p>一定の字数を超えたらその作品の話の二割がロックされ、有料化します。 また、一話相当の値段は様々な基準を分析し決められます</p>
+            </div>
+          </transition>
+          <v-checkbox label="有料作品にする" v-model="form.paid"></v-checkbox>
+        </div>
+
         <div class="divider flex flex--right">
           <input
             type="submit"
@@ -136,8 +146,11 @@ export default {
       rotation: 0,
       preGenre: [],
       oldImageUrl: "",
+      paid: false,
+      tip: false,
       scale: 1,
       form: {
+        paid: true,
         synopsis: "",
         title: "",
         tags: [],
@@ -233,6 +246,9 @@ export default {
     handleAvatarSuccess(res, file) {
       this.form.cover = file.raw;
       this.imageUrl = URL.createObjectURL(file.raw);
+    },
+    toggleTip() {
+      this.tip = !this.tip;
     },
     beforeAvatarUpload(file) {},
     async postBook() {
@@ -331,7 +347,18 @@ export default {
 }
 .book-form {
   // background-color: rgb(245, 245, 245);
-
+  .v-input {
+    padding: 0;
+  }
+  .v-input__slot {
+    margin: 0 !important;
+    label {
+      margin: 0;
+    }
+  }
+  .v-messages {
+    display: none;
+  }
   .el-input__inner {
     // height: 40px;
   }
@@ -357,7 +384,9 @@ export default {
       border: none;
     }
   }
-
+  .v-input--selection-controls {
+    margin: 0;
+  }
   .avatar-uploader .el-upload {
     border: 0px solid;
     border-color: $primary-lighter;
@@ -389,7 +418,7 @@ export default {
   .avatar-uploader .el-upload:hover {
     border-color: $primary;
   }
-  .avatar-uploader-icon {
+  &___ .avatar-uploader-icon {
     font-size: 28px;
     color: #8c939d;
     width: 130px;
@@ -470,6 +499,20 @@ export default {
     font-variant: normal;
     -webkit-font-smoothing: antialiased;
     color: #6b7c93;
+  }
+  &__paid {
+    position: relative;
+    #{$self}__paid-modal {
+      background-color: #fff;
+      box-shadow: 0 7px 14px 0 rgba(60, 66, 87, 0.1),
+        0 3px 6px 0 rgba(0, 0, 0, 0.07);
+      p {
+        width: 20rem;
+      }
+      position: absolute;
+      padding: 1rem;
+      bottom: 100%;
+    }
   }
   &__input {
     height: 40px;

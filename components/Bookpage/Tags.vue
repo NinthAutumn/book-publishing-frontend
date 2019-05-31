@@ -1,12 +1,17 @@
 <template>
   <div class="book-tags">
-    <p class="book-tags__title">作品のタグ</p>
+    <p class="book-tags__title">タグ</p>
     <ul class="book-tags__list flex-row">
       <li class="book-tags__item" v-for="(tag, index) in tags" :key="index" v-ripple>{{tag.name}}</li>
     </ul>
-    <p class="book-tags__title">作品のジャンル</p>
+    <p class="book-tags__title">ジャンル</p>
     <ul class="book-tags__list flex-row">
-      <li class="book-tags__item" v-for="(tag, index) in genres" :key="index" v-ripple>{{tag.name}}</li>
+      <li
+        class="book-tags__item book-tags__item--genre"
+        v-for="(tag, index) in genres"
+        :key="index"
+        v-ripple
+      >{{tag.name}}</li>
     </ul>
   </div>
 </template>
@@ -39,6 +44,13 @@ export default {
     border-radius: 0.5rem;
     color: $secondary;
     user-select: none;
+    &--genre {
+      border: 1px solid $primary;
+      color: $primary;
+      &:hover {
+        background-color: #f9dbff98 !important;
+      }
+    }
     &:hover {
       cursor: pointer;
       background-color: #dbe5ff98;

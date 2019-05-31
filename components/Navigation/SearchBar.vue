@@ -1,6 +1,11 @@
 <template>
   <div class="search-bar" v-click-outside="clickedSearch">
-    <form action @submit.prevent="searchOutput" class="search-bar__form">
+    <form
+      action
+      @submit.prevent="searchOutput"
+      class="search-bar__form"
+      :class="{'search-bar__form--mobile':$device.isMobile}"
+    >
       <input
         type="text"
         class="search-bar__input"
@@ -46,8 +51,18 @@ export default {
     // height: 100%;
     // width:
     display: flex;
+    &--mobile {
+      display: none;
+      width: 100%;
+      flex-grow: 1;
+      input {
+        width: 100% !important;
+        flex-grow: 1;
+      }
+    }
     #{$self}__input {
       width: 40vw;
+
       padding: 0.8rem 1.5rem;
       padding-right: 7.5rem;
       // box-shadow: 0 2px 5px 0 rgba(60, 66, 87, 0.1),

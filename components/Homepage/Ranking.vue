@@ -13,12 +13,19 @@
           :src="book.cover"
           :aspect-ratio="1/1.5"
           max-width="4rem"
+          :lazy-src="cover"
           min-width="4rem"
           alt="Book cover"
           style="border-radius: 0.4rem;box-shadow: 0 12px 18px 0 rgba(50, 50, 93, 0.11),
           0 3px 9px 0 rgba(0, 0, 0, 0.08);
         margin-right: 1rem;"
-        ></v-img>
+        >
+          <template v-slot:placeholder>
+            <v-layout fill-height align-center justify-center ma-0>
+              <v-progress-circular size="30" indeterminate color="#555555 "></v-progress-circular>
+            </v-layout>
+          </template>
+        </v-img>
         <!-- </div> -->
         <div class="recommendation-books__ranking__meta">
           <div class="recommendation-books__ranking__title">{{book.title}}</div>
@@ -36,6 +43,11 @@ export default {
     ...mapGetters({
       ranking: "analytic/getVoteRanking"
     })
+  },
+  data() {
+    return {
+      cover: require("~/assets/img/cover.png")
+    };
   }
 };
 </script>

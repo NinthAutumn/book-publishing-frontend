@@ -14,7 +14,19 @@
       <div class="book-cover">
         <!-- :src="`https://storage.googleapis.com/theta-images/${book.cover}`" -->
 
-        <v-img :src="book.cover" alt="Book cover" :aspect-ratio="1/1.5" max-width="15rem"></v-img>
+        <v-img
+          :lazy-src="cover"
+          :src="book.cover"
+          alt="Book cover"
+          :aspect-ratio="1/1.5"
+          max-width="15rem"
+        >
+          <template v-slot:placeholder>
+            <v-layout fill-height align-center justify-center ma-0>
+              <v-progress-circular indeterminate color="black "></v-progress-circular>
+            </v-layout>
+          </template>
+        </v-img>
       </div>
       <div class="book-meta">
         <div class="book-title">
@@ -28,10 +40,15 @@
         </div>
       </div>
       <div v-if="score" class="book-score">
-        <fa v-if="vote" icon="bolt" style="margin-right:1rem;color:rgb(255, 64, 64);"></fa>
+        <fa
+          v-if="vote"
+          icon="bolt"
+          class="book-score__icon"
+          :class="{'book-score__icon--mobile': $device.isMobile}"
+        ></fa>
         {{score}}
-        <span v-if="vote">ポイント</span>
-        <span v-if="!vote">スコアー</span>
+        <span v-if="vote&&!$device.isMobile">ポイント</span>
+        <span v-if="!vote&&!$device.isMobile">スコアー</span>
       </div>
     </nuxt-link>
   </div>
@@ -48,6 +65,11 @@ export default {
   },
   components: {
     Select: () => import("@/components/All/Select")
+  },
+  data() {
+    return {
+      cover: require("~/assets/img/cover.png")
+    };
   },
   created() {}
 };
@@ -111,6 +133,13 @@ export default {
     display: flex;
     align-items: center;
     padding: 0 1rem;
+    &__icon {
+      margin-right: 1rem;
+      color: rgb(255, 64, 64);
+      &--mobile {
+        margin-right: 0.5rem;
+      }
+    }
     span {
       font-size: 1.6rem;
     }
