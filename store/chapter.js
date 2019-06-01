@@ -1,3 +1,6 @@
+import {
+  get
+} from 'lodash'
 export const state = () => ({
   chapters: [],
   chapter: {},
@@ -5,6 +8,7 @@ export const state = () => ({
   bookTitle: "",
   loading: false,
   list: [],
+  list_simple: [],
   volumeList: [],
   modal: '',
   navigation: {},
@@ -13,6 +17,7 @@ export const state = () => ({
   latestBooksSimple: [],
   unlist: [], //chapters that aren't published
   count: 0,
+
   // chapters
 })
 
@@ -51,7 +56,8 @@ export const getters = {
   getChapter: state => state.chapter,
   getModalState: state => state.modal,
   getNotPublished: state => state.unlist,
-  getPublishedList: state => state.list
+  getPublishedList: state => state.list,
+  getSimpleList: state => state.list_simple
 }
 
 export const mutations = {
@@ -114,6 +120,9 @@ export const mutations = {
   },
   SET_CHAPTER_MOBILE(state, chapter) {
     state.chapters.push(chapter)
+  },
+  SET_SIMPLE_LIST: (state, list) => {
+    state.list_simple = list
   }
 }
 export const actions = {
@@ -134,10 +143,12 @@ export const actions = {
       commit('SET_CHAPTER_MOBILE', chapter)
 
 
-      if (!state.count) {
-        const res = await this.$axios.get(`/chapter/count?bookId=${bookId}`)
-        commit('SET_CHAPTER_COUNT', res.data.count)
-      }
+
+      const {
+        data
+      } = await this.$axios.get(`/chapter/count?bookId=${bookId}`)
+      commit('SET_CHAPTER_COUNT', data.count)
+
     } catch (error) {
       return Promise.reject(error.response.message)
     }
@@ -160,10 +171,11 @@ export const actions = {
       commit('SET_CHAPTER', chapter)
 
 
-      if (!state.count) {
-        const res = await this.$axios.get(`/chapter/count?bookId=${bookId}`)
-        commit('SET_CHAPTER_COUNT', res.data.count)
-      }
+      const {
+        data
+      } = await this.$axios.get(`/chapter/count?bookId=${bookId}`)
+      commit('SET_CHAPTER_COUNT', data.count)
+
     } catch (error) {
       return Promise.reject(error.response.message)
     }
@@ -301,6 +313,18 @@ export const actions = {
       return Promise.resolve(res.data)
     } catch (error) {
       return Promise.reject(error)
+    }
+  },
+  fetchUnstructuredList: async function ({
+    commit
+  }, {
+    bookId
+  }) {
+    try {
+      const res = await this.$axios.get(`/chapter/unstructuredList?bookId=${bookId}`)
+      commit('SET_SIMPLE_LIST', get(res, 'data'))
+    } catch (error) {
+
     }
   },
   async fetchMoreLatestBooksSimple({

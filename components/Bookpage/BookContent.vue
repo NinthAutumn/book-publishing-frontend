@@ -1,6 +1,26 @@
 <template>
-  <div class="book-content">
-    <div class="book-content__left flex flex-column divider">
+  <div class="book-content" :class="{'book-content--mobile':$device.isMobile}">
+    <div class="book-content__container">
+      <div class="book-content__title">あらすじ</div>
+      <div class="book-content__summary">
+        <v-clamp autoresize :max-lines="5" :expanded="opened">
+          {{book.synopsis}}
+          <template v-slot:before="clamped">{{setClamp(clamped.clamped)}}</template>
+        </v-clamp>
+        <div class="book-content__nav">
+          <div class="book-content__toggle" v-if="!opened&&clamp" @click="opened = !opened">
+            <fa icon="angle-down" style="margin-right:1rem;"></fa>
+            <div>詳細</div>
+          </div>
+          <div class="book-content__toggle" v-if="opened" @click="opened = !opened">
+            <fa icon="angle-up" style="margin-right:1rem;"></fa>
+            <div>一部を表示</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- <div class="book-content__left flex flex-column divider">
       <div class="book-content--text">
         <transition name="slide-fade" mode="out-in">
           <div v-show="bookSynopsis" class="book-content--text__summary">
@@ -24,17 +44,17 @@
           </div>
         </transition>
       </div>
-    </div>
+    </div>-->
   </div>
 </template>
 
 <script>
-import Statics from "./Statistics";
 import { get } from "lodash";
+import { mapGetters } from "vuex";
 // import clampy from "@clampy-js/vue-clampy";
 export default {
   components: {
-    Statics
+    VClamp: () => import("vue-clamp")
   },
   directives: {
     // clampy: {
@@ -48,23 +68,29 @@ export default {
     return {
       text: "",
       read: true,
+      opened: false,
       limit: 250,
-      length: get(this.book, "synopsis", "").length
+      clamp: false,
+      length: this.$store.getters["book/getBook"].synopsis.length
     };
   },
   computed: {
     bookSynopsis() {
       return this.$store.state.book.bookSynopsis;
     },
-    book() {
-      return this.$store.state.book.book;
+    ...mapGetters({
+      book: "book/getBook"
+    })
+  },
+  methods: {
+    setClamp(clamped) {
+      this.clamp = clamped;
     }
   },
-  methods: {},
   created() {
     this.text = this.bookmarkedText;
     if (this.$device.isMobile) {
-      this.limit = 50;
+      this.limit = 100;
     }
   },
   mounted() {},
@@ -99,77 +125,37 @@ export default {
   overflow: hidden;
   box-sizing: border-box;
   position: relative;
-  &__truncate-nav {
-    display: flex;
-    justify-content: flex-end;
-    font-size: 1.6rem;
-    color: $primary;
-    margin-right: 10px;
-    user-select: none;
-    &:hover {
-      cursor: pointer;
+  padding-bottom: 2rem;
+  $self: &;
+  &--mobile {
+  }
+  &__container {
+    #{$self}__title {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
     }
-  }
-  &__read-more {
-    font-size: inherit;
-  }
-  &__read-less {
-    font-size: inherit;
-  }
-  &__buttons {
-    // position: absolute;
-    display: flex;
-    // justify-content: ;
-    align-items: center;
-    justify-content: flex-end;
-    &__item {
-      width: 14rem;
-      margin-left: 1rem;
-      &__icon {
-        margin-right: 0.5rem;
-      }
+    span {
+      font-size: 1.6rem;
     }
-  }
-  &__left {
-    justify-content: space-between;
-  }
-
-  &--text {
-    overflow: hidden;
-    flex-grow: 1;
-    line-height: 3rem;
-
-    // text-overflow: ellipsis;
-    // position: relative;
-    /* line-clamp: 2; */
-    // white-space: nowrap;
-    &__summary {
-      h4 {
-        margin: 0;
-        font-size: 2rem;
-        font-weight: 400;
-      }
-      &--text {
-        // display: none;
-        font-size: 1.6rem;
-        line-height: 30px;
-        font-weight: 300;
-        text-align: left;
-      }
+    #{$self}__nav {
+      //  background:bl;
+      right: 0;
+      bottom: 0;
+      display: flex;
+      position: absolute;
+      justify-content: flex-end;
     }
-    &__statistics {
-      // display: none;
-      // height: 250px;
+    #{$self}__toggle {
+      text-align: right;
+      font-size: 1.4rem;
+      display: flex;
+      align-items: center;
 
-      p {
-        text-align: left !important;
-        font-size: 1.6rem;
-        line-height: 28px;
-        font-weight: 300;
+      &:hover {
+        cursor: pointer;
       }
-
-      &--title {
-        font-size: 2.2rem;
+      div {
+        font-size: inherit;
       }
     }
   }

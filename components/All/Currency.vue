@@ -38,7 +38,6 @@ export default {
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    width: 100px;
   }
   &__number {
     // font-family: Kameron;

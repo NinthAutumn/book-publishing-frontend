@@ -6,12 +6,13 @@
           <v-img class="banner-list__image" :height="228" :width="400" :src="image.cover"></v-img>
         </div>
       </div>
-      <!-- <div class="background">
-        <div class="swiper-button-prev swiper-button-black" slot="button-prev"></div>
+    </div>
+    <div v-swiper:mySwiper="mobileOption" v-else>
+      <div class="swiper-wrapper">
+        <div class="swiper-slide" v-for="(image,index) in images" :key="index">
+          <v-img class="banner-list__image" :max-height="228" :max-width="400" :src="image.cover"></v-img>
+        </div>
       </div>
-      <div class="background">
-        <div class="swiper-button-next swiper-button-black" slot="button-next"></div>
-      </div>-->
     </div>
   </div>
 </template>
@@ -26,6 +27,22 @@ export default {
         { cover: require("../../assets/banner1.jpg") },
         { cover: require("../../assets/banner3.jpg") }
       ],
+      mobileOption: {
+        slidesPerView: 1.1,
+        spaceBetween: 15,
+        freeMode: true,
+        mousewheel: {
+          invert: true,
+          sensitivity: 1,
+          forceToAxis: true
+        },
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev"
+        },
+        on: {},
+        breakpoints: {}
+      },
       swiperOption: {
         slidesPerView: "auto",
         spaceBetween: 15,
@@ -56,6 +73,9 @@ export default {
 .banner-list {
   $self: &;
   width: 100%;
+  .swiper-container {
+    border-radius: 2rem;
+  }
   &__image {
     border-radius: 2rem;
   }
@@ -65,6 +85,7 @@ export default {
     position: absolute;
     bottom: 5px;
   }
+
   .VueCarousel-dot-container {
     opacity: 0.7;
     button {

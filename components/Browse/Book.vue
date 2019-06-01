@@ -63,7 +63,7 @@ export default {
       rating: 3.5,
       menu: false,
       menu_modal: false,
-      cover: require("~/assets/img/cover.png")
+      cover: require("~/assets/img/NobleCardLight.png")
     };
   },
   methods: {

@@ -17,20 +17,26 @@
           </v-layout>
         </template>
       </v-img>
-      <v-img
-        :lazy-src="cover"
-        height="35vh"
-        class="book__cover book__cover--mobile"
-        width="100vw"
-        v-else
-        :src="book.cover"
+      <transition
+        appear
+        enter-active-class="animation animation--medium animation--ease-in animation__slide--down"
+        leave-active-class="animation animation--medium animation--ease-out animation__slide--up animation--backwards animation--reverse"
       >
-        <template v-slot:placeholder>
-          <v-layout fill-height align-center justify-center ma-0>
-            <v-progress-circular indeterminate color="black "></v-progress-circular>
-          </v-layout>
-        </template>
-      </v-img>
+        <v-img
+          :lazy-src="cover"
+          height="35vh"
+          class="book__cover book__cover--mobile"
+          width="100vw"
+          v-if="$device.isMobile&&showImage"
+          :src="book.cover"
+        >
+          <template v-slot:placeholder>
+            <v-layout fill-height align-center justify-center ma-0>
+              <v-progress-circular indeterminate color="black "></v-progress-circular>
+            </v-layout>
+          </template>
+        </v-img>
+      </transition>
       <div class="book__info flex flex-column flex--around">
         <header class="book__title">{{book.title}}</header>
         <div class="book__title--more-info" v-if="$device.isMobile">
@@ -217,8 +223,9 @@ export default {
       reviews: [],
       bookmarked: this.$store.getters["book/getBook"].bookmarked,
       star: 25,
-      cover: require("~/assets/img/cover2x.png"),
-      cover2: require("~/assets/img/cover2x.png"),
+      cover: require("~/assets/img/NobleCardLight@2x.png"),
+      cover2: require("~/assets/img/NobleCardLight@2x.png"),
+      showImage: true,
       tabs: {
         review: "",
         toc: "",
@@ -402,6 +409,11 @@ export default {
       this.loading = false;
     }
   },
+  beforeUpdated() {
+    this.showImage = false;
+  },
+  $route(to, from) {},
+
   components: {
     BookContent: () => import("@/components/Bookpage/BookContent"),
     BookChapterList: () => import("@/components/Bookpage/BookChapterList"),
@@ -607,8 +619,6 @@ input[type="number"]::-webkit-outer-spin-button {
     }
     .book-content {
       // padding: 0 1rem;
-      padding: 0;
-      height: 100%;
     }
     .book__synopsis {
       // height: 100%;

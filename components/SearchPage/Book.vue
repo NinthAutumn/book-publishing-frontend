@@ -115,16 +115,6 @@ export default {
     display: flex;
     position: absolute;
     justify-content: flex-end;
-    // width: 100%;
-    // height: 100%;
-    // &::after {
-    //   content: "";
-    //   width: 100%;
-    //   height: 100%;
-    //   filter: blur(10px);
-    //   position: absolute;
-    //   background-color: #fff;
-    // }
   }
   #{$self}__toggle {
     text-align: right;

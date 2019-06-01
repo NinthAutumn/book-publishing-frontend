@@ -58,7 +58,7 @@ export default {
   data() {
     return {
       rating: 3.5,
-      cover: require("~/assets/img/cover.png")
+      cover: require("~/assets/img/NobleCardLight.png")
     };
   },
   methods: {

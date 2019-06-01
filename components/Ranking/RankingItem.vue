@@ -68,7 +68,7 @@ export default {
   },
   data() {
     return {
-      cover: require("~/assets/img/cover.png")
+      cover: require("~/assets/img/NobleCardLight.png")
     };
   },
   created() {}
@@ -119,6 +119,7 @@ export default {
   }
   .book-title {
     margin-bottom: 1rem;
+    word-break: break-all;
     h4 {
       font-size: 16px;
       margin: 0 !important;
@@ -147,7 +148,7 @@ export default {
   .book-ranking {
     font-size: 18px;
     font-weight: bold;
-    width: 35px;
+    min-width: 35px;
     // height: 35px;
     display: flex;
     align-items: center;

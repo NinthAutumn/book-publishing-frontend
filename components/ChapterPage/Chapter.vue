@@ -1,5 +1,5 @@
 <template>
-  <section class="divider" style="padding: 0 10px;">
+  <section class="divider chapter-section" style="padding: 0 10px;">
     <v-progress-linear
       style="position:fixed!important; top:40px!important;left:0!important;"
       color="grey"
@@ -27,9 +27,10 @@
       @step-enter="stepEnterHandler"
       @step-leave="stepLeaveHandler"
       :progress="true"
+      v-if="!chapter.locked"
       @step-progress="progressHandler"
     >
-      <adsbygoogle :ad-layout="'in-article'" :ad-format="'fluid'"/>
+      <adsbygoogle v-if="!user.status" :ad-layout="'in-article'" :ad-format="'fluid'"/>
       <div
         data-step="1"
         :style="{'font-size':font + 'px', 'font-family':fontStyle}"
@@ -123,6 +124,7 @@ export default {
 .chapter-wrapper {
 }
 
+// .chapter-s
 .chapter-announcement {
   position: relative;
   padding: 20px;
@@ -166,8 +168,13 @@ export default {
   justify-content: center;
   width: 100%;
   padding: 10px;
-  margin-bottom: 350px;
+  // margin-bottom: 350px;
+  min-height: 70vh;
   user-select: none;
+  &:after {
+    width: 80vw;
+    content: "";
+  }
   .payblock-price {
     font-size: 20px;
   }
@@ -187,6 +194,7 @@ export default {
   //   width: 100vw;
   // }
   word-break: break-all;
+  box-sizing: border-box;
   ruby {
     font-family: inherit;
     font-size: inherit;

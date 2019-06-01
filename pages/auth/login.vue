@@ -23,6 +23,7 @@
 
 <script>
 import Cookies from "js-cookie";
+import { mapGetters } from "vuex";
 export default {
   data() {
     return {
@@ -33,6 +34,7 @@ export default {
         { key: "利用規約", value: "toc" },
         { key: "プライバシーポリシー", value: "privacy policy" }
       ]
+      // step:0
     };
   },
   components: {
@@ -42,9 +44,9 @@ export default {
     SocialAuth: () => import("@/components/Navigation/Auth/SocialAuth")
   },
   computed: {
-    step() {
-      return this.$store.state.authed;
-    }
+    ...mapGetters({
+      step: "getAuthStep"
+    })
   },
   methods: {
     async login() {
@@ -63,14 +65,13 @@ export default {
         });
     }
   },
-  auth: false,
   beforeCreate() {
-    if (this.$store.getters.isAuthenticated) {
+    if (this.$store.getters["auth/isAuthenticated"]) {
       this.$router.go(-1);
     }
   },
   async mounted() {
-    if (this.$store.getters.isAuthenticated) {
+    if (this.$store.getters["auth/isAuthenticated"]) {
       this.$router.go(-1);
     }
   }
@@ -81,14 +82,14 @@ export default {
 .login-page {
   // max-width: 50%;
 }
-.menu-active {
-  margin-left: 24rem;
-  margin-top: 5rem;
-  padding: 1rem 5rem;
-  transition: 300ms;
-}
-.menu-inactive {
-  padding: 6rem 3rem;
-  transition: 300ms;
-}
+// .menu-active {
+//   margin-left: 24rem;
+//   margin-top: 5rem;
+//   padding: 1rem 5rem;
+//   transition: 300ms;
+// }
+// .menu-inactive {
+//   padding: 6rem 3rem;
+//   transition: 300ms;
+// }
 </style>

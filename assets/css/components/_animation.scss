@@ -77,6 +77,60 @@
   }
 }
 
+.slide-down {
+  @keyframes slide-down {
+    from {
+      transform: translateY(-100%);
+    }
+
+    to {
+      transform: translateY(0);
+    }
+  }
+
+  &-enter {
+    transform: translateY(-100%);
+
+    &-active {
+      transition: 300ms;
+    }
+  }
+
+  &-leave {
+    transform: translateY(-100%);
+
+    &-active {
+      transition: 300ms;
+    }
+
+    &-to {
+      transform: translateY(-100%);
+    }
+  }
+}
+
+.slide-up {
+  &-enter {
+    transform: translateY(100%);
+
+    &-active {
+      transition: 300ms;
+    }
+  }
+
+  &-leave {
+    transform: translateY(100%);
+
+    &-active {
+      transition: 300ms;
+    }
+
+    &-to {
+      transform: translateY(100%);
+    }
+  }
+}
+
 .reverse-twitter-nav {
   &-enter {
     transform: translateY(-10rem);
@@ -130,3 +184,89 @@
 
 .list-enter,
 .list-leave-to {}
+
+.animation {
+  &--fast {
+    animation-duration: 300ms;
+  }
+
+  &--medium {
+    animation-duration: 500ms;
+  }
+
+  &--slow {
+    animation-duration: 800ms;
+  }
+
+  &--ease-in {
+    animation-timing-function: ease-in;
+  }
+
+  &--ease-out {
+    animation-timing-function: ease-out;
+  }
+
+  &--ease-in-out {
+    animation-timing-function: ease-in-out;
+  }
+
+  &__slide {
+    &--down {
+      animation: slide-down;
+    }
+
+    &--up {
+      animation: slide-up;
+    }
+
+    &--left {
+      animation: slide-left;
+    }
+
+    &--right {
+      animation: slide-right;
+    }
+
+  }
+}
+
+@keyframes slide-down {
+  from {
+    transform: translateY(-100%);
+  }
+
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-left {
+  from {
+    transform: translateX(-100%);
+  }
+
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-right {
+  from {
+    transform: translateX(100%);
+  }
+
+  to {
+    transform: translateY(0);
+  }
+}
+
+
+@keyframes slide-up {
+  from {
+    transform: translateY(100%);
+  }
+
+  to {
+    transform: translateY(0);
+  }
+}

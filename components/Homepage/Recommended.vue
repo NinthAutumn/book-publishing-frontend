@@ -76,7 +76,7 @@ import { mapGetters } from "vuex";
 export default {
   data() {
     return {
-      cover: require("~/assets/img/cover.png")
+      cover: require("~/assets/img/NobleCardLight.png")
     };
   },
   components: {},

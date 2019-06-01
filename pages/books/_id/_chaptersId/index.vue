@@ -1,11 +1,11 @@
 <template>
   <div class="divider chapter-wrapper">
     <main class="divider chapter-container">
-      <Chapter v-if="!nochapter"></Chapter>
+      <Chapter v-if="!nochapter&&!$device.isMobile"></Chapter>
+      <mobile-chapter v-if="$device.isMobile"></mobile-chapter>
       <div v-else class="chapter-closed" @click="nochapter=false">
         <fa icon="expand-arrows-alt"></fa>
       </div>
-
       <CommentList v-if="!$device.isMobile"></CommentList>
     </main>
   </div>
@@ -21,6 +21,7 @@ export default {
   },
   components: {
     Chapter: () => import("@/components/ChapterPage/Chapter"),
+    MobileChapter: () => import("@/components/ChapterPage/MobileChapter"),
     CommentList: () => import("@/components/ChapterPage/CommentList")
   },
   async mounted() {
@@ -129,6 +130,7 @@ export default {
     position: relative;
     display: flex;
     justify-content: center;
+    box-sizing: border-box;
     .chapter-navigation__next {
       text-align: center;
     }
@@ -142,6 +144,7 @@ export default {
       border: 1px solid #cecece;
       max-width: 750px;
       box-sizing: border-box;
+      padding: 0 1rem;
       .chapter-title {
         margin-top: 10px;
         header {
@@ -153,7 +156,7 @@ export default {
       }
       &::after {
         content: "";
-        display: inline-block;
+        display: relative;
         width: 80vw;
       }
     }

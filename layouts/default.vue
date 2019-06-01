@@ -69,6 +69,9 @@ export default {
 .mobile-nuxt {
   // padding: 10px;
 }
+.permanent {
+  min-height: 100vh;
+}
 
 .nuxt-pages .menu-active {
   margin-left: 240px;
