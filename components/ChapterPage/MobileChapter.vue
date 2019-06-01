@@ -177,7 +177,7 @@ export default {
     #{$self}__container {
       display: inline-block;
       max-width: 750px;
-      min-height: 80vh;
+      min-height: 100vh;
       &::after {
         content: "";
         display: inline-block;

@@ -24,7 +24,7 @@
               :to="{path: `/books/${ chapter.book_id}/${chapter.id}`}"
               v-ripple
             >
-              <div class="flex-divider flex" style="height:100%;">
+              <div class="flex-divider flex-row" style="height:100%;max-width:100%;">
                 <div class="book-chapters__chapter-item__content--index">{{chapter.index}}</div>
                 <div
                   class="flex-divider flex--between flex-column book-chapters__chapter-item__content book-chapters__chapter-item__content--divider"
@@ -121,7 +121,7 @@ export default {
   .book-chapters {
     $self: &;
     &__chapter-list {
-          /* autoprefixer: ignore next */
+      /* autoprefixer: ignore next */
       grid-template-columns: repeat(auto-fill, 100%) !important;
       #{$self}__chapter-item {
         &:nth-child(even) {
@@ -156,11 +156,19 @@ export default {
       }
     }
   }
-
+  &__container {
+    width: 100%;
+  }
   &__chapter-list {
     // grid-area: content;
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr 1fr;
+    min-height: 0; /* NEW */
+    min-width: 0;
+    /* autoprefixer: ignore next*/
+    grid-gap: 0 5px;
+    // overflow: hidden;
+
     // grid-template-rows: auto;
     &--no {
       #{$self}__no-chapter {
@@ -174,6 +182,7 @@ export default {
     user-select: none;
 
     #{$self}__chapter-item {
+      min-width: 100%;
       &:nth-child(4n - 1),
       &:nth-child(4n) {
         background-color: #f6f9fc;
@@ -183,7 +192,7 @@ export default {
       }
       border-radius: 1rem;
       background-color: #fff8f8;
-      max-width: 100%;
+
       margin: 0.3rem 0.3rem;
       padding: 0.5rem 0;
       // border-bottom: 1px solid grey;
@@ -193,10 +202,11 @@ export default {
         background-color: rgb(247, 247, 247);
       }
       &__content {
-        width: 100%;
+        max-width: 100%;
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
+        width: 100%;
         &--index {
           padding: 0.5rem 0.2rem;
           font-size: 1.6rem;
@@ -220,7 +230,6 @@ export default {
           white-space: nowrap;
           text-overflow: ellipsis;
           p {
-            max-width: 100%;
             font-size: 1.6rem;
             overflow: hidden;
             white-space: nowrap;

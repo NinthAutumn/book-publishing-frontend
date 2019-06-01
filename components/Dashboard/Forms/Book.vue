@@ -258,11 +258,14 @@ export default {
         this.form.tags.length < 1 ||
         this.form.main_genre.length < 1
       ) {
-        return this.$message({
-          message:
-            "関連ジャンル・メインジャンル・タグは必ず一個以上選択してください",
-          type: "error"
-        });
+        return this.$toast.show(
+          "関連ジャンル・メインジャンル・タグは必ず一個以上選択してください",
+          {
+            theme: "toasted-primary",
+            duration: 3000,
+            position: "top-right"
+          }
+        );
       }
 
       try {
@@ -271,7 +274,8 @@ export default {
           tags: this.form.tags,
           genres: this.form.genre,
           synopsis: this.form.synopsis,
-          main_genre: this.form.main_genre[0]
+          main_genre: this.form.main_genre[0],
+          paid: this.form.paid
           //   cover: url.url,
           //   cover_path: url.path
         };
@@ -418,7 +422,7 @@ export default {
   .avatar-uploader .el-upload:hover {
     border-color: $primary;
   }
-  &___ .avatar-uploader-icon {
+  .avatar-uploader-icon {
     font-size: 28px;
     color: #8c939d;
     width: 130px;

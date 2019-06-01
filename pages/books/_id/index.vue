@@ -65,7 +65,6 @@
               :value="+book.rating"
             ></v-rating>
             {{`(${book.rating})`}}
-            <!-- <v-rating medium color="#FF8D29" v-else :readonly="true" :value="0"></v-rating> -->
           </no-ssr>
         </div>
       </div>
@@ -716,6 +715,7 @@ input[type="number"]::-webkit-outer-spin-button {
   &__buttons {
     display: flex;
     user-select: none;
+
     .book-content__buttons__item {
       .lds-ellipsis {
         display: inline-block;

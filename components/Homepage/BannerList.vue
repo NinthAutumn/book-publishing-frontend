@@ -3,14 +3,14 @@
     <div v-swiper:mySwiper="swiperOption" v-if="!$device.isMobile">
       <div class="swiper-wrapper">
         <div class="swiper-slide" v-for="(image,index) in images" :key="index">
-          <v-img class="banner-list__image" :height="228" :width="400" :src="image.cover"></v-img>
+          <v-img class="banner-list__image" :height="250" :width="437.5" :src="image.cover"></v-img>
         </div>
       </div>
     </div>
     <div v-swiper:mySwiper="mobileOption" v-else>
       <div class="swiper-wrapper">
         <div class="swiper-slide" v-for="(image,index) in images" :key="index">
-          <v-img class="banner-list__image" :max-height="228" :max-width="400" :src="image.cover"></v-img>
+          <v-img class="banner-list__image" :max-height="250" :max-width="437.5" :src="image.cover"></v-img>
         </div>
       </div>
     </div>
@@ -25,7 +25,8 @@ export default {
       images: [
         { cover: require("../../assets/banner1.png") },
         { cover: require("../../assets/banner1.jpg") },
-        { cover: require("../../assets/banner3.jpg") }
+        { cover: require("../../assets/banner3.jpg") },
+        { cover: require("../../assets/banner4.png") }
       ],
       mobileOption: {
         slidesPerView: 1.1,
@@ -77,7 +78,10 @@ export default {
     border-radius: 2rem;
   }
   &__image {
+    // box-shadow: 0 13px 27px -5px rgba(50, 50, 93, 0.25),
+    //   0 8px 16px -8px rgba(0, 0, 0, 0.3), 0 -6px 16px -6px rgba(0, 0, 0, 0.025);
     border-radius: 2rem;
+    // margin: 1rem;
   }
   .VueCarousel-pagination {
     width: 100%;
@@ -96,7 +100,7 @@ export default {
     position: relative;
   }
   .swiper-slide {
-    width: 420px;
+    width: 437.5px;
   }
   .mobile {
     border-radius: 10px;

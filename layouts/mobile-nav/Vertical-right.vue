@@ -10,17 +10,12 @@
           <div class="mv-right__meta mv-right__meta--email">{{user.email}}</div>
         </div>
       </div>
-      <nuxt-link
-        tag="li"
-        v-ripple
-        class="mv-right__item mv-right__item--list"
-        v-for="(menu, index) in menus"
-        :key="index"
-        :to="menu.link"
-      >
-        <fa class="mv-right__icon" :icon="menu.icon"></fa>
-        <p>{{menu.title}}</p>
-      </nuxt-link>
+      <div tag="li" v-ripple class v-for="(menu, key) in menus" :key="key">
+        <div class="mv-right__item mv-right__item--list" @click="navigate(key)">
+          <fa class="mv-right__icon" :icon="menu.icon"></fa>
+          <p>{{menu.title}}</p>
+        </div>
+      </div>
     </ul>
   </nav>
 </template>
@@ -33,43 +28,59 @@ export default {
   },
   data() {
     return {
-      menus: [
-        {
+      menus: {
+        home: {
           title: "ホーム",
           icon: "home",
           link: "/",
           meta: ""
         },
-        {
+        search: {
           title: "検索",
           icon: "search",
           link: "/browse",
           meta: "search"
         },
-        {
+        ranking: {
           title: "ランキング",
           icon: "crown",
           link: "/rankings",
           meta: "ranking"
         },
-        {
+        update: {
           title: "更新",
           icon: "globe",
           link: "/update",
           meta: "update"
         },
-        {
+        library: {
           title: "ライブラリー",
           icon: "book",
           link: "/library",
           meta: "library"
         }
-      ]
+      }
     };
   },
   components: {},
   computed: {},
-  methods: {}
+  methods: {
+    navigate(key) {
+      if (key === "library") {
+        if (!this.$store.getters["auth/isAuthenticated"]) {
+          this.$toast.show("ライブラリーを使用する場合アカウントが必要です", {
+            theme: "toasted-primary",
+            duration: 1000,
+            position: "top-center",
+            icon: "extension"
+          });
+          return this.$router.push("/auth/login");
+        }
+        return this.$router.push(this.menus[key].link);
+      }
+      return this.$router.push(this.menus[key].link);
+    }
+  }
 };
 </script>
 <style lang="scss">
@@ -81,7 +92,9 @@ export default {
   top: 0;
   left: 0;
   z-index: 1111;
-  box-shadow: 1px 1px 5px grey;
+  -webkit-box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11),
+    0 1px 3px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
   &__item {
     font-size: 1.6rem;
     &--profile {
