@@ -398,7 +398,6 @@ export default {
       this.form.drawings = this.form.drawings.filter(file => {
         return file.url !== url;
       });
-      console.log(this.form.drawings);
     },
     contentBlur() {
       this.contentHolder = "本文";
@@ -418,9 +417,11 @@ export default {
     },
     openSubmitForm() {
       if (this.form.content.length < 1 || this.form.title.length < 1) {
-        return this.$message({
-          message: "コンテンツとタイトルは必要項目です",
-          type: "error"
+        return this.$toast.show("コンテンツとタイトルは必要項目です", {
+          theme: "toasted-primary",
+          position: "top-right",
+          duration: 1200,
+          icon: "extension"
         });
       }
       this.submitForm = !this.submitForm;

@@ -222,11 +222,6 @@ export default {
           position: "top-right",
           theme: "toasted-primary"
         });
-
-        this.$message({
-          message: "クラウンコインの購入に成功しました",
-          type: "success"
-        });
       }
     }
   },

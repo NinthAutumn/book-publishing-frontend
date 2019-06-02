@@ -3,7 +3,7 @@
     <main class="divider chapter-container">
       <Chapter v-if="!nochapter&&!$device.isMobile"></Chapter>
       <mobile-chapter v-if="$device.isMobile"></mobile-chapter>
-      <div v-else class="chapter-closed" @click="nochapter=false">
+      <div v-if="nochapter" class="chapter-closed" @click="nochapter=false">
         <fa icon="expand-arrows-alt"></fa>
       </div>
       <CommentList v-if="!$device.isMobile"></CommentList>

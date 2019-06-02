@@ -1,8 +1,9 @@
 <template>
   <div class="images-modal">
     <ul class="images-modal__list" v-if="modal === 'image'&&chapter.drawings">
+      <!-- {{chapter.drawings}} -->
       <li class="images-modal__item" v-for="(drawing, index) in chapter.drawings" :key="index">
-        <img class="images-modal__img" :src="drawing" @click.stop="openImage(drawing)">
+        <v-img class="images-modal__img" :src="drawing" @click.stop="openImage(drawing)"></v-img>
       </li>
     </ul>
   </div>
@@ -51,6 +52,7 @@ export default {
     }
     &__container {
       position: relative;
+      // max-wid
     }
     &__close {
       position: absolute;
@@ -69,14 +71,21 @@ export default {
       }
     }
   }
-  &__img {
-    max-width: 380px !important;
-    transition: 300ms;
-    &:hover {
-      transform: scale(1.05);
+  $self: &;
+  &__list {
+    #{$self}__img {
       transition: 300ms;
-      cursor: pointer;
+      max-width: 38rem;
+      &:hover {
+        transform: scale(1.05);
+        transition: 300ms;
+        cursor: pointer;
+      }
     }
+  }
+  &__img {
+    // min-width:;
+    // max-width: 380px !important;
   }
 }
 </style>

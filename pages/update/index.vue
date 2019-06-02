@@ -61,7 +61,6 @@ export default {
         limit: 30,
         infinite: true
       });
-      console.log(array);
       if (array.length < 1) {
         $state.complete();
       } else {

@@ -22,7 +22,7 @@
       <div class="plan-list__price">¥{{selected_option.price}}円/{{selected_option.interval_short}}</div>
       <div class="plan-list__select">
         <div class="plan-list__name" @click.stop="openModal">
-          <span>{{selected_option.interval||'期間を選ぶ'}}</span>
+          <span>{{selected_option.interval}}</span>
           <fa icon="sort"></fa>
         </div>
         <transition name="grow-shrink">
@@ -122,26 +122,27 @@ export default {
     }
   },
   async mounted() {
-    await this.$store.dispatch("subscription/fetchSubscription");
-    this.plan.forEach(item => {
-      if (item.interval === "month") {
-        this.selected_option = {
-          id: item.id,
-          price: item.price,
-          interval: "月間",
-          interval_short: "月",
-          stripe_plan_id: item.stripe_plan_id,
-          name: this.plan_key,
-          status: item.status
-        };
+    this.$store.dispatch("subscription/fetchSubscription").then(val => {
+      this.plan.forEach(item => {
+        if (item.interval === "month") {
+          this.selected_option = {
+            id: item.id,
+            price: item.price,
+            interval: "月間",
+            interval_short: "月",
+            stripe_plan_id: item.stripe_plan_id,
+            name: this.plan_key,
+            status: item.status
+          };
+        }
+        this.options[item.interval].value.id = item.id;
+        this.options[item.interval].value.status = item.status;
+        this.options[item.interval].value.price = item.price;
+      });
+      if (this.selected === this.plan_index) {
+        this.$store.commit("subscription/SET_SITE_PLAN", this.selected_option);
       }
-      this.options[item.interval].value.id = item.id;
-      this.options[item.interval].value.status = item.status;
-      this.options[item.interval].value.price = item.price;
     });
-    if (this.selected === this.plan_index) {
-      this.$store.commit("subscription/SET_SITE_PLAN", this.selected_option);
-    }
   }
 };
 </script>
@@ -202,6 +203,9 @@ export default {
         font-size: 1.4rem;
         margin-right: 1rem;
       }
+      // min-width
+      height: 2.7rem;
+      // min-width: 12rem;
       font-size: 1.4rem;
       padding: 0.3rem 1.2rem;
 
@@ -262,6 +266,8 @@ export default {
   &__description {
     font-size: 1.4rem;
     color: #6f798b;
+    word-break: break-all;
+    // max-width: 0%;
   }
 }
 </style>

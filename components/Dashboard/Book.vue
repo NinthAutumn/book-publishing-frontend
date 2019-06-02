@@ -1,7 +1,13 @@
 <template>
   <div class="dash-book">
     <div class="dash-book__cover">
-      <v-img :src="book.cover" :aspect-ratio="1/1.5" min-width="12rem" class="dash-book__image"></v-img>
+      <v-img
+        :src="book.cover"
+        :aspect-ratio="1/1.5"
+        min-width="12rem"
+        max-width="15rem"
+        class="dash-book__image"
+      ></v-img>
     </div>
     <div class="dash-book__meta">
       <div class="dash-book__header flex-row flex--align flex--between">
@@ -51,57 +57,7 @@
         v-ripple
       >話を投稿</nuxt-link>
     </div>
-    <!-- <div class="dash-booklist__cover" @mouseenter="image = !image" @mouseleave="image = !image">
-      <v-img
-        :src="`https://storage.googleapis.com/theta-images/${book.cover}`"
-        :aspect-ratio="1/1.5"
-        max-width="12rem"
-        style=" "
-      ></v-img>
-      <transition name="fade">
-        <fa v-if="image" class="dash-booklist__camera" icon="image"></fa>
-      </transition>
-    </div>
-    <fa class="dash-booklist__edit" icon="edit"></fa>
 
-    <div class="dash-booklist__title">{{book.title}}</div>
-    <div class="dash-booklist__stats-list">
-      <div class="dash-booklist__stats-item">
-        <div class="dash-booklist__stats-title">視聴回数</div>
-        <div class="dash-booklist__stats-content">{{book.views}}</div>
-      </div>
-      <div class="dash-booklist__stats-item">
-        <div class="dash-booklist__stats-title">ブックマーク数</div>
-        <div class="dash-booklist__stats-content">{{book.bookmark_count||0}}</div>
-      </div>
-      <div class="dash-booklist__stats-item">
-        <div class="dash-booklist__stats-title">話数</div>
-        <div class="dash-booklist__stats-content">{{book.chapter_count||0}}</div>
-      </div>
-      <div class="dash-booklist__stats-item">
-        <div class="dash-booklist__stats-title">話数</div>
-        <div class="dash-booklist__stats-content">{{book.status||'連載中'}}</div>
-      </div>
-    </div>
-    <div class="dash-booklist__buttons">
-      <div
-        class="dash-booklist__button dash-booklist__button--announcement"
-        @click="openForm"
-        v-ripple
-      >報告する</div>
-      <nuxt-link
-        tag="div"
-        :to="`/dashboard/books/${book.id}/published`"
-        class="dash-booklist__button dash-booklist__button--chapter"
-        v-ripple
-      >目次</nuxt-link>
-      <nuxt-link
-        tag="div"
-        :to="`/dashboard/books/${book.id}/new`"
-        class="dash-booklist__button dash-booklist__button--create-chapter"
-        v-ripple
-      >話を作る</nuxt-link>
-    </div>-->
     <v-dialog v-model="dialog" persistent max-width="600px">
       <v-card>
         <v-card-title>
@@ -197,7 +153,6 @@ export default {
 
       i--;
     }
-    // console.log(this.labels);
     this.$store
       .dispatch("dashboard/fetchBookStats", {
         bookId: this.book.id,
@@ -207,7 +162,6 @@ export default {
         this.value = [];
         this.labels.forEach((day, index) => {
           book.stat.forEach(stat => {
-            // console.log(this.$moment(stat.day).format("dddd"));
             if (day === this.$moment(stat.day).format("dddd")) {
               this.value.push(stat.data);
             }
@@ -235,7 +189,6 @@ export default {
           this.value = [];
           this.labels.forEach((day, index) => {
             book.stat.forEach(stat => {
-              // console.log(this.$moment(stat.day).format("dddd"));
               if (day === this.$moment(stat.day).format("dddd")) {
                 this.value.push(stat.data);
               }
@@ -261,9 +214,10 @@ export default {
           this.dialog = false;
         }
       } catch (error) {
-        return this.$message({
-          message: "報告の投稿に失敗しました",
-          type: "error"
+        return this.$toast.show("報告の投稿に失敗しました", {
+          theme: "toasted-primary",
+          position: "top-right",
+          duration: 1200
         });
       }
     }
@@ -274,23 +228,29 @@ export default {
 <style lang="scss">
 .dash-book {
   $self: &;
-  margin-top: 5rem;
-  margin-left: 5rem;
+  margin-bottom: 3rem;
   box-shadow: 0 2px 5px 0 rgba(60, 66, 87, 0.1), 0 1px 1px 0 rgba(0, 0, 0, 0.07);
   background-color: #fff;
   display: flex;
-  min-width: 10rem;
+  // min-width: 10rem;
+  width: 100%;
+  max-height: 50rem;
   padding: 1rem;
   position: relative;
+  max-width: 100%;
   &__meta {
     width: 100%;
+    max-width: 100%;
+    overflow: hidden;
     height: 100%;
     #{$self}__stats {
       // padding-right: 2rem;
     }
     #{$self}__header {
+      max-width: 100%;
       font-size: 1.6rem;
       margin-bottom: 1rem;
+
       #{$self}__icon {
         color: rgb(49, 49, 49);
         &:hover {
@@ -300,6 +260,7 @@ export default {
     }
     #{$self}__title {
       font-size: 1.6rem;
+      // max-width: 20rem;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;

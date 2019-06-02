@@ -345,7 +345,6 @@ export default {
   watch: {
     "form.address.postal": function(val) {},
     search: function(val) {
-      // console.log("this");
       val.replace("/", "");
       let rows = Object.keys(this.prefectures);
       let select = [];

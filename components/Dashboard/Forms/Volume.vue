@@ -51,7 +51,12 @@ export default {
         volume: this.volume
       });
       if (error) {
-        this.$message({ message: error, type: "error" });
+        this.$toast.show(error, {
+          theme: "toasted-primary",
+          position: "top-right",
+          duration: 1200,
+          icon: "extension"
+        });
       }
     }
   }

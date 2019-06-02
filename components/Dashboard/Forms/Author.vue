@@ -70,19 +70,26 @@ export default {
                 penname: this.author.penname
               };
               this.$store.dispatch("user/postAuthor", { author });
-              this.$message({
-                message: "おめでとうございます、あなたは作者になりました",
-                type: "success"
-              });
+              this.$toast.show(
+                "おめでとうございます、あなたは作者になりました",
+                {
+                  theme: "toasted-primary",
+                  position: "top-right",
+                  duration: 1200,
+                  icon: "account-circle"
+                }
+              );
             });
           },
           "image/jpeg",
           0.8
         );
       } catch (error) {
-        this.$message({
-          message: "作者の作成に失敗しました",
-          type: "error"
+        this.$toast.show("作者の作成に失敗しました", {
+          theme: "toasted-primary",
+          position: "top-right",
+          duration: 1200,
+          icon: "extension"
         });
       }
     }

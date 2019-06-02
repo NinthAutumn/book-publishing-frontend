@@ -311,16 +311,21 @@ export default {
         }
 
         await this.$store.dispatch("book/addBook", book);
-        this.$message({
-          message: "本の投稿に成功しました",
-          type: "success"
+        this.$toast.show("本の投稿に成功しました", {
+          theme: "toasted-primary",
+          position: "top-right",
+          duration: 1200,
+          icon: "check-circle"
         });
+
         this.loading = false;
         return this.$router.go(-1);
       } catch (error) {
-        this.$message({
-          message: `本の投稿に失敗しました！${error}`,
-          type: "error"
+        this.$toast.show("本の投稿に失敗しました！", {
+          theme: "toasted-primary",
+          position: "top-right",
+          duration: 1200,
+          icon: "extension"
         });
       }
     },

@@ -95,9 +95,11 @@ export default {
         });
         await this.$store.dispatch("library/getHistory");
       } catch (error) {
-        this.$message({
-          message: `ブックマークを失敗しました`,
-          type: "error"
+        this.$toast.show("ブックマークに失敗しました", {
+          theme: "toasted-primary",
+          position: "top-right",
+          duration: 1200,
+          icon: "extension"
         });
       }
     }

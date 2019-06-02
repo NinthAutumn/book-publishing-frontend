@@ -10,6 +10,7 @@
       </div>
     </div>
     <div class="is-mobile" v-else>
+      <mobile-horizontal></mobile-horizontal>
       <transition name="slide-right">
         <VerticalRightMobile :user="user" v-touch:swipe.left="swipeLeft" v-if="mvLeft"></VerticalRightMobile>
       </transition>
@@ -22,7 +23,8 @@ export default {
   components: {
     Horizontal: () => import("./main-nav/Horizontal"),
     Vertical: () => import("./main-nav/Vertical"),
-    VerticalRightMobile: () => import("./mobile-nav/Vertical-right")
+    VerticalRightMobile: () => import("./mobile-nav/Vertical-right"),
+    MobileHorizontal: () => import("./mobile-nav/Horizontal")
   },
   mounted() {
     document.addEventListener("touchstart", { passive: true });
@@ -67,7 +69,7 @@ export default {
 //   }
 // }
 .mobile-nuxt {
-  // padding: 10px;
+  padding-top: 5rem !important;
 }
 .permanent {
   min-height: 100vh;

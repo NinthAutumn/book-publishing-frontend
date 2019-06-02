@@ -165,8 +165,6 @@ export default {
   },
   watch: {
     latestData: function(val) {
-      console.log("in here");
-      console.log(this.latestData);
       for (let store of this.latestData) {
         for (let val of this.multiData) {
           if (store === val) {

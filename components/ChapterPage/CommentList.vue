@@ -108,10 +108,12 @@ export default {
           content: this.content
         })
         .then(async () => {
-          this.$message({
-            message: "コメントの投稿に成功！",
-            type: "success"
+          this.$toast.show("コメントの投稿に成功！", {
+            theme: "toasted-primary",
+            position: "top-right",
+            duration: 1000
           });
+
           await this.$store.dispatch("comment/fetchCommentList", {
             chapterId: this.$route.params.chaptersId,
             userId: this.$store.getters["user/loggedInUser"].id

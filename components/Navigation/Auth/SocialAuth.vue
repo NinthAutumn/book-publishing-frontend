@@ -88,7 +88,6 @@ export default {
             //  console.log(res.authResponse);
             window.FB.login(
               async res => {
-                console.log(res);
                 if (res.authResponse) {
                   let token = res.authResponse.accessToken;
 

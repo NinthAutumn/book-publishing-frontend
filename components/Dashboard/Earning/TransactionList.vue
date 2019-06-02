@@ -99,7 +99,12 @@ export default {
         this.redeem = false;
       } catch (error) {
         console.log(error);
-        this.$message({ message: "清算に失敗しました", type: "error" });
+        this.$toast.show("清算に失敗しました", {
+          theme: "toasted-primary",
+          position: "top-right",
+          duration: 1200,
+          icon: "extension"
+        });
       }
     },
     async openRedeem(id) {

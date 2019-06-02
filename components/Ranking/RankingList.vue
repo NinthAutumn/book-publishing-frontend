@@ -229,10 +229,6 @@ export default {
       if (books.length > 0) {
         $state.loaded();
       } else {
-        // this.$message({
-        //   message: "リストはこれで終わりです",
-        //   type: "info"
-        // });
         $state.complete();
       }
     },

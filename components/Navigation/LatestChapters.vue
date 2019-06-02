@@ -76,7 +76,6 @@ export default {
       this.$router.push("/books/" + bookId + "/" + chapterId);
     },
     async clickHandler(bookId, chapterId, id) {
-      console.log(id);
       //  :to="`/books/${notification.book_id}/${notification.chapter_id}`"
       await this.$axios.patch(`/notification/chapter/read?objectId=${id}`);
       this.$router.push(`/books/${bookId}/${chapterId}`);

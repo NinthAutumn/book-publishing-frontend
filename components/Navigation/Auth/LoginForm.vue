@@ -95,9 +95,11 @@ export default {
         this.$store.commit("LOGIN_FALSE");
         // this.$router.go(0);
       } catch (error) {
-        this.$message({
-          message: "パスワードまたはユーザ名が間違っています",
-          type: "error"
+        this.$toast.show("パスワードまたはユーザ名が間違っています", {
+          theme: "toasted-primary",
+          position: "top-right",
+          duration: 2000,
+          icon: "extension"
         });
       }
 
@@ -109,10 +111,7 @@ export default {
       //     this.$store.commit("LOGIN_FALSE");
       //   })
       //   .catch(e => {
-      //     this.$message({
-      //       message: "パスワードまたはユーザ名が間違っています",
-      //       type: "error"
-      //     });
+      //
       //   });
       // await this.$auth
       //   .loginWith("local", {

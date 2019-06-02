@@ -76,7 +76,6 @@ export default {
           });
           return this.$router.push("/auth/login");
         }
-        return this.$router.push(this.menus[key].link);
       }
       return this.$router.push(this.menus[key].link);
     }
