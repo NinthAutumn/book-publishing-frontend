@@ -37,13 +37,13 @@
         class="chapter-content step1"
         v-html="chapter.content"
       ></div>
-      <adsbygoogle :ad-layout="'in-article'" :ad-format="'fluid'"/>
+      <adsbygoogle v-if="!user.status" :ad-layout="'in-article'" :ad-format="'fluid'"/>
     </scrollama>
     <div class="chapter-payblock" v-if="chapter.locked">
       <div class="payblock-price">
         <Currency size="large" :amount="chapter.price"></Currency>
       </div>
-      <div class="payblock-buy button button--primary" @click="purchase" :class="{}">ロック解除</div>
+      <div class="payblock-buy button button--primary" @click.stop="purchase" :class="{}">ロック解除</div>
     </div>
     <div class="divider" v-if="chapter.extra">
       <div class="chapter-announcement chapter-announcement--footer" v-if="chapter.footer">
@@ -83,6 +83,9 @@ export default {
   methods: {
     purchase: async function() {
       try {
+        if (!this.$store.getters["auth/isAuthenticated"]) {
+          return this.$store.commit("LOGIN_STATE");
+        }
         await this.$store.dispatch("wallet/buyChapter", {
           bookId: this.$route.params.id,
           chapterId: this.$route.params.chaptersId,
@@ -129,9 +132,10 @@ export default {
   position: relative;
   padding: 20px;
   padding-top: 10px;
-  box-shadow: 0 7px 14px 0 rgba(60, 66, 87, 0.1),
-    0 3px 6px 0 rgba(0, 0, 0, 0.07);
+  box-shadow: 0 30px 60px -12px rgba(50, 50, 93, 0.25),
+    0 18px 36px -18px rgba(0, 0, 0, 0.3), 0 -12px 36px -8px rgba(0, 0, 0, 0.025);
   font-family: "Noto Sans JP" !important;
+  border-radius: 1rem;
   &--header {
     margin-bottom: 10px;
   }
@@ -193,6 +197,8 @@ export default {
   //   position: relative;
   //   width: 100vw;
   // }
+  //
+
   word-break: break-all;
   box-sizing: border-box;
   ruby {
@@ -205,6 +211,7 @@ export default {
     user-select: none;
     display: block;
     line-height: 30px;
+    max-width: 100%;
     margin-bottom: 15px;
   }
 }

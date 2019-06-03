@@ -121,7 +121,7 @@ export default {
   .book-chapters {
     $self: &;
     &__chapter-list {
-      /* autoprefixer: ignore next */
+      /* autoprefixer: ignore next; */
       grid-template-columns: repeat(auto-fill, 100%) !important;
       #{$self}__chapter-item {
         &:nth-child(even) {
@@ -165,7 +165,7 @@ export default {
     grid-template-columns: 1fr 1fr;
     min-height: 0; /* NEW */
     min-width: 0;
-    /* autoprefixer: ignore next*/
+    /* autoprefixer: ignore next; */
     grid-gap: 0 5px;
     // overflow: hidden;
 

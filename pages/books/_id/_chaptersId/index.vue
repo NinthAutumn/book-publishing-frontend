@@ -154,9 +154,11 @@ export default {
           margin-top: 12px;
         }
       }
+
       &::after {
         content: "";
-        display: relative;
+        display: block;
+        // position: relative;
         width: 80vw;
       }
     }

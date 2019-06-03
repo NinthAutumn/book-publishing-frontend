@@ -34,17 +34,13 @@ export default {
   // grid-gap: 1.5rem;
   &__header {
     font-size: 3rem;
-    grid-area: header;
   }
   &__graph {
-    grid-area: graph;
   }
   &__pie {
-    grid-area: pie;
     margin-bottom: 1rem;
   }
   &__list {
-    grid-area: list;
     margin-top: 1rem;
   }
 }

@@ -44,8 +44,9 @@ export default {
   width: 100%;
   padding: 10px;
   box-sizing: border-box;
-  /* height: 100vh; */
+  height: 95vh;
   $self: &;
+  overflow: auto;
   .ripple-color {
     color: rgb(206, 206, 206);
   }
@@ -79,7 +80,7 @@ export default {
         display: flex;
         flex-direction: column;
         margin-bottom: 0.5rem;
-        height: 4.5rem;
+        min-height: 4.5rem;
       }
     }
   }

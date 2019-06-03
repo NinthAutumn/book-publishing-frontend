@@ -121,7 +121,8 @@ export default {
 
     #{$self}__created-at {
       font-size: 1.6rem;
-      min-width: 8rem;
+      min-width: 13rem;
+      text-align: right;
     }
   }
 }

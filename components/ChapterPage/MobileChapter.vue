@@ -23,6 +23,7 @@
     >
       <div class="mobile-chapter__container">
         <div class="mobile-chapter__title">{{`第${chapter.index}話 ${chapter.title}`}}</div>
+        <adsbygoogle v-if="!user.status" :ad-layout="'in-article'" :ad-format="'fluid'"/>
         <div
           class="mobile-chapter__ann"
           :style="{  fontSize: `${this.font}px`}"

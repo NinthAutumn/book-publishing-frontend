@@ -49,8 +49,9 @@
         <div
           v-if="prev&&!$device.isMobile"
           class="next-chapter-title flex-column flex--center flex--align"
-          v-text="prev.title"
-        ></div>
+        >
+          <div class="next-chapter-title__content" v-text="prev.title"></div>
+        </div>
 
         <nuxt-link
           class="navigation-prev flex-column flex--center flex--align"
@@ -72,8 +73,9 @@
         <div
           v-if="next&&!$device.isMobile"
           class="next-chapter-title flex-column flex--center flex--align"
-          v-text="next.title"
-        ></div>
+        >
+          <div class="next-chapter-title__content" v-text="next.title"></div>
+        </div>
         <div class="flex-divider flex-row flex--align flex--between" v-if="$device.isMobile">
           <nuxt-link
             class="mobile-navigation mobile-navigation--prev"
@@ -217,6 +219,15 @@ export default {
   top: 0;
   -ms-writing-mode: tb-rl;
   writing-mode: vertical-rl;
+  // margin-left: 1rem;
+  text-align: center;
+  &__content {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 1.6rem;
+    height: 50vh;
+  }
   // text-combine-upright: all;
   // -webkit-text-combine: horizontal;
   // -ms-text-combine-horizontal: all;

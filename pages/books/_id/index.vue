@@ -583,14 +583,17 @@ input[type="number"]::-webkit-outer-spin-button {
   }
   &--mobile {
     #{$self}__container {
+      /* autoprefixer: ignore next */
       grid-template-rows: auto;
-
+      /* autoprefixer: ignore next */
       grid-template-columns: repeat(1, 1fr);
+      /* autoprefixer: ignore next */
       grid-template-areas:
         "cover"
         "title"
         "summary"
         "content" !important;
+      /* autoprefixer: ignore next */
       grid-row-gap: 2rem;
       .book-info {
         width: 100%;
@@ -699,8 +702,11 @@ input[type="number"]::-webkit-outer-spin-button {
       margin: 0 !important;
       font-size: 16px;
     }
+    /* autoprefixer: ignore next */
     display: grid;
+    /* autoprefixer: ignore next */
     grid-template-columns: 20rem 1fr 1fr 10rem;
+    /* autoprefixer: ignore next */
     grid-template-rows: 100px 1fr auto;
     /* autoprefixer: ignore next */
     grid-gap: 1rem;
@@ -713,8 +719,14 @@ input[type="number"]::-webkit-outer-spin-button {
   }
 
   &__buttons {
-    display: flex;
+    /* autoprefixer: ignore next */
+    display: grid;
+
     user-select: none;
+    /* autoprefixer: ignore next */
+    grid-template-columns: repeat(3, 1fr);
+    /* autoprefixer: ignore next */
+    grid-gap: 10px;
 
     .book-content__buttons__item {
       .lds-ellipsis {
@@ -780,12 +792,14 @@ input[type="number"]::-webkit-outer-spin-button {
     justify-self: end;
   }
   &__cover {
+    /* autoprefixer: ignore next */
     grid-area: cover;
     // width: 20rem;
     // height: 30rem;
   }
   &__info {
     justify-self: stretch;
+    /* autoprefixer: ignore next */
     grid-area: title;
     padding-left: 5px;
   }
@@ -827,9 +841,11 @@ input[type="number"]::-webkit-outer-spin-button {
     }
   }
   &__chapters {
+    /* autoprefixer: ignore next */
     grid-area: chapters;
   }
   &__reviews {
+    /* autoprefixer: ignore next */
     grid-area: reviews;
     // margin-bottom: 10px;
     &__title {
@@ -846,6 +862,7 @@ input[type="number"]::-webkit-outer-spin-button {
   &__content-nav {
     position: relative;
     // color: red;
+    /* autoprefixer: ignore next */
     grid-area: summary;
     &__line {
       border: 2px solid $primary;
@@ -889,6 +906,7 @@ input[type="number"]::-webkit-outer-spin-button {
     display: none;
   }
   .book__container {
+    /* autoprefixer: ignore next */
     grid-template-areas:
       "cover title title title"
       "cover announcements . meta"

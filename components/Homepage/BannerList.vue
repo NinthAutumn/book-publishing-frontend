@@ -23,7 +23,7 @@ export default {
     return {
       paginationSize: 10,
       images: [
-        { cover: require("../../assets/banner1.png") },
+        { cover: require("../../assets/banner5.png") },
         { cover: require("../../assets/banner1.jpg") },
         { cover: require("../../assets/banner3.jpg") },
         { cover: require("../../assets/banner4.png") }

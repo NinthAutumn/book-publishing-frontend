@@ -344,8 +344,8 @@ export default {
       margin-left: 10px;
     }
     &__chapter {
-      // max-width: 30em;
-      max-width: 90rem;
+      max-width: 30em;
+      // max-width: 90rem;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;

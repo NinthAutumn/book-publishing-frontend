@@ -447,7 +447,7 @@ export default {
     &--multiple {
       // height: 500px;
       top: 0;
-      /* autoprefixer: ignore next */
+      /* autoprefixer: ignore next; */
       grid-gap: 2px;
 
       // width: 200px;

@@ -18,7 +18,7 @@
           <Ranking></Ranking>
         </div>
       </div>
-      <adsbygoogle/>
+      <adsbygoogle v-if="!user.status"/>
       <div class="card-title flex flex--align">
         <h3>評価が高いレビュー</h3>
       </div>
@@ -31,7 +31,7 @@
         <h3>更新された作品</h3>
       </div>
       <BooksList :trendings="latest"></BooksList>
-      <adsbygoogle/>
+      <adsbygoogle v-if="!user.status"/>
       <div class="card-title">
         <h3>更新頻度が高い</h3>
       </div>
@@ -109,7 +109,8 @@ export default {
       trending: "analytic/getTrendingList",
       latest: "analytic/getLatest",
       recommended: "analytic/getRecommended",
-      frequent: "analytic/getFrequent"
+      frequent: "analytic/getFrequent",
+      user: "user/loggedInUser"
     })
   },
   auth: false

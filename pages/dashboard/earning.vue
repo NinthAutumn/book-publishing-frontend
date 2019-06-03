@@ -24,7 +24,9 @@ export default {
 
 <style lang="scss">
 .earning-page {
+  /* autoprefixer: ignore next */
   display: grid;
+  /* autoprefixer: ignore next */
   grid-template-areas: "header header" "graph pie" "list list ";
   /* autoprefixer: ignore next */
   grid-gap: 1.5rem;

@@ -30,8 +30,11 @@ export default {
   &__list {
     padding-left: 5rem;
     padding-top: 5rem;
+    /* autoprefixer: ignore next */
     display: grid;
+    /* autoprefixer: ignore next */
     grid-template-columns: repeat(2, minmax(30rem, 1fr));
+    /* autoprefixer: ignore next */
     grid-gap: 10rem;
     // grid-template-rows:minmax(20rem, 300rem);
   }
