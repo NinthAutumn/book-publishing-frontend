@@ -177,8 +177,9 @@ export default {
   &__wrapper {
     #{$self}__container {
       display: inline-block;
-      max-width: 750px;
+      max-width: 100%;
       min-height: 100vh;
+
       &::after {
         content: "";
         display: inline-block;
@@ -206,6 +207,8 @@ export default {
     #{$self}__title {
       font-size: 2.4rem;
       margin: 1rem 0;
+      max-width: 100%;
+      word-break: break-all;
     }
     #{$self}__ann {
       border-radius: 1rem;

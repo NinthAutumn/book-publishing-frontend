@@ -5,7 +5,7 @@
       <!-- {{review}} -->
     </div>
     <div class="reviews-like">
-      <v-avatar size="8rem">
+      <v-avatar :size="size">
         <v-img :src="review.avatar"></v-img>
       </v-avatar>
       <p class="reviews-content-username">{{review.username}}</p>
@@ -92,7 +92,8 @@ export default {
       likeNumber: 0,
       deleteModal: false,
       loading: false,
-      limit: 370
+      limit: 370,
+      size: 80
     };
   },
   components: {},
@@ -198,8 +199,10 @@ export default {
     this.liked = this.review.voted > 0;
     this.disliked = this.review.voted < 0;
     this.likeNumber = this.review.likes;
+
     if (this.$device.isMobile) {
       this.limit = 50;
+      this.size = 40;
     }
   }
 };

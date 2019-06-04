@@ -205,7 +205,7 @@ export default {
     border-radius: 100px;
     box-shadow: 1px 1px 5px 0px rgb(201, 200, 200);
     transition: 300ms;
-    margin-right: 5px;
+    margin: 0 1rem;
     &:hover {
       transform: scale(1.1);
       box-shadow: 3px 3px 5px 0px rgb(184, 182, 182);

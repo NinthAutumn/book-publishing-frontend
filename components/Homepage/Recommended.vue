@@ -18,6 +18,7 @@
             min-width="8rem"
             alt="Book cover"
             style="border-radius: 0.4rem;  "
+            v-ripple
           >
             <template v-slot:placeholder>
               <v-layout fill-height align-center justify-center ma-0>

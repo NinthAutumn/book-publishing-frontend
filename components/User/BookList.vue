@@ -52,7 +52,7 @@ export default {
   },
   computed: {},
   async mounted() {
-    this.$store.dispatch("user/fetchProfileBooks", {
+    await this.$store.dispatch("user/fetchProfileBooks", {
       userId: this.$route.params.id
     });
   }
@@ -83,6 +83,9 @@ export default {
     #{$self}__meta {
       &--title {
         grid-area: title;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
         font-size: 2rem;
       }
       &--rating {

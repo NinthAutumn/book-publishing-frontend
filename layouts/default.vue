@@ -3,7 +3,8 @@
     <div v-if="$nuxt.isOffline">今オフラインです</div>
     <div class="not-mobile" v-if="!$device.isMobile">
       <Horizontal></Horizontal>
-      <Vertical></Vertical>
+      <!-- <Vertical></Vertical> -->
+      <NewVertical v-if="$store.state.menuState=== 'menu-active'"></NewVertical>
       <div class="nuxt-pages">
         <div class="dropdown"></div>
         <nuxt :class="$store.state.menuState" class="permanent"></nuxt>
@@ -24,10 +25,15 @@ export default {
     Horizontal: () => import("./main-nav/Horizontal"),
     Vertical: () => import("./main-nav/Vertical"),
     VerticalRightMobile: () => import("./mobile-nav/Vertical-right"),
-    MobileHorizontal: () => import("./mobile-nav/Horizontal")
+    MobileHorizontal: () => import("./mobile-nav/Horizontal"),
+    NewVertical: () => import("./main-nav/NewVertical")
   },
   mounted() {
-    document.addEventListener("touchstart", { passive: true });
+    console.log(window.innerWidth);
+
+    if (this.$device.isMobile) {
+      document.addEventListener("touchstart", { passive: true });
+    }
   },
   data() {
     return {
@@ -69,14 +75,14 @@ export default {
 //   }
 // }
 .mobile-nuxt {
-  padding-top: 5rem !important;
+  padding-top: 5.5rem !important;
 }
 .permanent {
   min-height: 100vh;
 }
 
 .nuxt-pages .menu-active {
-  margin-left: 240px;
+  margin-left: 22rem;
   margin-top: 50px;
   // padding: 10px 50px;
   position: relative;

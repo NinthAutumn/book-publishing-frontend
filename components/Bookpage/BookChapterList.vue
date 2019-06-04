@@ -13,7 +13,7 @@
         <div
           v-if="volume.chapters.length> 0"
           class="book-chapters__volume-item__content"
-        >{{volume.volume_title || `第${volume.volume}章`}}</div>
+        >{{ `第${volume.volume}章 ${volume.volume_title}`}}</div>
         <div class="book-chapters__container" v-if="volume.chapters[0].id">
           <transition-group name="list-complete" tag="ul" class="book-chapters__chapter-list">
             <nuxt-link

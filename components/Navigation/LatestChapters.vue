@@ -9,7 +9,7 @@
         :key="index"
         @click="clickHandler(notification.book_id,notification.chapter_id,notification.notification_object_id)"
       >
-        <div class="latest-chapters__cover">
+        <!-- <div class="latest-chapters__cover">
           <v-img
             :src="notification.cover"
             :aspect-ratio="1/1.5"
@@ -18,7 +18,7 @@
             style
             class="latest-chapters__image"
           ></v-img>
-        </div>
+        </div>-->
         <div class="latest-chapters__chapter-meta flex--center flex-column">
           <div class="latest-chapters__chapter-title">
             <p v-text="notification.title"></p>
@@ -110,7 +110,9 @@ export default {
 .latest-chapters {
   width: 100%;
   $self: &;
-  height: 300px;
+  // max-height: 100%;
+  height: 25vh;
+
   overflow: auto;
   &__list {
     width: inherit;
@@ -120,6 +122,7 @@ export default {
     position: relative;
     width: inherit;
     // height: 55px;
+    padding: 1rem;
     border-radius: 1rem;
     // height: 4rem;
     display: flex;
@@ -156,7 +159,7 @@ export default {
     #{$self}__chapter-meta {
       // padding: 0.4rem 0.1rem;
       width: 100%;
-      padding: 0 1rem;
+      // padding: 0 1rem;
     }
     #{$self}__notification {
       content: "";
@@ -173,6 +176,7 @@ export default {
       font-size: 6px;
       // margin-bottom: 1rem;
       // width: 200px;
+      font-weight: bold;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -186,11 +190,13 @@ export default {
       }
     }
     #{$self}__chapter-index {
+      font-weight: bold;
       color: #4f566b;
       font-size: 1rem;
       // transform: translateX(5rem);
     }
     #{$self}__chapter-date {
+      font-weight: bold;
       font-size: 1rem;
       color: #aab7c4;
     }

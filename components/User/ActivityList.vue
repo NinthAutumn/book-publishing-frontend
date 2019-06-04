@@ -12,8 +12,18 @@
           <div v-if="reviews&&item.rating" class="user-activity__rating">
             <v-rating color="#FF8D29" readonly size="20" half-increments :value="item.rating"></v-rating>
           </div>
-          <div class="user-activity__content" v-if="reviews" v-html="item.content"></div>
-          <p class="user-activity__content" v-else>{{item.content}}</p>
+          <div
+            class="user-activity__content"
+            v-if="reviews&&!readMore"
+            v-html="truncate(item.content, 250)"
+          ></div>
+          <div class="user-activity__content" v-if="reviews&&readMore" v-html="item.content"></div>
+          <p class="user-activity__content" v-else-if="comment">{{item.content}}</p>
+          <div v-if="reviews&&item.content.length > 251" class="buts">
+            <a @click="toggleCollapse" v-if="!readMore" class="reviews-content-text-more">>>詳細</a>
+            <a @click="toggleCollapse" v-else class="reviews-content-text-more">{{'<<'}}一部を表示</a>
+          </div>
+
           <nuxt-link :to="'/books/'+item.book_id" tag="div" class="user-activity__parent">
             <fa class="user-activity__parent__icon" icon="book"></fa>
             {{item.book_title}}
@@ -31,6 +41,23 @@ export default {
     user: Object,
     reviews: Boolean,
     comment: Boolean
+  },
+  data() {
+    return {
+      readMore: false
+    };
+  },
+  methods: {
+    truncate: (string, number) => {
+      if (string.length > number) {
+        return (string || "").substring(0, number) + "…";
+      } else {
+        return string;
+      }
+    },
+    toggleCollapse: function() {
+      this.readMore = !this.readMore;
+    }
   }
 };
 </script>

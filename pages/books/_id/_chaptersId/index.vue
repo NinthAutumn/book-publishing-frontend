@@ -1,6 +1,6 @@
 <template>
   <div class="divider chapter-wrapper">
-    <main class="divider chapter-container">
+    <main class="divider chapter-container" :class="{'chapter-container--mobile':$device.isMobile}">
       <Chapter v-if="!nochapter&&!$device.isMobile"></Chapter>
       <mobile-chapter v-if="$device.isMobile"></mobile-chapter>
       <div v-if="nochapter" class="chapter-closed" @click="nochapter=false">
@@ -130,6 +130,7 @@ export default {
     position: relative;
     display: flex;
     justify-content: center;
+    max-width: 100%;
     box-sizing: border-box;
     .chapter-navigation__next {
       text-align: center;
@@ -145,6 +146,9 @@ export default {
       max-width: 750px;
       box-sizing: border-box;
       padding: 0 1rem;
+      &--mobile {
+        max-width: 100%;
+      }
       .chapter-title {
         margin-top: 10px;
         header {

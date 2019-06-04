@@ -118,7 +118,7 @@ export default {
   .profile-nav {
     &__container {
       &--fixed {
-        left: 24rem !important;
+        left: 22rem !important;
       }
     }
   }
