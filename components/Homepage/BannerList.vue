@@ -39,7 +39,8 @@ export default {
       images: [
         { cover: require("../../assets/banner5.png"), link: "/" },
         { cover: require("../../assets/banner2.png"), link: "/" },
-        { cover: require("../../assets/banner3.png"), link: "/rankings" }
+        { cover: require("../../assets/banner3.png"), link: "/rankings" },
+        { cover: require("../../assets/banner1.png"), link: "/" }
       ],
       mobileOption: {
         slidesPerView: 1.1,

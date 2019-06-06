@@ -8,7 +8,7 @@
             :src="`https://storage.googleapis.com/theta-images/${user.avatar}`"
             alt="user profile picture"
             >-->
-            <img :src="user.avatar" alt>
+            <img :src="user.avatar.img" alt>
           </v-avatar>
         </div>
         <div class="library-up__avatar__username" v-text="user.username"></div>

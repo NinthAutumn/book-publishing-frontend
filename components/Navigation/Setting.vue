@@ -11,7 +11,7 @@
           :canvas-color="'default'"
           :placeholder="'アバター'"
           v-model="user.avatar"
-          :initial-image="current.avatar"
+          :initial-image="current.avatar.img"
         ></croppa>
       </div>
 

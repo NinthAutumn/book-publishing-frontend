@@ -105,14 +105,15 @@ export const actions = {
     user
   }) {
     try {
-      console.log(user);
       const res = await this.$axios.post('/auth/signup', {
         username: user.username,
         email: user.email,
         password: user.password
       })
+      return Promise.resolve(res.data)
     } catch (error) {
       console.log(error);
+      return Promise.reject(error.response)
     }
 
   },

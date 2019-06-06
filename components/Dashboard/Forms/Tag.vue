@@ -61,6 +61,16 @@ export default {
         value: tag.id
       });
     }
+    if (this.value) {
+      this.value.forEach(val => {
+        // console.log(val);
+        object.forEach(ob => {
+          if (ob.value === val.id) {
+            ob.selected = true;
+          }
+        });
+      });
+    }
     this.selected = object;
   },
   methods: {

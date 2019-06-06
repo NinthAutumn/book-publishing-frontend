@@ -8,12 +8,13 @@
             :size="180"
             class="profile-nav__avatar-img"
             @click.stop="$store.commit('TOGGLE_SETTING_MODAL')"
+            v-if="user.avatar"
           >
             <!-- <img
             :src="`https://storage.googleapis.com/theta-images/${user.avatar}`"
             alt="user profile picture"
             >-->
-            <img :src="user.avatar" alt>
+            <img :src="user.avatar.img" alt>
           </v-avatar>
         </div>
       </transition>
@@ -22,7 +23,7 @@
         <transition name="twitter-nav">
           <div class="profile-nav__fixed-avatar" v-if="scrolled">
             <v-avatar class="profile-nav__avatar-img" :size="45">
-              <img :src="user.avatar" alt>
+              <img :src="user.avatar.img" alt>
             </v-avatar>
             <div class="flex-divider flex-column flex--between">
               <div class="profile-nav__fixed-username">{{user.username}}</div>

@@ -19,8 +19,8 @@
         </div>
         <div class="vertical-nav__profile-container" v-else>
           <div class="vertical-nav__user-avatar">
-            <v-avatar size="80" class="vertical-nav__avatar">
-              <v-img :src="user.avatar"></v-img>
+            <v-avatar size="80" class="vertical-nav__avatar" v-if="user.avatar">
+              <v-img :src="user.avatar.img"></v-img>
             </v-avatar>
           </div>
           <div class="vertical-nav__user-wallet">
@@ -87,12 +87,12 @@ export default {
           link: "/rankings",
           meta: "ranking"
         },
-        // {
-        //   title: "リーディングリスト",
-        //   icon: "store",
-        //   link: "/readinglists",
-        //   meta: "store"
-        // },
+        {
+          title: "更新",
+          icon: "globe",
+          link: "/update",
+          meta: "update"
+        },
         {
           title: "ライブラリー",
           icon: "book",

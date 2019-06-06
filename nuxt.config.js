@@ -228,6 +228,8 @@ module.exports = {
    */
   axios: {
     baseURL: process.env.SERVER_URL || 'http://localhost:5000/api',
+    credentials: false,
+    proxyHeaders: false
   },
 
   auth: {

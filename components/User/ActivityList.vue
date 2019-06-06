@@ -4,7 +4,7 @@
       <li class="user-activity__item" v-for="(item, index) in list" :key="index">
         <div class="user-activity__avatar">
           <v-avatar size="45">
-            <img :src="user.avatar" alt>
+            <img :src="user.avatar.img" alt>
           </v-avatar>
         </div>
         <div class="user-activity__meta">

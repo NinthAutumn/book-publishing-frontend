@@ -13,8 +13,12 @@
       <!-- <v-avatar class="mobile-horizontal__avatar" :size="40" v-if="!loggedIn">
         <img :src="avatar">
       </v-avatar>-->
-      <v-avatar class="mobile-horizontal__avatar" :size="40">
-        <img :src="user.avatar||avatar">
+      <v-avatar
+        class="mobile-horizontal__avatar"
+        :size="40"
+        v-if="$store.getters['auth/isAuthenticated']"
+      >
+        <v-img :src="user.avatar.img||avatar"></v-img>
       </v-avatar>
     </div>
   </nav>

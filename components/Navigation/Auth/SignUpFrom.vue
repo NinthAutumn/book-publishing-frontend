@@ -1,6 +1,6 @@
 <template>
   <div class="sign-up">
-    <form @submit.prevent="signUp" class="signup-form">
+    <form @submit.prevent="signUp" class="signup-form" v-loading="loading">
       <div @click="signOff" class="flex-row go-back">
         <div class="divider">
           <Zondicon class="zond-back" icon="arrow-thick-left"></Zondicon>
@@ -86,7 +86,8 @@ export default {
       confirm_password: "",
       gender: "",
       last_name: "",
-      first_name: ""
+      first_name: "",
+      loading: false
     };
   },
   watch: {
@@ -115,13 +116,23 @@ export default {
       await this.$validator.validateAll();
       if (!this.errors.any()) {
         try {
+          this.loading = true;
           let user = {
             username: this.username,
             email: this.email,
             password: this.password
           };
           const postUser = await this.$store.dispatch("auth/signup", { user });
-
+          this.loading = false;
+          return this.$toast.show(
+            "アカウント作成に成功しました、あとはEメール確認が必要なので登録されたメールアドレスに確認メールが送られました",
+            {
+              duration: 4000,
+              theme: "toasted-primary",
+              icon: "check_circle",
+              position: "top-right"
+            }
+          );
           // this.$router.go(0);
         } catch (error) {
           this.$toast.show("アカウント作成に失敗", {

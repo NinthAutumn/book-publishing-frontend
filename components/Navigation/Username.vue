@@ -1,5 +1,6 @@
 <template>
   <div class="username-form dialog dialog__container" v-if="open">
+    <!-- <div class="username-form__close" v-if="$store.state.auth.strategy === 'local'"></div> -->
     <div class="username-form__container dialog__content">
       <div class="flex-divider flex-row flex--align flex--center" style="margin-bottom:1rem;">
         <no-ssr>
@@ -13,8 +14,9 @@
           ></croppa>
         </no-ssr>
       </div>
-      <div class="username-form__username">
-        <v-text-field v-model="user.username" label="ユーザー名*" required></v-text-field>
+      <div class="div" v-if="$store.state.auth.strategy === 'local'"></div>
+      <div class="username-form__username" v-else>
+        <v-text-field v-model="user.username" label="ユーザー名*"></v-text-field>
       </div>
       <div class="username-form__submit">
         <div class="username-form__button" v-ripple @click="setUsername">更新</div>
@@ -32,7 +34,7 @@ export default {
       avatar: {},
       user: {
         avatar: {},
-        username: "",
+        username: this.$store.getters["user/loggedInUser"],
         avatar_path: ""
       }
     };
@@ -44,7 +46,10 @@ export default {
           const url = await this.$store.dispatch("upload/image", blob);
           this.user["avatar"] = url.url;
           this.user["avatar_path"] = url.path;
-          await this.$store.dispatch("user/patchUser", { user: this.user });
+          if (this$store.state.auth.strategy !== "local") {
+            await this.$store.dispatch("user/patchUser", { user: this.user });
+          } else {
+          }
         });
 
         // await this.$auth.fetchUser();
@@ -58,6 +63,9 @@ export default {
       this.$store.getters["auth/isAuthenticated"] &&
       !this.$store.getters["user/loggedInUser"].username
     ) {
+      if (this.$store.state.auth.strategy === "local") {
+        return;
+      }
       this.open = true;
     }
   }

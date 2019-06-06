@@ -187,7 +187,7 @@ export default {
               this.selectedData.push({ name: item.key, id: item.value });
             } else {
               this.selectedData = this.selectedData.filter(
-                element => element !== item.key
+                element => element.name !== item.key
               );
             }
           }
@@ -316,8 +316,10 @@ export default {
     if (this.data && this.value) {
       for (let store of this.value) {
         for (let val of this.multiData) {
-          if (store === val) {
+          if (store.name === val.key) {
             val.selected = !val.selected;
+
+            this.selectedData.push(store);
           }
         }
       }
@@ -339,7 +341,7 @@ export default {
         this.multiData.forEach((e, n) => {
           if (e.value === this.value) {
             this.selectD = e.key;
-
+            console.log(e);
             e.selected = !e.selected;
             // this.$emit("input", e.value);
           }

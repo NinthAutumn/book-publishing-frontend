@@ -45,7 +45,7 @@
               class="profile-pic__avatar"
               :class="{'profile-pic__avatar--bronze':user.status === 'bronze'}"
             >
-              <img :src="user.avatar">
+              <img :src="user.avatar.img">
             </v-avatar>
             <div class="profile-pic__info">
               <div class="profile-pic__meta">

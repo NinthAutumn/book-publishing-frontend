@@ -29,10 +29,47 @@ export default {
     NewVertical: () => import("./main-nav/NewVertical")
   },
   mounted() {
-    console.log(window.innerWidth);
-
     if (this.$device.isMobile) {
       document.addEventListener("touchstart", { passive: true });
+    }
+    if (this.$route.query.token) {
+      this.$axios
+        .patch("/auth/verify", { token: this.$route.query.token })
+        .then(async res => {
+          if (res.data.found) {
+            this.$storage.setUniversal("access_token", res.data.access_token);
+            this.$storage.setUniversal("refresh_token", res.data.refresh_token);
+            this.$storage.setUniversal("strategy", "local");
+            this.$axios.defaults.headers.common["Authorization"] =
+              "Bearer " + res.data.access_token;
+            this.$store.commit("auth/SET_AUTH", {
+              access_token: res.data.access_token,
+              refresh_token: res.data.refresh_token,
+              strategy: "local"
+            });
+
+            this.$store.dispatch("user/fetchUser").then(val => {
+              this.$toast.show(
+                "アカウント確認に成功しました、サイトがリフレッシュされます",
+                {
+                  theme: "toasted-primary",
+                  duration: 2000,
+                  position: "top-right",
+                  icon: "check_circle"
+                }
+              );
+              this.$router.push({ path: "/", query: {} });
+              // this.$router.go(0);
+            });
+          } else {
+            this.$toast.show("アカウント確認に失敗しました", {
+              theme: "toasted-primary",
+              duration: 5000,
+              position: "top-right",
+              icon: "extension"
+            });
+          }
+        });
     }
   },
   data() {

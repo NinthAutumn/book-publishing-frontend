@@ -2,8 +2,8 @@
   <nav class="mv-right">
     <ul class="mv-right__list">
       <div class="mv-right__item mv-right__item--profile" v-if="$store.state.auth.loggedIn">
-        <v-avatar class="mv-right__avatar" size="5.5rem">
-          <img :src="user.avatar">
+        <v-avatar class="mv-right__avatar" size="5.5rem" v-if="user.avatar">
+          <v-img :src="user.avatar.img||avatar"></v-img>
         </v-avatar>
         <div class="mv-right__meta-list">
           <div class="mv-right__meta mv-right__meta--username">{{user.username}}</div>
@@ -28,6 +28,7 @@ export default {
   },
   data() {
     return {
+      avatar: require("~/assets/profile.png"),
       menus: {
         home: {
           title: "ホーム",
