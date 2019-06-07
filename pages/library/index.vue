@@ -186,7 +186,8 @@ export default {
   async fetch({ store }) {
     await store.dispatch("library/getBookmark", { sortby: 0 });
     await store.dispatch("library/fetchReviews");
-  }
+  },
+  auth: false
 };
 </script>
 

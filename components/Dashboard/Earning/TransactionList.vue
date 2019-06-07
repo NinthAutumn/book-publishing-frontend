@@ -6,7 +6,7 @@
         <div class="transaction-list__component transaction-list__component--avatar">
           <v-avatar class="elevation-1" :size="35">
             <!-- :src="`https://storage.googleapis.com/theta-images/${props.item.avatar}`" -->
-            <v-img :src="transaction.avatar" :aspect-ratio="1/1.5" max-width="5rem"></v-img>
+            <v-img :src="transaction.avatar.img" :aspect-ratio="1/1.5" max-width="5rem"></v-img>
           </v-avatar>
         </div>
         <div

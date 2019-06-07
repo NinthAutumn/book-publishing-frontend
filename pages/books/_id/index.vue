@@ -394,6 +394,7 @@ export default {
         const { error } = await this.$store.dispatch("book/postVote", {
           bookId: this.$route.params.id
         });
+       
         if (error) {
           this.$toast.show(`${error}`, {
             theme: "toasted-primary",
@@ -406,6 +407,7 @@ export default {
         console.log(error.message);
       }
       this.loading = false;
+       await this.$store.dispatch("wallet/wealth");
     }
   },
   beforeUpdated() {

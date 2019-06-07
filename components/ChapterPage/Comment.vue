@@ -10,7 +10,7 @@
         <a :href="`#comment${comment.id}`"></a>
         <div class="comment-modal__avatar flex-column flex--align flex--left">
           <v-avatar size="40" v-if="!comment.deleted">
-            <img :src="comment.avatar">
+            <img :src="comment.avatar.img">
           </v-avatar>
         </div>
         <div class="comment-modal__div">

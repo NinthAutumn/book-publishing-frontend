@@ -37,7 +37,7 @@
     </div>
     <div class="review-card__author">
       <v-avatar :size="imgSize" class="review-card__avatar">
-        <v-img :src="review.avatar"></v-img>
+        <v-img :src="review.avatar.img"></v-img>
       </v-avatar>
     </div>
     <!-- <div class="review-card__profile flex-column">

@@ -18,6 +18,7 @@
             min-width="8rem"
             alt="Book cover"
             style="border-radius: 0.4rem;  "
+            class="recommendation-books__img"
             v-ripple
           >
             <template v-slot:placeholder>
@@ -157,6 +158,14 @@ export default {
       }
       #{$self}__cover {
         margin-right: 2rem;
+        // overflow: hidden;
+        #{$self}__img {
+          &:hover {
+            transform: scale(1.1);
+            transition: 200ms;
+          }
+          transition: 200ms;
+        }
       }
       #{$self}__meta {
         padding: 1rem 0;

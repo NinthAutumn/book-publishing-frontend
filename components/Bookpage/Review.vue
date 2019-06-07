@@ -6,7 +6,7 @@
     </div>
     <div class="reviews-like">
       <v-avatar :size="size">
-        <v-img :src="review.avatar"></v-img>
+        <v-img :src="review.avatar.img"></v-img>
       </v-avatar>
       <p class="reviews-content-username">{{review.username}}</p>
     </div>

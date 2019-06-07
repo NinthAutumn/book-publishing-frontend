@@ -12,8 +12,8 @@
         :to="`/books/${notification.book_id}/${notification.chapter_id}?comment=${notification.comment_id}#comments`"
       >
         <div class="notification-component__avatar">
-          <v-avatar>
-            <v-img :src="notification.avatar"></v-img>
+          <v-avatar v-if="notification.avatar">
+            <v-img :src="notification.avatar.img"></v-img>
           </v-avatar>
         </div>
         <div class="nofitication-component__meta">
