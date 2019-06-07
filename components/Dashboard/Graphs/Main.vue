@@ -68,7 +68,7 @@
           :settings="chartSetting"
           :loading="loading"
         >
-          <!-- <div class="data-empty">data empty😂</div> -->
+          <!-- <div class="data-empty">data empty</div> -->
         </ve-line>
       </no-ssr>
     </div>

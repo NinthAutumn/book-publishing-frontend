@@ -1,11 +1,13 @@
 export const state = () => ({
   wealth: 0,
-  token: 0
+  token: 0,
+  payout: []
 })
 
 export const getters = {
   getWealth: state => state.wealth,
-  getToken: state => state.token
+  getToken: state => state.token,
+  getPayoutList: state => state.payout
 }
 
 export const mutations = {
@@ -14,6 +16,9 @@ export const mutations = {
   },
   SET_VOTE_TOKEN(state, token) {
     state.token = token
+  },
+  SET_PAYOUT_LIST: function (state, payout) {
+    state.payout = payout
   }
 }
 export const actions = {
@@ -79,6 +84,17 @@ export const actions = {
         transactionId
       })
       return Promise.resolve()
+    } catch (error) {
+      return Promise.reject(error)
+    }
+  },
+  fetchPayoutList: async function ({
+    commit
+  }) {
+    try {
+      const res = await this.$axios.get(`/transaction/payout/list`)
+      commit('SET_PAYOUT_LIST', res.data)
+      return Promise.resolve(res.data)
     } catch (error) {
       return Promise.reject(error)
     }
