@@ -1,30 +1,30 @@
 <template>
-  <div class="tag-list">
-    <div class="tag-list__container">
-      <div class="tag-list__title flex flex--align flex--center"></div>
-      <fa class="tag-list__icon" icon="tags"></fa>
-      <fa class="tag-list__help" icon="question-circle"></fa>
-      <div class="tag-list__nav flex flex--align flex--center" @mouseleave="navLineOut">
+  <div class="browse-tag">
+    <div class="browse-tag__container">
+      <div class="browse-tag__title flex flex--align flex--center"></div>
+      <fa class="browse-tag__icon" icon="tags"></fa>
+      <fa class="browse-tag__help" icon="question-circle"></fa>
+      <div class="browse-tag__nav flex flex--align flex--center" @mouseleave="navLineOut">
         <div
           @mouseenter="moveline(1)"
           @click="navClick(1)"
-          class="tag-list__nav__item flex flex--align tag-list__nav__item--search"
+          class="browse-tag__nav__item flex flex--align browse-tag__nav__item--search"
         >検索</div>
         <div
           @click="navClick(2)"
           @mouseenter="moveline(2)"
-          class="tag-list__nav__item flex flex--align tag-list__nav__item--filter"
+          class="browse-tag__nav__item flex flex--align browse-tag__nav__item--filter"
         >除外</div>
         <i
-          class="tag-list__nav__line"
-          :class="{'tag-list__nav__line--include': index ===1}"
+          class="browse-tag__nav__line"
+          :class="{'browse-tag__nav__line--include': index ===1}"
           :style="line"
         ></i>
       </div>
 
-      <ul class="tag-list__list flex" v-if="tags.include.length > 0&&index === 1">
+      <ul class="browse-tag__list flex" v-if="tags.include.length > 0&&index === 1">
         <li
-          class="tag-list__item flex flex--align"
+          class="browse-tag__item flex flex--align"
           v-for="(tag, index) in tags.include"
           :key="index"
           @click="removeItem(tag)"
@@ -35,9 +35,9 @@
           <fa style="margin-left:5px;" icon="times"></fa>
         </li>
       </ul>
-      <ul class="tag-list__list flex" v-if="tags.exclude.length > 0&&index !== 1">
+      <ul class="browse-tag__list flex" v-if="tags.exclude.length > 0&&index !== 1">
         <li
-          class="tag-list__item tag-list__item--exclude flex flex--align"
+          class="browse-tag__item browse-tag__item--exclude flex flex--align"
           v-for="(tag, index) in tags.exclude"
           :key="index"
           @click="removeItem(tag)"
@@ -51,7 +51,7 @@
 
       <div class="tag-add__form flex flex--align">
         <transition name="form-right">
-          <div class="tag-list__add-input" v-if="form">
+          <div class="browse-tag__add-input" v-if="form">
             <input
               v-model="tag"
               ref="taginput"
@@ -62,24 +62,24 @@
           </div>
         </transition>
         <div
-          class="tag-list__add"
-          :class="{'tag-list__add--exclude':index!==1}"
+          class="browse-tag__add"
+          :class="{'browse-tag__add--exclude':index!==1}"
           @click="showForm"
           v-if="!form"
         >
           <fa icon="plus"></fa>
         </div>
         <div
-          class="tag-list__add"
-          :class="{'tag-list__add--exclude': index!==1}"
+          class="browse-tag__add"
+          :class="{'browse-tag__add--exclude': index!==1}"
           @click="showForm"
           v-if="form&&tag"
         >
           <fa icon="plus"></fa>
         </div>
         <div
-          class="tag-list__add"
-          :class="{'tag-list__add--exclude':index!==1}"
+          class="browse-tag__add"
+          :class="{'browse-tag__add--exclude':index!==1}"
           @click="showForm"
           v-if="form&&!tag"
         >
@@ -217,7 +217,7 @@ export default {
 </script>
 
 <style lang="scss">
-.tag-list {
+.browse-tag {
   position: relative;
   &__title {
     font-size: 17px;
@@ -320,7 +320,7 @@ export default {
     font-size: 13px;
     margin-right: 5px;
     height: 25px;
-    padding: 0 5px;
+    // padding: 0 5px;
     color: $secondary;
     border: 1px solid $secondary;
     margin-bottom: 5px;

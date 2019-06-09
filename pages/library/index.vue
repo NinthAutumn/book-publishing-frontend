@@ -79,9 +79,14 @@ export default {
         { key: "名前順", value: "2" }
       ],
       order: "入れた順",
-      selected_item: "再生リスト"
-      // nav_list: ["再生リスト", "レビュー", "購入済み", "歴史"]
+      selected_item: "ブックマーク",
+      nav_list: ["ブックマーク", "レビュー", "購入済み", "歴史"]
     };
+  },
+  mounted() {
+    if (this.$device.isMobile) {
+      nav_list = [];
+    }
   },
   watch: {
     order: async function(e) {

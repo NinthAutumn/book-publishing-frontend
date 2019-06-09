@@ -6,12 +6,14 @@
     </ul>
     <p class="book-tags__title">ジャンル</p>
     <ul class="book-tags__list flex-row">
-      <li
+      <nuxt-link
+        :to="`/browse?genre=${tag.name}`"
+        tag="li"
         class="book-tags__item book-tags__item--genre"
         v-for="(tag, index) in genres"
         :key="index"
         v-ripple
-      >{{tag.name}}</li>
+      >{{tag.name}}</nuxt-link>
     </ul>
   </div>
 </template>

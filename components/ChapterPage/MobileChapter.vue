@@ -18,7 +18,6 @@
         </div>
       </div>
     </transition>
-    <pull-to></pull-to>
     <div
       class="mobile-chapter__wrapper"
       ref="chapter"

@@ -105,15 +105,32 @@ export const actions = {
     user
   }) {
     try {
-      const res = await this.$axios.post('/auth/signup', {
+      const {
+        data
+      } = await this.$axios.post('/auth/signup', {
         username: user.username,
         email: user.email,
         password: user.password
       })
-      return Promise.resolve(res.data)
+      let error = data.error
+      if (error) {
+        if (error.errors[0].message === 'email must be unique') {
+          error = `この、${user.email} Eメールはもう使われています`
+        } else if (error.errors[0].message === 'username must be unique') {
+          error = `${user.username} はもう使われています`
+        } else {
+          error = `アカウント作成に失敗しました`
+        }
+        return Promise.resolve({
+          error: error
+        })
+      }
+      return Promise.resolve({
+        error: null
+      })
     } catch (error) {
-      console.log(error);
-      return Promise.reject(error.response)
+
+
     }
 
   },

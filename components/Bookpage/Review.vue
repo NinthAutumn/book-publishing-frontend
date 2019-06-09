@@ -62,7 +62,12 @@
               </v-card>
             </v-dialog>
           </div>
-          <div v-else>レポート</div>
+          <div v-else @click="reportReview">
+            <span>レポート</span>
+            <div class="dialog dialog__container">
+              <div class="dialog__content">dfd</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -93,13 +98,24 @@ export default {
       deleteModal: false,
       loading: false,
       limit: 370,
-      size: 80
+      size: 80,
+      report: false
     };
   },
   components: {},
   methods: {
     toggleCollapse() {
       this.readMore = !this.readMore;
+    },
+    toggleReport: function() {
+      this.report = !this.report;
+    },
+    reportReview: async function() {
+      const report = {
+        type: "review",
+        reportId: this.review.id,
+        problem
+      };
     },
     async likedReview() {
       if (this.liked) {
