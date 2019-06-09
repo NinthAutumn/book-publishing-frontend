@@ -22,6 +22,7 @@
               v-for="(chapter) in volume.chapters"
               :key="chapter.id"
               :to="{path: `/books/${ chapter.book_id}/${chapter.id}`}"
+              :class="{'book-chapters__chapter-item--disable':chapter.locked&&!auth}"
               v-ripple
             >
               <div class="flex-divider flex-row" style="height:100%;max-width:100%;">
@@ -48,7 +49,7 @@
                     <fa
                       class="book-chapters_chapter-item__content--locked"
                       icon="lock"
-                      v-if="chapter.locked"
+                      v-if="chapter.locked&&!chapter.bought"
                     ></fa>
                   </div>
                 </div>
@@ -65,6 +66,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 // const _ = require("lodash");
 export default {
   props: {
@@ -95,9 +97,10 @@ export default {
     }
   },
   computed: {
-    volumes: function() {
-      return this.$store.getters["chapter/getChapterList"];
-    }
+    ...mapGetters({
+      volumes: "chapter/getChapterList",
+      auth: "auth/isAuthenticated"
+    })
   },
   filters: {
     truncate: (string, number) => {
@@ -130,12 +133,12 @@ export default {
             background-color: #fff !important;
           }
         }
-        &:nth-child(odd) {
-          background-color: #fff8f8 !important;
-          &:hover {
-            background-color: #fff !important;
-          }
-        }
+        // &:nth-child(odd) {
+        //   background-color: #fff8f8 !important;
+        //   &:hover {
+        //     background-color: #fff !important;
+        //   }
+        // }
       }
     }
   }
@@ -183,6 +186,10 @@ export default {
 
     #{$self}__chapter-item {
       min-width: 100%;
+      color: #2a2f45;
+      &--disable {
+        display: none;
+      }
       &:nth-child(4n - 1),
       &:nth-child(4n) {
         background-color: #f6f9fc;
@@ -190,8 +197,9 @@ export default {
           background-color: #fff;
         }
       }
-      border-radius: 1rem;
-      background-color: #fff8f8;
+      border-bottom: 1px solid #aab7c4;
+      // border-radius: 1rem;
+      // background-color: #fff8f8;
 
       margin: 0.3rem 0.3rem;
       padding: 0.5rem 0;
@@ -199,7 +207,7 @@ export default {
       height: 6rem;
       &:hover {
         cursor: pointer;
-        background-color: rgb(247, 247, 247);
+        background-color: #f6f9fc;
       }
       &__content {
         max-width: 100%;

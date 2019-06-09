@@ -185,27 +185,27 @@
           placeholder="01-10"
         >
       </div>
-      <div class="flex-divider flex-column">
-        <label for="building">建物</label>
-        <input
-          class="profile-form__input profile-form__input--town profile-form__input--kanji"
-          v-model="form.address.lineTwo"
-          v-validate="'required'"
-          data-vv-as="建物"
-          type="text"
-          name="building"
-          placeholder="建物情報"
-        >
-        <input
-          class="profile-form__input profile-form__input--town-kana profile-form__input--kana"
-          v-model="kana_form.address.lineTwo"
-          type="text"
-          v-validate="'required'"
-          data-vv-as="カタカナ町村名"
-          name="building_kana"
-          placeholder="カタカナ*"
-        >
-      </div>
+    </div>
+    <div class="flex-divider flex-column">
+      <label for="building">建物</label>
+      <input
+        class="profile-form__input profile-form__input--town profile-form__input--kanji"
+        v-model="form.address.lineTwo"
+        v-validate="'required'"
+        data-vv-as="建物"
+        type="text"
+        name="building"
+        placeholder="建物情報"
+      >
+      <input
+        class="profile-form__input profile-form__input--town-kana profile-form__input--kana"
+        v-model="kana_form.address.lineTwo"
+        type="text"
+        v-validate="'required'"
+        data-vv-as="カタカナ町村名"
+        name="building_kana"
+        placeholder="カタカナ*"
+      >
     </div>
     <div class="flex-divider flex-row flex--right">
       <div @click="changeStep(1)" class="profile-form__button">進む</div>

@@ -27,6 +27,7 @@ export default {
   /* autoprefixer: ignore next */
   display: grid;
   /* autoprefixer: ignore next */
+  grid-template-columns: repeat(2, 1fr);
   grid-template-areas: "header header" "graph pie" "list list ";
   /* autoprefixer: ignore next */
   grid-gap: 1.5rem;

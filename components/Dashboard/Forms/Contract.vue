@@ -55,9 +55,10 @@ export default {
     z-index: 1000;
     scroll-behavior: unset;
     // overflow: hidden;
-    height: 65rem;
+    max-height: 70rem;
+    overflow: auto;
     min-width: 50rem;
-    max-width: 70rem;
+    max-width: 50rem;
     margin-top: 10px;
     background-color: #f7f8f9;
     -webkit-box-shadow: 0 30px 60px -12px rgba(50, 50, 93, 0.25),

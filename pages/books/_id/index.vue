@@ -64,7 +64,7 @@
               :size="star"
               :value="+book.rating"
             ></v-rating>
-            {{`(${book.rating})`}}
+            {{` ${book.rating}`}}
           </no-ssr>
         </div>
       </div>
@@ -244,13 +244,13 @@ export default {
           url: `/browse?genre=${this.$store.getters["book/getBook"].name}`
         },
         {
-          key: this.$store.getters["book/getBookChapterCount"] + "話",
+          key: this.$store.getters["book/getBookChapterCount"] || 0 + "話",
           icon: "scroll",
           type: "chapter",
           url: "/browse"
         },
         {
-          key: this.$store.getters["book/getBook"].view,
+          key: this.$store.getters["book/getBook"].view || 0,
           icon: "eye",
           type: "view",
           url: "/browse"
@@ -394,7 +394,7 @@ export default {
         const { error } = await this.$store.dispatch("book/postVote", {
           bookId: this.$route.params.id
         });
-       
+
         if (error) {
           this.$toast.show(`${error}`, {
             theme: "toasted-primary",
@@ -407,7 +407,7 @@ export default {
         console.log(error.message);
       }
       this.loading = false;
-       await this.$store.dispatch("wallet/wealth");
+      await this.$store.dispatch("wallet/wealth");
     }
   },
   beforeUpdated() {

@@ -106,7 +106,12 @@ module.exports = {
     }, {
       src: '@/plugins/vue-swipe-tab',
       ssr: false
-    }, {
+    },
+    {
+      src: '@/plugins/pull-to',
+      ssr: false
+    },
+    {
       src: '@/plugins/datePicker',
       ssr: false
     }, {

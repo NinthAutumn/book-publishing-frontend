@@ -12,11 +12,16 @@
           <div class="mobile-chapter__select" v-ripple>
             <fa icon="bookmark"></fa>
           </div>
+          <div class="mobile-chapter__select" v-ripple>
+            <fa icon="flag"></fa>
+          </div>
         </div>
       </div>
     </transition>
+    <pull-to></pull-to>
     <div
       class="mobile-chapter__wrapper"
+      ref="chapter"
       v-touch:tap="tapNav"
       v-touch:swipe.top="closeNav"
       v-touch:swipe.bottom="closeNav"
@@ -97,6 +102,8 @@ export default {
       chapter: "chapter/getChapter",
       user: "user/loggedInUser",
       font: "user/getFontSize",
+      next: "chapter/getNextChapter",
+      prev: "chapter/getPrevChapter",
       simpleList: "chapter/getSimpleList"
     })
   },
@@ -107,13 +114,15 @@ export default {
       list: [],
       min: 0,
       max: 0,
-      selected: 0
+      selected: 0,
+      height: "100%"
     };
   },
   watch: {
     selected: function(val) {}
   },
   mounted: async function() {
+    // this.height = this.$refs.chapter.clientHeight + "px";
     await this.$store.dispatch("chapter/fetchUnstructuredList", {
       bookId: this.$route.params.id
     });
@@ -131,6 +140,9 @@ export default {
           this.$router.push(`/books/${this.$route.params.id}/${chap.id}`);
         }
       });
+    },
+    refresh: function() {
+      this.$router.push({ path: `${this.prev.id}` });
     },
     tapNav: function() {
       this.navigation = !this.navigation;
@@ -175,6 +187,7 @@ export default {
 .mobile-chapter {
   $self: &;
   &__wrapper {
+    height: 100%;
     #{$self}__container {
       display: inline-block;
       max-width: 100%;
