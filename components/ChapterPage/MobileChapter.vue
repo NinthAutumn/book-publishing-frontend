@@ -84,6 +84,40 @@
         </div>
       </div>
     </transition>
+    <div class="mobile-chapter__actions flex-row flex--align flex--center">
+      <div
+        class="mobile-chapter__action flex-column flex--align"
+        v-for="(action,key) in actions"
+        :key="key"
+        v-ripple="{  }"
+        @click.stop="actionHandler(action.type)"
+      >
+        <fa :icon="action.icon"></fa>
+        <div class="mobile-chapter__message">{{action.message}}</div>
+      </div>
+      <transition name="grow-shrink">
+        <div v-if="problem" class="report-dialog dialog dialog__container">
+          <div v-click-outside="actionHandler" class="report-dialog__container dialog__content">
+            <form @submit.prevent class="report-dialog__form flex-column">
+              <label class="flex-row flex--between flex--align">
+                報告の理由
+                <span>
+                  <fa @click="actionHandler" class="report-dialog__close" icon="times"></fa>
+                </span>
+              </label>
+              <v-radio-group v-model="report.problem">
+                <v-radio v-for="n in problems" :key="n" :label="n" :value="n"></v-radio>
+              </v-radio-group>
+              <textarea placeholder="詳しく報告の理由" v-if="report.problem === 'その他'" name="problem" id></textarea>
+              <div class="flex-divider flex-row report-dialog__button">
+                <button class="report-dialog__submit report-dialog__submit--close">キャンセル</button>
+                <button class="report-dialog__submit" value>報告</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </transition>
+    </div>
   </section>
 </template>
 
@@ -103,7 +137,8 @@ export default {
       font: "user/getFontSize",
       next: "chapter/getNextChapter",
       prev: "chapter/getPrevChapter",
-      simpleList: "chapter/getSimpleList"
+      simpleList: "chapter/getSimpleList",
+      auth: "auth/isAuthenticated"
     })
   },
   data() {
@@ -113,8 +148,31 @@ export default {
       list: [],
       min: 0,
       max: 0,
+      problems: [
+        "差別的または攻撃的な内容",
+        "テロリズムの助長",
+        "スパムや誤解を招く話",
+        "児童虐待",
+        "その他"
+      ],
       selected: 0,
-      height: "100%"
+      height: "100%",
+      problem: false,
+      report: {
+        problem: ""
+      },
+      actions: {
+        リポート: {
+          icon: "flag",
+          message: "この話を報告",
+          type: "report"
+        },
+        投票: {
+          icon: "bolt",
+          message: "この作品に投票を掛ける",
+          type: "vote"
+        }
+      }
     };
   },
   watch: {
@@ -154,6 +212,33 @@ export default {
     },
     goBack: function() {
       this.$router.go(-1);
+    },
+    actionHandler: async function(type) {
+      if (type === "vote") {
+        if (!this.auth) {
+          return this.$router.push("/auth/login");
+        }
+        try {
+          const { error } = await this.$store.dispatch("book/postVote", {
+            bookId: this.$route.params.id
+          });
+
+          if (error) {
+            this.$toast.error(`${error}`, {
+              // theme: "toasted-primary",
+              position: "bottom-center",
+              duration: 5000,
+              icon: "extension",
+              className: "mobile-chapter__toasted"
+            });
+          }
+        } catch (error) {
+          console.log(error.message);
+        }
+        await this.$store.dispatch("wallet/wealth");
+      } else {
+        this.problem = !this.problem;
+      }
     },
     purchase: async function() {
       try {
@@ -252,6 +337,9 @@ export default {
       background-color: #19191a;
       color: #949698;
     }
+    &--tan {
+      background-color: #e9e1b8;
+    }
     padding: 0 1rem;
     display: flex;
     align-items: center;
@@ -284,9 +372,13 @@ export default {
     height: 12rem;
     left: 0;
     width: 100vw;
+    z-index: 100;
     &--black {
       background-color: #19191a;
       color: #949698;
+    }
+    &--tan {
+      background-color: #e9e1b8;
     }
     background-color: white;
     // padding: 2rem;
@@ -321,5 +413,84 @@ export default {
       flex-grow: 1;
     }
   }
+  &__actions {
+    #{$self}__action {
+      font-size: 2.5rem;
+      border-radius: 1rem;
+      padding: 1rem 0;
+      margin-bottom: 1rem;
+      width: 50%;
+      #{$self}__icon {
+      }
+      #{$self}__message {
+        margin-top: 1rem;
+        text-align: center;
+        font-size: 1.4rem;
+        opacity: 0.8;
+      }
+    }
+  }
+}
+.report-dialog {
+  $self: &;
+
+  #{$self}__container {
+    border-radius: 2rem;
+    // bottom: ;
+    #{$self}__form {
+      font-size: 3vh;
+      span {
+        padding: 0.5rem 0.75rem;
+        border-radius: 10rem;
+        background-color: #e3e8ee;
+      }
+      #{$self}__close {
+        font-size: 2vh;
+        color: #4f566b;
+      }
+      label {
+        font-size: 3vh;
+      }
+      textarea {
+        font-size: 3vh;
+        padding: 1rem;
+        box-sizing: border-box;
+        border-radius: 1rem;
+
+        box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11),
+          0 1px 3px rgba(0, 0, 0, 0.08);
+      }
+      #{$self}__button {
+        width: 100%;
+        height: 7vh;
+        border-radius: 1rem;
+        justify-content: space-between;
+        box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11),
+          0 1px 3px rgba(0, 0, 0, 0.08);
+        overflow: hidden;
+      }
+      #{$self}__submit {
+        font-size: 3vh;
+        // align-self: flex-end;
+        // padding: 0 2rem;
+        width: 50%;
+        background-color: #566cd6;
+        color: white;
+        &--close {
+          background-color: white;
+          color: #566cd6;
+          // align-self: flex-start;
+        }
+      }
+    }
+
+    // background-color:;
+  }
+}
+.mobile-chapter__toasted {
+  height: 8vh !important;
+  width: 96% !important;
+  border-radius: 1rem !important;
+  margin: 0 auto;
 }
 </style>

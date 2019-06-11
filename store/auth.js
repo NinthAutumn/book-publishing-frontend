@@ -48,7 +48,12 @@ export const actions = {
         username: user.username,
         password: user.password
       })
+      if (data.error) {
 
+        return Promise.resolve({
+          error: data.error
+        })
+      }
       commit('SET_AUTH', {
         access_token: data.access_token,
         refresh_token: data.refresh_token,
@@ -59,9 +64,13 @@ export const actions = {
       this.$storage.setUniversal('refresh_token', data.refresh_token)
       this.$storage.setUniversal('strategy', strategy)
       this.$axios.defaults.headers.common['Authorization'] = 'Bearer ' + data.access_token
-      this.$router.go(0)
+      return Promise.resolve({
+        error: null
+      })
     } catch (error) {
-
+      return Promise.reject({
+        error
+      })
     }
   },
   async socialAuth({

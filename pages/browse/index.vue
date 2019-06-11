@@ -38,6 +38,8 @@
                 v-model="selected_genre"
                 transition="grow-shrink"
                 multiple
+                genre
+                disable="犬"
                 :data="genre_list"
                 icon="filter"
                 name="ジャンル"
@@ -75,7 +77,7 @@
                 class="browse-page__filter-list browse-page__filter-list__item flex-row flex--align"
                 v-for="(genre) in selected_genre"
                 :key="genre"
-                v-text="genre"
+                v-text="genre.name"
               ></li>
             </transition-group>
           </div>
@@ -151,7 +153,7 @@ export default {
   },
   created() {
     if (this.$route.query.genre && this.$route.query.genre !== "undefined") {
-      this.selected_genre.push(this.$route.query.genre);
+      this.selected_genre.push({ name: this.$route.query.genre });
     }
   },
   watch: {
@@ -170,6 +172,7 @@ export default {
   },
   async fetch({ store }) {
     // await store.dispatch("book/fetchAllGenres");
+    await store.dispatch("book/fetchAllGenres");
     await store.dispatch("book/browseBooks", {
       type: 5,
       direction: "desc",

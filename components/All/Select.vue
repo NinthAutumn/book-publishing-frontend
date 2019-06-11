@@ -341,7 +341,6 @@ export default {
         this.multiData.forEach((e, n) => {
           if (e.value === this.value) {
             this.selectD = e.key;
-            console.log(e);
             e.selected = !e.selected;
             // this.$emit("input", e.value);
           }

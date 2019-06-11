@@ -119,7 +119,7 @@
             <fa
               v-if="!loading"
               class="book-content__buttons__item__icon"
-              style="font-size:15px;"
+              style="font-size:15px;margin-right:0.5rem;"
               icon="bolt"
             ></fa>
             <span v-if="!loading">投票をかける</span>
@@ -133,7 +133,7 @@
             <fa
               v-if="!loading"
               class="book-content__buttons__item__icon"
-              style="font-size:15px;"
+              style="font-size:15px;margin-right:0.5rem;"
               icon="bolt"
             ></fa>
             <span v-if="!loading">投票をかける</span>
@@ -151,7 +151,11 @@
             :class="{'button--secondary': bookmarked, 'button--secondary--open': !bookmarked}"
             v-ripple
           >
-            <fa class="book-content__buttons__item__icon" style="font-size:15px;" icon="bookmark"></fa>
+            <fa
+              class="book-content__buttons__item__icon"
+              style="font-size:15px;margin-right:0.5rem;"
+              icon="bookmark"
+            ></fa>
             <span style="font-size:13px;" v-text="text"></span>
           </span>
           <span
@@ -159,11 +163,16 @@
             @click.stop="$store.commit('LOGIN_STATE')"
             class="book-content__buttons__item button button--shadow button--big"
             @mouseenter="bookmarkHover"
+            style="margin-right:0.5rem;"
             @mouseleave="bookmarkLeave"
             :class="{'button--secondary': bookmarked, 'button--secondary--open': !bookmarked}"
             v-ripple
           >
-            <fa class="book-content__buttons__item__icon" style="font-size:15px;" icon="bookmark"></fa>
+            <fa
+              class="book-content__buttons__item__icon"
+              style="font-size:15px;margin-right:0.5rem;"
+              icon="bookmark"
+            ></fa>
             <span style="font-size:13px;" v-text="text"></span>
           </span>
         </div>

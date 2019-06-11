@@ -34,7 +34,7 @@ export default {
       realArray: [],
       selectedText: "",
       activeE: "",
-      text: this.content,
+      text: "",
       placehold: this.placeholder
     };
   },
@@ -64,14 +64,21 @@ export default {
     }
   },
   mounted() {
-    this.text = this.content;
-    this.changes();
+    if (this.content) {
+      this.text = this.content;
+      this.changes();
+    }
+
     if (this.value) {
     }
   },
   created() {
-    this.text = this.content;
-    this.changes();
+    console.log(this.text);
+
+    if (this.content) {
+      this.text = this.content;
+      this.changes();
+    }
     // if (this.content) {
     //   this.text = this.content;
     // }

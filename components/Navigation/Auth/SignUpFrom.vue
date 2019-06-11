@@ -13,7 +13,7 @@
       <p class="signup-title text--center text--large">アカウントを作る</p>
       <div
         class="sign-up__create-error"
-        style="text-align:center;font-size:14px;color:red;padding:1rem;background-color:#F6F9FC;border-radius:1rem;"
+        style="text-align:center;font-size:14px;padding:1rem;background-color:#F6F9FC;border-radius:1rem;"
         v-if="createError"
       >{{createError}}</div>
       <div class="flex-divider signup-form__control">

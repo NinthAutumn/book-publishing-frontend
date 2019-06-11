@@ -1,5 +1,5 @@
 <template>
-  <nav class="mc-nav">
+  <nav class="mc-nav" :class="`mc-nav--${theme}`">
     <div class="mc-nav__header flex-row flex--align　flex--between">
       <div class="mc-nav__back" @click="goBack" v-ripple>
         <fa icon="arrow-left"></fa>
@@ -14,7 +14,8 @@ import { mapGetters } from "vuex";
 export default {
   computed: {
     ...mapGetters({
-      chapter: "chapter/getChapter"
+      chapter: "chapter/getChapter",
+      theme: "user/getTheme"
     })
   },
   methods: {
@@ -35,6 +36,13 @@ export default {
   z-index: 100;
   width: 100%;
   background-color: #fff;
+  &--black {
+    background-color: #1a1a1b !important;
+    color: #d7dadc;
+  }
+  &--tan {
+    background-color: #e9e1b8;
+  }
   &__header {
     // padding: 2rem 1rem;
     display: flex;
@@ -59,7 +67,7 @@ export default {
       // background-color: #e3e8ee;
     }
     #{$self}__title {
-      font-size: 1.8rem;
+      font-size: 1.4rem;
       max-width: 100%;
       overflow: hidden;
       text-overflow: ellipsis;

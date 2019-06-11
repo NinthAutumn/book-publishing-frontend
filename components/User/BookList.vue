@@ -1,8 +1,8 @@
 <template>
-  <div class="user-books">
-    <ul class="user-books__list">
-      <li class="user-books__item" v-for="(book, index) in books" :key="index">
-        <nuxt-link tag="div" :to="`/books/${book.id}`" class="user-books__cover">
+  <div class="profile-books">
+    <ul class="profile-books__list">
+      <li class="profile-books__item" v-for="(book, index) in books" :key="index">
+        <nuxt-link tag="div" :to="`/books/${book.id}`" class="profile-books__cover">
           <v-img
             style="border-radius:0.4rem;"
             :src="book.cover"
@@ -13,17 +13,17 @@
         <nuxt-link
           tag="div"
           :to="`/books/${book.id}`"
-          class="user-books__meta user-books__meta--title"
+          class="profile-books__meta profile-books__meta--title"
           v-text="book.title"
         ></nuxt-link>
-        <div class="user-books__meta user-books__meta--genres">
+        <div class="profile-books__meta profile-books__meta--genres">
           <div
-            class="user-books__genre-list"
+            class="profile-books__genre-list"
             v-for="(genre, index) in book.genres"
             :key="index"
           >{{genre}}</div>
         </div>
-        <div class="user-books__meta user-books__meta--rating">
+        <div class="profile-books__meta profile-books__meta--rating">
           <v-rating
             color="#FF8D29"
             v-if="book.rating"
@@ -34,7 +34,7 @@
           ></v-rating>
           <v-rating size="20" color="#FF8D29" v-else :readonly="true" :value="0"></v-rating>
         </div>
-        <div class="user-books__meta user-books__meta--synopsis">
+        <div class="profile-books__meta profile-books__meta--synopsis">
           <p v-line-clamp="3">{{book.synopsis}}</p>
         </div>
       </li>
@@ -60,8 +60,9 @@ export default {
 </script>
 
 <style lang="scss">
-.user-books {
+.profile-books {
   $self: &;
+  // min-height: none;
   .v-icon {
     padding: 0;
   }

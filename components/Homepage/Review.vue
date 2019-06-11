@@ -92,7 +92,7 @@ export default {
       width: 0,
       cover: require("~/assets/img/cover.png"),
       imageWidth: 130,
-      wordCount: 100,
+      wordCount: 200,
       imgSize: 60,
       iconMargin: 10,
       imageHeight: 202.5
@@ -117,7 +117,9 @@ export default {
 
       this.imageWidth = this.width / 4;
       this.imageHeight = (this.width / 4) * 1.5;
+
       this.wordCount = this.width / 6;
+
       this.imgSize = this.width / 10;
     },
     truncate: (string, number) => {
@@ -138,29 +140,33 @@ export default {
   display: flex;
   align-items: center;
   background-color: #f7fcff;
+  color: #525f7f;
   position: relative;
   min-height: 15rem;
   min-width: 34rem;
-  .review-clip {
-    -webkit-clip-path: polygon(54% 53%, 0 0, 0 100%);
-    clip-path: polygon(54% 53%, 0 0, 0 100%);
-    background-color: #fff;
-    position: absolute;
-    height: 70%;
-    width: 100%;
-    z-index: 0;
-    right: 1rem;
-    transform: rotate(180deg);
-  }
+  border-radius: 1rem;
+  // .review-clip {
+  //   -webkit-clip-path: polygon(54% 53%, 0 0, 0 100%);
+  //   clip-path: polygon(54% 53%, 0 0, 0 100%);
+  //   background-color: #fff;
+  //   position: absolute;
+  //   height: 70%;
+  //   width: 100%;
+  //   z-index: 0;
+  //   right: 1rem;
+  //   transform: rotate(180deg);
+  //   // transition: 200ms;
+  // }
 
   &:hover {
     #{$self}__cover {
       // transform:
       clip-path: none;
+      transition: 200ms;
       // transition: clip-path 300ms;
       #{$self}__image {
-        transform: scale(0.9) perspective(2910px) rotateY(20deg) rotateX(5deg)
-          rotate(-1deg);
+        // transform: scale(0.9) perspective(2910px) rotateY(20deg) rotateX(5deg)
+        //   rotate(-1deg);
         &::after {
         }
       }
@@ -170,11 +176,11 @@ export default {
     z-index: 1;
     position: relative;
     clip-path: ellipse(130px 140px at 10% 20%);
-    transition: clip-path 300ms;
+    transition: 200ms;
     #{$self}__image {
       // position:absolute;
       border-radius: 0.6rem;
-      transform: translateY(-3rem);
+      transform: translateY(-10%);
       transition: transform 200ms;
       box-shadow: 0 12px 18px 0 rgba(50, 50, 93, 0.11),
         0 3px 9px 0 rgba(0, 0, 0, 0.08);
@@ -221,8 +227,16 @@ export default {
       margin-bottom: 2rem;
     }
     #{$self}__content {
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
       p {
         font-size: 1.5rem;
+        display: -webkit-box;
+        -webkit-line-clamp: 5;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
       }
     }
   }

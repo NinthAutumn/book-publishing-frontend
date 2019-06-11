@@ -53,7 +53,8 @@ export default {
         content: "",
         rating: this.prating
       },
-      state: this.value
+      state: this.value,
+      text: ""
     };
   },
   components: {
@@ -69,7 +70,12 @@ export default {
             review: this.review
           });
           await this.$store.dispatch("review/showAll", {
-            bookId: this.$route.params.id
+            bookId: this.$route.params.id,
+            userId: this.$store.getters["user/loggedInUser"].id,
+            page: 1,
+            limit: 10,
+            direction: "desc",
+            type: "likes"
           });
         } catch (error) {
           this.$toast.show("レビューの投稿に失敗しました", {
