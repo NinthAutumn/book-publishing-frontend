@@ -41,6 +41,18 @@
       <!-- <partial name="chapter"></partial> -->
 
       <adsbygoogle v-if="!user.status" :ad-layout="'in-article'" :ad-format="'fluid'"/>
+      <div class="chapter-actions">
+        <div class="chapter-actions__list">
+          <div class="chapter-actions__item chapter-actions__item--report">
+            <fa icon="flag"></fa>
+            <div class="chapter-actions__text">話を報告する</div>
+          </div>
+          <div class="chapter-actions__item chapter-actions__item--vote">
+            <fa icon="bolt"></fa>
+            <div class="chapter-actions__text">この作品に投票する</div>
+          </div>
+        </div>
+      </div>
     </scrollama>
     <div class="chapter-payblock" v-if="chapter.locked">
       <div class="payblock-price">
@@ -149,6 +161,24 @@ export default {
 }
 
 // .chapter-s
+.chapter-actions {
+  $self: &;
+  width: 100%;
+  &__list {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    #{$self}__item {
+      font-size: 4rem;
+      padding: 1rem;
+      &--vote {
+      }
+      &--report {
+      }
+    }
+  }
+}
 .chapter-announcement {
   position: relative;
   padding: 20px;

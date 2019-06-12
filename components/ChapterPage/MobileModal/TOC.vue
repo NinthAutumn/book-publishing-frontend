@@ -6,7 +6,7 @@
       </div>
       <li class="mobile-toc__volume" v-for="volume in list" :key="volume.volume">
         <h3 class="mobile-toc__volume-title">{{`第${volume.volume}章 ${volume.title||""}`}}</h3>
-        <ul class="mobile-toc__chapters" ref="chapter">
+        <ul class="mobile-toc__chapters">
           <nuxt-link
             v-ripple="{class:'ripple-color'}"
             tag="li"
@@ -54,17 +54,17 @@ export default {
       loading: false
     };
   },
-  created: async function() {
+  created: function() {
     this.loading = true;
+  },
+  mounted: async function() {
     await this.$store.dispatch("chapter/fetchPublishedList", {
       bookId: this.$route.params.id
     });
     this.loading = false;
-  },
-  mounted() {
-    console.log(this.$refs);
-    // const chapters = this.$refs.chapter.childNodes;
-    // console.log(chapters);
+    const chapter = document.querySelector(".nuxt-link-exact-active");
+    // this.$refs.chapters;
+    chapter.scrollIntoView();
   },
   computed: {
     ...mapGetters({
