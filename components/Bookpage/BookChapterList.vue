@@ -51,6 +51,11 @@
                       icon="lock"
                       v-if="chapter.locked&&!chapter.bought"
                     ></fa>
+                    <fa
+                      class="book-chapters_chapter-item__content--locked"
+                      icon="unlock"
+                      v-if="chapter.locked&&chapter.bought"
+                    ></fa>
                   </div>
                 </div>
               </div>

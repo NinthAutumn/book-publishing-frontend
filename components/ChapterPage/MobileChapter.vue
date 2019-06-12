@@ -1,23 +1,27 @@
 <template>
-  <section class="mobile-chapter">
+  <section class="mobile-chapter" v-touch:swipe.left="swipeLeft" v-touch:swipe.right="swipeRight">
     <transition name="slide-down">
       <div class="mobile-chapter__top" :class="'mobile-chapter__top--'+ theme" v-if="navigation">
         <div class="mobile-chapter__navigation" @click="goBack">
           <fa icon="arrow-left"></fa>
         </div>
         <div class="mobile-chapter__meta">
-          <div class="mobile-chapter__select" v-ripple>
-            <fa icon="bolt"></fa>
-          </div>
-          <div class="mobile-chapter__select" v-ripple>
+          <!-- <div class="mobile-chapter__select" v-ripple >
             <fa icon="bookmark"></fa>
-          </div>
-          <div class="mobile-chapter__select" v-ripple>
+          </div>-->
+          <div class="mobile-chapter__select" v-ripple @click="actionHandler">
             <fa icon="flag"></fa>
+          </div>
+          <div class="mobile-chapter__select" v-ripple @click="actionHandler('vote')">
+            <fa icon="bolt"></fa>
           </div>
         </div>
       </div>
     </transition>
+    <transition>
+      <TOC v-if="table" v-model="table"></TOC>
+    </transition>
+
     <div
       class="mobile-chapter__wrapper"
       ref="chapter"
@@ -69,7 +73,7 @@
         </div>
         <!-- <v-slider :value="selected" :min="min" :max="max"></v-slider> -->
         <div class="mobile-chapter__options">
-          <div class="mobile-chapter__option" v-ripple>
+          <div class="mobile-chapter__option" v-ripple @click="openModal">
             <fa icon="list"></fa>
           </div>
           <div class="mobile-chapter__option" v-ripple>
@@ -98,7 +102,7 @@
       <transition name="grow-shrink">
         <div v-if="problem" class="report-dialog dialog dialog__container">
           <div v-click-outside="actionHandler" class="report-dialog__container dialog__content">
-            <form @submit.prevent class="report-dialog__form flex-column">
+            <div v-loading="loading" @submit.prevent class="report-dialog__form flex-column">
               <label class="flex-row flex--between flex--align">
                 報告の理由
                 <span>
@@ -108,12 +112,21 @@
               <v-radio-group v-model="report.problem">
                 <v-radio v-for="n in problems" :key="n" :label="n" :value="n"></v-radio>
               </v-radio-group>
-              <textarea placeholder="詳しく報告の理由" v-if="report.problem === 'その他'" name="problem" id></textarea>
+              <textarea
+                v-model="report.moreInfo"
+                placeholder="詳しく報告の理由"
+                v-if="report.problem === 'その他'"
+                name="problem"
+                id
+              ></textarea>
               <div class="flex-divider flex-row report-dialog__button">
-                <button class="report-dialog__submit report-dialog__submit--close">キャンセル</button>
-                <button class="report-dialog__submit" value>報告</button>
+                <button
+                  class="report-dialog__submit report-dialog__submit--close"
+                  @click="actionHandler"
+                >キャンセル</button>
+                <button class="report-dialog__submit" @click="reportHandler">報告</button>
               </div>
-            </form>
+            </div>
           </div>
         </div>
       </transition>
@@ -125,7 +138,8 @@
 import { mapGetters } from "vuex";
 export default {
   components: {
-    Currency: () => import("@/components/All/Currency")
+    Currency: () => import("@/components/All/Currency"),
+    TOC: () => import("@/components/ChapterPage/MobileModal/TOC")
   },
   computed: {
     ...mapGetters({
@@ -148,6 +162,7 @@ export default {
       list: [],
       min: 0,
       max: 0,
+      table: false,
       problems: [
         "差別的または攻撃的な内容",
         "テロリズムの助長",
@@ -155,11 +170,13 @@ export default {
         "児童虐待",
         "その他"
       ],
+      loading: false,
       selected: 0,
       height: "100%",
       problem: false,
       report: {
-        problem: ""
+        problem: "",
+        moreInfo: ""
       },
       actions: {
         リポート: {
@@ -176,7 +193,11 @@ export default {
     };
   },
   watch: {
-    selected: function(val) {}
+    // table: function(val) {
+    //   if (val) {
+    //     this.navigation = false;
+    //   }
+    // }
   },
   mounted: async function() {
     // this.height = this.$refs.chapter.clientHeight + "px";
@@ -189,6 +210,7 @@ export default {
     this.min = this.simpleList[0];
     this.max = this.list[this.list.length - 1];
     this.selected = this.chapter.index;
+    this.chapter.content.split("<p></p>");
   },
   methods: {
     change: function() {
@@ -197,6 +219,26 @@ export default {
           this.$router.push(`/books/${this.$route.params.id}/${chap.id}`);
         }
       });
+    },
+    swipeLeft: function() {
+      if (!this.next) {
+        return this.$toast.show("これが最後の話です", {
+          position: "top-center",
+          duration: 2000,
+          icon: "extension"
+        });
+      }
+      this.$router.push({ path: `${this.next.id}` });
+    },
+    swipeRight: function() {
+      if (!this.prev) {
+        return this.$toast.show("これが最初の話です", {
+          position: "top-center",
+          duration: 2000,
+          icon: "extension"
+        });
+      }
+      this.$router.push({ path: `${this.prev.id}` });
     },
     refresh: function() {
       this.$router.push({ path: `${this.prev.id}` });
@@ -213,11 +255,19 @@ export default {
     goBack: function() {
       this.$router.go(-1);
     },
+    openModal: function(type) {
+      switch (type) {
+        default:
+          this.table = !this.table;
+          this.navigation = !this.navigation;
+          break;
+      }
+    },
     actionHandler: async function(type) {
+      if (!this.auth) {
+        return this.$router.push("/auth/login");
+      }
       if (type === "vote") {
-        if (!this.auth) {
-          return this.$router.push("/auth/login");
-        }
         try {
           const { error } = await this.$store.dispatch("book/postVote", {
             bookId: this.$route.params.id
@@ -227,9 +277,8 @@ export default {
             this.$toast.error(`${error}`, {
               // theme: "toasted-primary",
               position: "bottom-center",
-              duration: 5000,
-              icon: "extension",
-              className: "mobile-chapter__toasted"
+              duration: 2000,
+              icon: "extension"
             });
           }
         } catch (error) {
@@ -239,6 +288,28 @@ export default {
       } else {
         this.problem = !this.problem;
       }
+    },
+    reportHandler: async function() {
+      try {
+        const report = {
+          type: "chapter",
+          reportId: this.chapter.id,
+          problem: this.report.problem,
+          moreInfo: this.report.moreInfo
+        };
+        try {
+          this.loading = true;
+          await this.$store.dispatch("report/postReport", { report });
+          this.loading = false;
+          this.problem = !this.problem;
+          return this.$toast.show("報告に成功しました", {
+            theme: "toasted-primary",
+            position: "bottom-center",
+            duration: 1000,
+            icon: "check_circle"
+          });
+        } catch (error) {}
+      } catch (error) {}
     },
     purchase: async function() {
       try {
@@ -303,6 +374,7 @@ export default {
     }
     #{$self}__title {
       font-size: 2.4rem;
+      line-height: 2.5rem;
       margin: 1rem 0;
       max-width: 100%;
       word-break: break-all;
@@ -315,6 +387,7 @@ export default {
     }
     #{$self}__content {
       word-break: break-all;
+      line-height: 2.5rem;
       p {
         font-size: inherit;
       }
@@ -433,12 +506,16 @@ export default {
 }
 .report-dialog {
   $self: &;
-
+  .v-label {
+    line-height: 25px;
+  }
   #{$self}__container {
     border-radius: 2rem;
+    max-width: 95%;
     // bottom: ;
     #{$self}__form {
       font-size: 3vh;
+
       span {
         padding: 0.5rem 0.75rem;
         border-radius: 10rem;
@@ -456,7 +533,7 @@ export default {
         padding: 1rem;
         box-sizing: border-box;
         border-radius: 1rem;
-
+        margin-bottom: 0.5rem;
         box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11),
           0 1px 3px rgba(0, 0, 0, 0.08);
       }

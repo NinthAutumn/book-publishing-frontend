@@ -109,6 +109,70 @@
   }
 }
 
+.slide-right {
+  @keyframes slide-down {
+    from {
+      transform: translateX(-50%);
+    }
+
+    to {
+      transform: translateX(0);
+    }
+  }
+
+  &-enter {
+    transform: translateX(-50%);
+
+    &-active {
+      transition: 300ms;
+    }
+  }
+
+  &-leave {
+    transform: translateX(-50%);
+
+    &-active {
+      transition: 300ms;
+    }
+
+    &-to {
+      transform: translateX(-50%);
+    }
+  }
+}
+
+.slide-left {
+  @keyframes slide-down {
+    from {
+      transform: translateX(50%);
+    }
+
+    to {
+      transform: translateX(0);
+    }
+  }
+
+  &-enter {
+    transform: translateX(50%);
+
+    &-active {
+      transition: 300ms;
+    }
+  }
+
+  &-leave {
+    transform: translateX(50%);
+
+    &-active {
+      transition: 300ms;
+    }
+
+    &-to {
+      transform: translateX(50%);
+    }
+  }
+}
+
 .slide-up {
   &-enter {
     transform: translateY(100%);

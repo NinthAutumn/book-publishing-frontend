@@ -19,7 +19,7 @@ module.exports = {
    ** Headers of the page
    */
   head: {
-    title: pkg.name,
+    title: 'ノーブル',
     meta: [{
         charset: 'utf-8'
       },
@@ -30,7 +30,7 @@ module.exports = {
       {
         hid: 'description',
         name: 'description',
-        content: pkg.description
+        content: '小説家・読者のプラットフォーム'
       }
     ],
     link: [{
@@ -143,6 +143,9 @@ module.exports = {
       ssr: false
     }, {
       src: '@/plugins/gAuth',
+      ssr: false,
+    }, {
+      src: '@/plugins/epicSpinners',
       ssr: false,
     },
     {

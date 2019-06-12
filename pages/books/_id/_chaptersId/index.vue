@@ -110,8 +110,13 @@ export default {
     }
   },
   computed: {},
-  scrollToTop: true,
-  transition: "none"
+  scrollToTop: true
+  // transition(to, from) {
+  //   if (!from) return { name: "slide-right", mode: "out-in" };
+  //   return to.params.chaptersId > from.params.chaptersId
+  //     ? { name: "slide-left", mode: "out-in" }
+  //     : { name: "slide-right", mode: "out-in" };
+  // }
 };
 </script>
 

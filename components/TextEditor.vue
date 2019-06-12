@@ -151,7 +151,7 @@ export default {
           } else if (index === this.textArray.length - 1) {
             return "";
           } else {
-            return `<p><br></p>`;
+            return `<br>`;
           }
 
           // value + "dog";

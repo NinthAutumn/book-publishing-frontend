@@ -495,6 +495,9 @@ export default {
     border-radius: 0.4rem;
     font-size: 14px;
     z-index: 10000;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
     &--name {
       color: #f4648a;
       &:hover {

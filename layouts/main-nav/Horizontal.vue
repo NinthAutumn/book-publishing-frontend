@@ -98,7 +98,8 @@ export default {
     return {
       menuStates: "menu-inactive",
       profile: false,
-      notification: false
+      notification: false,
+      head: "ノーブル"
     };
   },
   components: {
@@ -129,6 +130,14 @@ export default {
       await this.$store.dispatch("user/fetchCommentNotificationsCount");
       await this.$store.dispatch("wallet/wealth");
     }
+    if (this.notificationCount > 0) {
+      this.head = `ノーブル　(${this.notificationCount})`;
+    }
+  },
+  head() {
+    return {
+      title: this.head
+    };
   },
   methods: {
     menuDrawer() {
