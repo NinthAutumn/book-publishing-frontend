@@ -132,9 +132,11 @@ export const actions = {
   },
   fetchUserBooks: async function ({
     commit
+  }, {
+    funnel = false
   }) {
     try {
-      const res = await this.$axios.get(`/analytic/book/list`)
+      const res = await this.$axios.get(`/analytic/book/list?funnel=${funnel}`)
       commit('SET_BOOKS', res.data)
       return Promise.resolve(res.data)
 

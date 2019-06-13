@@ -151,15 +151,6 @@ export default {
         0 3px 6px 0 rgba(0, 0, 0, 0.07);
       z-index: 10000;
       height: 92.5vh;
-      @keyframes slide-down {
-        from {
-          transform: translateY(-10%);
-        }
-        to {
-          transform: translateY(0);
-        }
-      }
-      animation: slide-down 300ms ease-in;
     }
     .nuxt-link-exact-active {
       background-color: black !important;

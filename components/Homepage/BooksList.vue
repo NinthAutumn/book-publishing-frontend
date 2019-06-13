@@ -2,8 +2,8 @@
   <div class="swiping-page" :class="{'swiping-page--mobile': $device.isMobile}" v-cloak>
     <div v-if="trendings&&!$device.isMobile" v-swiper:mySwiper="swiperOption">
       <div class="swiper-wrapper">
-        <div class="swiper-slide" v-for="(book,index) in trendings" :key="book.id">
-          <Book :index="index" :book="book" :size="size = 'big'"></Book>
+        <div class="swiper-slide" v-for="(book) in trendings" :key="book.id">
+          <book-card :cover="book.cover" :book="book" :isMobile="$device.isMobile"></book-card>
         </div>
       </div>
       <div class="background" v-if="!$device.isMobile">
@@ -15,15 +15,15 @@
     </div>
     <div v-if="trendings&&$device.isMobile" v-swiper:mySwiper="swiperMobile">
       <div class="swiper-wrapper">
-        <div class="swiper-slide" v-for="(book,index) in trendings" :key="book.id">
-          <Book :index="index" :book="book" :size="size = 'big'"></Book>
+        <div class="swiper-slide" v-for="(book) in trendings" :key="book.id">
+          <book-card :cover="book.cover" :book="book" :isMobile="$device.isMobile"></book-card>
         </div>
       </div>
     </div>
     <div v-if="!trendings&&!$device.isMobile" v-swiper:mySwiper="swiperOption">
       <div class="swiper-wrapper">
-        <div class="swiper-slide" v-for="(book,index) in books" :key="book.id">
-          <Book :index="index" :book="book" :size="size = 'big'"></Book>
+        <div class="swiper-slide" v-for="(book) in books" :key="book.id">
+          <book-card :cover="book.cover" :book="book" :isMobile="$device.isMobile"></book-card>
         </div>
       </div>
       <div class="background" v-if="!$device.isMobile">
@@ -35,8 +35,8 @@
     </div>
     <div v-if="!trendings&&$device.isMobile" v-swiper:mySwiper="swiperMobile">
       <div class="swiper-wrapper">
-        <div class="swiper-slide" v-for="(book,index) in books" :key="book.id">
-          <Book :index="index" :book="book" :size="size = 'big'"></Book>
+        <div class="swiper-slide" v-for="(book) in books" :key="book.id">
+          <book-card :cover="book.cover" :book="book" :isMobile="$device.isMobile"></book-card>
         </div>
       </div>
     </div>
@@ -82,7 +82,8 @@ export default {
     };
   },
   components: {
-    Book: () => import("./Book")
+    Book: () => import("./Book"),
+    BookCard: () => import("@/components/Web/Cards/Book")
   },
   methods: {}
 };

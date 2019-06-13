@@ -50,11 +50,13 @@ export default {
   components: {
     // VolumeForm: () => import("@/components/Dashboard/Forms/Volume")
   },
-  async fetch({ store, params }) {
+  async fetch({ store, route }) {
     await store.dispatch("chapter/fetchNotPublishedList", {
-      bookId: params.id
+      bookId: route.params.id
     });
-    await store.dispatch("chapter/fetchPublishedList", { bookId: params.id });
+    await store.dispatch("chapter/fetchPublishedList", {
+      bookId: route.params.id
+    });
     // await store.dispatch("book/getBook", params.id);
   },
   created() {},

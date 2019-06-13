@@ -2,7 +2,7 @@
   <div class="funnel-graph">
     <div class="funnel-graph__header">
       <div class="funnel-graph__title">作品ファネル</div>
-      <Select :width="100" v-model="bookId" name="作品" :object="book_list" transition="grow-shrink"></Select>
+      <Select :width="100" v-model="bookId" name="作品" :object="books" transition="grow-shrink"></Select>
     </div>
     <div class="funne-graph__graph">
       <div
@@ -61,31 +61,18 @@ export default {
       bookId: {}
     };
   },
-  beforeUpdate() {
-    this.books.forEach(book => {
-      this.book_list.push({
-        key: `ID: ${book.id}`,
-        value: { id: book.id, title: book.title }
-      });
-    });
-  },
-  updated() {
-    this.books.forEach(book => {
-      this.book_list.push({
-        key: `ID: ${book.id}`,
-        value: { id: book.id, title: book.title }
-      });
-    });
-  },
-  beforeMount() {},
   async mounted() {
-    this.bookId = { id: this.books[0].id, title: this.books[0].title };
-    this.books.forEach(book => {
-      this.book_list.push({
-        key: `ID: ${book.id}`,
-        value: { id: book.id, title: book.title }
-      });
-    });
+    this.bookId = {
+      id: this.books[0].value.id,
+      title: this.books[0].value.title
+    };
+    // this.books.forEach(book => {
+    //   this.book_list.push({
+    //     key: `ID: ${book.id}`,
+    //     value: { id: book.id, title: book.title }
+    //   });
+    // });
+
     const data = await this.$store.dispatch("dashboard/fetchBookFunnel", {
       bookId: this.bookId.id
     });

@@ -63,7 +63,7 @@ export default {
               .fromNow() + " 登録",
           icon: "calendar"
         },
-        { key: "県", value: "宮城県" || "非表示", icon: "map-marker" },
+        { key: "県", value: "非表示", icon: "map-marker" },
         { key: "性別", value: "男" || "非表示", icon: "venus-mars" }
       ],
       data: {}

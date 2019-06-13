@@ -50,7 +50,7 @@ export default {
       border: 1px solid $primary;
       color: $primary;
       &:hover {
-        background-color: #f9dbff98 !important;
+        background-color: #ebdbff98 !important;
       }
     }
     &:hover {

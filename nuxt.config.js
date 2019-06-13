@@ -54,7 +54,11 @@ module.exports = {
     height: '3px',
     continuous: true
   },
-
+  generate: {
+    routes: [
+      '/ads.txt',
+    ]
+  },
   /*
    ** Global CSS
    */

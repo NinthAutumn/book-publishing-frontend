@@ -17,7 +17,7 @@ export default {
   async fetch({ store, params }) {
     // await store.dispatch("dashboard/fetchTransactionGraph", { time:  });
     await store.dispatch("dashboard/fetchTransactionPie");
-    await store.dispatch("analytic/fetchUserBooks");
+    await store.dispatch("analytic/fetchUserBooks", { funnel: true });
   },
   components: {
     PieGraph: () => import("@/components/Dashboard/Graphs/Pie"),

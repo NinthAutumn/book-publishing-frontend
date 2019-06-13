@@ -1,3 +1,7 @@
 import Vue from 'vue'
 import * as epicSpinners from 'epic-spinners'
-Vue.use(epicSpinners)
+import {
+  TrinityRingsSpinner
+} from "epic-spinners";
+
+Vue.use(TrinityRingsSpinner)

@@ -39,21 +39,24 @@
         v-html="chapter.content"
       ></div>
       <!-- <partial name="chapter"></partial> -->
-
-      <adsbygoogle v-if="!user.status" :ad-layout="'in-article'" :ad-format="'fluid'"/>
-      <div class="chapter-actions">
-        <div class="chapter-actions__list">
-          <div class="chapter-actions__item chapter-actions__item--report">
-            <fa icon="flag"></fa>
-            <div class="chapter-actions__text">話を報告する</div>
-          </div>
-          <div class="chapter-actions__item chapter-actions__item--vote">
-            <fa icon="bolt"></fa>
-            <div class="chapter-actions__text">この作品に投票する</div>
-          </div>
+    </scrollama>
+    <adsbygoogle
+      v-if="!user.status&&!chapter.locked"
+      :ad-layout="'in-article'"
+      :ad-format="'fluid'"
+    />
+    <div v-if="!chapter.locked" class="chapter-actions">
+      <div class="chapter-actions__list">
+        <div class="chapter-actions__item chapter-actions__item--report">
+          <fa icon="flag"></fa>
+          <div class="chapter-actions__text">話を報告する</div>
+        </div>
+        <div class="chapter-actions__item chapter-actions__item--vote">
+          <fa icon="bolt"></fa>
+          <div class="chapter-actions__text">この作品に投票する</div>
         </div>
       </div>
-    </scrollama>
+    </div>
     <div class="chapter-payblock" v-if="chapter.locked">
       <div class="payblock-price">
         <Currency size="large" :amount="chapter.price"></Currency>
@@ -165,13 +168,23 @@ export default {
   $self: &;
   width: 100%;
   &__list {
+    margin-top: 2rem;
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
     #{$self}__item {
+      display: flex;
+      // justify-content:cente
+      align-items: center;
+      flex-direction: column;
       font-size: 4rem;
       padding: 1rem;
+      #{$self}__text {
+        margin-top: 1rem;
+        font-size: 1.4rem;
+        text-align: center;
+      }
       &--vote {
       }
       &--report {

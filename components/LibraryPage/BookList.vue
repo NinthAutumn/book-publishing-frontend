@@ -7,7 +7,7 @@
     </transition-group>
     <transition-group tag="ul" v-if="history" class="library-booklist__list">
       <li class="library-booklist__item" v-for="(book) in books" :key="book.book_id">
-        <Book :progress="{index: book.index, chapterId: book.chapter_id}" :book="book"></Book>
+        <book-card :cover="book.cover" :book="book" :isMobile="$device.isMobile"></book-card>
       </li>
     </transition-group>
   </div>
@@ -30,7 +30,8 @@ export default {
     };
   },
   components: {
-    Book: () => import("./Book")
+    Book: () => import("./Book"),
+    BookCard: () => import("@/components/Web/Cards/Book")
   },
   methods: {
     showSelect() {

@@ -20,7 +20,7 @@
       </v-img>
     </div>
     <div class="review-card__meta">
-      <div class="review-card__title" :style="{maxWidth:width/1.8 + 'px'}">
+      <div class="review-card__title" :style="{maxWidth:(width * 0.55) + 'px'}">
         <fa
           :style="{marginRight:iconMargin+'px' }"
           class="review-card__icon review-card__icon--left"
@@ -33,9 +33,10 @@
           icon="quote-right"
         ></fa>
       </div>
+      <v-rating color="#FF8D29" readonly size="20" half-increments :value="+review.rating"></v-rating>
       <div class="review-card__content" v-html="truncate(review.content,wordCount)"></div>
     </div>
-    <div class="review-card__author">
+    <div class="review-card__author" v-if="!$device.isMobile">
       <v-avatar :size="imgSize" class="review-card__avatar">
         <v-img :src="review.avatar.img"></v-img>
       </v-avatar>
@@ -139,25 +140,12 @@ export default {
   $self: &;
   display: flex;
   align-items: center;
-  background-color: #f7fcff;
+  background-color: #ffffff;
   color: #525f7f;
   position: relative;
   min-height: 15rem;
-  min-width: 34rem;
-  border-radius: 1rem;
-  // .review-clip {
-  //   -webkit-clip-path: polygon(54% 53%, 0 0, 0 100%);
-  //   clip-path: polygon(54% 53%, 0 0, 0 100%);
-  //   background-color: #fff;
-  //   position: absolute;
-  //   height: 70%;
-  //   width: 100%;
-  //   z-index: 0;
-  //   right: 1rem;
-  //   transform: rotate(180deg);
-  //   // transition: 200ms;
-  // }
-
+  // min-width: 34rem;
+  border-radius: 2rem;
   &:hover {
     #{$self}__cover {
       // transform:
@@ -175,7 +163,7 @@ export default {
   &__cover {
     z-index: 1;
     position: relative;
-    clip-path: ellipse(130px 140px at 10% 20%);
+    // clip-path: ellipse(130px 140px at 10% 20%);
     transition: 200ms;
     #{$self}__image {
       // position:absolute;
@@ -216,7 +204,7 @@ export default {
       display: flex;
       p {
         max-width: 100%;
-        font-size: 1.7rem;
+        font-size: 3vh;
         text-overflow: ellipsis;
         white-space: nowrap;
         overflow: hidden;
@@ -224,7 +212,7 @@ export default {
       text-overflow: ellipsis;
       white-space: nowrap;
       overflow: hidden;
-      margin-bottom: 2rem;
+      // margin-bottom: 2rem;
     }
     #{$self}__content {
       display: -webkit-box;
@@ -232,7 +220,7 @@ export default {
       -webkit-box-orient: vertical;
       overflow: hidden;
       p {
-        font-size: 1.5rem;
+        font-size: 2vh;
         display: -webkit-box;
         -webkit-line-clamp: 5;
         -webkit-box-orient: vertical;
@@ -246,26 +234,10 @@ export default {
   &--mobile {
     width: 80vw;
     height: 150px !important;
-
-    // background-color: $secondary;
-    // color: white;
-    hr {
-      margin: 0;
-      border: 0.5px solid grey;
+    #{$self}__image {
+      transform: translateX(0);
     }
-    .review-author {
-      display: block;
-      text-align: right;
-      color: grey;
-    }
-    border-radius: 5px;
-    .review-card__info__title {
-      font-size: 14px !important;
-      height: 18px !important;
-    }
-    .review-card__profile {
-      display: none;
-    }
+    border-radius: 8px;
   }
   // transform: rotateX(0deg) rotateY(0deg);
   // transform: rotateX(-100deg);
@@ -288,16 +260,9 @@ export default {
 
   padding: 10px;
   border-radius: 0.4rem;
-  box-shadow: 0 12px 18px 0 rgba(50, 50, 93, 0.11),
-    0 3px 9px 0 rgba(0, 0, 0, 0.08);
-  // position: relative;
-  -webkit-transition-property: color, background-color, -webkit-box-shadow,
-    -webkit-transform;
-  transition-property: color, background-color, -webkit-box-shadow,
-    -webkit-transform;
-  transition-property: color, background-color, box-shadow, transform;
-  transition-property: color, background-color, box-shadow, transform,
-    -webkit-box-shadow, -webkit-transform;
+  -webkit-box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11),
+    0 1px 3px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
   -webkit-transition-duration: 0.15s;
   transition-duration: 0.15s;
   // box-sizing: border-box;
