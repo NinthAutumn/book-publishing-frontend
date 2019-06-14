@@ -12,8 +12,17 @@
           @click="$store.commit('SET_CONTRACT_MODAL_STATE')"
         ></fa>
       </div>
-      <Profile v-if="contractStep === 0"></Profile>
-      <Bank v-if="contractStep === 1"></Bank>
+      <transition name="slide-fade">
+        <Profile
+          @storeBirth="storeBirth"
+          :birth="birth"
+          :person="account['person']"
+          v-if="contractStep === 0"
+          @save="profile"
+        ></Profile>
+        <Address v-if="contractStep === 1" @save="address"></Address>
+        <Bank v-if="contractStep === 2"></Bank>
+      </transition>
     </div>
   </div>
 </template>
@@ -22,7 +31,12 @@
 export default {
   data() {
     return {
-      open: true
+      open: true,
+      account: {
+        country: "JP",
+        person: {},
+        birth: ""
+      }
     };
   },
   computed: {
@@ -32,7 +46,23 @@ export default {
   },
   components: {
     Profile: () => import("./Profile"),
-    Bank: () => import("./Bank")
+    Bank: () => import("./Bank"),
+    Address: () => import("./Address")
+  },
+  methods: {
+    profile: function(val) {
+      console.log(val);
+      this.account["person"] = val;
+    },
+    address: function(val) {
+      Object.keys(val).forEach(address => {
+        this.account["person"][address] = val[address];
+      });
+      console.log(this.account);
+    },
+    storeBirth: function(val) {
+      this.birth = val;
+    }
   }
 };
 </script>

@@ -18,7 +18,7 @@
         </div>
       </div>
     </transition>
-    <transition>
+    <transition name="slide-right">
       <TOC v-if="table" v-model="table"></TOC>
     </transition>
 

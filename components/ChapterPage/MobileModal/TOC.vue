@@ -1,47 +1,49 @@
 <template>
   <div class="mobile-toc" :class="`mobile-toc--${theme}`">
-    <ul class="mobile-toc__volumes" v-click-outside="closeTOC">
-      <div class="mobile-toc__spinner" v-if="loading">
-        <breeding-rhombus-spinner :animation-duration="1000" :size="50" color="#ff1d5e"/>
-      </div>
-      <li class="mobile-toc__volume" v-for="volume in list" :key="volume.volume">
-        <h3 class="mobile-toc__volume-title">{{`第${volume.volume}章 ${volume.title||""}`}}</h3>
-        <ul class="mobile-toc__chapters">
-          <nuxt-link
-            v-ripple="{class:'ripple-color'}"
-            tag="li"
-            :to="`/books/${$route.params.id}/${chapter.id}`"
-            class="mobile-toc__chapter"
-            :class="{'mobile-toc__chapter--disable':chapter.locked&&!auth}"
-            v-for="chapter in volume.chapters"
-            :key="chapter.id"
-          >
-            <div class="flex-divider flex-row" style="width:100%;">
-              <div class="mobile-toc__chapter-index">{{chapter.index}}</div>
-              <div class="mobile-toc__chapter-meta">
-                <div class="mobile-toc__chapter-title">{{chapter.title}}</div>
-                <div
-                  class="mobile-toc__chapter-date"
-                >{{$moment(chapter.created_at).startOf('minute').fromNow()}}</div>
+    <transition name="slide-right">
+      <ul class="mobile-toc__volumes" v-click-outside="closeTOC">
+        <div class="mobile-toc__spinner" v-if="loading">
+          <breeding-rhombus-spinner :animation-duration="1000" :size="50" color="#ff1d5e"/>
+        </div>
+        <li class="mobile-toc__volume" v-for="volume in list" :key="volume.volume">
+          <h3 class="mobile-toc__volume-title">{{`第${volume.volume}章 ${volume.title||""}`}}</h3>
+          <ul class="mobile-toc__chapters">
+            <nuxt-link
+              v-ripple="{class:'ripple-color'}"
+              tag="li"
+              :to="`/books/${$route.params.id}/${chapter.id}`"
+              class="mobile-toc__chapter"
+              :class="{'mobile-toc__chapter--disable':chapter.locked&&!auth}"
+              v-for="chapter in volume.chapters"
+              :key="chapter.id"
+            >
+              <div class="flex-divider flex-row" style="width:100%;">
+                <div class="mobile-toc__chapter-index">{{chapter.index}}</div>
+                <div class="mobile-toc__chapter-meta">
+                  <div class="mobile-toc__chapter-title">{{chapter.title}}</div>
+                  <div
+                    class="mobile-toc__chapter-date"
+                  >{{$moment(chapter.created_at).startOf('minute').fromNow()}}</div>
+                </div>
               </div>
-            </div>
 
-            <div class="mobile-toc__chapter-locked">
-              <fa
-                class="book-chapters_chapter-item__content--locked"
-                icon="lock"
-                v-if="chapter.locked&&!chapter.bought"
-              ></fa>
-              <fa
-                class="book-chapters_chapter-item__content--locked"
-                icon="unlock"
-                v-if="chapter.locked&&chapter.bought"
-              ></fa>
-            </div>
-          </nuxt-link>
-        </ul>
-      </li>
-    </ul>
+              <div class="mobile-toc__chapter-locked">
+                <fa
+                  class="book-chapters_chapter-item__content--locked"
+                  icon="lock"
+                  v-if="chapter.locked&&!chapter.bought"
+                ></fa>
+                <fa
+                  class="book-chapters_chapter-item__content--locked"
+                  icon="unlock"
+                  v-if="chapter.locked&&chapter.bought"
+                ></fa>
+              </div>
+            </nuxt-link>
+          </ul>
+        </li>
+      </ul>
+    </transition>
   </div>
 </template>
 
@@ -54,6 +56,7 @@ export default {
       loading: false
     };
   },
+  props: { value: Boolean },
   created: function() {
     this.loading = true;
   },

@@ -23,6 +23,9 @@
         </div>
       </div>
       <div class="user-nav flex-row flex--align">
+        <div class="site-sub" @click.stop="openSubModal">
+          <fa icon="rainbow"></fa>
+        </div>
         <div
           v-ripple
           class="inbox-icon flex flex--align flex--center"
@@ -87,17 +90,19 @@
         <product-modal></product-modal>
       </div>
     </transition>
+    <transition name="grow-shrink">
+      <sub-main v-if="subscribe"></sub-main>
+    </transition>
   </div>
 </template>
 <script>
+import { mapGetters } from "vuex";
 export default {
   name: "Horizontal",
   data() {
     return {
       menuStates: "menu-inactive",
       notification: false
-
-      // signUpForm: "",
     };
   },
   async mounted() {
@@ -113,23 +118,22 @@ export default {
     Dropdown: () => import("@/components/Navigation/Dropdown"),
     ProductModal: () => import("@/components/Navigation/Stripe/ProductModal"),
     NotificationList: () => import("@/components/Navigation/Notification"),
-    Currency: () => import("@/components/All/Currency")
+    Currency: () => import("@/components/All/Currency"),
+    SubMain: () => import("@/components/Navigation/Subscribe/SubMain")
   },
   computed: {
-    notificationCount() {
-      return this.$store.getters["user/getCommentNotificationCount"];
-    },
-    user() {
-      return this.$store.getters["user/loggedInUser"];
-    },
-    loggedIn() {
-      return this.$store.getters.isAuthenticated;
-    },
+    ...mapGetters({
+      notificationCount: "user/getCommentNotificationCount",
+      user: "user/loggedInUser",
+      loggedIn: "auth/isAuthenticated",
+      theme: "user/getTheme",
+      productState: "getProductModalState",
+      title: "chapter/getChapterBookTitle",
+      wealth: "wealth/getWealth",
+      subscribe: "subscription/getSiteModalState"
+    }),
     loginState() {
       return this.$store.state.loginForm;
-    },
-    theme() {
-      return this.$store.state.user.theme;
     },
     progress() {
       return (
@@ -137,15 +141,6 @@ export default {
           this.$store.getters["chapter/getChapterCount"]) *
         100
       );
-    },
-    productState() {
-      return this.$store.getters.getProductModalState;
-    },
-    title() {
-      return this.$store.getters["chapter/getChapterBookTitle"];
-    },
-    wealth() {
-      return this.$store.getters["wallet/getWealth"];
     }
   },
   methods: {
@@ -168,15 +163,29 @@ export default {
       this.$store.commit("LOGIN_STATE");
     },
     closeNotification() {
-      if (!this.$store.getters["auth/isAuthenticated"]) {
+      if (!this.loggedIn) {
         return this.$store.commit("LOGIN_STATE");
       }
       this.notification = !this.notification;
+    },
+    openSubModal() {
+      if (!this.loggedIn) {
+        return this.$store.commit("LOGIN_STATE");
+      }
+      this.$store.commit("subscription/TOGGLE_SITE_MODAL");
     }
   }
 };
 </script>
 <style lang="scss" scoped>
+.site-sub {
+  font-size: 2rem;
+  color: #000000;
+  margin-right: 1rem;
+  &:hover {
+    cursor: pointer;
+  }
+}
 .inbox-icon {
   position: relative !important;
 
