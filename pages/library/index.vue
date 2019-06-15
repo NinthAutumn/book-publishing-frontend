@@ -34,7 +34,7 @@
         <div class="library-bookmark__select flex flex--align flex--right">
           <Select
             v-model="order"
-            def="最近読んだ順"
+            def="更新順"
             transition="grow-shrink"
             icon="sort"
             name="並び替え"
@@ -76,9 +76,10 @@ export default {
       sortTypes: [
         { key: "最近読んだ順", value: "0" },
         { key: "入れた順", value: "1" },
-        { key: "名前順", value: "2" }
+        { key: "名前順", value: "2" },
+        { key: "更新順", value: "3" }
       ],
-      order: "入れた順",
+      order: "更新順",
       selected_item: "ブックマーク",
       nav_list: ["ブックマーク", "レビュー", "購入済み", "歴史"]
     };
@@ -189,7 +190,7 @@ export default {
     }
   },
   async fetch({ store }) {
-    await store.dispatch("library/getBookmark", { sortby: 0 });
+    await store.dispatch("library/getBookmark", { sortby: 3 });
     await store.dispatch("library/fetchReviews");
   },
   auth: false
