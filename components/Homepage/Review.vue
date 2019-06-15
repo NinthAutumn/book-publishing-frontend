@@ -144,6 +144,7 @@ export default {
   color: #525f7f;
   position: relative;
   min-height: 15rem;
+  max-width: 60rem;
   // min-width: 34rem;
   border-radius: 2rem;
   &:hover {
@@ -179,6 +180,7 @@ export default {
     position: absolute;
     right: 1rem;
     bottom: 1rem;
+    z-index: 1;
     #{$self}__avatar {
       box-shadow: 0 12px 18px 0 rgba(50, 50, 93, 0.11),
         0 3px 9px 0 rgba(0, 0, 0, 0.08);

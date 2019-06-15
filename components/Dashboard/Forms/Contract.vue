@@ -3,7 +3,7 @@
     <div class="contract-component__modal">
       <div class="contract-component__title flex-row flex--between flex--align">
         <span>
-          <fa icon="file-contract" class style="margin-right:5px;"></fa>契約を結ぶ
+          <fa icon="file-contract" class style="margin-right:5px;"></fa>本人確認
         </span>
         <fa
           icon="times"
@@ -21,7 +21,8 @@
           @save="profile"
         ></Profile>
         <Address v-if="contractStep === 1" @save="address"></Address>
-        <Bank v-if="contractStep === 2"></Bank>
+        <confirm-identity v-if="contractStep===2"></confirm-identity>
+        <!-- <Bank v-if="contractStep === 2"></Bank> -->
       </transition>
     </div>
   </div>
@@ -47,7 +48,8 @@ export default {
   components: {
     Profile: () => import("./Profile"),
     Bank: () => import("./Bank"),
-    Address: () => import("./Address")
+    Address: () => import("./Address"),
+    ConfirmIdentity: () => import("./ConfirmIdentity")
   },
   methods: {
     profile: function(val) {

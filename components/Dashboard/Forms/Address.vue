@@ -38,7 +38,7 @@
                 class="address-form__option"
                 v-else
                 v-for="state in selected"
-                :key="state"
+                :key="state.id"
                 @click="selectState(state)"
                 :class="{'address-form__option--selected':state === address.state}"
               >{{state.name}}</li>
@@ -747,8 +747,18 @@ export default {
       }
     }
   }
-
+  @keyframes slide-left {
+    from {
+      opacity: 0;
+      transform: translateX(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translate(0);
+    }
+  }
   &__input {
+    opacity: 0;
     height: 40px;
     padding: 10px 12px;
     color: #32325d;
@@ -759,6 +769,8 @@ export default {
     -webkit-transition: box-shadow 150ms ease;
     transition: box-shadow 150ms ease;
     font-size: 1.6rem;
+    animation: slide-left 300ms ease;
+    animation-fill-mode: forwards;
     &:focus {
       outline: none;
     }
@@ -774,8 +786,10 @@ export default {
     &--firstname {
     }
     &--city {
+      animation-delay: 100ms;
       width: 13rem;
       &-kana {
+        animation-delay: 100ms;
         width: 13rem;
         font-size: 1.2rem;
         height: 3rem;
@@ -796,15 +810,19 @@ export default {
     }
     &--town {
       width: 13rem;
+      animation-delay: 200ms;
       &-kana {
+        animation-delay: 200ms;
         width: 13rem;
         font-size: 1.2rem;
         height: 3rem;
       }
     }
     &--line {
+      animation-delay: 300ms;
       width: 7.25rem;
       &-kana {
+        animation-delay: 300ms;
         width: 7.25rem;
       }
     }

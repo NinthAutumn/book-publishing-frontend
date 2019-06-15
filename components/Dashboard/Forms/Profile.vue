@@ -228,6 +228,14 @@ export default {
       font-size: 1.6rem;
     }
   }
+  @keyframes slide-left {
+    from {
+      transform: translateX(10px);
+    }
+    to {
+      transform: translate(0);
+    }
+  }
   &__input {
     height: 40px;
     padding: 10px 12px;
@@ -239,6 +247,7 @@ export default {
     -webkit-transition: box-shadow 150ms ease;
     transition: box-shadow 150ms ease;
     font-size: 1.6rem;
+    animation: slide-left 300ms ease;
     &:focus {
       outline: none;
     }
