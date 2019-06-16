@@ -78,7 +78,7 @@ export default {
   },
   methods: {
     closeTOC: function() {
-      this.$emit("input", false);
+      this.$emit("toggle", 0);
     }
   },
   components: {

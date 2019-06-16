@@ -19,9 +19,14 @@
       </div>
     </transition>
     <transition name="slide-right">
-      <TOC v-if="table" v-model="table"></TOC>
+      <TOC v-if="table" @toggle="toggleModal"></TOC>
     </transition>
-
+    <transition name="slide-up">
+      <Theme v-if="themeM" @toggle="toggleModal" :theme="theme"></Theme>
+    </transition>
+    <transition name="slide-up">
+      <Setting v-if="settingM" @toggle="toggleModal"></Setting>
+    </transition>
     <div
       class="mobile-chapter__wrapper"
       ref="chapter"
@@ -76,10 +81,10 @@
           <div class="mobile-chapter__option" v-ripple @click.stop="openModal">
             <fa icon="list"></fa>
           </div>
-          <div class="mobile-chapter__option" v-ripple>
+          <div class="mobile-chapter__option" v-ripple @click.stop="openModal(1)">
             <fa icon="tint"></fa>
           </div>
-          <div class="mobile-chapter__option" v-ripple>
+          <div class="mobile-chapter__option" v-ripple @click.stop="openModal(2)">
             <fa icon="font"></fa>
           </div>
           <div class="mobile-chapter__option" v-ripple>
@@ -142,7 +147,9 @@ import { mapGetters } from "vuex";
 export default {
   components: {
     Currency: () => import("@/components/All/Currency"),
-    TOC: () => import("@/components/ChapterPage/MobileModal/TOC")
+    TOC: () => import("@/components/ChapterPage/MobileModal/TOC"),
+    Theme: () => import("@/components/ChapterPage/MobileModal/Theme"),
+    Setting: () => import("@/components/ChapterPage/Mobilemodal/Setting")
   },
   computed: {
     ...mapGetters({
@@ -166,6 +173,8 @@ export default {
       min: 0,
       max: 0,
       table: false,
+      themeM: false,
+      settingM: false,
       problems: [
         "差別的または攻撃的な内容",
         "テロリズムの助長",
@@ -246,7 +255,13 @@ export default {
     refresh: function() {
       this.$router.push({ path: `${this.prev.id}` });
     },
-    tapNav: function() {
+    tapNav: function(type) {
+      this.themeM = false;
+
+      this.settingM = false;
+
+      this.table = false;
+
       this.navigation = !this.navigation;
     },
     formatTooltip(val) {
@@ -260,11 +275,17 @@ export default {
     },
     openModal: function(type) {
       switch (type) {
+        case 1:
+          this.themeM = !this.themeM;
+          break;
+        case 2:
+          this.settingM = !this.settingM;
+          break;
         default:
           this.table = !this.table;
-          this.navigation = !this.navigation;
           break;
       }
+      this.navigation = !this.navigation;
     },
     actionHandler: async function(type) {
       if (!this.auth) {
@@ -291,6 +312,20 @@ export default {
       } else {
         this.problem = !this.problem;
       }
+    },
+    toggleModal(type) {
+      switch (type) {
+        case 1:
+          this.themeM = false;
+          break;
+        case 2:
+          this.settingM = false;
+          break;
+        default:
+          this.table = false;
+          break;
+      }
+      this.navigation = true;
     },
     reportHandler: async function() {
       try {
