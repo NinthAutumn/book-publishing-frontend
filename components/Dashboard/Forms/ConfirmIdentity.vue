@@ -1,6 +1,6 @@
 <template>
   <div class="confirm-identity">
-    <div class="confirm-identity__container">
+    <div class="confirm-identity__container" v-loading="loading">
       <div class="confirm-identity__select">
         <div class="confirm-identity__text" @click.stop="toggleCardSelect">
           <span>{{selected_card.type||`本人確認`}}</span>
@@ -30,7 +30,7 @@
               <fa icon="plus"></fa>
               <span>アップロード</span>
             </div>
-            <div slot="tip" class="el-upload__tip">jpg/png ファイル、5mb以下</div>
+            <div slot="tip" class="el-upload__tip">jpg/png/pdf ファイル、5mb以下</div>
           </el-upload>
           <div class="confirm-identity__uploaded" v-if="form.cover.name">
             <fa icon="file-image" style="margin:0 1rem;"></fa>
@@ -54,13 +54,16 @@
       </div>
       <div class="confirm-identity__finish flex-row flex--between">
         <div class="confirm-identity__button" @click="changeStep">戻る</div>
-        <div class="confirm-identity__button confirm-identity__button--confirm">本人確認</div>
+        <div
+          class="confirm-identity__button confirm-identity__button--confirm"
+          @click="createAccount"
+        >本人確認</div>
       </div>
       <div class="confirm-identity__confirm">
-        本人確認することにより, プラットフォーム内でカード清算、支出金、などStripeが提供しているため、サイトの
+        本人確認することにより,
         <nuxt-link to="/tos">利用契約</nuxt-link>と
-        <a href="https://stripe.com/connect-account/legal">Stripe Connectアカウント契約</a>（
-        <a href="https://stripe.com/legal">Stripe利用規約を含み</a>、総称して「Stripeサービス契約」といいます。）に従い同意することになる。
+        <a href="https://stripe.com/connect-account/legal">Stripe Connectアカウント契約</a>
+        に従い同意することになる。
       </div>
     </div>
   </div>
@@ -68,8 +71,8 @@
 
 <script>
 export default {
-  props:{
-    person:Object
+  props: {
+    person: Object
   },
   data() {
     return {
@@ -82,38 +85,140 @@ export default {
       ],
       selected_card: { type: "パスポート", require: null },
       cardModal: false,
+      loading: false,
       form: {
         cover: {
           file: "",
-          name: ""
+          name: "",
+          url: "",
+          type: ""
         },
         back: {
           file: "",
-          name: ""
+          name: "",
+          url: "",
+          type: ""
         }
-      }
-
+      },
+      stripe: this.$stripe.import()
     };
   },
   methods: {
     selectCard: function(card) {
       this.selected_card = card;
+      this.cardModal = !this.cardModal;
     },
     toggleCardSelect: function() {
       this.cardModal = !this.cardModal;
+      // this.cardModal = this
     },
     handleChangeCover(res, file) {
       this.form.cover.file = file.raw;
       this.form.cover.name = file.name;
+      this.form.cover.type = file.raw.type;
+      // console.log(file);
       // this.form['cover']['url'] =
       // this.fileList = fileList.slice(-3);
     },
     handleChangeBack(res, file) {
       this.form.back.file = file.raw;
       this.form.back.name = file.name;
+      this.form.back.type = file.raw.type;
     },
     changeStep() {
       this.$store.commit("SET_CONTRACT_STEP", 1);
+    },
+    createAccount: async function() {
+      try {
+        this.loading = true;
+        if (!this.form.cover.name) {
+          return this.$toast.show("身分証明書が必要です", {
+            theme: "toasted-primary",
+            position: "top-right",
+            icon: "extension",
+            duration: 2000
+          });
+          this.loading = false;
+        }
+        // return console.log(this.person);
+        let file;
+        if (this.selected_card.require) {
+          if (!this.form.back.name) {
+            return this.$toast.show("身分証明書の裏側の写真が必要です", {
+              theme: "toasted-primary",
+              position: "top-right",
+              icon: "extension",
+              duration: 2000
+            });
+          }
+          // this.form.back.url = await this.$store.dispatch(
+          //   "upload/image",
+          //   this.form.back.file
+          // );
+        }
+        // this.form.cover.url = await this.$store.dispatch(
+        //   "upload/image",
+        //   this.form.cover.file
+        // );
+        // return
+        // this.person["person"]["tos_shown_and_accepted"] = true;
+        const { token, error } = await this.stripe.createToken(
+          "person",
+          this.person["person"]
+        );
+        // clg
+        if (error) throw error;
+        let formData = new FormData();
+        console.log(token);
+        formData.append("person", token.id);
+        formData.append("cover", this.form.cover.file);
+        formData.append(
+          "first_name_kanji",
+          this.person["person"]["first_name_kanji"]
+        );
+        let res;
+        if (this.selected_card.require) {
+          formData.append("cover", this.form.back.file);
+          res = await this.$axios.post("/stripe/connect/account", formData, {
+            headers: {
+              "Content-Type": "multipart/form-data"
+            }
+          });
+          if (res.status !== 200) {
+            throw new Error("bad");
+          }
+          // await this.$store.dispatch("stripe/setAccount", {
+          //   person: token,
+          //   cover: this.form.cover,
+          //   back: this.form.back
+          // });
+        } else {
+          res = await this.$axios.post("/stripe/connect/account", formData, {
+            headers: {
+              "Content-Type": "multipart/form-data"
+            }
+          });
+          if (res.status !== 200) {
+            throw new Error("bad");
+          }
+        }
+        this.loading = false;
+        return this.$toast.show("本人確認を完了しました", {
+          theme: "toasted-primary",
+          position: "top-right",
+          icon: "check_circle",
+          duration: 2000
+        });
+      } catch (error) {
+        this.loading = false;
+        console.log(error);
+        return this.$toast.show("本人確認に失敗しました", {
+          theme: "toasted-primary",
+          position: "top-right",
+          icon: "extension",
+          duration: 2000
+        });
+      }
     }
   }
 };
@@ -123,6 +228,7 @@ export default {
 .confirm-identity {
   padding: 2rem;
   $self: &;
+  user-select: none;
   #{$self}__upload {
     margin-top: 2rem;
     #{$self}__uploaded {

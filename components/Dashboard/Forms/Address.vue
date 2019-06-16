@@ -101,14 +101,13 @@
       <div class="flex-divider flex-column">
         <label for="fullname">番地*</label>
         <input
-          v-mask="'##-##'"
           v-validate="'required'"
           data-vv-as="番地"
           class="address-form__input address-form__input--line address-form__input--kanji"
           v-model="address.line"
           type="text"
           name="line"
-          placeholder="01-10"
+          placeholder="8-9"
         >
       </div>
     </div>
@@ -117,7 +116,6 @@
       <input
         class="address-form__input address-form__input--town address-form__input--kanji"
         v-model="address.lineTwo"
-        v-validate="'required'"
         data-vv-as="建物"
         type="text"
         name="building"
@@ -127,7 +125,6 @@
         class="address-form__input address-form__input--town-kana address-form__input--kana"
         v-model="address_kana.lineTwo"
         type="text"
-        v-validate="'required'"
         data-vv-as="カタカナ町村名"
         name="building_kana"
         placeholder="カタカナ*"
@@ -643,7 +640,7 @@ export default {
           state: this.address.state.kana,
           city: this.address_kana.city,
           town: this.address_kana.town,
-          line1: this.address_kana.line,
+          line1: this.address.line,
           line2: this.address_kana.lineTwo
         },
         address_kanji: {

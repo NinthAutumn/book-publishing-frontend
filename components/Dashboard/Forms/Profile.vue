@@ -60,7 +60,13 @@
       <div class="flex-divider">
         <label for="gender">性別*</label>
         <v-radio-group v-model="form.gender" row>
-          <v-radio v-for="n in genders" :key="n" :label="`${n}`" :value="n" color="#566CD6"></v-radio>
+          <v-radio
+            v-for="n in genders"
+            :key="n"
+            :label="`${n.key}`"
+            :value="n.value"
+            color="#566CD6"
+          ></v-radio>
         </v-radio-group>
       </div>
     </div>
@@ -90,14 +96,17 @@ export default {
   },
   data() {
     return {
-      genders: ["男性", "女性"],
+      genders: [
+        { key: "男性", value: "male" },
+        { key: "女性", value: "female" }
+      ],
       menu: false,
       date: "",
       form: {
         firstName: "",
         birth: this.$moment().subtract("18", "years"),
         lastName: "",
-        gender: "男性",
+        gender: "male",
         phone: "",
         email: ""
       },
@@ -177,7 +186,8 @@ export default {
           day: this.$moment(this.form.birth).date(),
           month: this.$moment(this.form.birth).month() + 1,
           year: this.$moment(this.form.birth).year()
-        }
+        },
+        gender: this.form.gender
       };
       // console.log();
       this.$emit("save", person);

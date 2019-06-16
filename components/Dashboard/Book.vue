@@ -316,7 +316,7 @@ export default {
       border-radius: 0.4rem;
       box-shadow: 0 12px 18px 0 rgba(50, 50, 93, 0.11),
         0 3px 9px 0 rgba(0, 0, 0, 0.08);
-      transform: translateX(-5rem) translateY(-5rem);
+      transform: translateX(-5rem);
     }
   }
   &:hover {

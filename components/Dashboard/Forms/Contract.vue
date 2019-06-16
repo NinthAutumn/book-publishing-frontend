@@ -21,7 +21,7 @@
           @save="profile"
         ></Profile>
         <Address v-if="contractStep === 1" @save="address"></Address>
-        <confirm-identity v-if="contractStep===2"></confirm-identity>
+        <confirm-identity :person="account" v-if="contractStep===2"></confirm-identity>
         <!-- <Bank v-if="contractStep === 2"></Bank> -->
       </transition>
     </div>
