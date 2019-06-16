@@ -139,6 +139,9 @@
 
 <script>
 export default {
+  props: {
+    person: Object
+  },
   data() {
     return {
       search: "",
@@ -610,6 +613,45 @@ export default {
       });
       this.selected = select;
       // this.form.address.city.replace(/市/g, "");
+    }
+  },
+  mounted() {
+    const person = {
+      address_kana: {
+        country: "JP",
+        postal_code: this.address.postal,
+        state: this.address.state.kana,
+        city: this.address_kana.city,
+        town: this.address_kana.town,
+        line1: this.address.line,
+        line2: this.address_kana.lineTwo
+      },
+      address_kanji: {
+        country: "JP",
+        postal_code: this.address.postal,
+        state: this.address.state.name,
+        city: this.address.city,
+        town: this.address.town,
+        line1: this.address.line,
+        line2: this.address.lineTwo
+      }
+    };
+    if (this.person) {
+      this.address.state = this.person["person"]["address_kanji"]["state"];
+      this.address.city = this.person["person"]["address_kanji"]["city"];
+      this.address.postal = this.person["person"]["address_kanji"][
+        "postal_code"
+      ];
+      this.address.town = this.person["person"]["address_kanji"]["town"];
+      this.address.line = this.person["person"]["address_kanji"]["line1"];
+      this.address.lineTwo = this.person["person"]["address_kanji"]["line2"];
+
+      this.address_kana.state = this.person["person"]["address_kana"]["state"];
+      this.address_kana.city = this.person["person"]["address_kana"]["city"];
+      this.address_kana.town = this.person["person"]["address_kana"]["town"];
+      this.address_kana.lineTwo = this.person["person"]["address_kana"][
+        "line2"
+      ];
     }
   },
   methods: {

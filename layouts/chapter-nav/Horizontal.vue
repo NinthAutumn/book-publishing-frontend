@@ -129,7 +129,7 @@ export default {
       theme: "user/getTheme",
       productState: "getProductModalState",
       title: "chapter/getChapterBookTitle",
-      wealth: "wealth/getWealth",
+      wealth: "wallet/getWealth",
       subscribe: "subscription/getSiteModalState"
     }),
     loginState() {

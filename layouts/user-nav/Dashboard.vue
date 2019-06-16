@@ -12,10 +12,14 @@
           <div
             @click.stop="$store.commit('SET_CONTRACT_MODAL_STATE')"
             class="contract-button button--shadow button"
-            v-if="!author.verified"
+            v-if="author.verified === 'unverified'"
           >
             <fa icon="file-contract" class style="margin-right:5px;"></fa>本人確認
           </div>
+          <div
+            class="contract-button contract-button--pending button--shadow button"
+            v-if="author.verified === 'pending'"
+          >本人確認を検討中</div>
           <nuxt-link
             v-if="$route.name ==='dashboard-books-id-index-draft'||$route.name ==='dashboard-books-id-index-published'||$route.name ==='dashboard-books-id-index'||$route.name ==='dashboard-books-id-index-deleted'||$route.name ==='dashboard-books-id-new'"
             class="write-chapter"
@@ -203,6 +207,10 @@ export default {
   font-size: 1.6rem;
   margin-right: 1rem;
   transition: 300ms;
+  &--pending {
+    background-color: #4554ff;
+    color: white;
+  }
   &:hover {
     background-color: #4554ff;
     color: white;

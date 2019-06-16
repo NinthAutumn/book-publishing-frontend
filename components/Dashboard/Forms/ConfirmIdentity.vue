@@ -1,6 +1,11 @@
 <template>
   <div class="confirm-identity">
-    <div class="confirm-identity__container" v-loading="loading">
+    <div class="confirm-identity__loading" v-if="loading">
+      <div class="pixel-spinner">
+        <div class="pixel-spinner-inner"></div>
+      </div>
+    </div>
+    <div class="confirm-identity__container">
       <div class="confirm-identity__select">
         <div class="confirm-identity__text" @click.stop="toggleCardSelect">
           <span>{{selected_card.type||`本人確認`}}</span>
@@ -229,6 +234,56 @@ export default {
   padding: 2rem;
   $self: &;
   user-select: none;
+  position: relative;
+  &__loading {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    .pixel-spinner,
+    .pixel-spinner * {
+      box-sizing: border-box;
+    }
+
+    .pixel-spinner {
+      height: 70px;
+      width: 70px;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .pixel-spinner .pixel-spinner-inner {
+      width: calc(70px / 7);
+      height: calc(70px / 7);
+      background-color: #ff1d5e;
+      color: #ff1d5e;
+      box-shadow: 15px 15px 0 0, -15px -15px 0 0, 15px -15px 0 0, -15px 15px 0 0,
+        0 15px 0 0, 15px 0 0 0, -15px 0 0 0, 0 -15px 0 0;
+      animation: pixel-spinner-animation 2000ms linear infinite;
+    }
+
+    @keyframes pixel-spinner-animation {
+      50% {
+        box-shadow: 20px 20px 0px 0px, -20px -20px 0px 0px, 20px -20px 0px 0px,
+          -20px 20px 0px 0px, 0px 10px 0px 0px, 10px 0px 0px 0px,
+          -10px 0px 0px 0px, 0px -10px 0px 0px;
+      }
+      75% {
+        box-shadow: 20px 20px 0px 0px, -20px -20px 0px 0px, 20px -20px 0px 0px,
+          -20px 20px 0px 0px, 0px 10px 0px 0px, 10px 0px 0px 0px,
+          -10px 0px 0px 0px, 0px -10px 0px 0px;
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+  }
   #{$self}__upload {
     margin-top: 2rem;
     #{$self}__uploaded {

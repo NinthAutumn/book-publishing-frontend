@@ -9,10 +9,10 @@
           <!-- <div class="mobile-chapter__select" v-ripple >
             <fa icon="bookmark"></fa>
           </div>-->
-          <div class="mobile-chapter__select" v-ripple @click="actionHandler">
+          <div class="mobile-chapter__select" v-ripple @click.stop="actionHandler">
             <fa icon="flag"></fa>
           </div>
-          <div class="mobile-chapter__select" v-ripple @click="actionHandler('vote')">
+          <div class="mobile-chapter__select" v-ripple @click.stop="actionHandler('vote')">
             <fa icon="bolt"></fa>
           </div>
         </div>
@@ -73,7 +73,7 @@
         </div>
         <!-- <v-slider :value="selected" :min="min" :max="max"></v-slider> -->
         <div class="mobile-chapter__options">
-          <div class="mobile-chapter__option" v-ripple @click="openModal">
+          <div class="mobile-chapter__option" v-ripple @click.stop="openModal">
             <fa icon="list"></fa>
           </div>
           <div class="mobile-chapter__option" v-ripple>
@@ -84,6 +84,9 @@
           </div>
           <div class="mobile-chapter__option" v-ripple>
             <fa icon="comment"></fa>
+          </div>
+          <div class="mobile-chapter__option" v-ripple>
+            <fa icon="image"></fa>
           </div>
         </div>
       </div>
@@ -193,11 +196,11 @@ export default {
     };
   },
   watch: {
-    // table: function(val) {
-    //   if (val) {
-    //     this.navigation = false;
-    //   }
-    // }
+    table: function(val) {
+      if (!val) {
+        this.navigation = true;
+      }
+    }
   },
   mounted: async function() {
     // this.height = this.$refs.chapter.clientHeight + "px";

@@ -6,6 +6,7 @@
     </div>
 
     <div class="total-earning__history">引き出し歴史</div>
+
     <div class="total-earning__list" v-if="payouts.length > 0">
       <div class="total-earning__item" v-for="(payout,index) in payouts" :key="index">{{payout}}</div>
     </div>
@@ -22,7 +23,8 @@ export default {
   computed: {
     ...mapGetters({
       earning: "dashboard/getTotalEarning",
-      payouts: "wallet/getPayoutList"
+      payouts: "wallet/getPayoutList",
+      author: ""
     })
   },
   async created() {
