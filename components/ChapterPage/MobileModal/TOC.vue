@@ -98,7 +98,7 @@ export default {
   top: 0;
   left: 0;
   // scroll-behavior: none;
-  background-color: rgba(65, 65, 65, 0.527);
+  // background-color: rgba(65, 65, 65, 0.527);
   &--black {
     #{$self}__volumes {
       background-color: #030303;

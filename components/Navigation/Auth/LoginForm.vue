@@ -114,6 +114,7 @@ export default {
         this.loading = false;
         this.$store.commit("LOGIN_FALSE");
         this.$router.go(0);
+        // this.$forceUpdate();
         // this.$router.go(0);
       } catch (error) {
         console.log(error);

@@ -333,7 +333,7 @@ module.exports = {
     })]
   },
   server: {
-    port: process.env.CLIENT_PORT || 3000, // default: 3000
+    port: process.env.CLIENT_PORT || 4000, // default: 3000
     host: process.env.API_HOST || '0.0.0.0', // default: localhost
   },
 }

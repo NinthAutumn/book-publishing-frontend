@@ -129,14 +129,14 @@
   }
 
   &-leave {
-    transform: translateX(-50%);
+    // transform: translateX(-50%);
 
     &-active {
       transition: 300ms;
     }
 
     &-to {
-      transform: translateX(-50%);
+      transform: translateX(-100%);
     }
   }
 }
@@ -161,14 +161,14 @@
   }
 
   &-leave {
-    transform: translateX(50%);
+    // transform: translateX(50%);
 
     &-active {
       transition: 300ms;
     }
 
     &-to {
-      transform: translateX(50%);
+      transform: translateX(100%);
     }
   }
 }

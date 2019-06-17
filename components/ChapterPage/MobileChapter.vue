@@ -25,7 +25,13 @@
       <Theme v-if="themeM" @toggle="toggleModal" :theme="theme"></Theme>
     </transition>
     <transition name="slide-up">
-      <Setting v-if="settingM" @toggle="toggleModal"></Setting>
+      <FontSetting v-if="settingM" :theme="theme" @toggle="toggleModal"></FontSetting>
+    </transition>
+    <transition name="slide-left">
+      <ImageM v-if="imageM" :drawings="chapter.drawings" :theme="theme" @toggle="toggleModal"></ImageM>
+    </transition>
+    <transition name="slide-left">
+      <Comments v-if="commentM" :chapter="chapter" :theme="theme" @toggle="toggleModal"></Comments>
     </transition>
     <div
       class="mobile-chapter__wrapper"
@@ -44,7 +50,7 @@
         >{{chapter.header}}</div>
         <div
           class="mobile-chapter__content"
-          :style="{  fontSize: `${this.font}px`}"
+          :style="{  fontSize: `${font}px`, fontFamily: `${fontStyle}`}"
           v-html="chapter.content"
           v-if="!chapter.locked"
         ></div>
@@ -87,10 +93,10 @@
           <div class="mobile-chapter__option" v-ripple @click.stop="openModal(2)">
             <fa icon="font"></fa>
           </div>
-          <div class="mobile-chapter__option" v-ripple>
+          <div class="mobile-chapter__option" v-ripple @click.stop="openModal(4)">
             <fa icon="comment"></fa>
           </div>
-          <div class="mobile-chapter__option" v-ripple>
+          <div class="mobile-chapter__option" v-ripple @click.stop="openModal(3)">
             <fa icon="image"></fa>
           </div>
         </div>
@@ -149,7 +155,9 @@ export default {
     Currency: () => import("@/components/All/Currency"),
     TOC: () => import("@/components/ChapterPage/MobileModal/TOC"),
     Theme: () => import("@/components/ChapterPage/MobileModal/Theme"),
-    Setting: () => import("@/components/ChapterPage/Mobilemodal/Setting")
+    FontSetting: () => import("@/components/ChapterPage/MobileModal/Font"),
+    ImageM: () => import("@/components/ChapterPage/MobileModal/Images"),
+    Comments: () => import("@/components/ChapterPage/MobileModal/Comments")
   },
   computed: {
     ...mapGetters({
@@ -175,6 +183,8 @@ export default {
       table: false,
       themeM: false,
       settingM: false,
+      imageM: false,
+      commentM: false,
       problems: [
         "差別的または攻撃的な内容",
         "テロリズムの助長",
@@ -258,8 +268,10 @@ export default {
     tapNav: function(type) {
       this.themeM = false;
 
+      this.commentM = false;
       this.settingM = false;
 
+      this.imageM = false;
       this.table = false;
 
       this.navigation = !this.navigation;
@@ -280,6 +292,12 @@ export default {
           break;
         case 2:
           this.settingM = !this.settingM;
+          break;
+        case 3:
+          this.imageM = !this.imageM;
+          break;
+        case 4:
+          this.commentM = !this.commentM;
           break;
         default:
           this.table = !this.table;
@@ -320,6 +338,12 @@ export default {
           break;
         case 2:
           this.settingM = false;
+          break;
+        case 3:
+          this.imageM = false;
+          break;
+        case 4:
+          this.commentM = false;
           break;
         default:
           this.table = false;
@@ -425,12 +449,15 @@ export default {
     }
     #{$self}__content {
       word-break: break-all;
-      line-height: 2.5rem;
+      line-height: 2.7rem;
+
       p {
         font-size: inherit;
+        font-family: inherit;
       }
       ruby {
         font-size: inherit;
+        font-family: inherit;
       }
     }
     #{$self}__footer {

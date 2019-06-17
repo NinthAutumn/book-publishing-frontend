@@ -7,7 +7,7 @@
         v-for="theme in themes"
         :key="theme"
         @click="updateTheme(theme)"
-      ></div>.
+      ></div>
     </div>
   </div>
 </template>
