@@ -1,5 +1,5 @@
 <template>
-  <section class="mobile-chapter" v-touch:swipe.left="swipeLeft" v-touch:swipe.right="swipeRight">
+  <section class="mobile-chapter">
     <transition name="slide-down">
       <div class="mobile-chapter__top" :class="'mobile-chapter__top--'+ theme" v-if="navigation">
         <div class="mobile-chapter__navigation" @click="goBack">
@@ -33,12 +33,15 @@
     <transition name="slide-left">
       <Comments v-if="commentM" :chapter="chapter" :theme="theme" @toggle="toggleModal"></Comments>
     </transition>
+
     <div
       class="mobile-chapter__wrapper"
       ref="chapter"
       v-touch:tap="tapNav"
       v-touch:swipe.top="closeNav"
       v-touch:swipe.bottom="closeNav"
+      v-touch:swipe.left="swipeLeft"
+      v-touch:swipe.right="swipeRight"
     >
       <div class="mobile-chapter__container">
         <div class="mobile-chapter__title">{{`第${chapter.index}話 ${chapter.title}`}}</div>
@@ -283,7 +286,7 @@ export default {
       this.navigation = false;
     },
     goBack: function() {
-      this.$router.go(-1);
+      this.$router.push(`/books/${this.$route.params.id}`);
     },
     openModal: function(type) {
       switch (type) {
@@ -506,7 +509,7 @@ export default {
   }
   &__bottom {
     position: fixed;
-    bottom: 0;
+    bottom: -1px;
     height: 12rem;
     left: 0;
     width: 100vw;

@@ -1,41 +1,43 @@
 <template>
-  <nuxt-link :to="`/books/${book.id}`" class="book-card" :class="customClass" v-ripple="isMobile">
-    <div class="book-card__cover" :class="{'book-card__cover--desktop': !isMobile}">
-      <v-img
-        class="book-card__img"
-        :src="cover"
-        :lazy-src="lazyCover"
-        :aspect-ratio="1/1.5"
-        max-width="15rem"
-      >
-        <template v-slot:placeholder>
-          <div class="book-card__loading">
-            <div class="trinity-rings-spinner">
-              <div class="circle"></div>
-              <div class="circle"></div>
-              <div class="circle"></div>
+  <nuxt-link :to="`/books/${book.id}`" class="book-card" :class="customClass">
+    <div class="book-card__container" v-ripple="isMobile">
+      <div class="book-card__cover" :class="{'book-card__cover--desktop': !isMobile}">
+        <v-img
+          class="book-card__img"
+          :src="cover"
+          :lazy-src="lazyCover"
+          :aspect-ratio="1/1.5"
+          max-width="15rem"
+        >
+          <template v-slot:placeholder>
+            <div class="book-card__loading">
+              <div class="trinity-rings-spinner">
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="circle"></div>
+              </div>
             </div>
-          </div>
-        </template>
-      </v-img>
-    </div>
-    <div class="book-card__progress-bar" v-if="progress">
-      <v-progress-linear
-        class="book-card__progress-line"
-        color="#F05A77"
-        height="4"
-        v-if="book.chapter_count"
-        :value="(book.read/book.chapter_count)*100"
-      ></v-progress-linear>
-      <span
-        class="book-card__progress"
-        v-if="book.chapter_count"
-        v-text="`${((book.read/book.chapter_count)*100).toFixed(0)}%`"
-      ></span>
-    </div>
-    <div v-line-clamp="clampLine" class="book-card__title" v-text="book.title"></div>
-    <div class="book-card__rating" v-if="!isMobile">
-      <v-rating color="#FF8D29" readonly :size="25" half-increments :value="+book.rating"></v-rating>
+          </template>
+        </v-img>
+      </div>
+      <div class="book-card__progress-bar" v-if="progress">
+        <v-progress-linear
+          class="book-card__progress-line"
+          color="#F05A77"
+          height="4"
+          v-if="book.chapter_count"
+          :value="(book.read/book.chapter_count)*100"
+        ></v-progress-linear>
+        <span
+          class="book-card__progress"
+          v-if="book.chapter_count"
+          v-text="`${((book.read/book.chapter_count)*100).toFixed(0)}%`"
+        ></span>
+      </div>
+      <div v-line-clamp="clampLine" class="book-card__title" v-text="book.title"></div>
+      <div class="book-card__rating" v-if="!isMobile">
+        <v-rating color="#FF8D29" readonly :size="25" half-increments :value="+book.rating"></v-rating>
+      </div>
     </div>
   </nuxt-link>
 </template>

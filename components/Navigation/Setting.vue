@@ -14,12 +14,22 @@
           :initial-image="current.avatar.img"
         ></croppa>
       </div>
-
-      <v-text-field v-model="user.username" label="ユーザー名" required></v-text-field>
+      <label for="username">ユーザー名</label>
+      <input v-model="user.username" placeholder="ユーザー名" required>
       <v-radio-group v-model="user.gender" row>
-        <v-radio v-for="n in genders" :key="n" :label="`${n}`" :value="n" color="#566CD6"></v-radio>
+        <v-radio
+          v-for="n in genders"
+          :key="n.key"
+          :label="`${n.key}`"
+          :value="n.value"
+          color="#566CD6"
+        ></v-radio>
       </v-radio-group>
-      <v-textarea label="自己紹介" v-model="user.bio" hint="好きな食べ物など"></v-textarea>
+      <label for="自己紹介">自己紹介</label>
+      <textarea v-model="user.bio" placeholder="好きな食べ物など"></textarea>
+      <div class="setting-form__submit">
+        <div class="setting-form__button" @click="updateHandler">更新</div>
+      </div>
     </div>
   </div>
 </template>
@@ -35,7 +45,11 @@ export default {
         gender: "",
         bio: ""
       },
-      genders: ["男性", "女性", "非公開"]
+      genders: [
+        { key: "男性", value: "male" },
+        { key: "女性", value: "female" },
+        { key: "非公開", value: "other" }
+      ]
     };
   },
   computed: {
@@ -49,6 +63,15 @@ export default {
   methods: {
     closeModal() {
       this.$store.commit("TOGGLE_SETTING_MODAL");
+    },
+    async updateHandler() {
+      try {
+        const user = await this.$store.dispatch("user/patchUser", {
+          user: this.user
+        });
+      } catch (error) {
+        return this.$toast.show("更新に失敗しました", { duration: 2000 });
+      }
     }
   }
 };
@@ -76,8 +99,50 @@ export default {
       }
     }
   }
+  &__submit {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    #{$self}__button {
+      font-size: 1.4rem;
+      padding: 0.75rem 2rem;
+      border-radius: 0.5rem;
+      color: #fff;
+      background: #3ecf8e;
+      text-shadow: 0 1px 3px rgba(36, 180, 126, 0.4);
+      font-weight: bold;
+      -webkit-box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11),
+        0 1px 3px rgba(0, 0, 0, 0.08);
+      box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11),
+        0 1px 3px rgba(0, 0, 0, 0.08);
+      transform: translateX(0px);
+      transition: transform 200ms ease;
+      &:hover {
+        cursor: pointer;
+        transform: translateX(1px);
+        transition: transform 200ms ease;
+      }
+    }
+  }
+  label {
+    font-size: 1.4rem;
+    color: rgb(122, 122, 122);
+  }
+  input {
+    font-size: 1.5rem;
+    padding: 1rem 1.2rem;
+    border-radius: 0.5rem;
+    border: 1px solid rgb(228, 228, 228);
+    margin: 1rem 0;
+  }
   textarea {
     font-size: 1.6rem;
+    margin: 1rem 0;
+    padding: 1rem 1.2rem;
+    height: 10rem;
+    border-radius: 0.5rem;
+    border: 1px solid rgb(228, 228, 228);
   }
   input {
     font-size: 1.6rem;

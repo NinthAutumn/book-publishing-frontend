@@ -79,7 +79,6 @@ export const actions = {
         error
       }
     })
-    console.log(res.data.count);
     commit('SET_BOOK_CHAPTER_COUNT', get(res, 'data.count', 0))
   },
   async addBook({

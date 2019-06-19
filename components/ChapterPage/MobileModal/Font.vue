@@ -45,16 +45,21 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   props: {
     theme: String
   },
+  computed: {
+    ...mapGetters({
+      fontFamily: "user/getFontFamily",
+      auth: "auth/isAuthenticated"
+    })
+  },
   data() {
     return {
-      fontSize: this.$store.getters["user/getFontSize"],
-      defaultFont:
-        "'IBM Plex Sans', 'Helvetica Neue', 'Segoe UI', Helvetica, Verdana, Arial, sans-serif",
-      fontFamily: ""
+      defaultFont: `'IBM Plex Sans', 'Helvetica Neue', 'Segoe UI', Helvetica, Verdana, Arial, sans-serif`,
+      fontSize: this.$store.getters["user/getFontSize"]
     };
   },
   methods: {
@@ -62,8 +67,8 @@ export default {
       this.$emit("toggle", 2);
     },
     async updateFontFamily(change) {
-      if (!this.$store.getters["auth/isAuthenticated"]) {
-        return this.$store.commit("LOGIN_STATE");
+      if (!this.auth) {
+        return this.$router.push("/auth/login");
       }
       if (change) {
         const setting = {
@@ -71,19 +76,18 @@ export default {
           change: "serif"
         };
         await this.$store.dispatch("user/setSetting", setting);
-        this.fontFamily = "serif";
       } else {
         const setting = {
           type: "chapterFontFamily",
           change: this.defaultFont
         };
-        this.fontFamily = this.defaultFont;
         await this.$store.dispatch("user/setSetting", setting);
       }
+      await this.$store.dispatch("user/fetchUserSettings");
     },
     async updateFontSize(type) {
-      if (!this.$store.getters["auth/isAuthenticated"]) {
-        return this.$store.commit("LOGIN_STATE");
+      if (!this.auth) {
+        return this.$router.push("/auth/login");
       }
       switch (type) {
         case "increase":
@@ -107,6 +111,7 @@ export default {
         change: this.fontSize
       };
       await this.$store.dispatch("user/setSetting", setting);
+      await this.$store.dispatch("user/fetchUserSettings");
     }
   }
 };

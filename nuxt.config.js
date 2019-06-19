@@ -152,6 +152,7 @@ module.exports = {
       src: '@/plugins/epicSpinners',
       ssr: false,
     },
+
     {
       src: '@/plugins/auth',
     }

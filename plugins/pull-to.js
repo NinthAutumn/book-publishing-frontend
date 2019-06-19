@@ -1,8 +1,8 @@
 // import Vue from 'vue';
-// import vuescroll from 'vuescroll';
+// import PullTo from 'vue-pull-to'
 // const VueSelect = {
 //   install(Vue, options) {
-//     Vue.component('scroller', vuescroll)
+//     Vue.component('pull-to', PullTo)
 //   }
 // };
 // Vue.use(VueSelect)

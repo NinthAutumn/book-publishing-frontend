@@ -175,6 +175,12 @@ export default {
     },
     handleServerResponse: async function(response) {
       if (response.error) {
+        return this.$toast.show(response.error, {
+          theme: "toasted-primary",
+          position: "top-right",
+          duration: 10000,
+          icon: "extension"
+        });
       } else if (response.requires_action) {
         const result = await this.stripe.handleCardAction(
           this.paymentIntent.client_secret
@@ -219,6 +225,7 @@ export default {
           });
         } else {
           await this.$store.dispatch("wallet/buyCoin", { form });
+          await this.$store.dispatch("wallet/wealth");
           this.$store.commit("TOGGLE_PRODUCT_MODAL");
           return this.$toast.show("クラウンコインの購入に成功しました", {
             theme: "toasted-primary",

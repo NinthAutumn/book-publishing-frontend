@@ -87,6 +87,7 @@ export default {
         change: theme
       };
       await this.$store.dispatch("user/setSetting", setting);
+      await this.$store.dispatch("user/fetchUserSettings");
     },
     async updateFontFamily(change) {
       if (!this.$store.getters["auth/isAuthenticated"]) {
@@ -106,6 +107,7 @@ export default {
         this.fontFamily = this.defaultFont;
         await this.$store.dispatch("user/setSetting", setting);
       }
+      await this.$store.dispatch("user/fetchUserSettings");
     },
     async updateFontSize(type) {
       if (!this.$store.getters["auth/isAuthenticated"]) {

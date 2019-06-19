@@ -1,5 +1,5 @@
 <template>
-  <div class="mobile-image">
+  <div class="mobile-image" :class="`mobile-image--${theme}`" v-touch:swipe.right="toggleModal">
     <div class="mobile-image__header">
       <div class="mobile-image__back" v-ripple>
         <fa icon="arrow-left" @click="toggleModal"></fa>
@@ -41,9 +41,29 @@ export default {
   right: 0;
   background-color: #fff;
   // overflow: auto;
+  &--default {
+    background: url("../../../assets/noise/noise-default-container.png");
+    border-color: #dae0e6;
+  }
+  &--black {
+    background-color: rgb(53, 53, 53);
+    border-color: black;
+  }
+  &--tan {
+    background: url("../../../assets/noise/noise-tan-container.png");
+    border-color: #eed368;
+  }
+  &--ruby {
+    background: url("../../../assets/noise/noise-ruby-container.png");
+    border-color: red;
+  }
+  &--sapphire {
+    background: url("../../../assets/noise/noise-sapphire-container.png");
+    border-color: blue;
+  }
   &__header {
     height: 5rem;
-    background-color: black;
+    // background-color: black;
     display: flex;
     align-items: center;
     padding: 0 1rem;

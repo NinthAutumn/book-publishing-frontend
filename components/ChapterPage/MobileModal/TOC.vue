@@ -1,7 +1,7 @@
 <template>
   <div class="mobile-toc" :class="`mobile-toc--${theme}`">
     <transition name="slide-right">
-      <ul class="mobile-toc__volumes" v-click-outside="closeTOC">
+      <ul class="mobile-toc__volumes" v-touch:swipe.left="closeTOC" v-click-outside="closeTOC">
         <div class="mobile-toc__spinner" v-if="loading">
           <breeding-rhombus-spinner :animation-duration="1000" :size="50" color="#ff1d5e"/>
         </div>

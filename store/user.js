@@ -371,7 +371,10 @@ export const actions = {
     user
   }) {
     try {
-      await this.$axios.patch('/user', user)
+      await this.$axios.patch('/user', {
+        user
+      })
+      return Promise.resolve(user)
     } catch (error) {
       return Promise.reject(error)
     }

@@ -55,6 +55,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   components: {
     BookList: () => import("@/components/LibraryPage/BookList"),
@@ -86,7 +87,7 @@ export default {
   },
   mounted() {
     if (this.$device.isMobile) {
-      nav_list = [];
+      this.nav_list = ["ブックマーク"];
     }
   },
   watch: {
@@ -95,15 +96,11 @@ export default {
     }
   },
   computed: {
-    bookmarks() {
-      return this.$store.state.library.bookmarks;
-    },
-    history() {
-      return this.$store.state.library.history;
-    },
-    reviews() {
-      return this.$store.getters["library/getReviews"];
-    }
+    ...mapGetters({
+      bookmarks: "library/getBookmarks",
+      history: "library/getHistory",
+      reviews: "library/getReviews"
+    })
   },
   methods: {
     sortSelect() {},

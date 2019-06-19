@@ -7,6 +7,7 @@
         class="recommendation-books__item"
         v-for="book in books"
         :key="book.id"
+        v-ripple=" $device.isMobile"
       >
         <div class="recommendation-books__cover">
           <!-- :src="`https://storage.googleapis.com/theta-images/${book.cover}`" -->
@@ -14,17 +15,21 @@
             v-if="$device.isMobile"
             :src="book.cover"
             :aspect-ratio="1/1.5"
+            :lazy-src="cover"
             max-width="17rem"
             min-width="8rem"
             alt="Book cover"
             style="border-radius: 0.4rem;  "
             class="recommendation-books__img"
-            v-ripple
           >
             <template v-slot:placeholder>
-              <v-layout fill-height align-center justify-center ma-0>
-                <v-progress-circular indeterminate color="black "></v-progress-circular>
-              </v-layout>
+              <div class="recommendation-books__loading">
+                <div class="trinity-rings-spinner">
+                  <div class="circle"></div>
+                  <div class="circle"></div>
+                  <div class="circle"></div>
+                </div>
+              </div>
             </template>
           </v-img>
           <v-img
@@ -38,9 +43,13 @@
             :lazy-src="cover"
           >
             <template v-slot:placeholder>
-              <v-layout fill-height align-center justify-center ma-0>
-                <v-progress-circular indeterminate color="black "></v-progress-circular>
-              </v-layout>
+              <div class="recommendation-books__loading">
+                <div class="trinity-rings-spinner">
+                  <div class="circle"></div>
+                  <div class="circle"></div>
+                  <div class="circle"></div>
+                </div>
+              </div>
             </template>
           </v-img>
         </div>
@@ -135,6 +144,12 @@ export default {
 
     // padding-right: 2rem;
   }
+  &__loading {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+  }
   &__list {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -144,24 +159,18 @@ export default {
     #{$self}__item {
       display: flex;
       // transform: scale(1);
-      transition: transform 200ms ease-out;
       // align-items: center;
       &:hover {
         cursor: pointer;
-        // transform: scale(1.05);
-        transition: transform 200ms ease-out;
       }
       &:focus,
       &:active {
-        // transform: scale(0.95);
-        transition: transform 200ms ease-out;
       }
       #{$self}__cover {
         margin-right: 2rem;
         // overflow: hidden;
         #{$self}__img {
           &:hover {
-            transform: scale(1.1);
             transition: 200ms;
           }
           transition: 200ms;
