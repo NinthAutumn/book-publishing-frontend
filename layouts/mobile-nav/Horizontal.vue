@@ -16,7 +16,7 @@
       <v-avatar
         class="mobile-horizontal__avatar"
         :size="40"
-        v-if="$store.getters['auth/isAuthenticated']"
+        v-if="$store.getters['auth/isAuthenticated']&&user.avatar"
       >
         <v-img :src="user.avatar.img||avatar"></v-img>
       </v-avatar>

@@ -41,6 +41,19 @@ a:visited {
 body {
   // color: white;
   // background: black;
+  // -webkit-text-size-adjust: 100%;
+  // -moz-osx-font-smoothing: grayscale;
+  // text-rendering: optimizeLegibility;
+  // font-feature-settings: "pnum";
+  // font-variant-numeric: proportional-nums;
+}
+
+* {
+  -webkit-text-size-adjust: 100%;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: "pnum";
+  font-variant-numeric: proportional-nums;
 }
 
 .page-padding {

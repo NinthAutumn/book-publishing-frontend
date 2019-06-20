@@ -12,7 +12,7 @@
             :class="{first: index === 0, last: ranking_type[ranking_type.length - 1].key === type.key,selected:type.selected}"
           >
             <fa class="ranking-select__icon" :icon="type.icon"></fa>
-            {{type.key}}
+            <p>{{type.key}}</p>
           </li>
         </div>
       </ul>

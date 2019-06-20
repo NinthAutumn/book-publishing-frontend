@@ -13,7 +13,7 @@
           <div class="flex-divider flex-row">
             <div class="browse-page__sort-type">
               <Select
-                :width="100"
+                :width="120"
                 v-model="type"
                 name="詳細条件"
                 :object="sort_type"
@@ -23,7 +23,7 @@
             </div>
             <div class="browse-page__sort-type browse-page__sort-type--direction">
               <Select
-                :width="100"
+                :width="120"
                 v-model="direction"
                 name="方向"
                 :object="sort_directions"

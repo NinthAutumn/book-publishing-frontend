@@ -54,11 +54,17 @@ export default {
   },
   computed: {
     ...mapGetters({
-      current: "user/loggedInUser"
+      current: "user/loggedInUser",
+      profile: "user/getProfile"
     })
   },
-  mounted() {
+  async mounted() {
+    await this.$store.dispatch("user/fetchProfile", {
+      userId: this.current.id
+    });
     this.user.username = this.current.username;
+    this.user.gender = this.current.gender;
+    this.user.bio = this.profile.bio;
   },
   methods: {
     closeModal() {
@@ -66,10 +72,18 @@ export default {
     },
     async updateHandler() {
       try {
-        const user = await this.$store.dispatch("user/patchUser", {
-          user: this.user
+        this.user.avatar.generateBlob(async blob => {
+          const url = await this.$store.dispatch("upload/image", blob);
+          this.user.avatar = {
+            img: url.url,
+            path: url.path
+          };
+          // this.user.avatar.img
+          await this.$store.dispatch("user/patchUser", { user: this.user });
+          await this.$store.dispatch("user/fetchUser");
         });
       } catch (error) {
+        console.log(error);
         return this.$toast.show("更新に失敗しました", { duration: 2000 });
       }
     }

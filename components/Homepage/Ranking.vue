@@ -6,6 +6,8 @@
         class="recommendation-books__ranking__item"
         v-for="book in ranking"
         :key="book.id"
+        tag="div"
+        v-ripple
       >
         <div class="recommendation-books__ranking__index">{{book.dense_rank}}.</div>
         <!-- <div class="recommendation-books__ranking__cover"> -->
@@ -70,6 +72,7 @@ export default {
       box-sizing: border-box;
       width: 20vw;
       #{$self}__item {
+        border-radius: 0.5rem;
         display: flex;
         align-items: center;
       }
@@ -78,6 +81,7 @@ export default {
       }
       #{$self}__index {
         font-size: 1.2rem;
+        font-weight: bold;
         width: 2.5rem;
         min-width: 2.5rem;
       }

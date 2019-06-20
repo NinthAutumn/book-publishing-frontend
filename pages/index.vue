@@ -31,6 +31,7 @@
         <h3>更新された作品</h3>
       </div>
       <BooksList :trendings="latest"></BooksList>
+      <mobile-ranking v-if="$device.isMobile"></mobile-ranking>
       <adsbygoogle v-if="!user.status"/>
       <div class="card-title">
         <h3>更新頻度が高い</h3>
@@ -51,7 +52,8 @@ export default {
     // BlobTwo: () => import("@/assets/svg/blob2.svg"),
     BannerList: () => import("@/components/Homepage/BannerList"),
     SearchBar: () => import("@/components/Navigation/SearchBar"),
-    Recommended: () => import("@/components/Homepage/Recommended")
+    Recommended: () => import("@/components/Homepage/Recommended"),
+    MobileRanking: () => import("@/components/Mobile/List/Book/Ranking/Home")
   },
   async asyncData({ store }) {
     await store.dispatch("analytic/fetchHighFrequent");

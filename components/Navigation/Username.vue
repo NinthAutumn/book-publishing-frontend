@@ -44,8 +44,9 @@ export default {
       try {
         this.avatar.generateBlob(async blob => {
           const url = await this.$store.dispatch("upload/image", blob);
-          this.user["avatar"] = url.url;
-          this.user["avatar_path"] = url.path;
+          this.user["avatar"]["img"] = url.url;
+          this.user["avatar"]["path"] = url.path;
+          this.user["initial"] = true;
           if (this$store.state.auth.strategy !== "local") {
             await this.$store.dispatch("user/patchUser", { user: this.user });
           } else {

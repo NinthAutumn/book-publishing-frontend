@@ -15,10 +15,10 @@ export default {
   methods: {
     changeSticky() {}
   },
-  async fetch({ store, params }) {
-    await store.dispatch("user/fetchProfile", { userId: params.id });
+  async fetch({ store, route }) {
+    await store.dispatch("user/fetchProfile", { userId: route.params.id });
     await store.dispatch("user/fetchProfileStats", {
-      userId: params.id
+      userId: route.params.id
     });
   },
   computed: {
