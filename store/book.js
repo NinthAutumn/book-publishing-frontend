@@ -8,7 +8,11 @@ export const state = () => ({
   // books: [],
   recommended: [],
   books: {
-    trending: []
+    popular: [],
+    chapter: [],
+    rating: [],
+    view: [],
+    word: []
   },
   view: "",
   bookSynopsis: true,
@@ -21,7 +25,9 @@ export const state = () => ({
   latest: [],
   createAuthor: false,
   announcements: [],
-  genres: []
+  genres: [],
+
+
 })
 
 export const getters = {
@@ -42,7 +48,10 @@ export const getters = {
   getBrowseBooks: state => state.browse,
   getBookTags: state => state.tags,
   getBookGenres: state => state.bookGenres,
-  getGenres: state => state.genres
+  getGenres: state => state.genres,
+  getMobileBrowse: (state) => (type) => {
+    return state.books[type]
+  }
 }
 
 export const actions = {
@@ -96,6 +105,36 @@ export const actions = {
       return Promise.reject(error)
     }
 
+  },
+  async browseMobileBooks({
+    commit
+  }, {
+    type,
+    genre,
+    page,
+    tag,
+    infinite = false
+  }) {
+
+    const res = await this.$axios.patch('/book/mobile/browse', {
+      type,
+      genre,
+      page,
+      tag,
+    })
+
+    if (infinite) {
+      commit('SET_MOBILE_BROWSE_NEXT', {
+        books: res.data,
+        type
+      })
+      return Promise.resolve(res.data)
+    }
+    commit('SET_MOBILE_BROWSE', {
+      books: res.data,
+      type
+    })
+    return Promise.resolve(res.data)
   },
   async browseBooks({
     commit
@@ -402,6 +441,19 @@ export const mutations = {
     announcements.forEach((announcement) => {
       state.announcements.push(announcement)
     })
+  },
+  SET_MOBILE_BROWSE: function (state, {
+    books,
+    type
+  }) {
+    state.books[type] = books
+  },
+  SET_MOBILE_BROWSE_NEXT: function (state, {
+    books,
+    type
+  }) {
+    books.forEach((book) => {
+      state.books[type].push(book)
+    })
   }
-
 }

@@ -52,10 +52,15 @@
 </template>
 
 <script>
+import { TrinityRingsSpinner } from "epic-spinners";
+
 export default {
   props: {
     title: String,
     books: Array
+  },
+  components: {
+    TrinityRingsSpinner
   },
   data() {
     return {

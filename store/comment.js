@@ -190,5 +190,20 @@ export const actions = {
     } catch (error) {
 
     }
+  },
+  addCommentMobile: async function ({
+    commit
+  }, {
+    bookId,
+    chapterId,
+    content,
+    parentId = null
+  }) {
+    await this.$axios.post('/comment', {
+      bookId,
+      chapterId,
+      content,
+      parentId
+    })
   }
 }

@@ -35,6 +35,7 @@
     </transition>
 
     <div
+      v-if="!chapter.locked"
       class="mobile-chapter__wrapper"
       ref="chapter"
       v-touch:tap="tapNav"
@@ -45,7 +46,11 @@
     >
       <div class="mobile-chapter__container">
         <div class="mobile-chapter__title">{{`第${chapter.index}話 ${chapter.title}`}}</div>
-        <adsbygoogle v-if="!user.status" :ad-layout="'in-article'" :ad-format="'fluid'"/>
+        <adsbygoogle
+          v-if="!user.status&&chapter.content"
+          :ad-layout="'in-article'"
+          :ad-format="'fluid'"
+        />
         <div
           class="mobile-chapter__ann"
           :style="{  fontSize: `${this.font}px`}"
@@ -57,17 +62,23 @@
           v-html="chapter.content"
           v-if="!chapter.locked"
         ></div>
-        <div class="mobile-chapter__locked flex-column flex--align flex--center" v-else>
-          <div class="mobile-chapter_price">
-            <Currency size="large" :amount="chapter.price"></Currency>
-            <div class="mobile-chapter__buy" @click="purchase" :class="{}">ロック解除</div>
-          </div>
-        </div>
+
         <div
           class="mobile-chapter__ann"
           :style="{  fontSize: `${this.font}px`}"
           v-if="chapter.footer"
         >{{chapter.footer}}</div>
+      </div>
+    </div>
+    <div class="mobile-chapter__locked-content" v-else>
+      <div class="mobile-chapter__title">{{`第${chapter.index}話 ${chapter.title}`}}</div>
+      <!-- .mobile-chapter__ -->
+      <div class="mobile-chapter__locked flex-column flex--align flex--center">
+        <!-- <div>-- ロック掛かっている話 --</div> -->
+        <div class="mobile-chapter_price">
+          <Currency size="large" :amount="chapter.price"></Currency>
+          <div class="mobile-chapter__buy" @click="purchase" :class="{}">ロック解除</div>
+        </div>
       </div>
     </div>
     <transition name="slide-up">
@@ -105,7 +116,7 @@
         </div>
       </div>
     </transition>
-    <div class="mobile-chapter__actions flex-row flex--align flex--center">
+    <div v-if="!chapter.locked" class="mobile-chapter__actions flex-row flex--align flex--center">
       <div
         class="mobile-chapter__action flex-column flex--align"
         v-for="(action,key) in actions"
@@ -229,13 +240,13 @@ export default {
     await this.$store.dispatch("chapter/fetchUnstructuredList", {
       bookId: this.$route.params.id
     });
-    this.simpleList.forEach(val => {
-      this.list.push(val.index);
-    });
-    this.min = this.simpleList[0];
-    this.max = this.list[this.list.length - 1];
-    this.selected = this.chapter.index;
-    this.chapter.content.split("<p></p>");
+    // this.simpleList.forEach(val => {
+    //   this.list.push(val.index);
+    // });
+    // this.min = this.simpleList[0];
+    // this.max = this.list[this.list.length - 1];
+    // this.selected = this.chapter.index;
+    // this.chapter.content.split("<p></p>");
   },
   methods: {
     change: function() {
@@ -406,21 +417,18 @@ export default {
 <style lang="scss">
 .mobile-chapter {
   $self: &;
-  &__wrapper {
-    height: 100%;
-    #{$self}__container {
+  &__locked-content {
+    &::after {
+      content: "";
       display: inline-block;
-      max-width: 100%;
-      min-height: 100vh;
-
-      &::after {
-        content: "";
-        display: inline-block;
-        width: 94vw;
-      }
+      width: 94vw;
+    }
+    #{$self}__title {
+      font-size: 2.4rem;
     }
     #{$self}__locked {
-      min-height: 70vh;
+      min-height: 80vh;
+
       #{$self}__buy {
         font-size: 1.6rem;
         padding: 1rem 2rem;
@@ -437,6 +445,22 @@ export default {
         }
       }
     }
+  }
+  &__wrapper {
+    height: 100%;
+
+    #{$self}__container {
+      display: inline-block;
+      max-width: 100%;
+      min-height: 100vh;
+
+      &::after {
+        content: "";
+        display: inline-block;
+        width: 94vw;
+      }
+    }
+
     #{$self}__title {
       font-size: 2.4rem;
       line-height: 2.5rem;

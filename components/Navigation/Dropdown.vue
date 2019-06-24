@@ -70,6 +70,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   components: {
     Currency: () => import("@/components/All/Currency"),
@@ -80,15 +81,11 @@ export default {
     this.loading = false;
   },
   computed: {
-    user() {
-      return this.$store.getters["user/loggedInUser"];
-    },
-    wealth() {
-      return this.$store.getters["wallet/getWealth"];
-    },
-    token() {
-      return this.$store.getters["wallet/getToken"];
-    }
+    ...mapGetters({
+      user: "user/loggedInUser",
+      wealth: "wallet/getWealth",
+      token: "wallet/getToken"
+    })
   },
   data() {
     return {

@@ -1,5 +1,5 @@
 <template>
-  <div class="book-chapters">
+  <div class="book-chapters" :class="{'book-chapters--mobile':$device.isMobile}">
     <div class="bookchapterlists__options">
       <fa
         class="bookchapterlists__options--sort"
@@ -131,27 +131,27 @@ export default {
     &__chapter-list {
       /* autoprefixer: ignore next; */
       grid-template-columns: repeat(auto-fill, 100%) !important;
-      #{$self}__chapter-item {
-        &:nth-child(even) {
-          background-color: #f6f9fc !important;
-          &:hover {
-            background-color: #fff !important;
-          }
-        }
-        // &:nth-child(odd) {
-        //   background-color: #fff8f8 !important;
-        //   &:hover {
-        //     background-color: #fff !important;
-        //   }
-        // }
-      }
     }
   }
 }
 
 .book-chapters {
   $self: &;
-
+  &--mobile {
+    #{$self}__volume-item {
+      &__content {
+        font-size: 1.4rem !important;
+        color: #2a2f45 !important;
+      }
+    }
+    #{$self}__chapter-item {
+      border-bottom: 0px solid !important;
+      background-color: #fff !important;
+      &:hover {
+        background-color: #fff !important;
+      }
+    }
+  }
   &__volume-list {
     // display: grid;
     // grid-template-areas: "volume volume" "content content";

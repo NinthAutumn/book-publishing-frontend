@@ -10,7 +10,7 @@
     </div>
     <div class="form-container">
       <div class="flex-control flex-row flex--between">
-        <div class="flex-control">
+        <div class="flex-control" style="width:45%;">
           <label for="fullname">姓名</label>
           <input
             class="payment-form__input payment-form__input--name payment-form__input--firstname"
@@ -20,7 +20,7 @@
             placeholder="姓名"
           >
         </div>
-        <div class="flex-control">
+        <div class="flex-control" style="width:45%;">
           <label for="fullname">名前</label>
           <input
             class="payment-form__input payment-form__input--name"
@@ -281,11 +281,12 @@ export default {
 
     margin-bottom: 2rem;
     &--firstname {
-      // width: 80%;
+      // width: 48%;
     }
     &--name {
       // width: 80%;
-      width: 17rem;
+      width: 100%;
+      max-width: 17rem;
     }
     &--email {
       width: 100%;

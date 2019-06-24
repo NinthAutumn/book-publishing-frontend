@@ -1,24 +1,15 @@
 <template>
   <nav class="mobile-horizontal flex-row flex--between flex--align">
-    <div class="mobile-horizontal__meta">
-      <nuxt-link
-        v-ripple
-        v-if="$device.isDesktop||$device.isTablet"
-        tag="div"
-        to="/"
-        class="site-logo"
-      >ノーブル</nuxt-link>
+    <div class="mobile-horizontal__meta" v-ripple @click.stop="toggleMenu(false)">
+      <fa icon="bars" class="mobile-horizontal__bar"></fa>
     </div>
-    <div class="mobile-horizontal__profile" v-ripple>
+    <div class="mobile-horizontal__profile" v-ripple @click="toggleMenu(true)">
       <!-- <v-avatar class="mobile-horizontal__avatar" :size="40" v-if="!loggedIn">
         <img :src="avatar">
       </v-avatar>-->
-      <v-avatar
-        class="mobile-horizontal__avatar"
-        :size="40"
-        v-if="$store.getters['auth/isAuthenticated']&&user.avatar"
-      >
-        <v-img :src="user.avatar.img||avatar"></v-img>
+      <v-avatar class="mobile-horizontal__avatar" :size="40">
+        <v-img v-if="$store.getters['auth/isAuthenticated']&&user.avatar" :src="user.avatar.img"></v-img>
+        <v-img v-else :src="avatar"></v-img>
       </v-avatar>
     </div>
   </nav>
@@ -38,6 +29,11 @@ export default {
       user: "user/loggedInUser",
       loggedIn: "auth/isAuthenticated"
     })
+  },
+  methods: {
+    toggleMenu(val) {
+      this.$emit("toggle", val);
+    }
   }
 };
 </script>
@@ -59,6 +55,10 @@ export default {
   // border-radius: 2rem;
   // border-bottom--radius: 2rem;
   &__meta {
+    padding: 1rem;
+    #{$self}__bar {
+      font-size: 2rem;
+    }
   }
   &__profile {
     #{$self}__avatar {

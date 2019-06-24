@@ -9,7 +9,7 @@
     </div>
     <div class="flex-divider browse-page__section flex">
       <div class="flex-divider" style="flex-grow:1;">
-        <div class="browse-page__sorting-list flex">
+        <div class="browse-page__sorting-list flex-row" v-if="!$device.isMobile">
           <div class="flex-divider flex-row">
             <div class="browse-page__sort-type">
               <Select
@@ -65,6 +65,9 @@
 
           <div class="browse-page__filter-tag"></div>
           <div class="browse-page__filter-bookstate"></div>
+        </div>
+        <div class="browse-list__sort-mobile" v-else>
+          <div class="browse-list__option" v-for="type in sort_type" :key="type.key"></div>
         </div>
         <transition name="grow-shrink">
           <div class="browse-page__filter" v-if="selected_genre.length > 0">
@@ -152,6 +155,9 @@ export default {
     }
   },
   created() {
+    if (this.$device.isMobile) {
+      return this.$router.push("/browse/mobile");
+    }
     if (this.$route.query.genre && this.$route.query.genre !== "undefined") {
       this.selected_genre.push({ name: this.$route.query.genre });
     }

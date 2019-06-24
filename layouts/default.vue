@@ -11,11 +11,27 @@
       </div>
     </div>
     <div class="is-mobile" v-else>
-      <mobile-horizontal></mobile-horizontal>
-      <transition name="slide-right">
-        <VerticalRightMobile :user="user" v-touch:swipe.left="swipeLeft" v-if="mvLeft"></VerticalRightMobile>
+      <mobile-horizontal @toggle="toggleMenu"></mobile-horizontal>
+      <transition name="slide-left">
+        <VerticalLeftMobile
+          @stripe="stripeOpen"
+          v-touch:swipe.right="swipeRight"
+          v-if="mvRight"
+          @toggle="toggleMenu"
+        ></VerticalLeftMobile>
       </transition>
-      <nuxt class="mobile-nuxt" v-touch:swipe.right="swipeRight"></nuxt>
+      <transition name="slide-right">
+        <VerticalRightMobile
+          :user="user"
+          v-if="mvLeft"
+          @toggle="toggleMenu"
+          v-touch:swipe.left="swipeLeft"
+        ></VerticalRightMobile>
+      </transition>
+      <transition name="slide-up">
+        <stripe-modal @stripe="stripeOpen" v-if="stripe"></stripe-modal>
+      </transition>
+      <nuxt class="mobile-nuxt"></nuxt>
     </div>
   </div>
 </template>
@@ -25,8 +41,10 @@ export default {
     Horizontal: () => import("./main-nav/Horizontal"),
     Vertical: () => import("./main-nav/Vertical"),
     VerticalRightMobile: () => import("./mobile-nav/Vertical-right"),
+    VerticalLeftMobile: () => import("./mobile-nav/VerticalLeft"),
     MobileHorizontal: () => import("./mobile-nav/Horizontal"),
-    NewVertical: () => import("./main-nav/NewVertical")
+    NewVertical: () => import("./main-nav/NewVertical"),
+    StripeModal: () => import("@/components/Navigation/Stripe/ProductModal")
   },
   mounted() {
     if (this.$device.isMobile) {
@@ -75,6 +93,8 @@ export default {
   data() {
     return {
       mvLeft: false,
+      mvRight: false,
+      stripe: false,
       links: ["Home", "About Us", "Team", "Services", "Blog", "Contact Us"]
     };
   },
@@ -88,18 +108,70 @@ export default {
     dropOff() {
       this.$store.commit("DROPDOWN_FALSE");
     },
-    swipeRight() {
-      this.mvLeft = true;
+    toggleMenu(val) {
+      console.log(val);
+      if (val) {
+        this.mvRight = !this.mvRight;
+        this.mvLeft = false;
+      } else {
+        this.mvLeft = !this.mvLeft;
+        this.mvRight = false;
+      }
     },
+    stripeOpen() {
+      this.stripe = !this.stripe;
+      // if(stripe)
+      this.mvRight = false;
+      this.mvLeft = false;
+    },
+    swipeRight() {
+      this.mvRight = false;
+    },
+
     swipeLeft() {
       this.mvLeft = false;
     }
+  },
+  transition: {
+    name: "slide-right",
+    mode: "out-in"
   }
 };
 </script>
 
 
 <style lang="scss">
+.slide-left {
+  @keyframes slide-down {
+    from {
+      transform: translateX(50%);
+    }
+
+    to {
+      transform: translateX(0);
+    }
+  }
+
+  &-enter {
+    transform: translateX(50%);
+
+    &-active {
+      transition: 300ms;
+    }
+  }
+
+  &-leave {
+    // transform: translateX(50%);
+
+    &-active {
+      transition: 300ms;
+    }
+
+    &-to {
+      transform: translateX(100%);
+    }
+  }
+}
 // body {
 //   background-color: white;
 // }

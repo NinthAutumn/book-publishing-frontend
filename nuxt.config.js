@@ -94,6 +94,10 @@ module.exports = {
     },
     {
       ssr: false,
+      src: '~/plugins/swipeTab'
+    },
+    {
+      ssr: false,
       src: "~plugins/clickOutside"
     }, {
       ssr: false,

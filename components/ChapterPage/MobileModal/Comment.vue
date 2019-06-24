@@ -1,7 +1,7 @@
 <template>
   <div class="mobile-comment__item">
     <div class="mobile-comment__avatar">
-      <v-avatar size="35">
+      <v-avatar size="40">
         <v-img
           :src="chapter.author_id === comment.user_id? comment.author_avatar : comment.avatar.img"
         ></v-img>
@@ -12,7 +12,11 @@
         class="mobile-comment__username"
         v-text="comment.user_id === chapter.author_id ? comment.pen_name : comment.username"
       ></div>
-      <div class="mobile-comment__content" v-ripple>
+      <div
+        class="mobile-comment__content"
+        v-ripple
+        @click.stop="$emit('create', {parent_id:comment.id})"
+      >
         <div class="mobile-comment__text">{{comment.content}}</div>
         <div class="mobile-comment__parent" v-if="comment.parent_username">
           <div
@@ -125,7 +129,7 @@ export default {
     max-width: 100%;
     // min-height:
     #{$self}__avatar {
-      width: 5rem;
+      width: 5.5rem;
     }
     #{$self}__meta {
       display: flex;
@@ -135,12 +139,12 @@ export default {
       margin-bottom: 0.75rem;
       flex-direction: column;
       #{$self}__username {
-        font-size: 1.4rem;
+        font-size: 1.6rem;
         font-weight: bold;
         margin-bottom: 1rem;
       }
       #{$self}__text {
-        font-size: 1.5rem;
+        font-size: 1.8rem;
         // margin-bottom: 0.75rem;
       }
       #{$self}__parent {

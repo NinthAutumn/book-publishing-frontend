@@ -226,6 +226,9 @@ export default {
           });
           break;
       }
+      if (!books) {
+        return $state.complete();
+      }
       if (books.length > 0) {
         $state.loaded();
       } else {

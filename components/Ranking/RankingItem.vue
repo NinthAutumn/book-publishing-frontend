@@ -24,7 +24,7 @@
       </div>
       <div class="book-meta">
         <div class="book-title">
-          <h4>{{book.title}}</h4>
+          <h4 v-line-clamp="2">{{book.title}}</h4>
         </div>
         <div class="book-author">
           <p>{{book.author}}</p>

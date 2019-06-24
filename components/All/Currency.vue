@@ -7,12 +7,13 @@
       <svg-icon
         name="crown"
         class="currency__icon"
-        :style="{fill: color}"
+        :style="{fill: color,width,height:width,marginRight}"
         :class="{'currency__icon--large':size === 'large','currency__icon--small':small}"
       ></svg-icon>
     </div>
     <div
       class="currency__number"
+      :style="{fontSize}"
       :class="{'currency__number--large':size === 'large','currency__number--small':small}"
     >{{amount}}</div>
   </div>
@@ -24,7 +25,11 @@ export default {
     size: String,
     amount: [String, Number],
     color: String,
-    small: Boolean
+    small: Boolean,
+    fontSize: String,
+    width: String,
+    height: String,
+    marginRight: String
   },
   components: {}
 };

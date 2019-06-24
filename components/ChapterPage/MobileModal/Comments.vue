@@ -1,8 +1,8 @@
 <template>
   <div class="mobile-comment" :class="`mobile-comment--${theme}`" v-touch:swipe.right="toggleModal">
     <div class="mobile-comment__header">
-      <div class="mobile-comment__back" v-ripple>
-        <fa icon="arrow-left" @click="toggleModal"></fa>
+      <div class="mobile-comment__back" v-ripple @click="toggleModal">
+        <fa icon="arrow-left"></fa>
       </div>
       <div class="mobile-comment__title">コメント欄</div>
     </div>
@@ -22,7 +22,7 @@
       </div>
     </div>
     <div class="mobile-comment__form">
-      <div class="mobile-comment__input" @click.stop="toggleComment">コメントを追加</div>
+      <div class="mobile-comment__input" @click.stop="toggleComment({parent_id:false})">コメントを追加</div>
     </div>
     <transition name="slide-up">
       <div v-if="modal" class="mobile-comment__form-modal" v-click-outside="toggleComment">
@@ -33,7 +33,12 @@
           ref="form"
           placeholder="コメントを書く"
         ></textarea>
-        <div class="mobile-comment__button" v-ripple v-text="parent_id ? '返信': '投稿'"></div>
+        <div
+          class="mobile-comment__button"
+          @click="createComment"
+          v-ripple
+          v-text="parent_id ? '返信': '投稿'"
+        ></div>
       </div>
     </transition>
   </div>
@@ -62,7 +67,7 @@ export default {
     toggleModal() {
       this.$emit("toggle", 4);
     },
-    toggleComment(parent_id) {
+    toggleComment({ parent_id }) {
       this.modal = !this.modal;
       if (parent_id) {
         this.parent_id = parent_id;
@@ -76,29 +81,35 @@ export default {
             clearTimeout();
           }
         }, 1);
-
-        // this.$nextTick(() => {});
-        // console.log(this.$refs.f/orm);
-        // this.$refs.form;
       }
     },
     async createComment() {
       try {
+        console.log(this.parent_id);
+
         if (this.parent_id) {
-          await this.$store.dispatch("comment/addComment", {
+          await this.$store.dispatch("comment/addCommentMobile", {
             bookId: this.$route.params.id,
             chapterId: this.$route.params.chaptersId,
             content: this.content,
             parentId: this.parent_id
           });
         } else {
-          await this.$store.dispatch("comment/addComment", {
+          await this.$store.dispatch("comment/addCommentMobile", {
             bookId: this.$route.params.id,
             chapterId: this.$route.params.chaptersId,
             content: this.content
+            // parentId: this.parent_id
           });
         }
+        await this.$store.dispatch("comment/fetchMobileComments", {
+          chapterId: this.$route.params.chaptersId
+        });
+        this.modal = !this.modal;
+        this.content = null;
+        this.parent_id = null;
       } catch (error) {
+        console.log(error);
         return this.$toast.show("返信の投稿に失敗しました", {
           theme: "toasted-primary",
           position: "top-right",
