@@ -109,7 +109,7 @@ export default {
       this.$store.commit("DROPDOWN_FALSE");
     },
     toggleMenu(val) {
-      console.log(val);
+      // console.log(val);
       if (val) {
         this.mvRight = !this.mvRight;
         this.mvLeft = false;

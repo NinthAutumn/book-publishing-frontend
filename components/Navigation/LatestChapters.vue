@@ -1,5 +1,5 @@
 <template>
-  <div class="latest-chapters">
+  <div class="latest-chapters" :style="{height}">
     <ul class="latest-chapters__list">
       <li
         tag="li"
@@ -53,6 +53,9 @@
 <script>
 import { mapGetters } from "vuex";
 export default {
+  props: {
+    height: String
+  },
   data() {
     return {
       page: 2

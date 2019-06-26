@@ -5,14 +5,15 @@
       <!-- {{review}} -->
     </div>
     <div class="reviews-like">
-      <v-avatar :size="size" v-if="book.user_id === review.user_id">
-        <v-img :src="book.avatar"></v-img>
+      <v-avatar :size="size">
+        <v-img :src="book.user_id === review.user_id? book.avatar : review.avatar.img"></v-img>
       </v-avatar>
-      <v-avatar :size="size" v-else>
-        <v-img :src="review.avatar.img"></v-img>
-      </v-avatar>
-      <p v-if="book.user_id === review.user_id" class="reviews-content-username">{{book.pen_name}}</p>
-      <p v-else class="reviews-content-username">{{review.username}}</p>
+
+      <p
+        v-text="book.user_id === review.user_id? book.pen_name : review.username"
+        class="reviews-content-username"
+      ></p>
+      <!-- <p v-else class="reviews-content-username">{{review.username}}</p> -->
       <div
         class="reviews__user-info"
         style="text-align:center;font-size:1.2rem;color:#566CD6;"

@@ -1,16 +1,33 @@
 <template>
   <div class="user-profile">
-    <profile-nav :books_count="books.length" :user="user"></profile-nav>
-    <user-content :books="books" :user="user"></user-content>
+    <div class="user-profile__web" v-if="!$device.isMobile">
+      <profile-nav :books_count="books.length" :user="user"></profile-nav>
+      <user-content :books="books" :user="user"></user-content>
+    </div>
+    <div class="user-profile__mobile page-padding" v-else>
+      <mobile-profile :author="$route.query.author"></mobile-profile>
+      <div class="user-profile__books" v-if="$route.query.author">
+        <div class="user-profile__title">作品</div>
+        <mobile-books v-if="books.length > 0" :slides="3.5" :books="books"></mobile-books>
+        <div class="user-profile__no-book" v-else></div>
+      </div>
+      <div class="user-profile__moments">
+        <mobile-moment :user="user"></mobile-moment>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   auth: false,
   components: {
     ProfileNav: () => import("@/components/User/ProfileNav"),
-    UserContent: () => import("@/components/User/Content")
+    UserContent: () => import("@/components/User/Content"),
+    MobileProfile: () => import("@/components/Mobile/Cards/User/Profile"),
+    MobileBooks: () => import("@/components/Mobile/List/Book"),
+    MobileMoment: () => import("@/components/Mobile/List/Moment")
   },
   methods: {
     changeSticky() {}
@@ -22,30 +39,39 @@ export default {
     });
   },
   computed: {
-    user() {
-      return this.$store.getters["user/getProfile"];
-    },
-
-    owner() {
-      if (this.$store.getters["isLoggedIn"]) {
-        return (
-          this.$store.getters["user/getUserProfile"]._id ===
-          this.$store.getters["user/loggedInUser"].id
-        );
-      } else {
-        return false;
-      }
-    },
-    books() {
-      return this.$store.getters["user/getProfileBooks"];
+    ...mapGetters({
+      user: "user/getProfile",
+      books: "user/getProfileBooks",
+      current: "user/loggedInUser"
+    }),
+    owner: function() {
+      return this.user.id === this.current.id;
     }
   },
-  async mounted() {}
+  async mounted() {
+    await this.$store.dispatch("user/fetchProfileBooks", {
+      userId: this.$route.params.id
+    });
+  }
 };
 </script>
 
 <style lang="scss">
 .user-profile {
   padding: 10px 0;
+  $self: &;
+  &__books {
+    padding: 1rem 0;
+  }
+  $min_width: 320px;
+  $max_width: 430px;
+  $min_font: 1.8rem;
+  $max_font: 2.2rem;
+  //  @include fluid-type($min_width, $max_width, $min_font, $max_font);
+  &__title {
+    font-size: 1.8rem;
+    margin: 1rem 0;
+    font-weight: bold;
+  }
 }
 </style>

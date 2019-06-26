@@ -39,7 +39,7 @@ export const getters = {
   getUserComments: (state) => {
     return state.comments
   },
-  getUserReviews: (state) => {
+  getProfileReviews: (state) => {
     return state.reviews
   },
   getUpdateView: (state) => {

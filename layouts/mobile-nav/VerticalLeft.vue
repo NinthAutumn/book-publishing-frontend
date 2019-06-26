@@ -26,8 +26,11 @@
         </div>
         <div class="mobile-vleft__buy" @click.stop="$emit('stripe')">買う</div>
       </div>
-      <div class="mobile-vleft__nav">
-        <latest-chapters></latest-chapters>
+      <div class="mobile-vleft__nav" v-cloak>
+        <div class="mobile-vleft__title">通知</div>
+        <inbox-list v-cloak></inbox-list>
+        <div class="mobile-vleft__title">ブックマーク</div>
+        <latest-chapters height="30vh" v-cloak></latest-chapters>
       </div>
     </div>
   </div>
@@ -55,7 +58,8 @@ export default {
   components: {
     Currency: () => import("@/components/All/Currency"),
     Vote: () => import("@/components/All/Vote"),
-    LatestChapters: () => import("@/components/Navigation/LatestChapters")
+    LatestChapters: () => import("@/components/Navigation/LatestChapters"),
+    InboxList: () => import("@/components/Mobile/List/Inbox")
   }
 };
 </script>
@@ -77,6 +81,15 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+  &__nav {
+    padding: 1.5rem;
+  }
+  &__title {
+    font-size: 1.6rem;
+    // color:#d6dcdd;
+    font-weight: bold;
+    margin: 1rem 0rem;
   }
   &__wealth {
     padding: 0 1.5rem;

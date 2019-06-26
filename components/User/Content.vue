@@ -43,7 +43,7 @@ export default {
   },
   computed: {
     reviews() {
-      return this.$store.getters["user/getUserReviews"];
+      return this.$store.getters["user/getProfileReviews"];
     },
     comments() {
       return this.$store.getters["user/getUserComments"];

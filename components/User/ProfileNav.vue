@@ -56,7 +56,7 @@ export default {
   },
   computed: {
     stats() {
-      return this.$store.getters["users/getProfileStats"];
+      return this.$store.getters["user/getProfileStats"];
     }
   },
   data() {
