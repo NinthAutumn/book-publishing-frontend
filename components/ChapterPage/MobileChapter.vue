@@ -605,6 +605,7 @@ export default {
     border-radius: 2rem;
     max-width: 95%;
     // bottom: ;
+    max-height: 50vh;
     #{$self}__form {
       font-size: 3vh;
 

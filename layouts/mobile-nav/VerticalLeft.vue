@@ -1,7 +1,7 @@
 <template>
   <div class="mobile-vleft">
     <div class="mobile-vleft__container">
-      <div class="mobile-vleft__user flex-row flex--between">
+      <div tag="div" class="mobile-vleft__user flex-row flex--between" v-ripple @click="navigate">
         <div class="mobile-vleft__meta">
           <div class="mobile-vleft__username" v-text="user.username"></div>
           <div class="mobile-vleft__email" v-text="user.email"></div>
@@ -54,6 +54,12 @@ export default {
     return {
       avatar: require("~/assets/profile.png")
     };
+  },
+  methods: {
+    navigate: function() {
+      this.$router.push(`/users/${this.user.id}`);
+      this.$emit("toggle", true);
+    }
   },
   components: {
     Currency: () => import("@/components/All/Currency"),

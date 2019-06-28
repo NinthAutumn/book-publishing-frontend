@@ -1,7 +1,13 @@
 <template>
   <div class="moment-mobile">
     <div class="moment-mobile__nav">
-      <div class="moment-mobile__nav-item" v-for="item in nav" :key="item.value">{{item.key}}</div>
+      <div
+        class="moment-mobile__nav-item"
+        :class="{'moment-mobile__nav-item--selected': item.value === selected}"
+        @click="selected = item.value"
+        v-for="item in nav"
+        :key="item.value"
+      >{{item.key}}</div>
     </div>
     <div class="moment-mobile__list" v-if="!selected">
       <review-card
@@ -59,6 +65,15 @@ export default {
   &__nav {
     display: flex;
     font-size: 1.8rem;
+    margin: 1rem 0;
+    #{$self}__nav-item {
+      font-size: inherit;
+      margin-right: 1rem;
+      &--selected {
+        border-bottom: 2px solid #566cd6;
+      }
+    }
+    border-bottom: 2px solid rgb(243, 243, 243);
   }
 }
 </style>

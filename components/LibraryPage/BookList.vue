@@ -2,7 +2,7 @@
   <div class="library-booklist">
     <transition-group tag="ul" class="library-booklist__list" v-if="trendings">
       <li class="library-booklist__item" v-for="(book) in books" :key="book.book_id">
-        <Book :book="book"></Book>
+        <book-card progress :cover="book.cover" :isMobile="$device.isMobile" :book="book"></book-card>
       </li>
     </transition-group>
     <transition-group tag="ul" v-if="history" class="library-booklist__list">

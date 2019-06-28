@@ -1,5 +1,11 @@
 <template>
-  <nuxt-link :to="`/books/${book.id}`" class="book-card" :class="customClass">
+  <nuxt-link
+    tag="div"
+    :to="`/books/${book.book_id||book.id}`"
+    class="book-card"
+    :class="customClass"
+  >
+    <!-- {{book}} -->
     <div class="book-card__container" v-ripple="isMobile">
       <div class="book-card__cover" :class="{'book-card__cover--desktop': !isMobile}">
         <v-img
@@ -8,6 +14,7 @@
           :lazy-src="lazyCover"
           :aspect-ratio="1/1.5"
           max-width="15rem"
+          min-width="5rem"
         >
           <template v-slot:placeholder>
             <div class="book-card__loading">
@@ -69,10 +76,10 @@ export default {
       type: [String, Object],
       default: ""
     },
-    progress: {
-      type: [String, Number],
-      default: 0
-    },
+    // progress: {
+    //   type: [String, Number],
+    //   default: 0
+    // },
     isMobile: {
       type: Boolean,
       default: false
@@ -117,6 +124,11 @@ export default {
     }
     #{$self}__img {
       border-radius: 0.5rem;
+    }
+  }
+  @media screen and (max-width: 450px) {
+    #{$self}__title {
+      font-size: 1.3rem;
     }
   }
   &__title {

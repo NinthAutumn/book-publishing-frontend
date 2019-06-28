@@ -1,6 +1,6 @@
 <template>
   <div class="mobile-profile">
-    <div class="mobile-profile__avatar">
+    <div tag="div" class="mobile-profile__avatar">
       <v-avatar size="100" v-if="profile.avatar">
         <v-img :src="author&&profile.author_avatar? profile.author_avatar:profile.avatar.img"></v-img>
       </v-avatar>

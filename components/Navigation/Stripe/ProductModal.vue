@@ -150,6 +150,11 @@ export default {
       padding: 1rem 2rem;
       border-bottom: 1px solid rgb(238, 238, 238);
     }
+    @media screen and (max-width: 450px) {
+      #{$self}__inside {
+        padding: 0 !important;
+      }
+    }
     #{$self}__inside {
       height: 100%;
       padding: 2rem;

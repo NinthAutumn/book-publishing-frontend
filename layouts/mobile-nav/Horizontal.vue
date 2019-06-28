@@ -7,9 +7,10 @@
       <!-- <v-avatar class="mobile-horizontal__avatar" :size="40" v-if="!loggedIn">
         <img :src="avatar">
       </v-avatar>-->
-      <v-avatar class="mobile-horizontal__avatar" :size="40">
-        <v-img v-if="$store.getters['auth/isAuthenticated']&&user.avatar" :src="user.avatar.img"></v-img>
-        <v-img v-else :src="avatar"></v-img>
+      <v-avatar class="mobile-horizontal__avatar" :size="38">
+        <v-img :src="$store.getters['auth/isAuthenticated']&&user.avatar? user.avatar.img:avatar"></v-img>
+        <!-- <v-img v-else :src="avatar"></v-img> -->
+        <div class="mobile-horizontal__notification" v-if="notificationCount"></div>
       </v-avatar>
     </div>
   </nav>
@@ -27,7 +28,8 @@ export default {
   computed: {
     ...mapGetters({
       user: "user/loggedInUser",
-      loggedIn: "auth/isAuthenticated"
+      loggedIn: "auth/isAuthenticated",
+      notificationCount: "user/getCommentNotificationCount"
     })
   },
   methods: {
@@ -59,6 +61,17 @@ export default {
     #{$self}__bar {
       font-size: 2rem;
     }
+  }
+  &__notification {
+    position: absolute;
+    top: 0.5px;
+    right: 0.1rem;
+    width: 0.7rem;
+    height: 0.7rem;
+    border-radius: 20rem;
+    background-color: red;
+    content: "";
+    // color:
   }
   &__profile {
     #{$self}__avatar {

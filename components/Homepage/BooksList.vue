@@ -52,7 +52,7 @@ export default {
     return {
       // slidesNumber: 7,
       swiperMobile: {
-        slidesPerView: 3,
+        slidesPerView: 3.5,
         spaceBetween: 5,
         freeMode: true,
         mousewheel: {
