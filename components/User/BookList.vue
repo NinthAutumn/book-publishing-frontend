@@ -1,6 +1,6 @@
 <template>
   <div class="profile-books">
-    <ul class="profile-books__list">
+    <ul class="profile-books__list" v-if="$route.query.author">
       <li class="profile-books__item" v-for="(book, index) in books" :key="index">
         <nuxt-link tag="div" :to="`/books/${book.id}`" class="profile-books__cover">
           <v-img

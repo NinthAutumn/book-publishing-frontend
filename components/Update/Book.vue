@@ -1,5 +1,5 @@
 <template>
-  <div class="update-book" v-ripple>
+  <div class="update-book" v-ripple="$device.isMobile">
     <nuxt-link
       tag="div"
       :to="`books/${book[0].book_id}`"

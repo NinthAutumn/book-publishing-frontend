@@ -74,7 +74,23 @@ export default {
     this.selected = object;
   },
   methods: {
-    async createTag() {},
+    async createTag() {
+      const { data } = await this.$axios.post("/book/tag", {
+        name: this.search
+      });
+      let name = this.search;
+      if (data.error) {
+        if (data.error === "もうこの名前のタグが存在しています") {
+          console.log("in");
+          // this.selectTag(name);
+        }
+        return this.$toast.show(data.error);
+      }
+
+      // this.search = "";
+      this.filterTags();
+      // this.selectTag(name);
+    },
     async filterTags() {
       const tags = await this.$store.dispatch("book/queryTags", {
         page: 1,

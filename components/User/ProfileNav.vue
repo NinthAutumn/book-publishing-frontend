@@ -14,7 +14,7 @@
             :src="`https://storage.googleapis.com/theta-images/${user.avatar}`"
             alt="user profile picture"
             >-->
-            <img :src="user.avatar.img" alt>
+            <img :src="$route.query.author?user.author_avatar:user.avatar.img" alt>
           </v-avatar>
         </div>
       </transition>
@@ -23,7 +23,7 @@
         <transition name="twitter-nav">
           <div class="profile-nav__fixed-avatar" v-if="scrolled">
             <v-avatar class="profile-nav__avatar-img" :size="45">
-              <img :src="user.avatar.img" alt>
+              <img :src="$route.query.author?user.author_avatar:user.avatar.img" alt>
             </v-avatar>
             <div class="flex-divider flex-column flex--between">
               <div class="profile-nav__fixed-username">{{user.username}}</div>
