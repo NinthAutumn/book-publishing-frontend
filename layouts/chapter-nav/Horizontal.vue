@@ -48,7 +48,7 @@
               class="profile-pic__avatar"
               :class="{'profile-pic__avatar--bronze':user.status === 'bronze'}"
             >
-              <img :src="user.avatar.img">
+              <img :src="user.avatar.img" />
             </v-avatar>
             <div class="profile-pic__info">
               <div class="profile-pic__meta">
@@ -76,19 +76,15 @@
             src="~/assets/profile.png"
             style="border-radius:10rem;"
             @click.stop="loginInState"
-          >
+          />
         </div>
       </div>
     </nav>
     <transition name="grow-shrink">
-      <div class="loginform" v-if="loginState">
-        <AuthModal></AuthModal>
-      </div>
+      <AuthModal v-if="loginState"></AuthModal>
     </transition>
     <transition name="grow-shrink">
-      <div class="productform" v-if="productState">
-        <product-modal></product-modal>
-      </div>
+      <product-modal v-if="productState"></product-modal>
     </transition>
     <transition name="grow-shrink">
       <sub-main v-if="subscribe"></sub-main>

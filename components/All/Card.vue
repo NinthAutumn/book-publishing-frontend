@@ -86,7 +86,7 @@ export default {
   }
   &__digits {
     margin-bottom: 1rem;
-    font-size: 1.3rem;
+    font-size: 1rem;
   }
   &__name {
     font-size: 1rem;

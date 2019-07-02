@@ -2,12 +2,12 @@
   <div class="library-booklist">
     <transition-group tag="ul" class="library-booklist__list" v-if="trendings">
       <li class="library-booklist__item" v-for="(book) in books" :key="book.book_id">
-        <book-card progress :cover="book.cover" :isMobile="$device.isMobile" :book="book"></book-card>
+        <book-card progress rating :cover="book.cover" :isMobile="$device.isMobile" :book="book"></book-card>
       </li>
     </transition-group>
     <transition-group tag="ul" v-if="history" class="library-booklist__list">
       <li class="library-booklist__item" v-for="(book) in books" :key="book.book_id">
-        <book-card :cover="book.cover" :book="book" :isMobile="$device.isMobile"></book-card>
+        <book-card :cover="book.cover" rating :book="book" :isMobile="$device.isMobile"></book-card>
       </li>
     </transition-group>
   </div>

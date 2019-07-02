@@ -12,6 +12,7 @@
           :placeholder="'アバター'"
           v-model="user.avatar"
           :initial-image="current.avatar.img"
+          @file-choose="handleCroppaFileChoose"
         ></croppa>
       </div>
       <label for="username">ユーザー名</label>
@@ -43,7 +44,8 @@ export default {
         avatar: {},
         username: "",
         gender: "",
-        bio: ""
+        bio: "",
+        newAvatar: false
       },
       genders: [
         { key: "男性", value: "male" },
@@ -72,20 +74,39 @@ export default {
     },
     async updateHandler() {
       try {
-        this.user.avatar.generateBlob(async blob => {
-          const url = await this.$store.dispatch("upload/image", blob);
+        if (this.user.newAvatar) {
+          // alert(this.user.avatar.generateDataUrl());
+
+          this.user.avatar.generateBlob(async blob => {
+            const { url, path } = await this.$store.dispatch(
+              "upload/image",
+              blob
+            );
+            this.user.avatar = {
+              img: url,
+              path
+            };
+            await this.$store.dispatch("user/patchUser", { user: this.user });
+            await this.$store.dispatch("user/fetchUser");
+          });
+
+          // this.user.avatar.img
+        } else {
           this.user.avatar = {
-            img: url.url,
-            path: url.path
+            img: this.current.avatar.img,
+            path: this.current.avatar.path
           };
           // this.user.avatar.img
           await this.$store.dispatch("user/patchUser", { user: this.user });
           await this.$store.dispatch("user/fetchUser");
-        });
+        }
       } catch (error) {
         console.log(error);
         return this.$toast.show("更新に失敗しました", { duration: 2000 });
       }
+    },
+    handleCroppaFileChoose() {
+      this.user.newAvatar = true;
     }
   }
 };

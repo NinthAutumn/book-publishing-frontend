@@ -62,18 +62,15 @@
             <!-- <p v-line-clamp="{lines:1,text: book.title}"></p> -->
             <!-- <v-clamp autoresize :max-lines="100"></v-clamp> -->
           </div>
-          <div class="recommendation-books__author" v-if="!$device.isMobile">
-            <!-- {{book.}} -->
-            今期ち完治
-          </div>
+          <div class="recommendation-books__author" v-if="!$device.isMobile">{{book.pen_name}}</div>
           <div class="recommendation-books__info" v-if="!$device.isMobile">
             <div class="recommendation-books__genre">
               <fa class="recommendation-books__icon" icon="th-large"></fa>
-              <p>空想学</p>
+              <p>{{book.name}}</p>
             </div>
             <div class="recommendation-books__chapter-list">
               <fa class="recommendation-books__icon" icon="eye"></fa>
-              <p>123話</p>
+              <p>{{book.chapter_count}}話</p>
             </div>
           </div>
         </div>
