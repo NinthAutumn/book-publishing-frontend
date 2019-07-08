@@ -42,11 +42,15 @@ export default {
     }
   },
   async mounted() {
-    await this.$store.dispatch("book/fetchLatestBooks", {
-      page: 1,
-      limit: 30
-    });
-    this.loading = false;
+    try {
+      await this.$store.dispatch("book/fetchLatestBooks", {
+        page: 1,
+        limit: 30
+      });
+      this.loading = false;
+    } catch (error) {
+      this.loading = false;
+    }
   },
   data() {
     return {
