@@ -1,5 +1,4 @@
-FROM node:10.13.0
-
+FROM node:11.1
 # Create app directory
 RUN mkdir -p /usr/src/app/client
 WORKDIR /usr/src/app/client
@@ -8,7 +7,7 @@ WORKDIR /usr/src/app/client
 COPY . .
 
 RUN npm install
-ENV SERVER_URL=http://api:5000/api
+ENV SERVER_URL=http://noble-sql.n2d3jjhs9z.ap-northeast-1.elasticbeanstalk.com/api
 # Build app
 
 RUN npm run build
