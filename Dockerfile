@@ -6,8 +6,6 @@ WORKDIR /usr/src/app/client
 # Install app dependencies
 
 COPY . .
-RUN apk update && apk upgrade
-RUN apk add git
 
 RUN npm install
 ENV SERVER_URL=http://api:5000/api
