@@ -338,7 +338,7 @@ module.exports = {
     })]
   },
   server: {
-    port: process.env.CLIENT_PORT || 4000, // default: 3000
-    host: process.env.API_HOST || '0.0.0.0', // default: localhost
+    port: process.env.NUXT_PORT || 4000, // default: 3000
+    host: process.env.NUXT_HOST || '0.0.0.0', // default: localhost
   },
 }
