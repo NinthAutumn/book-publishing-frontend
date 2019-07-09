@@ -9,7 +9,7 @@
     >
       <ul class="modular-select__list">
         <div class="modular-select__search" v-show="search">
-          <input type="text" v-model="query">
+          <input type="text" v-model="query" />
         </div>
         <li
           class="modular-select__item"
@@ -147,6 +147,7 @@ export default {
 <style lang="scss">
 .modular-select {
   $self: &;
+  // &
 }
 </style>
 
