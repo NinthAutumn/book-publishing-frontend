@@ -244,9 +244,8 @@ module.exports = {
    ** Axios module configuration
    */
   axios: {
-    baseURL: process.env.SERVER_URL || 'http://0.0.0.0:5000/api',
-    credentials: false,
-    proxyHeaders: false
+    baseURL: process.env.SERVER_URL,
+
   },
 
   auth: {
@@ -338,7 +337,7 @@ module.exports = {
     })]
   },
   server: {
-    port: process.env.NUXT_PORT || 4000, // default: 3000
-    host: process.env.NUXT_HOST || '0.0.0.0', // default: localhost
+    port: process.env.NUXT_PORT,
+    host: process.env.NUXT_HOST
   },
 }

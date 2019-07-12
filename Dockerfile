@@ -7,7 +7,7 @@ WORKDIR /usr/src/app/client
 COPY . .
 
 RUN npm install
-ENV SERVER_URL=http://noble-sql.n2d3jjhs9z.ap-northeast-1.elasticbeanstalk.com/api
+ENV SERVER_URL=http://noble-sql.n2d3jjhs9z.ap-northeast-1.elasticbeanstalk.com/
 # Build app
 
 RUN npm run build
