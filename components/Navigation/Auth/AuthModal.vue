@@ -1,22 +1,24 @@
 <template>
-  <div class="auth-modal" v-click-outside="close">
-    <transition name="slide-fade">
-      <social-auth v-if="step === 0"></social-auth>
-      <login-form v-if="step === 1"></login-form>
-      <sign-up-from v-if="step === 2"></sign-up-from>
-      <forgot-password v-if="step === 3"></forgot-password>
-    </transition>
-    <div class="auth-modal__footer">
-      <ul class="auth-modal__footer__list flex-row flex--align flex--center">
-        <li
-          class="auth-modal__footer__item"
-          v-for="(footer,index) in footerList"
-          :key="footer.value"
-        >
-          <span>{{footer.key}}</span>
-          <i v-if="index !== 2">|</i>
-        </li>
-      </ul>
+  <div class="dialog dialog__container">
+    <div class="auth-modal dialog__content" v-click-outside="close">
+      <transition name="slide-fade">
+        <social-auth v-if="step === 0"></social-auth>
+        <login-form v-if="step === 1"></login-form>
+        <sign-up-from v-if="step === 2"></sign-up-from>
+        <forgot-password v-if="step === 3"></forgot-password>
+      </transition>
+      <div class="auth-modal__footer">
+        <ul class="auth-modal__footer__list flex-row flex--align flex--center">
+          <li
+            class="auth-modal__footer__item"
+            v-for="(footer,index) in footerList"
+            :key="footer.value"
+          >
+            <span>{{footer.key}}</span>
+            <i v-if="index !== 2">|</i>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </template>
@@ -56,26 +58,11 @@ export default {
 
 <style lang="scss">
 .auth-modal {
-  width: 100%;
+  // width: 100%;
   width: 44rem;
   height: 60rem;
-  margin-top: 2rem;
   /* padding: 3rem; */
-  border-radius: 0.4rem;
   box-sizing: border-box;
-  -webkit-box-shadow: 0 13px 27px -5px rgba(50, 50, 93, 0.25),
-    0 8px 16px -8px rgba(0, 0, 0, 0.3), 0 -6px 16px -6px rgba(0, 0, 0, 0.025);
-  box-shadow: 0 13px 27px -5px rgba(50, 50, 93, 0.25),
-    0 8px 16px -8px rgba(0, 0, 0, 0.3), 0 -6px 16px -6px rgba(0, 0, 0, 0.025);
-  -webkit-transition-property: color, background-color, -webkit-box-shadow,
-    -webkit-transform;
-  transition-property: color, background-color, -webkit-box-shadow,
-    -webkit-transform;
-  transition-property: color, background-color, box-shadow, transform;
-  transition-property: color, background-color, box-shadow, transform,
-    -webkit-box-shadow, -webkit-transform;
-  -webkit-transition-duration: 0.15s;
-  transition-duration: 0.15s;
   background-color: rgb(255, 255, 255);
   $self: &;
   &__footer {

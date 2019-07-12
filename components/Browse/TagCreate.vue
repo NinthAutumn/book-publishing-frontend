@@ -1,18 +1,18 @@
 <template>
-  <div class="tag-create">
-    <div class="tag-create__header">タグで検索</div>
-    <div class="tag-create__search flex flex--align">
+  <div class="browse-create">
+    <div class="browse-create__header">タグで検索</div>
+    <div class="browse-create__search flex flex--align">
       <input
         v-model="search"
         placeholder="タグを検索"
-        class="tag-create__search__input"
+        class="browse-create__search__input"
         type="text"
         @change="filterTags"
       >
     </div>
-    <transition-group name="list" class="tag-create__list">
+    <transition-group name="list" class="browse-create__list">
       <li
-        class="tag-create__item"
+        class="browse-create__item"
         @click="selectTag(index)"
         v-for="(tag,index) in selected"
         :key="tag.key"
@@ -89,7 +89,7 @@ export default {
 </script>
 
 <style lang="scss">
-.tag-create {
+.browse-create {
   top: 60px;
   // right: 100px;
   margin-left: 10px;
@@ -122,7 +122,10 @@ export default {
     max-height: 400px;
     #{$self}__item {
       height: 25px;
-      padding: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 5px;
       color: grey;
       font-size: 12px;
       border: 1px solid grey;

@@ -19,7 +19,7 @@ module.exports = {
    ** Headers of the page
    */
   head: {
-    title: pkg.name,
+    title: 'ノーブル',
     meta: [{
         charset: 'utf-8'
       },
@@ -30,7 +30,7 @@ module.exports = {
       {
         hid: 'description',
         name: 'description',
-        content: pkg.description
+        content: '小説家・読者のプラットフォーム'
       }
     ],
     link: [{
@@ -54,7 +54,11 @@ module.exports = {
     height: '3px',
     continuous: true
   },
-
+  generate: {
+    routes: [
+      '/ads.txt',
+    ]
+  },
   /*
    ** Global CSS
    */
@@ -90,6 +94,10 @@ module.exports = {
     },
     {
       ssr: false,
+      src: '~/plugins/swipeTab'
+    },
+    {
+      ssr: false,
       src: "~plugins/clickOutside"
     }, {
       ssr: false,
@@ -106,7 +114,12 @@ module.exports = {
     }, {
       src: '@/plugins/vue-swipe-tab',
       ssr: false
-    }, {
+    },
+    {
+      src: '@/plugins/pull-to',
+      ssr: false
+    },
+    {
       src: '@/plugins/datePicker',
       ssr: false
     }, {
@@ -139,7 +152,11 @@ module.exports = {
     }, {
       src: '@/plugins/gAuth',
       ssr: false,
+    }, {
+      src: '@/plugins/epicSpinners',
+      ssr: false,
     },
+
     {
       src: '@/plugins/auth',
     }
@@ -227,7 +244,7 @@ module.exports = {
    ** Axios module configuration
    */
   axios: {
-    baseURL: process.env.SERVER_URL || 'http://localhost:5000/api',
+    baseURL: process.env.SERVER_URL || 'http://0.0.0.0:5000/api',
     credentials: false,
     proxyHeaders: false
   },
@@ -321,7 +338,7 @@ module.exports = {
     })]
   },
   server: {
-    port: process.env.CLIENT_PORT || 3000, // default: 3000
-    host: process.env.API_HOST || '0.0.0.0', // default: localhost
+    port: process.env.NUXT_PORT || 4000, // default: 3000
+    host: process.env.NUXT_HOST || '0.0.0.0', // default: localhost
   },
 }

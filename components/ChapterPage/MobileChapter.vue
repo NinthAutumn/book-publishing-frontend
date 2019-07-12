@@ -6,24 +6,51 @@
           <fa icon="arrow-left"></fa>
         </div>
         <div class="mobile-chapter__meta">
-          <div class="mobile-chapter__select" v-ripple>
-            <fa icon="bolt"></fa>
-          </div>
-          <div class="mobile-chapter__select" v-ripple>
+          <!-- <div class="mobile-chapter__select" v-ripple >
             <fa icon="bookmark"></fa>
+          </div>-->
+          <div class="mobile-chapter__select" v-ripple @click.stop="actionHandler">
+            <fa icon="flag"></fa>
+          </div>
+          <div class="mobile-chapter__select" v-ripple @click.stop="actionHandler('vote')">
+            <fa icon="bolt"></fa>
           </div>
         </div>
       </div>
     </transition>
+    <transition name="slide-right">
+      <TOC v-if="table" @toggle="toggleModal"></TOC>
+    </transition>
+    <transition name="slide-up">
+      <Theme v-if="themeM" @toggle="toggleModal" :theme="theme"></Theme>
+    </transition>
+    <transition name="slide-up">
+      <FontSetting v-if="settingM" :theme="theme" @toggle="toggleModal"></FontSetting>
+    </transition>
+    <transition name="slide-left">
+      <ImageM v-if="imageM" :drawings="chapter.drawings" :theme="theme" @toggle="toggleModal"></ImageM>
+    </transition>
+    <transition name="slide-left">
+      <Comments v-if="commentM" :chapter="chapter" :theme="theme" @toggle="toggleModal"></Comments>
+    </transition>
+
     <div
+      v-if="!chapter.locked"
       class="mobile-chapter__wrapper"
+      ref="chapter"
       v-touch:tap="tapNav"
       v-touch:swipe.top="closeNav"
       v-touch:swipe.bottom="closeNav"
+      v-touch:swipe.left="swipeLeft"
+      v-touch:swipe.right="swipeRight"
     >
       <div class="mobile-chapter__container">
         <div class="mobile-chapter__title">{{`第${chapter.index}話 ${chapter.title}`}}</div>
-        <adsbygoogle v-if="!user.status" :ad-layout="'in-article'" :ad-format="'fluid'"/>
+        <adsbygoogle
+          v-if="!user.status&&chapter.content"
+          :ad-layout="'in-article'"
+          :ad-format="'fluid'"
+        />
         <div
           class="mobile-chapter__ann"
           :style="{  fontSize: `${this.font}px`}"
@@ -31,21 +58,27 @@
         >{{chapter.header}}</div>
         <div
           class="mobile-chapter__content"
-          :style="{  fontSize: `${this.font}px`}"
+          :style="{  fontSize: `${font}px`, fontFamily: `${fontStyle}`}"
           v-html="chapter.content"
           v-if="!chapter.locked"
         ></div>
-        <div class="mobile-chapter__locked flex-column flex--align flex--center" v-else>
-          <div class="mobile-chapter_price">
-            <Currency size="large" :amount="chapter.price"></Currency>
-            <div class="mobile-chapter__buy" @click="purchase" :class="{}">ロック解除</div>
-          </div>
-        </div>
+
         <div
           class="mobile-chapter__ann"
           :style="{  fontSize: `${this.font}px`}"
           v-if="chapter.footer"
         >{{chapter.footer}}</div>
+      </div>
+    </div>
+    <div class="mobile-chapter__locked-content" v-else>
+      <div class="mobile-chapter__title">{{`第${chapter.index}話 ${chapter.title}`}}</div>
+      <!-- .mobile-chapter__ -->
+      <div class="mobile-chapter__locked flex-column flex--align flex--center">
+        <!-- <div>-- ロック掛かっている話 --</div> -->
+        <div class="mobile-chapter_price">
+          <Currency size="large" :amount="chapter.price"></Currency>
+          <div class="mobile-chapter__buy" @click="purchase" :class="{}">ロック解除</div>
+        </div>
       </div>
     </div>
     <transition name="slide-up">
@@ -65,21 +98,67 @@
         </div>
         <!-- <v-slider :value="selected" :min="min" :max="max"></v-slider> -->
         <div class="mobile-chapter__options">
-          <div class="mobile-chapter__option" v-ripple>
+          <div class="mobile-chapter__option" v-ripple @click.stop="openModal">
             <fa icon="list"></fa>
           </div>
-          <div class="mobile-chapter__option" v-ripple>
+          <div class="mobile-chapter__option" v-ripple @click.stop="openModal(1)">
             <fa icon="tint"></fa>
           </div>
-          <div class="mobile-chapter__option" v-ripple>
+          <div class="mobile-chapter__option" v-ripple @click.stop="openModal(2)">
             <fa icon="font"></fa>
           </div>
-          <div class="mobile-chapter__option" v-ripple>
+          <div class="mobile-chapter__option" v-ripple @click.stop="openModal(4)">
             <fa icon="comment"></fa>
+          </div>
+          <div class="mobile-chapter__option" v-ripple @click.stop="openModal(3)">
+            <fa icon="image"></fa>
           </div>
         </div>
       </div>
     </transition>
+    <div v-if="!chapter.locked" class="mobile-chapter__actions flex-row flex--align flex--center">
+      <div
+        class="mobile-chapter__action flex-column flex--align"
+        v-for="(action,key) in actions"
+        :key="key"
+        v-ripple="{  }"
+        @click.stop="actionHandler(action.type)"
+      >
+        <fa :icon="action.icon"></fa>
+        <div class="mobile-chapter__message">{{action.message}}</div>
+      </div>
+      <transition name="grow-shrink">
+        <div v-if="problem" class="report-dialog dialog dialog__container">
+          <div v-click-outside="actionHandler" class="report-dialog__container dialog__content">
+            <div v-loading="loading" @submit.prevent class="report-dialog__form flex-column">
+              <label class="flex-row flex--between flex--align">
+                報告の理由
+                <span>
+                  <fa @click="actionHandler" class="report-dialog__close" icon="times"></fa>
+                </span>
+              </label>
+              <v-radio-group v-model="report.problem">
+                <v-radio v-for="n in problems" :key="n" :label="n" :value="n"></v-radio>
+              </v-radio-group>
+              <textarea
+                v-model="report.moreInfo"
+                placeholder="詳しく報告の理由"
+                v-if="report.problem === 'その他'"
+                name="problem"
+                id
+              ></textarea>
+              <div class="flex-divider flex-row report-dialog__button">
+                <button
+                  class="report-dialog__submit report-dialog__submit--close"
+                  @click="actionHandler"
+                >キャンセル</button>
+                <button class="report-dialog__submit" @click="reportHandler">報告</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </transition>
+    </div>
   </section>
 </template>
 
@@ -87,7 +166,12 @@
 import { mapGetters } from "vuex";
 export default {
   components: {
-    Currency: () => import("@/components/All/Currency")
+    Currency: () => import("@/components/All/Currency"),
+    TOC: () => import("@/components/ChapterPage/MobileModal/TOC"),
+    Theme: () => import("@/components/ChapterPage/MobileModal/Theme"),
+    FontSetting: () => import("@/components/ChapterPage/MobileModal/Font"),
+    ImageM: () => import("@/components/ChapterPage/MobileModal/Images"),
+    Comments: () => import("@/components/ChapterPage/MobileModal/Comments")
   },
   computed: {
     ...mapGetters({
@@ -97,7 +181,10 @@ export default {
       chapter: "chapter/getChapter",
       user: "user/loggedInUser",
       font: "user/getFontSize",
-      simpleList: "chapter/getSimpleList"
+      next: "chapter/getNextChapter",
+      prev: "chapter/getPrevChapter",
+      simpleList: "chapter/getSimpleList",
+      auth: "auth/isAuthenticated"
     })
   },
   data() {
@@ -107,22 +194,59 @@ export default {
       list: [],
       min: 0,
       max: 0,
-      selected: 0
+      table: false,
+      themeM: false,
+      settingM: false,
+      imageM: false,
+      commentM: false,
+      problems: [
+        "差別的または攻撃的な内容",
+        "テロリズムの助長",
+        "スパムや誤解を招く話",
+        "児童虐待",
+        "その他"
+      ],
+      loading: false,
+      selected: 0,
+      height: "100%",
+      problem: false,
+      report: {
+        problem: "",
+        moreInfo: ""
+      },
+      actions: {
+        リポート: {
+          icon: "flag",
+          message: "この話を報告",
+          type: "report"
+        },
+        投票: {
+          icon: "bolt",
+          message: "この作品に投票を掛ける",
+          type: "vote"
+        }
+      }
     };
   },
   watch: {
-    selected: function(val) {}
+    table: function(val) {
+      if (!val) {
+        this.navigation = true;
+      }
+    }
   },
   mounted: async function() {
+    // this.height = this.$refs.chapter.clientHeight + "px";
     await this.$store.dispatch("chapter/fetchUnstructuredList", {
       bookId: this.$route.params.id
     });
-    this.simpleList.forEach(val => {
-      this.list.push(val.index);
-    });
-    this.min = this.simpleList[0];
-    this.max = this.list[this.list.length - 1];
-    this.selected = this.chapter.index;
+    // this.simpleList.forEach(val => {
+    //   this.list.push(val.index);
+    // });
+    // this.min = this.simpleList[0];
+    // this.max = this.list[this.list.length - 1];
+    // this.selected = this.chapter.index;
+    // this.chapter.content.split("<p></p>");
   },
   methods: {
     change: function() {
@@ -132,7 +256,38 @@ export default {
         }
       });
     },
-    tapNav: function() {
+    swipeLeft: function() {
+      if (!this.next) {
+        return this.$toast.show("これが最後の話です", {
+          position: "top-center",
+          duration: 2000,
+          icon: "extension"
+        });
+      }
+      this.$router.push({ path: `${this.next.id}` });
+    },
+    swipeRight: function() {
+      if (!this.prev) {
+        return this.$toast.show("これが最初の話です", {
+          position: "top-center",
+          duration: 2000,
+          icon: "extension"
+        });
+      }
+      this.$router.push({ path: `${this.prev.id}` });
+    },
+    refresh: function() {
+      this.$router.push({ path: `${this.prev.id}` });
+    },
+    tapNav: function(type) {
+      this.themeM = false;
+
+      this.commentM = false;
+      this.settingM = false;
+
+      this.imageM = false;
+      this.table = false;
+
       this.navigation = !this.navigation;
     },
     formatTooltip(val) {
@@ -142,7 +297,95 @@ export default {
       this.navigation = false;
     },
     goBack: function() {
-      this.$router.go(-1);
+      this.$router.push(`/books/${this.$route.params.id}`);
+    },
+    openModal: function(type) {
+      switch (type) {
+        case 1:
+          this.themeM = !this.themeM;
+          break;
+        case 2:
+          this.settingM = !this.settingM;
+          break;
+        case 3:
+          this.imageM = !this.imageM;
+          break;
+        case 4:
+          this.commentM = !this.commentM;
+          break;
+        default:
+          this.table = !this.table;
+          break;
+      }
+      this.navigation = !this.navigation;
+    },
+    actionHandler: async function(type) {
+      if (!this.auth) {
+        return this.$router.push("/auth/login");
+      }
+      if (type === "vote") {
+        try {
+          const { error } = await this.$store.dispatch("book/postVote", {
+            bookId: this.$route.params.id
+          });
+
+          if (error) {
+            this.$toast.error(`${error}`, {
+              // theme: "toasted-primary",
+              position: "bottom-center",
+              duration: 2000,
+              icon: "extension"
+            });
+          }
+        } catch (error) {
+          console.log(error.message);
+        }
+        await this.$store.dispatch("wallet/wealth");
+      } else {
+        this.problem = !this.problem;
+      }
+    },
+    toggleModal(type) {
+      switch (type) {
+        case 1:
+          this.themeM = false;
+          break;
+        case 2:
+          this.settingM = false;
+          break;
+        case 3:
+          this.imageM = false;
+          break;
+        case 4:
+          this.commentM = false;
+          break;
+        default:
+          this.table = false;
+          break;
+      }
+      this.navigation = true;
+    },
+    reportHandler: async function() {
+      try {
+        const report = {
+          type: "chapter",
+          reportId: this.chapter.id,
+          problem: this.report.problem,
+          moreInfo: this.report.moreInfo
+        };
+        try {
+          this.loading = true;
+          await this.$store.dispatch("report/postReport", { report });
+          this.loading = false;
+          this.problem = !this.problem;
+          return this.$toast.show("報告に成功しました", {
+            theme: "toasted-primary",
+            position: "bottom-center",
+            duration: 1000,
+            icon: "check_circle"
+          });
+        } catch (error) {}
+      } catch (error) {}
     },
     purchase: async function() {
       try {
@@ -174,20 +417,18 @@ export default {
 <style lang="scss">
 .mobile-chapter {
   $self: &;
-  &__wrapper {
-    #{$self}__container {
+  &__locked-content {
+    &::after {
+      content: "";
       display: inline-block;
-      max-width: 100%;
-      min-height: 100vh;
-
-      &::after {
-        content: "";
-        display: inline-block;
-        width: 94vw;
-      }
+      width: 94vw;
+    }
+    #{$self}__title {
+      font-size: 2.4rem;
     }
     #{$self}__locked {
-      min-height: 70vh;
+      min-height: 80vh;
+
       #{$self}__buy {
         font-size: 1.6rem;
         padding: 1rem 2rem;
@@ -204,8 +445,25 @@ export default {
         }
       }
     }
+  }
+  &__wrapper {
+    height: 100%;
+
+    #{$self}__container {
+      display: inline-block;
+      max-width: 100%;
+      min-height: 100vh;
+
+      &::after {
+        content: "";
+        display: inline-block;
+        width: 94vw;
+      }
+    }
+
     #{$self}__title {
       font-size: 2.4rem;
+      line-height: 2.5rem;
       margin: 1rem 0;
       max-width: 100%;
       word-break: break-all;
@@ -218,11 +476,15 @@ export default {
     }
     #{$self}__content {
       word-break: break-all;
+      line-height: 2.7rem;
+
       p {
         font-size: inherit;
+        font-family: inherit;
       }
       ruby {
         font-size: inherit;
+        font-family: inherit;
       }
     }
     #{$self}__footer {
@@ -239,6 +501,9 @@ export default {
     &--black {
       background-color: #19191a;
       color: #949698;
+    }
+    &--tan {
+      background-color: #e9e1b8;
     }
     padding: 0 1rem;
     display: flex;
@@ -268,13 +533,17 @@ export default {
   }
   &__bottom {
     position: fixed;
-    bottom: 0;
+    bottom: -1px;
     height: 12rem;
     left: 0;
     width: 100vw;
+    z-index: 100;
     &--black {
       background-color: #19191a;
       color: #949698;
+    }
+    &--tan {
+      background-color: #e9e1b8;
     }
     background-color: white;
     // padding: 2rem;
@@ -309,5 +578,89 @@ export default {
       flex-grow: 1;
     }
   }
+  &__actions {
+    #{$self}__action {
+      font-size: 2.5rem;
+      border-radius: 1rem;
+      padding: 1rem 0;
+      margin-bottom: 1rem;
+      width: 50%;
+      #{$self}__icon {
+      }
+      #{$self}__message {
+        margin-top: 1rem;
+        text-align: center;
+        font-size: 1.4rem;
+        opacity: 0.8;
+      }
+    }
+  }
+}
+.report-dialog {
+  $self: &;
+  .v-label {
+    line-height: 25px;
+  }
+  #{$self}__container {
+    border-radius: 2rem;
+    max-width: 95%;
+    // bottom: ;
+    max-height: 50vh;
+    #{$self}__form {
+      font-size: 3vh;
+
+      span {
+        padding: 0.5rem 0.75rem;
+        border-radius: 10rem;
+        background-color: #e3e8ee;
+      }
+      #{$self}__close {
+        font-size: 2vh;
+        color: #4f566b;
+      }
+      label {
+        font-size: 3vh;
+      }
+      textarea {
+        font-size: 3vh;
+        padding: 1rem;
+        box-sizing: border-box;
+        border-radius: 1rem;
+        margin-bottom: 0.5rem;
+        box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11),
+          0 1px 3px rgba(0, 0, 0, 0.08);
+      }
+      #{$self}__button {
+        width: 100%;
+        height: 7vh;
+        border-radius: 1rem;
+        justify-content: space-between;
+        box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11),
+          0 1px 3px rgba(0, 0, 0, 0.08);
+        overflow: hidden;
+      }
+      #{$self}__submit {
+        font-size: 3vh;
+        // align-self: flex-end;
+        // padding: 0 2rem;
+        width: 50%;
+        background-color: #566cd6;
+        color: white;
+        &--close {
+          background-color: white;
+          color: #566cd6;
+          // align-self: flex-start;
+        }
+      }
+    }
+
+    // background-color:;
+  }
+}
+.mobile-chapter__toasted {
+  height: 8vh !important;
+  width: 96% !important;
+  border-radius: 1rem !important;
+  margin: 0 auto;
 }
 </style>

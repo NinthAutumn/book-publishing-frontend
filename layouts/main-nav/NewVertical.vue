@@ -3,29 +3,17 @@
     <div class="vertical-nav__container">
       <div class="vertical-nav__user-profile">
         <div
-          class="vertical-nav__profile-container vertical-nav__profile-container--no-user"
-          v-if="!auth"
-          @click.stop="$store.commit('LOGIN_STATE')"
+          @click.stop="auth? null:$store.commit('LOGIN_STATE')"
+          class="vertical-nav__profile-container"
         >
           <div class="vertical-nav__user-avatar">
             <v-avatar size="80" class="vertical-nav__avatar">
-              <v-img :src="avatar"></v-img>
+              <v-img :src="user.avatar? user.avatar.img: avatar"></v-img>
             </v-avatar>
           </div>
           <div class="vertical-nav__user-wallet">
-            <Currency style="margin-right:1rem;" :amount="0"></Currency>
-            <Vote :amount="0"></Vote>
-          </div>
-        </div>
-        <div class="vertical-nav__profile-container" v-else>
-          <div class="vertical-nav__user-avatar">
-            <v-avatar size="80" class="vertical-nav__avatar" v-if="user.avatar">
-              <v-img :src="user.avatar.img"></v-img>
-            </v-avatar>
-          </div>
-          <div class="vertical-nav__user-wallet">
-            <Currency style="margin-right:1rem;" :amount="wealth"></Currency>
-            <Vote :amount="token"></Vote>
+            <Currency style="margin-right:1rem;" :amount="wealth|| 0"></Currency>
+            <Vote :amount="token||0"></Vote>
           </div>
         </div>
       </div>
@@ -151,15 +139,6 @@ export default {
         0 3px 6px 0 rgba(0, 0, 0, 0.07);
       z-index: 10000;
       height: 92.5vh;
-      @keyframes slide-down {
-        from {
-          transform: translateY(-10%);
-        }
-        to {
-          transform: translateY(0);
-        }
-      }
-      animation: slide-down 300ms ease-in;
     }
     .nuxt-link-exact-active {
       background-color: black !important;

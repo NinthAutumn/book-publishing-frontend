@@ -34,7 +34,7 @@
         <div class="library-bookmark__select flex flex--align flex--right">
           <Select
             v-model="order"
-            def="最近読んだ順"
+            def="更新順"
             transition="grow-shrink"
             icon="sort"
             name="並び替え"
@@ -55,6 +55,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   components: {
     BookList: () => import("@/components/LibraryPage/BookList"),
@@ -76,12 +77,18 @@ export default {
       sortTypes: [
         { key: "最近読んだ順", value: "0" },
         { key: "入れた順", value: "1" },
-        { key: "名前順", value: "2" }
+        { key: "名前順", value: "2" },
+        { key: "更新順", value: "3" }
       ],
-      order: "入れた順",
-      selected_item: "再生リスト"
-      // nav_list: ["再生リスト", "レビュー", "購入済み", "歴史"]
+      order: "更新順",
+      selected_item: "ブックマーク",
+      nav_list: ["ブックマーク", "レビュー", "購入済み", "歴史"]
     };
+  },
+  mounted() {
+    if (this.$device.isMobile) {
+      this.nav_list = ["ブックマーク"];
+    }
   },
   watch: {
     order: async function(e) {
@@ -89,15 +96,11 @@ export default {
     }
   },
   computed: {
-    bookmarks() {
-      return this.$store.state.library.bookmarks;
-    },
-    history() {
-      return this.$store.state.library.history;
-    },
-    reviews() {
-      return this.$store.getters["library/getReviews"];
-    }
+    ...mapGetters({
+      bookmarks: "library/getBookmarks",
+      history: "library/getHistory",
+      reviews: "library/getReviews"
+    })
   },
   methods: {
     sortSelect() {},
@@ -184,9 +187,10 @@ export default {
     }
   },
   async fetch({ store }) {
-    await store.dispatch("library/getBookmark", { sortby: 0 });
+    await store.dispatch("library/getBookmark", { sortby: 3 });
     await store.dispatch("library/fetchReviews");
-  }
+  },
+  auth: false
 };
 </script>
 

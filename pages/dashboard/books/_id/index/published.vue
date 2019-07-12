@@ -11,6 +11,11 @@ export default {
       return this.$store.getters["chapter/getPublishedList"];
     }
   },
+  async mounted() {
+    await this.$store.dispatch("chapter/fetchPublishedList", {
+      bookId: this.$route.params.id
+    });
+  },
   components: {
     BookToc: () => import("@/components/Dashboard/BookToc")
   },

@@ -94,7 +94,7 @@ export default {
   $self: &;
   width: 100%;
   .swiper-container {
-    border-radius: 2rem;
+    // border-radius: 2rem;
   }
   &__image {
     // box-shadow: 0 13px 27px -5px rgba(50, 50, 93, 0.25),

@@ -48,7 +48,12 @@ export const actions = {
         username: user.username,
         password: user.password
       })
+      if (data.error) {
 
+        return Promise.resolve({
+          error: data.error
+        })
+      }
       commit('SET_AUTH', {
         access_token: data.access_token,
         refresh_token: data.refresh_token,
@@ -59,9 +64,13 @@ export const actions = {
       this.$storage.setUniversal('refresh_token', data.refresh_token)
       this.$storage.setUniversal('strategy', strategy)
       this.$axios.defaults.headers.common['Authorization'] = 'Bearer ' + data.access_token
-      this.$router.go(0)
+      return Promise.resolve({
+        error: null
+      })
     } catch (error) {
-
+      return Promise.reject({
+        error
+      })
     }
   },
   async socialAuth({
@@ -105,15 +114,32 @@ export const actions = {
     user
   }) {
     try {
-      const res = await this.$axios.post('/auth/signup', {
+      const {
+        data
+      } = await this.$axios.post('/auth/signup', {
         username: user.username,
         email: user.email,
         password: user.password
       })
-      return Promise.resolve(res.data)
+      let error = data.error
+      if (error) {
+        if (error.errors[0].message === 'email must be unique') {
+          error = `この、${user.email} Eメールはもう使われています`
+        } else if (error.errors[0].message === 'username must be unique') {
+          error = `${user.username} はもう使われています`
+        } else {
+          error = `アカウント作成に失敗しました`
+        }
+        return Promise.resolve({
+          error: error
+        })
+      }
+      return Promise.resolve({
+        error: null
+      })
     } catch (error) {
-      console.log(error);
-      return Promise.reject(error.response)
+
+
     }
 
   },

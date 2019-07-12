@@ -39,7 +39,7 @@ export const getters = {
   getUserComments: (state) => {
     return state.comments
   },
-  getUserReviews: (state) => {
+  getProfileReviews: (state) => {
     return state.reviews
   },
   getUpdateView: (state) => {
@@ -371,7 +371,10 @@ export const actions = {
     user
   }) {
     try {
-      await this.$axios.patch('/user', user)
+      await this.$axios.patch('/user', {
+        user
+      })
+      return Promise.resolve(user)
     } catch (error) {
       return Promise.reject(error)
     }

@@ -43,7 +43,7 @@ export default {
   },
   computed: {
     reviews() {
-      return this.$store.getters["user/getUserReviews"];
+      return this.$store.getters["user/getProfileReviews"];
     },
     comments() {
       return this.$store.getters["user/getUserComments"];
@@ -54,18 +54,19 @@ export default {
   },
   data() {
     return {
-      metas: [
-        {
+      metas: {
+        calendar: {
           key: "登録日",
-          value:
-            this.$moment(this.user.created_at)
-              .startOf("month")
-              .fromNow() + " 登録",
+          value: "",
           icon: "calendar"
         },
-        { key: "県", value: "宮城県" || "非表示", icon: "map-marker" },
-        { key: "性別", value: "男" || "非表示", icon: "venus-mars" }
-      ],
+        gender: {
+          key: "性別",
+          value: "非表示",
+          icon: "venus-mars"
+        },
+        bio: { key: "県", value: "非表示", icon: "address-card" }
+      },
       data: {}
     };
   },
@@ -73,6 +74,19 @@ export default {
     await this.$store.dispatch("user/fetchProfileReviews", {
       userId: this.$route.params.id
     });
+    this.metas["calendar"]["value"] =
+      this.$moment(this.user.created_at)
+        .startOf("month")
+        .fromNow() + " 登録";
+    // console.log(this.user);
+    if (this.user.gender === "male") {
+      this.metas["gender"]["value"] = "男";
+    } else if (this.user.gender === "female") {
+      this.metas["gender"]["value"] = "女";
+    } else {
+      this.metas["gender"]["value"] = "未公開";
+    }
+    this.metas["bio"]["value"] = this.user.bio;
   }
 };
 </script>

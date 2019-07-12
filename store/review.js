@@ -210,7 +210,7 @@ export const actions = {
     id,
     review
   }) {
-    const update = await this.$axios.patch('/review/review?id=' + id, {
+    const update = await this.$axios.patch('/review?id=' + id, {
       review
     })
   },

@@ -1,11 +1,12 @@
 <template>
   <div
     class="chapter-page"
-    :class="{'chapter-page--black': theme === 'black','chapter-page--default': theme === 'default','chapter-page--ruby': theme === 'ruby','chapter-page--tan': theme === 'tan','chapter-page--sapphire': theme === 'sapphire'}"
+    :class="{'chapter-page--black': theme === 'black','chapter-page--default': theme === 'default','chapter-page--ruby': theme === 'ruby','chapter-page--tan': theme === 'tan','chapter-page--sapphire': theme === 'sapphire', 'chapter-page--mobile': $device.isMobile}"
   >
-    <Horizontal></Horizontal>
+    <Horizontal v-if="!$device.isMobile"></Horizontal>
+    <MobileHorizontal v-else></MobileHorizontal>
     <LeftV></LeftV>
-    <RightV></RightV>
+    <RightV v-if="!$device.isMobile"></RightV>
     <div v-if="imageModal" class="images-modal__dialog flex flex--align flex--center">
       <div class="images-modal__dialog__container" v-click-outside="closeImageDialog">
         <div class="images-modal__dialog__close">
@@ -118,7 +119,8 @@ export default {
   components: {
     Horizontal: () => import("./Horizontal"),
     LeftV: () => import("./Left-V"),
-    RightV: () => import("./Right-V")
+    RightV: () => import("./Right-V"),
+    MobileHorizontal: () => import("./MobileHorizontal")
   },
   computed: {
     ...mapGetters({
@@ -268,6 +270,9 @@ export default {
   margin-right: 50px;
   background-color: #dae0e6;
   position: relative;
+  &--mobile {
+    margin-right: 0;
+  }
   // .chapter-container
   .mobile-navigation--placeholder {
     width: 50%;

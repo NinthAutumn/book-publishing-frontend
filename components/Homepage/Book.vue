@@ -28,9 +28,9 @@
         </div>
         <transition name="grow-shrink">
           <div class="book-menu__modal" v-if="menu_modal" v-click-outside="menuModalClose">
-            <div class="book-menu__modal__options flex--center flex flex--align">ブックマーク</div>
-            <div class="book-menu__modal__options flex--center flex flex--align">再読列記に保存</div>
-            <div class="book-menu__modal__options flex--center flex flex--align">後で読むに保存</div>
+            <div v-ripple class="book-menu__modal__options flex--center flex flex--align">ブックマーク</div>
+            <div v-ripple class="book-menu__modal__options flex--center flex flex--align">再読列記に保存</div>
+            <div v-ripple class="book-menu__modal__options flex--center flex flex--align">後で読むに保存</div>
           </div>
         </transition>
       </div>
@@ -133,11 +133,13 @@ export default {
       position: absolute;
 
       // right: -118px;
-      right: 0 !important;
-      top: 0px;
+      right: 1px;
+      top: 1px;
+      // margin: 0 auto;
       background-color: white;
       z-index: 2000;
       width: 12rem;
+      border-radius: 1rem;
       &--left {
       }
       -webkit-box-shadow: 0 13px 27px -5px rgba(50, 50, 93, 0.25),
@@ -154,7 +156,9 @@ export default {
       transition-property: color, background-color, box-shadow, transform,
         -webkit-box-shadow, -webkit-transform;
       &__options {
+        border-radius: 1rem;
         &:hover {
+          // border-radius: 1rem;
           background-color: rgb(247, 247, 247);
           cursor: pointer;
         }

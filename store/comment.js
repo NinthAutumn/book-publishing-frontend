@@ -52,8 +52,11 @@ export const mutations = {
       console.log(error);
     }
     // chcomment.children.push(comment)
-
-
+  },
+  PUSH_COMMENT_LIST(state, comments) {
+    comments.forEach((comment) => {
+      state.comments.push(comment)
+    })
   }
 }
 
@@ -68,11 +71,25 @@ export const actions = {
     page = 1,
     type = 'likes',
     direction = 'desc',
-    sortBy = 0
+    sortBy = 0,
+    infinite = false
   }) {
-    await this.$axios.get(`/comment/chapter?sortBy=${sortBy}&type=${type}&direction=${direction}&page=${page}&limit=${limit}&chapterId=${chapterId}&userId=${userId}`).then(async (res) => {
-      commit('SET_COMMENTS', res.data)
-    })
+    try {
+      const {
+        data
+      } = await this.$axios.get(`/comment/chapter?sortBy=${sortBy}&page=${page}&limit=${limit}&chapterId=${chapterId}`)
+      if (infinite) {
+        commit('PUSH_COMMENTS_LIST', data)
+
+      } else {
+        commit('SET_COMMENTS', data)
+
+      }
+      return Promise.resolve(data)
+    } catch (error) {
+      return Promise.reject(error)
+    }
+
   },
   async addComment({
     commit
@@ -126,6 +143,30 @@ export const actions = {
       Promise.reject(error)
     }
   },
+  fetchMobileComments: async function ({
+    commit
+  }, {
+    chapterId,
+    page = 1,
+    sortBy = 0,
+    infinite = false
+  }) {
+    try {
+      const {
+        data
+      } = await this.$axios.get(`/comment/mobile?chapterId=${chapterId}&page=${page}&sortBy=${sortBy}`)
+      if (infinite) {
+        commit('PUSH_COMMENTS_LIST', data)
+      } else {
+        commit('SET_COMMENTS', data)
+      }
+
+      return Promise.resolve(data)
+    } catch (error) {
+      return Promise.resolve()
+    }
+
+  },
   fetchUserComments: async function ({
     commit
   }, {
@@ -145,8 +186,24 @@ export const actions = {
   }) {
     try {
       const res = await this.$axios.patch(`/comment`, comment)
+
     } catch (error) {
 
     }
+  },
+  addCommentMobile: async function ({
+    commit
+  }, {
+    bookId,
+    chapterId,
+    content,
+    parentId = null
+  }) {
+    await this.$axios.post('/comment', {
+      bookId,
+      chapterId,
+      content,
+      parentId
+    })
   }
 }

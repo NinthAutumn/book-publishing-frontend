@@ -40,7 +40,8 @@ export const actions = {
           'Content-Type': 'image',
           "Authorization": null,
           "TrackId": null
-        }
+        },
+        baseURL: ""
       })
       commit('ADD_URL', uploadConfig.data.filename)
       return Promise.resolve({

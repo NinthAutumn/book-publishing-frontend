@@ -1,6 +1,6 @@
 <template>
   <div class="login-form">
-    <div class="login-form__item">
+    <div class="login-form__item" v-loading="loading">
       <div @click="changePage(0)" class="flex-row go-back">
         <div class="divider">
           <Zondicon class="zond-back" icon="arrow-thick-left"></Zondicon>
@@ -12,6 +12,11 @@
       <h3 class="login__header text--center text--large">ノーブル</h3>
 
       <form @submit.prevent="login" class="flex flex-column" style="padding-top:20px;">
+        <div
+          class="login-form__error"
+          style="text-align:center;font-size:1.4rem;padding:1rem;border-radiu:1rem;background-color:#F6F9FC;"
+          v-if="bigError"
+        >パスワードまたはユーザ名が間違っています</div>
         <label for="username">ユーザー名・Eメール</label>
         <input
           class="login-form__input elevation-1"
@@ -61,6 +66,8 @@ import SignUpFrom from "./SignUpFrom";
 export default {
   data() {
     return {
+      loading: false,
+      bigError: false,
       form: {
         username: "",
         password: ""
@@ -82,19 +89,37 @@ export default {
       this.$store.commit("SET_AUTH_PAGE", page);
     },
     async login() {
+      this.bigError = false;
+      this.loading = true;
       const user = {
         username: this.form.username,
         password: this.form.password
       };
       try {
-        await this.$store.dispatch("auth/login", {
+        const { error } = await this.$store.dispatch("auth/login", {
           user: this.form,
           strategy: "local"
         });
+        if (error) {
+          this.loading = false;
+          this.bigError = true;
+          return this.$toast.show("パスワードまたはユーザ名が間違っています", {
+            theme: "toasted-primary",
+            position: "top-right",
+            duration: 2000,
+            icon: "extension"
+          });
+        }
         await this.$store.dispatch("user/fetchUser");
+        this.loading = false;
         this.$store.commit("LOGIN_FALSE");
+        this.$router.go(0);
+        // this.$forceUpdate();
         // this.$router.go(0);
       } catch (error) {
+        console.log(error);
+        this.loading = false;
+        this.bigError = true;
         this.$toast.show("パスワードまたはユーザ名が間違っています", {
           theme: "toasted-primary",
           position: "top-right",

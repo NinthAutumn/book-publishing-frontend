@@ -2,7 +2,8 @@
   <div class="library-booklist">
     <ul class="browse-booklist__list">
       <li class="library-booklist__item" v-for="(book) in books" :key="book.id">
-        <Book :book="book"></Book>
+        <!-- <Book :book="book"></Book> -->
+        <book-card :cover="book.cover" :book="book" :isMobile="$device.isMobile"></book-card>
       </li>
     </ul>
     <no-ssr>
@@ -41,6 +42,7 @@ export default {
     }
   },
   components: {
+    BookCard: () => import("@/components/Web/Cards/Book"),
     Book: () => import("./Book")
   },
   methods: {

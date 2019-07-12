@@ -11,6 +11,11 @@
       </div>
 
       <p class="signup-title text--center text--large">アカウントを作る</p>
+      <div
+        class="sign-up__create-error"
+        style="text-align:center;font-size:14px;padding:1rem;background-color:#F6F9FC;border-radius:1rem;"
+        v-if="createError"
+      >{{createError}}</div>
       <div class="flex-divider signup-form__control">
         <label for="username">ユーザー名</label>
         <input
@@ -20,15 +25,12 @@
           placeholder="ユーザー名"
           data-vv-as="ユーザー名"
           class="signup-form__input signup-form__input--username elevation-1"
-          :class="{'signup-form__input--error': errors.has('username')}"
+          :class="{'signup-form__input--error': errors.has('username')||!usernameAvailable}"
           type="text"
           v-model="username"
         >
         <span v-if="errors.first('username')" class="help is-danger">{{ errors.first('username') }}</span>
-        <span
-          v-else-if="!usernameAvailable&&username.length>3"
-          class="help is-danger"
-        >このユーザー名はもう使われています</span>
+        <span v-else-if="!usernameAvailable" class="help is-danger">このユーザー名はもう使われています</span>
       </div>
       <div class="flex-divider signup-form__control">
         <label for="email">メールアドレス</label>
@@ -87,7 +89,8 @@ export default {
       gender: "",
       last_name: "",
       first_name: "",
-      loading: false
+      loading: false,
+      createError: ""
     };
   },
   watch: {
@@ -115,6 +118,7 @@ export default {
       // const isValid = await this.$refs.observer.validate();
       await this.$validator.validateAll();
       if (!this.errors.any()) {
+        this.createError = "";
         try {
           this.loading = true;
           let user = {
@@ -122,7 +126,17 @@ export default {
             email: this.email,
             password: this.password
           };
-          const postUser = await this.$store.dispatch("auth/signup", { user });
+          const { error } = await this.$store.dispatch("auth/signup", { user });
+          if (error) {
+            this.loading = false;
+            this.createError = error;
+            return this.$toast.show(error, {
+              duration: 3000,
+              theme: "toasted-primary",
+              icon: "extension",
+              position: "top-right"
+            });
+          }
           this.loading = false;
           return this.$toast.show(
             "アカウント作成に成功しました、あとはEメール確認が必要なので登録されたメールアドレスに確認メールが送られました",

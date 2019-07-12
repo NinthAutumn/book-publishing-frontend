@@ -91,6 +91,20 @@ export default {
     /* autoprefixer: ignore next */
     grid-gap: 5rem;
   }
+  @media screen and (max-width: 1224px) {
+    #{$self}__header {
+      flex-direction: column-reverse;
+      align-items: center;
+      justify-content: space-between;
+
+      #{$self}__title {
+        margin-right: auto;
+      }
+      #{$self}__select {
+        margin-left: auto;
+      }
+    }
+  }
   &__item {
     height: 100%;
     width: 100%;
@@ -104,6 +118,7 @@ export default {
     // color: red;
     padding: 1.7rem;
     box-sizing: border-box;
+
     #{$self}__title {
       text-align: left;
       font-size: 1.4rem;

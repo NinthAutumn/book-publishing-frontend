@@ -2,8 +2,13 @@
   <div class="funnel-graph">
     <div class="funnel-graph__header">
       <div class="funnel-graph__title">作品ファネル</div>
+      <Select :width="100" v-model="bookId" name="作品" :object="books" transition="grow-shrink"></Select>
     </div>
     <div class="funne-graph__graph">
+      <div
+        class="funne-graph__book-title"
+        style="padding:1rem 2rem;font-size:1.4rem;"
+      >{{bookId.title}}</div>
       <no-ssr>
         <ve-funnel :data="chartData" :settings="chartSetting"></ve-funnel>
       </no-ssr>
@@ -12,7 +17,33 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
+  computed: {
+    ...mapGetters({
+      books: "analytic/getBookList"
+    })
+  },
+  watch: {
+    bookId: async function(val) {
+      const data = await this.$store.dispatch("dashboard/fetchBookFunnel", {
+        bookId: val.id
+      });
+
+      let row = Object.keys(data);
+      this.chartData.rows = [];
+      row.forEach(item => {
+        let object = {
+          status: item,
+          value: data[item]
+        };
+        this.chartData.rows.push(object);
+      });
+    }
+  },
+  components: {
+    Select: () => import("@/components/All/Select")
+  },
   data() {
     return {
       chartData: {
@@ -25,22 +56,39 @@ export default {
         ascending: true,
         metrics: "value"
         // scale: [true, true]
-      }
+      },
+      book_list: [],
+      bookId: {}
     };
   },
   async mounted() {
-    await this.$store
-      .dispatch("dashboard/fetchBookFunnel", { bookId: 2 })
-      .then(data => {
-        let row = Object.keys(data);
-        row.forEach(item => {
-          let object = {
-            status: item,
-            value: data[item]
-          };
-          this.chartData.rows.push(object);
-        });
-      });
+    this.bookId = {
+      id: this.books[0].value.id,
+      title: this.books[0].value.title
+    };
+    // this.books.forEach(book => {
+    //   this.book_list.push({
+    //     key: `ID: ${book.id}`,
+    //     value: { id: book.id, title: book.title }
+    //   });
+    // });
+
+    const data = await this.$store.dispatch("dashboard/fetchBookFunnel", {
+      bookId: this.bookId.id
+    });
+    this.chartData.rows = [];
+    let row = Object.keys(data);
+    row.forEach(item => {
+      let object = {
+        status: item,
+        value: data[item]
+      };
+      this.chartData.rows.push(object);
+    });
+    // let row = Object.keys
+    // .then(data => {
+
+    // });
   }
 };
 </script>

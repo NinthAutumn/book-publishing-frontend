@@ -1,5 +1,5 @@
 <template>
-  <div class="payment-method" v-loading="loading">
+  <div class="payment-method">
     <div class="payment-method__buy-price">{{price_word||`合計 ¥${price}円`}}</div>
     <div class="payment-method__container">
       <ul class="payment-method__stored-list">
@@ -29,6 +29,7 @@
             v-if="method.value==='buy'"
             @click="buyButton"
             v-ripple
+            v-loading="loading"
           >
             <!-- <fa class="payment-method__button__icon" ></fa> -->
             {{`最後${selectedCard.last}桁のカードを使用`}}
@@ -175,7 +176,14 @@ export default {
     },
     handleServerResponse: async function(response) {
       if (response.error) {
+        return this.$toast.show(response.error, {
+          theme: "toasted-primary",
+          position: "top-right",
+          duration: 10000,
+          icon: "extension"
+        });
       } else if (response.requires_action) {
+        console.log("in here");
         const result = await this.stripe.handleCardAction(
           this.paymentIntent.client_secret
         );
@@ -219,6 +227,7 @@ export default {
           });
         } else {
           await this.$store.dispatch("wallet/buyCoin", { form });
+          await this.$store.dispatch("wallet/wealth");
           this.$store.commit("TOGGLE_PRODUCT_MODAL");
           return this.$toast.show("クラウンコインの購入に成功しました", {
             theme: "toasted-primary",

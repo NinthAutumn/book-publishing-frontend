@@ -5,7 +5,8 @@
 export const state = () => ({
   list: [],
   trending: [],
-  ranking: {}
+  ranking: {},
+  rankings: {}
 })
 
 export const getters = {
@@ -14,7 +15,8 @@ export const getters = {
   },
   getTrendingList: (state) => {
     return state.trending
-  }
+  },
+  getRankingsList: state => state.rankings
 }
 
 export const mutations = {
@@ -24,7 +26,9 @@ export const mutations = {
   SET_TRENDING_LIST(state, list) {
     state.trending = list
   },
-
+  SET_RANKINGS(state, list) {
+    state.rankings = list
+  }
 }
 
 export const actions = {
@@ -39,6 +43,12 @@ export const actions = {
     await this.$axios.get(`/analytic/book/rankinglist?days=${days}&limit=${limit}&page=${page}`).then((res) => {
       commit('SET_RANKING_LIST', res.data)
     })
+  },
+  async fetchHomeRankingList({
+    commit
+  }) {
+    const res = await this.$axios.get(`/ranking/mobile/home`)
+    commit('SET_RANKINGS', res.data)
   },
   async fetchGenreRanking({
     commit

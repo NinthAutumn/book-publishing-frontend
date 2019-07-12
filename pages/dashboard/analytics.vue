@@ -7,7 +7,7 @@
       <funnel-graph></funnel-graph>
       <pie-graph class="analytic-page__pie"></pie-graph>
     </div>
-    <transaction-list class="analytic-page__list"></transaction-list>
+    <!-- <transaction-list class="analytic-page__list"></transaction-list> -->
   </div>
 </template>
 
@@ -17,6 +17,7 @@ export default {
   async fetch({ store, params }) {
     // await store.dispatch("dashboard/fetchTransactionGraph", { time:  });
     await store.dispatch("dashboard/fetchTransactionPie");
+    await store.dispatch("analytic/fetchUserBooks", { funnel: true });
   },
   components: {
     PieGraph: () => import("@/components/Dashboard/Graphs/Pie"),

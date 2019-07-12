@@ -37,6 +37,7 @@ export default {
       // step:0
     };
   },
+  auth: false,
   components: {
     LoginForm: () => import("@/components/Navigation/Auth/LoginForm"),
     SignUpFrom: () => import("@/components/Navigation/Auth/SignUpFrom"),

@@ -71,9 +71,10 @@ export default {
       opened: false,
       limit: 250,
       clamp: false,
-      length: this.$store.getters["book/getBook"].synopsis.length
+      length: 0
     };
   },
+
   computed: {
     bookSynopsis() {
       return this.$store.state.book.bookSynopsis;
@@ -93,7 +94,9 @@ export default {
       this.limit = 100;
     }
   },
-  mounted() {},
+  mounted() {
+    this.length = this.book.synopsis.length;
+  },
   filters: {
     truncate: (string, number) => {
       if (!string) {

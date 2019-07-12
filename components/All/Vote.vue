@@ -1,16 +1,18 @@
 <template>
   <div class="vote-token">
-    <div class="vote-token__bolt">
+    <div class="vote-token__bolt" :style="{fontSize,marginRight}">
       <fa icon="bolt"></fa>
     </div>
-    <div class="vote-token__amount">{{amount}}</div>
+    <div class="vote-token__amount" :style="{fontSize}">{{amount}}</div>
   </div>
 </template>
 
 <script>
 export default {
   props: {
-    amount: Number
+    amount: Number,
+    fontSize: String,
+    marginRight: String
   }
 };
 </script>

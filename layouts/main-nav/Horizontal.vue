@@ -71,15 +71,11 @@
         </div>
       </div>
     </nav>
-    <transition name="grow-shrink">
-      <div class="loginform" v-if="loginState">
-        <AuthModal></AuthModal>
-      </div>
+    <transition name="grow-shrink" class="loginform">
+      <AuthModal v-if="loginState"></AuthModal>
     </transition>
-    <transition name="grow-shrink">
-      <div class="productform" v-if="productState">
-        <product-modal></product-modal>
-      </div>
+    <transition name="grow-shrink" class="productform">
+      <product-modal v-if="productState"></product-modal>
     </transition>
     <transition name="grow-shrink">
       <setting-form v-if="dialog"></setting-form>
@@ -98,7 +94,8 @@ export default {
     return {
       menuStates: "menu-inactive",
       profile: false,
-      notification: false
+      notification: false,
+      head: "ノーブル"
     };
   },
   components: {
@@ -129,6 +126,14 @@ export default {
       await this.$store.dispatch("user/fetchCommentNotificationsCount");
       await this.$store.dispatch("wallet/wealth");
     }
+    if (this.notificationCount > 0) {
+      this.head = `ノーブル　(${this.notificationCount})`;
+    }
+  },
+  head() {
+    return {
+      title: this.head
+    };
   },
   methods: {
     menuDrawer() {

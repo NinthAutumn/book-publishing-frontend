@@ -6,7 +6,7 @@
       <li class="dash-comments__item" v-for="(comment, index) in comments" :key="index">
         <div class="dash-comments__avatar">
           <v-avatar :size="45" style="box-shadow:1px 1px 5px rgb(240, 240, 240);">
-            <v-img :src="comment.avatar"></v-img>
+            <v-img :src="comment.avatar.img"></v-img>
           </v-avatar>
         </div>
         <div class="flex-divider" style="width:100%;">

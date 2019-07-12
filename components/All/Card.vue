@@ -44,7 +44,7 @@ export default {
   // color: b;
   width: 100%;
   // height: 10rem;x
-
+  $self: &;
   border: 1px solid white;
   &--selected {
     border: 1px solid #4554ff;
@@ -66,6 +66,11 @@ export default {
     cursor: pointer;
   }
   // color: black;
+  @media screen and (max-width: 450px) {
+    #{$self}__brand {
+      left: 1rem;
+    }
+  }
   &__brand {
     position: absolute;
     top: 1rem;
@@ -81,7 +86,7 @@ export default {
   }
   &__digits {
     margin-bottom: 1rem;
-    font-size: 1.3rem;
+    font-size: 1rem;
   }
   &__name {
     font-size: 1rem;

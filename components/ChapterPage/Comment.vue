@@ -10,7 +10,8 @@
         <a :href="`#comment${comment.id}`"></a>
         <div class="comment-modal__avatar flex-column flex--align flex--left">
           <v-avatar size="40" v-if="!comment.deleted">
-            <img :src="comment.avatar">
+            <v-img v-if="comment.user_id === chapter.author_id" :src="comment.author_avatar"></v-img>
+            <v-img v-else :src="comment.avatar.img"></v-img>
           </v-avatar>
         </div>
         <div class="comment-modal__div">
@@ -20,7 +21,11 @@
               @mouseenter="contentFalse"
               @mouseleave="contentTrue"
             >
-              <div class="comment-modal__username">{{comment.username}}</div>
+              <div
+                class="comment-modal__username"
+                v-if="comment.user_id === chapter.author_id"
+              >{{comment.pen_name}}</div>
+              <div class="comment-modal__username" v-else>{{comment.username}}</div>
               <div
                 class="comment-modal__author"
                 v-if="$store.state.book.author === comment.username"
@@ -72,7 +77,7 @@
                 <fa icon="comment-alt" style="transform:rotateY(180deg);margin-right:2px;"></fa>返信
               </div>
               <div class="comment-modal__media">シェア</div>
-              <div class="comment-modal__report">レポート</div>
+              <div class="comment-modal__report" @click.stop="reportOpen">報告</div>
               <div v-if="logged">
                 <div
                   v-if="user.id === comment.user_id"
@@ -104,6 +109,37 @@
           :depth="depth + 1"
         ></comment-modal>
       </div>
+      <transition name="grow-shrink">
+        <div v-if="report.state" class="report-comment dialog dialog__container">
+          <div v-click-outside="reportOpen" class="report-comment__container dialog__content">
+            <div v-loading="loading" @submit.prevent class="report-comment__form flex-column">
+              <label class="flex-row flex--between flex--align">
+                報告の理由
+                <span>
+                  <fa @click="reportOpen" class="report-comment__close" icon="times"></fa>
+                </span>
+              </label>
+              <v-radio-group v-model="report.problem">
+                <v-radio v-for="n in problems" :key="n" :label="n" :value="n"></v-radio>
+              </v-radio-group>
+              <textarea
+                v-model="report.moreInfo"
+                placeholder="詳しく報告の理由"
+                v-if="report.problem === 'その他'"
+                name="problem"
+                id
+              ></textarea>
+              <div class="flex-divider flex-row report-comment__button">
+                <button
+                  class="report-comment__submit report-comment__submit--close"
+                  @click="reportOpen"
+                >キャンセル</button>
+                <button class="report-comment__submit" @click="reportHandler">報告</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </transition>
     </article>
     <div class="comment-modal__closed" v-else>
       <div :style="indented" class="container">
@@ -139,7 +175,20 @@ export default {
       disliked: this.comment.voted < 0,
       likeNumber: this.comment.likes,
       edit: false,
-      editContent: this.comment.content
+      editContent: this.comment.content,
+      report: {
+        state: false,
+        problem: "",
+        moreInfo: ""
+      },
+      problems: [
+        "差別的または攻撃的な内容",
+        "テロリズムの助長",
+        "スパムや誤解を招く話",
+        "児童虐待",
+        "その他"
+      ],
+      loading: false
     };
   },
   watch: {
@@ -164,7 +213,8 @@ export default {
     ...mapGetters({
       theme: "user/getTheme",
       logged: "isAuthenticated",
-      user: "user/loggedInUser"
+      user: "user/loggedInUser",
+      chapter: "chapter/getChapter"
     })
   },
   methods: {
@@ -178,11 +228,42 @@ export default {
     contentTrue() {
       this.hideContent = true;
     },
+    reportOpen() {
+      this.report.state = !this.report.state;
+    },
     replyOpen() {
       if (this.$store.getters["auth/isAuthenticated"]) {
         this.replyForm = !this.replyForm;
       } else {
         this.$store.commit("LOGIN_STATE");
+      }
+    },
+    async reportHandler() {
+      try {
+        const report = {
+          type: "chapter",
+          reportId: this.comment.id,
+          problem: this.report.problem,
+          moreInfo: this.report.moreInfo
+        };
+
+        this.loading = true;
+        await this.$store.dispatch("report/postReport", { report });
+        this.loading = false;
+        this.problem = !this.problem;
+        return this.$toast.show("報告に成功しました", {
+          theme: "toasted-primary",
+          position: "bottom-center",
+          duration: 1000,
+          icon: "check_circle"
+        });
+      } catch (error) {
+        return this.$toast.show("報告に失敗しました", {
+          theme: "toasted-primary",
+          position: "bottom-center",
+          duration: 1000,
+          icon: "extension"
+        });
       }
     },
     async patchComment() {
@@ -513,6 +594,66 @@ export default {
     &:hover {
       cursor: pointer;
     }
+  }
+}
+.report-comment {
+  $self: &;
+  .v-label {
+    line-height: 25px;
+  }
+  #{$self}__container {
+    border-radius: 2rem;
+    max-width: 95%;
+    // bottom: ;
+    #{$self}__form {
+      font-size: 3vh;
+
+      span {
+        padding: 0.5rem 0.75rem;
+        border-radius: 10rem;
+        background-color: #e3e8ee;
+      }
+      #{$self}__close {
+        font-size: 2vh;
+        color: #4f566b;
+      }
+      label {
+        font-size: 3vh;
+      }
+      textarea {
+        font-size: 3vh;
+        padding: 1rem;
+        box-sizing: border-box;
+        border-radius: 1rem;
+        margin-bottom: 0.5rem;
+        box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11),
+          0 1px 3px rgba(0, 0, 0, 0.08);
+      }
+      #{$self}__button {
+        width: 100%;
+        height: 7vh;
+        border-radius: 1rem;
+        justify-content: space-between;
+        box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11),
+          0 1px 3px rgba(0, 0, 0, 0.08);
+        overflow: hidden;
+      }
+      #{$self}__submit {
+        font-size: 3vh;
+        // align-self: flex-end;
+        // padding: 0 2rem;
+        width: 50%;
+        background-color: #566cd6;
+        color: white;
+        &--close {
+          background-color: white;
+          color: #566cd6;
+          // align-self: flex-start;
+        }
+      }
+    }
+
+    // background-color:;
   }
 }
 </style>

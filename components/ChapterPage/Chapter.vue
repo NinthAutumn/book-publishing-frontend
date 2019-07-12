@@ -39,9 +39,24 @@
         v-html="chapter.content"
       ></div>
       <!-- <partial name="chapter"></partial> -->
-
-      <adsbygoogle v-if="!user.status" :ad-layout="'in-article'" :ad-format="'fluid'"/>
     </scrollama>
+    <adsbygoogle
+      v-if="!user.status&&!chapter.locked"
+      :ad-layout="'in-article'"
+      :ad-format="'fluid'"
+    />
+    <div v-if="!chapter.locked" class="chapter-actions">
+      <div class="chapter-actions__list">
+        <div class="chapter-actions__item chapter-actions__item--report">
+          <fa icon="flag"></fa>
+          <div class="chapter-actions__text">話を報告する</div>
+        </div>
+        <div class="chapter-actions__item chapter-actions__item--vote">
+          <fa icon="bolt"></fa>
+          <div class="chapter-actions__text">この作品に投票する</div>
+        </div>
+      </div>
+    </div>
     <div class="chapter-payblock" v-if="chapter.locked">
       <div class="payblock-price">
         <Currency size="large" :amount="chapter.price"></Currency>
@@ -149,12 +164,46 @@ export default {
 }
 
 // .chapter-s
+.chapter-actions {
+  $self: &;
+  width: 100%;
+  &__list {
+    margin-top: 2rem;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    #{$self}__item {
+      display: flex;
+      // justify-content:cente
+      align-items: center;
+      flex-direction: column;
+      font-size: 4rem;
+      padding: 1rem;
+      #{$self}__text {
+        margin-top: 1rem;
+        font-size: 1.4rem;
+        text-align: center;
+      }
+      &--vote {
+      }
+      &--report {
+      }
+    }
+  }
+}
 .chapter-announcement {
   position: relative;
   padding: 20px;
   padding-top: 10px;
-  box-shadow: 0 30px 60px -12px rgba(50, 50, 93, 0.25),
-    0 18px 36px -18px rgba(0, 0, 0, 0.3), 0 -12px 36px -8px rgba(0, 0, 0, 0.025);
+  -webkit-box-shadow: 0 13px 27px -5px rgba(50, 50, 93, 0.25),
+    0 8px 16px -8px rgba(0, 0, 0, 0.3), 0 -6px 16px -6px rgba(0, 0, 0, 0.025);
+  box-shadow: 0 13px 27px -5px rgba(50, 50, 93, 0.25),
+    0 8px 16px -8px rgba(0, 0, 0, 0.3), 0 -6px 16px -6px rgba(0, 0, 0, 0.025);
+  -webkit-box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1),
+    0 3px 6px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+
   font-family: "Noto Sans JP" !important;
   border-radius: 1rem;
   &--header {

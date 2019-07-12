@@ -63,7 +63,6 @@ export default {
         this.author.avatar.generateBlob(
           blob => {
             this.$store.dispatch("upload/image", blob).then(url => {
-              console.log(url);
               const author = {
                 avatar: url.url,
                 avatar_path: url.path,

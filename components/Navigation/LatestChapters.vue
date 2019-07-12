@@ -1,5 +1,5 @@
 <template>
-  <div class="latest-chapters">
+  <div class="latest-chapters" :style="{height}">
     <ul class="latest-chapters__list">
       <li
         tag="li"
@@ -51,14 +51,18 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
+  props: {
+    height: String
+  },
   data() {
     return {
       page: 2
     };
   },
   async mounted() {
-    if (this.$store.state.auth.loggedIn) {
+    if (this.auth) {
       await this.$store.dispatch("user/fetchNotifications", {
         page: 1,
         limit: 7
@@ -66,9 +70,10 @@ export default {
     }
   },
   computed: {
-    notifications() {
-      return this.$store.getters["user/getNotification"];
-    }
+    ...mapGetters({
+      notifications: "user/getNotification",
+      auth: "auth/isAuthenticated"
+    })
   },
   methods: {
     async removeInbox(chapterId, bookId) {
@@ -86,11 +91,12 @@ export default {
         limit: 7,
         infinite: true
       });
-
-      if (notification.length > 0) {
-        $state.loaded();
-      } else {
-        $state.complete();
+      if (notification) {
+        if (notification.length > 0) {
+          $state.loaded();
+        } else {
+          $state.complete();
+        }
       }
     }
   },

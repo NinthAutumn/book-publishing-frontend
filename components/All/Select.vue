@@ -11,7 +11,7 @@
         v-if="!multiple&&!selectD&&!def"
       >
         <fa v-if="icon" class="select-component__icon" :icon="icon"></fa>
-        {{name}}
+        <p>{{name}}</p>
       </div>
       <div
         :style="{width: width+'px',height: height+'px','font-size': fontSize + 'px'}"
@@ -20,7 +20,7 @@
         v-if="!multiple&&def&&!selectD"
       >
         <fa v-if="icon" class="select-component__icon" :icon="icon"></fa>
-        {{def}}
+        <p>{{def}}</p>
       </div>
       <div
         :style="{width: width+'px',height: height+'px','font-size': fontSize + 'px'}"
@@ -29,7 +29,7 @@
         v-if="!multiple&&selectD"
       >
         <fa v-if="icon" class="select-component__icon" :icon="icon"></fa>
-        {{selectD}}
+        <p>{{selectD}}</p>
       </div>
       <div
         class="select-component__name select-component__name--multiple flex flex--align flex--center"
@@ -37,7 +37,7 @@
         v-if="multiple"
       >
         <fa class="select-component__name__icon" :icon="icon"></fa>
-        {{name}}
+        <p>{{name}}</p>
       </div>
       <transition
         class="select-component__modal"
@@ -341,7 +341,6 @@ export default {
         this.multiData.forEach((e, n) => {
           if (e.value === this.value) {
             this.selectD = e.key;
-            console.log(e);
             e.selected = !e.selected;
             // this.$emit("input", e.value);
           }
@@ -399,7 +398,7 @@ export default {
     background-color: #fff;
     color: grey;
     font-size: 14px;
-    width: 100px;
+    width: 120px;
     height: 30px;
     border-radius: 0.4rem;
     &--multiple {
@@ -496,6 +495,9 @@ export default {
     border-radius: 0.4rem;
     font-size: 14px;
     z-index: 10000;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
     &--name {
       color: #f4648a;
       &:hover {

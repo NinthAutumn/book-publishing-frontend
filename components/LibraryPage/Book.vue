@@ -1,6 +1,6 @@
 <template>
   <div class="book-library">
-    <nuxt-link tag="div" :to="`books/${book.book_id}`" id="book-library__container">
+    <nuxt-link tag="div" :to="url" id="book-library__container">
       <div class="book-library__cover">
         <span class="star-rating"></span>
         <!-- :src="`https://storage.googleapis.com/theta-images/${book.cover}`" -->
@@ -58,7 +58,8 @@ export default {
   data() {
     return {
       rating: 3.5,
-      cover: require("~/assets/img/NobleCardLight.png")
+      cover: require("~/assets/img/NobleCardLight.png"),
+      url: ""
     };
   },
   methods: {
@@ -73,13 +74,11 @@ export default {
     round() {},
     roundT() {}
   },
-  filters: {
-    truncate: (string, number) => {
-      if (string.length > 16) {
-        return (string || "").substring(0, number) + "…";
-      } else {
-        return string;
-      }
+  mounted() {
+    if (this.book.current_chapter) {
+      this.url = `/books/${this.book.book_id}/${this.book.current_chapter}`;
+    } else {
+      this.url = `/books/${this.book.book_id}`;
     }
   }
 };

@@ -124,23 +124,23 @@
   transform: translateX(-100px);
 }
 
-.grow-shrink-enter-active {
-  animation: growShrink 100ms ease-out;
-  // animation-direction: reverse;
-  animation-fill-mode: backwards;
-}
+// .grow-shrink-enter-active {
+//   animation: growShrink 100ms ease-out;
+//   // animation-direction: reverse;
+//   animation-fill-mode: backwards;
+// }
 
-.grow-shrink-leave-active {
-  animation: growShrink 100ms ease-out;
-  animation-direction: reverse;
-  animation-fill-mode: backwards;
-}
+// .grow-shrink-leave-active {
+//   animation: growShrink 100ms ease-out;
+//   animation-direction: reverse;
+//   animation-fill-mode: backwards;
+// }
 
-.placeholder-up-enter-active {
-  animation: downUp 300ms ease-out;
-  // animation-direction: reverse;
-  animation-fill-mode: backwards;
-}
+// .placeholder-up-enter-active {
+//   animation: downUp 300ms ease-out;
+//   // animation-direction: reverse;
+//   animation-fill-mode: backwards;
+// }
 
 .placeholder-up-leave-active {
   animation: downUp 300ms ease-out;

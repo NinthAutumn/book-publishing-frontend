@@ -394,6 +394,17 @@ export const actions = {
     } catch (error) {
 
     }
+  },
+  async patchVolume({
+    commit
+  }, {
+    title,
+    id
+  }) {
+    await this.$axios.patch('/chapter/volume', {
+      title,
+      id
+    })
   }
 
 }

@@ -150,5 +150,18 @@ export const actions = {
     } catch (error) {
       return Promise.reject()
     }
+  },
+  setAccount: async function ({
+    commit
+  }, {
+    person,
+    cover,
+    back = ""
+  }) {
+    const res = await this.$axios.post('/stripe/connect/account', {
+      person,
+      cover,
+      back
+    })
   }
 }

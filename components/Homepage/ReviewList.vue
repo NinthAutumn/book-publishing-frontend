@@ -1,5 +1,5 @@
 <template>
-  <div class="swiping-page" v-cloak>
+  <div class="swiping-page review-list" v-cloak>
     <div v-swiper:mySwiper="swiperOption" v-if="!$device.isMobile">
       <div class="swiper-wrapper">
         <div class="swiper-slide" v-for="(review,index) in reviews" :key="index">
@@ -51,7 +51,7 @@ export default {
       swiperOption: {
         // loop: true,
         autoHeight: true,
-        slidesPerView: 2,
+        slidesPerView: "auto",
         freeMode: true,
         mousewheel: {
           invert: true,
@@ -89,6 +89,12 @@ export default {
 
 .my-swiper {
   height: 100%;
+}
+.review-list {
+  .swiper-slide {
+    // max-width: 60rem;
+    width: 52rem;
+  }
 }
 .my-swiper {
   // height: 110%;/

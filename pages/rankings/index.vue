@@ -4,6 +4,7 @@
       <h3 class="ranking-header__text">
         <fa class="ranking-header__icon" icon="crown"></fa>ランキング
       </h3>
+      <svg-icon v-if="!$device.isMobile" class="ranking-header__winner" name="winner"/>
     </header>
     <ranking-list></ranking-list>
   </div>
@@ -22,9 +23,18 @@ export default {
 <style lang="scss">
 .ranking-header {
   user-select: none;
+  position: relative;
   &__icon {
     margin-right: 5px;
   }
+  &__winner {
+    position: absolute;
+    right: 0;
+    top: -10px;
+    width: 15rem;
+    z-index: -1;
+  }
+
   &__text {
     margin: 0;
     margin-bottom: 10px;

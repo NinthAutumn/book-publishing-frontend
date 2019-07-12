@@ -1,6 +1,11 @@
 <template>
-  <div class="update-book" v-ripple>
-    <nuxt-link tag="div" :to="`books/${book[0].book_id}`" class="update-book__cover">
+  <div class="update-book" v-ripple="$device.isMobile">
+    <nuxt-link
+      tag="div"
+      :to="`books/${book[0].book_id}`"
+      class="update-book__cover"
+      style=" border-radius: 0.4rem;"
+    >
       <v-img
         :aspect-ratio="1/1.5"
         max-width="15rem"
@@ -83,7 +88,7 @@ export default {
       padding: 2px 10px;
       font-size: 1.3rem;
       background-color: rgb(255, 70, 37);
-      border-radius: 0.4rem;
+      border-top-left-radius: 0.4rem;
       color: white;
       top: 0;
       left: 0;

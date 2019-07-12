@@ -10,7 +10,7 @@
     </div>
     <div class="form-container">
       <div class="flex-control flex-row flex--between">
-        <div class="flex-control">
+        <div class="flex-control" style="width:45%;">
           <label for="fullname">姓名</label>
           <input
             class="payment-form__input payment-form__input--name payment-form__input--firstname"
@@ -20,7 +20,7 @@
             placeholder="姓名"
           >
         </div>
-        <div class="flex-control">
+        <div class="flex-control" style="width:45%;">
           <label for="fullname">名前</label>
           <input
             class="payment-form__input payment-form__input--name"
@@ -190,7 +190,16 @@ export default {
     },
     handleServerResponse: async function(response) {
       if (response.error) {
+        console.log(response.error);
+        console.log("in hereasdfasdfdsf");
+        return this.$toast.show("クラウンコインの購入に失敗しました", {
+          icon: "extension",
+          duration: 1000,
+          position: "top-right",
+          theme: "toasted-primary"
+        });
       } else if (response.requires_action) {
+        console.log("in here");
         const result = await this.stripe.handleCardAction(
           this.paymentIntent.client_secret
         );
@@ -281,11 +290,12 @@ export default {
 
     margin-bottom: 2rem;
     &--firstname {
-      // width: 80%;
+      // width: 48%;
     }
     &--name {
       // width: 80%;
-      width: 17rem;
+      width: 100%;
+      max-width: 17rem;
     }
     &--email {
       width: 100%;
@@ -310,6 +320,14 @@ export default {
     box-shadow: 0 1px 3px 0 #e6ebf1;
     // margin-bottom: 3rem;
   }
+  @media screen and (max-width: 450px) {
+    #{$self}__buy-button {
+      &:hover {
+        background-color: #6772e4;
+        color: white;
+      }
+    }
+  }
   &__buy-button {
     font-size: 1.6rem;
     padding: 0.75rem 0;
@@ -324,7 +342,8 @@ export default {
     &:hover {
       cursor: pointer;
       color: #6772e4;
-      background-color: #cad3ff;
+      background-color: #fff;
+      // background-color: #cad3ff;
       transition: box-shadow 300ms, background-color 300ms, color 300ms;
     }
   }

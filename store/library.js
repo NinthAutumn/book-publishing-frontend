@@ -19,7 +19,9 @@ export const getters = {
   isBookmarked: (state) => {
     return state.bookmarked
   },
-  getReviews: state => state.reviews
+  getReviews: state => state.reviews,
+  getBookmarks: state => state.bookmarks,
+  getHistory: state => state.history
 }
 
 

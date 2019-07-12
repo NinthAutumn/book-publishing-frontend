@@ -6,9 +6,19 @@
     </div>
     <div class="reviews-like">
       <v-avatar :size="size">
-        <v-img :src="review.avatar"></v-img>
+        <v-img :src="book.user_id === review.user_id? book.avatar : review.avatar.img"></v-img>
       </v-avatar>
-      <p class="reviews-content-username">{{review.username}}</p>
+
+      <p
+        v-text="book.user_id === review.user_id? book.pen_name : review.username"
+        class="reviews-content-username"
+      ></p>
+      <!-- <p v-else class="reviews-content-username">{{review.username}}</p> -->
+      <div
+        class="reviews__user-info"
+        style="text-align:center;font-size:1.2rem;color:#566CD6;"
+        v-if="book.user_id === review.user_id"
+      >作者</div>
     </div>
 
     <div class="reviews-content">
@@ -62,7 +72,44 @@
               </v-card>
             </v-dialog>
           </div>
-          <div v-else>レポート</div>
+          <div v-else>
+            <span @click.stop="toggleReport">報告</span>
+            <transition name="grow-shrink">
+              <div class="report-review dialog dialog__container" v-if="problem">
+                <div class="report-review__container dialog__content">
+                  <form @submit.prevent class="report-review__form flex-column">
+                    <label class="flex-row flex--between flex--align">
+                      報告の理由
+                      <span>
+                        <fa @click="toggleReport" class="report-review__close" icon="times"></fa>
+                      </span>
+                    </label>
+                    <v-radio-group v-model="report.problem">
+                      <v-radio v-for="n in problems" :key="n" :label="n" :value="n"></v-radio>
+                    </v-radio-group>
+                    <textarea
+                      placeholder="詳しく報告の理由"
+                      v-if="report.problem === 'その他'"
+                      v-model="report.moreInfo"
+                      name="problem"
+                      id
+                    ></textarea>
+                    <div class="flex-divider flex-row report-review__button">
+                      <button
+                        class="report-review__submit report-review__submit--close"
+                        @click="toggleReport"
+                      >キャンセル</button>
+                      <button
+                        class="report-review__submit"
+                        v-loading="loading"
+                        @click="reportReview"
+                      >報告</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </transition>
+          </div>
         </div>
       </div>
     </div>
@@ -73,6 +120,7 @@
 // import ArrowDown from "@/assets/svg/arrow-down.svg";
 // import ArrowUp from "@/assets/svg/arrow-up.svg";
 import _ from "lodash";
+import { mapGetters } from "vuex";
 export default {
   props: {
     review: Object
@@ -93,13 +141,49 @@ export default {
       deleteModal: false,
       loading: false,
       limit: 370,
-      size: 80
+      size: 80,
+      loading: false,
+      problems: [
+        "差別的または攻撃的な内容",
+        "テロリズムの助長",
+        "スパムや誤解を招く話",
+        "児童虐待",
+        "その他"
+      ],
+      problem: false,
+      report: {
+        problem: "",
+        moreInfo: ""
+      }
     };
   },
   components: {},
   methods: {
     toggleCollapse() {
       this.readMore = !this.readMore;
+    },
+    toggleReport: function() {
+      this.problem = !this.problem;
+    },
+    reportReview: async function() {
+      const report = {
+        type: "review",
+        reportId: this.review.id,
+        problem: this.report.problem,
+        moreInfo: this.report.moreInfo
+      };
+      try {
+        this.loading = true;
+        await this.$store.dispatch("report/postReport", { report });
+        this.loading = false;
+        this.problem = !this.problem;
+        return this.$toast.show("報告に成功しました", {
+          theme: "toasted-primary",
+          position: "top-right",
+          duration: 1000,
+          icon: "check_circle"
+        });
+      } catch (error) {}
     },
     async likedReview() {
       if (this.liked) {
@@ -185,7 +269,11 @@ export default {
       }
     }
   },
-  computed: {},
+  computed: {
+    ...mapGetters({
+      book: "book/getBook"
+    })
+  },
   filters: {
     truncate: (string, number) => {
       if (string.length > number) {
@@ -425,5 +513,66 @@ export default {
     }
   }
   transition: 300ms;
+}
+.report-review {
+  $self: &;
+
+  #{$self}__container {
+    border-radius: 2rem;
+    // bottom: ;
+    #{$self}__form {
+      font-size: 1.8rem;
+      span {
+        width: 3rem;
+        height: 3rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 10rem;
+        background-color: #e3e8ee;
+      }
+      #{$self}__close {
+        font-size: 1.6rem;
+        color: #4f566b;
+      }
+      label {
+        font-size: 1.8rem;
+      }
+      textarea {
+        font-size: 1.6rem;
+        padding: 1rem;
+        box-sizing: border-box;
+        border-radius: 1rem;
+        margin-bottom: 2rem;
+        box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11),
+          0 1px 3px rgba(0, 0, 0, 0.08);
+      }
+      #{$self}__button {
+        width: 100%;
+        height: 3.5rem;
+        border-radius: 1rem;
+        justify-content: space-between;
+        box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11),
+          0 1px 3px rgba(0, 0, 0, 0.08);
+        overflow: hidden;
+      }
+      #{$self}__submit {
+        font-size: 1.6rem;
+        // align-self: flex-end;
+        // padding: 0 2rem;
+        width: 50%;
+        background-color: #566cd6;
+        color: white;
+
+        &--close {
+          background-color: white;
+          color: #566cd6;
+          // align-self: flex-start;
+        }
+      }
+    }
+
+    // background-color:;
+  }
 }
 </style>

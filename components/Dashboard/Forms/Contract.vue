@@ -3,7 +3,7 @@
     <div class="contract-component__modal">
       <div class="contract-component__title flex-row flex--between flex--align">
         <span>
-          <fa icon="file-contract" class style="margin-right:5px;"></fa>契約を結ぶ
+          <fa icon="file-contract" class style="margin-right:5px;"></fa>本人確認
         </span>
         <fa
           icon="times"
@@ -12,8 +12,18 @@
           @click="$store.commit('SET_CONTRACT_MODAL_STATE')"
         ></fa>
       </div>
-      <Profile v-if="contractStep === 0"></Profile>
-      <Bank v-if="contractStep === 1"></Bank>
+      <transition name="slide-fade">
+        <Profile
+          @storeBirth="storeBirth"
+          :birth="birth"
+          :person="account['person']"
+          v-if="contractStep === 0"
+          @save="profile"
+        ></Profile>
+        <Address v-if="contractStep === 1" @save="address"></Address>
+        <confirm-identity :person="account" v-if="contractStep===2"></confirm-identity>
+        <!-- <Bank v-if="contractStep === 2"></Bank> -->
+      </transition>
     </div>
   </div>
 </template>
@@ -22,7 +32,12 @@
 export default {
   data() {
     return {
-      open: true
+      open: true,
+      account: {
+        country: "JP",
+        person: {},
+        birth: ""
+      }
     };
   },
   computed: {
@@ -32,7 +47,24 @@ export default {
   },
   components: {
     Profile: () => import("./Profile"),
-    Bank: () => import("./Bank")
+    Bank: () => import("./Bank"),
+    Address: () => import("./Address"),
+    ConfirmIdentity: () => import("./ConfirmIdentity")
+  },
+  methods: {
+    profile: function(val) {
+      console.log(val);
+      this.account["person"] = val;
+    },
+    address: function(val) {
+      Object.keys(val).forEach(address => {
+        this.account["person"][address] = val[address];
+      });
+      console.log(this.account);
+    },
+    storeBirth: function(val) {
+      this.birth = val;
+    }
   }
 };
 </script>
@@ -55,9 +87,10 @@ export default {
     z-index: 1000;
     scroll-behavior: unset;
     // overflow: hidden;
-    height: 65rem;
+    max-height: 70rem;
+    overflow: auto;
     min-width: 50rem;
-    max-width: 70rem;
+    max-width: 50rem;
     margin-top: 10px;
     background-color: #f7f8f9;
     -webkit-box-shadow: 0 30px 60px -12px rgba(50, 50, 93, 0.25),

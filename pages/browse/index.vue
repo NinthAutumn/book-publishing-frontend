@@ -9,11 +9,11 @@
     </div>
     <div class="flex-divider browse-page__section flex">
       <div class="flex-divider" style="flex-grow:1;">
-        <div class="browse-page__sorting-list flex">
+        <div class="browse-page__sorting-list flex-row" v-if="!$device.isMobile">
           <div class="flex-divider flex-row">
             <div class="browse-page__sort-type">
               <Select
-                :width="100"
+                :width="120"
                 v-model="type"
                 name="詳細条件"
                 :object="sort_type"
@@ -23,7 +23,7 @@
             </div>
             <div class="browse-page__sort-type browse-page__sort-type--direction">
               <Select
-                :width="100"
+                :width="120"
                 v-model="direction"
                 name="方向"
                 :object="sort_directions"
@@ -38,6 +38,8 @@
                 v-model="selected_genre"
                 transition="grow-shrink"
                 multiple
+                genre
+                disable="犬"
                 :data="genre_list"
                 icon="filter"
                 name="ジャンル"
@@ -64,6 +66,9 @@
           <div class="browse-page__filter-tag"></div>
           <div class="browse-page__filter-bookstate"></div>
         </div>
+        <div class="browse-list__sort-mobile" v-else>
+          <div class="browse-list__option" v-for="type in sort_type" :key="type.key"></div>
+        </div>
         <transition name="grow-shrink">
           <div class="browse-page__filter" v-if="selected_genre.length > 0">
             <transition-group
@@ -75,7 +80,7 @@
                 class="browse-page__filter-list browse-page__filter-list__item flex-row flex--align"
                 v-for="(genre) in selected_genre"
                 :key="genre"
-                v-text="genre"
+                v-text="genre.name"
               ></li>
             </transition-group>
           </div>
@@ -150,8 +155,11 @@ export default {
     }
   },
   created() {
+    if (this.$device.isMobile) {
+      return this.$router.push("/browse/mobile");
+    }
     if (this.$route.query.genre && this.$route.query.genre !== "undefined") {
-      this.selected_genre.push(this.$route.query.genre);
+      this.selected_genre.push({ name: this.$route.query.genre });
     }
   },
   watch: {
@@ -170,6 +178,7 @@ export default {
   },
   async fetch({ store }) {
     // await store.dispatch("book/fetchAllGenres");
+    await store.dispatch("book/fetchAllGenres");
     await store.dispatch("book/browseBooks", {
       type: 5,
       direction: "desc",

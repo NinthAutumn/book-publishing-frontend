@@ -64,7 +64,7 @@
               :size="star"
               :value="+book.rating"
             ></v-rating>
-            {{`(${book.rating})`}}
+            {{` ${book.rating}`}}
           </no-ssr>
         </div>
       </div>
@@ -119,7 +119,7 @@
             <fa
               v-if="!loading"
               class="book-content__buttons__item__icon"
-              style="font-size:15px;"
+              style="font-size:15px;margin-right:0.5rem;"
               icon="bolt"
             ></fa>
             <span v-if="!loading">投票をかける</span>
@@ -133,7 +133,7 @@
             <fa
               v-if="!loading"
               class="book-content__buttons__item__icon"
-              style="font-size:15px;"
+              style="font-size:15px;margin-right:0.5rem;"
               icon="bolt"
             ></fa>
             <span v-if="!loading">投票をかける</span>
@@ -151,7 +151,11 @@
             :class="{'button--secondary': bookmarked, 'button--secondary--open': !bookmarked}"
             v-ripple
           >
-            <fa class="book-content__buttons__item__icon" style="font-size:15px;" icon="bookmark"></fa>
+            <fa
+              class="book-content__buttons__item__icon"
+              style="font-size:15px;margin-right:0.5rem;"
+              icon="bookmark"
+            ></fa>
             <span style="font-size:13px;" v-text="text"></span>
           </span>
           <span
@@ -159,11 +163,16 @@
             @click.stop="$store.commit('LOGIN_STATE')"
             class="book-content__buttons__item button button--shadow button--big"
             @mouseenter="bookmarkHover"
+            style="margin-right:0.5rem;"
             @mouseleave="bookmarkLeave"
             :class="{'button--secondary': bookmarked, 'button--secondary--open': !bookmarked}"
             v-ripple
           >
-            <fa class="book-content__buttons__item__icon" style="font-size:15px;" icon="bookmark"></fa>
+            <fa
+              class="book-content__buttons__item__icon"
+              style="font-size:15px;margin-right:0.5rem;"
+              icon="bookmark"
+            ></fa>
             <span style="font-size:13px;" v-text="text"></span>
           </span>
         </div>
@@ -244,13 +253,13 @@ export default {
           url: `/browse?genre=${this.$store.getters["book/getBook"].name}`
         },
         {
-          key: this.$store.getters["book/getBookChapterCount"] + "話",
+          key: this.$store.getters["book/getBookChapterCount"] || 0 + "話",
           icon: "scroll",
           type: "chapter",
           url: "/browse"
         },
         {
-          key: this.$store.getters["book/getBook"].view,
+          key: this.$store.getters["book/getBook"].view || 0,
           icon: "eye",
           type: "view",
           url: "/browse"
@@ -394,6 +403,7 @@ export default {
         const { error } = await this.$store.dispatch("book/postVote", {
           bookId: this.$route.params.id
         });
+
         if (error) {
           this.$toast.show(`${error}`, {
             theme: "toasted-primary",
@@ -406,6 +416,7 @@ export default {
         console.log(error.message);
       }
       this.loading = false;
+      await this.$store.dispatch("wallet/wealth");
     }
   },
   beforeUpdated() {
