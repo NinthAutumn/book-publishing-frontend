@@ -218,7 +218,7 @@ module.exports = {
         page: false
       }
     }],
-    ['nuxt-universal-storage', {
+    ['@nuxtjs/universal-storage', {
       storage: {
         vuex: true, // boolean or {namespace} 
         localStorage: true, // boolean or {prefix } 
