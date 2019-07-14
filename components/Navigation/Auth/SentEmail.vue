@@ -13,6 +13,7 @@
       Eメールがあなたに送られました、
       もし貴方の受信トレイにメールが届いていなければ、
       スパムやプロモーションにあるかもしれません。
+      <br />*また、メールが届くのに数分から数十分かかることがあります。
     </p>
     <div class="sent-mail__email">{{email}}</div>
     <div class="flex-divider flex-row flex--right">
@@ -29,7 +30,14 @@ export default {
     ...mapMutations({
       moveAuth: "SET_AUTH_PAGE"
     }),
-    async resendMail() {}
+    async resendMail() {
+      try {
+        await this.$store.dispatch("auth/resendEmail", { email: this.email });
+        return this.$toast.success("Eメールがまた送られました");
+      } catch (error) {
+        return this.$toast.error(error);
+      }
+    }
   },
   mounted() {}
 };

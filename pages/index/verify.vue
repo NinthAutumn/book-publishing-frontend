@@ -33,14 +33,14 @@ export default {
         icon: "extension"
       });
     }
-    this.$storage.setUniversal("access_token", res.data.access_token);
-    this.$storage.setUniversal("refresh_token", res.data.refresh_token);
+    this.$storage.setUniversal("access_token", data.access_token);
+    this.$storage.setUniversal("refresh_token", data.refresh_token);
     this.$storage.setUniversal("strategy", "local");
     this.$axios.defaults.headers.common["Authorization"] =
-      "Bearer " + res.data.access_token;
+      "Bearer " + data.access_token;
     this.$store.commit("auth/SET_AUTH", {
-      access_token: res.data.access_token,
-      refresh_token: res.data.refresh_token,
+      access_token: data.access_token,
+      refresh_token: data.refresh_token,
       strategy: "local"
     });
     const val = await this.$store.dispatch("user/fetchUser");

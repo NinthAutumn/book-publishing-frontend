@@ -12,6 +12,7 @@
     <p class="fg-modal__desc">
       登録済みアカウントのメールアドレスを入力してください。
       パスワードを再設定する手順をお送りいたします。
+      *また、メールが届くのに数分から数十分かかるときがあります。
     </p>
     <div v-show="errors.has('email')" class="fg-modal__error is-danger">{{ errors.first('email') }}</div>
     <div class="fg-modal__email-form flex-column">
@@ -55,6 +56,10 @@ export default {
         await this.$store.dispatch("auth/setPasswordToken", {
           email: this.email
         });
+        return this.$toast.success(
+          "記入されたメールにパスワードリセットトークンが送られました",
+          { icon: "extension" }
+        );
       } catch (error) {
         return this.$toast.error(error, { icon: "extension" });
       }

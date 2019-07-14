@@ -149,10 +149,40 @@ export const actions = {
     password,
     token
   }) {
-    await this.$axios.post('/auth/setPassword', {
-      password,
-      token
-    })
+    try {
+      const {
+        data
+      } = await this.$axios.patch('/auth/setPassword', {
+        password,
+        token
+      })
+      if (data.error) {
+        return Promise.reject(data.error)
+      }
+      return Promise.resolve()
+    } catch (error) {
+      return Promise.reject(error)
+    }
+
+  },
+  async resendEmail({
+    commit
+  }, {
+    email
+  }) {
+    try {
+      const {
+        data
+      } = await this.$axios.patch('/auth/resend', {
+        email
+      })
+      if (data.error) {
+        return Promise.reject(data.error)
+      }
+      return Promise.resolve()
+    } catch (error) {
+      return Promise.reject(error)
+    }
   },
   async setPasswordToken({
     commit,

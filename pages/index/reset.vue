@@ -22,7 +22,7 @@
           class="reset-modal__input reset-modal__input--confirm elevation-1"
         />
         <div class="flex-divider flex-row flex--right">
-          <div class="reset-modal__submit">パスワードを更新</div>
+          <div class="reset-modal__submit" @click="resetPassword">パスワードを更新</div>
         </div>
       </div>
     </div>
@@ -39,19 +39,27 @@ export default {
     };
   },
   methods: {
-    resetPassword: async () => {
-      await this.$store.dispatch("auth/setPassword", {
-        token: this.token,
-        password: this.password
-      });
+    resetPassword: async function() {
+      try {
+        await this.$store.dispatch("auth/setPassword", {
+          token: this.token,
+          password: this.password
+        });
+        this.$toast.success("パスワードの変更に成功しました");
+        this.$store.commit("LOGIN_STATE");
+
+        this.$router.push("/");
+      } catch (error) {
+        return this.$toast.error(error);
+      }
     }
   },
   mounted() {
     if (!this.$route.query.token) {
-      return this.$router.push("/");
+      // return this.$router.push("/");
     }
 
-    this.token = this.$router.query.token;
+    this.token = this.$route.query.token;
   }
 };
 </script>
