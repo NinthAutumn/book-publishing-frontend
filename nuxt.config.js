@@ -244,8 +244,7 @@ module.exports = {
    ** Axios module configuration
    */
   axios: {
-    baseURL: process.env.SERVER_URL,
-
+    baseURL: process.env.SERVER_URL
   },
 
   auth: {
@@ -298,7 +297,12 @@ module.exports = {
   'manifest': {
     name: 'ノーブル　小説',
     short_name: 'ノーブル',
-    lang: 'ja'
+    lang: 'ja',
+    theme_color: "#AF9BD0",
+    "icons": [{
+      "src": "/static/favicon.ico",
+      "sizes": "48x48 64x64 72x72 96x96 128x128 256x256"
+    }, ]
   },
   /*
    ** Build configuration
