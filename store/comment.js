@@ -199,11 +199,13 @@ export const actions = {
     content,
     parentId = null
   }) {
+
     await this.$axios.post('/comment', {
       bookId,
       chapterId,
       content,
       parentId
     })
+    // commit('SHIFT_COMMENT')
   }
 }
