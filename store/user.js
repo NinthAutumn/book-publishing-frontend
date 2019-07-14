@@ -13,7 +13,7 @@ export const state = () => ({
   comments: [],
   notification: [],
   author: {},
-  username: false,
+  username: true,
   profile: {},
   stats: {},
   commentNotification: [],
@@ -317,7 +317,9 @@ export const actions = {
     username
   }) {
     try {
-      const res = await this.$axios.get(`/user/usernameAvailable?username=${username}`)
+      const res = await this.$axios.get(`/user/usernameAvailable?username=${username}`, {
+        progress: false
+      })
       commit('SET_USERNAME_AVAILABILITY', get(res, 'data'))
     } catch (error) {
       return Promise.reject(error)

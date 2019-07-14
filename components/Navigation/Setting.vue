@@ -16,7 +16,7 @@
         ></croppa>
       </div>
       <label for="username">ユーザー名</label>
-      <input v-model="user.username" placeholder="ユーザー名" required>
+      <input v-model="user.username" placeholder="ユーザー名" required />
       <v-radio-group v-model="user.gender" row>
         <v-radio
           v-for="n in genders"
@@ -100,6 +100,7 @@ export default {
           await this.$store.dispatch("user/patchUser", { user: this.user });
           await this.$store.dispatch("user/fetchUser");
         }
+        this.$store.commit("TOGGLE_SETTING_MODAL");
       } catch (error) {
         console.log(error);
         return this.$toast.show("更新に失敗しました", { duration: 2000 });

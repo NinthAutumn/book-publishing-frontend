@@ -252,13 +252,13 @@ module.exports = {
       google: {
         client_id: process.env.GOOGLE_CLIENT_ID,
         user: false,
-        redirect_uri: 'http://127.0.0.1:3000/'
+        redirect_uri: process.env.REDIRECT_URI
       },
       facebook: {
         client_id: process.env.FACEBOOK_CLIENT_ID,
         userinfo_endpoint: false,
         scope: ['public_profile', 'email'],
-        redirect_uri: 'https://tolocalhost.com/'
+        redirect_uri: process.env.REDIRECT_URI
       },
       local: {
         _scheme: '~/auth/local.js',

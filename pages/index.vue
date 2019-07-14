@@ -3,7 +3,7 @@
     <div class="search-books" v-if="$device.isMobile">
       <search-bar></search-bar>
     </div>
-
+    <nuxt-child></nuxt-child>
     <div class="head-banner">
       <BannerList></BannerList>
     </div>
@@ -18,7 +18,7 @@
           <Ranking></Ranking>
         </div>
       </div>
-      <adsbygoogle v-if="!user.status"/>
+      <adsbygoogle v-if="!user.status" />
       <div class="card-title flex flex--align">
         <h3>評価が高いレビュー</h3>
       </div>
@@ -32,7 +32,7 @@
       </div>
       <BooksList :trendings="latest"></BooksList>
       <mobile-ranking v-if="$device.isMobile"></mobile-ranking>
-      <adsbygoogle v-if="!user.status"/>
+      <adsbygoogle v-if="!user.status" />
       <div class="card-title">
         <h3>更新頻度が高い</h3>
       </div>

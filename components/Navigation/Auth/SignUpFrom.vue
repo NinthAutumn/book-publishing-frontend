@@ -28,7 +28,7 @@
           :class="{'signup-form__input--error': errors.has('username')||!usernameAvailable}"
           type="text"
           v-model="username"
-        >
+        />
         <span v-if="errors.first('username')" class="help is-danger">{{ errors.first('username') }}</span>
         <span v-else-if="!usernameAvailable" class="help is-danger">このユーザー名はもう使われています</span>
       </div>
@@ -43,7 +43,7 @@
           data-vv-as="記入されたメールアドレス"
           :class="{'signup-form__input--error': errors.has('email')}"
           v-model="email"
-        >
+        />
         <span class="help is-danger">{{ errors.first('email') }}</span>
       </div>
       <div class="flex-divider signup-form__control">
@@ -58,7 +58,7 @@
           placeholder="パスワード"
           data-vv-as="パスワード"
           ref="password"
-        >
+        />
         <span v-show="errors.has('password')" class="help is-danger">{{ errors.first('password') }}</span>
       </div>
 
@@ -68,7 +68,7 @@
           color="#8860d0"
           class
           :class="{active: errors.any()||!username||!email||!password}"
-        >サインイン</v-btn>
+        >サインアップ</v-btn>
       </div>
     </form>
     <!-- <button @click="google">グーグろでサインイン</button> -->
@@ -95,9 +95,10 @@ export default {
   },
   watch: {
     username: async function(username) {
-      this.$store.dispatch("user/checkUsername", { username });
+      await this.$store.dispatch("user/checkUsername", { username });
     }
   },
+  loading: false,
   computed: {
     isFormInValid() {
       return Object.keys(this.fields).some(key => this.fields[key].invalid);
@@ -138,6 +139,8 @@ export default {
             });
           }
           this.loading = false;
+          this.$emit("setEmail", { email: this.email });
+          this.$store.commit("SET_AUTH_PAGE", 4);
           return this.$toast.show(
             "アカウント作成に成功しました、あとはEメール確認が必要なので登録されたメールアドレスに確認メールが送られました",
             {
@@ -147,6 +150,7 @@ export default {
               position: "top-right"
             }
           );
+
           // this.$router.go(0);
         } catch (error) {
           this.$toast.show("アカウント作成に失敗", {
