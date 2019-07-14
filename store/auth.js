@@ -143,6 +143,12 @@ export const actions = {
     }
 
   },
+  async setResetPassword({
+    commit,
+    state
+  }) {
+
+  },
   async refresh({
     commit,
     state,

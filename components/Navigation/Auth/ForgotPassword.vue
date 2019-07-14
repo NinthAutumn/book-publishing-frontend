@@ -27,7 +27,7 @@
       >
     </div>
     <div class="flex-divider flex-row flex--right">
-      <v-btn color="#C1C9E4">再設定メールを送信</v-btn>
+      <v-btn @click="getToken" color="#C1C9E4">再設定メールを送信</v-btn>
     </div>
   </div>
 </template>
@@ -42,6 +42,9 @@ export default {
   methods: {
     signOff() {
       this.$store.commit("SET_AUTH_PAGE", 1);
+    },
+    getToken(){
+      await this.$store.dispatch()
     }
   },
   mounted() {

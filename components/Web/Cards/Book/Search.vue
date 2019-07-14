@@ -24,6 +24,7 @@
       <div class="book-scard__meta">
         <div class="book-scard__title" v-text="book.title"></div>
         <div class="book-scard__genre" v-text="`${book.pen_name}・${book.name}`"></div>
+        .book-scard__sy
       </div>
     </div>
   </div>
