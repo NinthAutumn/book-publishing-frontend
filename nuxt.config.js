@@ -299,25 +299,6 @@ module.exports = {
     short_name: 'ノーブル',
     lang: 'ja',
     theme_color: "#AF9BD0",
-    "icons": [{
-      "src": "~/static/favicon.ico",
-      "sizes": "48x48 "
-    }, {
-      "src": "~/static/favicon.ico",
-      "sizes": "64x64 "
-    }, {
-      "src": "~/static/favicon.ico",
-      "sizes": "72x72 "
-    }, {
-      "src": "~/static/favicon.ico",
-      "sizes": "96x96"
-    }, {
-      "src": "~/static/favicon.ico",
-      "sizes": "128x128"
-    }, {
-      "src": "~/static/favicon.ico",
-      "sizes": "256x256"
-    }, ]
   },
   /*
    ** Build configuration
