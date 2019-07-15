@@ -9,16 +9,6 @@
         :key="index"
         @click="clickHandler(notification.book_id,notification.chapter_id,notification.notification_object_id)"
       >
-        <!-- <div class="latest-chapters__cover">
-          <v-img
-            :src="notification.cover"
-            :aspect-ratio="1/1.5"
-            width="3rem"
-            alt="Book cover"
-            style
-            class="latest-chapters__image"
-          ></v-img>
-        </div>-->
         <div class="latest-chapters__chapter-meta flex--center flex-column">
           <div class="latest-chapters__chapter-title">
             <p v-text="notification.title"></p>
@@ -30,15 +20,6 @@
             >{{$moment(notification.created_at).startOf('minute').fromNow()}}</div>
           </div>
         </div>
-        <!-- <div class="latest-chapters__chapter-title">
-          <p v-text="notification.title"></p>
-        </div>
-        <div class="latest-chapters__chapter-meta flex flex--between">
-          <div class="latest-chapters__chapter-index">第{{notification.index}}話</div>
-          <div
-            class="latest-chapters__chapter-date"
-          >{{$moment(notification.created_at).startOf('minute').fromNow()}}</div>
-        </div>-->
         <div v-if="!notification.read" class="latest-chapters__notification"></div>
       </li>
       <no-ssr>

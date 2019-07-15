@@ -36,6 +36,7 @@
   </div>
 </template>
 <script>
+import { mapGetters } from "vuex";
 export default {
   components: {
     Horizontal: () => import("./main-nav/Horizontal"),
@@ -64,7 +65,10 @@ export default {
   computed: {
     user() {
       return this.$store.getters["user/loggedInUser"];
-    }
+    },
+    ...mapGetters({
+      auth: "auth/isAuthenticated"
+    })
   },
   watch: {},
   methods: {
@@ -74,6 +78,9 @@ export default {
     toggleMenu(val) {
       // console.log(val);
       if (val) {
+        if (!this.auth) {
+          return this.$router.push("/auth/login");
+        }
         this.mvRight = !this.mvRight;
         this.mvLeft = false;
       } else {

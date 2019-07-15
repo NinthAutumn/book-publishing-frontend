@@ -67,7 +67,7 @@
             style="border-radius:10rem;"
             src="~/assets/profile.png"
             @click.stop="loginInState"
-          >
+          />
         </div>
       </div>
     </nav>
@@ -147,8 +147,6 @@ export default {
     },
     stateDropChange() {
       this.$store.commit("DROPDOWN_STATE");
-      // console.log("yes");
-      // console.log(e.target);
     },
     dropOff() {
       this.$store.commit("DROPDOWN_FALSE");
