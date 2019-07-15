@@ -62,31 +62,23 @@ export default {
       try {
         this.author.avatar.generateBlob(
           blob => {
-            this.$store.dispatch("upload/image", blob).then(url => {
+            this.$store.dispatch("upload/image", blob).then(async url => {
               const author = {
                 avatar: url.url,
                 avatar_path: url.path,
                 penname: this.author.penname
               };
-              this.$store.dispatch("user/postAuthor", { author });
-              this.$toast.show(
-                "おめでとうございます、あなたは作者になりました",
-                {
-                  theme: "toasted-primary",
-                  position: "top-right",
-                  duration: 1200,
-                  icon: "account-circle"
-                }
-              );
+              await this.$store.dispatch("user/postAuthor", { author });
+              this.$toast.success("おめでとうございます、作者になりました", {
+                duration: 1200
+              });
             });
           },
           "image/jpeg",
           0.8
         );
       } catch (error) {
-        this.$toast.show("作者の作成に失敗しました", {
-          theme: "toasted-primary",
-          position: "top-right",
+        this.$toast.error("作者の作成に失敗しました", {
           duration: 1200,
           icon: "extension"
         });

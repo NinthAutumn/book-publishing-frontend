@@ -215,7 +215,7 @@ module.exports = {
     ['@nuxtjs/google-analytics', {
       id: 'UA-119733183-2',
       autoTracking: {
-        page: false
+        page: true
       }
     }],
     ['@nuxtjs/universal-storage', {
@@ -300,8 +300,23 @@ module.exports = {
     lang: 'ja',
     theme_color: "#AF9BD0",
     "icons": [{
-      "src": "/static/favicon.ico",
-      "sizes": "48x48 64x64 72x72 96x96 128x128 256x256"
+      "src": "~/static/favicon.ico",
+      "sizes": "48x48 "
+    }, {
+      "src": "~/static/favicon.ico",
+      "sizes": "64x64 "
+    }, {
+      "src": "~/static/favicon.ico",
+      "sizes": "72x72 "
+    }, {
+      "src": "~/static/favicon.ico",
+      "sizes": "96x96"
+    }, {
+      "src": "~/static/favicon.ico",
+      "sizes": "128x128"
+    }, {
+      "src": "~/static/favicon.ico",
+      "sizes": "256x256"
     }, ]
   },
   /*
