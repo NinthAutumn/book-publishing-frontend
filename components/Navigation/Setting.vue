@@ -79,7 +79,7 @@ export default {
 
           this.user.avatar.generateBlob(async blob => {
             const { url, path } = await this.$store.dispatch(
-              "upload/image",
+              "upload/uploadAvatar",
               blob
             );
             this.user.avatar = {

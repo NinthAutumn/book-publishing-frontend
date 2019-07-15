@@ -7,6 +7,7 @@
           <fa class="chapter-form__save-draft__icon" v-if="!$route.query.chapterId" icon="save"></fa>保存
         </div>
       </div>
+      <!-- {{form.drawings}} -->
       <div class="chapter-form__options flex">
         <Select
           v-model="form.volume"
@@ -46,7 +47,7 @@
               v-model="form.title"
               required
               maxlength="100"
-            >
+            />
           </div>
           <div class="form-control">
             <TextEditor
@@ -60,35 +61,7 @@
           </div>
         </div>
       </transition>
-      <v-dialog class="chapter-form__upload-img" v-model="picture" persistent width="50rem">
-        <fa @click="picture= !picture" class="chapter-form__image-btn__close" icon="times"></fa>
-        <transition name="slide-fade">
-          <div class="chapter-form__extra">
-            <upload-btn
-              accept="image/*"
-              ripple
-              multiple
-              title="画像アップロード"
-              :fileChangedCallback="upload"
-            >
-              <template slot="icon">
-                <v-icon>add</v-icon>
-              </template>
-            </upload-btn>
-            <div class="chapter-form__image-list">
-              <v-img
-                class="chapter-form__image-btn"
-                v-for="(file, index) in fileList"
-                :key="index"
-                :src="file.url"
-                @click="deleteImage(file.url)"
-              >
-                <fa class="chapter-form__image-btn__close" icon="times"></fa>
-              </v-img>
-            </div>
-          </div>
-        </transition>
-      </v-dialog>
+      <drawing-modal @close="picture = !picture" v-model="form.drawings" v-if="picture"></drawing-modal>
       <v-dialog class="chapter-form__announcement" v-model="announcement" width="50rem">
         <header>告知・広告・思考</header>
         <div class="form-control flex-column">
@@ -206,7 +179,8 @@ export default {
   components: {
     TextEditor: () => import("@/components/TextEditor"),
     Select: () => import("@/components/All/Select"),
-    Currency: () => import("@/components/All/Currency")
+    Currency: () => import("@/components/All/Currency"),
+    DrawingModal: () => import("./Drawing")
   },
   computed: {
     ...mapGetters({
@@ -221,12 +195,13 @@ export default {
       this.form.title = this.chapter.title;
       this.form.header = this.chapter.header;
       this.form.footer = this.chapter.footer;
-      if (this.chapter.drawings) {
-        this.chapter.drawings.forEach(image => {
-          this.form.drawings.push({ file: image, old: true, url: image });
-          this.fileList.push({ url: image, file: image });
-        });
-      }
+      const { data } = await this.$axios.get(
+        `/drawing/chapter/${this.$route.query.chapterId}`
+      );
+      console.log(data.drawings);
+      data.drawings.forEach(drawing => {
+        this.form.drawings[drawing.id] = drawing;
+      });
 
       // this.form.
       this.disableVolume = true;
@@ -321,7 +296,7 @@ export default {
         volume: {},
         bookId: this.$route.params.id,
         locked: false,
-        drawings: [],
+        drawings: {},
         header: "",
         footer: ""
       },
@@ -371,34 +346,7 @@ export default {
     contentFocus() {
       this.contentHolder = "";
     },
-    upload(files) {
-      let dogs = Object.keys(files);
-      let store = [];
-      dogs.forEach(dog => {
-        store.push(files[dog]);
-      });
-      // files.forEach(file => {
-      //
-      // });
 
-      const reader = new FileReader();
-      store.forEach(file => {
-        this.form.drawings.push({
-          file: file,
-          old: false,
-          url: URL.createObjectURL(file)
-        });
-        this.fileList.push({ url: URL.createObjectURL(file), file: file });
-      });
-    },
-    deleteImage(url) {
-      this.fileList = this.fileList.filter(file => {
-        return file.url !== url;
-      });
-      this.form.drawings = this.form.drawings.filter(file => {
-        return file.url !== url;
-      });
-    },
     contentBlur() {
       this.contentHolder = "本文";
     },
@@ -430,19 +378,8 @@ export default {
       this.loading = true;
       this.$store.commit("upload/REMOVE_URLS");
 
-      if (this.form.drawings) {
-        try {
-          let val;
-          for (let image of this.form.drawings) {
-            if (!image.old) {
-              await this.$store.dispatch("upload/multiImage", image.file);
-            }
-          }
-          this.postChapter();
-        } catch (error) {}
-      } else {
-        this.postChapter();
-      }
+      this.postChapter();
+
       this.loading = false;
       this.$router.push(`/dashboard/books/${this.$route.params.id}/published`);
     },
@@ -464,7 +401,7 @@ export default {
         header: this.form.header,
         footer: this.form.footer,
         bookId,
-        drawings: this.drawings
+        drawings: this.form.drawings
       };
       await this.$store.dispatch("chapter/createChapter", {
         chapter,
@@ -476,22 +413,13 @@ export default {
       this.loading = true;
       let bookId = this.$route.params.id;
       let state = "published";
-      let drawings = [];
-      this.form.drawings.forEach(val => {
-        if (val.old) {
-          drawings.push(val.url);
-        }
-      });
-      this.drawings.forEach(drawing => {
-        drawings.push(drawing);
-      });
       let chapter = {
         title: this.form.title,
         content: this.form.content,
         wordCount: this.form.wordCount.length,
         header: this.form.header,
         footer: this.form.footer,
-        drawings: drawings
+        drawings: this.form.drawings
       };
       await this.$store.dispatch("chapter/patchChapter", {
         chapter,

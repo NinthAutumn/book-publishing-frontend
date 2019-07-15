@@ -20,7 +20,7 @@ export default {
     };
   },
   components: {
-    CreateChapter: () => import("@/components/Dashboard/Forms/Chapter")
+    CreateChapter: () => import("@/components/Dashboard/Forms/Chapter/index")
   },
   created() {},
   async fetch({ store, params }) {

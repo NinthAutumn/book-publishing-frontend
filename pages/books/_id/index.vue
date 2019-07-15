@@ -46,8 +46,8 @@
           <nuxt-link
             class="book__meta__item"
             :class="'book__meta__item--' +item.type"
-            v-for="(item, index) in meta"
-            :key="index"
+            v-for="(item, key) in meta"
+            :key="key"
             :to="item.url"
             tag="div"
           >
@@ -185,11 +185,14 @@
 import { mapGetters } from "vuex";
 export default {
   auth: false,
-  async asyncData({ store, route }) {
+  async asyncData({ store, route, app }) {
     await store.dispatch("book/fetchBookGenreAndTags", route.params.id);
     await store.dispatch("book/fetchBookChapterCount", route.params.id);
+    const { data } = await app.$axios.get(
+      `/book/wordCount?bookId=${route.params.id}`
+    );
     return {
-      // count:
+      wordCount: data.word_count + "字"
     };
   },
   async created() {
@@ -245,26 +248,33 @@ export default {
         selected: {},
         open: "review"
       },
-      meta: [
-        {
+      meta: {
+        genre: {
           key: this.$store.getters["book/getBook"].name,
           icon: "landmark",
           type: "genre",
           url: `/browse?genre=${this.$store.getters["book/getBook"].name}`
         },
-        {
-          key: this.$store.getters["book/getBookChapterCount"] || 0 + "話",
+        chapter: {
+          key:
+            this.$store.getters["book/getBookChapterCount"] + "話" || 0 + "話",
           icon: "scroll",
           type: "chapter",
           url: "/browse"
         },
-        {
-          key: this.$store.getters["book/getBook"].view || 0,
+        view: {
+          key: this.$store.getters["book/getBook"].view + "人" || 0,
           icon: "eye",
           type: "view",
           url: "/browse"
+        },
+        word: {
+          key: 0,
+          icon: "cube",
+          type: "word",
+          url: "/browse"
         }
-      ],
+      },
       review: {
         title: "",
         content: "",
@@ -438,8 +448,10 @@ export default {
     // while (1) {
     //   alert("なぜそれが");
     // }
+    // const word
     this.tabs.review = this.$refs.review.clientWidth;
     this.tabs.toc = this.$refs.toc.clientWidth;
+    this.meta["word"].key = this.wordCount;
     let left = 0;
     if (this.$device.isMobile) {
       left = "10px";
@@ -836,6 +848,10 @@ input[type="number"]::-webkit-outer-spin-button {
       }
       p {
         font-size: inherit;
+      }
+      &--word {
+        color: white;
+        background-color: #af9bd0;
       }
       &--genre {
         color: white;

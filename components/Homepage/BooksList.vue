@@ -3,7 +3,7 @@
     <div v-if="trendings&&!$device.isMobile" v-swiper:mySwiper="swiperOption">
       <div class="swiper-wrapper">
         <div class="swiper-slide" v-for="(book) in trendings" :key="book.id">
-          <book-card :cover="book.cover" :book="book" :isMobile="$device.isMobile"></book-card>
+          <book-card rating :cover="book.cover" :book="book" :isMobile="$device.isMobile"></book-card>
         </div>
       </div>
       <div class="background" v-if="!$device.isMobile">
@@ -16,14 +16,14 @@
     <div v-if="trendings&&$device.isMobile" v-swiper:mySwiper="swiperMobile">
       <div class="swiper-wrapper">
         <div class="swiper-slide" v-for="(book) in trendings" :key="book.id">
-          <book-card :cover="book.cover" :book="book" :isMobile="$device.isMobile"></book-card>
+          <book-card rating :cover="book.cover" :book="book" :isMobile="$device.isMobile"></book-card>
         </div>
       </div>
     </div>
     <div v-if="!trendings&&!$device.isMobile" v-swiper:mySwiper="swiperOption">
       <div class="swiper-wrapper">
         <div class="swiper-slide" v-for="(book) in books" :key="book.id">
-          <book-card :cover="book.cover" :book="book" :isMobile="$device.isMobile"></book-card>
+          <book-card rating :cover="book.cover" :book="book" :isMobile="$device.isMobile"></book-card>
         </div>
       </div>
       <div class="background" v-if="!$device.isMobile">
@@ -36,7 +36,7 @@
     <div v-if="!trendings&&$device.isMobile" v-swiper:mySwiper="swiperMobile">
       <div class="swiper-wrapper">
         <div class="swiper-slide" v-for="(book) in books" :key="book.id">
-          <book-card :cover="book.cover" :book="book" :isMobile="$device.isMobile"></book-card>
+          <book-card rating :cover="book.cover" :book="book" :isMobile="$device.isMobile"></book-card>
         </div>
       </div>
     </div>

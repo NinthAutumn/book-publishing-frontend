@@ -42,8 +42,16 @@
         ></span>
       </div>
       <div v-line-clamp="clampLine" class="book-card__title" v-text="book.title"></div>
+      <!-- {{rating}} -->
       <div class="book-card__rating" v-if="!isMobile">
-        <v-rating color="#FF8D29" readonly :size="25" half-increments :value="+book.rating"></v-rating>
+        <v-rating
+          v-if="rating"
+          color="#FF8D29"
+          readonly
+          :size="25"
+          half-increments
+          :value="+book.rating"
+        ></v-rating>
       </div>
     </div>
   </nuxt-link>
@@ -79,7 +87,8 @@ export default {
     isMobile: {
       type: Boolean,
       default: false
-    }
+    },
+    rating: Boolean
   },
   data() {
     return {

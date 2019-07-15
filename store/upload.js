@@ -1,4 +1,7 @@
 import Cookies from 'js-cookie';
+import {
+  Avatar
+} from 'element-ui';
 
 
 export const state = () => ({
@@ -46,24 +49,35 @@ export const actions = {
       commit('ADD_URL', uploadConfig.data.filename)
       return Promise.resolve({
         url: `https://storage.googleapis.com/theta-images/${uploadConfig.data.filename}`,
-        path: uploadConfig.data.filename
+        path: uploadConfig.data.filename,
+        id: uploadConfig.data.id
       })
     } catch (error) {
 
     }
+  },
+  async uploadAvatar({
+    commit
+  }, file) {
+    try {
+      const uploadConfig = await this.$axios.get('/upload')
+      await this.$axios.put(uploadConfig.data.url, file, {
+        headers: {
+          'Content-Type': 'image',
+          "Authorization": null,
+          "TrackId": null
+        },
+        baseURL: ""
+      })
+      commit('ADD_URL', uploadConfig.data.filename)
+      return Promise.resolve({
+        url: `https://storage.googleapis.com/theta-images/${uploadConfig.data.filename}`,
+        path: uploadConfig.data.filename,
+        id: uploadConfig.data.id
+      })
+    } catch (error) {
 
-
-    // this.$axios.put(uploadConfig.data.url, file, {
-    //   headers: {
-    //     'Content-Type': 'image',
-    //     "Authorization": null,
-    //     "TrackId": null
-    //   }
-    // }).then((res) => {
-    //   console.log("in here yo");
-
-    // })
-
+    }
   },
   async multiImage({
     commit
@@ -78,10 +92,8 @@ export const actions = {
           "Authorization": null,
           "TrackId": null
         }
-      }).catch((bal) => {
-        console.log(bal);
       })
-      commit('PUSH_URL', uploadConfig.data.filename)
+      commit('PUSH_URL', uploadConfig.data.id)
       // const token = this.$storage.getUniversal('access_token')
       // let track_id = $storage.getUniversal('track_id')
       // this.$axios.defaults.headers.common['Authorization'] = token

@@ -7,18 +7,28 @@
       <div class="mobile-image__title">作者投稿 描画像</div>
     </div>
     <div class="mobile-image__list">
-      <div class="mobile-image__item" v-for="(drawing,index) in drawings" :key="index">
-        <v-img class="mobile-image__img" :src="drawing"></v-img>
+      <div class="mobile-image__item" v-for="(drawing) in drawings" :key="drawing.id">
+        <v-img class="mobile-image__img" :src="drawing.url"></v-img>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   props: {
-    theme: String,
-    drawings: Array
+    theme: String
+  },
+  computed: {
+    ...mapGetters({
+      drawings: "drawing/getChapterDrawings"
+    })
+  },
+  async mounted() {
+    await this.$store.dispatch("drawing/fetchChapterDrawings", {
+      chapterId: this.$route.params.chaptersId
+    });
   },
   methods: {
     toggleModal() {

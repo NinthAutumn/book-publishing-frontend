@@ -1,9 +1,9 @@
 <template>
   <div class="images-modal">
-    <ul class="images-modal__list" v-if="modal === 'image'&&chapter.drawings">
+    <ul class="images-modal__list" v-if="modal === 'image'&&drawings">
       <!-- {{chapter.drawings}} -->
-      <li class="images-modal__item" v-for="(drawing, index) in chapter.drawings" :key="index">
-        <v-img class="images-modal__img" :src="drawing" @click.stop="openImage(drawing)"></v-img>
+      <li class="images-modal__item" v-for="(drawing) in drawings" :key="drawing">
+        <v-img class="images-modal__img" :src="drawing.url" @click.stop="openImage(drawing.url)"></v-img>
       </li>
     </ul>
   </div>
@@ -15,8 +15,13 @@ export default {
   computed: {
     ...mapGetters({
       modal: "chapter/getModalState",
-      chapter: "chapter/getChapter"
+      drawings: "drawing/getChapterDrawings"
     })
+  },
+  async mounted() {
+    await this.$store.dispatch("drawing/fetchChapterDrawings", {
+      chapterId: this.$route.params.chaptersId
+    });
   },
   methods: {
     openImage(url) {

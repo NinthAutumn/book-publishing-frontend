@@ -8,6 +8,7 @@
       :isMobile="isMobile"
       :progress="progress"
       :clampLine="clampLine"
+      :rating="rating"
     ></default-type>
   </div>
 </template>
@@ -46,7 +47,8 @@ export default {
     isMobile: {
       type: Boolean,
       default: false
-    }
+    },
+    rating: Boolean
   },
   data() {
     return {

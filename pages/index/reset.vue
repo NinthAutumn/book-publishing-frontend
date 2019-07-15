@@ -1,7 +1,10 @@
 <template>
   <div class="reset-modal dialog dialog__container">
     <div class="dialog__content reset-modal__container">
-      <header class="reset-modal__title">パスワードをリセットする</header>
+      <div class="reset-modal__header flex-row flex--between flex--align">
+        <header class="reset-modal__title">パスワードをリセットする</header>
+        <fa class="reset-modal__icon" icon="times" @click="$router.push('/')"></fa>
+      </div>
       <div class="reset-modal__form flex-column">
         <label for="password">新しいパスワード</label>
         <input
@@ -11,7 +14,13 @@
           data-vv-as="パスワード"
           name="password"
           class="reset-modal__input reset-modal__input--new elevation-1"
+          :class="{'reset-modal__input--error':errors.has('password')}"
+          ref="password"
         />
+        <span
+          v-show="errors.has('password')"
+          class="reset-modal__error"
+        >{{ errors.first('password') }}</span>
         <label for>パスワードの確認</label>
         <input
           v-model="cpassword"
@@ -20,7 +29,12 @@
           v-validate="'required|confirmed:password'"
           name="password_confirmation"
           class="reset-modal__input reset-modal__input--confirm elevation-1"
+          :class="{'reset-modal__input--error':errors.has('password_confirmation')}"
         />
+        <span
+          v-show="errors.has('password_confirmation')"
+          class="reset-modal__error"
+        >{{ errors.first('password_confirmation') }}</span>
         <div class="flex-divider flex-row flex--right">
           <div class="reset-modal__submit" @click="resetPassword">パスワードを更新</div>
         </div>
@@ -41,6 +55,10 @@ export default {
   methods: {
     resetPassword: async function() {
       try {
+        await this.$validator.validateAll();
+        if (this.errors.any()) {
+          return;
+        }
         await this.$store.dispatch("auth/setPassword", {
           token: this.token,
           password: this.password
@@ -68,12 +86,27 @@ export default {
 .reset-modal {
   $self: &;
   &__container {
-    #{$self}__title {
-      text-align: center;
+    min-width: 33rem;
+    // min-height: 33rem;
+
+    #{$self}__header {
       font-size: 1.6rem;
-      margin-bottom: 1rem;
+      margin-bottom: 2rem;
+      #{$self}__title {
+        text-align: center;
+        font-size: 1.6rem;
+        // margin-bottom: 1rem;
+      }
+      #{$self}__icon {
+        cursor: pointer;
+      }
     }
     #{$self}__form {
+      #{$self}__error {
+        font-size: 1.4rem;
+        color: orangered;
+        margin-bottom: 1rem;
+      }
       label {
         display: block;
         margin-bottom: 8px;
@@ -111,6 +144,7 @@ export default {
         margin-bottom: 1rem;
         // margin-bottom: 2rem;
         border-left: 5px solid #f5f5f5;
+
         &--error {
           border-left: 5px solid #ff6160;
           &:focus {

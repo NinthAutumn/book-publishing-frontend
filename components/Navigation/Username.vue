@@ -43,7 +43,7 @@ export default {
     async setUsername() {
       try {
         this.avatar.generateBlob(async blob => {
-          const url = await this.$store.dispatch("upload/image", blob);
+          const url = await this.$store.dispatch("upload/uploadAvatar", blob);
           this.user["avatar"]["img"] = url.url;
           this.user["avatar"]["path"] = url.path;
           this.user["initial"] = true;

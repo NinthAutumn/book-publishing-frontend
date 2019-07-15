@@ -3,7 +3,7 @@
     <ul class="browse-booklist__list">
       <li class="library-booklist__item" v-for="(book) in books" :key="book.id">
         <!-- <Book :book="book"></Book> -->
-        <book-card :cover="book.cover" :book="book" :isMobile="$device.isMobile"></book-card>
+        <book-card rating :cover="book.cover" :book="book" :isMobile="$device.isMobile"></book-card>
       </li>
     </ul>
     <no-ssr>
