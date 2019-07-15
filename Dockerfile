@@ -16,6 +16,7 @@ RUN npm run build
 ENV NUXT_HOST=0.0.0.0
 # set app port
 ENV NUXT_PORT=3000
+ENV STRIPE_KEY=pk_test_vo5gfW5q36LnApH8C6AFeYJJ
 # ENV HOST 0.0.0.0
 EXPOSE 3000
 
