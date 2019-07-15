@@ -89,9 +89,11 @@ export default {
             window.FB.login(
               async res => {
                 if (res.authResponse) {
-                  let token = res.authResponse.accessToken;
-
-                  await this.auth({ token: token, strategy: "facebook" });
+                  // let token = ;
+                  await this.auth({
+                    token: res.authResponse.accessToken,
+                    strategy: "facebook"
+                  });
                 } else {
                   // console.log(errpr);
                   this.$toast.show(`フェースブックのログインに失敗しました`, {

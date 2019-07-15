@@ -79,19 +79,24 @@ export const actions = {
     strategy,
     token
   }) {
-    const {
-      data
-    } = await this.$axios.post(`/auth/social/${strategy}?token=${token}`)
-    commit('SET_AUTH', {
-      access_token: data.access_token,
-      refresh_token: data.refresh_token,
-      strategy: strategy
-    })
-    this.$storage.setUniversal('access_token', data.access_token)
-    this.$storage.setUniversal('refresh_token', data.refresh_token)
-    this.$storage.setUniversal('strategy', strategy)
-    this.$axios.defaults.headers.common['Authorization'] = 'Bearer ' + data.access_token
-    this.$router.go(0)
+    try {
+      const {
+        data
+      } = await this.$axios.post(`/auth/social/${strategy}?token=${token}`)
+      commit('SET_AUTH', {
+        access_token: data.access_token,
+        refresh_token: data.refresh_token,
+        strategy: strategy
+      })
+      this.$storage.setUniversal('access_token', data.access_token)
+      this.$storage.setUniversal('refresh_token', data.refresh_token)
+      this.$storage.setUniversal('strategy', strategy)
+      this.$axios.defaults.headers.common['Authorization'] = 'Bearer ' + data.access_token
+      this.$router.go(0)
+    } catch (error) {
+      return Promise.reject(error)
+    }
+
     // accessToken/idToken
 
   },

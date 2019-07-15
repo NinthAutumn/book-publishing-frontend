@@ -14,8 +14,8 @@
           ></croppa>
         </no-ssr>
       </div>
-      <div class="div" v-if="$store.state.auth.strategy === 'local'"></div>
-      <div class="username-form__username" v-else>
+      <div>アバターは要否です</div>
+      <div class="username-form__username">
         <v-text-field v-model="user.username" label="ユーザー名*"></v-text-field>
       </div>
       <div class="username-form__submit">
@@ -47,10 +47,7 @@ export default {
           this.user["avatar"]["img"] = url.url;
           this.user["avatar"]["path"] = url.path;
           this.user["initial"] = true;
-          if (this$store.state.auth.strategy !== "local") {
-            await this.$store.dispatch("user/patchUser", { user: this.user });
-          } else {
-          }
+          await this.$store.dispatch("user/patchUser", { user: this.user });
         });
 
         // await this.$auth.fetchUser();

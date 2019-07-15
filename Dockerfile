@@ -6,7 +6,7 @@ WORKDIR /usr/src/app/client
 
 COPY . .
 
-RUN npm install
+RUN npm install --production --quiet
 ENV SERVER_URL=https://nobles-231311.appspot.com/api
 # Build app
 
