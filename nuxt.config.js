@@ -85,10 +85,6 @@ module.exports = {
       ssr: false
     },
     {
-      src: '~/plugins/intercept',
-      ssr: false
-    },
-    {
       ssr: false,
       src: '~/plugins/avatar'
     },
@@ -220,11 +216,11 @@ module.exports = {
     }],
     ['@nuxtjs/universal-storage', {
       storage: {
-        vuex: true, // boolean or {namespace} 
-        localStorage: true, // boolean or {prefix } 
-        cookie: true, // boolean or {prefix, options } 
+        vuex: true, // boolean or {namespace}
+        localStorage: true, // boolean or {prefix }
+        cookie: true, // boolean or {prefix, options }
         initialState: {}, // Object {}
-        ignoreExceptions: true // 
+        ignoreExceptions: true //
       }
     }],
     ['@nuxtjs/dotenv', {

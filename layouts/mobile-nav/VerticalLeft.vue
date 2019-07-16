@@ -27,6 +27,8 @@
         <div class="mobile-vleft__buy" @click.stop="$emit('stripe')">買う</div>
       </div>
       <div class="mobile-vleft__nav" v-cloak>
+        <div v-ripple @click="logout" class="mobile-vleft__logout">サインアウト</div>
+
         <div class="mobile-vleft__title">通知</div>
         <inbox-list v-cloak></inbox-list>
         <div class="mobile-vleft__title">ブックマーク</div>
@@ -37,7 +39,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 export default {
   computed: {
     ...mapGetters({
@@ -59,7 +61,10 @@ export default {
     navigate: function() {
       this.$router.push(`/users/${this.user.id}`);
       this.$emit("toggle", true);
-    }
+    },
+    ...mapActions({
+      logout: "auth/logout"
+    })
   },
   components: {
     Currency: () => import("@/components/All/Currency"),
@@ -134,6 +139,11 @@ export default {
     //   background-color: black;
     // }
     border-bottom: 1px solid #e3e8ee;
+  }
+  &__logout {
+    font-size: 1.6rem;
+    text-align: center;
+    // padding-bottom: 1rem;
   }
   &__meta {
     display: flex;

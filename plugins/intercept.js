@@ -9,7 +9,7 @@ export default function ({
 
   $axios.onError(async error => {
     if (error.config && error.response && error.response.status === 401) {
-      return store.dispatch('auth/logout')
+      return await store.dispatch('auth/logout')
     }
   })
 
