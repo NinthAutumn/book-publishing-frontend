@@ -36,16 +36,7 @@ export default function ({
   if (routeOption(route, 'auth', false)) {
     return
   }
-
-  // Add middleware
-  // app.use(redirectSSL)
   if (!store.state.auth.loggedIn) {
-    // console.log(app);
-    // app.$toast.show('アカウントが必要です', {
-    //   duration: 1000,
-    //   theme: 'toasted-primary',
-    //   position: 'top-right'
-    // })
     return redirect('/')
   }
 
