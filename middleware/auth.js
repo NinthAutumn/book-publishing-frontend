@@ -36,10 +36,9 @@ export default function ({
   if (routeOption(route, 'auth', false)) {
     return
   }
-  const redirectSSL = require('redirect-ssl')
 
   // Add middleware
-  app.use(redirectSSL)
+  // app.use(redirectSSL)
   if (!store.state.auth.loggedIn) {
     // console.log(app);
     // app.$toast.show('アカウントが必要です', {
