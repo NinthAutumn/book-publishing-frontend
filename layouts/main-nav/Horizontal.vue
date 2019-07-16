@@ -14,6 +14,9 @@
       <SearchBar class="searchbar"></SearchBar>
 
       <div class="user-nav flex-row flex--align">
+        <nuxt-link v-ripple tag="div" to="/dashboard/books/new" class="create-book">
+          <fa icon="pen"></fa>
+        </nuxt-link>
         <div class="site-sub" @click.stop="openSubModal">
           <fa icon="rainbow"></fa>
         </div>
@@ -172,6 +175,16 @@ export default {
     cursor: pointer;
   }
 }
+.create-book {
+  font-size: 1.7rem;
+  margin-right: 1rem;
+  padding: 1rem;
+  display: flex;
+  border-radius: 10rem;
+  &:hover {
+    cursor: pointer;
+  }
+}
 .inbox-icon {
   position: relative !important;
 
@@ -295,6 +308,7 @@ nav {
 .left-menu {
   // height: 100%;
 }
+
 .profile-pic {
   position: relative;
   // border-radius: 100px;

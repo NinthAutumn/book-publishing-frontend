@@ -12,12 +12,22 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   layout: "user-nav/User",
   async fetch({ store, params }) {
     // await store.dispatch("dashboard/fetchTransactionGraph", { time:  });
     await store.dispatch("dashboard/fetchTransactionPie");
     await store.dispatch("analytic/fetchUserBooks", { funnel: true });
+    await store.dispatch("analytic/fetchUserBooks", { funnel: false });
+  },
+  computed: {
+    ...mapGetters({
+      books: "analytic/getBookList"
+    })
+  },
+  mounted() {
+    this.books.length < 1 ? this.$router.push("/dashboard/books/new") : null;
   },
   components: {
     PieGraph: () => import("@/components/Dashboard/Graphs/Pie"),

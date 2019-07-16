@@ -62,10 +62,18 @@ export default {
     };
   },
   async mounted() {
-    this.bookId = {
-      id: this.books[0].value.id,
-      title: this.books[0].value.title
-    };
+    if (this.books[0]) {
+      this.bookId = {
+        id: this.books[0].value.id,
+        title: this.books[0].value.title
+      };
+    } else {
+      this.bookId = {
+        id: 0,
+        title: 0
+      };
+    }
+
     // this.books.forEach(book => {
     //   this.book_list.push({
     //     key: `ID: ${book.id}`,
