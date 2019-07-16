@@ -11,7 +11,7 @@
           v-validate="'required'"
           data-vv-as="漢字姓"
           placeholder="姓"
-        >
+        />
         <input
           class="profile-form__input profile-form__input--name-kana"
           v-model="kana_form.lastName"
@@ -20,7 +20,7 @@
           type="text"
           name="fullname"
           placeholder="カタカナ*"
-        >
+        />
       </div>
       <div class="flex-control flex-column">
         <label for="fullname">名*</label>
@@ -32,7 +32,7 @@
           data-vv-as="漢字名"
           name="fullname"
           placeholder="名"
-        >
+        />
         <input
           class="profile-form__input profile-form__input--name-kana"
           v-model="kana_form.firstName"
@@ -41,20 +41,30 @@
           type="text"
           name="fullname"
           placeholder="カタカナ*"
-        >
+        />
       </div>
     </div>
     <div class="flex-divider">
-      <label for="fullname">Eメール*</label>
+      <label for="email">Eメール*</label>
       <input
         class="profile-form__input profile-form__input--email"
         v-model="form.email"
         type="text"
-        v-validate="'required'"
-        data-vv-as="漢字名"
+        v-validate="'required|email'"
+        data-vv-as="Eメール"
         name="email"
         placeholder="example@example.com"
-      >
+      />
+      <label for="phone">携帯番号*</label>
+      <input
+        class="profile-form__input profile-form__input--email"
+        v-model="form.phone"
+        type="text"
+        v-validate="'required'"
+        data-vv-as="携帯"
+        name="email"
+        placeholder="00 0000 0000"
+      />
     </div>
     <div class="flex flex--between flex--align">
       <div class="flex-divider">
@@ -62,7 +72,7 @@
         <v-radio-group v-model="form.gender" row>
           <v-radio
             v-for="n in genders"
-            :key="n"
+            :key="n.key"
             :label="`${n.key}`"
             :value="n.value"
             color="#566CD6"
@@ -143,9 +153,6 @@ export default {
       selected: []
     };
   },
-  updated() {
-    // console.log(this.person);
-  },
   mounted() {
     if (this.birth) {
       this.form.birth = this.birth;
@@ -157,11 +164,6 @@ export default {
       this.form.lastName = this.person["last_name_kanji"];
       this.form.phone = this.person["phone"];
       this.form.email = this.person["email"];
-      // if (get(this.person, "dob.day", null)) {
-      //   this.form.birth = `${this.person["dob"]["day"]}/${
-      //     this.person["dob"]["month"]
-      //   }/${this.person["dob"]["year"]}`;
-      // }
     }
   },
   methods: {
@@ -182,6 +184,7 @@ export default {
         first_name_kanji: this.form.firstName,
         last_name_kanji: this.form.lastName,
         phone: this.form.phone,
+        email: this.form.email,
         dob: {
           day: this.$moment(this.form.birth).date(),
           month: this.$moment(this.form.birth).month() + 1,
@@ -189,7 +192,6 @@ export default {
         },
         gender: this.form.gender
       };
-      // console.log();
       this.$emit("save", person);
       this.$emit("storeBirth", this.form.birth);
       this.$store.commit("SET_CONTRACT_STEP", 1);

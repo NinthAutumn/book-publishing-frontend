@@ -6,6 +6,7 @@
       </div>
     </div>
     <div class="confirm-identity__container">
+      <div class="confirm-identity__error">{{createError}}</div>
       <div class="confirm-identity__select">
         <div class="confirm-identity__text" @click.stop="toggleCardSelect">
           <span>{{selected_card.type||`本人確認`}}</span>
@@ -105,6 +106,7 @@ export default {
           type: ""
         }
       },
+      createError: "",
       stripe: this.$stripe.import()
     };
   },
@@ -115,15 +117,11 @@ export default {
     },
     toggleCardSelect: function() {
       this.cardModal = !this.cardModal;
-      // this.cardModal = this
     },
     handleChangeCover(res, file) {
       this.form.cover.file = file.raw;
       this.form.cover.name = file.name;
       this.form.cover.type = file.raw.type;
-      // console.log(file);
-      // this.form['cover']['url'] =
-      // this.fileList = fileList.slice(-3);
     },
     handleChangeBack(res, file) {
       this.form.back.file = file.raw;
@@ -145,10 +143,10 @@ export default {
           });
           this.loading = false;
         }
-        // return console.log(this.person);
         let file;
         if (this.selected_card.require) {
           if (!this.form.back.name) {
+            this.loading = false;
             return this.$toast.show("身分証明書の裏側の写真が必要です", {
               theme: "toasted-primary",
               position: "top-right",
@@ -156,16 +154,7 @@ export default {
               duration: 2000
             });
           }
-          // this.form.back.url = await this.$store.dispatch(
-          //   "upload/image",
-          //   this.form.back.file
-          // );
         }
-        // this.form.cover.url = await this.$store.dispatch(
-        //   "upload/image",
-        //   this.form.cover.file
-        // );
-        // return
         // this.person["person"]["tos_shown_and_accepted"] = true;
         const { token, error } = await this.stripe.createToken(
           "person",
@@ -174,7 +163,6 @@ export default {
         // clg
         if (error) throw error;
         let formData = new FormData();
-        console.log(token);
         formData.append("person", token.id);
         formData.append("cover", this.form.cover.file);
         formData.append(
@@ -189,6 +177,9 @@ export default {
               "Content-Type": "multipart/form-data"
             }
           });
+          if (res.data.error) {
+            throw new Error(res.data.error);
+          }
           if (res.status !== 200) {
             throw new Error("bad");
           }
@@ -206,6 +197,9 @@ export default {
           if (res.status !== 200) {
             throw new Error("bad");
           }
+          if (res.data.error) {
+            throw new Error(res.data.error);
+          }
         }
         this.loading = false;
         return this.$toast.show("本人確認を完了しました", {
@@ -216,8 +210,8 @@ export default {
         });
       } catch (error) {
         this.loading = false;
-        console.log(error);
-        return this.$toast.show("本人確認に失敗しました", {
+        this.createError = error;
+        return this.$toast.show(error, {
           theme: "toasted-primary",
           position: "top-right",
           icon: "extension",
@@ -235,6 +229,15 @@ export default {
   $self: &;
   user-select: none;
   position: relative;
+  &__error {
+    padding: 1rem;
+    color: #697386;
+    border-radius: 0.5rem;
+    width: 100%;
+    font-size: 1.6rem;
+    text-align: center;
+    background-color: #fff;
+  }
   &__loading {
     top: 0;
     left: 0;

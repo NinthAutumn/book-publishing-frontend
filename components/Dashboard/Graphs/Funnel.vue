@@ -63,6 +63,8 @@ export default {
   },
   async mounted() {
     if (this.books[0]) {
+      // console.log(this.books[0]);
+      // alert(this.books[0]);
       this.bookId = {
         id: this.books[0].value.id,
         title: this.books[0].value.title

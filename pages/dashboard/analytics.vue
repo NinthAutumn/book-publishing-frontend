@@ -18,8 +18,8 @@ export default {
   async fetch({ store, params }) {
     // await store.dispatch("dashboard/fetchTransactionGraph", { time:  });
     await store.dispatch("dashboard/fetchTransactionPie");
-    await store.dispatch("analytic/fetchUserBooks", { funnel: true });
     await store.dispatch("analytic/fetchUserBooks", { funnel: false });
+    await store.dispatch("analytic/fetchUserBooks", { funnel: true });
   },
   computed: {
     ...mapGetters({

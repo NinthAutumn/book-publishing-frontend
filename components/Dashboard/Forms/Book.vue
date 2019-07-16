@@ -17,7 +17,7 @@
               :aspect-ratio="1/1.5"
               width="150"
             >
-              <img v-if="imageUrl" :src="imageUrl" class="avatar">
+              <img v-if="imageUrl" :src="imageUrl" class="avatar" />
               <i v-else class="el-icon-plus avatar-uploader-icon"></i>
             </el-upload>
           </div>
@@ -33,7 +33,7 @@
               class="book-form__input book-form__input--title"
               placeholder="タイトル"
               v-model="form.title"
-            >
+            />
             <span class="form-error">{{ errors.first('book-title') }}</span>
             <label for="synopsis">あらすじ*</label>
             <textarea
@@ -128,7 +128,7 @@
             class="form-submit form-submit--primary book-form__submit"
             value="投稿"
             @click="postBook"
-          >
+          />
         </div>
       </form>
     </div>
@@ -319,7 +319,7 @@ export default {
         });
 
         this.loading = false;
-        return this.$router.go(-1);
+        return this.$router.push("/dashboard");
       } catch (error) {
         this.$toast.show("本の投稿に失敗しました！", {
           theme: "toasted-primary",
