@@ -341,8 +341,16 @@ nav {
     align-items: center;
     justify-content: space-between;
     width: 10rem;
+
+    #{$self}__meta {
+      overflow: hidden;
+    }
     #{$self}__username {
       font-size: 1.2rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 100%;
       // margin-right: 2rem;
     }
     #{$self}__icon {

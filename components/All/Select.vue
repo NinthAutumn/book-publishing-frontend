@@ -39,6 +39,23 @@
         <fa class="select-component__name__icon" :icon="icon"></fa>
         <p>{{name}}</p>
       </div>
+      <transition name="slide-up">
+        <div
+          class="select-component__mobile-list"
+          v-if="$device.isMobile&&!multiple&&modal"
+          v-click-outside="closeModal"
+        >
+          <div
+            v-ripple
+            class="select-component__mobile-option"
+            v-for="(item,index) in multiData"
+            @click="select(index)"
+            :key="item.key"
+            v-text="item.key"
+            :class="{'select-component__mobile-option--selected':item.selected}"
+          ></div>
+        </div>
+      </transition>
       <transition
         class="select-component__modal"
         :name="transition"
@@ -47,7 +64,7 @@
         <div
           :style="{width: width+'px',height: mheight+'px','font-size': fontSize + 'px'}"
           class="select-component__list"
-          v-if="!multiple && modal"
+          v-if="!multiple && modal&&!$device.isMobile"
           v-click-outside="closeModal"
         >
           <div
@@ -418,6 +435,32 @@ export default {
   }
   .top {
     top: -400px;
+  }
+  @media screen and (max-width: 450px) {
+    // #{$self}__list {
+    //   width: 100vw;
+    //   bottom: 0!important;
+    //   left: 0;
+    //   position: fixed;
+    //   height: 50vh;
+    // }
+  }
+  &__mobile-list {
+    bottom: 0;
+    width: 100vw;
+    position: fixed;
+    background-color: #fff;
+    z-index: 10000;
+    left: 0;
+    #{$self}__mobile-option {
+      font-size: 1.8rem;
+      text-align: center;
+      padding: 1rem 0;
+
+      &--selected {
+        color: #f4648a;
+      }
+    }
   }
   &__list {
     border-radius: 0.4rem;
