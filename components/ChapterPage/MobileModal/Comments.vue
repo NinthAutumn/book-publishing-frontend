@@ -85,7 +85,7 @@ export default {
     },
     async createComment() {
       try {
-        console.log(this.parent_id);
+        // console.log(this.parent_id);
 
         if (this.parent_id) {
           await this.$store.dispatch("comment/addCommentMobile", {

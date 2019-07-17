@@ -1,5 +1,5 @@
 <template>
-  <nav class="mv-right">
+  <nav class="mv-right" v-click-outside="toggleMenu">
     <div class="mv-right__nav">
       <div class="mv-right__icon" v-ripple @click.stop="toggleMenu">
         <fa icon="bars" class="mv-right__bar"></fa>
