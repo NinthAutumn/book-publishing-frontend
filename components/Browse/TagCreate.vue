@@ -19,6 +19,9 @@
         :class="{selected: tag.selected}"
       >{{tag.key}}({{tag.sum}})</li>
     </transition-group>
+    <no-ssr>
+      <infinite-loading @infinite="infiniteHandler"></infinite-loading>
+    </no-ssr>
   </div>
 </template>
 
@@ -28,7 +31,8 @@ export default {
     return {
       search: "",
       selected: [],
-      object: []
+      object: [],
+      page: 2
     };
   },
   watch: {
@@ -42,13 +46,13 @@ export default {
     }
   },
   async mounted() {
-    const { tag } = await this.$store.dispatch("book/searchTags", {
+    const { tags } = await this.$store.dispatch("book/searchTags", {
       page: 1,
       limit: 30,
       search: this.search
     });
     let object = [];
-    tag.forEach(item => {
+    tags.forEach(item => {
       object.push({ key: item.name, sum: item.books, selected: false });
     });
     this.selected = object;
@@ -62,7 +66,7 @@ export default {
       });
       let object = [];
       this.tags.forEach(item => {
-        object.push({ key: item._id, sum: item.sum, selected: false });
+        object.push({ key: item.name, sum: item.books, selected: false });
       });
       this.selected = object;
       this.selected.forEach(tag => {
@@ -83,6 +87,27 @@ export default {
       });
       this.object = temparray;
       this.$emit("input", temparray);
+    },
+    async infiniteHandler($state) {
+      const { tags } = await this.$store.dispatch("book/searchTags", {
+        page: this.page++,
+        limit: 20,
+        search: this.search,
+        infinite: true
+      });
+
+      if (tags.length > 0) {
+        tags.forEach(item => {
+          this.selected.push({
+            key: item.name,
+            sum: item.books,
+            selected: false
+          });
+        });
+        $state.loaded();
+      } else {
+        $state.complete();
+      }
     }
   }
 };
@@ -105,7 +130,7 @@ export default {
   box-shadow: 0 7px 14px 0 rgba(60, 66, 87, 0.1),
     0 3px 6px 0 rgba(0, 0, 0, 0.07);
   $self: &;
-
+  overflow: auto;
   &__header {
     font-size: 17px;
   }
@@ -123,7 +148,7 @@ export default {
   &__list {
     display: flex;
     flex-wrap: wrap;
-    overflow: auto;
+    // overflow: auto;
     justify-content: flex-start;
     max-height: 400px;
     #{$self}__item {
@@ -149,6 +174,8 @@ export default {
     }
   }
   &__search {
+    position: sticky;
+    top: 0;
     margin-bottom: 10px;
     #{$self}__create-button {
       width: 70px;
@@ -176,7 +203,9 @@ export default {
       border: 1px solid rgb(236, 236, 236);
       border-right: 0;
       box-sizing: border-box;
-      box-shadow: 1px 1px 5px rgb(247, 247, 247);
+      background-color: #fff;
+      box-shadow: 0 2px 5px 0 rgba(60, 66, 87, 0.1),
+        0 1px 1px 0 rgba(0, 0, 0, 0.07);
       &:focus,
       &:active {
         outline: none;

@@ -185,13 +185,20 @@ export const actions = {
   }, {
     search,
     page,
-    limit
+    limit,
+    infinite = false
   }) {
     try {
       const res = await this.$axios.get(`/book/tags?search=${search}&limit=${limit}&page=${page}`)
-      commit('SET_TAG_LIST', res.data)
+      if (infinite) {
+        commit('PUSH_TAG_LIST', res.data)
+
+      } else {
+        commit('SET_TAG_LIST', res.data)
+
+      }
       return Promise.resolve({
-        tag: res.data
+        tags: res.data
       })
     } catch (error) {
       return Promise.reject(error)
@@ -385,6 +392,11 @@ export const mutations = {
   },
   SET_TAG_LIST(state, tags) {
     state.tagList = tags
+  },
+  PUSH_TAG_LIST(state, tags) {
+    tags.forEach((tag) => {
+      state.tagList.push(tag)
+    })
   },
   SET_BOOK_VIEW(state, view) {
     state.view = view
