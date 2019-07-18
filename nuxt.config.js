@@ -236,6 +236,7 @@ module.exports = {
       version: 'v3', // Default
     }],
     "nuxt-compress",
+    "nuxt-purgecss"
   ],
   /*
    ** Axios module configuration
