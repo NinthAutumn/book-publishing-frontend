@@ -317,7 +317,7 @@ export default {
         this.multiData.push({ key: item, selected: false });
       });
     } else {
-      (this.object);
+      this.object;
       this.object.forEach(item => {
         let disable = false;
 
@@ -450,6 +450,8 @@ export default {
     width: 100vw;
     position: fixed;
     background-color: #fff;
+    box-shadow: 0 2px 5px 0 rgba(60, 66, 87, 0.1),
+      0 1px 1px 0 rgba(0, 0, 0, 0.07);
     z-index: 10000;
     left: 0;
     #{$self}__mobile-option {

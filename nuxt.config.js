@@ -2,22 +2,8 @@ const pkg = require('./package')
 const webpack = require('webpack')
 require('dotenv').config()
 
-// var FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
-// const webpack = require('webpack');
-// var webpackConfig = {
-//   // ...
-//   plugins: [
-//     new FriendlyErrorsWebpackPlugin(),
-//   ],
-//   // ...
-// }
-
 module.exports = {
   mode: 'universal',
-
-  /*
-   ** Headers of the page
-   */
   head: {
     title: 'ノーブル',
     meta: [{
@@ -229,7 +215,8 @@ module.exports = {
     ['@nuxtjs/recaptcha', {
       siteKey: '6LcZRq4UAAAAAL74nLSlaPqv10TJXVxhzyANs49_',
       version: 2,
-      language: 'ja'
+      language: 'ja',
+      hideBadge: true
     }],
     ['@nuxtjs/toast', {
       position: 'top-right',

@@ -81,15 +81,20 @@ export default {
   components: {
     SignUpFrom: () => import("./SignUpFrom")
   },
-  mounted() {
+  async mounted() {
     this.$refs.username.focus();
+    // await this.$recaptcha.
   },
   methods: {
     // async stateOff() {
     //   await this.$store.commit("LOGIN_FALSE");
     // },
-    onError() {},
-    onSuccess(token) {},
+    onError(error) {
+      // alert(error);
+    },
+    onSuccess(token) {
+      // alert(token);
+    },
     onExpired() {},
     changePage(page) {
       this.$store.commit("SET_AUTH_PAGE", page);
@@ -103,8 +108,11 @@ export default {
         password: this.form.password
       };
       try {
+        console.log(this.$recaptcha);
+
+        // await this.$recaptcha.execute();
+        // await this.$recaptcha.render();
         const token = await this.$recaptcha.getResponse();
-        console.log("ReCaptcha token:", token);
         const { error } = await this.$store.dispatch("auth/login", {
           user: this.form,
           strategy: "local"
@@ -134,7 +142,6 @@ export default {
             icon: "extension"
           });
         }
-
         this.bigError = error;
         this.$toast.error(this.bigError, {
           duration: 2000,
