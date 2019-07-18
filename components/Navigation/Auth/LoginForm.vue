@@ -16,7 +16,8 @@
           class="login-form__error"
           style="text-align:center;font-size:1.4rem;padding:1rem;border-radiu:1rem;background-color:#F6F9FC;"
           v-if="bigError"
-        >パスワードまたはユーザ名が間違っています</div>
+          v-text="bigError"
+        ></div>
         <label for="username">ユーザー名・Eメール</label>
         <input
           class="login-form__input elevation-1"
@@ -26,7 +27,7 @@
           v-model="form.username"
           autocomplete="username"
           placeholder="ユーザー名・Eメール"
-        >
+        />
 
         <label for="password">パスワード</label>
         <input
@@ -36,14 +37,16 @@
           autocomplete="current-password"
           placeholder="パスワード"
           v-model="form.password"
-        >
+        />
         <div class="text--center" style="margin-top:1rem;">
           <p
             class="login-forgot__password text--primary text--link"
             @click="changePage(3)"
           >パスワードを忘れた?</p>
         </div>
-
+        <div class="flex-divider flex-row flex--align flex--center">
+          <recaptcha @error="onError" @success="onSuccess" @expired="onExpired" />
+        </div>
         <div class="flex-divider flex-row flex--right">
           <v-btn color="#8860d0" type="submit">ログイン</v-btn>
         </div>
@@ -85,21 +88,28 @@ export default {
     // async stateOff() {
     //   await this.$store.commit("LOGIN_FALSE");
     // },
+    onError() {},
+    onSuccess(token) {},
+    onExpired() {},
     changePage(page) {
       this.$store.commit("SET_AUTH_PAGE", page);
     },
     async login() {
       this.bigError = false;
       this.loading = true;
+
       const user = {
         username: this.form.username,
         password: this.form.password
       };
       try {
+        const token = await this.$recaptcha.getResponse();
+        console.log("ReCaptcha token:", token);
         const { error } = await this.$store.dispatch("auth/login", {
           user: this.form,
           strategy: "local"
         });
+
         if (error) {
           this.loading = false;
           this.bigError = true;
@@ -119,8 +129,12 @@ export default {
       } catch (error) {
         console.log(error);
         this.loading = false;
-        this.bigError = true;
-        this.$toast.show("パスワードまたはユーザ名が間違っています", {
+        if (error === "Failed to execute") {
+          return (this.bigError = "ロボット認証に失敗しました");
+        }
+
+        this.bigError = "パスワードまたはユーザ名が間違っています";
+        this.$toast.show(this.bigError, {
           theme: "toasted-primary",
           position: "top-right",
           duration: 2000,

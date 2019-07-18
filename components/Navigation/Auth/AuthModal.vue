@@ -66,7 +66,7 @@ export default {
 .auth-modal {
   // width: 100%;
   width: 44rem;
-  height: 60rem;
+  min-height: 60rem;
   /* padding: 3rem; */
   box-sizing: border-box;
   background-color: rgb(255, 255, 255);

@@ -8,7 +8,7 @@
             :class="{'profile-dropdown__profile-pic--bronze':user.status==='bronze'}"
           >
             <v-avatar size="50">
-              <img :src="user.avatar.img">
+              <img :src="user.avatar? user.avatar.img : avatar" />
             </v-avatar>
           </div>
           <div class="profile-dropdown__user-text">
@@ -96,7 +96,8 @@ export default {
         { title: "ログアウト", link: "/home" }
       ],
       loading: true,
-      product: false
+      product: false,
+      avatar: require("~/assets/profile.png")
     };
   },
   methods: {

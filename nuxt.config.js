@@ -226,14 +226,18 @@ module.exports = {
     ['@nuxtjs/dotenv', {
       /* module options */
     }],
-    '@nuxtjs/recaptcha',
+    ['@nuxtjs/recaptcha', {
+      siteKey: '6LcZRq4UAAAAAL74nLSlaPqv10TJXVxhzyANs49_',
+      version: 2,
+      language: 'ja'
+    }],
     ['@nuxtjs/toast', {
       position: 'top-right',
       duration: 5000
     }],
     ['nuxt-stripe-module', {
       publishableKey: 'pk_test_vo5gfW5q36LnApH8C6AFeYJJ',
-      version: 'v3', // Default
+      version: 'v2', // Default
     }],
     "nuxt-compress",
     "nuxt-purgecss"
