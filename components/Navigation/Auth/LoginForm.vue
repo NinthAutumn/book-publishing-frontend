@@ -112,10 +112,8 @@ export default {
 
         if (error) {
           this.loading = false;
-          this.bigError = true;
-          return this.$toast.show("パスワードまたはユーザ名が間違っています", {
-            theme: "toasted-primary",
-            position: "top-right",
+          this.bigError = error;
+          return this.$toast.error(error, {
             duration: 2000,
             icon: "extension"
           });
@@ -130,13 +128,15 @@ export default {
         console.log(error);
         this.loading = false;
         if (error === "Failed to execute") {
-          return (this.bigError = "ロボット認証に失敗しました");
+          this.bigError = "ロボット認証に失敗しました";
+          return this.$toast.error(this.bigError, {
+            duration: 2000,
+            icon: "extension"
+          });
         }
 
-        this.bigError = "パスワードまたはユーザ名が間違っています";
-        this.$toast.show(this.bigError, {
-          theme: "toasted-primary",
-          position: "top-right",
+        this.bigError = error;
+        this.$toast.error(this.bigError, {
           duration: 2000,
           icon: "extension"
         });

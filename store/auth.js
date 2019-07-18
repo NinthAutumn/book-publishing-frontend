@@ -49,10 +49,7 @@ export const actions = {
         password: user.password
       })
       if (data.error) {
-
-        return Promise.resolve({
-          error: data.error
-        })
+        return Promise.reject(data.error)
       }
       commit('SET_AUTH', {
         access_token: data.access_token,
@@ -68,9 +65,7 @@ export const actions = {
         error: null
       })
     } catch (error) {
-      return Promise.reject({
-        error
-      })
+      return Promise.reject(error)
     }
   },
   async socialAuth({
