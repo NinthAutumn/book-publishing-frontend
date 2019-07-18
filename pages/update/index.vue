@@ -84,7 +84,7 @@ export default {
   computed: {
     update_view() {
       if (this.$store.getters.isAuthenticated) {
-        // console.log(this.$store.getters["user/getUpdateView"]);
+        (this.$store.getters["user/getUpdateView"]);
         return this.$store.getters["user/getUpdateView"];
       } else {
         return "grid";

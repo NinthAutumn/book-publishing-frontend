@@ -420,7 +420,7 @@ export const mutations = {
         }
       })
     })
-    // console.log(books);
+    (books);
     temp.forEach((book) => {
       state.latest.push(book)
     })

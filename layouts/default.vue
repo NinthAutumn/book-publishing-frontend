@@ -76,7 +76,7 @@ export default {
       this.$store.commit("DROPDOWN_FALSE");
     },
     toggleMenu(val) {
-      // console.log(val);
+      (val);
       if (val) {
         if (!this.auth) {
           return this.$router.push("/auth/login");

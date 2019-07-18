@@ -18,7 +18,7 @@
             type="text"
             name="fullname"
             placeholder="姓名"
-          >
+          />
         </div>
         <div class="flex-control" style="width:45%;">
           <label for="fullname">名前</label>
@@ -28,7 +28,7 @@
             type="text"
             name="fullname"
             placeholder="名前"
-          >
+          />
         </div>
       </div>
       <div class="flex-control">
@@ -41,7 +41,7 @@
           data-vv-as="記入されたメールアドレス"
           name="email"
           placeholder="example@email.com"
-        >
+        />
       </div>
       <div class="flex-control">
         <label for="phone">電話番号</label>
@@ -52,7 +52,7 @@
           type="text"
           name="phone"
           placeholder="080-1234-5678"
-        >
+        />
       </div>
     </div>
     <label class="payment-form__card-label">クレジット・デビット カード</label>
@@ -191,7 +191,6 @@ export default {
     handleServerResponse: async function(response) {
       if (response.error) {
         console.log(response.error);
-        console.log("in hereasdfasdfdsf");
         return this.$toast.show("クラウンコインの購入に失敗しました", {
           icon: "extension",
           duration: 1000,
@@ -199,7 +198,6 @@ export default {
           theme: "toasted-primary"
         });
       } else if (response.requires_action) {
-        console.log("in here");
         const result = await this.stripe.handleCardAction(
           this.paymentIntent.client_secret
         );

@@ -73,8 +73,6 @@ export default {
     }
   },
   created() {
-    console.log(this.text);
-
     if (this.content) {
       this.text = this.content;
       this.changes();
@@ -143,7 +141,7 @@ export default {
         })
         // .filter(value => value)
         .map((value, index) => {
-          // console.log(value );
+          value;
           value.replace(/[|]/, "<ruby>");
           if (value) {
             br = 0;

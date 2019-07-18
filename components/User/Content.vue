@@ -78,7 +78,7 @@ export default {
       this.$moment(this.user.created_at)
         .startOf("month")
         .fromNow() + " 登録";
-    // console.log(this.user);
+    (this.user);
     if (this.user.gender === "male") {
       this.metas["gender"]["value"] = "男";
     } else if (this.user.gender === "female") {

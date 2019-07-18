@@ -109,7 +109,7 @@ export default {
       }
     },
     selectCard: function() {
-      // console.log(this.plan_index);
+      (this.plan_index);
       if (this.disable) {
         return this.$toast.show("まだこのプランはサポートされていません", {
           duration: 2000,

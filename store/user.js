@@ -137,7 +137,7 @@ export const actions = {
   }) {
     try {
       const res = await this.$axios.get('/user')
-      // console.log(data);
+      (data);
       commit('SET_USER', res.data)
     } catch (error) {
       console.log(error);

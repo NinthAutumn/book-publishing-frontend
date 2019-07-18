@@ -247,17 +247,13 @@ export default {
   }
 }
 .dropdown-inactive {
-  // display: none;
   position: fixed;
-  // right: 0;
   top: -1111px;
   height: 0;
-  // width: 45px;
   border-radius: 100px;
 }
 
 .h-nav {
-  // background-color: #141B39;
   border-bottom-right-radius: 1rem;
   border-bottom-left-radius: 1rem;
   &--black {
@@ -283,12 +279,6 @@ nav {
   justify-content: space-between;
   height: 50px;
 }
-// ul {
-//   list-style: none;
-//   display: flex;
-//   align-items: center;
-//   justify-content: space-between;
-// }
 .el-icon-menu {
   font-size: 32px;
   color: black;
@@ -302,7 +292,6 @@ nav {
   transition: 300ms;
 }
 .menu-inactive {
-  /* animation: forwards; */
   transition: 300ms;
 }
 .left-menu {

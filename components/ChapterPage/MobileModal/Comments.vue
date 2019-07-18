@@ -85,7 +85,7 @@ export default {
     },
     async createComment() {
       try {
-        // console.log(this.parent_id);
+        this.parent_id;
 
         if (this.parent_id) {
           await this.$store.dispatch("comment/addCommentMobile", {
@@ -99,7 +99,6 @@ export default {
             bookId: this.$route.params.id,
             chapterId: this.$route.params.chaptersId,
             content: this.content
-            // parentId: this.parent_id
           });
         }
         await this.$store.dispatch("comment/fetchMobileComments", {
@@ -109,7 +108,6 @@ export default {
         this.content = null;
         this.parent_id = null;
       } catch (error) {
-        console.log(error);
         return this.$toast.show("返信の投稿に失敗しました", {
           theme: "toasted-primary",
           position: "top-right",
@@ -138,13 +136,11 @@ export default {
   z-index: 900;
   position: fixed;
   z-index: 100;
-  // position
   top: 0;
   right: 0;
   background-color: #fff;
   display: flex;
-  // align-items:center;
-  // justify-content: space-between;
+
   flex-direction: column;
 
   &--default {
@@ -174,7 +170,6 @@ export default {
     border-color: #eed368;
     #{$self}__header {
       background-color: #e9e1b8;
-      // color:blac
     }
     #{$self}__form-modal {
       background-color: #e9e1b8;
@@ -205,7 +200,6 @@ export default {
       opacity: 0.8;
     }
     #{$self}__svg {
-      // font-size: 50vw;
       #{$self}__empty-svg {
         width: 100%;
       }
@@ -219,8 +213,6 @@ export default {
   }
   &__header {
     height: 5rem;
-    // background-color: black;
-    // color: #d7dadc;
     display: flex;
     align-items: center;
     padding: 0 1rem;
@@ -275,7 +267,6 @@ export default {
   }
   &__form {
     height: 5rem;
-    // align-self: flex-end;
     background-color: #fff;
     position: absolute;
     bottom: 0;
@@ -284,7 +275,6 @@ export default {
     padding: 0.75rem 1rem;
     #{$self}__input {
       height: 100%;
-      // border: 1px solid;
       background-color: #e3e8ee;
       display: flex;
       align-items: center;

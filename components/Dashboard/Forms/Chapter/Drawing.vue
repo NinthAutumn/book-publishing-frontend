@@ -63,7 +63,7 @@ export default {
       });
       const reader = new FileReader();
       for (let file of store) {
-        // console.log(file);
+        (file);
         // this.draw.push({
         //   file: file,
         //   old: false,
@@ -82,8 +82,8 @@ export default {
         this.selected[drawing.id] = drawing;
       }
       this.$emit("input", this.selected);
-      // console.log(this.selected);
-      // console.log(this.defDrawings);
+      (this.selected);
+      (this.defDrawings);
     }
   },
   async mounted() {

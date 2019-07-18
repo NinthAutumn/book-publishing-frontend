@@ -84,7 +84,7 @@ export default {
             duration: 1000,
             icon: "extension"
           });
-          console.log(error);
+          (error);
         }
       } else {
         try {
@@ -123,7 +123,7 @@ export default {
             duration: 1000,
             icon: "extension"
           });
-          console.log(error);
+          (error);
         }
       }
     }

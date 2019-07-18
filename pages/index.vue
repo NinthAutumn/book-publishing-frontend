@@ -78,7 +78,7 @@ export default {
     await store.dispatch("analytic/fetchTrendingReviews");
   },
   async created() {
-    // console.log(this.recommended);
+    (this.recommended);
   },
   data() {
     return {

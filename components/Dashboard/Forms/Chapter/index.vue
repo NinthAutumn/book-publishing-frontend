@@ -198,12 +198,10 @@ export default {
       const { data } = await this.$axios.get(
         `/drawing/chapter/${this.$route.query.chapterId}`
       );
-      console.log(data.drawings);
       data.drawings.forEach(drawing => {
         this.form.drawings[drawing.id] = drawing;
       });
 
-      // this.form.
       this.disableVolume = true;
     }
   },
@@ -337,7 +335,6 @@ export default {
       }
     },
     async getNewLatestChapter() {
-      // console.log(this.form.volume.id);
       await this.$store.dispatch("chapter/fetchLatestIndex", {
         bookId: this.$route.params.id,
         volumeId: this.form.volume.id
@@ -388,7 +385,7 @@ export default {
       if (this.schedule) {
         state = "scheduled";
       }
-      // console.log(this.$store.state.upload.urls, "dog so nad");
+      this.$store.state.upload.urls, "dog so nad";
       const bookId = this.$route.params.id;
       let chapter = {
         title: this.form.title,

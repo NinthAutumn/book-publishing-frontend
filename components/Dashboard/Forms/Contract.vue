@@ -53,14 +53,12 @@ export default {
   },
   methods: {
     profile: function(val) {
-      console.log(val);
       this.account["person"] = val;
     },
     address: function(val) {
       Object.keys(val).forEach(address => {
         this.account["person"][address] = val[address];
       });
-      console.log(this.account);
     },
     storeBirth: function(val) {
       this.birth = val;
@@ -80,13 +78,9 @@ export default {
   .v-dialog {
   }
   #{$self}__modal {
-    // margin: auto;
-    // z-index: 100;
-    // margin-top: 10px;
     margin: auto;
     z-index: 1000;
     scroll-behavior: unset;
-    // overflow: hidden;
     max-height: 70rem;
     overflow: auto;
     min-width: 50rem;
@@ -99,12 +93,6 @@ export default {
     box-shadow: 0 30px 60px -12px rgba(50, 50, 93, 0.25),
       0 18px 36px -18px rgba(0, 0, 0, 0.3),
       0 -12px 36px -8px rgba(0, 0, 0, 0.025);
-    // height: 50rem;
-    // width: 50rem;
-    // width: 100%;
-    // height: 100%;
-    // top: 0;
-    // left: 50rem;
   }
   &__title {
     font-size: 1.8rem;

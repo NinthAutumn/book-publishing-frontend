@@ -183,7 +183,6 @@ export default {
           icon: "extension"
         });
       } else if (response.requires_action) {
-        console.log("in here");
         const result = await this.stripe.handleCardAction(
           this.paymentIntent.client_secret
         );

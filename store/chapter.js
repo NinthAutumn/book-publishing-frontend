@@ -373,7 +373,7 @@ export const actions = {
 
     }
 
-    // console.log(res);
+    (res);
     // if (res) {
 
     //   return Promise.reject(error)

@@ -40,7 +40,7 @@ export const mutations = {
     state.comments = comments
   },
   PUSH_COMMENT(state, comment, parentId) {
-    // console.log(comment.parentId);
+    (comment.parentId);
     try {
       const object = findParent({
         comments: state.comments,
@@ -106,7 +106,7 @@ export const actions = {
         content,
         parentId
       })
-      // console.log();
+      ();
       // let comment = {}
       commit('PUSH_COMMENT', res.data, parentId)
     } catch (error) {

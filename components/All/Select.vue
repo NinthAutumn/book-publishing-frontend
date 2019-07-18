@@ -317,7 +317,7 @@ export default {
         this.multiData.push({ key: item, selected: false });
       });
     } else {
-      console.log(this.object);
+      (this.object);
       this.object.forEach(item => {
         let disable = false;
 

@@ -163,7 +163,7 @@ export default {
 
       this.form = !this.form;
       if (this.form) {
-        // console.log(this.$refs.taginput.clientWidth);
+        (this.$refs.taginput.clientWidth);
         // this.$refs.taginput.focus();
       }
     },

@@ -8,7 +8,7 @@
         class="tag-create__search__input"
         type="text"
         @change.stop="filterTags"
-      >
+      />
       <button class="tag-create__create-button" @click="createTag">作る</button>
     </div>
     <transition-group name="list" class="tag-create__list">
@@ -63,7 +63,6 @@ export default {
     }
     if (this.value) {
       this.value.forEach(val => {
-        // console.log(val);
         object.forEach(ob => {
           if (ob.value === val.id) {
             ob.selected = true;
@@ -81,7 +80,6 @@ export default {
       let name = this.search;
       if (data.error) {
         if (data.error === "もうこの名前のタグが存在しています") {
-          console.log("in");
           // this.selectTag(name);
         }
         return this.$toast.show(data.error);
@@ -153,7 +151,6 @@ export default {
     font-size: 17px;
   }
   .selected {
-    // border: 1px solid $secondary;
     color: white !important;
     background-color: grey !important;
     &:hover {
@@ -219,7 +216,6 @@ export default {
       &:focus,
       &:active {
         outline: none;
-        // border: 1px solid grey;
         transition: 300ms;
       }
     }

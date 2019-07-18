@@ -76,16 +76,6 @@ export default {
   watch: {
     type: function(val) {
       this.changeDate();
-    },
-    widthBar: function(val) {
-      //  this.$refs["bargraph"].clientWidth;
-    },
-    menu: function(val) {
-      // console.log(this.widthBar);
-      // this.$nextTick(_ => {
-      //   console.log("object");
-      //   this.$refs[`view-bar`].echarts.resize();
-      // });
     }
   },
   methods: {
@@ -132,7 +122,7 @@ export default {
   },
 
   async mounted() {
-    // console.log(this.$moment());
+    this.$moment();
     this.isMounted = true;
     let row = Object.keys(this.time);
     let i = 6;
@@ -160,7 +150,7 @@ export default {
       });
     });
 
-    // console.log(row);
+    row;
     // this.$store.getters["analytic/getTotalViews"].forEach(day => {
     //   this.object = {
     //     date: day._id.day

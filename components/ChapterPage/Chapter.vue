@@ -141,7 +141,7 @@ export default {
       }
     },
     stepEnterHandler: async function({ element, index, direction }) {
-      // console.log(element, index, direction);
+      (element, index, direction);
     },
     stepLeaveHandler: async function({}) {},
     progressHandler: async function({ progress }) {

@@ -85,7 +85,6 @@ export default {
           break;
         case "facebook":
           try {
-            //  console.log(res.authResponse);
             window.FB.login(
               async res => {
                 if (res.authResponse) {
@@ -95,7 +94,7 @@ export default {
                     strategy: "facebook"
                   });
                 } else {
-                  // console.log(errpr);
+                  errpr;
                   this.$toast.show(`フェースブックのログインに失敗しました`, {
                     theme: "toasted-primary",
                     position: "top-right",
@@ -108,7 +107,7 @@ export default {
                 scope: "public_profile,email"
               }
             );
-            // console.log("dasfadsfadsfasdfadsfasdf");
+            ("dasfadsfadsfasdfadsfasdf");
           } catch (error) {
             console.log(error);
             this.$toast.show(`フェースブックのログインに失敗しました`, {
@@ -141,9 +140,7 @@ export default {
     async changeStep() {
       this.$store.commit("SET_AUTH_PAGE", 2);
     },
-    async googleAuth(googleUser) {
-      console.log(googleUser);
-    },
+    async googleAuth(googleUser) {},
     async google_submit() {
       await window.google_auth2.signIn().then(
         async val =>

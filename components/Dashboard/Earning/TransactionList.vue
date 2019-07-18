@@ -98,7 +98,6 @@ export default {
         });
         this.redeem = false;
       } catch (error) {
-        console.log(error);
         this.$toast.show("清算に失敗しました", {
           theme: "toasted-primary",
           position: "top-right",
@@ -143,11 +142,8 @@ export default {
 .transaction-list {
   box-shadow: 0 2px 5px 0 rgba(60, 66, 87, 0.1), 0 1px 1px 0 rgba(0, 0, 0, 0.07);
   border-radius: 0.5rem;
-  // width: 900px;
-
   max-width: 100%;
   $self: &;
-  // max-width: 50rem;  padding: 0.5rem;
   padding: 0.5rem;
 
   &__list {
@@ -177,12 +173,10 @@ export default {
     padding: 0.5rem 2rem;
     max-width: 100%;
     height: 5rem;
-    // background-color: grey;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
     &:hover {
-      // cursor: pointer;
       box-shadow: 0 2px 5px 0 rgba(60, 66, 87, 0.1),
         0 1px 1px 0 rgba(0, 0, 0, 0.07);
     }
@@ -190,21 +184,14 @@ export default {
     }
     #{$self}__component {
       font-size: 1.4rem;
-      // display: flex;
-      // align-items: center;
-      // justify-content: center;
       &--avatar {
         display: flex;
-        // align-items: center;
-        // justify-content: center;
-        // flex-direction: column;
         width: 10%;
       }
       &--user {
         width: 10%;
       }
       &--title {
-        // min-width: 15rem;
         width: 50%;
         overflow: hidden;
         white-space: nowrap;
@@ -218,7 +205,6 @@ export default {
       }
       &--currency {
         text-align: left;
-        // justify-content:
         width: 20%;
       }
       &--created-at {
@@ -251,12 +237,6 @@ export default {
         }
       }
     }
-    // &--title {
-    //   white-space: nowrap;
-    //   overflow: hidden;
-    //   text-overflow: ellipsis;
-    //   max-width: 15rem;
-    // }
   }
   height: 100%;
   background-color: #fff;

@@ -226,6 +226,7 @@ module.exports = {
     ['@nuxtjs/dotenv', {
       /* module options */
     }],
+    '@nuxtjs/recaptcha',
     ['@nuxtjs/toast', {
       position: 'top-right',
       duration: 5000
