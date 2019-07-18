@@ -187,8 +187,16 @@ export const actions = {
     page,
     limit
   }) {
-    const res = await this.$axios.get(`/book/tags?search=${search}&limit=${limit}&page=${page}`)
-    commit('SET_TAG_LIST', res.data)
+    try {
+      const res = await this.$axios.get(`/book/tags?search=${search}&limit=${limit}&page=${page}`)
+      commit('SET_TAG_LIST', res.data)
+      return Promise.resolve({
+        tag: res.data
+      })
+    } catch (error) {
+      return Promise.reject(error)
+    }
+
   },
   async queryTags({
     commit
@@ -410,29 +418,20 @@ export const mutations = {
   },
   SET_MORE_LATEST_BOOKS(state, books) {
     let temp = books
-    state.latest.forEach((item) => {
-      temp.forEach((book, index) => {
-        if (item.date === book.date) {
-          book.book.forEach((boo) => {
-            item.book.push(boo)
-          })
-          temp.splice(index, 1)
-        }
-      })
-    })
-    (books);
-    temp.forEach((book) => {
-      state.latest.push(book)
-    })
     // state.latest.forEach((item) => {
-    //   temp.forEach((book) => {
-    //     if (item.date !== book.date) {
-    //       state.latest.push(book)
+    //   temp.forEach((book, index) => {
+    //     if (item.date === book.date) {
+    //       book.book.forEach((boo) => {
+    //         item.book.push(boo)
+    //       })
+    //       temp.splice(index, 1)
     //     }
     //   })
     // })
-
-    // state.latest.push(books)
+    // (books);
+    temp.forEach((book) => {
+      state.latest.push(book)
+    })
   },
   SET_ANNOUNCEMENTS: (state, announcements) => {
     state.announcements = announcements

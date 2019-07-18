@@ -3,7 +3,13 @@
     <ul class="browse-booklist__list">
       <li class="library-booklist__item" v-for="(book) in books" :key="book.id">
         <!-- <Book :book="book"></Book> -->
-        <book-card rating :cover="book.cover" :book="book" :isMobile="$device.isMobile"></book-card>
+        <book-card
+          rating
+          :cover="book.cover"
+          :book="book"
+          :type="'search'"
+          :isMobile="$device.isMobile"
+        ></book-card>
       </li>
     </ul>
     <no-ssr>
@@ -119,9 +125,9 @@ export default {
   &__list {
     display: grid;
     /* autoprefixer: ignore next; */
-    grid-template-columns: repeat(auto-fit, minmax(10rem, 15rem));
+    grid-template-columns: repeat(2, minmax(25rem, 100rem));
     /* autoprefixer: ignore next */
-    grid-gap: 0.5rem;
+    grid-gap: 1rem;
   }
   @media screen and (max-width: 500px) {
     &__list {

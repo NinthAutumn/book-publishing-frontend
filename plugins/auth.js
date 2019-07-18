@@ -78,7 +78,13 @@ export default async function ({
   $axios.defaults.headers.common['TrackId'] = track_id
 
 
+  // const redirectSSL = require('redirect-ssl')
 
+  // // Add middleware
+  // app.use(redirectSSL)
+
+  // Or if want to provide options
+  // app.use(redirectSSL.create({ redirectPort: 8443 }))
 
 
 

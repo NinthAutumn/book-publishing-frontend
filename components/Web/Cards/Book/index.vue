@@ -10,6 +10,7 @@
       :clampLine="clampLine"
       :rating="rating"
     ></default-type>
+    <search-type v-else-if="type === 'search'" :book="book"></search-type>
   </div>
 </template>
 
@@ -56,7 +57,8 @@ export default {
     };
   },
   components: {
-    DefaultType: () => import("./Default")
+    DefaultType: () => import("./Default"),
+    SearchType: () => import("./Search")
   }
   // mounted: {}
 };

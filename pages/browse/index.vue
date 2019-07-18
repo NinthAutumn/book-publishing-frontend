@@ -85,6 +85,9 @@
             </transition-group>
           </div>
         </transition>
+        <transition name="tag-summon">
+          <TagCreate v-if="tag_search" v-model="tag_list"></TagCreate>
+        </transition>
         <div v-loading.fullscreen="loading" class="browse-page__content flex-row">
           <BookList
             :type="type"
@@ -95,9 +98,6 @@
           ></BookList>
         </div>
       </div>
-      <transition name="tag-summon">
-        <TagCreate v-if="tag_search" v-model="tag_list"></TagCreate>
-      </transition>
     </div>
   </div>
 </template>

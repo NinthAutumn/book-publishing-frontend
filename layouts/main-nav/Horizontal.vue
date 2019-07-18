@@ -42,9 +42,8 @@
               size="30"
               class="profile-pic__avatar"
               :class="{'profile-pic__avatar--bronze': user.status === 'bronze'}"
-              v-if="user.avatar"
             >
-              <v-img :src="user.avatar.img"></v-img>
+              <v-img :src="user.avatar? user.avatar.img : avatar"></v-img>
             </v-avatar>
             <div class="profile-pic__info">
               <div class="profile-pic__meta">
@@ -60,7 +59,7 @@
 
           <div class>
             <transition name="grow-shrink">
-              <Dropdown v-click-outside="userProfile" v-if="profile"></Dropdown>
+              <Dropdown v-click-outside="userProfile" v-show="profile"></Dropdown>
             </transition>
           </div>
         </div>
@@ -98,7 +97,8 @@ export default {
       menuStates: "menu-inactive",
       profile: false,
       notification: false,
-      head: "ノーブル"
+      head: "ノーブル",
+      avatar: require("~/assets/profile.png")
     };
   },
   components: {

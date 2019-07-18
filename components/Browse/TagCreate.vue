@@ -8,7 +8,7 @@
         class="browse-create__search__input"
         type="text"
         @change="filterTags"
-      >
+      />
     </div>
     <transition-group name="list" class="browse-create__list">
       <li
@@ -42,13 +42,13 @@ export default {
     }
   },
   async mounted() {
-    await this.$store.dispatch("book/searchTags", {
+    const { tag } = await this.$store.dispatch("book/searchTags", {
       page: 1,
       limit: 30,
       search: this.search
     });
     let object = [];
-    this.tags.forEach(item => {
+    tag.forEach(item => {
       object.push({ key: item.name, sum: item.books, selected: false });
     });
     this.selected = object;
@@ -90,16 +90,22 @@ export default {
 
 <style lang="scss">
 .browse-create {
-  top: 60px;
+  top: 50px;
+  right: 10px;
   // right: 100px;
-  margin-left: 10px;
+  margin-left: auto;
   position: sticky;
-  height: 500px;
-  width: 150px;
+  width: 500px;
+  height: 150px;
+  margin-bottom: 1.5rem;
   padding: 10px;
   background-color: #fff;
-
+  border-radius: 0.5rem;
+  z-index: 100;
+  box-shadow: 0 7px 14px 0 rgba(60, 66, 87, 0.1),
+    0 3px 6px 0 rgba(0, 0, 0, 0.07);
   $self: &;
+
   &__header {
     font-size: 17px;
   }

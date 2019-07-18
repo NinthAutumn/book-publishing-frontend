@@ -11,7 +11,7 @@
           :canvas-color="'default'"
           :placeholder="'アバター'"
           v-model="user.avatar"
-          :initial-image="current.avatar.img"
+          :initial-image="current.avatar? current.avatar.img : avatar"
           @file-choose="handleCroppaFileChoose"
         ></croppa>
       </div>
@@ -47,6 +47,7 @@ export default {
         bio: "",
         newAvatar: false
       },
+      avatar: require("~/assets/profile.png"),
       genders: [
         { key: "男性", value: "male" },
         { key: "女性", value: "female" },
