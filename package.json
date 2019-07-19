@@ -36,7 +36,6 @@
     "browserslist": "^4.6.4",
     "caniuse-lite": "^1.0.30000984",
     "chart.js": "^2.8.0",
-    "child_process": "^1.0.2",
     "cookie": "^0.3.1",
     "cookie-parser": "^1.4.4",
     "cookie-universal-nuxt": "^2.0.16",
@@ -98,8 +97,7 @@
     "vue2-touch-events": "^1.1.2",
     "vuetify-loader": "^1.2.2",
     "vuetify-upload-button": "^1.2.2",
-    "vuex-router-sync": "^5.0.0",
-    "webp-loader": "^0.5.0"
+    "vuex-router-sync": "^5.0.0"
   },
   "devDependencies": {
     "autoprefixer": "^9.6.1",
