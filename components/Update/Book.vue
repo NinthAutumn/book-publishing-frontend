@@ -23,19 +23,18 @@
       <span class="update-book__cover-meta">{{book.length}}</span>
     </nuxt-link>
     <div class="update-book__meta">
-      <div class="update-book__title">
-        <p v-line-clamp="2">{{book[0].title}}</p>
-      </div>
-      <div class="flex-divider flex-row flex--align flex--between">
-        <div class="update-book__author">{{book[0].author}}</div>
+      <div class="update-book__title" v-line-clamp="2">{{book[0].title}}</div>
+      <div class="update-book__chapter-list">
         <div
-          class="update-book__createdAt"
-          v-if="$moment().format('l') === $moment(book[0].published).format('l')"
-        >{{$moment(book[0].published).startOf('second').fromNow()}}</div>
-        <div
-          class="update-book__createdAt"
-          v-else
-        >{{$moment(book[0].published).startOf('hour').fromNow()}}</div>
+          class="update-book__chapter-item"
+          :key="chapter.chapter_id"
+          v-for="(chapter,index) in book"
+        >
+          <div class="update-book__chapter-container flex-row" v-if="index < 3">
+            <div class="update-book__chapter-index">{{chapter.index}}</div>
+            <div class="update-book__chapter-title" v-line-clamp="1">{{chapter.chapter_title}}</div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -70,11 +69,15 @@ export default {
   &:hover {
     cursor: pointer;
   }
+  display: flex;
   &__cover {
     position: relative;
     height: 100%;
     width: 100%;
     overflow: hidden;
+    width: 13rem;
+    min-width: 13rem;
+    margin-right: 1rem;
     #{$self}__img {
       &:hover {
         transform: scale(1.1);
@@ -96,11 +99,15 @@ export default {
   }
   &__meta {
     user-select: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     #{$self}__title {
-      font-size: 1.35rem;
+      font-size: 1.6rem;
       max-width: 100%;
 
       p {
+        font-size: 1.6rem !important;
         &:hover {
           text-decoration: solid;
           word-break: break-word;
@@ -108,8 +115,21 @@ export default {
         // white-space: nowrap;
         // text-overflow: ellipsis;
         // overflow: hidden;
-        font-size: inherit;
+        // font-size: inherit;
       }
+    }
+    #{$self}__chapter-container {
+      padding: 0.5rem;
+      box-shadow: 0 2px 5px 0 rgba(60, 66, 87, 0.1),
+        0 1px 1px 0 rgba(0, 0, 0, 0.07);
+      margin-bottom: 0.5rem;
+    }
+    #{$self}__chapter-title {
+      font-size: 1.4rem;
+    }
+    #{$self}__chapter-index {
+      font-size: 1.4rem;
+      margin-right: 1rem;
     }
     #{$self}__author {
       font-size: 1.3rem;

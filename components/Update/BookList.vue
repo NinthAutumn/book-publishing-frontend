@@ -41,10 +41,10 @@ export default {
   &__book-list {
     display: grid;
     /* autoprefixer: ignore next */
-    grid-template-columns: repeat(auto-fill, minmax(10rem, 15rem));
+    grid-template-columns: repeat(3, minmax(30rem, 50rem));
     grid-template-rows: auto;
     /* autoprefixer: ignore next */
-    grid-gap: 0.5rem;
+    grid-gap: 1rem;
 
     #{$self}__book-item {
     }

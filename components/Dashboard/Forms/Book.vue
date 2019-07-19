@@ -249,7 +249,6 @@ export default {
       for (let tag of this.tags) {
         this.form.tags.push({ name: tag.name, id: tag.id });
       }
-      console.log(this.book);
       this.form.title = this.book.title;
       this.form.synopsis = this.book.synopsis;
       this.imageUrl = this.book.cover;

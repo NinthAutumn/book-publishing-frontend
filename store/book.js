@@ -177,7 +177,7 @@ export const actions = {
     page = 1,
     limit = 10
   }) {
-    const taglist = await this.$axios.get('/book/tags?limit=' + limit + '&page=' + page)
+    const taglist = await this.$axios.get('/tag/list?limit=' + limit + '&page=' + page)
     commit('SET_TAG_LIST', taglist.data)
   },
   async searchTags({
@@ -189,7 +189,7 @@ export const actions = {
     infinite = false
   }) {
     try {
-      const res = await this.$axios.get(`/book/tags?search=${search}&limit=${limit}&page=${page}`)
+      const res = await this.$axios.get(`/tag/list?search=${search}&limit=${limit}&page=${page}`)
       if (infinite) {
         commit('PUSH_TAG_LIST', res.data)
 
@@ -213,7 +213,7 @@ export const actions = {
     limit
   }) {
     try {
-      const res = await this.$axios.get(`/book/tags/query?search=${search}&limit=${limit}&page=${page}`)
+      const res = await this.$axios.get(`/tag/query?search=${search}&limit=${limit}&page=${page}`)
       commit('SET_TAG_LIST', res.data)
       return Promise.resolve(res.data)
     } catch (error) {
