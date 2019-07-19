@@ -35,9 +35,14 @@ export const mutations = {
 export const actions = {
   async image({
     commit
-  }, file) {
+  }, {
+    file,
+    size = "",
+    unique = ""
+  }) {
     try {
-      const uploadConfig = await this.$axios.get('/upload')
+      console.log(size);
+      const uploadConfig = await this.$axios.get(`/upload?size=${size}&unique=${unique}`)
       await this.$axios.put(uploadConfig.data.url, file, {
         headers: {
           'Content-Type': 'image',
@@ -48,11 +53,12 @@ export const actions = {
       })
       commit('ADD_URL', uploadConfig.data.filename)
       return Promise.resolve({
-        url: `https://storage.googleapis.com/theta-images/${uploadConfig.data.filename}`,
-        path: uploadConfig.data.filename,
+        url: `https://storage.googleapis.com/theta-images/${uploadConfig.data.filepath}`,
+        path: uploadConfig.data.filepath,
         id: uploadConfig.data.id
       })
     } catch (error) {
+      alert(error)
 
     }
   },

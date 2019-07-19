@@ -12,7 +12,6 @@
     "devHttps": "node server/index.js"
   },
   "dependencies": {
-    "@bazzite/nuxt-optimized-images": "^0.2.1",
     "@clampy-js/vue-clampy": "^1.0.6",
     "@fortawesome/free-brands-svg-icons": "^5.9.0",
     "@fortawesome/free-solid-svg-icons": "^5.9.0",
@@ -37,6 +36,7 @@
     "browserslist": "^4.6.4",
     "caniuse-lite": "^1.0.30000984",
     "chart.js": "^2.8.0",
+    "child_process": "^1.0.2",
     "cookie": "^0.3.1",
     "cookie-parser": "^1.4.4",
     "cookie-universal-nuxt": "^2.0.16",
@@ -45,9 +45,6 @@
     "element-ui": "^2.10.1",
     "epic-spinners": "^1.1.0",
     "fstream": "^1.0.12",
-    "imagemagick": "^0.1.3",
-    "imagemin-mozjpeg": "^8.0.0",
-    "imagemin-pngquant": "^8.0.0",
     "intersection-observer": "^0.5.1",
     "js-yaml": "^3.13.1",
     "jwt-decode": "^2.2.0",
@@ -66,7 +63,6 @@
     "redirect-ssl": "^1.4.0",
     "responsive-loader": "^1.2.0",
     "set-value": "^2.0.1",
-    "sharp": "^0.22.1",
     "swiper": "^4.5.0",
     "tar": "^4.4.10",
     "tb-skeleton": "^0.3.6",

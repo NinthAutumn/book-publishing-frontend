@@ -1,8 +1,9 @@
 <template>
   <div class="dash-book">
     <div class="dash-book__cover">
+      <!-- {{book.cover}} -->
       <v-img
-        :src="book.cover"
+        :src="`${book.cover}/l`"
         :aspect-ratio="1/1.5"
         min-width="12rem"
         max-width="15rem"

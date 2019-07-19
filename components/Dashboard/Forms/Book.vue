@@ -137,12 +137,31 @@
 
 <script>
 import { mapGetters } from "vuex";
+// import webp from "webp-converter";
+import uuid from "uuid/v1";
+import imageResize from "@/static/js/imageresize.js";
 export default {
   data() {
     return {
       loading: false,
       content: "",
       imageUrl: "",
+      image: {
+        small: {
+          url: ""
+        },
+        medium: {
+          url: ""
+        },
+        large: {
+          url: ""
+        },
+        normal: {
+          url: ""
+        }
+
+        // small:{}
+      },
       rotation: 0,
       preGenre: [],
       oldImageUrl: "",
@@ -203,7 +222,8 @@ export default {
       url: "upload/getUrl",
       book: "book/getBook",
       genres: "book/getBookGenres",
-      tags: "book/getBookTags"
+      tags: "book/getBookTags",
+      user: "user/loggedInUser"
     }),
     isFormInValid() {
       return Object.keys(this.fields).some(key => this.fields[key].invalid);
@@ -229,6 +249,7 @@ export default {
       for (let tag of this.tags) {
         this.form.tags.push({ name: tag.name, id: tag.id });
       }
+
       // this.form.genre = this.form.tags;
       this.form.main_genre.push({
         name: this.book.genre_name,
@@ -243,9 +264,65 @@ export default {
   },
   async mounted() {},
   methods: {
-    handleAvatarSuccess(res, file) {
+    async handleAvatarSuccess(res, file) {
       this.form.cover = file.raw;
-      this.imageUrl = URL.createObjectURL(file.raw);
+      // let webpImg = "";
+      try {
+        imageResize.resize(
+          file.raw,
+          {
+            width: 140, // maximum width
+            height: 210 // maximum height
+          },
+          (blob, didItResize) => {
+            this.image.medium = {
+              url: blob,
+              size: "m"
+            };
+            // alert(didItResize);
+          }
+        );
+        imageResize.resize(
+          file.raw,
+          {
+            width: 50, // maximum width
+            height: 75 // maximum height
+          },
+          (blob, didItResize) => {
+            // console.log(blob);
+            this.image.small = {
+              url: blob,
+              size: "s"
+            };
+            // alert(didItResize);
+          }
+        );
+        imageResize.resize(
+          file.raw,
+          { width: 200, height: 300 },
+          (blob, didItResize) => {
+            this.image.large = {
+              url: blob,
+              size: "l"
+            };
+            this.imageUrl = window.URL.createObjectURL(blob);
+            // alert("large" + didItResize);
+          }
+        );
+        this.image.normal = { url: file.raw, size: "" };
+        // console.log(this.image);
+        this.form.cover = this.image;
+      } catch (error) {
+        console.log(error);
+      }
+
+      // webp.cwebp(file.raw, webpImg, "-q 80", function(status, error) {
+      //   //if conversion successful status will be '100'
+      //   //if conversion fails status will be '101'
+      //   console.log(status, error);
+      // });
+      // console.log(file.raw);
+      // this.imageUrl = URL.createObjectURL(file.raw);
     },
     toggleTip() {
       this.tip = !this.tip;
@@ -258,10 +335,9 @@ export default {
         this.form.tags.length < 1 ||
         this.form.main_genre.length < 1
       ) {
-        return this.$toast.show(
+        return this.$toast.error(
           "関連ジャンル・メインジャンル・タグは必ず一個以上選択してください",
           {
-            theme: "toasted-primary",
             duration: 3000,
             position: "top-right"
           }
@@ -280,13 +356,21 @@ export default {
           //   cover_path: url.path
         };
         if (this.$route.query.bookId) {
-          if (this.form.cover) {
-            const url = await this.$store.dispatch(
-              "upload/image",
-              this.form.cover
-            );
-            book["cover"] = url.url;
-            book["coverPath"] = url.path;
+          if (this.form.cover.medium) {
+            let keys = Object.keys(this.form.cover);
+            let uid = uuid();
+            for (let i of keys) {
+              const { url, path } = await this.$store.dispatch("upload/image", {
+                file: this.form.cover[i].url,
+                size: this.form.cover[i].size,
+                unique: uid
+              });
+            }
+
+            book[
+              "cover"
+            ] = `https://storage.googleapis.com/theta-images/${this.user.id}/uid`;
+            book["coverPath"] = `/${this.user.id}/uid`;
           } else {
             book["cover"] = this.oldImageUrl;
           }
@@ -302,12 +386,19 @@ export default {
           return;
         }
         if (this.form.cover) {
-          const url = await this.$store.dispatch(
-            "upload/image",
-            this.form.cover
-          );
-          book["cover"] = url.url;
-          book["coverPath"] = url.path;
+          let keys = Object.keys(this.form.cover);
+          let uid = uuid();
+          for (let i of keys) {
+            const { url, path } = await this.$store.dispatch("upload/image", {
+              file: this.form.cover[i].url,
+              size: this.form.cover[i].size,
+              unique: uid
+            });
+          }
+          book[
+            "cover"
+          ] = `https://storage.googleapis.com/theta-images/${this.user.id}/${uid}`;
+          book["coverPath"] = `/${this.user.id}/${uid}`;
         }
 
         await this.$store.dispatch("book/addBook", book);

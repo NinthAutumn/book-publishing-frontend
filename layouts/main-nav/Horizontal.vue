@@ -101,7 +101,7 @@ export default {
       profile: false,
       notification: false,
       head: "ノーブル",
-      avatar: require("~/assets/profile.png?webp")
+      avatar: require("~/assets/profile.png?webp&url")
     };
   },
   components: {
