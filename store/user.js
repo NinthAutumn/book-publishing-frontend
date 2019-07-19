@@ -136,9 +136,10 @@ export const actions = {
     commit
   }) {
     try {
-      const res = await this.$axios.get('/user')
-      (data);
-      commit('SET_USER', res.data)
+      const {
+        data
+      } = await this.$axios.get('/user')
+      commit('SET_USER', data)
     } catch (error) {
       console.log(error);
     }

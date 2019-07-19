@@ -59,17 +59,20 @@
 
           <div class>
             <transition name="grow-shrink">
-              <Dropdown v-click-outside="userProfile" v-show="profile"></Dropdown>
+              <Dropdown v-click-outside="userProfile" v-if="profile"></Dropdown>
             </transition>
           </div>
         </div>
         <div class="not-loggedin" v-else>
-          <img
-            class="not-loggedin__img text--link"
+          <v-avatar size="40" class="not-loggedin__img text--link" @click.stop="loginInState">
+            <v-img :src="avatar"></v-img>
+          </v-avatar>
+          <!-- <img
+            class=""
             style="border-radius:10rem;"
             src="~/assets/profile.png"
-            @click.stop="loginInState"
-          />
+
+          />-->
         </div>
       </div>
     </nav>
@@ -98,7 +101,7 @@ export default {
       profile: false,
       notification: false,
       head: "ノーブル",
-      avatar: require("~/assets/profile.png")
+      avatar: require("~/assets/profile.png?webp")
     };
   },
   components: {

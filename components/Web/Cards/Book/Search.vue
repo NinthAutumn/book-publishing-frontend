@@ -1,6 +1,6 @@
 <template>
   <div class="book-scard">
-    <div class="book-scard__container">
+    <nuxt-link class="book-scard__container" :to="`/books/${book.id}`">
       <div class="book-scard__cover">
         <v-img
           class="book-scard__img"
@@ -31,7 +31,7 @@
         </div>
         <div class="book-scard__synopsis" v-line-clamp="4" v-text="book.synopsis"></div>
       </div>
-    </div>
+    </nuxt-link>
   </div>
 </template>
 
