@@ -10,7 +10,7 @@
       <div class="book-card__cover" :class="{'book-card__cover--desktop': !isMobile}">
         <v-img
           class="book-card__img"
-          :src="cover+'?webp'"
+          :src="`${cover}?m`"
           :lazy-src="lazyCover"
           :aspect-ratio="1/1.5"
           max-width="15rem"
