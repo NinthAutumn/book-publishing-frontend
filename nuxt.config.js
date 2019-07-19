@@ -212,6 +212,9 @@ module.exports = {
     ['@nuxtjs/dotenv', {
       /* module options */
     }],
+    ['@bazzite/nuxt-optimized-images', {
+      optimizeImages: true
+    }],
     ['@nuxtjs/recaptcha', {
       siteKey: '6LcZRq4UAAAAAL74nLSlaPqv10TJXVxhzyANs49_',
       version: 2,

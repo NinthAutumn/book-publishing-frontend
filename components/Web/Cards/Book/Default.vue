@@ -10,7 +10,7 @@
       <div class="book-card__cover" :class="{'book-card__cover--desktop': !isMobile}">
         <v-img
           class="book-card__img"
-          :src="cover"
+          :src="cover+'?webp'"
           :lazy-src="lazyCover"
           :aspect-ratio="1/1.5"
           max-width="15rem"
@@ -63,7 +63,7 @@ export default {
   props: {
     cover: {
       type: [String, Object],
-      default: require("~/assets/img/NobleCardLight.png")
+      default: require("~/assets/img/NobleCardLight.png?webp")
     },
     book: {
       type: Object
@@ -92,7 +92,7 @@ export default {
   },
   data() {
     return {
-      lazyCover: require("~/assets/img/NobleCardLight.png")
+      lazyCover: require("~/assets/img/NobleCardLight.png?webp")
     };
   },
   components: {
@@ -146,7 +146,7 @@ export default {
   &__rating {
     // text-align: center;
     .v-icon {
-      padding: 0;
+      padding: 0 !important;
     }
   }
   &__progress-bar {

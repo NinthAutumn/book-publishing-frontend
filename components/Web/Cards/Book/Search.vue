@@ -4,7 +4,7 @@
       <div class="book-scard__cover">
         <v-img
           class="book-scard__img"
-          :src="book.cover"
+          :src="book.cover + '?webp'"
           :lazy-src="lazyCover"
           :aspect-ratio="1/1.5"
           max-width="15rem"
@@ -41,6 +41,11 @@ export default {
     book: {
       type: Object
     }
+  },
+  data() {
+    return {
+      lazyCover: require("~/assets/img/NobleCardLight.png?webp")
+    };
   }
 };
 </script>
