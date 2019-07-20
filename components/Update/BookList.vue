@@ -5,7 +5,8 @@
         <div class="update-books__date-title">{{books.date}}</div>
         <ul class="update-books__book-list">
           <li class="update-books__book-item" v-for="(book, index) in books.book" :key="index">
-            <Book :book="book"></Book>
+            <book-card v-if="!$device.isMobile" :book="book" type="update"></book-card>
+            <book-mobile v-else :book="book"></book-mobile>
           </li>
         </ul>
       </li>
@@ -20,7 +21,8 @@ export default {
     latestBooks: Array
   },
   components: {
-    Book: () => import("./Book")
+    BookCard: () => import("@/components/Web/Cards/Book"),
+    BookMobile: () => import("@/components/Mobile/Cards/Book/Update")
   },
   created() {},
   computed: {}

@@ -11,6 +11,7 @@
       :rating="rating"
     ></default-type>
     <search-type v-else-if="type === 'search'" :book="book"></search-type>
+    <update-type v-else-if="type === 'update'" :book="book" :chapters="chapters"></update-type>
   </div>
 </template>
 
@@ -58,7 +59,8 @@ export default {
   },
   components: {
     DefaultType: () => import("./Default"),
-    SearchType: () => import("./Search")
+    SearchType: () => import("./Search"),
+    UpdateType: () => import("./Update")
   }
   // mounted: {}
 };

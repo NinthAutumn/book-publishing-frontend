@@ -52,7 +52,7 @@
       name="list"
       tag="ul"
       class="book-list"
-      v-if="selected_ranking_type===0||selected_ranking_type===2"
+      v-if="selected_ranking_type===0&&!$device.isMobile||selected_ranking_type===2&&!$device.isMobile"
     >
       <ranking-item
         :index="index"
@@ -63,7 +63,27 @@
         :key="book.id"
       ></ranking-item>
     </transition-group>
-    <transition-group name="list" tag="ul" class="book-list" v-if="selected_ranking_type===1">
+    <transition-group
+      name="list"
+      tag="ul"
+      class="book-list"
+      v-if="selected_ranking_type===0&&$device.isMobile||selected_ranking_type===2&&$device.isMobile"
+    >
+      <ranking-card
+        :index="index"
+        trending
+        :score="book.score"
+        :book="book"
+        v-for="(book, index) in list"
+        :key="book.id"
+      ></ranking-card>
+    </transition-group>
+    <transition-group
+      name="list"
+      tag="ul"
+      class="book-list"
+      v-if="selected_ranking_type===1&&!$device.isMobile"
+    >
       <ranking-item
         :index="index"
         trending
@@ -73,7 +93,27 @@
         :key="book.id"
       ></ranking-item>
     </transition-group>
-    <transition-group name="list" tag="ul" class="book-list" v-if="selected_ranking_type===3">
+    <transition-group
+      name="list"
+      tag="ul"
+      class="book-list"
+      v-if="selected_ranking_type===1&&$device.isMobile"
+    >
+      <ranking-card
+        :index="index"
+        trending
+        :score="book.sum"
+        :book="book"
+        v-for="(book, index) in trending"
+        :key="book.id"
+      ></ranking-card>
+    </transition-group>
+    <transition-group
+      name="list"
+      tag="ul"
+      class="book-list"
+      v-if="selected_ranking_type===3&&!$device.isMobile"
+    >
       <ranking-item
         :index="index"
         trending
@@ -83,6 +123,22 @@
         vote
         :key="book.id"
       ></ranking-item>
+    </transition-group>
+    <transition-group
+      name="list"
+      tag="ul"
+      class="book-list"
+      v-if="selected_ranking_type===3&&$device.isMobile"
+    >
+      <ranking-card
+        :index="index"
+        trending
+        :score="book.votes"
+        :book="book"
+        v-for="(book, index) in vote"
+        vote
+        :key="book.id"
+      ></ranking-card>
     </transition-group>
     <no-ssr>
       <infinite-loading :identifier="infiniteId" @infinite="infiniteHandler"></infinite-loading>
@@ -96,7 +152,8 @@ import { mapGetters } from "vuex";
 export default {
   components: {
     RankingItem: () => import("./RankingItem"),
-    Select: () => import("@/components/All/Select")
+    Select: () => import("@/components/All/Select"),
+    RankingCard: () => import("@/components/Mobile/Cards/Book/Ranking")
   },
   data() {
     return {
