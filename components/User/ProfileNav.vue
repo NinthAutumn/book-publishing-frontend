@@ -14,7 +14,7 @@
             :src="`https://storage.googleapis.com/theta-images/${user.avatar}`"
             alt="user profile picture"
             >-->
-            <img :src="$route.query.author?user.author_avatar:user.avatar.img" alt>
+            <img :src="$route.query.author?user.author_avatar:user.avatar.img" alt />
           </v-avatar>
         </div>
       </transition>
@@ -23,10 +23,13 @@
         <transition name="twitter-nav">
           <div class="profile-nav__fixed-avatar" v-if="scrolled">
             <v-avatar class="profile-nav__avatar-img" :size="45">
-              <img :src="$route.query.author?user.author_avatar:user.avatar.img" alt>
+              <img :src="$route.query.author?user.author_avatar:user.avatar.img" alt />
             </v-avatar>
             <div class="flex-divider flex-column flex--between">
-              <div class="profile-nav__fixed-username">{{user.username}}</div>
+              <div
+                class="profile-nav__fixed-username"
+                v-text="$route.query.author?user.pen_name: user.username"
+              ></div>
               <div class="profile-nav__fixed-meta" v-if="books_count > 0">作家</div>
               <div class="profile-nav__fixed-meta" v-else>メンバー</div>
             </div>

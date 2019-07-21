@@ -44,7 +44,7 @@
             @click="changePage(3)"
           >パスワードを忘れた?</p>
         </div>
-        <div class="flex-divider flex-row flex--align flex--center">
+        <div class="flex-divider flex-row flex--align flex--center" v-if="failed > 5">
           <recaptcha @error="onError" @success="onSuccess" @expired="onExpired" />
         </div>
         <div class="flex-divider flex-row flex--right">
@@ -74,16 +74,23 @@ export default {
       form: {
         username: "",
         password: ""
-      }
+      },
+      failed: ""
     };
   },
   props: {},
+  computed: {
+    // failed() {
+    //   return ;
+    // }
+  },
   components: {
     SignUpFrom: () => import("./SignUpFrom")
   },
   async mounted() {
     this.$refs.username.focus();
     // await this.$recaptcha.
+    this.failed = this.$storage.getUniversal("FAILED_LOGIN_COUNT");
   },
   methods: {
     // async stateOff() {
@@ -108,17 +115,29 @@ export default {
         password: this.form.password
       };
       try {
-        console.log(this.$recaptcha);
-
         // await this.$recaptcha.execute();
         // await this.$recaptcha.render();
-        const token = await this.$recaptcha.getResponse();
+
+        if (this.failed > 5) {
+          const token = await this.$recaptcha.getResponse();
+        }
         const { error } = await this.$store.dispatch("auth/login", {
           user: this.form,
           strategy: "local"
         });
 
         if (error) {
+          if (!this.failed) {
+            this.$storage.setUniversal("FAILED_LOGIN_COUNT", 1);
+            this.failed = 1;
+          } else {
+            this.failed++;
+            this.$storage.setUniversal(
+              "FAILED_LOGIN_COUNT",
+              this.$storage.getUniversal("FAILED_LOGIN_COUNT") + 1
+            );
+          }
+
           this.loading = false;
           this.bigError = error;
           return this.$toast.error(error, {
@@ -129,12 +148,23 @@ export default {
         await this.$store.dispatch("user/fetchUser");
         this.loading = false;
         this.$store.commit("LOGIN_FALSE");
+        this.$storage.setUniversal("FAILED_LOGIN_COUNT", 0);
         this.$router.go(0);
-        // this.$forceUpdate();
-        // this.$router.go(0);
       } catch (error) {
         console.log(error);
         this.loading = false;
+        if (!this.failed) {
+          // console.log(alert()/);
+          this.failed = 1;
+          this.$storage.setUniversal("FAILED_LOGIN_COUNT", 1);
+        } else {
+          this.failed++;
+          this.$storage.setUniversal(
+            "FAILED_LOGIN_COUNT",
+            this.$storage.getUniversal("FAILED_LOGIN_COUNT") + 1
+          );
+        }
+
         if (error === "Failed to execute") {
           this.bigError = "ロボット認証に失敗しました";
           return this.$toast.error(this.bigError, {

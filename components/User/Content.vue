@@ -4,7 +4,7 @@
       <div class="profile-content__meta">
         <div
           class="profile-content__meta-text profile-content__meta-text--username"
-          v-text="user.username"
+          v-text="$route.query.author?user.pen_name: user.username"
         ></div>
         <div
           class="profile-content__meta-text profile-content__meta-text--meta"
@@ -78,7 +78,7 @@ export default {
       this.$moment(this.user.created_at)
         .startOf("month")
         .fromNow() + " 登録";
-    (this.user);
+    this.user;
     if (this.user.gender === "male") {
       this.metas["gender"]["value"] = "男";
     } else if (this.user.gender === "female") {

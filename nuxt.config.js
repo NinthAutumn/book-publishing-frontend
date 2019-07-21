@@ -14,10 +14,14 @@ module.exports = {
         content: 'width=device-width, initial-scale=1,minimum-scale=1, maximum-scale=1'
       },
       {
-        hid: 'description',
         name: 'description',
-        content: '小説家・読者のプラットフォーム'
+        content: '優れた機能とデザインを雇用する令和を象徴する最新ネット小説投稿・閲覧サイトである。'
+      },
+      {
+        name: 'title',
+        content: '最新WEB小説投稿・閲覧サイト ノーブル'
       }
+
     ],
     link: [{
       rel: 'icon',
@@ -326,7 +330,7 @@ module.exports = {
     })]
   },
   server: {
-    port: process.env.NUXT_PORT,
+    port: process.env.NUXT_PORT || 3000,
     host: process.env.NUXT_HOST
   },
 }
