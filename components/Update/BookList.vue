@@ -1,9 +1,12 @@
 <template>
   <div class="update-books">
-    <ul class="update-books__date-list">
+    <ul class="update-books__date-list" ref="bookList">
       <li class="update-books__date-item" v-for="(books, index) in latestBooks" :key="index">
         <div class="update-books__date-title">{{books.date}}</div>
-        <ul class="update-books__book-list">
+        <ul
+          class="update-books__book-list"
+          :class="{'update-books__book-list--small': width < 930, 'update-books__book-list--large':width>1350 }"
+        >
           <li class="update-books__book-item" v-for="(book, index) in books.book" :key="index">
             <book-card v-if="!$device.isMobile" :book="book" type="update"></book-card>
             <book-mobile v-else :book="book"></book-mobile>
@@ -20,11 +23,29 @@ export default {
   props: {
     latestBooks: Array
   },
+  data() {
+    return {
+      width: 0
+    };
+  },
   components: {
     BookCard: () => import("@/components/Web/Cards/Book"),
     BookMobile: () => import("@/components/Mobile/Cards/Book/Update")
   },
-  created() {},
+  mounted() {
+    window.addEventListener("resize", this.checkWidth);
+    this.checkWidth();
+    // this.compo = this.checkMobile() ? Header : null;
+  },
+  destroyed() {
+    window.removeEventListener("resize", this.checkWidth);
+  },
+  methods: {
+    checkWidth() {
+      console.log(this.$refs["books"]);
+      this.width = this.$refs.bookList.clientWidth;
+    }
+  },
   computed: {}
 };
 </script>
@@ -43,6 +64,11 @@ export default {
   &__book-list {
     display: grid;
     /* autoprefixer: ignore next */
+    &--large {
+      grid-template-columns: repeat(4, minmax(30rem, 50rem));
+    }
+    &--small {
+    }
     grid-template-columns: repeat(3, minmax(30rem, 50rem));
     grid-template-rows: auto;
     /* autoprefixer: ignore next */

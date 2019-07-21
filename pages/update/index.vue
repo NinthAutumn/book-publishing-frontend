@@ -71,6 +71,7 @@ export default {
         $state.loaded();
       }
     },
+
     updateView: async function(setting) {
       if (!this.loggedIn) {
         return this.$store.commit("LOGIN_STATE");
@@ -84,7 +85,7 @@ export default {
   computed: {
     update_view() {
       if (this.$store.getters.isAuthenticated) {
-        (this.$store.getters["user/getUpdateView"]);
+        this.$store.getters["user/getUpdateView"];
         return this.$store.getters["user/getUpdateView"];
       } else {
         return "grid";

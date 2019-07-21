@@ -58,7 +58,7 @@
               type="text"
               @keypress.enter="showForm"
               placeholder="タグをたす"
-            >
+            />
           </div>
         </transition>
         <div
@@ -162,10 +162,6 @@ export default {
       }
 
       this.form = !this.form;
-      if (this.form) {
-        (this.$refs.taginput.clientWidth);
-        // this.$refs.taginput.focus();
-      }
     },
     removeItem(tag) {
       if (this.index === 1) {

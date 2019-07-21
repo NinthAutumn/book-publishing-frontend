@@ -30,10 +30,16 @@
           :key="chapter.chapter_id"
           v-for="(chapter,index) in book"
         >
-          <div class="update-book__chapter-container flex-row" v-if="index < 3">
+          <nuxt-link
+            tag="div"
+            v-ripple
+            :to="`/books/${chapter.book_id}/${chapter.chapter_id}`"
+            class="update-book__chapter-container flex-row"
+            v-if="index < 3"
+          >
             <div class="update-book__chapter-index">{{chapter.index}}</div>
             <div class="update-book__chapter-title" v-line-clamp="1">{{chapter.chapter_title}}</div>
-          </div>
+          </nuxt-link>
         </div>
       </div>
     </div>
@@ -51,6 +57,7 @@ export default {
       cover: require("~/assets/img/NobleCardLight.png")
     };
   },
+  methods: {},
   filters: {
     truncate: (string, number) => {
       if (string.length > number) {
@@ -102,6 +109,7 @@ export default {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    width: 100%;
     #{$self}__title {
       font-size: 1.6rem;
       max-width: 100%;
@@ -119,6 +127,7 @@ export default {
       }
     }
     #{$self}__chapter-container {
+      width: 100%;
       padding: 0.5rem;
       box-shadow: 0 2px 5px 0 rgba(60, 66, 87, 0.1),
         0 1px 1px 0 rgba(0, 0, 0, 0.07);

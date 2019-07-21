@@ -48,8 +48,6 @@ export default {
     BooksList: () => import("@/components/Homepage/BooksList"),
     ReviewList: () => import("@/components/Homepage/ReviewList"),
     Ranking: () => import("@/components/Homepage/Ranking"),
-    // BlobOne: () => import("@/assets/svg/blob.svg"),
-    // BlobTwo: () => import("@/assets/svg/blob2.svg"),
     BannerList: () => import("@/components/Homepage/BannerList"),
     SearchBar: () => import("@/components/Navigation/SearchBar"),
     Recommended: () => import("@/components/Homepage/Recommended"),
@@ -59,7 +57,6 @@ export default {
     await store.dispatch("analytic/fetchHighFrequent");
   },
   async fetch({ store }) {
-    // await store.dispatch("review/mostLiked");
     await store.dispatch("analytic/fetchTrending", { time: "weekly", page: 1 });
     await store.dispatch("analytic/fetchRecommended");
     await store.dispatch("analytic/fetchLatest");
@@ -68,17 +65,10 @@ export default {
       page: 1,
       limit: 5
     });
-    // await store.dispatch("chapter/fetchMoreLatestBooksSimple", {
-    //   page: 1,
-    //   limit: 8
-    // });
-    // if (store.state.auth.loggedIn) {
-    //   await store.dispatch("library/fetchLatestChapters");
-    // }
     await store.dispatch("analytic/fetchTrendingReviews");
   },
   async created() {
-    (this.recommended);
+    // (this.recommended);
   },
   data() {
     return {
