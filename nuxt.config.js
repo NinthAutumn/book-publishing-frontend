@@ -20,7 +20,23 @@ module.exports = {
       {
         name: 'title',
         content: '最新WEB小説投稿・閲覧サイト ノーブル'
-      }
+      },
+      {
+        property: "og:type",
+        content: 'website'
+      },
+      {
+        property: "og:url",
+        content: 'https://nobles.jp'
+      },
+      {
+        property: "og:title",
+        content: '最新WEB小説投稿・閲覧サイト ノーブルp'
+      },
+      {
+        property: 'og:description',
+        content: '優れた機能とデザインを雇用する令和を象徴する最新ネット小説投稿・閲覧サイトである。'
+      },
 
     ],
     link: [{

@@ -244,9 +244,13 @@ export default {
           width: "",
           left: 0
         },
-
         selected: {},
         open: "review"
+      },
+      head: {
+        title: "",
+        desc: "",
+        rating: ""
       },
       meta: {
         genre: {
@@ -445,10 +449,10 @@ export default {
   },
   transition: false,
   async mounted() {
-    // while (1) {
-    //   alert("なぜそれが");
-    // }
-    // const word
+    this.head = {
+      title: this.book.title,
+      desc: this.book.synopsis
+    };
     this.tabs.review = this.$refs.review.clientWidth;
     this.tabs.toc = this.$refs.toc.clientWidth;
     this.meta["word"].key = this.wordCount;
@@ -469,6 +473,17 @@ export default {
     } else {
       this.text = "ブックマーク";
     }
+  },
+  head() {
+    return {
+      title: this.book.title,
+      meta: [
+        {
+          name: "description",
+          content: this.book.synopsis
+        }
+      ]
+    };
   }
 };
 </script>
