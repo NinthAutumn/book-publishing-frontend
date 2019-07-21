@@ -158,7 +158,7 @@ export default {
     color: String,
     value: [Object, String, Array, Number],
     volume: Boolean,
-    disable: { type: [Array, String, Object], default: {} },
+    disable: { type: [Array, String, Object] },
     disabled: Boolean,
     disableMessage: String,
     genre: Boolean

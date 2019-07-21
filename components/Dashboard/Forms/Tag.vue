@@ -41,19 +41,14 @@ export default {
       this.filterTags();
     }
   },
-  computed: {
-    tags() {
-      return this.$store.getters["book/getTagList"];
-    }
-  },
   async mounted() {
-    await this.$store.dispatch("book/searchTags", {
+    let object = [];
+    const { tags } = await this.$store.dispatch("tag/fetchTagList", {
       page: 1,
       limit: 30,
       search: this.search
     });
-    let object = [];
-    for (let tag of this.tags) {
+    for (let tag of tags) {
       object.push({
         key: tag.name,
         sum: tag.books,
@@ -90,7 +85,7 @@ export default {
       // this.selectTag(name);
     },
     async filterTags() {
-      const tags = await this.$store.dispatch("book/queryTags", {
+      const { tags } = await this.$store.dispatch("tag/fetchTagList", {
         page: 1,
         limit: 30,
         search: this.search
@@ -124,9 +119,12 @@ export default {
       });
       if (temparray.length > this.limit) {
         this.selected[name].selected = false;
-        temparray.pop();
+        temparray = temparray.filter(val => {
+          return val.name !== this.selected[name].key;
+        });
       }
       this.object = temparray;
+      console.log(temparray);
 
       this.$emit("input", temparray);
     }
@@ -161,7 +159,7 @@ export default {
     }
   }
   &__list {
-    height: 200px;
+    max-height: 200px;
     display: flex;
     flex-wrap: wrap;
     overflow: auto;

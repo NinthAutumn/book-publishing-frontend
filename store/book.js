@@ -189,10 +189,9 @@ export const actions = {
     infinite = false
   }) {
     try {
-      const res = await this.$axios.get(`/tag/list?search=${search}&limit=${limit}&page=${page}`)
+      const res = await this.$axios.get(`/tag/query?search=${search}&limit=${limit}&page=${page}`)
       if (infinite) {
         commit('PUSH_TAG_LIST', res.data)
-
       } else {
         commit('SET_TAG_LIST', res.data)
 
