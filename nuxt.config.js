@@ -248,13 +248,9 @@ module.exports = {
     }],
     "nuxt-compress",
   ],
-  /*
-   ** Axios module configuration
-   */
   axios: {
     baseURL: process.env.SERVER_URL
   },
-
   auth: {
     strategies: {
       google: {
@@ -346,7 +342,7 @@ module.exports = {
     })]
   },
   server: {
-    port: process.env.NUXT_PORT || 3000,
-    host: process.env.NUXT_HOST
+    port: 8080,
+    host: '0.0.0.0'
   },
 }

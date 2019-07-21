@@ -15,10 +15,10 @@ RUN npm run build
 # set app serving to permissive / assigned
 ENV NUXT_HOST=0.0.0.0
 # set app port
-ENV NUXT_PORT=80
+ENV NUXT_PORT=8080
 ENV STRIPE_KEY=pk_test_vo5gfW5q36LnApH8C6AFeYJJ
 # ENV HOST 0.0.0.0
-EXPOSE 80
+EXPOSE 8080
 
 # start command
 CMD [ "npm", "start" ]
