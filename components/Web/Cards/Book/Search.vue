@@ -27,7 +27,9 @@
           <div class="book-scard__genre" v-text="`${book.pen_name}・${book.name}`"></div>
         </div>
         <div class="flex-divider flex-row">
-          <div class="book-scard__genres" v-for="genre in book.genres" :key="genre">{{genre}}</div>
+          <div class="book-scard__genres" v-for="(genre,index) in book.genres" :key="genre">
+            <div class="book-scard__genre-container" v-if="index < 3">{{genre}}</div>
+          </div>
         </div>
         <div class="book-scard__synopsis" v-line-clamp="4" v-text="book.synopsis"></div>
       </div>
@@ -94,12 +96,14 @@ export default {
         font-size: 1.8rem;
       }
       #{$self}__genres {
-        font-size: 1.4rem;
-        padding: 0.3rem 1rem;
-        border-radius: 50rem;
-        background-color: $primary;
-        color: white;
-        margin-right: 1rem;
+        #{$self}__genre-container {
+          font-size: 1.3rem;
+          padding: 0.3rem 1rem;
+          border-radius: 50rem;
+          background-color: $primary;
+          color: white;
+          margin-right: 1rem;
+        }
       }
       #{$self}__genre {
         font-size: 1.4rem;

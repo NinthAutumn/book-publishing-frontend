@@ -17,11 +17,7 @@
         icon="th-list"
       ></fa>
     </div>
-    <BookList
-      v-loading.fullscreen="loading"
-      :latestBooks="latestBooks"
-      v-if="update_view === 'grid'"
-    ></BookList>
+    <BookList v-loading="loading" :latestBooks="latestBooks" v-if="update_view === 'grid'"></BookList>
     <book-table :latestBooks="latestBooks" v-if="update_view === 'list'"></book-table>
     <no-ssr>
       <infinite-loading @infinite="infiniteHandler"></infinite-loading>

@@ -249,7 +249,7 @@ module.exports = {
     "nuxt-compress",
   ],
   axios: {
-    baseURL: process.env.SERVER_URL
+    baseURL: process.env.SERVER_URL + '/v1'
   },
   auth: {
     strategies: {

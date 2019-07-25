@@ -42,7 +42,7 @@ export default {
   },
   methods: {
     checkWidth() {
-      console.log(this.$refs["books"]);
+      // console.log(this.$refs["books"]);
       this.width = this.$refs.bookList.clientWidth;
     }
   },
@@ -65,9 +65,10 @@ export default {
     display: grid;
     /* autoprefixer: ignore next */
     &--large {
-      grid-template-columns: repeat(4, minmax(30rem, 50rem));
+      grid-template-columns: repeat(auto-fill, minmax(30rem, 50rem));
     }
     &--small {
+      grid-template-columns: repeat(2, minmax(30rem, 50rem));
     }
     grid-template-columns: repeat(3, minmax(30rem, 50rem));
     grid-template-rows: auto;
