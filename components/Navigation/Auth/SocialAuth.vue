@@ -24,6 +24,7 @@
     </ul>
     <div class="social-auth__create-account">
       アカウントを持っていない?
+      <br />
       <span @click="changeStep">サインアップ!</span>
     </div>
   </div>
@@ -243,10 +244,13 @@ export default {
     text-align: center;
     font-size: 1.4rem;
     margin-top: 2rem;
+    margin-bottom: 1rem;
+    font-weight: bold;
     // color: ;
     span {
-      font-size: 1.6rem;
+      font-size: 1.4rem;
       color: $secondary;
+      font-weight: bold;
       &:hover {
         cursor: pointer;
       }

@@ -15,7 +15,13 @@
             v-for="(footer,index) in footerList"
             :key="footer.value"
           >
-            <span>{{footer.key}}</span>
+            <span v-if="!footer.link">{{footer.key}}</span>
+            <nuxt-link
+              tag="span"
+              class="auth-modal__footer__link"
+              v-else
+              :to="footer.link"
+            >{{footer.key}}</nuxt-link>
             <i v-if="index !== 2">|</i>
           </li>
         </ul>
@@ -32,8 +38,12 @@ export default {
     return {
       footerList: [
         { key: "© nobles 2019", value: "copyright" },
-        { key: "利用規約", value: "toc" },
-        { key: "プライバシーポリシー", value: "privacy policy" }
+        { key: "利用規約", value: "toc", link: "/about/tos" },
+        {
+          key: "プライバシーポリシー",
+          value: "privacy policy",
+          link: "/about/pp"
+        }
       ],
       email: ""
     };
@@ -85,6 +95,10 @@ export default {
         border-left: 1px solid;
       }
       #{$self}__item {
+        #{$self}__link {
+          cursor: pointer;
+          color: #556cd6;
+        }
         font-size: 1.4rem;
         span {
           font-size: 1.4rem;
