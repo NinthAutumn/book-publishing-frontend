@@ -22,7 +22,8 @@ export default {
         }
         const { access_token, refresh_token } = data;
         this.auth({ access_token, refresh_token, strategy: "twitter" });
-        this.$router.go("/");
+        this.$router.push("/");
+        this.$router.go(0);
       } catch (error) {
         console.log(error);
       }

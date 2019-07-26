@@ -212,13 +212,12 @@ export default {
       }
       &--twitter {
         color: #059ff5;
-        background-color: rgb(182, 182, 182);
+        // background-color: rgb(182, 182, 182);
         // box-shadow: none;
-        cursor: default;
         &:hover {
-          cursor: default;
-          box-shadow: 0 2px 5px 0 rgba(60, 66, 87, 0.1),
-            0 1px 1px 0 rgba(0, 0, 0, 0.07);
+          cursor: pointer;
+          // box-shadow: 0 2px 5px 0 rgba(60, 66, 87, 0.1),
+          //   0 1px 1px 0 rgba(0, 0, 0, 0.07);
         }
       }
       #{$self}__icon {
