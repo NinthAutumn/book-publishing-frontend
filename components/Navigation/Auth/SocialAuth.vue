@@ -122,6 +122,10 @@ export default {
           this.google_submit();
           break;
         case "twitter":
+          // console.log(window.twttr);
+          const { data } = await this.$axios.get("auth/social/twitter/url");
+
+          window.open(data.url);
           this.$toast.show(`ツイッターの対応は現在工作通です`, {
             theme: "toasted-primary",
             position: "top-right",

@@ -24,12 +24,12 @@
               :src="book.cover"
               :lazy-src="lazyCover"
               :aspect-ratio="1/1.5"
-              max-width="10rem"
-              min-width="3.5rem"
+              max-width="4rem"
+              min-width="2rem"
             >
               <template v-slot:placeholder>
                 <div class="home-ranking__loading">
-                  <trinity-rings-spinner :animation-duration="1500" :size="50" color="#ff1d5e"/>
+                  <trinity-rings-spinner :animation-duration="1500" :size="50" color="#ff1d5e" />
                 </div>
               </template>
             </v-img>
@@ -134,7 +134,7 @@ export default {
             box-shadow: 0 2px 5px 0 rgba(60, 66, 87, 0.1),
               0 1px 1px 0 rgba(0, 0, 0, 0.07);
           }
-          min-width: 20%;
+          min-width: 4rem;
         }
         #{$self}__loading {
           height: 100%;
