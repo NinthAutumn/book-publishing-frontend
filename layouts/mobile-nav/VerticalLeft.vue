@@ -27,12 +27,15 @@
         <div class="mobile-vleft__buy" @click.stop="$emit('stripe')">買う</div>
       </div>
       <div class="mobile-vleft__nav" v-cloak>
+        <div class="mobile-vleft__menu">
+          <div class="mobile-vleft__item" v-for="menu in menu_list" :key="menu.title"></div>
+        </div>
         <div v-ripple @click="logout" class="mobile-vleft__logout">サインアウト</div>
 
-        <div class="mobile-vleft__title">通知</div>
+        <!-- <div class="mobile-vleft__title">通知</div>
         <inbox-list v-cloak></inbox-list>
         <div class="mobile-vleft__title">ブックマーク</div>
-        <latest-chapters height="30vh" v-cloak></latest-chapters>
+        <latest-chapters height="30vh" v-cloak></latest-chapters>-->
       </div>
     </div>
   </div>
@@ -54,7 +57,40 @@ export default {
   },
   data() {
     return {
-      avatar: require("~/assets/profile.png")
+      avatar: require("~/assets/profile.png"),
+      menu_list: [
+        {
+          title: "ホーム",
+          icon: "home",
+          link: "/",
+          meta: ""
+        },
+        {
+          title: "検索",
+          icon: "search",
+          link: "/browse",
+          meta: "search"
+        },
+        {
+          title: "ランキング",
+          icon: "crown",
+          link: "/rankings",
+          meta: "ranking"
+        },
+        {
+          title: "更新",
+          icon: "globe",
+          link: "/update",
+          meta: "update"
+        },
+        {
+          title: "ライブラリー",
+          icon: "book",
+          link: "/library",
+          meta: "library",
+          auth: true
+        }
+      ]
     };
   },
   methods: {

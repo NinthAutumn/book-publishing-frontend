@@ -20,10 +20,17 @@ export default {
         if (data.error) {
           return this.$toast.error(data.error);
         }
+
         const { access_token, refresh_token } = data;
         this.auth({ access_token, refresh_token, strategy: "twitter" });
-        this.$router.push("/");
-        this.$router.go(0);
+        this.$storage.setUniversal("access_token", access_token);
+        this.$storage.setUniversal("refresh_token", refresh_token);
+        this.$storage.setUniversal("strategy", "twitter");
+        this.$axios.defaults.headers.common[
+          "Authorization"
+        ] = `Bearer ${access_token}`;
+        await this.$store.dispatch("user/fetchUser");
+        // this.$router.go(0);
       } catch (error) {
         console.log(error);
       }

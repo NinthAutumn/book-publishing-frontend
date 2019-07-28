@@ -41,7 +41,7 @@
             <div class="update-book__chapter-title" v-line-clamp="1">{{chapter.chapter_title}}</div>
           </nuxt-link>
         </div>
-        <p class="text--right" v-if="book.length > 3">・・・{{book.length- 3}}+</p>
+        <p class="text--right" v-if="book.length > 3">・・・ {{book.length- 3}}+</p>
       </div>
     </div>
   </div>

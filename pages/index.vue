@@ -53,23 +53,17 @@ export default {
     Recommended: () => import("@/components/Homepage/Recommended"),
     MobileRanking: () => import("@/components/Mobile/List/Book/Ranking/Home")
   },
-  async asyncData({ store }) {
-    await store.dispatch("analytic/fetchHighFrequent");
-  },
+  async asyncData({ store }) {},
   async fetch({ store }) {
-    await store.dispatch("analytic/fetchTrending", { time: "weekly", page: 1 });
     await store.dispatch("analytic/fetchRecommended");
-    await store.dispatch("analytic/fetchLatest");
+
     await store.dispatch("analytic/fetchVoteRanking", {
       time: "daily",
       page: 1,
       limit: 5
     });
-    await store.dispatch("analytic/fetchTrendingReviews");
   },
-  async created() {
-    // (this.recommended);
-  },
+  async mounted() {},
   data() {
     return {
       compo: false,
@@ -78,7 +72,15 @@ export default {
       height: 0
     };
   },
-  mounted() {
+  async mounted() {
+    await this.$store.dispatch("analytic/fetchHighFrequent");
+
+    await this.$store.dispatch("analytic/fetchLatest");
+    await this.$store.dispatch("analytic/fetchTrending", {
+      time: "weekly",
+      page: 1
+    });
+    await this.$store.dispatch("analytic/fetchTrendingReviews");
     window.addEventListener("resize", this.handleResize);
     this.handleResize();
     // this.compo = this.checkMobile() ? Header : null;

@@ -1,6 +1,8 @@
 <template>
   <div class="social-auth">
-    <div class="social-auth__header text--center text--large">ノーブル</div>
+    <div class="social-auth__header text--center text--large flex-row flex--align flex--center">
+      <v-img style="margin-right:1rem;" width="2rem" max-width="3rem" :src="'/icon.png'"></v-img>ノーブル
+    </div>
 
     <ul class="social-auth__list flex-column flex--center flex--align">
       <li
@@ -167,6 +169,7 @@ export default {
   padding: 3rem;
   &__header {
     margin-bottom: 2rem;
+    font-weight: bold;
   }
   &__list {
     #{$self}__item {

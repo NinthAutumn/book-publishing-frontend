@@ -61,7 +61,7 @@ export default {
           list: []
         },
         個人情報: {
-          title: "",
+          title: "個人情報の取扱い",
           desc:
             "<p>弊社は、個人情報を<a href='/about/pp'>「プライバシーポリシー」</a>に基づき、適切に取り扱うものとします。</p>",
           list: []

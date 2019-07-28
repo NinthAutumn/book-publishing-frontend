@@ -26,6 +26,8 @@
         <div class="flex-divider flex-row">
           <div class="book-scard__genre" v-text="`${book.pen_name}・${book.name}`"></div>
         </div>
+        <v-rating color="#FF8D29" readonly :size="20" half-increments :value="+book.rating"></v-rating>
+
         <div class="flex-divider flex-row">
           <div class="book-scard__genres" v-for="(genre,index) in book.genres" :key="genre">
             <div class="book-scard__genre-container" v-if="index < 3">{{genre}}</div>
@@ -62,6 +64,9 @@ export default {
   }
   $self: &;
   &__container {
+    .v-icon {
+      padding: 0 !important;
+    }
     display: flex;
     // min-width: 50rem;
     transform: scale(1);
@@ -80,7 +85,7 @@ export default {
     }
     &:active,
     &:focus {
-      transform: scale(0.98);
+      // transform: scale(0.98);
     }
     #{$self}__cover {
       min-width: 13rem;

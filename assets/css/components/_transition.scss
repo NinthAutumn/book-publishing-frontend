@@ -13,6 +13,47 @@
   }
 }
 
+@keyframes UpDown {
+  from {
+    transform: translateY(-1000px)
+  }
+
+  to {
+    transform: translateX(0)
+  }
+}
+
+@keyframes DownUp {
+  from {
+    transform: translateX(0)
+  }
+
+  to {
+    transform: translateY(1000px)
+  }
+}
+
+.up-down {
+  &-enter {
+
+    &-active {
+      animation: UpDown 500ms ease-out;
+      animation-fill-mode: backwards;
+    }
+  }
+
+  &-leave {
+    &-active {
+      animation: DownUp 500ms ease-out;
+      animation-fill-mode: backwards;
+      // animation-direction: reverse;
+    }
+
+    &-to {}
+  }
+
+}
+
 .slide-right {
   &-enter {
 
@@ -242,7 +283,7 @@
   }
 
   &-leave-active {
-    transition: opacity .4s linear, transform .4s cubic-bezier(.5, 0, .7, .4); //cubic-bezier(.7,0,.7,1); 
+    transition: opacity .4s linear, transform .4s cubic-bezier(.5, 0, .7, .4); //cubic-bezier(.7,0,.7,1);
     transition-delay: calc(0.1s * (var(--total) - var(--i)));
   }
 
