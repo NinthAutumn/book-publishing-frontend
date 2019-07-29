@@ -2,12 +2,18 @@
   <div class="layout-main">
     <div class="layout-main__container">
       <div class="layout-main__list">
-        <div class="layout-main__item" v-for="(menu,key) in menus" :key="key">
+        <nuxt-link
+          :to="menu.link"
+          @click="openLink(key)"
+          class="layout-main__item"
+          v-for="(menu,key) in menus"
+          :key="key"
+        >
           <div class="layout-main__item-container" :style="menu.style">
             <fa class="layout-main__icon" :icon="menu.icon"></fa>
           </div>
           <div class="layout-main__text" v-text="menu.text"></div>
-        </div>
+        </nuxt-link>
       </div>
     </div>
   </div>
@@ -26,7 +32,8 @@ export default {
             boxShadow: "0 2px 4px 0 rgb(178, 107, 255,0.24)"
           },
           icon: "search",
-          text: "検索"
+          text: "検索",
+          link: "/browse/mobile"
         },
 
         update: {
@@ -38,7 +45,8 @@ export default {
             boxShadow: "0 2px 4px 0 rgb(52, 240, 243,0.24) "
           },
           icon: "globe",
-          text: "更新"
+          text: "更新",
+          link: "/update"
         },
         ranking: {
           style: {
@@ -48,7 +56,8 @@ export default {
             boxShadow: "0 2px 4px 0 rgba(245, 49, 101, 0.24)"
           },
           icon: "fire",
-          text: "ランキング"
+          text: "ランキング",
+          link: "/rankings"
         },
         library: {
           style: {
@@ -58,10 +67,14 @@ export default {
             boxShadow: "0 2px 4px 0 rgba(255, 141, 41, 0.24)"
           },
           icon: "book-open",
-          text: "本棚"
+          text: "本棚",
+          link: "/library"
         }
       }
     };
+  },
+  methods: {
+    openLink(key) {}
   }
 };
 </script>
