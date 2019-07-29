@@ -1,13 +1,21 @@
 <template>
   <nav class="mobile-horizontal flex-row flex--between flex--align">
-    <div class="mobile-horizontal__meta" v-ripple @click.stop="toggleMenu(false)">
-      <fa icon="bars" class="mobile-horizontal__bar"></fa>
+    <div class="mobile-horizontal__meta">
+      <v-img
+        width="3.3rem"
+        height="3.3rem"
+        style="mobile-horizontal__img"
+        max-height="3.3rem"
+        max-width="3.3rem"
+        :src="icon"
+        @click="$router.push('/')"
+      ></v-img>
     </div>
     <div class="mobile-horizontal__profile" v-ripple @click="toggleMenu(true)">
       <!-- <v-avatar class="mobile-horizontal__avatar" :size="40" v-if="!loggedIn">
         <img :src="avatar">
       </v-avatar>-->
-      <v-avatar class="mobile-horizontal__avatar" :size="41">
+      <v-avatar class="mobile-horizontal__avatar" :size="35">
         <v-img :src="$store.getters['auth/isAuthenticated']&&user.avatar? user.avatar.img:avatar"></v-img>
         <!-- <v-img v-else :src="avatar"></v-img> -->
         <div class="mobile-horizontal__notification" v-if="notificationCount"></div>
@@ -22,7 +30,8 @@ export default {
   props: {},
   data() {
     return {
-      avatar: require("~/assets/profile.png")
+      avatar: require("~/assets/profile.png"),
+      icon: require("~/assets/No-shadow-icon.png")
     };
   },
   computed: {
@@ -53,11 +62,24 @@ export default {
     0 1px 3px rgba(0, 0, 0, 0.08);
   box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
   z-index: 1000;
-  padding: 0 1rem;
+  padding: 0 1.5rem;
   // border-radius: 2rem;
   // border-bottom--radius: 2rem;
   &__meta {
-    padding: 1rem;
+    // padding: 1rem;
+    transition: 200ms;
+    #{$self}__img {
+      box-shadow: 0 7px 14px 0 rgba(60, 66, 87, 0.1),
+        0 3px 6px 0 rgba(0, 0, 0, 0.07);
+    }
+    transform: scale(1);
+    &:hover {
+      cursor: pointer;
+    }
+    &:active {
+      transform: scale(0.96);
+      transition: 200ms;
+    }
     #{$self}__bar {
       font-size: 2rem;
     }

@@ -1,7 +1,7 @@
 <template>
   <div class="currency flex-row flex--align" :class="{'currency--large':size === 'large'}">
     <div
-      class="currency__type"
+      class="currency__type flex--align flex-row flex--center"
       :class="{'currency__type--large':size === 'large','currency__icon--small':small}"
     >
       <svg-icon

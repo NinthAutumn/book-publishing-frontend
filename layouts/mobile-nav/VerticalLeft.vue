@@ -28,7 +28,10 @@
       </div>
       <div class="mobile-vleft__nav" v-cloak>
         <div class="mobile-vleft__menu">
-          <div class="mobile-vleft__item" v-for="menu in menu_list" :key="menu.title"></div>
+          <div class="mobile-vleft__item" v-for="menu in menu_list" :key="menu.title">
+            <div class="mobile-vleft__title" v-text="menu.title"></div>
+            <fa class="mobile-vleft__icon" :icon="menu.icon"></fa>
+          </div>
         </div>
         <div v-ripple @click="logout" class="mobile-vleft__logout">サインアウト</div>
 
@@ -60,32 +63,8 @@ export default {
       avatar: require("~/assets/profile.png"),
       menu_list: [
         {
-          title: "ホーム",
-          icon: "home",
-          link: "/",
-          meta: ""
-        },
-        {
-          title: "検索",
-          icon: "search",
-          link: "/browse",
-          meta: "search"
-        },
-        {
-          title: "ランキング",
-          icon: "crown",
-          link: "/rankings",
-          meta: "ranking"
-        },
-        {
-          title: "更新",
-          icon: "globe",
-          link: "/update",
-          meta: "update"
-        },
-        {
           title: "ライブラリー",
-          icon: "book",
+          icon: "book-open",
           link: "/library",
           meta: "library",
           auth: true
@@ -118,7 +97,7 @@ export default {
   z-index: 1000;
   right: 0;
   position: fixed;
-  width: 90vw;
+  width: 80vw;
   background-color: #fff;
   -webkit-box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11),
     0 1px 3px rgba(0, 0, 0, 0.08);
@@ -131,13 +110,25 @@ export default {
   }
   &__nav {
     padding: 1.5rem;
+    #{$self}__item {
+      font-size: 1.7rem;
+      padding: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      // text-align: center;
+      #{$self}__title {
+        font-size: 1.7rem;
+      }
+    }
   }
-  &__title {
-    font-size: 1.6rem;
-    // color:#d6dcdd;
-    font-weight: bold;
-    margin: 1rem 0rem;
-  }
+  // &__title {
+  //   font-size: 1.6rem;
+  //   // color:#d6dcdd;
+  //   font-weight: bold;
+  //   margin: 1rem 0rem;
+  // }
+
   &__wealth {
     padding: 0 1.5rem;
     height: 5rem;
@@ -148,7 +139,7 @@ export default {
     #{$self}__buy {
       font-size: 1.6rem;
       // paddin
-      padding: 0.5rem 2.5rem;
+      padding: 0.2rem 2.5rem;
       border-radius: 0.5rem;
       background-color: #566cd6;
       color: white;

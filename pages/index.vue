@@ -3,10 +3,12 @@
     <div class="search-books" v-if="$device.isMobile">
       <search-bar></search-bar>
     </div>
+
     <nuxt-child></nuxt-child>
     <div class="head-banner">
       <BannerList></BannerList>
     </div>
+    <nav-list v-if="$device.isMobile"></nav-list>
     <div class="main-books">
       <div class="flex-divider flex-row">
         <div class="card-title">
@@ -51,7 +53,8 @@ export default {
     BannerList: () => import("@/components/Homepage/BannerList"),
     SearchBar: () => import("@/components/Navigation/SearchBar"),
     Recommended: () => import("@/components/Homepage/Recommended"),
-    MobileRanking: () => import("@/components/Mobile/List/Book/Ranking/Home")
+    MobileRanking: () => import("@/components/Mobile/List/Book/Ranking/Home"),
+    NavList: () => import("@/components/Mobile/Layout/Nav")
   },
   async asyncData({ store }) {},
   async fetch({ store }) {
@@ -74,7 +77,6 @@ export default {
   },
   async mounted() {
     await this.$store.dispatch("analytic/fetchHighFrequent");
-
     await this.$store.dispatch("analytic/fetchLatest");
     await this.$store.dispatch("analytic/fetchTrending", {
       time: "weekly",
