@@ -172,6 +172,19 @@ export default {
     font-weight: bold;
   }
   &__list {
+    @media screen and (max-width: 450px) {
+      #{$self}__item {
+        padding: 1.25rem 3rem !important;
+        min-width: 30rem !important;
+      }
+    }
+    @media screen and (max-width: 320px) {
+      #{$self}__item {
+        padding: 1.25rem 2.8rem !important;
+        min-width: 28rem !important;
+      }
+    }
+
     #{$self}__item {
       background-color: #fff;
       font-size: 1.6rem;

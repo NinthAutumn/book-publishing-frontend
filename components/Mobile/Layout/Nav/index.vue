@@ -8,6 +8,7 @@
           class="layout-main__item"
           v-for="(menu,key) in menus"
           :key="key"
+          v-ripple="{class:'layout-main__ripple'}"
         >
           <div class="layout-main__item-container" :style="menu.style">
             <fa class="layout-main__icon" :icon="menu.icon"></fa>
@@ -83,6 +84,9 @@ export default {
 .layout-main {
   $self: &;
   &__container {
+    #{$self}__ripple {
+      color: rgb(241, 241, 241);
+    }
     #{$self}__list {
       display: flex;
       margin-top: 2rem;
@@ -95,7 +99,7 @@ export default {
         &:active,
         &:focus,
         &:hover {
-          background-color: rgb(241, 241, 241);
+          // background-color:
           transform: scale(0.98);
           transition: 200ms;
         }
