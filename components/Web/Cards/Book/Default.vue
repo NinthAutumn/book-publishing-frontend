@@ -10,7 +10,7 @@
       <div class="book-card__cover" :class="{'book-card__cover--desktop': !isMobile}">
         <v-img
           class="book-card__img"
-          :src="`${cover}?m`"
+          :src="`${cover}/m`"
           :lazy-src="lazyCover"
           :aspect-ratio="1/1.5"
           max-width="15rem"
@@ -46,7 +46,7 @@
       <div class="book-card__rating" v-if="!isMobile">
         <v-rating
           v-if="rating"
-          color="#FF8D29"
+          color="#FF634C"
           readonly
           :size="25"
           half-increments

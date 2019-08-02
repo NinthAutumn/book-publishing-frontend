@@ -57,19 +57,24 @@ export default {
   },
   async mounted() {
     await this.$store.dispatch("wallet/wealth");
+    this.menu_list["profile"].link = `/users/${this.user.id}`;
   },
   data() {
     return {
       avatar: require("~/assets/profile.png"),
-      menu_list: [
-        {
+      menu_list: {
+        profile: {
+          title: "プローフィール",
+          icon: "user",
+          link: "/users/"
+        },
+        library: {
           title: "ライブラリー",
           icon: "book-open",
           link: "/library",
-          meta: "library",
           auth: true
         }
-      ]
+      }
     };
   },
   methods: {

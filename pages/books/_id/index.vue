@@ -4,7 +4,7 @@
       <v-img
         v-if="!$device.isMobile"
         class="book__cover"
-        :src="book.cover"
+        :src="book.cover+'/l'"
         alt="book cover"
         max-width="20rem"
         min-width="10rem"

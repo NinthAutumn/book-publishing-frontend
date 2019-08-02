@@ -4,7 +4,7 @@
       <div class="book-scard__cover">
         <v-img
           class="book-scard__img"
-          :src="book.cover + '?m'"
+          :src="book.cover + '/m'"
           :lazy-src="lazyCover"
           :aspect-ratio="1/1.5"
           max-width="15rem"

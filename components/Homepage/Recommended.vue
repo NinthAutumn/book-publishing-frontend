@@ -13,7 +13,7 @@
           <!-- :src="`https://storage.googleapis.com/theta-images/${book.cover}`" -->
           <v-img
             v-if="$device.isMobile"
-            :src="book.cover"
+            :src="book.cover + '/m'"
             :aspect-ratio="1/1.5"
             :lazy-src="cover"
             max-width="17rem"
@@ -34,7 +34,7 @@
           </v-img>
           <v-img
             v-else
-            :src="book.cover"
+            :src="book.cover + '/m'"
             :aspect-ratio="1/1.5"
             max-width="17rem"
             min-width="12rem"

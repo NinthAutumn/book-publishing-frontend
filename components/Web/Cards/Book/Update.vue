@@ -10,7 +10,7 @@
         :aspect-ratio="1/1.5"
         max-width="15rem"
         class="update-book__img"
-        :src="book[0].cover"
+        :src="book[0].cover + '/m'"
         :lazy-src="cover"
         style=" border-radius: 0.4rem;"
       >

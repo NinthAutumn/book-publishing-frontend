@@ -2,12 +2,12 @@
   &-item {
     display: inline-block;
     margin-right: 10px;
-    transition: 500ms;
+    transition: 100ms;
     position: absolute;
   }
 
   &-enter-active {
-    transition: 500ms;
+    transition: 100ms;
   }
 
   &-leave-active {
@@ -16,13 +16,11 @@
 
   &-enter {
     opacity: 0;
-    transform: scale(0.8) translateY(10rem);
-
+    transform: translateZ(-30rem);
   }
 
   &-leave {
     display: none;
-
   }
 
   &-leave-to {
@@ -31,6 +29,38 @@
     // transform: translateY(10px);
   }
 }
+
+.slide-in {
+
+  &-move {
+    transition: opacity .5s linear, transform .5s ease-in-out;
+  }
+
+  &-leave-active {
+    transition: opacity .4s linear, transform .4s cubic-bezier(.5, 0, .7, .4); //cubic-bezier(.7,0,.7,1);
+    transition-delay: calc(0.1s * (var(--total) - var(--i)));
+  }
+
+  &-enter-active {
+    transition: opacity .5s linear, transform .5s cubic-bezier(.2, .5, .1, 1);
+    transition-delay: calc(0.1s * var(--i));
+  }
+
+  &-enter,
+  &-leave-to {
+    opacity: 0;
+  }
+
+  &-enter {
+    transform: translateX(-1em);
+  }
+
+  &-leave-to {
+    transform: translateX(1em);
+  }
+
+}
+
 
 .tag-summon {
   &-enter-active {

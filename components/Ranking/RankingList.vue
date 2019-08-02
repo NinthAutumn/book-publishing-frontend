@@ -49,7 +49,7 @@
       </div>
     </div>
     <transition-group
-      name="list"
+      name="slide-in"
       tag="ul"
       class="book-list"
       v-if="selected_ranking_type===0&&!$device.isMobile||selected_ranking_type===2&&!$device.isMobile"
@@ -64,7 +64,7 @@
       ></ranking-item>
     </transition-group>
     <transition-group
-      name="list"
+      name="slide-in"
       tag="ul"
       class="book-list"
       v-if="selected_ranking_type===0&&$device.isMobile||selected_ranking_type===2&&$device.isMobile"
@@ -79,7 +79,7 @@
       ></ranking-card>
     </transition-group>
     <transition-group
-      name="list"
+      name="slide-in"
       tag="ul"
       class="book-list"
       v-if="selected_ranking_type===1&&!$device.isMobile"
@@ -94,7 +94,7 @@
       ></ranking-item>
     </transition-group>
     <transition-group
-      name="list"
+      name="slide-in"
       tag="ul"
       class="book-list"
       v-if="selected_ranking_type===1&&$device.isMobile"
