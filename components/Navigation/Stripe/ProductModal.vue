@@ -28,7 +28,7 @@
                   <Currency :amount="product.amount"></Currency>
                 </div>
                 <div class="product-modal__price">
-                  {{`¥${product.value + (product.value*0.08)}円`}}
+                  {{`¥${product.value * (1.08)}円`}}
                   <span class="product-modal__tax">税込</span>
                 </div>
               </li>
@@ -58,28 +58,28 @@ export default {
   data() {
     return {
       products: [
-        { amount: 30, value: 100, selected: false, id: "sku_EzvZQ4Yx0HJwAI" },
-        { amount: 150, value: 500, selected: false, id: "sku_EzvdVvAjFFbOmK" },
-        { amount: 300, value: 1000, selected: false, id: "sku_EzvbfgXi08lDyX" },
-        { amount: 750, value: 2500, selected: false, id: "sku_F01o0Cvj1cIEM6" },
+        { amount: 30, value: 100, selected: false, id: "sku_FYNYB8CJUXAkuh" },
+        { amount: 150, value: 500, selected: false, id: "sku_FYNZyBHIUFrmV4" },
+        { amount: 300, value: 1000, selected: false, id: "sku_FYNZ0Zc6GUdtGR" },
+        { amount: 750, value: 2500, selected: false, id: "sku_FYNZ5xGK6styIY" },
         {
           amount: 1500,
           value: 5000,
           selected: false,
-          id: "sku_F01prA6uqwsuqD"
+          id: "sku_FYNah0tP7OPGvL"
         },
         {
           amount: 3000,
           value: 10000,
           selected: false,
-          id: "sku_F01ps58bR5lbRw"
+          id: "sku_FYNaMcXbE3aPMq"
         }
       ],
       open: true,
       selected: 1,
       step: 1,
-      price: 500 + 500 * 0.08,
-      id: "sku_EzvdVvAjFFbOmK",
+      price: 500 * 1.08,
+      id: "sku_FYNZyBHIUFrmV4",
       coin: 150
     };
   },
@@ -96,7 +96,7 @@ export default {
     selectProduct: function(index, coin, price, id) {
       this.selected = index;
       this.coin = coin;
-      this.price = price + price * 0.08;
+      this.price = price * 1.08;
       this.id = id;
     },
     goBack() {

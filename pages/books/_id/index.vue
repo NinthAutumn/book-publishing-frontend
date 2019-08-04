@@ -1,81 +1,8 @@
 <template>
   <main class="book" :class="{'book--mobile': $device.isMobile, 'page-padding': !$device.isMobile}">
-    <div class="book__container">
-      <v-img
-        v-if="!$device.isMobile"
-        class="book__cover"
-        :src="book.cover+'/l'"
-        alt="book cover"
-        max-width="20rem"
-        min-width="10rem"
-        :lazy-src="cover"
-        :aspect-ratio="1/1.5"
-      >
-        <template v-slot:placeholder>
-          <v-layout fill-height align-center justify-center ma-0>
-            <v-progress-circular indeterminate color="black "></v-progress-circular>
-          </v-layout>
-        </template>
-      </v-img>
-      <transition
-        appear
-        enter-active-class="animation animation--medium animation--ease-in animation__slide--down"
-        leave-active-class="animation animation--medium animation--ease-out animation__slide--up animation--backwards animation--reverse"
-      >
-        <v-img
-          :lazy-src="cover"
-          height="35vh"
-          class="book__cover book__cover--mobile"
-          width="100vw"
-          v-if="$device.isMobile&&showImage"
-          :src="book.cover"
-        >
-          <template v-slot:placeholder>
-            <v-layout fill-height align-center justify-center ma-0>
-              <v-progress-circular indeterminate color="black "></v-progress-circular>
-            </v-layout>
-          </template>
-        </v-img>
-      </transition>
-      <div class="book__info flex flex-column flex--around">
-        <header class="book__title">{{book.title}}</header>
-        <div class="book__title--more-info" v-if="$device.isMobile">
-          <div class="book__title__author">作者: {{book.pen_name}}</div>
-        </div>
-        <div class="book__meta flex-row">
-          <nuxt-link
-            class="book__meta__item"
-            :class="'book__meta__item--' +item.type"
-            v-for="(item, key) in meta"
-            :key="key"
-            :to="item.url"
-            tag="div"
-          >
-            <fa class="book__meta__icon" :icon="item.icon"></fa>
-            <p>{{item.key}}</p>
-          </nuxt-link>
-        </div>
-        <div class="book__rating flex-row flex--align" style="font-size:1.6rem;">
-          <no-ssr>
-            <v-rating
-              half-increments
-              color="#FF8D29"
-              :readonly="true"
-              :size="star"
-              :value="+book.rating"
-            ></v-rating>
-            {{` ${book.rating}`}}
-          </no-ssr>
-        </div>
-      </div>
-
-      <div class="book__avatar">
-        <v-img v-if="book.avatar" class="book-author" :src="book.avatar" alt="author avatar"></v-img>
-      </div>
-      <div class="book__mobile-info">
-        <div class="book__mobile-view"></div>
-      </div>
-
+    <book-header v-if="!$device.isMobile" :book="book"></book-header>
+    <mobile-page :book="book" v-else></mobile-page>
+    <div class="book__container" v-if="!$device.isMobile">
       <div @mouseleave="navLeave" class="book__content-nav book-showtab　flex flex-row">
         <div
           @mouseenter="navLine(1)"
@@ -100,83 +27,6 @@
         </section>
       </div>
       <BookChapterList class="book__synopsis" v-show="tabs.open ==='toc'"></BookChapterList>
-      <announcements v-if="!$device.isMobile" class="book__announcements"></announcements>
-      <div class="book__all" v-if="!$device.isMobile">
-        <div class="book__information"></div>
-        <div class="book__buttons">
-          <span
-            class="book-content__buttons__item book-content__buttons__item--vote button button--primary--open button--shadow button--big"
-            v-ripple
-            @click="voteHandler"
-            v-if="$store.getters.isAuthenticated"
-          >
-            <div v-if="loading" class="lds-ellipsis">
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-            </div>
-            <fa
-              v-if="!loading"
-              class="book-content__buttons__item__icon"
-              style="font-size:15px;margin-right:0.5rem;"
-              icon="bolt"
-            ></fa>
-            <span v-if="!loading">投票をかける</span>
-          </span>
-          <span
-            class="book-content__buttons__item book-content__buttons__item--vote button button--primary--open button--shadow button--big"
-            v-ripple
-            @click.stop="$store.commit('LOGIN_STATE')"
-            v-else
-          >
-            <fa
-              v-if="!loading"
-              class="book-content__buttons__item__icon"
-              style="font-size:15px;margin-right:0.5rem;"
-              icon="bolt"
-            ></fa>
-            <span v-if="!loading">投票をかける</span>
-          </span>
-          <span
-            class="book-content__buttons__item button button--primary--open button--shadow button--big"
-            v-ripple
-          >サポートする</span>
-          <span
-            v-if="$store.getters.isAuthenticated"
-            @click="bookmarkBook"
-            class="book-content__buttons__item button button--shadow button--big"
-            @mouseenter="bookmarkHover"
-            @mouseleave="bookmarkLeave"
-            :class="{'button--secondary': bookmarked, 'button--secondary--open': !bookmarked}"
-            v-ripple
-          >
-            <fa
-              class="book-content__buttons__item__icon"
-              style="font-size:15px;margin-right:0.5rem;"
-              icon="bookmark"
-            ></fa>
-            <span style="font-size:13px;" v-text="text"></span>
-          </span>
-          <span
-            v-else
-            @click.stop="$store.commit('LOGIN_STATE')"
-            class="book-content__buttons__item button button--shadow button--big"
-            @mouseenter="bookmarkHover"
-            style="margin-right:0.5rem;"
-            @mouseleave="bookmarkLeave"
-            :class="{'button--secondary': bookmarked, 'button--secondary--open': !bookmarked}"
-            v-ripple
-          >
-            <fa
-              class="book-content__buttons__item__icon"
-              style="font-size:15px;margin-right:0.5rem;"
-              icon="bookmark"
-            ></fa>
-            <span style="font-size:13px;" v-text="text"></span>
-          </span>
-        </div>
-      </div>
     </div>
   </main>
 </template>
@@ -444,8 +294,9 @@ export default {
     ReviewsList: () => import("@/components/Bookpage/ReviewsList"),
     ReviewsForm: () => import("@/components/Bookpage/ReviewForm"),
     Tags: () => import("@/components/Bookpage/Tags"),
-    Announcements: () => import("@/components/Bookpage/Announcements")
-    // TextEditor
+    Announcements: () => import("@/components/Bookpage/Announcements"),
+    BookHeader: () => import("@/components/Web/Cards/Book/Header"),
+    MobilePage: () => import("@/components/Mobile/Cards/Book/Page")
   },
   transition: false,
   async mounted() {
@@ -632,7 +483,7 @@ input[type="number"]::-webkit-outer-spin-button {
         "summary"
         "content" !important;
       /* autoprefixer: ignore next */
-      grid-row-gap: 2rem;
+      grid-row-gap: 1rem;
       .book-info {
         width: 100%;
       }
@@ -745,12 +596,10 @@ input[type="number"]::-webkit-outer-spin-button {
     /* autoprefixer: ignore next */
     grid-template-columns: 20rem 1fr 1fr 10rem;
     /* autoprefixer: ignore next */
-    grid-template-rows: 100px 1fr auto;
+    // grid-template-rows: 100px 1fr auto;
     /* autoprefixer: ignore next */
     grid-gap: 1rem;
     grid-template-areas:
-      "cover title title avatar"
-      "cover announcements . meta"
       "summary summary summary summary "
       "content content content content ";
     // "summary summary summary summary";

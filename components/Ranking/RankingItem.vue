@@ -10,7 +10,7 @@
 
         <v-img
           :lazy-src="cover"
-          :src="book.cover"
+          :src="book.cover + '/m'"
           alt="Book cover"
           :aspect-ratio="1/1.5"
           max-width="15rem"

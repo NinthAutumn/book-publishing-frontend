@@ -87,27 +87,6 @@ export default {
     setClamp(clamped) {
       this.clamp = clamped;
     }
-  },
-  created() {
-    this.text = this.bookmarkedText;
-    if (this.$device.isMobile) {
-      this.limit = 100;
-    }
-  },
-  mounted() {
-    this.length = this.book.synopsis.length;
-  },
-  filters: {
-    truncate: (string, number) => {
-      if (!string) {
-        return;
-      }
-      if (string.length > number) {
-        return (string || "").substring(0, number) + "…";
-      } else {
-        return string;
-      }
-    }
   }
 };
 </script>

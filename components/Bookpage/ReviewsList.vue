@@ -39,7 +39,7 @@
         class="review-open button"
       >レビューを編集</button>
     </div>
-    <hr>
+    <hr />
     <ul class="list">
       <Select
         transition="grow-shrink"
@@ -55,7 +55,7 @@
       ></Select>
       <li class="show" v-for="(review, index) in reviews" :key="index">
         <Review :review="review"></Review>
-        <hr>
+        <hr />
       </li>
       <no-ssr>
         <infinite-loading @infinite="infiniteHandler"></infinite-loading>
