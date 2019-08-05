@@ -300,6 +300,9 @@ export default {
   },
   transition: false,
   async mounted() {
+    if (this.$device.isMobile) {
+      return;
+    }
     this.head = {
       title: this.book.title,
       desc: this.book.synopsis

@@ -85,6 +85,11 @@ export default {
       this.$store.commit("chapter/TOC_REVERSE");
       this.ascending = !this.ascending;
     }
+  },
+  async mounted() {
+    await this.$store.dispatch("chapter/fetchPublishedList", {
+      bookId: this.$route.params.id
+    });
   }
 };
 </script>
