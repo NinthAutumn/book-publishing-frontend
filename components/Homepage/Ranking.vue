@@ -12,7 +12,7 @@
         <div class="recommendation-books__ranking__index">{{book.dense_rank}}.</div>
         <!-- <div class="recommendation-books__ranking__cover"> -->
         <v-img
-          :src="book.cover+'?s'"
+          :src="book.cover+'/s'"
           :aspect-ratio="1/1.5"
           max-width="4rem"
           :lazy-src="cover"

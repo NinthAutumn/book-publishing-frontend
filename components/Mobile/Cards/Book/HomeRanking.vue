@@ -21,7 +21,7 @@
           <div class="home-ranking__cover">
             <v-img
               class="home-ranking__img"
-              :src="book.cover"
+              :src="`${book.cover}/s`"
               :lazy-src="lazyCover"
               :aspect-ratio="1/1.5"
               max-width="4rem"
