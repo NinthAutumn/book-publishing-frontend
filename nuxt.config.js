@@ -248,7 +248,7 @@ module.exports = {
     }],
     ['nuxt-stripe-module', {
       publishableKey: 'pk_test_vo5gfW5q36LnApH8C6AFeYJJ',
-      version: 'v2', // Default
+      version: 'v3', // Default
     }],
     "nuxt-compress",
   ],

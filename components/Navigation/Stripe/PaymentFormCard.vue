@@ -234,6 +234,7 @@ export default {
   },
   async created() {},
   async mounted() {
+    console.log(this.stripe);
     const elements = this.stripe.elements({ locale: "ja" });
     const self = this;
     let style = {
