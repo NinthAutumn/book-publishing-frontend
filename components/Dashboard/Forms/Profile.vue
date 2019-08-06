@@ -62,8 +62,8 @@
         type="text"
         v-validate="'required'"
         data-vv-as="携帯"
-        name="email"
-        placeholder="00 0000 0000"
+        name="phone"
+        placeholder="+810000000000"
       />
     </div>
     <div class="flex flex--between flex--align">
@@ -117,7 +117,7 @@ export default {
         birth: this.$moment().subtract("18", "years"),
         lastName: "",
         gender: "male",
-        phone: "",
+        phone: "+81",
         email: ""
       },
       kana_form: {
@@ -157,6 +157,7 @@ export default {
     if (this.birth) {
       this.form.birth = this.birth;
     }
+    // this.form.phone = "+88";
     if (this.person) {
       this.kana_form.firstName = this.person["first_name_kana"];
       this.kana_form.lastName = this.person["last_name_kana"];

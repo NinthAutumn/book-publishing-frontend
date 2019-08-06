@@ -35,7 +35,7 @@ export default {
       open: true,
       account: {
         country: "JP",
-        person: {},
+        person: "",
         birth: ""
       }
     };
