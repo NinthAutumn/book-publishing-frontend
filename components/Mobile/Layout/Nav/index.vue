@@ -103,7 +103,16 @@ export default {
           transform: scale(0.98);
           transition: 200ms;
         }
-
+        @media screen and (max-width: 320px) {
+          #{$self}__item-container {
+            width: 4.2rem !important;
+            height: 4.2rem !important;
+            font-size: 1.8rem !important;
+          }
+          #{$self}__text {
+            font-size: 0.9rem;
+          }
+        }
         #{$self}__item-container {
           width: 5rem;
           height: 5rem;

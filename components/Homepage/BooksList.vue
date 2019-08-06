@@ -91,11 +91,11 @@ export default {
 <style lang="scss">
 .swiping-page--mobile {
   .swiper-slide {
-    min-width: 10rem !important;
+    min-width: 5rem !important;
     max-width: 15rem !important;
   }
   #book-card {
-    min-width: 10rem !important;
+    min-width: 5rem !important;
     max-width: 15rem !important;
   }
   .book-title {

@@ -191,7 +191,7 @@ export default {
       justify-content: center;
       padding: 0.5rem 0rem;
       #{$self}__nav-item {
-        padding: 0.5rem;
+        padding: 0.5rem 0;
         width: 10rem;
         font-size: 1.6rem;
         display: flex;

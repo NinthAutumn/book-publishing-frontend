@@ -7,7 +7,7 @@
           :aspect-ratio="1/1.5"
           max-width="15rem"
           class="mranking-card__img"
-          :src="book.cover"
+          :src="book.cover + '/m'"
           :lazy-src="cover"
           style="border-radius: 0.4rem;"
         >

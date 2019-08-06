@@ -84,26 +84,26 @@ export default {
       left: 0;
     }
   }
+  @media screen and (max-width: 375px) {
+    #{$self}__title {
+      font-size: 1.2rem !important;
+    }
+  }
+  @media screen and (max-width: 320px) {
+    #{$self}__title {
+      font-size: 1.1rem !important;
+    }
+  }
   &__meta {
     user-select: none;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+
     #{$self}__title {
       font-size: 1.4rem;
       max-width: 100%;
-
-      p {
-        font-size: 1.4rem !important;
-        &:hover {
-          text-decoration: solid;
-          word-break: break-word;
-        }
-        // white-space: nowrap;
-        // text-overflow: ellipsis;
-        // overflow: hidden;
-        // font-size: inherit;
-      }
+      font-weight: bold;
     }
     #{$self}__chapter-container {
       padding: 0.5rem;

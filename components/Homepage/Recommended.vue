@@ -123,7 +123,13 @@ export default {
       #{$self}__title {
         font-size: 1.5rem;
         word-break: break-all;
+        @media screen and (max-width: 320px) {
+          p {
+            font-size: 1.1rem;
+          }
+        }
         p {
+          font-weight: bold;
           word-break: break-all;
         }
         margin: 0;

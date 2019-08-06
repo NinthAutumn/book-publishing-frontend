@@ -392,7 +392,7 @@ export default {
     }
     &__item {
       max-width: 14rem;
-      min-width: 10rem;
+      min-width: 8rem;
       min-height: 4rem;
       max-height: 4.5rem;
       padding: 0 0.5rem;
@@ -456,6 +456,11 @@ export default {
     &__list {
       // margin-bottom: 0.2rem;
       width: 100%;
+    }
+    @media screen and (max-width: 320px) {
+      &__item {
+        font-size: 1.4rem !important;
+      }
     }
     &__item {
       font-size: 1.6rem;

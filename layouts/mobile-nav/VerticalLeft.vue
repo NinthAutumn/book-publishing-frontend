@@ -15,25 +15,32 @@
       <div class="mobile-vleft__wealth flex-row flex--between">
         <div class="flex-divider flex-row">
           <Currency
-            width="2.2rem"
+            width="2rem"
             height="4rem"
-            fontSize="2rem"
+            fontSize="1.8rem"
             style="margin-right:1rem;"
             marginRight="0.75rem"
             :amount="wealth"
           ></Currency>
-          <Vote fontSize="2rem" :amount="token"></Vote>
+          <Vote fontSize="1.8rem" :amount="token"></Vote>
         </div>
         <div class="mobile-vleft__buy" @click.stop="$emit('stripe')">買う</div>
       </div>
       <div class="mobile-vleft__nav" v-cloak>
         <div class="mobile-vleft__menu">
-          <div class="mobile-vleft__item" v-for="menu in menu_list" :key="menu.title">
+          <nuxt-link
+            :to="menu.link"
+            tag="div"
+            class="mobile-vleft__item"
+            v-ripple
+            v-for="menu in menu_list"
+            :key="menu.title"
+          >
             <div class="mobile-vleft__title" v-text="menu.title"></div>
             <fa class="mobile-vleft__icon" :icon="menu.icon"></fa>
-          </div>
+          </nuxt-link>
         </div>
-        <div v-ripple @click="logout" class="mobile-vleft__logout">サインアウト</div>
+        <!-- <div v-ripple @click="logout" class="mobile-vleft__logout">サインアウト</div> -->
 
         <!-- <div class="mobile-vleft__title">通知</div>
         <inbox-list v-cloak></inbox-list>
@@ -72,6 +79,18 @@ export default {
           title: "ライブラリー",
           icon: "book-open",
           link: "/library",
+          auth: true
+        },
+        inbox: {
+          title: "通知",
+          icon: "bell",
+          link: "/library",
+          auth: true
+        },
+        logout: {
+          title: "ログアウト",
+          icon: "sign-out-alt",
+          link: "/auth/logout",
           auth: true
         }
       }
@@ -116,14 +135,14 @@ export default {
   &__nav {
     padding: 1.5rem;
     #{$self}__item {
-      font-size: 1.7rem;
+      font-size: 1.5rem;
       padding: 1rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
       // text-align: center;
       #{$self}__title {
-        font-size: 1.7rem;
+        font-size: 1.5rem;
       }
     }
   }
@@ -141,6 +160,12 @@ export default {
     align-items: center;
     border-bottom: 1px solid #e3e8ee;
     // padding-bottom: 1.5rem;
+    @media screen and (max-width: 320px) {
+      #{$self}__buy {
+        font-size: 1.3rem !important;
+        padding: 0.1rem 1.5rem !important;
+      }
+    }
     #{$self}__buy {
       font-size: 1.6rem;
       // paddin

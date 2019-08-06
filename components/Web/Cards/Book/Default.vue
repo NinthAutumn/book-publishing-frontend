@@ -140,8 +140,19 @@ export default {
       font-size: 1.3rem;
     }
   }
+  @media screen and (max-width: 375px) {
+    #{$self}__title {
+      font-size: 1.2rem;
+    }
+  }
+  @media screen and (max-width: 320px) {
+    #{$self}__title {
+      font-size: 1.1rem;
+    }
+  }
   &__title {
     font-size: 1.4rem;
+    font-weight: bold;
   }
   &__rating {
     // text-align: center;
