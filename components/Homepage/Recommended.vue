@@ -123,9 +123,19 @@ export default {
       #{$self}__title {
         font-size: 1.5rem;
         word-break: break-all;
-        @media screen and (max-width: 320px) {
+        @media screen and (max-width: 450px) {
+          p {
+            font-size: 1.2rem;
+          }
+        }
+        @media screen and (max-width: 375px) {
           p {
             font-size: 1.1rem;
+          }
+        }
+        @media screen and (max-width: 320px) {
+          p {
+            font-size: 1rem;
           }
         }
         p {

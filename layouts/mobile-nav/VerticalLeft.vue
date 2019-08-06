@@ -71,7 +71,7 @@ export default {
       avatar: require("~/assets/profile.png"),
       menu_list: {
         profile: {
-          title: "プローフィール",
+          title: "プロフィール",
           icon: "user",
           link: "/users/"
         },

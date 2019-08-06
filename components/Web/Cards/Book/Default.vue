@@ -137,17 +137,17 @@ export default {
   }
   @media screen and (max-width: 450px) {
     #{$self}__title {
-      font-size: 1.3rem;
+      font-size: 1.2rem;
     }
   }
   @media screen and (max-width: 375px) {
     #{$self}__title {
-      font-size: 1.2rem;
+      font-size: 1.1rem;
     }
   }
   @media screen and (max-width: 320px) {
     #{$self}__title {
-      font-size: 1.1rem;
+      font-size: 1rem;
     }
   }
   &__title {
