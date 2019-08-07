@@ -233,8 +233,11 @@ export default {
     }
   },
   watch: {
-    time_day: function(val) {
-      this.composite_time();
+    time_day: {
+      immediate: true,
+      handler: function(val) {
+        this.composite_time();
+      }
     },
     genre: function(val) {
       this.composite_time();

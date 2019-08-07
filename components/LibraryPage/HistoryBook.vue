@@ -7,7 +7,7 @@
           -->
           <v-img
             style=" border-radius: 0.4rem;"
-            :src="book.cover"
+            :src="book.cover + '/m'"
             :aspect-ratio="1/1.5"
             max-width="14rem"
             :lazy-src="cover"
