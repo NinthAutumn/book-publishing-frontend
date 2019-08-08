@@ -1,6 +1,10 @@
 <template>
   <div class="bank-form flex-column">
     <div class="bank-form__container">
+      <div class="bank-form__header flex-row flex--between flex--align">
+        <div class="bank-form__title">銀行講座を追加する</div>
+        <fa class="bank-form__icon" icon="times" @click="$emit('close')"></fa>
+      </div>
       <label for>金融機関</label>
       <div class="bank-form__select-container">
         <div class="bank-form__bank-select" @click.stop="toggleBankModal">
@@ -9,7 +13,7 @@
         </div>
         <!-- <transition name="grow-shrink"> -->
         <div class="bank-form__select-modal" v-if="bankModal" v-click-outside="closeBankModal">
-          <input v-model="search" class="bank-form__search-input">
+          <input v-model="search" class="bank-form__search-input" />
           <ul class="bank-form__options" v-loading="loading">
             <li
               class="bank-form__option bank-form__option--default"
@@ -38,7 +42,7 @@
           <fa icon="sort"></fa>
         </button>
         <div class="bank-form__select-modal" v-if="shopModal" v-click-outside="closeShopModal">
-          <input v-model="searchShop" class="bank-form__search-input">
+          <input v-model="searchShop" class="bank-form__search-input" />
           <ul class="bank-form__options" v-loading="loading">
             <li
               class="bank-form__option bank-form__option--default"
@@ -56,16 +60,16 @@
         </div>
       </div>
       <label for>口座名義人 (カタカナ)</label>
-      <input placeholder="イロハストア" type="text" v-model="form.fullname">
+      <input placeholder="イロハストア" type="text" v-model="form.name" />
       <label for>口座番号</label>
-      <input placeholder="1234567" type="text" v-model="form.bankNumber">
+      <input placeholder="1234567" type="text" v-model="form.bankNumber" />
       <label for>口座番号(確認)</label>
-      <input placeholder="1234567" type="text" v-model="form.bankNumberConfirm">
+      <input placeholder="1234567" type="text" v-model="form.bankNumberConfirm" />
     </div>
-    <div class="bank-form__footer flex-divider flex-row flex--between flex--align">
-      <div @click="changeStep(0)" class="bank-form__button bank-form__button--back">戻る</div>
+    <div class="bank-form__footer flex-divider flex-row flex--right flex--align">
+      <!-- <div @click="changeStep(0)" class="bank-form__button bank-form__button--back">戻る</div> -->
 
-      <div @click="changeStep(1)" class="bank-form__button">進む</div>
+      <div @click="createBank()" class="bank-form__button">講座を追加</div>
     </div>
   </div>
 </template>
@@ -80,10 +84,20 @@ export default {
       form: {
         bank: "",
         shop: "",
-        fullname: "",
+        name: "",
         bankNumber: "",
         bankNumberConfirm: ""
       },
+      account: {
+        account_holder_type: "individual",
+        country: "JP",
+        currency: "jpy",
+        routing_number: "",
+        bank_name: "",
+        account_number: "",
+        account_holder_name: ""
+      },
+      stripe: this.$stripe.import(),
       bankModal: false,
       shopModal: false,
       loading: false
@@ -126,8 +140,20 @@ export default {
         this.shopModal = !this.shopModal;
       }
     },
-    changeStep(step) {
-      this.$store.commit("SET_CONTRACT_STEP", step);
+    async createBank(step) {
+      // this.stripe.
+      this.account.routing_number = this.form.shop.code + this.form.bank.code;
+      // console.log(this.form.shop, this.form.bank);
+      this.account.bank_name = this.form.bank.name;
+      this.account.account_number = this.form.bankNumber;
+      this.account.account_holder_name = this.form.name;
+      const token = await this.stripe.createToken("bank_account", this.account);
+      const { data } = this.$axios.post("/connect/account/external", {
+        token
+      });
+      if (data.error) {
+        return this.$toast.error(data.error);
+      }
     },
     closeBankModal() {
       this.bankModal = false;
@@ -144,7 +170,9 @@ export default {
       return this.$store.getters["dashboard/getShops"];
     }
   },
-  async mounted() {}
+  async mounted() {
+    // console.log(this.stripe);
+  }
 };
 </script>
 
@@ -165,6 +193,15 @@ export default {
     font-variant: normal;
     -webkit-font-smoothing: antialiased;
     color: #6b7c93;
+  }
+  &__header {
+    font-size: 1.6rem;
+    #{$self}__icon {
+      cursor: pointer;
+    }
+  }
+  &__title {
+    font-size: 1.6rem;
   }
   &__select-container {
     position: relative;

@@ -19,7 +19,7 @@
             max-width="17rem"
             min-width="8rem"
             alt="Book cover"
-            style="border-radius: 0.4rem;  "
+            style="border-radius: 0.4rem;     box-shadow: 0 2px 5px 0 rgba(60,66,87, 0.1), 0 1px 1px 0 rgba(0, 0, 0, .07); "
             class="recommendation-books__img"
           >
             <template v-slot:placeholder>
@@ -39,7 +39,7 @@
             max-width="17rem"
             min-width="12rem"
             alt="Book cover"
-            style="border-radius: 0.4rem;  "
+            style="border-radius: 0.4rem;    box-shadow: 0 2px 5px 0 rgba(60,66,87, 0.1), 0 1px 1px 0 rgba(0, 0, 0, .07);  "
             :lazy-src="cover"
           >
             <template v-slot:placeholder>
@@ -183,6 +183,8 @@ export default {
         margin-right: 2rem;
         // overflow: hidden;
         #{$self}__img {
+          // box-shadow: 0 2px 5px 0 rgba(60, 66, 87, 0.1),
+          //   0 1px 1px 0 rgba(0, 0, 0, 0.07);
           &:hover {
             transition: 200ms;
           }

@@ -133,6 +133,8 @@ export default {
     }
     #{$self}__img {
       border-radius: 0.5rem;
+      box-shadow: 0 2px 5px 0 rgba(60, 66, 87, 0.1),
+        0 1px 1px 0 rgba(0, 0, 0, 0.07);
     }
   }
   @media screen and (max-width: 450px) {

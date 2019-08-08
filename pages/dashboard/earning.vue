@@ -6,6 +6,7 @@
     <!-- <transaction-graph class="earning-page__graph"></transaction-graph>
     <transaction-pie class="earning-page__pie"></transaction-pie>-->
     <transaction-list class="earning-page__list"></transaction-list>
+    <bank-list :banks="banks" class="earning-page__bank"></bank-list>
   </div>
 </template>
 
@@ -17,7 +18,20 @@ export default {
     Total: () => import("@/components/Dashboard/Earning/Total"),
     Earning: () => import("@/components/Dashboard/Earning/Earning"),
     TransactionList: () =>
-      import("@/components/Dashboard/Earning/TransactionList")
+      import("@/components/Dashboard/Earning/TransactionList"),
+    BankList: () => import("@/components/Web/Cards/Bank/index")
+  },
+  data() {
+    return {
+      banks: [
+        {
+          bank_name: "七十七銀行",
+          last4: "4323",
+          status: "new",
+          account_holder_name: "イワモト　アリフモハマド"
+        }
+      ]
+    };
   }
 };
 </script>
@@ -28,7 +42,7 @@ export default {
   display: grid;
   /* autoprefixer: ignore next */
   grid-template-columns: repeat(2, 1fr);
-  grid-template-areas: "header header" "graph pie" "list list ";
+  grid-template-areas: "header header" "graph pie" "list bank ";
   /* autoprefixer: ignore next */
   grid-gap: 1.5rem;
   /* autoprefixer: ignore next */
@@ -45,6 +59,9 @@ export default {
   &__list {
     grid-area: list;
     margin-bottom: 1rem;
+  }
+  &__bank {
+    grid-area: bank;
   }
 }
 </style>
