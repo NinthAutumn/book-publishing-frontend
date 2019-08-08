@@ -69,7 +69,10 @@
     <div class="bank-form__footer flex-divider flex-row flex--right flex--align">
       <!-- <div @click="changeStep(0)" class="bank-form__button bank-form__button--back">戻る</div> -->
 
-      <div @click="createBank()" class="bank-form__button">講座を追加</div>
+      <div @click="createBank()" class="bank-form__button">
+        <span v-if="!pageLoading">講座を追加</span>
+        <span v-else>ローディング中...</span>
+      </div>
     </div>
   </div>
 </template>
@@ -100,7 +103,8 @@ export default {
       stripe: this.$stripe.import(),
       bankModal: false,
       shopModal: false,
-      loading: false
+      loading: false,
+      pageLoading: false
     };
   },
   watch: {
@@ -142,17 +146,25 @@ export default {
     },
     async createBank(step) {
       // this.stripe.
-      this.account.routing_number = this.form.shop.code + this.form.bank.code;
+      this.pageLoading = true;
+      this.account.routing_number = this.form.bank.code + this.form.shop.code;
       // console.log(this.form.shop, this.form.bank);
       this.account.bank_name = this.form.bank.name;
       this.account.account_number = this.form.bankNumber;
       this.account.account_holder_name = this.form.name;
       const token = await this.stripe.createToken("bank_account", this.account);
-      const { data } = this.$axios.post("/connect/account/external", {
-        token
-      });
+      const { data } = await this.$axios.post(
+        "/stripe/connect/account/external",
+        {
+          token
+        }
+      );
+      this.pageLoading = false;
+
       if (data.error) {
         return this.$toast.error(data.error);
+      } else {
+        this.$emit("close");
       }
     },
     closeBankModal() {
@@ -299,6 +311,9 @@ export default {
     }
   }
   &__button {
+    span {
+      font-size: inherit;
+    }
     font-size: 1.5rem;
     padding: 0.5rem 2rem;
     border-radius: 0.4rem;

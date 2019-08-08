@@ -1,6 +1,11 @@
 <template>
   <div class="bank-card">
-    <div class="bank-card__container" v-ripple>
+    <div
+      class="bank-card__container"
+      v-ripple
+      @click="$emit('selectDefault',bank)"
+      :class="{'bank-card__container--default':bank.default_for_currency}"
+    >
       <div class="bank-card__icon">
         <fa icon="landmark"></fa>
         <div class="bank-card__name">{{ bank.bank_name}}</div>
@@ -61,6 +66,9 @@ export default {
       0 1px 1px 0 rgba(0, 0, 0, 0.07);
     user-select: none;
     margin-right: 1rem;
+    &--default {
+      border: 2px solid rgb(46, 46, 46);
+    }
     #{$self}__icon {
       font-size: 2.3rem;
       text-align: center;

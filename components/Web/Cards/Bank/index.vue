@@ -5,9 +5,9 @@
         <div class="bank-list__title">貴方への支払方法</div>
       </div>
 
-      <div class="bank-list__list">
-        <bank-card :bank="bank" v-for="bank in banks" :key="bank.id"></bank-card>
-        <div class="bank-list__plus" @click.stop="modal = !modal">
+      <div class="bank-list__list" v-loading="loading">
+        <bank-card @selectDefault="selectDefault" :bank="bank" v-for="bank in banks" :key="bank.id"></bank-card>
+        <div v-ripple class="bank-list__plus" @click.stop="modal = !modal">
           <fa icon="plus"></fa>
           <!-- <div class="bank-list__add"></div> -->
         </div>
@@ -24,20 +24,42 @@
 
 <script>
 export default {
-  props: {
-    banks: Array
-  },
+  // props: {
+  //   banks: Array
+  // },
   data() {
     return {
       modal: false,
-      modalContainer: false
+      modalContainer: false,
+      banks: [],
+      loading: false
     };
   },
   methods: {
     bankModal() {
       this.modal = !this.modal;
     },
-    closeModal() {}
+    async selectDefault(bank) {
+      this.loading = true;
+      const res = await this.$axios.patch(
+        "/stripe/connect/account/external/default",
+        {
+          bankId: bank.id
+        }
+      );
+      const { data } = await this.$axios.get(
+        "/stripe/connect/account/external/list"
+      );
+      this.banks = data;
+      this.loading = false;
+    }
+  },
+  async mounted() {
+    const { data } = await this.$axios.get(
+      "/stripe/connect/account/external/list"
+    );
+    this.banks = data;
+    console.log(this.banks);
   },
   components: {
     BankCard: () => import("./Bank"),
@@ -67,9 +89,15 @@ export default {
     align-items: center;
     #{$self}__plus {
       font-size: 2rem;
+      border-radius: 0.5rem;
+      border: 2px solid $secondary;
+      color: $secondary;
+      &:hover {
+        cursor: pointer;
+      }
       padding: 1rem;
-      width: 7.5rem;
-      height: 7.5rem;
+      width: 5rem;
+      height: 5rem;
       display: flex;
       align-items: center;
       justify-content: center;
