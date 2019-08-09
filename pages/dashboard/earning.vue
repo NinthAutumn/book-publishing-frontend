@@ -37,11 +37,17 @@ export default {
 </script>
 
 <style lang="scss">
+@media screen and (max-width: 1200px) {
+  .earning-page {
+    grid-template-areas: "header header" "graph graph" "pie bank" "list list" !important;
+  }
+}
 .earning-page {
   /* autoprefixer: ignore next */
   display: grid;
   /* autoprefixer: ignore next */
   grid-template-columns: repeat(2, 1fr);
+
   grid-template-areas: "header header" "graph pie" "list bank ";
   /* autoprefixer: ignore next */
   grid-gap: 1.5rem;

@@ -146,9 +146,18 @@ export default {
     },
     async createBank(step) {
       // this.stripe.
+      if (
+        !this.form.bank.name ||
+        !this.form.bankNumber ||
+        !this.form.name ||
+        !this.form.shop.name
+      ) {
+        return this.$toast.error("空欄がまだ残っています");
+      }
       this.pageLoading = true;
       this.account.routing_number = this.form.bank.code + this.form.shop.code;
       // console.log(this.form.shop, this.form.bank);
+
       this.account.bank_name = this.form.bank.name;
       this.account.account_number = this.form.bankNumber;
       this.account.account_holder_name = this.form.name;

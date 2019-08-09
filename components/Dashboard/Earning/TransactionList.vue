@@ -213,27 +213,30 @@ export default {
       #{$self}__button {
         padding: 1rem 1.25rem;
         font-size: 1.2rem;
-        background-color: #6772e5;
-        color: white;
+        color: #6772e5;
+        background-color: #fff;
         border-radius: 0.4rem;
         transition: 300ms;
+        box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11),
+          0 1px 3px rgba(0, 0, 0, 0.08);
+        &:hover {
+          background-color: #6772e5;
+          color: white;
+          transition: 300ms;
+          box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11),
+            0 1px 3px rgba(0, 0, 0, 0.08);
+          cursor: pointer;
+        }
         &--redeemed {
-          color: #6772e5;
-          background-color: #fff;
+          background-color: #6772e5;
+          color: white;
+
           transition: 300ms;
           box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11),
             0 1px 3px rgba(0, 0, 0, 0.08);
           &:hover {
             cursor: default;
           }
-        }
-        &:hover {
-          color: #6772e5;
-          background-color: #fff;
-          transition: 300ms;
-          box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11),
-            0 1px 3px rgba(0, 0, 0, 0.08);
-          cursor: pointer;
         }
       }
     }
