@@ -76,7 +76,7 @@ export default {
       this.$store.commit("DROPDOWN_FALSE");
     },
     toggleMenu(val) {
-      (val);
+      val;
       if (val) {
         if (!this.auth) {
           return this.$router.push("/auth/login");
@@ -154,7 +154,7 @@ export default {
 //   }
 // }
 .mobile-nuxt {
-  padding-top: 5.5rem !important;
+  padding-top: 5.2rem !important;
 }
 .permanent {
   min-height: 100vh;

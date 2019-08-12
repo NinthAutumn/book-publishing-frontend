@@ -158,7 +158,12 @@ export default {
     color: String,
     value: [Object, String, Array, Number],
     volume: Boolean,
-    disable: { type: [Array, String, Object] },
+    disable: {
+      // type: [Array, String, Object],
+      default: {
+        name: ""
+      }
+    },
     disabled: Boolean,
     disableMessage: String,
     genre: Boolean
@@ -450,10 +455,13 @@ export default {
     width: 100vw;
     position: fixed;
     background-color: #fff;
-    box-shadow: 0 2px 5px 0 rgba(60, 66, 87, 0.1),
-      0 1px 1px 0 rgba(0, 0, 0, 0.07);
+    -webkit-box-shadow: 0px -2px 5px -2px rgba(219, 219, 219, 0.904);
+    -moz-box-shadow: 0px -2px 5px -2px rgba(219, 219, 219, 0.904);
+    box-shadow: 0px -2px 5px -2px rgba(219, 219, 219, 0.904);
     z-index: 10000;
     left: 0;
+    border-top-left-radius: 2.5rem;
+    border-top-right-radius: 2.5rem;
     #{$self}__mobile-option {
       font-size: 1.8rem;
       text-align: center;

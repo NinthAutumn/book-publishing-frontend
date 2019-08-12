@@ -12,7 +12,7 @@
         >
           <template v-slot:placeholder>
             <div class="mobile-detailed__loading">
-              <trinity-rings-spinner :animation-duration="1500" :size="30" color="#ff1d5e"/>
+              <trinity-rings-spinner :animation-duration="1500" :size="30" color="#ff1d5e" />
             </div>
           </template>
         </v-img>
@@ -76,12 +76,15 @@ export default {
         margin-right: 1rem;
         font-size: 1.2rem;
         background-color: #e3e8ee;
+        font-weight: bold;
+        opacity: 0.8;
       }
     }
     #{$self}__meta {
       display: flex;
       flex-direction: column;
       #{$self}__title {
+        font-weight: bold;
         font-size: 1.55rem;
         line-height: 1.8rem;
         margin-bottom: 0.5rem;

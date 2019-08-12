@@ -63,7 +63,7 @@ export default {
       });
       const reader = new FileReader();
       for (let file of store) {
-        (file);
+        file;
         // this.draw.push({
         //   file: file,
         //   old: false,
@@ -82,8 +82,8 @@ export default {
         this.selected[drawing.id] = drawing;
       }
       this.$emit("input", this.selected);
-      (this.selected);
-      (this.defDrawings);
+      this.selected;
+      this.defDrawings;
     }
   },
   async mounted() {
@@ -99,11 +99,17 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .drawing-modal {
   $self: &;
   .upload-btn {
     padding: 0 !important;
+    label {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      font-size: 1.6rem;
+    }
   }
   &__container {
     width: 50rem;

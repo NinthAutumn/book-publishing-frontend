@@ -37,12 +37,9 @@ export const actions = {
     commit
   }, {
     file,
-    size = "",
-    unique = ""
   }) {
     try {
-      console.log(size);
-      const uploadConfig = await this.$axios.get(`/upload?size=${size}&unique=${unique}`)
+      const uploadConfig = await this.$axios.get(`/upload`)
       await this.$axios.put(uploadConfig.data.url, file, {
         headers: {
           'Content-Type': 'image',
@@ -59,7 +56,32 @@ export const actions = {
       })
     } catch (error) {
       alert(error)
-
+    }
+  },
+  async uploadCover({
+    commit
+  }, {
+    file,
+    size,
+    unique
+  }) {
+    try {
+      const uploadConfig = await this.$axios.get(`/upload/cover?size=${size}&unique=${unique}`)
+      await this.$axios.put(uploadConfig.data.url, file, {
+        headers: {
+          'Content-Type': 'image',
+          "Authorization": null,
+          "TrackId": null
+        },
+        baseURL: ""
+      })
+      commit('ADD_URL', uploadConfig.data.filename)
+      return Promise.resolve({
+        url: `https://storage.googleapis.com/theta-images/${uploadConfig.data.filepath}`,
+        path: uploadConfig.data.filepath,
+      })
+    } catch (error) {
+      alert(error)
     }
   },
   async uploadAvatar({

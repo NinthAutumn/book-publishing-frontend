@@ -7,7 +7,7 @@
       <p>検索</p>
     </div>
     <div class="mobile-browse__tab">
-      <v-tabs v-model="tab" dark color="#19191a">
+      <v-tabs v-model="tab" dark color="#e3e8ee">
         <v-tabs-slider color="white"></v-tabs-slider>
         <v-tab v-for="item in items" :key="item.key">{{ item.value }}</v-tab>
         <v-tabs-items v-touch:swipe.left="swipeTab" v-touch:swipe.right="swipeRight">
@@ -220,13 +220,14 @@ export default {
     position: fixed;
     top: 0;
     left: 0;
-    background-color: black;
+    background-color: rgb(247, 244, 244);
     z-index: 1000;
-    color: white;
+    color: black;
     font-size: 1.6rem;
     display: flex;
     align-items: center;
     padding: 0.5rem;
+    font-weight: bold;
     #{$self}__icon {
       padding: 0.5rem 1rem;
       font-size: 2rem;
@@ -254,7 +255,8 @@ export default {
       align-items: center;
       padding: 0 2rem;
       justify-content: space-between;
-      color: #74808b;
+      color: #000000;
+      font-weight: bold;
       #{$self}__selected {
         font-size: 1.6rem;
       }
@@ -321,12 +323,20 @@ export default {
 }
 .mobile-browse__nav {
 }
+.v-tabs__item {
+  color: black;
+  font-weight: bold;
+}
+
 .v-tabs__wrapper {
   position: fixed;
   top: 4rem;
   left: 0;
-  background-color: black;
+  background-color: rgb(247, 244, 244);
   width: 100%;
   z-index: 1000;
+}
+.v-tabs__slider {
+  background-color: black !important;
 }
 </style>

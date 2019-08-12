@@ -6,20 +6,30 @@
         <div class="divider">
           <div class="divider" style="margin-right:10px;">
             <label for="avatar-uploader">本のカバー</label>
-            <el-upload
+            <div class="book-form__cover">
+              <v-img
+                @click="image = !image"
+                style="border-radius:0.5rem;"
+                class="book-form__img"
+                v-if="imageUrl"
+                :src="imageUrl"
+                :aspect-ratio="1/1.5"
+                width="150"
+              ></v-img>
+              <div @click="image = !image" v-else class="book-form__cover-place">
+                <fa icon="plus"></fa>
+              </div>
+            </div>
+            <!-- <el-upload
               class="avatar-uploader flex"
               action
-              drag
               accept="image/*"
               :show-file-list="false"
-              :on-success="handleAvatarSuccess"
-              :before-upload="beforeAvatarUpload"
-              :aspect-ratio="1/1.5"
               width="150"
             >
               <img v-if="imageUrl" :src="imageUrl" class="avatar" />
               <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-            </el-upload>
+            </el-upload>-->
           </div>
           <div class="divider flex flex-column" style="width:100%;">
             <label for="book-title">タイトル*</label>
@@ -132,6 +142,7 @@
         </div>
       </form>
     </div>
+    <image-modal @selectImage="handleCoverSelect" v-model="image"></image-modal>
   </div>
 </template>
 
@@ -213,7 +224,8 @@ export default {
         "音楽",
         "日常",
         "ゲーム"
-      ]
+      ],
+      image: false
     };
   },
 
@@ -238,7 +250,8 @@ export default {
   },
   components: {
     Select: () => import("@/components/All/Select"),
-    TagCreate: () => import("./Tag")
+    TagCreate: () => import("./Tag"),
+    ImageModal: () => import("@/components/Web/Modal/Image/BookCover")
   },
   async created() {
     if (this.$route.query.bookId) {
@@ -254,18 +267,15 @@ export default {
       this.imageUrl = this.book.cover;
       this.oldImageUrl = this.book.cover;
       this.form.coverPath = this.book.cover_path;
-      // this.form.genre = this.form.tags;
       this.form.main_genre.push({
         name: this.book.genre_name,
         id: this.book.genre_id
       });
     }
   },
-  async mounted() {},
   methods: {
     async handleAvatarSuccess(res, file) {
       this.form.cover = file.raw;
-      // let webpImg = "";
       try {
         imageResize.resize(
           file.raw,
@@ -278,7 +288,6 @@ export default {
               url: blob,
               size: "m"
             };
-            // alert(didItResize);
           }
         );
         imageResize.resize(
@@ -288,12 +297,10 @@ export default {
             height: 75 // maximum height
           },
           (blob, didItResize) => {
-            // console.log(blob);
             this.image.small = {
               url: blob,
               size: "s"
             };
-            // alert(didItResize);
           }
         );
         imageResize.resize(
@@ -305,28 +312,25 @@ export default {
               size: "l"
             };
             this.imageUrl = window.URL.createObjectURL(blob);
-            // alert("large" + didItResize);
           }
         );
         this.image.normal = { url: file.raw, size: "" };
-        // console.log(this.image);
         this.form.cover = this.image;
       } catch (error) {
         console.log(error);
       }
-
-      // webp.cwebp(file.raw, webpImg, "-q 80", function(status, error) {
-      //   //if conversion successful status will be '100'
-      //   //if conversion fails status will be '101'
-      //   console.log(status, error);
-      // });
-      // console.log(file.raw);
-      // this.imageUrl = URL.createObjectURL(file.raw);
     },
     toggleTip() {
       this.tip = !this.tip;
     },
-    beforeAvatarUpload(file) {},
+    handleCoverSelect(image) {
+      // if(image.id === this.form.cover){
+
+      // }
+      this.form.cover = image;
+      this.image = false;
+      this.imageUrl = image.url;
+    },
     async postBook() {
       this.loading = true;
       if (
@@ -351,25 +355,26 @@ export default {
           synopsis: this.form.synopsis,
           main_genre: this.form.main_genre[0],
           paid: this.form.paid
-          //   cover: url.url,
-          //   cover_path: url.path
         };
         if (this.$route.query.bookId) {
           if (this.form.cover.medium) {
             let keys = Object.keys(this.form.cover);
             let uid = uuid();
             for (let i of keys) {
-              const { url, path } = await this.$store.dispatch("upload/image", {
-                file: this.form.cover[i].url,
-                size: this.form.cover[i].size,
-                unique: uid
-              });
+              const { url, path } = await this.$store.dispatch(
+                "upload/uploadCover",
+                {
+                  file: this.form.cover[i].url,
+                  size: this.form.cover[i].size,
+                  unique: uid
+                }
+              );
             }
 
             book[
               "cover"
-            ] = `https://storage.googleapis.com/theta-images/${this.user.id}/uid`;
-            book["coverPath"] = `/${this.user.id}/uid`;
+            ] = `https://storage.googleapis.com/theta-images/${this.user.id}/${uid}`;
+            book["coverPath"] = `/${this.user.id}/${uid}`;
           } else {
             book["cover"] = this.oldImageUrl;
           }
@@ -384,21 +389,22 @@ export default {
           this.loading = false;
           return;
         }
-        if (this.form.cover) {
-          let keys = Object.keys(this.form.cover);
-          let uid = uuid();
-          for (let i of keys) {
-            const { url, path } = await this.$store.dispatch("upload/image", {
-              file: this.form.cover[i].url,
-              size: this.form.cover[i].size,
-              unique: uid
-            });
-          }
-          book[
-            "cover"
-          ] = `https://storage.googleapis.com/theta-images/${this.user.id}/${uid}`;
-          book["coverPath"] = `/${this.user.id}/${uid}`;
+        if (!this.form.cover) {
+          return this.$toast.error("作品のカバーを選択してください");
+          // let keys = Object.keys(this.form.cover);
+          // let uid = uuid();
+          // for (let i of keys) {
+          //   const { url, path } = await this.$store.dispatch(
+          //     "upload/uploadCover",
+          //     {
+          //       file: this.form.cover[i].url,
+          //       size: this.form.cover[i].size,
+          //       unique: uid
+          //     }
+          //   );
+          // }
         }
+        book["cover"] = this.form.cover.url;
 
         await this.$store.dispatch("book/addBook", book);
         this.$toast.show("本の投稿に成功しました", {
@@ -612,6 +618,44 @@ export default {
       padding: 1rem;
       bottom: 100%;
     }
+  }
+  #{$self}__cover {
+    #{$self}__img {
+      &:hover {
+        cursor: pointer;
+        box-shadow: 0 7px 14px 0 rgba(60, 66, 87, 0.1),
+          0 3px 6px 0 rgba(0, 0, 0, 0.07);
+      }
+      box-shadow: 0 7px 14px 0 rgba(60, 66, 87, 0.1),
+        0 3px 6px 0 rgba(0, 0, 0, 0.07);
+      border-radius: 0.5rem;
+    }
+    #{$self}__cover-place {
+      transition: transform 300ms;
+      &:active,
+      &:focus {
+        transform: scale(0.94);
+        transition: 300ms;
+      }
+      &:hover {
+        cursor: pointer;
+        box-shadow: 0 7px 14px 0 rgba(60, 66, 87, 0.1),
+          0 3px 6px 0 rgba(0, 0, 0, 0.07);
+      }
+      width: 150px;
+      height: 225px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      color: #939599;
+      box-shadow: 0 7px 14px 0 rgba(60, 66, 87, 0.1),
+        0 3px 6px 0 rgba(0, 0, 0, 0.07);
+      background-color: #fff;
+      border-radius: 0.5rem;
+      // margin-b
+    }
+    margin-bottom: 1rem;
   }
   &__input {
     height: 40px;
