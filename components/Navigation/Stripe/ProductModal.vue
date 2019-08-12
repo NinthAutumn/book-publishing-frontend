@@ -114,6 +114,9 @@ export default {
     }
   },
   async mounted() {
+    const { data } = await this.$axios.get("/stripe/product/list");
+    this.products = data;
+
     await this.$store.dispatch("stripe/fetchPaymentMethods", {
       type: "card"
     });

@@ -195,7 +195,7 @@ export default {
   &__container {
     display: grid;
     grid-template-columns: 20rem 1fr 1fr 10rem;
-    grid-template-areas: "cover content content avatar" "cover announcement action action";
+    grid-template-areas: "cover content content avatar" "cover announcement announcement announcement" ". . action action";
     grid-gap: 1rem;
     #{$self}__cover {
       grid-area: cover;
