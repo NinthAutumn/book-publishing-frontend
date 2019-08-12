@@ -16,7 +16,7 @@ RUN npm run build
 ENV NUXT_HOST=0.0.0.0
 # set app port
 ENV NUXT_PORT=8080
-ENV STRIPE_KEY=pk_test_vo5gfW5q36LnApH8C6AFeYJJ
+ENV STRIPE_KEY=pk_live_2WoTAiPewhp9sgG6DsTE09uF
 # ENV HOST 0.0.0.0
 EXPOSE 8080
 

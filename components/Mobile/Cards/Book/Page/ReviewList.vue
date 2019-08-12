@@ -98,6 +98,7 @@ export default {
     padding: 0 0.5rem;
     box-shadow: 0 7px 14px 0 rgba(60, 66, 87, 0.1),
       0 3px 6px 0 rgba(0, 0, 0, 0.07);
+    border-radius: 0.5rem;
     padding: 0.5rem;
     #{$self}__header {
       display: flex;

@@ -153,6 +153,7 @@ export default {
     }
   }
   &__title {
+    margin-top: 0.5rem;
     font-size: 1.4rem;
     font-weight: bold;
   }

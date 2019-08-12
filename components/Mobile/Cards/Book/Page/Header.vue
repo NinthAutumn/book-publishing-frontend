@@ -174,6 +174,7 @@ export default {
     box-shadow: 0 7px 14px 0 rgba(60, 66, 87, 0.1),
       0 3px 6px 0 rgba(0, 0, 0, 0.07);
     margin-bottom: 1rem;
+    border-radius: 0.5rem;
     #{$self}__img {
     }
     #{$self}__title {

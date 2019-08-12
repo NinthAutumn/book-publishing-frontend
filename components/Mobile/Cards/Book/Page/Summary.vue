@@ -53,6 +53,7 @@ export default {
       0 3px 6px 0 rgba(0, 0, 0, 0.07);
     padding: 0.5rem;
     background-color: #fff;
+    border-radius: 0.5rem;
     margin-bottom: 1rem;
     #{$self}__title {
       font-size: 1.4rem;

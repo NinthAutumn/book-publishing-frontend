@@ -247,7 +247,7 @@ module.exports = {
       duration: 5000
     }],
     ['nuxt-stripe-module', {
-      publishableKey: 'pk_test_vo5gfW5q36LnApH8C6AFeYJJ',
+      publishableKey: process.env.STRIPE_KEY,
       version: 'v3', // Default
     }],
     "nuxt-compress",
@@ -299,7 +299,7 @@ module.exports = {
   },
   webfontloader: {
     google: {
-      families: ['IBM Plex Sans:300,400,700', 'Noto Sans JP:400,500', 'Sniglet:400,800'] //Loads Lato font with weights 400 and 700
+      families: ['IBM Plex Sans:300,400,700', 'Noto Sans JP:400,500', 'Sniglet:400,800', 'Kosugi:400,500'] //Loads Lato font with weights 400 and 700
     }
   },
   'manifest': {
