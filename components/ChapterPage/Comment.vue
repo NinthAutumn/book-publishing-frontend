@@ -284,32 +284,25 @@ export default {
       const chapterId = this.$route.params.chaptersId;
       const content = this.content;
       const parentId = this.comment.id;
-      await this.$store
-        .dispatch("comment/addComment", {
+      try {
+        const res = await this.$store.dispatch("comment/addComment", {
           bookId,
           chapterId,
           content,
           parentId
-        })
-        .then(async () => {
-          this.$toast.show("返信の投稿に成功しました", {
-            theme: "toasted-primary",
-            position: "top-right",
-            duration: 1000,
-            icon: "extension"
-          });
-
-          this.replyForm = false;
-          this.content = "";
-        })
-        .catch(() => {
-          this.$toast.show("返信の投稿に失敗しました", {
-            theme: "toasted-primary",
-            position: "top-right",
-            duration: 1000,
-            icon: "extension"
-          });
         });
+        this.$toast.show("返信の投稿に成功しました", {
+          theme: "toasted-primary",
+          position: "top-right",
+          duration: 1000,
+          icon: "extension"
+        });
+
+        this.replyForm = false;
+        this.content = "";
+      } catch (error) {
+        this.$toast.error("返信の投稿に失敗しました");
+      }
     },
     async likedComment() {
       if (!this.$store.getters["auth/isAuthenticated"]) {

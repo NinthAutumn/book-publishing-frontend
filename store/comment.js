@@ -40,14 +40,14 @@ export const mutations = {
     state.comments = comments
   },
   PUSH_COMMENT(state, comment, parentId) {
-    (comment.parentId);
+    // (comment.parentId);
     try {
       const object = findParent({
         comments: state.comments,
         id: comment.parent_id,
         object: comment
       });
-
+      console.log(object);
     } catch (error) {
       console.log(error);
     }
@@ -106,11 +106,13 @@ export const actions = {
         content,
         parentId
       })
-      ();
+
       // let comment = {}
       commit('PUSH_COMMENT', res.data, parentId)
+      return Promise.resolve()
     } catch (error) {
-
+      console.log(error);
+      return Promise.reject(error)
     }
 
   },

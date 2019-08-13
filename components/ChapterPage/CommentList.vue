@@ -101,26 +101,23 @@ export default {
       if (!this.content) {
         return (this.error = true);
       }
-      this.$store
-        .dispatch("comment/addComment", {
-          bookId,
-          chapterId,
-          content: this.content
-        })
-        .then(async () => {
-          this.$toast.show("コメントの投稿に成功！", {
-            theme: "toasted-primary",
-            position: "top-right",
-            duration: 1000
-          });
+      await this.$store.dispatch("comment/addComment", {
+        bookId,
+        chapterId,
+        content: this.content
+      });
 
-          await this.$store.dispatch("comment/fetchCommentList", {
-            chapterId: this.$route.params.chaptersId,
-            userId: this.$store.getters["user/loggedInUser"].id
-          });
-          this.newComment.content = "";
-        })
-        .catch(e => {});
+      this.$toast.show("コメントの投稿に成功！", {
+        theme: "toasted-primary",
+        position: "top-right",
+        duration: 1000
+      });
+
+      await this.$store.dispatch("comment/fetchCommentList", {
+        chapterId: this.$route.params.chaptersId,
+        userId: this.$store.getters["user/loggedInUser"].id
+      });
+      this.newComment.content = "";
     }
   }
 };

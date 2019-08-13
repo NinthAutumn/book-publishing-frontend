@@ -30,7 +30,7 @@
       v-if="!chapter.locked"
       @step-progress="progressHandler"
     >
-      <adsbygoogle v-if="!user.status" :ad-layout="'in-article'" :ad-format="'fluid'"/>
+      <adsbygoogle v-if="!user.status" :ad-layout="'in-article'" :ad-format="'fluid'" />
       <div
         data-step="1"
         :style="{'font-size':font + 'px', 'font-family':fontStyle}"
@@ -46,7 +46,7 @@
       :ad-format="'fluid'"
     />
     <div v-if="!chapter.locked" class="chapter-actions">
-      <div class="chapter-actions__list">
+      <!-- <div class="chapter-actions__list">
         <div class="chapter-actions__item chapter-actions__item--report">
           <fa icon="flag"></fa>
           <div class="chapter-actions__text">話を報告する</div>
@@ -55,7 +55,7 @@
           <fa icon="bolt"></fa>
           <div class="chapter-actions__text">この作品に投票する</div>
         </div>
-      </div>
+      </div>-->
     </div>
     <div class="chapter-payblock" v-if="chapter.locked">
       <div class="payblock-price">
@@ -141,7 +141,7 @@ export default {
       }
     },
     stepEnterHandler: async function({ element, index, direction }) {
-      (element, index, direction);
+      element, index, direction;
     },
     stepLeaveHandler: async function({}) {},
     progressHandler: async function({ progress }) {
