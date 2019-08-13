@@ -117,7 +117,7 @@ export default {
         chapterId: this.$route.params.chaptersId,
         userId: this.$store.getters["user/loggedInUser"].id
       });
-      this.newComment.content = "";
+      this.content = "";
     }
   }
 };
