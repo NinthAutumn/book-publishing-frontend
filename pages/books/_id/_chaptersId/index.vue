@@ -28,7 +28,9 @@ export default {
     if (this.$route.query.comment) {
       this.nochapter = true;
     }
-
+    await this.$store.dispatch("drawing/fetchChapterDrawings", {
+      chapterId: this.$route.params.chaptersId
+    });
     await this.$store.dispatch("chapter/fetchChapterNav", {
       index: this.$store.getters["chapter/getChapter"].index,
       bookId: this.$route.params.id,

@@ -12,17 +12,13 @@
 <script>
 import { mapGetters } from "vuex";
 export default {
+  props: ["drawings"],
   computed: {
     ...mapGetters({
-      modal: "chapter/getModalState",
-      drawings: "drawing/getChapterDrawings"
+      modal: "chapter/getModalState"
     })
   },
-  async mounted() {
-    await this.$store.dispatch("drawing/fetchChapterDrawings", {
-      chapterId: this.$route.params.chaptersId
-    });
-  },
+  async mounted() {},
   methods: {
     openImage(url) {
       this.$store.commit("TOGGLE_IMAGE");

@@ -55,8 +55,10 @@ export default {
       this.nav["bookmark"]["title"] = "ブックマーク済み";
     }
     try {
-      const { data } = await this.$axios.get(`/library/${this.book.id}`);
-      this.latestChapter = data;
+      if (this.auth) {
+        const { data } = await this.$axios.get(`/library/${this.book.id}`);
+        this.latestChapter = data;
+      }
     } catch (error) {}
 
     this.nav["toc"]["title"] = `${this.chapter_count || 0}話`;
@@ -70,7 +72,10 @@ export default {
     book: Object
   },
   computed: {
-    ...mapGetters({ chapter_count: "book/getBookChapterCount" })
+    ...mapGetters({
+      chapter_count: "book/getBookChapterCount",
+      auth: "user/loggedInUser"
+    })
   },
   data() {
     return {
@@ -99,6 +104,9 @@ export default {
     async navHandler(key) {
       switch (key) {
         case "bookmark":
+          if (!this.auth) {
+            this.$router.push("/auth/login");
+          }
           this.bookmarkHandler();
           break;
         case "toc":

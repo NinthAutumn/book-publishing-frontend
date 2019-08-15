@@ -54,14 +54,15 @@
       class="book-list"
       v-if="selected_ranking_type===0&&!$device.isMobile||selected_ranking_type===2&&!$device.isMobile"
     >
-      <ranking-item
+      <web-ranking-card
+        :book="book"
         :index="index"
         trending
         :score="book.score"
-        :book="book"
         v-for="(book, index) in list"
         :key="book.id"
-      ></ranking-item>
+      ></web-ranking-card>
+      <!-- <ranking-item :index="index" trending :score="book.score" :book="book"></ranking-item> -->
     </transition-group>
     <transition-group
       name="slide-in"
@@ -70,13 +71,21 @@
       v-if="selected_ranking_type===0&&$device.isMobile||selected_ranking_type===2&&$device.isMobile"
     >
       <ranking-card
+        :book="book"
         :index="index"
         trending
         :score="book.score"
-        :book="book"
         v-for="(book, index) in list"
         :key="book.id"
       ></ranking-card>
+      <!-- <web-ranking-card
+        :book="book"
+        :index="index"
+        trending
+        :score="book.score"
+        v-for="(book, index) in list"
+        :key="book.id"
+      ></web-ranking-card>-->
     </transition-group>
     <transition-group
       name="slide-in"
@@ -84,14 +93,14 @@
       class="book-list"
       v-if="selected_ranking_type===1&&!$device.isMobile"
     >
-      <ranking-item
+      <web-ranking-card
+        :book="book"
         :index="index"
         trending
         :score="book.sum"
-        :book="book"
         v-for="(book, index) in trending"
         :key="book.id"
-      ></ranking-item>
+      ></web-ranking-card>
     </transition-group>
     <transition-group
       name="slide-in"
@@ -114,15 +123,15 @@
       class="book-list"
       v-if="selected_ranking_type===3&&!$device.isMobile"
     >
-      <ranking-item
+      <web-ranking-card
+        :book="book"
         :index="index"
         trending
-        :score="book.votes"
-        :book="book"
+        :vote="true"
+        :score="book.score"
         v-for="(book, index) in vote"
-        vote
         :key="book.id"
-      ></ranking-item>
+      ></web-ranking-card>
     </transition-group>
     <transition-group
       name="list"
@@ -133,10 +142,10 @@
       <ranking-card
         :index="index"
         trending
-        :score="book.votes"
+        :score="book.score"
         :book="book"
         v-for="(book, index) in vote"
-        vote
+        :vote="true"
         :key="book.id"
       ></ranking-card>
     </transition-group>
@@ -153,7 +162,8 @@ export default {
   components: {
     RankingItem: () => import("./RankingItem"),
     Select: () => import("@/components/All/Select"),
-    RankingCard: () => import("@/components/Mobile/Cards/Book/Ranking")
+    RankingCard: () => import("@/components/Mobile/Cards/Book/Ranking"),
+    WebRankingCard: () => import("@/components/Web/Cards/Book/Ranking")
   },
   data() {
     return {

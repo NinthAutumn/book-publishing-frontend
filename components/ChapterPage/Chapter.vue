@@ -100,22 +100,7 @@ export default {
       currStepProgress: null
     };
   },
-  async mounted() {
-    // let pCount = this.$refs.chapterContent.childElementCount;
-    // let child = this.$refs.chapterContent.children;
-    // let count = 0;
-    // for (let i = 0; i < pCount; i++) {
-    //   if (i === Math.ceil(pCount / 2)) {
-    //     let node = child[i];
-    //     node.insertAdjacentHTML("beforebegin", `<div id="mount" ></div>`);
-    //   }
-    // }
-    // const google = Vue.extend(adsbygoogle);
-    // const instance = new google({});
-    // instance.$mount("#mount");
-    // const val = document.querySelector();
-    // val.appendChild(instance.$el);
-  },
+  async mounted() {},
   methods: {
     purchase: async function() {
       try {

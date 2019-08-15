@@ -42,16 +42,17 @@
         ></span>
       </div>
       <div v-line-clamp="clampLine" class="book-card__title" v-text="book.title"></div>
-      <!-- {{rating}} -->
-      <div class="book-card__rating" v-if="!isMobile">
+      <div class="book-card__genre" v-text="book.name"></div>
+      <div class="book-card__rating flex-row flex--align" v-if="!isMobile">
         <v-rating
           v-if="rating"
           color="#FF634C"
           readonly
-          :size="25"
+          :size="20"
           half-increments
           :value="+book.rating"
         ></v-rating>
+        <div class="book-card__rating-number" v-text="+book.rating"></div>
       </div>
     </div>
   </nuxt-link>
@@ -141,15 +142,24 @@ export default {
     #{$self}__title {
       font-size: 1.2rem;
     }
+    #{$self}__genre {
+      font-size: 1.1rem;
+    }
   }
   @media screen and (max-width: 375px) {
     #{$self}__title {
       font-size: 1.1rem;
     }
+    #{$self}__genre {
+      font-size: 1rem;
+    }
   }
   @media screen and (max-width: 320px) {
     #{$self}__title {
       font-size: 1rem;
+    }
+    #{$self}__genre {
+      font-size: 0.9rem;
     }
   }
   &__title {
@@ -162,6 +172,17 @@ export default {
     .v-icon {
       padding: 0 !important;
     }
+  }
+  &__genre {
+    font-size: 1.2rem;
+    color: #83848f;
+    font-weight: bold;
+  }
+  &__rating-number {
+    font-size: 1.4rem;
+    margin-left: 1rem;
+    opacity: 0.6;
+    font-weight: bold;
   }
   &__progress-bar {
     #{$self}__progress-line {

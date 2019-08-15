@@ -10,7 +10,7 @@
           <Profile></Profile>
         </div>
         <div class="chapters-modal__images" v-else-if="modal === 'image'">
-          <Images></Images>
+          <Images :drawings="drawings"></Images>
         </div>
         <div class="chapters-modal__table-of-content" v-else-if="modal === 'table'">
           <TOC></TOC>
@@ -28,11 +28,7 @@
         </div>
         <div class="nav-icon" @click="images">
           <fa class="nav-icon__item nav-icon__item--image" icon="image"></fa>
-          <span
-            class="image-count"
-            v-if="$store.state.chapter.chapter.drawings"
-            v-text="$store.state.chapter.chapter.drawings.length"
-          ></span>
+          <span class="image-count" v-if="drawings" v-text="drawings.length"></span>
         </div>
         <!-- ユーザーの意見を聞いて　アップデートする -->
         <!-- <div class="nav-icon" @click="comments">
@@ -51,6 +47,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   computed: {
     modal() {
@@ -58,13 +55,19 @@ export default {
     },
     theme() {
       return this.$store.state.user.theme;
-    }
+    },
+    ...mapGetters({
+      drawings: "drawing/getChapterDrawings"
+    })
   },
   components: {
     TOC: () => import("@/components/ChapterPage/Modal/TOC"),
     Profile: () => import("@/components/ChapterPage/Modal/Profile"),
     Setting: () => import("@/components/ChapterPage/Modal/Setting"),
     Images: () => import("@/components/ChapterPage/Modal/Images")
+  },
+  async mounted() {
+   
   },
   methods: {
     async table() {
