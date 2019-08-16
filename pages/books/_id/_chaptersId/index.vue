@@ -12,6 +12,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   data() {
     return {
@@ -111,14 +112,17 @@ export default {
       // await store.dispatch("book/fetchBookChapterCount", params.id);
     }
   },
-  computed: {},
-  scrollToTop: true
-  // transition(to, from) {
-  //   if (!from) return { name: "slide-right", mode: "out-in" };
-  //   return to.params.chaptersId > from.params.chaptersId
-  //     ? { name: "slide-left", mode: "out-in" }
-  //     : { name: "slide-right", mode: "out-in" };
-  // }
+  computed: {
+    ...mapGetters({
+      title: "chapter/getChapterBookTitle"
+    })
+  },
+  scrollToTop: true,
+  head() {
+    return {
+      title: this.title
+    };
+  }
 };
 </script>
 

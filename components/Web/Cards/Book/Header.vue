@@ -50,7 +50,7 @@
             v-ripple
           >
             <div
-              @click="actionHandler(key)"
+              @click.stop="actionHandler(key)"
               class="book-header__button"
               :class="{'book-header__button--bookmarked': key==='bookmark'&&bookmarked}"
             >
@@ -98,7 +98,10 @@ export default {
     AnnouncementCard: () => import("@/components/Bookpage/Announcements")
   },
   computed: {
-    ...mapGetters({ chapter_count: "book/getBookChapterCount" })
+    ...mapGetters({
+      chapter_count: "book/getBookChapterCount",
+      auth: "auth/isAuthenticated"
+    })
   },
   data() {
     return {
@@ -165,9 +168,46 @@ export default {
           break;
       }
     },
+    async bookmarkHandler() {
+      const store = {
+        type: "bookmark",
+        bookId: this.book.id
+      };
+      if (!this.auth) {
+        this.$toast.error(
+          `ブックマークをするにはログインかアカウント作成が必要です`
+        );
+
+        return this.$store.commit("LOGIN_STATE");
+      }
+      if (this.bookmarked) {
+        try {
+          await this.$store.dispatch("library/patchStore", {
+            store
+          });
+          this.bookmarked = false;
+        } catch (error) {
+          this.$toast.error(`ブックマーク解除に失敗しました`);
+        }
+      } else {
+        try {
+          await this.$store.dispatch("library/patchStore", {
+            store
+          });
+          this.bookmarked = true;
+        } catch (error) {
+          this.$toast.error(`ブックマークを失敗しました`);
+        }
+      }
+    },
     async voteHandler() {
       this.loading = true;
       try {
+        if (!this.auth) {
+          this.$toast.error(`投票をするにはログインかアカウント作成が必要です`);
+
+          return this.$store.commit("LOGIN_STATE");
+        }
         const { error } = await this.$store.dispatch("book/postVote", {
           bookId: this.$route.params.id
         });
