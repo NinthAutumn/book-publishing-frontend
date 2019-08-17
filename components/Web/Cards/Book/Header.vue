@@ -54,7 +54,7 @@
               class="book-header__button"
               :class="{'book-header__button--bookmarked': key==='bookmark'&&bookmarked}"
             >
-              <div class="book-header__content" v-if="!loading">
+              <div class="book-header__content" v-if="loading !== key">
                 <fa class="book-header__button-icon" :icon="value.icon"></fa>
                 <div class="book-header__button-text" v-text="value.title"></div>
               </div>
@@ -176,6 +176,7 @@ export default {
       }
     },
     async bookmarkHandler() {
+      this.loading = "bookmark";
       const store = {
         type: "bookmark",
         bookId: this.book.id
@@ -184,7 +185,7 @@ export default {
         this.$toast.error(
           `ブックマークをするにはログインかアカウント作成が必要です`
         );
-
+        this.loading = false;
         return this.$store.commit("LOGIN_STATE");
       }
       if (this.bookmarked) {
@@ -206,9 +207,10 @@ export default {
           this.$toast.error(`ブックマークを失敗しました`);
         }
       }
+      this.loading = false;
     },
     async voteHandler() {
-      this.loading = true;
+      this.loading = "vote";
       try {
         if (!this.auth) {
           this.$toast.error(`投票をするにはログインかアカウント作成が必要です`);
