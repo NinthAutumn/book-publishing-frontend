@@ -42,7 +42,7 @@
         ></span>
       </div>
       <div v-line-clamp="clampLine" class="book-card__title" v-text="book.title"></div>
-      <div class="book-card__genre" v-text="book.name"></div>
+      <div v-if="book.name" class="book-card__genre" v-text="book.name"></div>
       <div class="book-card__rating flex-row flex--align" v-if="!isMobile">
         <v-rating
           v-if="rating"

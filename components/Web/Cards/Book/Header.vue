@@ -61,8 +61,8 @@
         </div>
       </div>
 
-      <div class="book-header__author">
-        <v-avatar size="100">
+      <div class="book-header__author" @mouseenter="author = true" @mouseleave="author = leave">
+        <v-avatar size="100" @click="author = true">
           <v-img
             :src="book.avatar"
             class="book-header__author-img"
@@ -70,6 +70,7 @@
             v-if="book.avatar"
           ></v-img>
         </v-avatar>
+        <author-card class="book-header__author-card" v-if="author"></author-card>
       </div>
     </div>
   </div>
@@ -95,7 +96,8 @@ export default {
     }
   },
   components: {
-    AnnouncementCard: () => import("@/components/Bookpage/Announcements")
+    AnnouncementCard: () => import("@/components/Bookpage/Announcements"),
+    AuthorCard: () => import("@/components/Web/Cards/Author/Info")
   },
   computed: {
     ...mapGetters({
@@ -151,7 +153,8 @@ export default {
           title: "ブックマークする"
         }
       },
-      bookmarked: false
+      bookmarked: false,
+      author: false
     };
   },
   methods: {
@@ -211,7 +214,6 @@ export default {
         const { error } = await this.$store.dispatch("book/postVote", {
           bookId: this.$route.params.id
         });
-
         if (error) {
           this.$toast.error(`${error}`, {
             position: "top-right",
@@ -243,9 +245,18 @@ export default {
     }
     #{$self}__author {
       grid-area: avatar;
+      position: relative;
       #{$self}__author-img {
+        &:hover {
+          cursor: pointer;
+        }
         box-shadow: 0 7px 14px 0 rgba(60, 66, 87, 0.1),
           0 3px 6px 0 rgba(0, 0, 0, 0.07);
+      }
+      #{$self}__author-card {
+        position: absolute;
+        top: 0;
+        right: 0;
       }
     }
     #{$self}__content {
