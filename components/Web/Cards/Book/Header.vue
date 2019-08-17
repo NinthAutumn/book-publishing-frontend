@@ -54,8 +54,11 @@
               class="book-header__button"
               :class="{'book-header__button--bookmarked': key==='bookmark'&&bookmarked}"
             >
-              <fa class="book-header__button-icon" :icon="value.icon"></fa>
-              <div class="book-header__button-text" v-text="value.title"></div>
+              <div class="book-header__content" v-if="!loading">
+                <fa class="book-header__button-icon" :icon="value.icon"></fa>
+                <div class="book-header__button-text" v-text="value.title"></div>
+              </div>
+              <div class="book-header__content book-header__content--loading" v-else></div>
             </div>
           </div>
         </div>
@@ -154,7 +157,8 @@ export default {
         }
       },
       bookmarked: false,
-      author: false
+      author: false,
+      loading: false
     };
   },
   methods: {
@@ -315,17 +319,18 @@ export default {
         // &--
       }
       #{$self}__button {
-        display: flex;
-        align-items: center;
-        font-size: 1.3rem;
-        width: 14rem;
-        height: 3.5rem;
-        padding: 0.4rem;
-        box-sizing: border-box;
-        justify-content: center;
-        box-shadow: 0 2px 5px 0 rgba(60, 66, 87, 0.1),
-          0 1px 1px 0 rgba(0, 0, 0, 0.07);
-
+        #{$self}__content {
+          display: flex;
+          align-items: center;
+          font-size: 1.3rem;
+          width: 14rem;
+          height: 3.5rem;
+          padding: 0.4rem;
+          box-sizing: border-box;
+          justify-content: center;
+          box-shadow: 0 2px 5px 0 rgba(60, 66, 87, 0.1),
+            0 1px 1px 0 rgba(0, 0, 0, 0.07);
+        }
         &--bookmarked {
           color: white;
           // border-color:none;

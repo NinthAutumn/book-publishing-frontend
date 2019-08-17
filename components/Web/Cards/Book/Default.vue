@@ -1,13 +1,12 @@
 <template>
-  <nuxt-link
-    tag="div"
-    :to="`/books/${book.book_id||book.id}`"
-    class="book-card"
-    :class="customClass"
-  >
+  <div tag="div" class="book-card" :class="customClass">
     <!-- {{book}} -->
     <div class="book-card__container" v-ripple="isMobile">
-      <div class="book-card__cover" :class="{'book-card__cover--desktop': !isMobile}">
+      <nuxt-link
+        :to="`/books/${book.book_id||book.id}${book.current_chapter? `/${book.current_chapter}`:''}`"
+        class="book-card__cover"
+        :class="{'book-card__cover--desktop': !isMobile}"
+      >
         <v-img
           class="book-card__img"
           :src="`${cover}/m`"
@@ -26,7 +25,7 @@
             </div>
           </template>
         </v-img>
-      </div>
+      </nuxt-link>
       <div class="book-card__progress-bar" v-if="progress">
         <v-progress-linear
           class="book-card__progress-line"
@@ -41,7 +40,13 @@
           v-text="`${((book.read/book.chapter_count)*100).toFixed(0)}%`"
         ></span>
       </div>
-      <div v-line-clamp="clampLine" class="book-card__title" v-text="book.title"></div>
+      <nuxt-link
+        tag="div"
+        :to="`/books/${book.book_id||book.id}`"
+        v-line-clamp="clampLine"
+        class="book-card__title"
+        v-text="book.title"
+      ></nuxt-link>
       <div v-if="book.name" class="book-card__genre" v-text="book.name"></div>
       <div class="book-card__rating flex-row flex--align" v-if="!isMobile">
         <v-rating
@@ -52,10 +57,10 @@
           half-increments
           :value="+book.rating"
         ></v-rating>
-        <div class="book-card__rating-number" v-text="+book.rating"></div>
+        <div v-if="rating" class="book-card__rating-number" v-text="+book.rating"></div>
       </div>
     </div>
-  </nuxt-link>
+  </div>
 </template>
 
 <script>
