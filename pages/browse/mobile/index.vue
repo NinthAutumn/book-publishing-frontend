@@ -305,8 +305,8 @@ export default {
     }
 
     #{$self}__option {
-      font-size: 1.5rem;
-      padding: 0.5rem 1rem;
+      font-size: 1.2rem;
+      padding: 0.5rem 2rem;
       background-color: #e3e8ee;
       color: #2e2e2f;
       border-radius: 2rem;
