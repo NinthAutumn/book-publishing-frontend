@@ -17,7 +17,7 @@
           <transition name="slide-fade">
             <div
               class="product-modal__content"
-              element-loading-background="#f7f8f9"
+              element-loading-background=" #f7f8f9e3"
               v-if="step ===1"
               v-loading="loading"
             >

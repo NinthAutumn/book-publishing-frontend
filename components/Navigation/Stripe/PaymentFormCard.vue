@@ -65,6 +65,9 @@
       @click="buttonSelect"
       class="payment-form__buy-button"
     >{{price_word||`¥${price}円払う`}}</div>
+    <div id="payment-request-button">
+      <!-- A Stripe Element will be inserted here. -->
+    </div>
   </div>
 </template>
 
@@ -243,6 +246,30 @@ export default {
         color: "#32325d"
       }
     };
+    const paymentRequest = this.stripe.paymentRequest({
+      country: "JP",
+      currency: "jpy",
+      total: {
+        label: "クラウンコイン",
+        amount: this.price
+      },
+      requestPayerName: false,
+      requestPayerEmail: false
+    });
+    const prButton = elements.create("paymentRequestButton", {
+      paymentRequest
+    });
+
+    (async () => {
+      // Check the availability of the Payment Request API first.
+      const result = await paymentRequest.canMakePayment();
+      if (result) {
+        prButton.mount("#payment-request-button");
+      } else {
+        document.getElementById("payment-request-button").style.display =
+          "none";
+      }
+    })();
     this.card = elements.create("card", { style: style });
     this.card.addEventListener("change", async function(event) {
       let displayError = document.getElementById("card-errors");

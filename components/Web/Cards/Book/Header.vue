@@ -64,7 +64,7 @@
         </div>
       </div>
 
-      <div class="book-header__author" @mouseenter="author = true" @mouseleave="author = leave">
+      <div class="book-header__author" @mouseenter="author = true" @mouseleave="author = false">
         <v-avatar size="100" @click="author = true">
           <v-img
             :src="book.avatar"
@@ -110,6 +110,7 @@ export default {
   },
   data() {
     return {
+      cover: require("~/assets/img/NobleCardLight@2x.png"),
       meta: {
         genre: {
           style: {
@@ -148,7 +149,7 @@ export default {
           title: "投票をかける"
         },
         support: {
-          icon: "",
+          icon: "gift",
           title: "サポートする"
         },
         bookmark: {

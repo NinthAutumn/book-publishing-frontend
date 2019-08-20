@@ -50,7 +50,7 @@
 <script>
 export default {
   props: {
-    chapters: Array,
+    // chapters: Array,
     book: Array
   },
   data() {

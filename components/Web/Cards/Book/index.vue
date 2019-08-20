@@ -11,7 +11,7 @@
       :rating="rating"
     ></default-type>
     <search-type v-else-if="type === 'search'" :book="book"></search-type>
-    <update-type v-else-if="type === 'update'" :book="book" :chapters="chapters"></update-type>
+    <update-type v-else-if="type === 'update'" :book="book"></update-type>
   </div>
 </template>
 
@@ -28,7 +28,7 @@ export default {
       default: require("~/assets/img/NobleCardLight.png")
     },
     book: {
-      type: Object
+      type: [Object, Array]
     },
     progress: {
       type: Boolean,

@@ -97,11 +97,11 @@
           >{{name}}</div>
           <div
             class="select-component__option flex flex--align flex--around"
-            :class="{selected: item.selected, disable: item.key === disable.name}"
+            :class="{selected: item.selected, disable: item.key === disable['name']}"
             v-for="(item, index) in multiData"
             :key="index"
             v-text="item.key"
-            @click="selected(index,item.key === disable.name )"
+            @click="selected(index,item.key === disable['name'] )"
           ></div>
         </div>
         <div
@@ -159,10 +159,8 @@ export default {
     value: [Object, String, Array, Number],
     volume: Boolean,
     disable: {
-      // type: [Array, String, Object],
-      default: {
-        name: ""
-      }
+      type: [Array, String, Object],
+      default: () => ({ name: "" })
     },
     disabled: Boolean,
     disableMessage: String,
