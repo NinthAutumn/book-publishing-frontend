@@ -382,14 +382,5 @@ export const actions = {
       return Promise.reject(error)
     }
   }
-  // async signUpGoogle({
-  //   commit
-  // }){
-  //   try {
-  //     const update = await this.$axios.post('/auth/google')
-  //     commit('GET_BOOKMARK_UPDATE', update)
-  //   } catch (error) {
 
-  //   }
-  // }
 }

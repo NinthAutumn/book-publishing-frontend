@@ -73,7 +73,7 @@
             v-if="book.avatar"
           ></v-img>
         </v-avatar>
-        <author-card class="book-header__author-card" v-if="author"></author-card>
+        <author-card :id="book.user_id" class="book-header__author-card" v-if="author"></author-card>
       </div>
     </div>
   </div>

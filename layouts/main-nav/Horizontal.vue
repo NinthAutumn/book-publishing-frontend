@@ -77,7 +77,7 @@
       </div>
     </nav>
     <transition name="grow-shrink" class="loginform">
-      <AuthModal v-show="loginState"></AuthModal>
+      <AuthModal v-if="loginState"></AuthModal>
     </transition>
     <transition name="grow-shrink" class="productform">
       <product-modal v-if="productState"></product-modal>

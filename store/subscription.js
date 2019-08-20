@@ -6,11 +6,13 @@ export const state = () => ({
   bookPlans: [],
   subscriptions: [],
   siteModal: false,
-  sitePlan: {}
+  sitePlan: {},
+  subscription: {}
 })
 
 export const getters = {
   getSubscriptions: state => state.subscriptions,
+  getSubscription: state => state.subscription,
   getSitePlans: state => state.sitePlans,
   getSiteModalState: state => state.siteModal,
   getSitePlan: state => state.sitePlan

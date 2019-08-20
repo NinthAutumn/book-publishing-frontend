@@ -47,7 +47,14 @@ export default {
     NewVertical: () => import("./main-nav/NewVertical"),
     StripeModal: () => import("@/components/Navigation/Stripe/ProductModal")
   },
-  mounted() {
+  async mounted() {
+    if (this.auth) {
+      await this.$store.dispatch("subscription/fetchSubscription");
+      if (this.subscription.payment_due) {
+        alert("payment is due but it failed ");
+      }
+    }
+
     if (this.$device.isMobile) {
       document.addEventListener("touchstart", { passive: true });
     }
@@ -67,7 +74,8 @@ export default {
       return this.$store.getters["user/loggedInUser"];
     },
     ...mapGetters({
-      auth: "auth/isAuthenticated"
+      auth: "auth/isAuthenticated",
+      subscription: "subscription/getSubscription"
     })
   },
   watch: {},

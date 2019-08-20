@@ -13,7 +13,7 @@
           <fa class="images-modal__dialog__close__icon" icon="times" @click="closeImageDialog"></fa>
         </div>
         <div class="images-modal__dialog__content flex flex--align flex--center">
-          <img :src="$store.state.imageUrl" alt>
+          <img :src="$store.state.imageUrl" alt />
         </div>
       </div>
     </div>
@@ -128,7 +128,8 @@ export default {
       prev: "chapter/getPrevChapter",
       theme: "user/getTheme",
       modal: "chapter/getModalState",
-      imageModal: "getImageModalState"
+      imageModal: "getImageModalState",
+      auth: "auth/isAuthenticated"
     })
   },
   methods: {
@@ -136,7 +137,11 @@ export default {
       this.$store.commit("TOGGLE_IMAGE");
     }
   },
-  created() {}
+  async mounted() {
+    if (this.auth) {
+      await this.$store.dispatch("subscription/fetchSubscription");
+    }
+  }
 };
 </script>
 

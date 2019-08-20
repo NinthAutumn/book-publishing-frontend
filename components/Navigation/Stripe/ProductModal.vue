@@ -15,7 +15,12 @@
             class="product-modal__description"
           >*クラウンコインとは本の話の購入・作者のサポート・広告のスキップなどができる nobles.jp ないの仮想通貨である</p>
           <transition name="slide-fade">
-            <div class="product-modal__content" v-if="step ===1">
+            <div
+              class="product-modal__content"
+              element-loading-background="#f7f8f9"
+              v-if="step ===1"
+              v-loading="loading"
+            >
               <div class="product-modal__buy-price_show">{{`合計 ¥${price}円`}}</div>
               <li
                 class="product-modal__item"
@@ -76,6 +81,7 @@ export default {
         }
       ],
       open: true,
+      loading: false,
       selected: 1,
       step: 1,
       price: 500 * 1.08,
@@ -114,9 +120,11 @@ export default {
     }
   },
   async mounted() {
+    this.loading = true;
     const { data } = await this.$axios.get("/stripe/product/list");
     this.products = data;
-
+    this.loading = false;
+    // element-loading-background="rgba(0, 0, 0, 0.8)"
     await this.$store.dispatch("stripe/fetchPaymentMethods", {
       type: "card"
     });

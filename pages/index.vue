@@ -66,7 +66,6 @@ export default {
       limit: 5
     });
   },
-  async mounted() {},
   data() {
     return {
       compo: false,
@@ -95,6 +94,7 @@ export default {
       return window ? window.innerWidth < 1 : true;
     },
     handleResize() {
+      if (!this.$refs.homepage) return;
       this.width = this.$refs.homepage.clientWidth;
       this.height = this.$refs.homepage.clientWidth;
       this.compo = this.width > 1197;

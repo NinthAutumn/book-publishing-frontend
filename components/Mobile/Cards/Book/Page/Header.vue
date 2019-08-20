@@ -132,7 +132,6 @@ export default {
             icon: "extension"
           }
         );
-
         return this.$store.commit("LOGIN_STATE");
       } else {
         if (this.bookmarked) {

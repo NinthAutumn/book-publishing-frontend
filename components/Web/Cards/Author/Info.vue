@@ -17,13 +17,15 @@
 <script>
 import { mapGetters } from "vuex";
 export default {
-  computed: {
-    ...mapGetters({
-      author: "user/getAuthor"
-    })
+  props: ["id"],
+  data() {
+    return {
+      author: {}
+    };
   },
   async mounted() {
-    await this.$store.dispatch("user/fetchAuthor");
+    const { data } = await this.$axios.get(`/author/${this.id}`);
+    this.author = data;
   }
 };
 </script>
