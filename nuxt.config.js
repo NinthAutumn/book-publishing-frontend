@@ -247,7 +247,7 @@ module.exports = {
       duration: 5000
     }],
     ['nuxt-stripe-module', {
-      publishableKey: process.env.STRIPE_KEY,
+      publishableKey: process.env.STRIPE_KEY || 'pk_live_2WoTAiPewhp9sgG6DsTE09uF',
       version: 'v3', // Default
     }],
     "nuxt-compress",
