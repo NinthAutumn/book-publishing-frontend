@@ -1,19 +1,21 @@
 <template>
   <div class="review-mobile">
     <div class="review-mobile__container">
-      <div class="review-mobile__avatar">
-        <v-avatar :size="40" class="review-mobile__img">
-          <v-img :src="book.user_id === review.user_id? book.avatar : review.avatar.img"></v-img>
-        </v-avatar>
-      </div>
-      <div class="review-mobile__meta">
-        <div class="review-mobile__header">
-          <div class="review-mobile__title" v-text="review.title"></div>
-          <div class="review-mobile__rating">
-            <fa class="review-mobile__icon" :icon="{prefix:'far',iconName:'star'}"></fa>
-            <div class="review-mobile__rate" v-text="review.rating"></div>
-          </div>
+      <div class="flex-divider flex-row flex--align">
+        <div class="review-mobile__avatar">
+          <v-avatar :size="50" class="review-mobile__img">
+            <v-img :src="book.user_id === review.user_id? book.avatar : review.avatar.img"></v-img>
+          </v-avatar>
         </div>
+        <div class="flex-divider flex-column">
+          <div class="review-mobile__title" v-text="review.title"></div>
+          <v-rating color="#FF8D29" readonly :size="18" half-increments :value="+book.rating"></v-rating>
+          <div class="review-mobile__author" v-text="review.username"></div>
+        </div>
+      </div>
+
+      <div class="review-mobile__meta">
+        <div class></div>
         <div
           v-if="review.content.length > 299 &&!open"
           class="review-mobile__content"
@@ -68,6 +70,7 @@ export default {
   $self: &;
   &__container {
     display: flex;
+    flex-direction: column;
     padding: 0.5rem;
     #{$self}__avatar {
       margin-right: 0.5rem;
@@ -76,11 +79,31 @@ export default {
           0 3px 6px 0 rgba(0, 0, 0, 0.07);
       }
     }
+    box-shadow: 0 7px 14px 0 rgba(60, 66, 87, 0.1),
+      0 3px 6px 0 rgba(0, 0, 0, 0.07);
     #{$self}__meta {
-      box-shadow: 0 7px 14px 0 rgba(60, 66, 87, 0.1),
-        0 3px 6px 0 rgba(0, 0, 0, 0.07);
       padding: 1rem;
       border-radius: 1rem;
+    }
+    #{$self}__title {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+    #{$self}__rating {
+      display: flex;
+      align-items: center;
+      // justify-content: center;
+      color: black;
+      font-size: 1.8rem;
+      #{$self}__icon {
+        margin-right: 0.5rem;
+        color: #ff8d29;
+      }
+      #{$self}__rate {
+        color: #ff8d29;
+        font-size: 1.6rem;
+        font-weight: bold;
+      }
     }
     #{$self}__nav {
       display: flex;
@@ -103,26 +126,7 @@ export default {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      #{$self}__title {
-        font-size: 1.5rem;
-        font-weight: bold;
-      }
-      #{$self}__rating {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: black;
-        font-size: 1.8rem;
-        #{$self}__icon {
-          margin-right: 0.5rem;
-          color: #ff8d29;
-        }
-        #{$self}__rate {
-          color: #ff8d29;
-          font-size: 1.6rem;
-          font-weight: bold;
-        }
-      }
+
       // self
     }
     #{$self}__content {

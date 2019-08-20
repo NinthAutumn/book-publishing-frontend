@@ -3,16 +3,24 @@
     <div class="mbp-reviews__container">
       <div class="mbp-reviews__header">
         <div class="mbp-reviews__title">感想 ({{reviewCount}})</div>
-        <div class="mbp-review__rating">
+        <div class="mbp-reviews__rating">
           <v-rating color="#FF8D29" readonly :size="22" half-increments :value="+book.rating"></v-rating>
         </div>
       </div>
+      <!-- <div class="mbp-review__new flex-row flex--align flex--right"> -->
+
+      <!-- </div> -->
+
       <div class="mbp-reviews__list">
         <review-card v-for="review in reviews" :key="review.id" :review="review" :book="book"></review-card>
       </div>
       <no-ssr>
         <infinite-loading @infinite="infiniteHandler"></infinite-loading>
       </no-ssr>
+      <div class="mbp-reviews__form">
+        <fa class="mbp-reviews__icon" icon="pen"></fa>
+        <div class="mbp-reviews__create">レビューを書く</div>
+      </div>
     </div>
   </div>
 </template>
@@ -95,6 +103,26 @@ export default {
 .mbp-reviews {
   $self: &;
   &__container {
+    #{$self}__form {
+      display: flex;
+      align-items: center;
+      font-size: 1.4rem;
+      justify-content: center;
+      padding: 1rem 0;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      border-radius: 0.5rem;
+      background-color: #2a2f45;
+      color: white;
+
+      #{$self}__icon {
+        margin-right: 0.5rem;
+      }
+      #{$self}__create {
+        font-size: 1.4rem;
+      }
+    }
     padding: 0 0.5rem;
     box-shadow: 0 7px 14px 0 rgba(60, 66, 87, 0.1),
       0 3px 6px 0 rgba(0, 0, 0, 0.07);

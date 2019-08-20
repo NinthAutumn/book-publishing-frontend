@@ -7,7 +7,8 @@ export const state = () => ({
   myReview: {},
   nextChapterLength: 0,
   trending: [],
-  count: 0
+  count: 0,
+  preview: []
 })
 export const getters = {
   getReviews: (state) => {
@@ -20,7 +21,8 @@ export const getters = {
     return state.count
   },
   getMyReview: state => state.myReview,
-  isReviewed: state => state.reviewed
+  isReviewed: state => state.reviewed,
+  getPreviewReviews: state => state.preview
 }
 
 
@@ -69,6 +71,9 @@ export const mutations = {
   },
   SET_IS_REVIEWED: (state, reviewed) => {
     state.reviewed = reviewed
+  },
+  SET_PREVIEW: (state, reviews) => {
+    state.preview = reviews
   }
 }
 export const actions = {
@@ -101,9 +106,14 @@ export const actions = {
     userId = "",
     type,
     direction,
-    next = false
+    next = false,
+    preview = false
   }) {
     const res = await this.$axios.get(`/review/book?bookId=${bookId}&limit=${limit}&page=${page}&userId=${userId}&direction=${direction}&type=${type}`)
+    if (preview) {
+      commit('SET_PREVIEW', res.data.reviews)
+      return Promise.resolve()
+    }
     if (next) {
       commit('SET_NEXT_REVIEWS', res.data.reviews)
       return Promise.resolve(res.data.reviews)
