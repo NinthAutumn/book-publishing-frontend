@@ -20,6 +20,13 @@ a:visited {
   color: rgb(51, 51, 51);
 }
 
+@media screen and (max-width:450px) {
+  .swiper-container {
+    overflow: visible;
+  }
+}
+
+
 .site-logo {
   padding: 2px 8px;
   font-size: 2rem;

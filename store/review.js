@@ -111,6 +111,8 @@ export const actions = {
   }) {
     const res = await this.$axios.get(`/review/book?bookId=${bookId}&limit=${limit}&page=${page}&userId=${userId}&direction=${direction}&type=${type}`)
     if (preview) {
+      commit('SET_REVIEW_LENGTH', res.data.review_count)
+
       commit('SET_PREVIEW', res.data.reviews)
       return Promise.resolve()
     }
@@ -119,6 +121,7 @@ export const actions = {
       return Promise.resolve(res.data.reviews)
     }
     commit('SET_REVIEW_LENGTH', res.data.review_count)
+
     commit('SET_REVIEWS', res.data.reviews)
     return Promise.resolve(res.data.reviews)
   },

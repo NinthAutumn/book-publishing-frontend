@@ -12,7 +12,13 @@
       <!-- </div> -->
 
       <div class="mbp-reviews__list">
-        <review-card v-for="review in reviews" :key="review.id" :review="review" :book="book"></review-card>
+        <review-card
+          :limit="150"
+          v-for="review in reviews"
+          :key="review.id"
+          :review="review"
+          :book="book"
+        ></review-card>
       </div>
       <no-ssr>
         <infinite-loading @infinite="infiniteHandler"></infinite-loading>
@@ -112,10 +118,10 @@ export default {
       position: fixed;
       bottom: 0;
       left: 0;
-      border-radius: 0.5rem;
+      // border-radius: 0.5rem;
       background-color: #2a2f45;
       color: white;
-
+      width: 100%;
       #{$self}__icon {
         margin-right: 0.5rem;
       }

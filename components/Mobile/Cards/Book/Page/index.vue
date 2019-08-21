@@ -2,6 +2,7 @@
   <div class="pmobile-book">
     <header-card :book="book"></header-card>
     <summary-card :synopsis="book.synopsis"></summary-card>
+
     <review-list :book="book"></review-list>
   </div>
 </template>
@@ -14,7 +15,7 @@ export default {
   components: {
     HeaderCard: () => import("./Header"),
     SummaryCard: () => import("./Summary"),
-    ReviewList: () => import("./ReviewList")
+    ReviewList: () => import("./ReviewPreview")
   }
 };
 </script>

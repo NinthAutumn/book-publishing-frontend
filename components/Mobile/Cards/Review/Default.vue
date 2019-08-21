@@ -17,16 +17,16 @@
       <div class="review-mobile__meta">
         <div class></div>
         <div
-          v-if="review.content.length > 299 &&!open"
+          v-if="review.content.length > limit-1 &&!open"
           class="review-mobile__content"
-          v-html="truncate(review.content,300)"
+          v-html="truncate(review.content,limit)"
         ></div>
         <div
           class="review-mobile__content"
-          v-else-if="review.content.length <300 || open"
+          v-else-if="review.content.length <limit || open"
           v-html="review.content"
         ></div>
-        <div class="review-mobile__nav" v-if="review.content.length > 299">
+        <div class="review-mobile__nav" v-if="review.content.length > limit-1">
           <div class="review-mobile__open" v-if="!open" @click="open=!open">
             詳細
             <fa icon="caret-down" class="review-mobile__icon"></fa>
@@ -45,7 +45,8 @@
 export default {
   props: {
     review: Object,
-    book: Object
+    book: Object,
+    limit: { type: Number, default: 300 }
   },
   data() {
     return {
