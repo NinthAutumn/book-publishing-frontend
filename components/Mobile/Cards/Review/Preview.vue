@@ -28,7 +28,7 @@
           v-html="review.content"
         ></div>
         <div class="mbp-reviewp__nav" v-if="review.content.length > limit-1">
-          <div class="mbp-reviewp__open" v-if="!open" @click="open=!open">
+          <div class="mbp-reviewp__open" v-if="!open" @click.stop="$emit('selectReview',review.id)">
             詳細
             <fa icon="caret-right" class="mbp-reviewp__icon"></fa>
           </div>

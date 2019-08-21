@@ -6,12 +6,22 @@
         <div class="pmb-reviewp__rating">
           <v-rating color="#FF8D29" readonly :size="22" half-increments :value="+book.rating"></v-rating>
         </div>
+        <div class="pmb-reviewp__all" @click.stop="$emit('openReviews')">
+          全部見る
+          <fa class="pmb-reviewp__all-icon" icon="caret-right"></fa>
+        </div>
       </div>
       <div class="pmb-reviewp__list">
         <div v-swiper:mySwiper="swiperMobile">
           <div class="swiper-wrapper">
             <div class="swiper-slide" v-for="(review) in preview" :key="review.id">
-              <review-card type="preview" :limit="150" :review="review" :book="book"></review-card>
+              <review-card
+                @selectReview="handleSelect"
+                type="preview"
+                :limit="150"
+                :review="review"
+                :book="book"
+              ></review-card>
             </div>
           </div>
         </div>
@@ -63,8 +73,13 @@ export default {
       }
     };
   },
+  methods: {
+    handleSelect(val) {
+      this.$emit("selectReview", val);
+    }
+  },
   components: {
-    ReviewCard: () => import("@/components/Mobile/Cards/Review/")
+    ReviewCard: () => import("@/components/Mobile/Cards/Review/Preview")
   }
 };
 </script>
@@ -86,7 +101,7 @@ export default {
       // position: fixed;
       // bottom: 0;
       // left: 0;
-      // border-radius: 0.5rem;
+      border-radius: 0.5rem;
       background-color: #2a2f45;
       color: white;
       width: 100%;
@@ -105,6 +120,11 @@ export default {
       #{$self}__title {
         font-weight: bold;
         font-size: 1.4rem;
+      }
+      #{$self}__all {
+        font-size: 1.4rem;
+        // margin-right: 1rem;
+        color: #2a2f45;
       }
       // displ
     }
