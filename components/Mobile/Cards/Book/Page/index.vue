@@ -1,6 +1,7 @@
 <template>
   <div class="pmobile-book">
     <header-card :book="book"></header-card>
+    <ranking-list></ranking-list>
     <summary-card :synopsis="book.synopsis"></summary-card>
     <review-list
       @toggleForm="toggleForm"
@@ -71,6 +72,7 @@ export default {
     HeaderCard: () => import("./Header"),
     SummaryCard: () => import("./Summary"),
     ReviewList: () => import("./ReviewPreview"),
+    RankingList: () => import("./Ranking"),
     ReviewModal: () => import("./ReviewList"),
     ReviewPage: () => import("@/components/Mobile/Cards/Review/Page"),
     ReviewForm: () => import("@/components/Mobile/Modals/Review/form")
