@@ -77,6 +77,10 @@ export default {
       this.text = this.content;
       this.changes();
     }
+    if (this.value) {
+      this.text = this.value;
+      this.changes();
+    }
     // if (this.content) {
     //   this.text = this.content;
     // }

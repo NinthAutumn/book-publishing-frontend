@@ -6,7 +6,7 @@
           <div class="mrf-modal__back" v-ripple @click="$emit('toggleForm')">
             <fa class="mrf-modal__back-icon" icon="arrow-left"></fa>
           </div>
-          <div class="mrf-modal__header">レビューを書く</div>
+          <div class="mrf-modal__header" v-text="reviewed? 'レビューを編集する':'レビューを書く'"></div>
         </div>
 
         <label for="rating">評価</label>
@@ -37,13 +37,14 @@
           v-validate="'required||min:5'"
           data-vv-as="本文"
         ></text-editor>
-        <div class="mrf-modal__button">投稿する</div>
+        <div class="mrf-modal__button" v-text="reviewed? '編集する':'投稿する'"></div>
       </div>
     </transition>
   </div>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   props: ["value"],
   data() {
@@ -58,10 +59,77 @@ export default {
   components: {
     TextEditor: () => import("@/components/TextEditor")
   },
-  mounted() {
+  async mounted() {
+    await this.$store.dispatch("review/fetchIsReviewed", {
+      bookId: this.$route.params.id
+    });
     if (this.$refs.title) {
       this.$refs.title.focus();
     }
+    if (this.reviewed) {
+      await this.$store.dispatch("review/myReview", {
+        bookId: this.$route.params.id
+      });
+      this.form.rating = this.oldReview.rating;
+      this.form.content = this.oldReview.content;
+      this.form.title = this.oldReview.title;
+    }
+  },
+  methods: {
+    async handleUpload() {
+      try {
+        if (!this.form.rating) {
+          return this.$toast.error(
+            this.reviewed
+              ? "レビューの編集には投票が必要です"
+              : "レビューを投稿するには投票が必要です"
+          );
+        }
+        if (this.reviewed) {
+          await this.$store.dispatch("review/updateReview", {
+            id: this.oldReview.id,
+            review: this.form
+          });
+          await this.$store.dispatch("review/showAll", {
+            bookId: this.$route.params.id,
+            page: 1,
+            limit: 10,
+            direction: "desc",
+            type: "likes"
+          });
+        } else {
+          await this.$store.dispatch("review/addReview", {
+            review: this.form,
+            bookId: this.$route.params.id
+          });
+          await this.$store.dispatch("review/showAll", {
+            bookId: this.$route.params.id,
+            page: 1,
+            limit: 10,
+            direction: "desc",
+            type: "likes"
+          });
+          this.$toast.success(
+            this.reviewed
+              ? "レビューの編集に成功しました"
+              : "レビューの投稿に成功しました"
+          );
+          this.$emit("toggleForm");
+        }
+      } catch (error) {
+        this.$toast.error(
+          this.reviewed
+            ? "レビューの編集に失敗しました"
+            : "レビューの投稿に失敗しました"
+        );
+      }
+    }
+  },
+  computed: {
+    ...mapGetters({
+      reviewed: "review/isReviewed",
+      oldReview: "review/getMyReview"
+    })
   }
 };
 </script>

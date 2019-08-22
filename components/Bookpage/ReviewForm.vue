@@ -11,7 +11,7 @@
       v-validate="'required'"
       data-vv-as="タイトル"
       :class="{'review-form__title--error':errors.first('タイトル')}"
-    >
+    />
     <div class="form-control">
       <v-rating
         color="#FF8D29"
@@ -84,17 +84,12 @@ export default {
             duration: 1000,
             icon: "extension"
           });
-          (error);
+          error;
         }
       } else {
         try {
           if (!this.review.rating) {
-            this.$toast.show("レビューを投稿するには投票が必要です", {
-              theme: "toasted-primary",
-              position: "top-right",
-              duration: 1000,
-              icon: "extension"
-            });
+            this.$toast.error("レビューを投稿するには投票が必要です");
           }
           await this.$store.dispatch("review/addReview", {
             review: this.review,
@@ -123,7 +118,7 @@ export default {
             duration: 1000,
             icon: "extension"
           });
-          (error);
+          // (error);
         }
       }
     }

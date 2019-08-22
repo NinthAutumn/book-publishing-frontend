@@ -45,22 +45,10 @@ export default {
       wordCount: data.word_count + "字"
     };
   },
-  async created() {
-    // await this.$store.dispatch
-    // await this.$store.dispatch("book/fetchBookView", this.$route.params.id);
-  },
-  async fetch({ store, params }) {
-    if (store.getters.isAuthenticated) {
-      await store.dispatch("book/fetchBook", {
-        id: params.id,
-        userId: store.getters["user/loggedInUser"].id
-      });
-      // await store.dispatch("review/reviewedStatus", params.id);
-      // await store.dispatch("library/checkBookmark", params.id);
-    } else {
-      await store.dispatch("book/fetchBook", { id: params.id });
-      // await store.dispatch("chapter/fetchPublishedTOC", params.id);
-    }
+  async fetch({ store, route }) {
+    await store.dispatch("book/fetchBook", {
+      id: route.params.id
+    });
   },
   computed: {
     ...mapGetters({
@@ -102,33 +90,7 @@ export default {
         desc: "",
         rating: ""
       },
-      meta: {
-        genre: {
-          key: this.$store.getters["book/getBook"].name,
-          icon: "landmark",
-          type: "genre",
-          url: `/browse?genre=${this.$store.getters["book/getBook"].name}`
-        },
-        chapter: {
-          key:
-            this.$store.getters["book/getBookChapterCount"] + "話" || 0 + "話",
-          icon: "scroll",
-          type: "chapter",
-          url: "/browse"
-        },
-        view: {
-          key: this.$store.getters["book/getBook"].view + "人" || 0,
-          icon: "eye",
-          type: "view",
-          url: "/browse"
-        },
-        word: {
-          key: 0,
-          icon: "cube",
-          type: "word",
-          url: "/browse"
-        }
-      },
+
       review: {
         title: "",
         content: "",
@@ -191,102 +153,11 @@ export default {
           left: lefty
         };
       }
-    },
-    async bookmarkHover() {
-      if (!this.bookmarked) {
-        this.text = "ブックマークする";
-        // return this.bookmarkedText();
-      } else {
-        this.text = "ブックマーク解除";
-
-        // return this.bookmarkedText();
-      }
-    },
-    async bookmarkLeave() {
-      if (!this.bookmarked) {
-        this.text = "ブックマーク";
-        // return this.bookmarkedText();
-      } else {
-        this.text = "ブックマーク済み";
-
-        // return this.bookmarkedText();
-      }
-    },
-    async bookmarkBook() {
-      const store = {
-        type: "bookmark",
-        bookId: this.book.id
-      };
-      if (this.$store.state.loggedIn === false) {
-        this.$toast.show(
-          `ブックマークをするにはログインかアカウント作成が必要です`,
-          {
-            theme: "toasted-primary",
-            position: "top-right",
-            duration: 1000,
-            icon: "extension"
-          }
-        );
-
-        return this.$store.commit("LOGIN_STATE");
-      } else {
-        if (this.bookmarked) {
-          try {
-            const remove = await this.$store.dispatch("library/patchStore", {
-              store
-            });
-            this.bookmarked = false;
-          } catch (error) {
-            this.$toast.show(`ブックマーク解除に失敗しました`, {
-              theme: "toasted-primary",
-              position: "top-right",
-              duration: 1000,
-              icon: "extension"
-            });
-          }
-        } else {
-          try {
-            const addStore = await this.$store.dispatch("library/patchStore", {
-              store
-            });
-            this.bookmarked = true;
-          } catch (error) {
-            this.$toast.show(`ブックマークを失敗しました`, {
-              theme: "toasted-primary",
-              position: "top-right",
-              duration: 1000,
-              icon: "extension"
-            });
-          }
-        }
-      }
-    },
-    async voteHandler() {
-      this.loading = true;
-      try {
-        const { error } = await this.$store.dispatch("book/postVote", {
-          bookId: this.$route.params.id
-        });
-
-        if (error) {
-          this.$toast.show(`${error}`, {
-            theme: "toasted-primary",
-            position: "top-right",
-            duration: 1000,
-            icon: "extension"
-          });
-        }
-      } catch (error) {
-        console.log(error.message);
-      }
-      this.loading = false;
-      await this.$store.dispatch("wallet/wealth");
     }
   },
   beforeUpdated() {
     this.showImage = false;
   },
-  $route(to, from) {},
 
   components: {
     BookContent: () => import("@/components/Bookpage/BookContent"),
@@ -307,8 +178,11 @@ export default {
       title: this.book.title,
       desc: this.book.synopsis
     };
-    this.tabs.review = this.$refs.review.clientWidth;
-    this.tabs.toc = this.$refs.toc.clientWidth;
+    if (this.$refs.review && this.$refs.toc) {
+      this.tabs.review = this.$refs.review.clientWidth;
+      this.tabs.toc = this.$refs.toc.clientWidth;
+    }
+
     this.meta["word"].key = this.wordCount;
     let left = 0;
     if (this.$device.isMobile) {
@@ -322,11 +196,6 @@ export default {
       width: `${this.tabs.review}px`,
       left: left
     };
-    if (this.bookmarked) {
-      this.text = "ブックマーク済み";
-    } else {
-      this.text = "ブックマーク";
-    }
   },
   head() {
     return {
