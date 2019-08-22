@@ -23,8 +23,15 @@
       <div class="pmb-toc__volumes">
         <div class="pmb-toc__volume" v-for="volume in volumes" :key="volume.volume">
           <div class="pmb-toc__volume-title" v-text="`${volume.volume}章 ${volume.volume_title}`"></div>
-
-          <div class="pmb-toc__chapters">
+          <div
+            class="pmb-toc__chapters pmb-toc__chapters--none"
+            v-if="volume.chapters.length < 1"
+          >話はまだありません</div>
+          <div
+            class="pmb-toc__chapters pmb-toc__chapters--none"
+            v-else-if="!volume.chapters[0].id"
+          >話はまだありません</div>
+          <div class="pmb-toc__chapters" v-else>
             <div
               class="pmb-toc__chapter flex-row"
               v-for="chapter in volume.chapters"
@@ -60,7 +67,8 @@ export default {
   data() {
     return {
       sort_type: [{ key: "上り", value: 0 }, { key: "下がり", value: 1 }],
-      sort: 0
+      sort: 0,
+      today: ""
     };
   },
   watch: {
@@ -90,6 +98,7 @@ export default {
     await this.$store.dispatch("chapter/fetchPublishedList", {
       bookId: this.$route.params.id
     });
+    this.today = this.$moment().toDate();
   }
 };
 </script>

@@ -8,12 +8,14 @@ export const state = () => ({
   nextChapterLength: 0,
   trending: [],
   count: 0,
-  preview: []
+  preview: [],
+  review: {}
 })
 export const getters = {
   getReviews: (state) => {
     return state.reviews
   },
+  getReview: (state) => state.review,
   getTrendingList: (state) => {
     return state.trending
   },
@@ -74,6 +76,9 @@ export const mutations = {
   },
   SET_PREVIEW: (state, reviews) => {
     state.preview = reviews
+  },
+  SET_REVIEW: (state, review) => {
+    state.review = review
   }
 }
 export const actions = {
@@ -95,6 +100,24 @@ export const actions = {
     //   commit('SET_NEXT_REVIEW_LENGTH', res.data.length)
 
     // })
+  },
+  async fetchReview({
+    commit
+  }, {
+    id
+  }) {
+    try {
+      const {
+        data
+      } = await this.$axios.get(`/review/show?id=${id}`);
+      if (data.error) {
+        return Promise.reject(data.error)
+      }
+      commit('SET_REVIEW', data)
+    } catch (error) {
+      return Promise.reject(error)
+
+    }
   },
   async showAll({
     commit,
