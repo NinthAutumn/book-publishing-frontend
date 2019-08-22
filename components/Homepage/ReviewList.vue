@@ -3,7 +3,7 @@
     <div v-swiper:mySwiper="swiperOption" v-if="!$device.isMobile">
       <div class="swiper-wrapper">
         <div class="swiper-slide" v-for="(review,index) in reviews" :key="index">
-          <Review :height="height" :review="review"></Review>
+          <Review v-if="!$device.isMobile" :height="height" :review="review"></Review>
         </div>
       </div>
       <div class="background">
@@ -16,10 +16,11 @@
     <div class="mobile-swiper--review" v-swiper:mySwiper="mobileOption" v-else>
       <div class="swiper-wrapper">
         <div class="swiper-slide" v-for="(review,index) in reviews" :key="index">
-          <Review mobile :review="review"></Review>
+          <mobile-review @selectReview="reviewPage" :limit="150" :book="{}" :review="review"></mobile-review>
         </div>
       </div>
     </div>
+    <review-page :book="{}" @selectReview="reviewPage" v-model="$route.query.review"></review-page>
   </div>
 </template>
 <script>
@@ -32,12 +33,13 @@ export default {
       return this.$store.getters["analytic/getTrendingReviews"];
     }
   },
+
   data() {
     return {
       // slidesNumber: 2,
       mobileOption: {
         // loop: true,
-        slidesPerView: 1,
+        slidesPerView: 1.1,
         freeMode: true,
         mousewheel: {
           invert: true,
@@ -68,9 +70,23 @@ export default {
     };
   },
   components: {
-    Review: () => import("./Review")
+    Review: () => import("@/components/Web/Cards/Review"),
+    MobileReview: () => import("@/components/Mobile/Cards/Review/Preview"),
+    ReviewPage: () => import("@/components/Mobile/Cards/Review/Page")
   },
-  methods: {},
+  methods: {
+    reviewPage: function(state) {
+      if (this.$route.query.review) {
+        this.$router.push("");
+      } else {
+        if (this.$route.query.modal) {
+          this.$router.push(`?review=${state}&modal=true`);
+        } else {
+          this.$router.push(`?review=${state}`);
+        }
+      }
+    }
+  },
   created() {}
 };
 </script>

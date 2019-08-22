@@ -215,7 +215,7 @@ export default {
       try {
         if (!this.auth) {
           this.$toast.error(`投票をするにはログインかアカウント作成が必要です`);
-
+          this.loading = false;
           return this.$store.commit("LOGIN_STATE");
         }
         const { error } = await this.$store.dispatch("book/postVote", {

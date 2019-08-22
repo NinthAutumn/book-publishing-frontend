@@ -94,7 +94,10 @@ export default {
     };
   },
   watch: {
-    value: async function() {
+    value: async function(val) {
+      if (!this.value) {
+        return;
+      }
       await this.$store.dispatch("review/fetchReview", { id: this.value });
       this.liked = this.review.voted > 0;
       this.disliked = this.review.voted < 0;
@@ -207,6 +210,9 @@ export default {
   &--disabled {
     visibility: hidden;
     transition: 200ms;
+  }
+  .v-icon {
+    padding: 0 !important;
   }
   &__container {
     #{$self}__close {
