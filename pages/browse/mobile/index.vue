@@ -180,11 +180,11 @@ export default {
     },
     swipeTab(val) {
       const tab = parseInt(this.tab);
-      this.tab = tab < 3 ? tab + 1 : 0;
+      this.tab = tab < 4 ? tab + 1 : 0;
     },
     swipeRight(val) {
       const tab = parseInt(this.tab);
-      this.tab = tab > 0 ? tab - 1 : 3;
+      this.tab = tab > 0 ? tab - 1 : 4;
     },
     goBack() {
       this.$router.go(-1);

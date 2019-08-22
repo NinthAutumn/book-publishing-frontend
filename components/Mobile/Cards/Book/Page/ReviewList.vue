@@ -35,7 +35,7 @@
           </no-ssr>
         </div>
 
-        <div class="mbp-reviews__form">
+        <div class="mbp-reviews__form" @click="$emit('toggleForm')">
           <fa class="mbp-reviews__icon" icon="pen"></fa>
           <div class="mbp-reviews__create">レビューを書く</div>
         </div>

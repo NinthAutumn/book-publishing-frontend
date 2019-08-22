@@ -26,7 +26,7 @@
           </div>
         </div>
       </div>
-      <div class="pmb-reviewp__form">
+      <div class="pmb-reviewp__form" @click="$emit('toggleForm')">
         <fa class="pmb-reviewp__icon" icon="pen"></fa>
         <div class="pmb-reviewp__create">レビューを書く</div>
       </div>
@@ -76,10 +76,12 @@ export default {
   methods: {
     handleSelect(val) {
       this.$emit("selectReview", val);
-    }
+    },
+    toggleForm() {}
   },
   components: {
-    ReviewCard: () => import("@/components/Mobile/Cards/Review/Preview")
+    ReviewCard: () => import("@/components/Mobile/Cards/Review/Preview"),
+    ReviewForm: () => import("@/components/Mobile/Modals/Review/form")
   }
 };
 </script>
