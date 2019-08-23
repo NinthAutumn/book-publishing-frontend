@@ -113,9 +113,6 @@ module.exports = {
     }, {
       src: '@/plugins/elementLoading',
       ssr: false
-    }, {
-      src: '@/plugins/vue-swipe-tab',
-      ssr: false
     },
     {
       src: '@/plugins/pull-to',
@@ -144,9 +141,6 @@ module.exports = {
       ssr: false
     }, {
       src: '@/plugins/countTo',
-      ssr: false
-    }, {
-      src: '@/plugins/chartLine',
       ssr: false
     }, {
       src: '@/plugins/skeleton',

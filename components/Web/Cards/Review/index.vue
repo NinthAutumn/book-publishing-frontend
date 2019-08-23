@@ -76,6 +76,7 @@ export default {
     width: 40rem;
 
     margin: 1rem;
+    margin-bottom: 2rem;
     padding: 1rem;
     box-shadow: 0 7px 14px 0 rgba(60, 66, 87, 0.1),
       0 3px 6px 0 rgba(0, 0, 0, 0.07);
