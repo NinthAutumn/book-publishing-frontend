@@ -160,7 +160,6 @@ import { mapGetters } from "vuex";
 
 export default {
   components: {
-    RankingItem: () => import("./RankingItem"),
     Select: () => import("@/components/All/Select"),
     RankingCard: () => import("@/components/Mobile/Cards/Book/Ranking"),
     WebRankingCard: () => import("@/components/Web/Cards/Book/Ranking")
@@ -354,11 +353,6 @@ export default {
 </script>
 
 <style lang="scss">
-@media screen and (max-width: 400px) {
-  .ranking-select__container {
-    // font-size: 8px !important;
-  }
-}
 #ranking-list {
   display: flex;
   justify-content: center;

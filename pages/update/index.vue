@@ -26,6 +26,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   auth: false,
   components: {
@@ -79,19 +80,16 @@ export default {
     }
   },
   computed: {
+    ...mapGetters({
+      latestBooks: "book/getLatest",
+      loggedIn: "auth/isAuthenticated"
+    }),
     update_view() {
-      if (this.$store.getters.isAuthenticated) {
-        this.$store.getters["user/getUpdateView"];
+      if (this.loggedIn) {
         return this.$store.getters["user/getUpdateView"];
       } else {
         return "grid";
       }
-    },
-    latestBooks() {
-      return this.$store.getters["book/getLatest"];
-    },
-    loggedIn() {
-      return this.$store.getters.isAuthenticated;
     }
   }
 };

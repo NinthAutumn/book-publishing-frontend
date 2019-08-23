@@ -82,7 +82,7 @@ export default {
     };
   },
   components: {
-    Book: () => import("./Book"),
+    // Book: () => import("./Book"),
     BookCard: () => import("@/components/Web/Cards/Book")
   },
   methods: {}

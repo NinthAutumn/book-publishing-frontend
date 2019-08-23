@@ -38,12 +38,6 @@ export default {
   async asyncData({ store, route, app }) {
     await store.dispatch("book/fetchBookGenreAndTags", route.params.id);
     await store.dispatch("book/fetchBookChapterCount", route.params.id);
-    const { data } = await app.$axios.get(
-      `/book/wordCount?bookId=${route.params.id}`
-    );
-    return {
-      wordCount: data.word_count + "字"
-    };
   },
   async fetch({ store, route }) {
     await store.dispatch("book/fetchBook", {
@@ -58,23 +52,11 @@ export default {
       reviewCount: "review/getReviewCount",
       genres: "book/getBookGenres",
       tags: "book/getBookTags"
-    }),
-    bookmarkedText() {
-      if (!this.bookmarked) {
-        return "ブックマーク";
-      } else {
-        return "ブックマーク済み";
-      }
-    }
+    })
   },
   data() {
     return {
       reviews: [],
-      bookmarked: this.$store.getters["book/getBook"].bookmarked,
-      star: 25,
-      cover: require("~/assets/img/NobleCardLight@2x.png"),
-      cover2: require("~/assets/img/NobleCardLight@2x.png"),
-      showImage: true,
       tabs: {
         review: "",
         toc: "",
@@ -107,10 +89,6 @@ export default {
     navLine(index) {
       let left = 0;
       let lefty = 0;
-      if (this.$device.isMobile) {
-        left = 10;
-        lefty = "10px";
-      }
       if (index === 1) {
         this.tabs.position = {
           width: `${this.tabs.review}px`,
@@ -130,10 +108,6 @@ export default {
       this.tabs.open = name;
       let left = 0;
       let lefty = 0;
-      if (this.$device.isMobile) {
-        left = 10;
-        lefty = "10px";
-      }
       if (name === "toc") {
         this.tabs.position = {
           width: `${this.tabs.toc}px`,
@@ -155,10 +129,6 @@ export default {
       }
     }
   },
-  beforeUpdated() {
-    this.showImage = false;
-  },
-
   components: {
     BookContent: () => import("@/components/Bookpage/BookContent"),
     BookChapterList: () => import("@/components/Bookpage/BookChapterList"),
@@ -182,12 +152,7 @@ export default {
       this.tabs.review = this.$refs.review.clientWidth;
       this.tabs.toc = this.$refs.toc.clientWidth;
     }
-
-    this.meta["word"].key = this.wordCount;
     let left = 0;
-    if (this.$device.isMobile) {
-      left = "10px";
-    }
     this.tabs.position = {
       width: `${this.tabs.review}px`,
       left: left

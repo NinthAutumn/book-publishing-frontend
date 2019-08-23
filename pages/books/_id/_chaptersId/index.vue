@@ -38,34 +38,25 @@ export default {
       settingIndex: this.$store.getters["chapter/getChapter"].setting_index
     });
   },
-  beforeDestroy() {},
-  destroyed() {},
   methods: {
     async nextChapter() {
       const bookId = this.$route.params.id,
         chapterId = this.$store.state.chapter.navigation.next._id;
-      await this.$store
-        .dispatch("chapter/fetchChapter", {
-          bookId,
-          chapterId
-          // userId: this.$store.getters["user/loggedInUser"].id
-        })
-        .then(review => {
-          this.$router.push(`/books/${bookId}/${chapterId}`);
-        });
+
+      await this.$store.dispatch("chapter/fetchChapter", {
+        bookId,
+        chapterId
+      });
+      this.$router.push(`/books/${bookId}/${chapterId}`);
     },
     async prevChapter() {
       const bookId = this.$route.params.id,
         chapterId = this.$store.state.chapter.navigation.prev._id;
-      await this.$store
-        .dispatch("chapter/fetchChapter", {
-          bookId,
-          chapterId
-          // userId: this.$store.getters["user/loggedInUser"].id
-        })
-        .then(review => {
-          this.$router.push(`/books/${bookId}/${chapterId}`);
-        });
+      await this.$store.dispatch("chapter/fetchChapter", {
+        bookId,
+        chapterId
+      });
+      this.$router.push(`/books/${bookId}/${chapterId}`);
     },
     nextPage() {
       if (this.bottomVisible()) {
@@ -74,10 +65,8 @@ export default {
           this.$store.state.chapter.chapter.index
         ) {
           this.$router.push(
-            "/books/" +
-              this.$route.params.id +
-              "/" +
-              (this.$store.state.chapter.chapter.index + 1)
+            `/books/${this.$route.params.id}/${this.$store.state.chapter.chapter
+              .index + 1}`
           );
         }
       }
@@ -89,7 +78,6 @@ export default {
     if (store.state.auth.loggedIn) {
       await store.dispatch("chapter/fetchChapter", {
         chapterId: params.chaptersId,
-        // userId: store.getters["user/getUser"].id,
         bookId: params.id
       });
       await store.dispatch("user/fetchUserSettings");
@@ -107,11 +95,6 @@ export default {
     }
   },
   layout: "chapter-nav/Chapter",
-  async asyncData({ store, params }) {
-    if (!store.getters["chapter/getBookChapterCount"]) {
-      // await store.dispatch("book/fetchBookChapterCount", params.id);
-    }
-  },
   computed: {
     ...mapGetters({
       title: "chapter/getChapterBookTitle"

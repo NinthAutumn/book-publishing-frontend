@@ -1,6 +1,7 @@
 <template>
   <div class="mcr-card">
     <div class="mcr-card__container">
+      <fa class="mcr-card__question" icon="question-circle"></fa>
       <div class="flex-divider flex-row flex--between">
         <div class="mcr-card__meta mcr-card__meta--rank">
           <!-- <fa class="mcr-card__icon mcr-card__icon--rank" icon="pager"></fa> -->
@@ -18,7 +19,7 @@
       </div>
       <hr />
       <div class="mcr-card__vote flex-row flex--right">
-        <div class="mcr-card__button" v-text="'投票'"></div>
+        <div class="mcr-card__button" @click="voteHandler" v-text="'投票'"></div>
       </div>
     </div>
   </div>
@@ -36,16 +37,50 @@ export default {
     };
   },
   computed: {
-    // ...mapGetters({
-    //   ranking
-    // })
+    ...mapGetters({
+      auth: "auth/isAuthenticated"
+    })
   },
   async mounted() {
     const { data } = await this.$axios.get(
       `/ranking/${this.$route.params.id}?period=daily&type=vote`
     );
     console.log(data);
-    this.ranking = data;
+    if (!data) {
+      this.ranking = {
+        ranking: "999+",
+        votes: 0
+      };
+    } else {
+      this.ranking = data;
+    }
+  },
+  methods: {
+    async voteHandler() {
+      this.loading = "vote";
+      try {
+        if (!this.auth) {
+          this.$toast.error(`投票をするにはログインかアカウント作成が必要です`);
+          this.loading = false;
+          return this.$router.push("/auth/login");
+        }
+        const { error } = await this.$store.dispatch("book/postVote", {
+          bookId: this.$route.params.id
+        });
+        if (error) {
+          return this.$toast.error(`${error}`, {
+            position: "top-right",
+            duration: 1000,
+            icon: "extension"
+          });
+        }
+      } catch (error) {
+        console.log(error.message);
+      }
+      this.loading = false;
+      this.ranking.votes++;
+      await this.$store.dispatch("wallet/wealth");
+    }
   }
 };
 </script>
@@ -55,10 +90,15 @@ export default {
   $self: &;
   &__container {
     padding: 1rem;
-    box-shadow: 0 7px 14px 0 rgba(60, 66, 87, 0.1),
-      0 3px 6px 0 rgba(0, 0, 0, 0.07);
+    -webkit-box-shadow: 0 2px 4px 0 rgba(31, 33, 41, 0.08),
+      0 4px 16px 0 rgba(59, 102, 245, 0.12);
+    box-shadow: 0 2px 4px 0 rgba(31, 33, 41, 0.08),
+      0 4px 16px 0 rgba(59, 102, 245, 0.12);
+    margin: 0rem 1rem;
     margin-bottom: 1rem;
     border-radius: 0.5rem;
+    position: relative;
+
     // border:1p
     #{$self}__label {
       font-size: 1.4rem;
@@ -79,6 +119,12 @@ export default {
     #{$self}__number {
       font-weight: bold;
       font-size: 2rem;
+    }
+    #{$self}__question {
+      position: absolute;
+      font-size: 1.2rem;
+      top: 1rem;
+      right: 1rem;
     }
     #{$self}__score {
       align-self: flex-end;

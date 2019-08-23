@@ -1,30 +1,31 @@
 <template>
   <div class="swiping-page review-list" v-cloak>
-    <div v-swiper:mySwiper="swiperOption" v-if="!$device.isMobile">
+    <div v-swiper:mySwiper="!$device.isMobile? swiperOption:mobileOption">
       <div class="swiper-wrapper">
         <div class="swiper-slide" v-for="(review,index) in reviews" :key="index">
           <Review v-if="!$device.isMobile" :height="height" :review="review"></Review>
+          <mobile-review v-else @selectReview="reviewPage" :limit="150" :book="{}" :review="review"></mobile-review>
         </div>
       </div>
-      <div class="background">
+      <!-- <div class="background">
         <div class="swiper-button-prev swiper-button-black" slot="button-prev"></div>
       </div>
       <div class="background">
         <div class="swiper-button-next swiper-button-black" slot="button-next"></div>
-      </div>
+      </div>-->
     </div>
-    <div class="mobile-swiper--review" v-swiper:mySwiper="mobileOption" v-else>
+    <!-- <div class="mobile-swiper--review" v-swiper:mySwiper="mobileOption" v-else>
       <div class="swiper-wrapper">
         <div class="swiper-slide" v-for="(review,index) in reviews" :key="index">
-          <mobile-review @selectReview="reviewPage" :limit="150" :book="{}" :review="review"></mobile-review>
+
         </div>
       </div>
-    </div>
+    </div>-->
     <review-page :book="{}" @selectReview="reviewPage" v-model="$route.query.review"></review-page>
   </div>
 </template>
 <script>
-import Review from "./Review";
+// import Review from "./Review";
 export default {
   props: ["height"],
   created() {},

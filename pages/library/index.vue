@@ -116,27 +116,7 @@ export default {
           };
           this.selectedTabName = "bookmark";
           break;
-        // case "readingList":
-        //   this.selectedTab = {
-        //     width: "80px",
-        //     left: "106px"
-        //   };
-        //   this.selectedTabName = "readingList";
-        //   break;
-        // case "review":
-        //   this.selectedTab = {
-        //     width: "64px",
-        //     left: "196px"
-        //   };
-        //   this.selectedTabName = "review";
-        //   break;
-        // case "bought":
-        //   this.selectedTab = {
-        //     width: "64px",
-        //     left: "270px"
-        //   };
-        //   this.selectedTabName = "bought";
-        //   break;
+
         case "history":
           this.selectedTab = {
             width: "32px",
@@ -155,25 +135,7 @@ export default {
             left: "0px"
           };
           break;
-        // case "readingList":
-        //   this.line = {
-        //     width: "80px",
-        //     left: "106px"
-        //   };
 
-        //   break;
-        // case "review":
-        //   this.line = {
-        //     width: "64px",
-        //     left: "196px"
-        //   };
-        //   break;
-        // case "bought":
-        //   this.line = {
-        //     width: "64px",
-        //     left: "270px"
-        //   };
-        //   break;
         case "history":
           this.line = {
             width: "32px",

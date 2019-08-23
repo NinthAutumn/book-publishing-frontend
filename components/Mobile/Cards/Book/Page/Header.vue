@@ -178,13 +178,14 @@ export default {
 .pmb-header {
   $self: &;
   &__container {
-    box-shadow: 0 7px 14px 0 rgba(60, 66, 87, 0.1),
-      0 3px 6px 0 rgba(0, 0, 0, 0.07);
+    // box-shadow: 0 7px 14px 0 rgba(60, 66, 87, 0.1),
+    //   0 3px 6px 0 rgba(0, 0, 0, 0.07);
     margin-bottom: 1rem;
     border-radius: 0.5rem;
     #{$self}__img {
     }
     #{$self}__title {
+      padding: 0 1rem;
       font-size: 2.1rem;
       font-weight: bold;
       text-align: center;
@@ -196,8 +197,8 @@ export default {
     #{$self}__nav {
       display: flex;
       align-items: center;
-      justify-content: center;
-      padding: 0.5rem 0rem;
+      justify-content: space-between;
+      padding: 0.5rem 1rem;
       #{$self}__nav-item {
         padding: 0.5rem 0;
         width: 10rem;

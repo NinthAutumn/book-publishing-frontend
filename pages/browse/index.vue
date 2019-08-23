@@ -188,7 +188,6 @@ export default {
     });
   },
   async mounted() {
-    // await
     this.loading = false;
   },
   data() {
@@ -202,7 +201,6 @@ export default {
       modalDirection: "right",
       selected_genre: [],
       sort_type: [
-        // { key: "視聴回数", value: "views" },
         { key: "栞数", value: 1 },
         { key: "話数", value: 2 },
         { key: "字数", value: 3 },
@@ -214,41 +212,7 @@ export default {
         { key: "下り", value: "desc" }
       ],
       tag_list: [],
-      tag_search: false,
-      genre_list: [
-        "ファンタジー",
-        "恋愛",
-        "文学",
-        "異世界",
-        "空想科学",
-        "SF",
-        "武術",
-        "ミステリー",
-        "サスペンス",
-        "冒険",
-        "アクション",
-        "ノンフィクション",
-        "ホラー",
-        "オカルト",
-        "時代",
-        "歴史",
-        "コメディ",
-        "政治",
-        "スポーツ",
-        "武俠",
-        "経済",
-        "推理",
-        "青春",
-        "学園",
-        "ボーイズラブ",
-        "少女愛",
-        "メカ",
-        "少年",
-        "青年",
-        "音楽",
-        "日常",
-        "ゲーム"
-      ]
+      tag_search: false
     };
   }
 };

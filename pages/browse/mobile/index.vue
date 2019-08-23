@@ -119,8 +119,6 @@ export default {
       Object.keys(this.infinite).forEach(val => {
         this.infinite[val] += 5;
       });
-
-      // this.items[this.tab].list = [];
     }
   },
   async mounted() {
@@ -145,14 +143,6 @@ export default {
         });
       }
     });
-    // this.tab = ;
-    // await this.$store.dispatch("book/browseMobileBooks", {
-    //   type: "popular",
-    //   page: 1,
-    //   limit: 20,
-    //   genre: this.$route.query.genre || null,
-    //   tag: this.$route.query.tag || null
-    // });
   },
   methods: {
     async infiniteHandler($state) {
