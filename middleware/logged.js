@@ -1,7 +1,6 @@
 import {
   routeOption
 } from './utilities'
-import Cookies from 'js-cookie'
 export default function ({
   store,
   redirect,

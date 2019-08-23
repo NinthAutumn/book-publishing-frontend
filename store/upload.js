@@ -1,4 +1,3 @@
-import Cookies from 'js-cookie';
 import {
   Avatar
 } from 'element-ui';

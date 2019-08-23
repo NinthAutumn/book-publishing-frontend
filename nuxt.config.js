@@ -197,8 +197,6 @@ module.exports = {
     ['@nuxtjs/google-adsense', {
       id: 'pub-4438410171989811'
     }],
-    'cookie-universal-nuxt',
-
     ['nuxt-fontawesome', {
       component: 'fa',
       imports: [{

@@ -22,7 +22,6 @@
 </template>
 
 <script>
-import Cookies from "js-cookie";
 import { mapGetters } from "vuex";
 export default {
   data() {

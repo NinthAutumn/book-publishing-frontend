@@ -1,6 +1,3 @@
-// var cookie = require('cookie');
-
-
 export const state = () => ({
   counter: 0,
   menuState: "menu-active",
