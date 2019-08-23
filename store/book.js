@@ -3,7 +3,7 @@
 // } from 'axios'
 import {
   get
-} from 'lodash'
+} from 'lodash-es'
 export const state = () => ({
   // books: [],
   recommended: [],

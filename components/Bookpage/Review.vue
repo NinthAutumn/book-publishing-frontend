@@ -119,7 +119,7 @@
 <script>
 // import ArrowDown from "@/assets/svg/arrow-down.svg";
 // import ArrowUp from "@/assets/svg/arrow-up.svg";
-import _ from "lodash";
+import { toNumber } from "lodash";
 import { mapGetters } from "vuex";
 export default {
   props: {
@@ -200,7 +200,7 @@ export default {
         });
         this.liked = true;
         if (this.disliked) {
-          this.likeNumber = _.toNumber(this.likeNumber) + 2;
+          this.likeNumber = toNumber(this.likeNumber) + 2;
           this.disliked = false;
         } else {
           this.likeNumber++;
@@ -222,7 +222,7 @@ export default {
         });
         this.disliked = true;
         if (this.liked) {
-          this.likeNumber = _.toNumber(this.likeNumber) - 2;
+          this.likeNumber = toNumber(this.likeNumber) - 2;
           this.liked = false;
         } else {
           this.likeNumber--;
@@ -243,9 +243,7 @@ export default {
       this.loading = true;
       try {
         await this.$axios.delete(
-          `/review?reviewId=${this.review.id}&rating=${
-            this.review.rating
-          }&bookId=${this.review.book_id}`
+          `/review?reviewId=${this.review.id}&rating=${this.review.rating}&bookId=${this.review.book_id}`
         );
         await this.$store.dispatch("review/showAll", {
           bookId: this.$route.params.id,

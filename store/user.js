@@ -1,6 +1,6 @@
 import {
   get
-} from 'lodash'
+} from 'lodash-es'
 export const state = () => ({
   books: [],
   fontFamily: "'IBM Plex Sans', 'Helvetica Neue', 'Segoe UI', Helvetica, Verdana, Arial, sans-serif",

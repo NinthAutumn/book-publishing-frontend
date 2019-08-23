@@ -1,6 +1,6 @@
 import {
   get
-} from 'lodash'
+} from 'lodash-es'
 export const state = () => ({
   sitePlans: [],
   bookPlans: [],

@@ -19,39 +19,11 @@
         </div>
       </div>
     </div>
-
-    <!-- <div class="book-content__left flex flex-column divider">
-      <div class="book-content--text">
-        <transition name="slide-fade" mode="out-in">
-          <div v-show="bookSynopsis" class="book-content--text__summary">
-            <h4>あらすじ</h4>
-            <div class="flex-divider"></div>
-            <p
-              v-if="read"
-              class="book-content--text__summary--text"
-            >{{book.synopsis|truncate(limit-1)}}</p>
-            <p v-else class="book-content--text__summary--text">{{book.synopsis}}</p>
-            <div class="book-content__truncate-nav" v-if="length > limit">
-              <div class="book-content__read-more" @click="read=!read" v-if="read">>>詳細</div>
-              <div class="book-content__read-less" @click="read=!read" v-else><<一部を表示</div>
-            </div>
-          </div>
-        </transition>
-        <transition name="slide-fade" mode="out-in">
-          <div v-show="!bookSynopsis" class="book-content--text__statistics">
-            <span class="book-content--text__statistics--title">作品の統計</span>
-            <Statics></Statics>
-          </div>
-        </transition>
-      </div>
-    </div>-->
   </div>
 </template>
 
 <script>
-import { get } from "lodash";
 import { mapGetters } from "vuex";
-// import clampy from "@clampy-js/vue-clampy";
 export default {
   components: {
     VClamp: () => import("vue-clamp")

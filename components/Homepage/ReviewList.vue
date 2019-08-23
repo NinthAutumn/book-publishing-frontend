@@ -4,7 +4,7 @@
       <div class="swiper-wrapper">
         <div class="swiper-slide" v-for="(review,index) in reviews" :key="index">
           <Review v-if="!$device.isMobile" :height="height" :review="review"></Review>
-          <mobile-review v-else @selectReview="reviewPage" :limit="150" :book="{}" :review="review"></mobile-review>
+          <mobile-review v-else @selectReview="reviewPage" :limit="100" :book="{}" :review="review"></mobile-review>
         </div>
       </div>
       <!-- <div class="background">

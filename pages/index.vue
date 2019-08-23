@@ -3,47 +3,70 @@
     <div class="search-books" v-if="$device.isMobile">
       <search-bar></search-bar>
     </div>
-
-    <nuxt-child></nuxt-child>
+    <LazyHydrate when-visible>
+      <nuxt-child></nuxt-child>
+    </LazyHydrate>
     <div class="head-banner">
+      <!-- <LazyHydrate when-visible> -->
       <BannerList></BannerList>
+      <!-- </LazyHydrate> -->
     </div>
-    <nav-list v-if="$device.isMobile"></nav-list>
+    <LazyHydrate :on-interaction="['click', 'touchstart']">
+      <nav-list v-if="$device.isMobile"></nav-list>
+    </LazyHydrate>
     <div class="main-books">
       <div class="flex-divider flex-row">
         <div class="card-title">
           <h3>おすすめ</h3>
-          <Recommended></Recommended>
+          <LazyHydrate when-visible>
+            <Recommended></Recommended>
+          </LazyHydrate>
         </div>
         <div class="card-title" v-if="compo">
           <h3>ランキング</h3>
-          <Ranking></Ranking>
+          <LazyHydrate when-visible>
+            <Ranking></Ranking>
+          </LazyHydrate>
         </div>
       </div>
-      <adsbygoogle v-if="!user.status" />
+      <LazyHydrate when-visible>
+        <adsbygoogle v-if="!user.status" />
+      </LazyHydrate>
       <div class="card-title flex flex--align">
         <h3>評価が高いレビュー</h3>
       </div>
-      <ReviewList :height="height"></ReviewList>
+      <LazyHydrate when-visible>
+        <ReviewList :height="height"></ReviewList>
+      </LazyHydrate>
       <div class="card-title">
         <h3>今日人気の作品</h3>
       </div>
-      <BooksList :trendings="trending"></BooksList>
+      <LazyHydrate when-visible>
+        <BooksList :trendings="trending"></BooksList>
+      </LazyHydrate>
       <div class="card-title">
         <h3>更新された作品</h3>
       </div>
-      <BooksList :trendings="latest"></BooksList>
+      <LazyHydrate when-visible>
+        <BooksList :trendings="latest"></BooksList>
+      </LazyHydrate>
       <mobile-ranking v-if="$device.isMobile"></mobile-ranking>
-      <adsbygoogle v-if="!user.status" />
+      <LazyHydrate when-visible>
+        <adsbygoogle v-if="!user.status" />
+      </LazyHydrate>
       <div class="card-title">
         <h3>更新頻度が高い</h3>
       </div>
-      <BooksList :trendings="frequent"></BooksList>
+      <LazyHydrate when-visible>
+        <BooksList :trendings="frequent"></BooksList>
+      </LazyHydrate>
     </div>
   </div>
 </template>
 
 <script>
+// import LazyHydrate from "vue-lazy-hydration";
+
 import { mapGetters } from "vuex";
 export default {
   components: {
@@ -54,6 +77,7 @@ export default {
     SearchBar: () => import("@/components/Navigation/SearchBar"),
     Recommended: () => import("@/components/Homepage/Recommended"),
     MobileRanking: () => import("@/components/Mobile/List/Book/Ranking/Home"),
+    // LazyHydrate,
     NavList: () => import("@/components/Mobile/Layout/Nav")
   },
   async asyncData({ store }) {},

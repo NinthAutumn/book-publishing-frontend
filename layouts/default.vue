@@ -2,9 +2,13 @@
   <div>
     <div v-if="$nuxt.isOffline">今オフラインです</div>
     <div class="not-mobile" v-if="!$device.isMobile">
-      <Horizontal></Horizontal>
+      <LazyHydrate when-visible>
+        <Horizontal></Horizontal>
+      </LazyHydrate>
       <!-- <Vertical></Vertical> -->
-      <NewVertical v-if="$store.state.menuState=== 'menu-active'"></NewVertical>
+      <LazyHydrate when-visible>
+        <NewVertical v-if="$store.state.menuState=== 'menu-active'"></NewVertical>
+      </LazyHydrate>
       <div class="nuxt-pages">
         <div class="dropdown"></div>
         <nuxt :class="$store.state.menuState" class="permanent"></nuxt>
@@ -12,22 +16,26 @@
     </div>
     <div class="is-mobile" v-else>
       <mobile-horizontal @toggle="toggleMenu"></mobile-horizontal>
-      <transition name="slide-left">
-        <VerticalLeftMobile
-          @stripe="stripeOpen"
-          v-touch:swipe.right="swipeRight"
-          v-if="mvRight"
-          @toggle="toggleMenu"
-        ></VerticalLeftMobile>
-      </transition>
-      <transition name="slide-right">
-        <VerticalRightMobile
-          :user="user"
-          v-if="mvLeft"
-          @toggle="toggleMenu"
-          v-touch:swipe.left="swipeLeft"
-        ></VerticalRightMobile>
-      </transition>
+      <LazyHydrate on-interaction>
+        <transition name="slide-left">
+          <VerticalLeftMobile
+            @stripe="stripeOpen"
+            v-touch:swipe.right="swipeRight"
+            v-if="mvRight"
+            @toggle="toggleMenu"
+          ></VerticalLeftMobile>
+        </transition>
+      </LazyHydrate>
+      <LazyHydrate when-visible>
+        <transition name="slide-right">
+          <VerticalRightMobile
+            :user="user"
+            v-if="mvLeft"
+            @toggle="toggleMenu"
+            v-touch:swipe.left="swipeLeft"
+          ></VerticalRightMobile>
+        </transition>
+      </LazyHydrate>
       <transition name="slide-up">
         <stripe-modal @stripe="stripeOpen" v-if="stripe"></stripe-modal>
       </transition>

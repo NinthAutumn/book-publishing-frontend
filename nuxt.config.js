@@ -155,6 +155,9 @@ module.exports = {
 
     {
       src: '@/plugins/auth',
+    },
+    {
+      src: '@/plugins/hydrate',
     }
 
   ],
@@ -317,7 +320,7 @@ module.exports = {
     styleResources: {
       sass: ['./assets/css/abstracts/main.scss']
     },
-    transpile: ['vue-clamp', 'resize-detector'],
+    transpile: ['vue-clamp', 'resize-detector', 'lodash-es'],
     postcss: {
       plugins: [
         require('postcss-gap-properties')(),

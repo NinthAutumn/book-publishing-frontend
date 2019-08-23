@@ -41,8 +41,7 @@
             </div>
             <div class="home-ranking__genre" v-text="book.name"></div>
             <div class="home-ranking__rating flex-row flex--align">
-              <v-rating color="#FF8D29" readonly :size="18" half-increments :value="+book.rating"></v-rating>
-              {{book.rating}}
+              <v-rating color="#FF8D29" readonly :size="15" half-increments :value="+book.rating"></v-rating>
             </div>
           </div>
         </nuxt-link>
@@ -172,7 +171,9 @@ export default {
           overflow: hidden;
           white-space: nowrap;
           text-overflow: ellipsis;
+          font-weight: bold;
           p {
+            font-weight: bold;
             max-width: 100%;
             overflow: hidden;
             white-space: nowrap;

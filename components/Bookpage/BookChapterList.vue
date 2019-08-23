@@ -72,7 +72,6 @@
 
 <script>
 import { mapGetters } from "vuex";
-// const _ = require("lodash");
 export default {
   props: {
     // chapters: Array
