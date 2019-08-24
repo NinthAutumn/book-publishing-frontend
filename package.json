@@ -77,6 +77,7 @@
     "vue-loaders": "^2.0.0",
     "vue-match-media": "^1.0.3",
     "vue-observe-visibility": "^0.4.4",
+    "vue-pwa-installer": "^0.2.0",
     "vue-scrollama": "^1.1.1",
     "vue-swipe-tab": "^2.0.4",
     "vue-template-compiler": "^2.6.10",

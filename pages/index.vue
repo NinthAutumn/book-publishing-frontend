@@ -3,84 +3,80 @@
     <div class="search-books" v-if="$device.isMobile">
       <search-bar></search-bar>
     </div>
-    <LazyHydrate when-visible>
-      <nuxt-child></nuxt-child>
-    </LazyHydrate>
+    <nuxt-child></nuxt-child>
     <div class="head-banner">
-      <!-- <LazyHydrate when-visible> -->
       <BannerList></BannerList>
-      <!-- </LazyHydrate> -->
     </div>
-    <LazyHydrate :on-interaction="['click', 'touchstart']">
-      <nav-list v-if="$device.isMobile"></nav-list>
-    </LazyHydrate>
+    <nav-list v-if="$device.isMobile"></nav-list>
     <div class="main-books">
       <div class="flex-divider flex-row">
         <div class="card-title">
           <h3>おすすめ</h3>
-          <LazyHydrate when-visible>
-            <Recommended></Recommended>
-          </LazyHydrate>
+          <Recommended></Recommended>
         </div>
         <div class="card-title" v-if="compo">
           <h3>ランキング</h3>
-          <LazyHydrate when-visible>
-            <Ranking></Ranking>
-          </LazyHydrate>
+          <Ranking></Ranking>
         </div>
       </div>
-      <LazyHydrate when-visible>
-        <adsbygoogle v-if="!user.status" />
-      </LazyHydrate>
+      <adsbygoogle v-if="!user.status" />
       <div class="card-title flex flex--align">
         <h3>評価が高いレビュー</h3>
       </div>
-      <LazyHydrate when-visible>
-        <ReviewList :height="height"></ReviewList>
-      </LazyHydrate>
+      <ReviewList :height="height"></ReviewList>
       <div class="card-title">
         <h3>今日人気の作品</h3>
       </div>
-      <LazyHydrate when-visible>
-        <BooksList :trendings="trending"></BooksList>
-      </LazyHydrate>
+
+      <BooksList :trendings="trending"></BooksList>
+
       <div class="card-title">
         <h3>更新された作品</h3>
       </div>
-      <LazyHydrate when-visible>
-        <BooksList :trendings="latest"></BooksList>
-      </LazyHydrate>
+      <BooksList :trendings="latest"></BooksList>
       <mobile-ranking v-if="$device.isMobile"></mobile-ranking>
-      <LazyHydrate when-visible>
-        <adsbygoogle v-if="!user.status" />
-      </LazyHydrate>
+      <adsbygoogle v-if="!user.status" />
       <div class="card-title">
         <h3>更新頻度が高い</h3>
       </div>
-      <LazyHydrate when-visible>
-        <BooksList :trendings="frequent"></BooksList>
-      </LazyHydrate>
+      <BooksList :trendings="frequent"></BooksList>
     </div>
   </div>
 </template>
 
 <script>
-// import LazyHydrate from "vue-lazy-hydration";
+import {
+  hydrateWhenVisible,
+  hydrateWhenIdle,
+  hydrateOnInteraction
+} from "vue-lazy-hydration";
 
 import { mapGetters } from "vuex";
 export default {
   components: {
-    BooksList: () => import("@/components/Homepage/BooksList"),
-    ReviewList: () => import("@/components/Homepage/ReviewList"),
-    Ranking: () => import("@/components/Homepage/Ranking"),
-    BannerList: () => import("@/components/Homepage/BannerList"),
-    SearchBar: () => import("@/components/Navigation/SearchBar"),
-    Recommended: () => import("@/components/Homepage/Recommended"),
-    MobileRanking: () => import("@/components/Mobile/List/Book/Ranking/Home"),
-    // LazyHydrate,
-    NavList: () => import("@/components/Mobile/Layout/Nav")
+    BooksList: hydrateWhenVisible(() =>
+      import("@/components/Homepage/BooksList")
+    ),
+    ReviewList: hydrateWhenVisible(() =>
+      import("@/components/Homepage/ReviewList")
+    ),
+    Ranking: hydrateWhenVisible(() => import("@/components/Homepage/Ranking")),
+    BannerList: hydrateWhenIdle(() =>
+      import("@/components/Homepage/BannerList")
+    ),
+    SearchBar: hydrateOnInteraction(() =>
+      import("@/components/Navigation/SearchBar")
+    ),
+    Recommended: hydrateWhenVisible(() =>
+      import("@/components/Homepage/Recommended")
+    ),
+    MobileRanking: hydrateWhenVisible(() =>
+      import("@/components/Mobile/List/Book/Ranking/Home")
+    ),
+    NavList: hydrateOnInteraction(() =>
+      import("@/components/Mobile/Layout/Nav")
+    )
   },
-  async asyncData({ store }) {},
   async fetch({ store }) {
     await store.dispatch("analytic/fetchRecommended");
 

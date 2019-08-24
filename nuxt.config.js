@@ -152,7 +152,10 @@ module.exports = {
       src: '@/plugins/epicSpinners',
       ssr: false,
     },
-
+    {
+      src: '@/plugins/installer',
+      ssr: false,
+    },
     {
       src: '@/plugins/auth',
     },
@@ -198,7 +201,10 @@ module.exports = {
       maxAge: 1000 * 60 * 60
     }],
     ['@nuxtjs/google-adsense', {
-      id: 'pub-4438410171989811'
+      id: 'pub-4438410171989811',
+      pageLevelAds: false,
+      test: true,
+
     }],
     ['nuxt-fontawesome', {
       component: 'fa',

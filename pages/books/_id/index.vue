@@ -33,6 +33,11 @@
 
 <script>
 import { mapGetters } from "vuex";
+import {
+  hydrateWhenVisible,
+  hydrateWhenIdle,
+  hydrateOnInteraction
+} from "vue-lazy-hydration";
 export default {
   auth: false,
   async asyncData({ store, route, app }) {
@@ -130,14 +135,23 @@ export default {
     }
   },
   components: {
-    BookContent: () => import("@/components/Bookpage/BookContent"),
-    BookChapterList: () => import("@/components/Bookpage/BookChapterList"),
-    ReviewsList: () => import("@/components/Bookpage/ReviewsList"),
-    ReviewsForm: () => import("@/components/Bookpage/ReviewForm"),
-    Tags: () => import("@/components/Bookpage/Tags"),
+    BookContent: hydrateWhenVisible(() =>
+      import("@/components/Bookpage/BookContent")
+    ),
+    BookChapterList: hydrateWhenVisible(() =>
+      import("@/components/Bookpage/BookChapterList")
+    ),
+    ReviewsList: hydrateWhenVisible(() =>
+      import("@/components/Bookpage/ReviewsList")
+    ),
+    ReviewsForm: hydrateWhenVisible(() =>
+      import("@/components/Bookpage/ReviewForm")
+    ),
     Announcements: () => import("@/components/Bookpage/Announcements"),
     BookHeader: () => import("@/components/Web/Cards/Book/Header"),
-    MobilePage: () => import("@/components/Mobile/Cards/Book/Page")
+    MobilePage: hydrateWhenVisible(() =>
+      import("@/components/Mobile/Cards/Book/Page")
+    )
   },
   transition: false,
   async mounted() {

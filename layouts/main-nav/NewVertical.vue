@@ -43,9 +43,6 @@
         <div class="vertical-nav__library-title">Bookmark</div>
         <latest-chapters v-if="auth"></latest-chapters>
       </div>
-      <!-- <div class="vertical-nav__upgrade">
-        <div class="vertical-nav__button">アップグレード</div>
-      </div>-->
     </div>
   </nav>
 </template>
@@ -103,13 +100,7 @@ export default {
     Vote: () => import("@/components/All/Vote"),
     LatestChapters: () => import("@/components/Navigation/LatestChapters")
   },
-  created() {
-    // if (process.client) {
-    //   if (window.innerWidth < 1137) {
-    //     this.$store.commit("menuStateChange");
-    //   }
-    // }
-  },
+  created() {},
   methods: {
     navigate(menu) {
       if (menu.title === "ライブラリー" && !this.auth) {

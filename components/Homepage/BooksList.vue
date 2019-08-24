@@ -7,9 +7,6 @@
         </div>
       </div>
       <div class="background" v-if="!$device.isMobile">
-        <div class="swiper-button-prev swiper-button-black" slot="button-prev"></div>
-      </div>
-      <div class="background" v-if="!$device.isMobile">
         <div class="swiper-button-next swiper-button-black" slot="button-next"></div>
       </div>
     </div>
@@ -73,8 +70,7 @@ export default {
           forceToAxis: true
         },
         navigation: {
-          nextEl: ".swiper-button-next",
-          prevEl: ".swiper-button-prev"
+          nextEl: ".swiper-button-next"
         },
         on: {},
         breakpoints: {}
