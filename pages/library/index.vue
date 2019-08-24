@@ -33,6 +33,7 @@
       <div v-if="selectedTabName === 'bookmark'&& selected_item!== '歴史'" class="library-bookmark">
         <div class="library-bookmark__select flex flex--align flex--right">
           <Select
+            v-if="!$route.query.editMode"
             v-model="order"
             def="更新順"
             transition="grow-shrink"
@@ -135,7 +136,6 @@ export default {
             left: "0px"
           };
           break;
-
         case "history":
           this.line = {
             width: "32px",

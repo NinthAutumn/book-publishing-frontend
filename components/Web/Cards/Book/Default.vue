@@ -1,12 +1,26 @@
 <template>
   <div tag="div" class="book-card" :class="customClass">
     <!-- {{book}} -->
-    <div class="book-card__container" v-ripple="isMobile">
+    <div
+      class="book-card__container"
+      v-ripple="isMobile"
+      v-touch:start="startHandler"
+      v-touch:end="endHandler"
+      @click="selectItem"
+    >
+      <div v-if="editMode" class="book-card__editmode"></div>
       <nuxt-link
-        :to="`/books/${book.book_id||book.id}${book.current_chapter? `/${book.current_chapter}`:''}`"
+        :to="editMode? '?editMode=true':`/books/${book.book_id||book.id}${book.current_chapter? `/${book.current_chapter}`:''}`"
         class="book-card__cover"
+        tag="div"
         :class="{'book-card__cover--desktop': !isMobile}"
       >
+        <div v-if="editMode" class="book-card__edit">
+          <div v-if="!selected" class="book-card__check"></div>
+          <div v-else class="book-card__check book-card__check--selected">
+            <fa icon="check"></fa>
+          </div>
+        </div>
         <v-img
           class="book-card__img"
           :src="`${cover}/m`"
@@ -94,17 +108,52 @@ export default {
       type: Boolean,
       default: false
     },
-    rating: Boolean
+    rating: Boolean,
+    editMode: [Boolean, String]
   },
   data() {
     return {
-      lazyCover: require("~/assets/img/NobleCardLight.png?webp")
+      lazyCover: require("~/assets/img/NobleCardLight.png"),
+      timer: false,
+      lockTimer: false,
+      touchduration: 500,
+      selected: false
     };
   },
   components: {
     // TrinityRingsSpinner
+  },
+  methods: {
+    startHandler(e) {
+      if (!this.progress) {
+        return;
+      }
+      if (this.lockTimer) {
+        return;
+      }
+      this.timer = setTimeout(this.onlongtouch, this.touchduration);
+      this.lockTimer = true;
+    },
+    selectItem() {
+      this.selected = !this.selected;
+      // console.log(this.book);
+      if (this.selected) {
+        this.$emit("addBook", { bookId: this.book.book_id });
+      } else {
+        this.$emit("removeBook", { bookId: this.book.book_id });
+      }
+    },
+    onlongtouch() {
+      this.$emit("editModeToggle", this.book.id);
+      // alert("dope");
+    },
+    endHandler(e) {
+      if (this.timer) {
+        clearTimeout(this.timer); // clearTimeout, not cleartimeout..
+        this.lockTimer = false;
+      }
+    }
   }
-  // mounted: {}
 };
 </script>
 
@@ -114,6 +163,45 @@ export default {
   &:hover {
     user-select: none;
     cursor: pointer;
+  }
+  &__container {
+    position: relative;
+  }
+  &__editmode {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+
+    // background-color: ;
+    z-index: 5;
+  }
+  &__edit {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    background-color: rgba(31, 31, 31, 0.644);
+    align-items: center;
+    justify-content: center;
+    z-index: 6;
+    border-radius: 0.5rem;
+    // border
+    #{$self}__check {
+      width: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      height: 2rem;
+      // background-color: #fff;
+      border: 2px solid white;
+      border-radius: 100rem;
+      &--selected {
+        font-size: 1.1rem;
+        background-color: $secondary;
+        color: white;
+      }
+    }
   }
   &__loading {
     display: flex;

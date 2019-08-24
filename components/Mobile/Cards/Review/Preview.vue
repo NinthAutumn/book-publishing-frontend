@@ -7,7 +7,7 @@
             <v-img :src="book.user_id === review.user_id? book.avatar : review.avatar.img"></v-img>
           </v-avatar>
         </div>
-        <div class="flex-divider flex-column">
+        <div class="flex-divider flex-column" style="text-overflow:ellipsis;overflow:hidden;">
           <div class="mbp-reviewp__title" v-text="review.title"></div>
           <v-rating color="#FF8D29" readonly :size="18" half-increments :value="+review.rating"></v-rating>
           <div class="flex-divider flex-row flex--align">
@@ -80,6 +80,8 @@ export default {
     border-radius: 0.5rem;
     margin-bottom: 0.5rem;
     margin-left: 0.5rem;
+    max-width: 100%;
+    overflow: hidden;
     #{$self}__avatar {
       margin-right: 0.5rem;
       #{$self}__img {
@@ -95,7 +97,11 @@ export default {
     }
     #{$self}__title {
       font-size: 1.5rem;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
       font-weight: bold;
+      max-width: 100%;
     }
     #{$self}__author {
       font-size: 1.4rem;

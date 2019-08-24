@@ -4,7 +4,13 @@
       <div class="swiper-wrapper">
         <div class="swiper-slide" v-for="(review,index) in reviews" :key="index">
           <Review v-if="!$device.isMobile" :height="height" :review="review"></Review>
-          <mobile-review v-else @selectReview="reviewPage" :limit="100" :book="{}" :review="review"></mobile-review>
+          <mobile-review
+            v-else
+            @selectReview="reviewPage"
+            :limit="word"
+            :book="{}"
+            :review="review"
+          ></mobile-review>
         </div>
       </div>
       <!-- <div class="background">
@@ -28,15 +34,14 @@
 // import Review from "./Review";
 export default {
   props: ["height"],
-  created() {},
   computed: {
     reviews() {
       return this.$store.getters["analytic/getTrendingReviews"];
     }
   },
-
   data() {
     return {
+      word: 100,
       // slidesNumber: 2,
       mobileOption: {
         // loop: true,
@@ -88,7 +93,11 @@ export default {
       }
     }
   },
-  created() {}
+  mounted() {
+    if (window.screen.width < 321) {
+      this.word = 50;
+    }
+  }
 };
 </script>
 <style lang="scss">

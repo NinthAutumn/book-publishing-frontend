@@ -61,7 +61,7 @@ export default {
       import("@/components/Homepage/ReviewList")
     ),
     Ranking: hydrateWhenVisible(() => import("@/components/Homepage/Ranking")),
-    BannerList: hydrateWhenIdle(() =>
+    BannerList: hydrateWhenVisible(() =>
       import("@/components/Homepage/BannerList")
     ),
     SearchBar: hydrateOnInteraction(() =>

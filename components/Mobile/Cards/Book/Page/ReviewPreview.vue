@@ -18,7 +18,7 @@
               <review-card
                 @selectReview="handleSelect"
                 type="preview"
-                :limit="150"
+                :limit="word"
                 :review="review"
                 :book="book"
               ></review-card>
@@ -56,9 +56,13 @@ export default {
       type: "likes",
       preview: true
     });
+    if (window.screen.width < 321) {
+      this.word = 50;
+    }
   },
   data() {
     return {
+      word: 100,
       swiperMobile: {
         slidesPerView: 1.1,
         spaceBetween: 5,
@@ -83,6 +87,9 @@ export default {
     ReviewCard: () => import("@/components/Mobile/Cards/Review/Preview"),
     ReviewForm: () => import("@/components/Mobile/Modals/Review/form")
   }
+  // mounted() {
+
+  // }
 };
 </script>
 

@@ -2,7 +2,16 @@
   <div class="library-booklist">
     <transition-group tag="ul" class="library-booklist__list" v-if="trendings">
       <li class="library-booklist__item" v-for="(book) in books" :key="book.book_id">
-        <book-card progress :cover="book.cover" :isMobile="$device.isMobile" :book="book"></book-card>
+        <book-card
+          @editModeToggle="handleEditMode"
+          progress
+          @addBook="addBookHandler"
+          @removeBook="removeBookHndler"
+          :cover="book.cover"
+          :isMobile="$device.isMobile"
+          :book="book"
+          :editMode="$device.isMobile? $route.query.editMode: editMode"
+        ></book-card>
       </li>
     </transition-group>
     <transition-group tag="ul" v-if="history" class="library-booklist__list">
@@ -10,6 +19,13 @@
         <book-card :cover="book.cover" rating :book="book" :isMobile="$device.isMobile"></book-card>
       </li>
     </transition-group>
+    <div
+      v-if="$route.query.editMode&&$device.isMobile"
+      class="library-booklist__edit-nav"
+      @click="deleteHandler"
+    >
+      <p v-text="'削除'"></p>
+    </div>
   </div>
 </template>
 <script>
@@ -26,12 +42,14 @@ export default {
       sortSelect: false,
       itemSelected: false,
       selected: "並び替え",
-      sortTypes: ["最近読んだ順", "入れた順", "名前順"]
+      sortTypes: ["最近読んだ順", "入れた順", "名前順"],
+      editMode: false,
+      select: {}
     };
   },
   components: {
     Book: () => import("./Book"),
-    BookCard: () => import("@/components/Web/Cards/Book")
+    BookCard: () => import("@/components/Web/Cards/Book/Default")
   },
   methods: {
     showSelect() {
@@ -40,11 +58,35 @@ export default {
     hideSelect() {
       this.sortSelect = false;
     },
+    addBookHandler({ bookId }) {
+      console.log(bookId);
+      this.select[bookId] = {
+        type: "bookmark",
+        bookId: bookId
+      };
+      console.log(this.select);
+    },
+    removeBookHndler({ bookId }) {
+      delete this.select[bookId];
+      console.log(this.select);
+    },
+    async deleteHandler() {
+      await this.$axios.patch("/library/bulk", {
+        list: this.select
+      });
+      await this.$store.dispatch("library/getBookmark", { sortby: 3 });
+    },
     selectedOrder(order) {
       this.selected = order;
 
       this.itemSelected = true;
       this.sortSelect = false;
+    },
+    handleEditMode(bookId) {
+      console.log("alert");
+      if (this.$device.isMobile) return this.$router.push("?editMode=true");
+
+      this.editMode = !this.editMode;
     }
   }
 };
@@ -56,6 +98,9 @@ export default {
     .flex-divider {
       height: 100%;
     }
+    // #{$self}__ed{
+
+    // }
     box-shadow: 1px 1px 5px 0px rgb(233, 233, 233);
     width: 120px;
     height: 30px;
@@ -98,6 +143,19 @@ export default {
     &__text {
       font-size: 14px;
     }
+  }
+  &__edit-nav {
+    width: 100%;
+    position: fixed;
+    height: 3.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: $secondary;
+    color: white;
+    bottom: 0;
+    left: 0;
+    z-index: 1003;
   }
   &__list {
     display: grid;
