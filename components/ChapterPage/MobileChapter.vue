@@ -164,14 +164,24 @@
 
 <script>
 import { mapGetters } from "vuex";
+import { hydrateWhenVisible, hydrateSsrOnly } from "vue-lazy-hydration";
+
 export default {
   components: {
     Currency: () => import("@/components/All/Currency"),
-    TOC: () => import("@/components/ChapterPage/MobileModal/TOC"),
-    Theme: () => import("@/components/ChapterPage/MobileModal/Theme"),
-    FontSetting: () => import("@/components/ChapterPage/MobileModal/Font"),
+    TOC: hydrateWhenVisible(() =>
+      import("@/components/ChapterPage/MobileModal/TOC")
+    ),
+    Theme: hydrateWhenVisible(() =>
+      import("@/components/ChapterPage/MobileModal/Theme")
+    ),
+    FontSetting: hydrateWhenVisible(() =>
+      import("@/components/ChapterPage/MobileModal/Font")
+    ),
     ImageM: () => import("@/components/ChapterPage/MobileModal/Images"),
-    Comments: () => import("@/components/ChapterPage/MobileModal/Comments")
+    Comments: hydrateWhenVisible(() =>
+      import("@/components/ChapterPage/MobileModal/Comments")
+    )
   },
   computed: {
     ...mapGetters({

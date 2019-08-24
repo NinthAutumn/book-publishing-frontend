@@ -33,11 +33,7 @@
 
 <script>
 import { mapGetters } from "vuex";
-import {
-  hydrateWhenVisible,
-  hydrateWhenIdle,
-  hydrateOnInteraction
-} from "vue-lazy-hydration";
+import { hydrateWhenVisible } from "vue-lazy-hydration";
 export default {
   auth: false,
   async asyncData({ store, route, app }) {
@@ -147,7 +143,6 @@ export default {
     ReviewsForm: hydrateWhenVisible(() =>
       import("@/components/Bookpage/ReviewForm")
     ),
-    Announcements: () => import("@/components/Bookpage/Announcements"),
     BookHeader: () => import("@/components/Web/Cards/Book/Header"),
     MobilePage: hydrateWhenVisible(() =>
       import("@/components/Mobile/Cards/Book/Page")

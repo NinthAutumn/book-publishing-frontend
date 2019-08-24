@@ -13,6 +13,8 @@
 
 <script>
 import { mapGetters } from "vuex";
+import { hydrateWhenVisible, hydrateSsrOnly } from "vue-lazy-hydration";
+
 export default {
   data() {
     return {
@@ -21,9 +23,13 @@ export default {
     };
   },
   components: {
-    Chapter: () => import("@/components/ChapterPage/Chapter"),
-    MobileChapter: () => import("@/components/ChapterPage/MobileChapter"),
-    CommentList: () => import("@/components/ChapterPage/CommentList")
+    Chapter: hydrateSsrOnly(() => import("@/components/ChapterPage/Chapter")),
+    MobileChapter: hydrateWhenVisible(() =>
+      import("@/components/ChapterPage/MobileChapter")
+    ),
+    CommentList: hydrateWhenVisible(() =>
+      import("@/components/ChapterPage/CommentList")
+    )
   },
   async mounted() {
     if (this.$route.query.comment) {

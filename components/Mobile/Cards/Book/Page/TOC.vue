@@ -32,7 +32,9 @@
             v-else-if="!volume.chapters[0].id"
           >話はまだありません</div>
           <div class="pmb-toc__chapters" v-else>
-            <div
+            <nuxt-link
+              tag="div"
+              :to="`/books/${$route.params.id}/${chapter.id}`"
               class="pmb-toc__chapter flex-row"
               v-for="chapter in volume.chapters"
               :key="chapter.id"
@@ -50,7 +52,7 @@
                   <fa class="pmb-toc__locked" v-else-if="chapter.locked" :icon="'lock'"></fa>
                 </div>
               </div>
-            </div>
+            </nuxt-link>
           </div>
         </div>
       </div>
