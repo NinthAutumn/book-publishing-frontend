@@ -32,8 +32,28 @@
     <div class="flex-divider flex-row flex--between">
       <div v-if="selectedTabName === 'bookmark'&& selected_item!== '歴史'" class="library-bookmark">
         <div class="library-bookmark__select flex flex--align flex--right">
+          <div class="library-bookmark__edit">
+            <div
+              v-if="!editMode"
+              class="library-bookmark__edit-button"
+              @click="editMode= !editMode"
+            >
+              <fa class="library-bookmark__edit-icon" icon="pen"></fa>編集
+            </div>
+            <div class="library-bookmark__actions" v-else>
+              <div
+                class="library-bookmark__action library-bookmark__action--delete"
+                :class="{'library-bookmark__action--deactive':Object.keys(bulk_items).length < 1}"
+                @click="deleteHandler"
+              >削除</div>
+              <div
+                class="library-bookmark__action library-bookmark__action--cancel"
+                @click="editMode= !editMode"
+              >キャンセル</div>
+            </div>
+          </div>
           <Select
-            v-if="!$route.query.editMode"
+            v-if="$device.isMobile? !$route.query.editMode: true"
             v-model="order"
             def="更新順"
             transition="grow-shrink"
@@ -43,7 +63,7 @@
             :width="120"
           ></Select>
         </div>
-        <BookList :trendings="true" :books="bookmarks"></BookList>
+        <BookList v-model="bulk_items" :editMode="editMode" :trendings="true" :books="bookmarks"></BookList>
       </div>
       <div class="library-history" v-if="selectedTabName=== 'history'||selected_item=== '歴史'">
         <HistoryBook :books="history"></HistoryBook>
@@ -81,8 +101,10 @@ export default {
         { key: "名前順", value: "2" },
         { key: "更新順", value: "3" }
       ],
+      bulk_items: {},
       order: "更新順",
       selected_item: "ブックマーク",
+      editMode: false,
       nav_list: ["ブックマーク", "レビュー", "購入済み", "歴史"]
     };
   },
@@ -107,6 +129,15 @@ export default {
     sortSelect() {},
     navLineOut() {
       this.line = this.selectedTab;
+    },
+    async deleteHandler() {
+      if (Object.keys(this.bulk_items).length < 1) {
+        return;
+      }
+      await this.$axios.patch("/library/bulk", {
+        list: this.bulk_items
+      });
+      await this.$store.dispatch("library/getBookmark", { sortby: 3 });
     },
     async navSelect(item) {
       switch (item) {
@@ -201,6 +232,45 @@ export default {
   &-bookmark {
     margin-right: 10px;
     flex-grow: 1;
+    $self: &;
+    &__edit {
+      #{$self}__edit-button {
+        font-size: 1.4rem;
+        #{$self}__edit-icon {
+          margin-right: 0.5rem;
+        }
+        &:hover {
+          text-decoration: underline;
+          cursor: pointer;
+        }
+        margin-right: 1rem;
+        color: $secondary;
+      }
+      #{$self}__actions {
+        display: flex;
+
+        #{$self}__action {
+          font-size: 1.4rem;
+          &--delete {
+            margin-right: 3.5rem;
+            color: orangered;
+          }
+          &--deactive {
+            color: rgba(255, 68, 0, 0.658);
+            &:hover {
+              text-decoration: none !important;
+              cursor: default !important;
+            }
+          }
+          &:hover {
+            text-decoration: underline;
+            cursor: pointer;
+          }
+          margin-right: 1rem;
+          color: $secondary;
+        }
+      }
+    }
     &__header {
       font-size: 16px !important;
     }

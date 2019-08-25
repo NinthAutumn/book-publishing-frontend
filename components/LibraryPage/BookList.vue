@@ -35,7 +35,8 @@ export default {
   props: {
     books: Array,
     trendings: Boolean,
-    history: Boolean
+    history: Boolean,
+    editMode: Boolean
   },
   data() {
     return {
@@ -43,12 +44,11 @@ export default {
       itemSelected: false,
       selected: "並び替え",
       sortTypes: ["最近読んだ順", "入れた順", "名前順"],
-      editMode: false,
+      // editMode: false,
       select: {}
     };
   },
   components: {
-    Book: () => import("./Book"),
     BookCard: () => import("@/components/Web/Cards/Book/Default")
   },
   methods: {
@@ -59,18 +59,20 @@ export default {
       this.sortSelect = false;
     },
     addBookHandler({ bookId }) {
-      console.log(bookId);
       this.select[bookId] = {
         type: "bookmark",
         bookId: bookId
       };
-      console.log(this.select);
+      this.$emit("input", this.select);
     },
     removeBookHndler({ bookId }) {
       delete this.select[bookId];
-      console.log(this.select);
+      this.$emit("input", this.select);
     },
     async deleteHandler() {
+      if (Object.keys(this.select).length < 1) {
+        return;
+      }
       await this.$axios.patch("/library/bulk", {
         list: this.select
       });
@@ -83,10 +85,9 @@ export default {
       this.sortSelect = false;
     },
     handleEditMode(bookId) {
-      console.log("alert");
       if (this.$device.isMobile) return this.$router.push("?editMode=true");
 
-      this.editMode = !this.editMode;
+      // this.editMode = !this.editMode;
     }
   }
 };

@@ -175,6 +175,20 @@ export default {
     // background-color: ;
     z-index: 5;
   }
+  @media screen and (min-width: 500px) {
+    &__edit {
+      #{$self}__check {
+        width: 4rem !important;
+        height: 4rem !important;
+        border: 2px solid white !important;
+
+        &--selected {
+          border: 0px !important;
+          font-size: 1.5rem !important;
+        }
+      }
+    }
+  }
   &__edit {
     position: absolute;
     width: 100%;
@@ -185,6 +199,7 @@ export default {
     justify-content: center;
     z-index: 6;
     border-radius: 0.5rem;
+
     // border
     #{$self}__check {
       width: 2rem;
