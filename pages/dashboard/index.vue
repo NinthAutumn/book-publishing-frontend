@@ -17,26 +17,27 @@
 </template>
 
 <script>
+import { hydrateWhenVisible } from "vue-lazy-hydration";
 export default {
   layout: "user-nav/User",
-  props: {},
   async fetch({ store, params }) {
     await store.dispatch("analytic/fetchUserViews", { type: 8 });
     await store.dispatch("dashboard/fetchStatistics", { page: 1 });
     await store.dispatch("dashboard/fetchRanking", { type: "daily" });
   },
   components: {
-    Analytics: () => import("@/components/Dashboard/Analytics"),
-    ViewBarGraph: () => import("@/components/Dashboard/Graphs/Views"),
-    CommentList: () => import("@/components/Dashboard/CommentList"),
-    TransactionList: () =>
+    Analytics: hydrateWhenVisible(() =>
+      import("@/components/Dashboard/Analytics")
+    ),
+    ViewBarGraph: hydrateWhenVisible(() =>
+      import("@/components/Dashboard/Graphs/Views")
+    ),
+    CommentList: hydrateWhenVisible(() =>
+      import("@/components/Dashboard/CommentList")
+    ),
+    TransactionList: hydrateWhenVisible(() =>
       import("@/components/Dashboard/Earning/TransactionList")
-  },
-  computed: {},
-  created() {},
-  mounted() {},
-  data() {
-    return {};
+    )
   }
 };
 </script>

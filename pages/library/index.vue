@@ -77,12 +77,20 @@
 
 <script>
 import { mapGetters } from "vuex";
+import { hydrateWhenVisible } from "vue-lazy-hydration";
+
 export default {
   components: {
-    BookList: () => import("@/components/LibraryPage/BookList"),
-    Profile: () => import("@/components/LibraryPage/Profile"),
-    Select: () => import("@/components/All/Select"),
-    HistoryBook: () => import("@/components/LibraryPage/HistoryBook")
+    BookList: hydrateWhenVisible(() =>
+      import("@/components/LibraryPage/BookList")
+    ),
+    Profile: hydrateWhenVisible(() =>
+      import("@/components/LibraryPage/Profile")
+    ),
+    Select: hydrateWhenVisible(() => import("@/components/All/Select")),
+    HistoryBook: hydrateWhenVisible(() =>
+      import("@/components/LibraryPage/HistoryBook")
+    )
   },
   data() {
     return {

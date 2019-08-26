@@ -27,14 +27,16 @@
 
 <script>
 import { mapGetters } from "vuex";
+import { hydrateWhenVisible } from "vue-lazy-hydration";
+
 export default {
   auth: false,
   components: {
-    BookList: () => import("@/components/Update/BookList"),
-    BookTable: () => import("@/components/Update/BookTable")
+    BookList: hydrateWhenVisible(() => import("@/components/Update/BookList")),
+    BookTable: hydrateWhenVisible(() => import("@/components/Update/BookTable"))
   },
   async fetch({ store }) {
-    if (store.getters.isAuthenticated) {
+    if (this.loggedIn) {
       await store.dispatch("user/fetchUserSettings");
     }
   },

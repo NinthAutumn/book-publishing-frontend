@@ -11,15 +11,24 @@
 </template>
 
 <script>
+import { hydrateWhenVisible } from "vue-lazy-hydration";
+
 export default {
   layout: "user-nav/User",
   async fetch({ store, params }) {},
   components: {
-    Total: () => import("@/components/Dashboard/Earning/Total"),
-    Earning: () => import("@/components/Dashboard/Earning/Earning"),
-    TransactionList: () =>
-      import("@/components/Dashboard/Earning/TransactionList"),
-    BankList: () => import("@/components/Web/Cards/Bank/index")
+    Total: hydrateWhenVisible(() =>
+      import("@/components/Dashboard/Earning/Total")
+    ),
+    Earning: hydrateWhenVisible(() =>
+      import("@/components/Dashboard/Earning/Earning")
+    ),
+    TransactionList: hydrateWhenVisible(() =>
+      import("@/components/Dashboard/Earning/TransactionList")
+    ),
+    BankList: hydrateWhenVisible(() =>
+      import("@/components/Web/Cards/Bank/index")
+    )
   },
   data() {
     return {

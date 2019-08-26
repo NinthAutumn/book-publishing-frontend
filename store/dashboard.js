@@ -218,6 +218,7 @@ export const actions = {
       const {
         data
       } = await this.$axios.get(`/analytic/dashboard/book?bookId=${bookId}&type=${type}`)
+      commit('SET_STATISTICS', data.stat)
       return Promise.resolve(data)
     } catch (error) {
       return Promise.reject(error)
