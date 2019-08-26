@@ -1,20 +1,17 @@
 <template>
   <div class="text-editor">
-    <button v-if="ruby" class="text-editor__ruby-button" @click.prevent="createRuby">ルビを作る</button>
-    <!-- <transition name="text-editor-up">
-      <div class="text-editor__title" v-text="placeholder" v-if="!placehold"></div>
-    </transition>-->
+    <div class="text-editor__nav">
+      <button v-if="ruby" class="text-editor__ruby-button" @click.prevent="createRuby">ルビを振る</button>
+    </div>
     <textarea
-      :class="{'text-editor__disappear': !placehold}"
+      :class="{'text-editor__disappear': !placehold, 'text-editor__textarea--nav': ruby}"
+      class="text-editor__textarea"
       ref="text"
       :placeholder="placehold"
-      @focus="contentFocus"
-      @blur="contentBlur"
       v-model="text"
       @select="selectEvent"
     ></textarea>
     <p class="text-editor__count" v-text="textLength"></p>
-    <!-- <div v-html="tempText"></div> -->
   </div>
 </template>
 
@@ -43,7 +40,9 @@ export default {
       this.changes();
     },
     content: function(val) {
-      this.text = val;
+      if (val) {
+        this.text = val;
+      }
     }
   },
   computed: {
@@ -64,23 +63,15 @@ export default {
     }
   },
   mounted() {
+    console.log(this.content);
     if (this.content) {
       this.text = this.content;
       this.changes();
-    }
-
-    if (this.value) {
     }
   },
   created() {
-    if (this.content) {
-      this.text = this.content;
-      this.changes();
-    }
-    if (this.value) {
-      this.text = this.value;
-      this.changes();
-    }
+    // this.text = this.value;
+    // this.changes();
     // if (this.content) {
     //   this.text = this.content;
     // }
@@ -143,7 +134,6 @@ export default {
             return true;
           }
         })
-        // .filter(value => value)
         .map((value, index) => {
           value;
           value.replace(/[|]/, "<ruby>");
@@ -160,6 +150,7 @@ export default {
         });
       this.tempText = this.realArray.join("");
       this.$emit("input", this.tempText);
+      this.$emit("wordCount", this.textLength);
     },
     selectEvent(event) {
       this.activeE = event.target;
@@ -174,14 +165,24 @@ export default {
   height: 100%;
   width: 100%;
   position: relative;
+  // border-top: 1px solid grey;
+  border-radius: 0.5rem;
+  border: 1px solid #ddd;
+  &__nav {
+    border-bottom: 1px solid #b8b8b8;
+  }
   &__ruby-button {
     height: 30px;
     background-color: #fff;
-    border: 1px solid grey;
+    // border: 1px solid grey;
+    border-top-left-radius: 0.4rem;
     font-size: 13px;
-    margin-bottom: 5px;
+    // margin-bottom: 5px;
     transition: 200ms;
     padding: 0 10px;
+    // position: absolute;
+    // top: 0;
+    // left: 0;
     &:active,
     &:focus {
       outline: none;
@@ -193,33 +194,34 @@ export default {
       transition: 200ms;
     }
   }
-  &-up {
-  }
   &__title {
     position: absolute;
     top: 0;
     left: 10px;
     font-size: 16px;
   }
-  // &__disappear {
-  //   padding-top: 20px !important;
-  //   transition: 300ms;
-  // }
+
   textarea {
     transition: 300ms;
-    border: 2px solid $review-color;
+    // border: 2px solid $review-color;
     height: 300px;
     width: 100%;
     resize: none;
-    overflow: scroll;
+    overflow: auto;
     font-size: 16px;
     line-height: 20px;
     padding: 10px;
+    // padding-top: 5rem;
     padding-bottom: 20px !important;
     box-sizing: border-box;
     &:focus {
       outline: none;
       -ms-outline: none;
+    }
+  }
+  &__textarea {
+    &--nav {
+      // padding-top: 5rem !important;
     }
   }
   &__count {

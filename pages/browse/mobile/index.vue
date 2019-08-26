@@ -246,7 +246,7 @@ export default {
       padding: 0 2rem;
       justify-content: space-between;
       color: #000000;
-      font-weight: bold;
+      // font-weight: bold;
       #{$self}__selected {
         font-size: 1.6rem;
       }
@@ -315,7 +315,7 @@ export default {
 }
 .v-tabs__item {
   color: black;
-  font-weight: bold;
+  // font-weight: bold;
 }
 
 .v-tabs__wrapper {

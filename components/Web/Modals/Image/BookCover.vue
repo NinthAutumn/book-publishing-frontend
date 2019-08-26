@@ -132,21 +132,16 @@ export default {
       this.$emit("input", false);
     },
     async onFileChange(e) {
-      console.log("dsafasdfasdfasdf");
       this.loading = true;
       this.$nuxt.$loading.start();
       this.file = e.target.files || e.dataTransfer.files;
       this.file = this.file[0];
       let unique = uuid();
       const cover_keys = Object.keys(this.cover);
-      console.log(unique);
       try {
-        console.log(cover_keys);
         for (let key of cover_keys) {
-          console.log(key);
           await this.resizeHandler({ file: this.file, cover: this.cover[key] });
         }
-        console.log("inhere");
         for (let key of cover_keys) {
           await this.upload({
             file: this.file,
@@ -160,7 +155,6 @@ export default {
         this.site = site;
         this.selected = "user";
         this.$nuxt.$loading.finish();
-        console.log("otu");
       } catch (error) {
         console.log(error);
       }

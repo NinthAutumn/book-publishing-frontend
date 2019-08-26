@@ -1,12 +1,10 @@
 <template>
   <div class="chapter-new">
     <div class="chapter-title__wrapper flex flex--align">
-      <h3 class="chapter-new-title">
-        話を書く
-        <fa icon="pen-nib" class="title-icon"></fa>
-      </h3>
+      <h3 class="chapter-new-title">話を書く</h3>
     </div>
-    <create-chapter class="chapter-forms"></create-chapter>
+    <!-- <create-chapter class="chapter-forms"></create-chapter> -->
+    <chapter-form></chapter-form>
   </div>
 </template>
 
@@ -20,13 +18,25 @@ export default {
     };
   },
   components: {
-    CreateChapter: () => import("@/components/Dashboard/Forms/Chapter/index")
+    CreateChapter: () => import("@/components/Dashboard/Forms/Chapter/index"),
+    ChapterForm: () => import("@/components/Web/Forms/Chapter")
   },
   created() {},
-  async fetch({ store, params }) {
+  async fetch({ store, route }) {
     // await store.dispatch("chapter/fetchPublishedTOC", params.id);
-    await store.dispatch("chapter/fetchVolumeList", params.id);
-    await store.dispatch("chapter/fetchLatestIndex", { bookId: params.id });
+    if (route.query.chapterId) {
+      await store.dispatch("chapter/fetchChapterDetail", {
+        chapterId: route.query.chapterId
+        // bookId: route.params.id
+      });
+      await store.dispatch("drawing/fetchChapterDrawings", {
+        chapterId: route.query.chapterId
+      });
+    }
+    await store.dispatch("chapter/fetchVolumeList", route.params.id);
+    await store.dispatch("chapter/fetchLatestIndex", {
+      bookId: route.params.id
+    });
   }
 };
 </script>
@@ -42,13 +52,13 @@ export default {
 }
 .chapter-new-title {
   margin: 0;
-  font-size: 20px;
+  font-size: 3rem;
   font-weight: 400;
   // font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
   // background-color: rgb(199, 199, 199);
 }
 .chapter-title__wrapper {
-  background-color: rgb(248, 246, 246);
+  background-color: white;
   // width: 100%;
   height: 50px;
   padding: 0px 45px;

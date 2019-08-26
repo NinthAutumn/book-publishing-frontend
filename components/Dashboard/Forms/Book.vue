@@ -251,7 +251,7 @@ export default {
   components: {
     Select: () => import("@/components/All/Select"),
     TagCreate: () => import("./Tag"),
-    ImageModal: () => import("@/components/Web/Modal/Image/BookCover")
+    ImageModal: () => import("@/components/Web/Modals/Image/BookCover")
   },
   async created() {
     if (this.$route.query.bookId) {

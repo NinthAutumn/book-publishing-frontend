@@ -101,6 +101,9 @@ export default {
     // box-shadow: 0 7px 14px 0 rgba(60, 66, 87, 0.1),
     //   0 3px 6px 0 rgba(0, 0, 0, 0.07);
     border-radius: 0.5rem;
+    #{$self}__list {
+      margin-bottom: 1rem;
+    }
     #{$self}__form {
       display: flex;
       align-items: center;
@@ -125,7 +128,7 @@ export default {
       display: flex;
       align-items: center;
       justify-content: space-between;
-
+      margin-bottom: 1rem;
       #{$self}__title {
         font-weight: bold;
         font-size: 1.4rem;

@@ -32,7 +32,7 @@
     <div class="flex-divider flex-row flex--between">
       <div v-if="selectedTabName === 'bookmark'&& selected_item!== '歴史'" class="library-bookmark">
         <div class="library-bookmark__select flex flex--align flex--right">
-          <div class="library-bookmark__edit">
+          <div class="library-bookmark__edit" v-if="!$device.isMobile">
             <div
               v-if="!editMode"
               class="library-bookmark__edit-button"

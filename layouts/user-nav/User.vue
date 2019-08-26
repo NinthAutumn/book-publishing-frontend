@@ -39,7 +39,8 @@ export default {
   background-color: #fff;
 }
 .dashboards .dashboard-active {
-  margin-left: 50px;
+  margin-left: 5.6rem;
+
   margin-top: 50px;
   padding: 0 45px;
   padding-top: 10px;
@@ -49,7 +50,7 @@ export default {
   z-index: 10;
 }
 .dashboards .dashboard-inactive {
-  margin-left: 50px;
+  margin-left: 5.6rem;
   margin-top: 50px;
   padding: 0 45px;
   padding-top: 10px;
@@ -65,7 +66,7 @@ export default {
   }
   .dashboards .dashboard-active {
     /* margin-left: 255px; */
-    margin-left: 50px;
+    margin-left: 5.6rem;
     margin-top: 50px;
     padding: 0 45px;
     padding-top: 10px;
@@ -79,7 +80,7 @@ export default {
   }
   .dashboards .dashboard-inactive {
     margin-top: 50px;
-    margin-left: 50px;
+    margin-left: 5.6rem;
     padding: 0 45px;
     padding-top: 10px;
     min-height: 100vh;

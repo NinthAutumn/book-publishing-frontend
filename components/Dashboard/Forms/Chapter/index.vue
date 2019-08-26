@@ -7,7 +7,6 @@
           <fa class="chapter-form__save-draft__icon" v-if="!$route.query.chapterId" icon="save"></fa>保存
         </div>
       </div>
-      <!-- {{form.drawings}} -->
       <div class="chapter-form__options flex">
         <Select
           v-model="form.volume"
@@ -17,7 +16,6 @@
           volume
           :disabled="disableVolume"
         ></Select>
-        <!-- <Select v-model="form.locked" def="無料" icon="yen-sign" name="時価" :object="locked"></Select> -->
         <div
           class="chapter-form__options__user-news flex-row flex--align flex--center"
           @click.stop="announcementOpen"
@@ -106,15 +104,10 @@
 
       <div class="flex-row flex--right">
         <button
-          @click.stop="openSubmitForm"
-          v-if="!$route.query.chapterId"
+          @click.stop="$route.query.chapterId? updateChapter() : openSubmitForm()"
           class="form-submit form-submit--primary chapter-new-submit"
-        >話を投稿</button>
-        <button
-          @click="updateChapter"
-          class="form-submit form-submit--primary chapter-new-submit"
-          v-else
-        >更新</button>
+          v-text="$route.query.chapterId? '更新':'話を投稿'"
+        ></button>
       </div>
       <v-dialog class="chapter-form__submit-form" v-model="submitForm" width="50rem">
         <div class="chapter-form__submit-form__title flex-row flex--align flex--between">
@@ -141,7 +134,6 @@
               style="margin-top:10px;"
             >
               <span class="chapter-title__placeholder">有料</span>
-
               <span class="chapter-title__content">
                 <Currency :amount="form.wordCount.length*0.0303"></Currency>
               </span>
@@ -206,6 +198,7 @@ export default {
     }
   },
   created() {
+    this.form.date = this.$moment().subtract(18, "year");
     this.$store.getters["chapter/getVolumeList"].forEach((volume, index) => {
       if (index === 0) {
         this.volumes.push({

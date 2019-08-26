@@ -4,7 +4,7 @@
       <div class="book-toc__volume-index">{{`第${volume.volume}章`}}</div>
       <div class="book-toc__volume-title" v-if="!editVolume">{{volume.volume_title}}</div>
       <div class="book-toc__volume-edit flex-row flex--align" v-else>
-        <input type="text" v-model="volume_title">
+        <input type="text" v-model="volume_title" />
         <div class="book-toc__edit" v-ripple @click="updateVolume">更新</div>
         <div class="book-toc__edit--cancel" v-ripple @click="editVolume=!editVolume">キャンセル</div>
       </div>
@@ -51,7 +51,7 @@ export default {
   },
   methods: {
     async editChapter(chapterId) {
-      await this.$store.dispatch("chapter/fetchChapterDetail", { chapterId });
+      // await this.$store.dispatch("chapter/fetchChapterDetail", { chapterId });
       this.$router.push(
         `/dashboard/books/${this.$route.params.id}/new?chapterId=${chapterId}`
       );
