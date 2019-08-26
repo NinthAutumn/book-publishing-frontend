@@ -173,7 +173,7 @@ module.exports = {
       treeShake: true
     }],
     '@nuxtjs/pwa',
-    'nuxt-device-detect',
+    '@nuxtjs/device',
     'nuxt-webfontloader',
     '@nuxtjs/axios',
     '@nuxtjs/dotenv',
@@ -256,6 +256,7 @@ module.exports = {
   axios: {
     baseURL: process.env.SERVER_URL + '/v1'
   },
+
   auth: {
     strategies: {
       google: {

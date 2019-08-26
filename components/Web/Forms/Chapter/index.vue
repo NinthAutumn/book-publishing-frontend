@@ -232,7 +232,10 @@ export default {
       color: $secondary;
     }
     #{$self}__content {
-      padding: 0 20rem;
+      // padding: 0 20rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
     #{$self}__nav {
       background-color: #fff;
@@ -256,8 +259,9 @@ export default {
     }
     #{$self}__announcement {
       display: flex;
-      align-items: center;
+      width: 100%;
       justify-content: center;
+      align-items: center;
       user-select: none;
       &:hover {
         cursor: pointer;
@@ -282,12 +286,12 @@ export default {
         }
       }
       #{$self}__announcement-form {
-        width: 100%;
+        width: 70%;
       }
       #{$self}__add-announcement {
         font-weight: bold;
         padding: 1rem 2rem;
-        width: 50%;
+        width: 40%;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -324,6 +328,7 @@ export default {
       font-size: 1.6rem;
     }
     #{$self}__textarea {
+      width: 70%;
       textarea {
         height: 85vh;
       }
