@@ -28,17 +28,7 @@
           :aspect-ratio="1/1.5"
           max-width="15rem"
           min-width="5rem"
-        >
-          <template v-slot:placeholder>
-            <div class="book-card__loading">
-              <div class="trinity-rings-spinner">
-                <div class="circle"></div>
-                <div class="circle"></div>
-                <div class="circle"></div>
-              </div>
-            </div>
-          </template>
-        </v-img>
+        ></v-img>
       </nuxt-link>
       <div class="book-card__progress-bar" v-if="progress">
         <v-progress-linear
@@ -83,7 +73,7 @@ export default {
   props: {
     cover: {
       type: [String, Object],
-      default: require("~/assets/img/NobleCardLight.png?webp")
+      default: require("~/assets/img/NobleCardLight.png?size=510")
     },
     book: {
       type: Object

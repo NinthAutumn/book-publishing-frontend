@@ -13,13 +13,7 @@
         :src="book[0].cover + '/m'"
         :lazy-src="cover"
         style=" border-radius: 0.4rem;"
-      >
-        <template v-slot:placeholder>
-          <v-layout fill-height align-center justify-center ma-0>
-            <v-progress-circular indeterminate color="black "></v-progress-circular>
-          </v-layout>
-        </template>
-      </v-img>
+      ></v-img>
       <span class="update-book__cover-meta">{{book.length}}</span>
     </nuxt-link>
     <div class="update-book__meta">

@@ -26,13 +26,7 @@
               :aspect-ratio="1/1.5"
               max-width="4rem"
               min-width="2rem"
-            >
-              <template v-slot:placeholder>
-                <div class="home-ranking__loading">
-                  <trinity-rings-spinner :animation-duration="1500" :size="50" color="#ff1d5e" />
-                </div>
-              </template>
-            </v-img>
+            ></v-img>
           </div>
           <div class="home-ranking__index" v-text="book.dense_ranking || index+1"></div>
           <div class="home-ranking__meta">

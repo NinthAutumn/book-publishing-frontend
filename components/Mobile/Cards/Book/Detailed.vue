@@ -9,13 +9,7 @@
           :aspect-ratio="1/1.5"
           max-width="15rem"
           min-width="7rem"
-        >
-          <template v-slot:placeholder>
-            <div class="mobile-detailed__loading">
-              <trinity-rings-spinner :animation-duration="1500" :size="30" color="#ff1d5e" />
-            </div>
-          </template>
-        </v-img>
+        ></v-img>
       </div>
       <div class="mobile-detailed__meta">
         <div class="mobile-detailed__title" v-line-clamp="2">{{book.title}}</div>

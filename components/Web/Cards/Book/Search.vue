@@ -9,17 +9,7 @@
           :aspect-ratio="1/1.5"
           max-width="15rem"
           min-width="5rem"
-        >
-          <template v-slot:placeholder>
-            <div class="book-scard__loading">
-              <div class="trinity-rings-spinner">
-                <div class="circle"></div>
-                <div class="circle"></div>
-                <div class="circle"></div>
-              </div>
-            </div>
-          </template>
-        </v-img>
+        ></v-img>
       </div>
       <div class="book-scard__meta">
         <div class="book-scard__title" v-line-clamp="1" v-text="book.title"></div>

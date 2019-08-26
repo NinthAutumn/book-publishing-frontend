@@ -11,13 +11,7 @@
           min-width="10rem"
           :lazy-src="cover"
           :aspect-ratio="1/1.5"
-        >
-          <template v-slot:placeholder>
-            <v-layout fill-height align-center justify-center ma-0>
-              <v-progress-circular indeterminate color="black"></v-progress-circular>
-            </v-layout>
-          </template>
-        </v-img>
+        ></v-img>
       </div>
       <div class="book-header__content">
         <div class="book-header__title" v-text="book.title"></div>

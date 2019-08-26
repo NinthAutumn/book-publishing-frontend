@@ -14,13 +14,7 @@
             width="100vw"
             v-if="showImage"
             :src="book.cover"
-          >
-            <template v-slot:placeholder>
-              <v-layout fill-height align-center justify-center ma-0>
-                <v-progress-circular indeterminate color="black "></v-progress-circular>
-              </v-layout>
-            </template>
-          </v-img>
+          ></v-img>
         </transition>
       </div>
       <div class="pmb-header__title" v-text="book.title"></div>

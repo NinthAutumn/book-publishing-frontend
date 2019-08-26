@@ -1,22 +1,12 @@
 <template>
   <div class="banner-list">
-    <div v-swiper:mySwiper="swiperOption" v-if="!$device.isMobile">
+    <div v-swiper:mySwiper="!$device.isMobile?swiperOption:mobileOption">
       <div class="swiper-wrapper">
-        <div class="swiper-slide" v-for="(image,index) in images" :key="index">
-          <nuxt-link tag="div" class="banner-list__container" :to="image.link">
-            <v-img
-              class="banner-list__image"
-              :max-height="250"
-              :max-width="437.5"
-              :src="image.cover"
-            ></v-img>
-          </nuxt-link>
-        </div>
-      </div>
-    </div>
-    <div v-swiper:mySwiper="mobileOption" v-else>
-      <div class="swiper-wrapper">
-        <div class="swiper-slide" v-for="(image,index) in images" :key="index">
+        <div
+          class="swiper-slide"
+          v-for="(image,index) in (!$device.isMobile? images: mimages)"
+          :key="index"
+        >
           <nuxt-link tag="div" class="banner-list__container" :to="image.link">
             <v-img
               class="banner-list__image"
@@ -37,10 +27,22 @@ export default {
     return {
       paginationSize: 10,
       images: [
-        { cover: require("../../assets/banner5.png?webp"), link: "/" },
-        { cover: require("../../assets/banner2.png?webp"), link: "/" },
-        { cover: require("../../assets/banner3.png?webp"), link: "/rankings" },
-        { cover: require("../../assets/banner1.png?webp"), link: "/" }
+        { cover: require(`../../assets/banner5.png?size=500`), link: "/" },
+        { cover: require(`../../assets/banner2.png?size=500`), link: "/" },
+        {
+          cover: require(`../../assets/banner3.png?size=500`),
+          link: "/rankings"
+        },
+        { cover: require(`../../assets/banner1.png?size=500`), link: "/" }
+      ],
+      mimages: [
+        { cover: require(`../../assets/banner5.png?size=325`), link: "/" },
+        { cover: require(`../../assets/banner2.png?size=325`), link: "/" },
+        {
+          cover: require(`../../assets/banner3.png?size=325`),
+          link: "/rankings"
+        },
+        { cover: require(`../../assets/banner1.png?size=325`), link: "/" }
       ],
       mobileOption: {
         slidesPerView: 1.1,

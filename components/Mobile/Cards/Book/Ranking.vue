@@ -10,13 +10,7 @@
           :src="book.cover + '/m'"
           :lazy-src="cover"
           style="border-radius: 0.4rem;"
-        >
-          <template v-slot:placeholder>
-            <v-layout fill-height align-center justify-center ma-0>
-              <v-progress-circular indeterminate color="black "></v-progress-circular>
-            </v-layout>
-          </template>
-        </v-img>
+        ></v-img>
       </div>
       <div class="mranking-card__meta">
         <div class="mranking-card__title" v-line-clamp="1" v-text="book.title"></div>
