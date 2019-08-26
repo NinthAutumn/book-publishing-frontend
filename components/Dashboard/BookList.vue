@@ -40,5 +40,10 @@ export default {
     grid-gap: 1rem;
     // grid-template-rows:minmax(20rem, 300rem);
   }
+  @media screen and (min-width: 1500px) {
+    &__list {
+      grid-template-columns: repeat(3, minmax(30rem, 1fr)) !important;
+    }
+  }
 }
 </style>
