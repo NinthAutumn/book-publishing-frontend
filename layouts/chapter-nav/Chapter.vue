@@ -103,6 +103,9 @@
         </div>
       </div>
     </div>
+    <transition name="grow-shrink">
+      <setting-form v-if="dialog"></setting-form>
+    </transition>
     <!-- <div class="block-move" v-if="modal"></div> -->
   </div>
 </template>
@@ -120,12 +123,14 @@ export default {
     Horizontal: () => import("./Horizontal"),
     LeftV: () => import("./Left-V"),
     RightV: () => import("./Right-V"),
-    MobileHorizontal: () => import("./MobileHorizontal")
+    MobileHorizontal: () => import("./MobileHorizontal"),
+    SettingForm: () => import("@/components/Navigation/Setting")
   },
   computed: {
     ...mapGetters({
       next: "chapter/getNextChapter",
       prev: "chapter/getPrevChapter",
+      dialog: "getSettingModal",
       theme: "user/getTheme",
       modal: "chapter/getModalState",
       imageModal: "getImageModalState",

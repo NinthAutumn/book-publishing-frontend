@@ -333,7 +333,15 @@ module.exports = {
         }
       })
       // remove old pattern from the older loader
+
       config.module.rules.forEach(value => {
+        if (Array.isArray(value.use)) {
+          value.use.forEach(u => {
+            if (u.loader === 'css-loader' && u.options) {
+              delete u.options.minimize;
+            }
+          });
+        }
         if (String(value.test) === String(/\.(png|jpe?g|gif|svg|webp)$/)) {
           // reduce to svg and webp, as other images are handled above
           value.test = /\.(svg|webp)$/

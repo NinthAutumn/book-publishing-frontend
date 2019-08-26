@@ -183,18 +183,19 @@ export default {
       font-size: 14px;
       // padding: 10px;
       user-select: none;
-      border-radius: 2px;
+      border-radius: 0.5rem;
+
       &:hover {
         cursor: pointer;
-        background-color: $primary;
-        color: white;
+        // background-color: $primary;
+        // color: white;
         transition: 300ms;
       }
       height: 3rem;
       width: 10rem;
-      background-color: white;
-      border: 1px solid $primary;
-      color: $primary;
+      background-color: #2a2f45;
+      // border: 1px solid $primary;
+      color: white;
     }
   }
   &__list {
