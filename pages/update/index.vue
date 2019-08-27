@@ -36,7 +36,7 @@ export default {
     BookTable: hydrateWhenVisible(() => import("@/components/Update/BookTable"))
   },
   async fetch({ store }) {
-    if (this.loggedIn) {
+    if (store.getters["auth/isAuthenticated"]) {
       await store.dispatch("user/fetchUserSettings");
     }
   },

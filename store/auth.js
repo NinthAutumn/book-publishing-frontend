@@ -2,7 +2,8 @@ export const state = () => ({
   token: '',
   loggedIn: false,
   refresh_token: "",
-  strategy: ""
+  strategy: "",
+  user: {}
 })
 
 export const getters = {
@@ -10,6 +11,7 @@ export const getters = {
   getStrategy: state => state.strategy,
   getAccessToken: state => state.token,
   getRefreshToken: state => state.refresh_token,
+  getUser: state => state.user
 }
 
 export const mutations = {
@@ -28,6 +30,9 @@ export const mutations = {
     state.token = ""
     state.refresh_token = ""
     state.strategy = ""
+  },
+  SET_USER: (state, user) => {
+    state.user = user
   },
 }
 
@@ -59,6 +64,7 @@ export const actions = {
       this.$storage.setUniversal('refresh_token', data.refresh_token)
       this.$storage.setUniversal('strategy', strategy)
       this.$axios.defaults.headers.common['Authorization'] = 'Bearer ' + data.access_token
+      await dispatch('fetchUser')
       return Promise.resolve({
         error: null
       })
@@ -85,7 +91,7 @@ export const actions = {
       this.$storage.setUniversal('refresh_token', data.refresh_token)
       this.$storage.setUniversal('strategy', strategy)
       this.$axios.defaults.headers.common['Authorization'] = 'Bearer ' + data.access_token
-      this.$router.go(0)
+      await dispatch('fetchUser')
     } catch (error) {
       return Promise.reject(error)
     }
@@ -94,7 +100,7 @@ export const actions = {
 
   },
   async logout({
-    commit
+    commit,
   }) {
     if (process.client) {
       this.$storage.removeUniversal('access_token')
@@ -102,7 +108,33 @@ export const actions = {
       this.$storage.removeUniversal('strategy')
       delete this.$axios.defaults.headers.common['Authorization']
       commit("AUTH_LOGOUT");
-      this.$router.go(0)
+      commit('SET_USER', false)
+      commit('wallet/SET_WEALTH', 0, {
+        root: true
+      })
+      commit('wallet/SET_VOTE_TOKEN', 0, {
+        root: true
+      })
+      // this.refresh
+    }
+  },
+  async fetchUser({
+    commit,
+    dispatch
+  }) {
+    try {
+      const {
+        data
+      } = await this.$axios.get('/user')
+      commit('SET_USER', data)
+      await dispatch('wallet/wealth', '', {
+        root: true
+      })
+      await dispatch('user/fetchUserSettings', '', {
+        root: true
+      })
+    } catch (error) {
+      console.log(error);
     }
 
   },

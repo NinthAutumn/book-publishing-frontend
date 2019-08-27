@@ -113,7 +113,7 @@ export default {
     },
     ...mapActions({
       create: "auth/signup",
-      user: "user/fetchUser"
+      user: "auth/fetchUser"
     }),
     async signUp() {
       // const isValid = await this.$refs.observer.validate();

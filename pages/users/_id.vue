@@ -42,7 +42,7 @@ export default {
     ...mapGetters({
       user: "user/getProfile",
       books: "user/getProfileBooks",
-      current: "user/loggedInUser"
+      current: "auth/getUser"
     }),
     owner: function() {
       return this.user.id === this.current.id;

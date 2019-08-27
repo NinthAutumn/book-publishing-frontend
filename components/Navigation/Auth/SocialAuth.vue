@@ -97,7 +97,6 @@ export default {
                     strategy: "facebook"
                   });
                 } else {
-                  errpr;
                   this.$toast.show(`フェースブックのログインに失敗しました`, {
                     theme: "toasted-primary",
                     position: "top-right",
@@ -110,7 +109,6 @@ export default {
                 scope: "public_profile,email"
               }
             );
-            ("dasfadsfadsfasdfadsfasdf");
           } catch (error) {
             console.log(error);
             this.$toast.show(`フェースブックのログインに失敗しました`, {
@@ -142,7 +140,7 @@ export default {
       if (value === "local") {
       } else {
       }
-      // this.$auth.loginWith(value);
+      this.$emit("loginAction");
     },
     async changeStep() {
       this.$store.commit("SET_AUTH_PAGE", 2);

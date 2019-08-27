@@ -38,7 +38,7 @@ export default {
   computed: {
     ...mapGetters({
       profile: "user/getProfile",
-      user: "user/loggedInUser",
+      user: "auth/getUser",
       stat: "user/getProfileStats"
     })
   },

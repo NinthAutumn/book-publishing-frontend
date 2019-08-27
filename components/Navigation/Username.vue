@@ -37,7 +37,7 @@ export default {
       avatar: {},
       newAvatar: false,
       user: {
-        username: this.$store.getters["user/loggedInUser"].username || "",
+        username: this.$store.getters["auth/getUser"].username || "",
         avatar_path: ""
       }
     };
@@ -74,7 +74,7 @@ export default {
   async mounted() {
     if (
       this.$store.getters["auth/isAuthenticated"] &&
-      !this.$store.getters["user/loggedInUser"].username
+      !this.$store.getters["auth/getUser"].username
     ) {
       if (this.$store.state.auth.strategy === "local") {
         return;

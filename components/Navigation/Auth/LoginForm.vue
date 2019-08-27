@@ -145,11 +145,11 @@ export default {
             icon: "extension"
           });
         }
-        await this.$store.dispatch("user/fetchUser");
         this.loading = false;
         this.$store.commit("LOGIN_FALSE");
         this.$storage.setUniversal("FAILED_LOGIN_COUNT", 0);
-        this.$router.go(0);
+        this.$nuxt.refresh();
+        this.$emit("loginAction");
       } catch (error) {
         console.log(error);
         this.loading = false;
@@ -178,25 +178,6 @@ export default {
           icon: "extension"
         });
       }
-
-      // await this.$store
-      //   .dispatch("nauth/login", user)
-      //   .then(() => {
-      //     this.$store.commit("DROPDOWN_FALSE");
-      //     // this.$router.go(-1);
-      //     this.$store.commit("LOGIN_FALSE");
-      //   })
-      //   .catch(e => {
-      //
-      //   });
-      // await this.$auth
-      //   .loginWith("local", {
-      //     data: {
-      //       username: this.username,
-      //       password: this.password
-      //     }
-      //   })
-      //   .catch(e => {});
     }
   }
 };

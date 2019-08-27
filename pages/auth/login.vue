@@ -1,9 +1,9 @@
 <template>
   <div class="login-page flex-column flex--center flex--align" :class="$store.state.menuState">
     <transition name="slide-fade">
-      <social-auth v-if="step === 0"></social-auth>
-      <login-form v-if="step === 1"></login-form>
-      <sign-up-from v-if="step === 2"></sign-up-from>
+      <social-auth @loginAction="login" v-if="step === 0"></social-auth>
+      <login-form @loginAction="login" v-if="step === 1"></login-form>
+      <sign-up-from @loginAction="login" v-if="step === 2"></sign-up-from>
       <forgot-password v-if="step === 3"></forgot-password>
     </transition>
     <div class="auth-modal__footer">
@@ -49,20 +49,8 @@ export default {
     })
   },
   methods: {
-    async login() {
-      const user = {
-        username: this.username,
-        password: this.password
-      };
-      await this.$store
-        .dispatch("auth/login", user)
-        .then(() => {
-          this.$store.commit("DROPDOWN_FALSE");
-          this.$router.go(-1);
-        })
-        .catch(e => {
-          console.log(e.response);
-        });
+    login() {
+      this.$router.go(-1);
     }
   },
   beforeCreate() {

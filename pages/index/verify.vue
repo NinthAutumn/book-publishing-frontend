@@ -43,7 +43,7 @@ export default {
       refresh_token: data.refresh_token,
       strategy: "local"
     });
-    const val = await this.$store.dispatch("user/fetchUser");
+    const val = await this.$store.dispatch("auth/fetchUser");
     this.$toast.success(
       "アカウント確認に成功しました、サイトがリフレッシュされます",
       {

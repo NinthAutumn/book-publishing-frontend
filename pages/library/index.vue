@@ -187,11 +187,13 @@ export default {
       this.selected_item = item;
     }
   },
-  async fetch({ store }) {
+  async fetch({ store, redirect }) {
+    if (!store.getters["auth/isAuthenticated"])
+      return redirect(301, "/?auth=true");
     await store.dispatch("library/getBookmark", { sortby: 3 });
     await store.dispatch("library/fetchReviews");
-  },
-  auth: false
+  }
+  // auth: true
 };
 </script>
 

@@ -89,7 +89,7 @@ export default {
   },
   computed: {
     ...mapGetters({
-      user: "user/loggedInUser",
+      user: "auth/getUser",
       auth: "auth/isAuthenticated",
       wealth: "wallet/getWealth",
       token: "wallet/getToken"

@@ -47,7 +47,7 @@ export default {
   methods: {
     async nextChapter() {
       const bookId = this.$route.params.id,
-        chapterId = this.$store.state.chapter.navigation.next._id;
+        chapterId = this.chapter.navigation.next._id;
 
       await this.$store.dispatch("chapter/fetchChapter", {
         bookId,
@@ -57,31 +57,18 @@ export default {
     },
     async prevChapter() {
       const bookId = this.$route.params.id,
-        chapterId = this.$store.state.chapter.navigation.prev._id;
+        chapterId = this.chapter.navigation.prev._id;
       await this.$store.dispatch("chapter/fetchChapter", {
         bookId,
         chapterId
       });
       this.$router.push(`/books/${bookId}/${chapterId}`);
-    },
-    nextPage() {
-      if (this.bottomVisible()) {
-        if (
-          this.$store.state.chapter.chapter.bookId.chapters.length !==
-          this.$store.state.chapter.chapter.index
-        ) {
-          this.$router.push(
-            `/books/${this.$route.params.id}/${this.$store.state.chapter.chapter
-              .index + 1}`
-          );
-        }
-      }
     }
   },
   auth: false,
   async fetch({ store, params, query }) {
     const index = params.chaptersId;
-    if (store.state.auth.loggedIn) {
+    if (store.getters["auth/isAuthenticated"]) {
       await store.dispatch("chapter/fetchChapter", {
         chapterId: params.chaptersId,
         bookId: params.id
@@ -100,15 +87,11 @@ export default {
       });
     }
   },
-  // transition (to, from) {
-  //   if (!from) return 'slide-left'
-  //   return +to.query.page < +from.query.page ? 'slide-right' : 'slide-left'
-  // }
   layout: "chapter-nav/Chapter",
   computed: {
     ...mapGetters({
-      title: "chapter/getChapterBookTitle"
-      // chapter:'chapter/getChapter'
+      title: "chapter/getChapterBookTitle",
+      chapter: "chapte/getChapter"
     })
   },
   scrollToTop: true,

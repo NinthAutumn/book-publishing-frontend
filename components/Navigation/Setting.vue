@@ -57,7 +57,7 @@ export default {
   },
   computed: {
     ...mapGetters({
-      current: "user/loggedInUser",
+      current: "auth/getUser",
       profile: "user/getProfile"
     })
   },
@@ -88,7 +88,7 @@ export default {
               path
             };
             await this.$store.dispatch("user/patchUser", { user: this.user });
-            await this.$store.dispatch("user/fetchUser");
+            await this.$store.dispatch("auth/fetchUser");
           });
 
           // this.user.avatar.img
@@ -99,7 +99,7 @@ export default {
           };
           // this.user.avatar.img
           await this.$store.dispatch("user/patchUser", { user: this.user });
-          await this.$store.dispatch("user/fetchUser");
+          await this.$store.dispatch("auth/fetchUser");
         }
         this.$store.commit("TOGGLE_SETTING_MODAL");
       } catch (error) {

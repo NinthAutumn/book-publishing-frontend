@@ -12,12 +12,9 @@
             v-text="`${title}/`"
             :to="`/books/${$route.params.id}`"
           ></nuxt-link>
-          <span
-            class="nav-title__chapter-index"
-            v-text="`第${$store.state.chapter.chapter.index}話:`"
-          ></span>
+          <span class="nav-title__chapter-index" v-text="`第${chapter.index}話:`"></span>
           <div class="nav-title__chapter">
-            <h4 v-text="$store.state.chapter.chapter.title"></h4>
+            <h4 v-text="chapter.title"></h4>
           </div>
           <div class="nav-title__progress" v-text="`${progress.toFixed(2)}%`"></div>
         </div>
@@ -41,14 +38,14 @@
         <transition name="grow-shrink">
           <notification-list v-if="notification" v-click-outside="closeNotification"></notification-list>
         </transition>
-        <span v-if="loggedIn" style="z-index:3000;" id="prof" v-click-outside="dropOff">
+        <span style="z-index:3000;" id="prof" v-click-outside="dropOff" v-if="auth">
           <div class="profile-pic" @click.stop="stateDropChange">
             <v-avatar
               size="30"
               class="profile-pic__avatar"
               :class="{'profile-pic__avatar--bronze':user.status === 'bronze'}"
             >
-              <img :src="user.avatar.img" />
+              <img :src="user.avatar? user.avatar.img:avatar" />
             </v-avatar>
             <div class="profile-pic__info">
               <div class="profile-pic__meta">
@@ -71,12 +68,9 @@
           </div>
         </span>
         <div class="not-loggedin" v-else>
-          <img
-            class="not-loggedin__img text--link"
-            src="~/assets/profile.png"
-            style="border-radius:10rem;"
-            @click.stop="loginInState"
-          />
+          <v-avatar size="35" class="profile-pic__avatar" @click.stop="loginInState()">
+            <img :src="auth? user.avatar.img:avatar" />
+          </v-avatar>
         </div>
       </div>
     </nav>
@@ -98,7 +92,8 @@ export default {
   data() {
     return {
       menuStates: "menu-inactive",
-      notification: false
+      notification: false,
+      avatar: require("~/assets/profile.png")
     };
   },
   async mounted() {
@@ -120,12 +115,14 @@ export default {
   computed: {
     ...mapGetters({
       notificationCount: "user/getCommentNotificationCount",
-      user: "user/loggedInUser",
-      loggedIn: "auth/isAuthenticated",
+      user: "auth/getUser",
+      chapter: "chapter/getChapter",
+      auth: "auth/isAuthenticated",
       theme: "user/getTheme",
       productState: "getProductModalState",
       title: "chapter/getChapterBookTitle",
       wealth: "wallet/getWealth",
+      // auth:'auth/'
       subscribe: "subscription/getSiteModalState"
     }),
     loginState() {
@@ -159,13 +156,13 @@ export default {
       this.$store.commit("LOGIN_STATE");
     },
     closeNotification() {
-      if (!this.loggedIn) {
+      if (!this.auth) {
         return this.$store.commit("LOGIN_STATE");
       }
       this.notification = !this.notification;
     },
     openSubModal() {
-      if (!this.loggedIn) {
+      if (!this.auth) {
         return this.$store.commit("LOGIN_STATE");
       }
       this.$store.commit("subscription/TOGGLE_SITE_MODAL");
@@ -273,6 +270,9 @@ export default {
     box-shadow: 0 2px 5px 0 rgba(60, 66, 87, 0.1),
       0 1px 1px 0 rgba(0, 0, 0, 0.07);
     margin-right: 1rem;
+    &:hover {
+      cursor: pointer;
+    }
     &--bronze {
       img {
         border: 1px solid $bronze;

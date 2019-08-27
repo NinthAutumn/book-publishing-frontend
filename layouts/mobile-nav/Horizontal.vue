@@ -36,7 +36,7 @@ export default {
   },
   computed: {
     ...mapGetters({
-      user: "user/loggedInUser",
+      user: "auth/getUser",
       loggedIn: "auth/isAuthenticated",
       notificationCount: "user/getCommentNotificationCount"
     })

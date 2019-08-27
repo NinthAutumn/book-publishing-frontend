@@ -71,7 +71,7 @@ export default {
           });
           await this.$store.dispatch("review/showAll", {
             bookId: this.$route.params.id,
-            userId: this.$store.getters["user/loggedInUser"].id,
+            userId: this.$store.getters["auth/getUser"].id,
             page: 1,
             limit: 10,
             direction: "desc",
@@ -97,7 +97,7 @@ export default {
           });
           await this.$store.dispatch("review/showAll", {
             bookId: this.$route.params.id,
-            userId: this.$store.getters["user/loggedInUser"].id,
+            userId: this.$store.getters["auth/getUser"].id,
             page: 1,
             limit: 10,
             direction: "desc",
