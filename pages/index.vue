@@ -79,7 +79,6 @@ export default {
   },
   async fetch({ store }) {
     await store.dispatch("analytic/fetchRecommended");
-
     await store.dispatch("analytic/fetchVoteRanking", {
       time: "daily",
       page: 1,
@@ -126,7 +125,7 @@ export default {
       latest: "analytic/getLatest",
       recommended: "analytic/getRecommended",
       frequent: "analytic/getFrequent",
-      user: "user/loggedInUser"
+      user: "auth/getUser"
     })
   },
   auth: false

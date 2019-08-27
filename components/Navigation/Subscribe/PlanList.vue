@@ -80,7 +80,7 @@ export default {
   },
   computed: {
     ...mapGetters({
-      user: "user/loggedInUser"
+      user: "auth/getUser"
     })
   },
   methods: {

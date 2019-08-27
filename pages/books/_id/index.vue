@@ -148,7 +148,7 @@ export default {
       import("@/components/Mobile/Cards/Book/Page")
     )
   },
-  transition: false,
+  pageTransition: false,
   async mounted() {
     if (this.$device.isMobile) {
       return;

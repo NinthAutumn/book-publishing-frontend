@@ -216,7 +216,7 @@ export default {
             planId: this.selectedPlan.id,
             subscription: this.subscription
           });
-          await this.$store.dispatch("user/fetchUser");
+          await this.$store.dispatch("auth/fetchUser");
 
           return this.$toast.show("プレミアム会員登録に成功しました", {
             theme: "toasted-primary",

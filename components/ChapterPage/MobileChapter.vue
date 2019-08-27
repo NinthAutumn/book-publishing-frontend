@@ -189,7 +189,7 @@ export default {
       theme: "user/getTheme",
       modal: "chapter/getModalState",
       chapter: "chapter/getChapter",
-      user: "user/loggedInUser",
+      user: "auth/getUser",
       font: "user/getFontSize",
       next: "chapter/getNextChapter",
       prev: "chapter/getPrevChapter",

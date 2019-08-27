@@ -87,7 +87,7 @@ export default {
       stripe: this.$stripe.import(),
       form: {
         phone: "",
-        email: this.$store.getters["user/loggedInUser"].email,
+        email: this.$store.getters["auth/getUser"].email,
         fullname: "",
         firstname: "",
         lastname: ""
@@ -146,7 +146,7 @@ export default {
 
       if (this.saveCard) {
         await this.$store.dispatch("stripe/savePaymentMethod", {
-          customerId: this.$store.getters["user/loggedInUser"].stripeCustomerId,
+          customerId: this.$store.getters["auth/getUser"].stripeCustomerId,
           paymentMethodId: paymentMethod.id
         });
       }

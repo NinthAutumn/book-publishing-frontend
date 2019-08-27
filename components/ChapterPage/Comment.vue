@@ -213,7 +213,7 @@ export default {
     ...mapGetters({
       theme: "user/getTheme",
       logged: "isAuthenticated",
-      user: "user/loggedInUser",
+      user: "auth/getUser",
       chapter: "chapter/getChapter"
     })
   },

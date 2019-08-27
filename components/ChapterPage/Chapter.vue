@@ -89,7 +89,7 @@ export default {
       fontStyle: "user/getFontFamily",
       modal: "chapter/getModalState",
       chapter: "chapter/getChapter",
-      user: "user/loggedInUser",
+      user: "auth/getUser",
       font: "user/getFontSize"
     })
   },

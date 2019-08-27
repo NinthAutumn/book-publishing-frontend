@@ -10,7 +10,7 @@
         <h3 class="comment-header" style>コメント欄</h3>
       </div>
 
-      <div style="margin-bottom:5px;" class="divider" v-if="$store.state.auth.loggedIn">
+      <div style="margin-bottom:5px;" class="divider" v-if="auth">
         <div class="comment-list__error" v-if="error">
           <p>コメントは何か書かないと投稿できません！</p>
         </div>
@@ -53,7 +53,8 @@ import { mapGetters } from "vuex";
 export default {
   computed: {
     ...mapGetters({
-      comments: "comment/getComments"
+      comments: "comment/getComments",
+      auth: "auth/isAuthenticated"
     })
   },
   components: {
@@ -115,7 +116,7 @@ export default {
 
       await this.$store.dispatch("comment/fetchCommentList", {
         chapterId: this.$route.params.chaptersId,
-        userId: this.$store.getters["user/loggedInUser"].id
+        userId: this.$store.getters["auth/getUser"].id
       });
       this.content = "";
     }

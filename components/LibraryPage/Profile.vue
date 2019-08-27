@@ -8,7 +8,7 @@
             :src="`https://storage.googleapis.com/theta-images/${user.avatar}`"
             alt="user profile picture"
             >-->
-            <img :src="user.avatar.img" alt>
+            <img :src="user?user.avatar.img:avatar" alt />
           </v-avatar>
         </div>
         <div class="library-up__avatar__username" v-text="user.username"></div>
@@ -52,8 +52,13 @@ import { mapGetters } from "vuex";
 export default {
   computed: {
     ...mapGetters({
-      user: "user/loggedInUser"
+      user: "auth/getUser"
     })
+  },
+  data() {
+    return {
+      avatar: require("~/assets/profile.png")
+    };
   }
 };
 </script>

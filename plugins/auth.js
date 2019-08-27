@@ -32,7 +32,7 @@ export default async function ({
       access_token: token,
       strategy: strategy
     })
-    await store.dispatch('user/fetchUser')
+    await store.dispatch('auth/fetchUser')
   }
   if (process.client) {
     if (store.getters['auth/isAuthenticated']) {

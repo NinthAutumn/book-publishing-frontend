@@ -39,7 +39,7 @@ export default {
     ...mapGetters({
       plans: "subscription/getSitePlans",
       selectedPlan: "subscription/getSitePlan",
-      user: "user/loggedInUser"
+      user: "auth/getUser"
     })
   },
   methods: {

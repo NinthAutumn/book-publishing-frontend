@@ -117,8 +117,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      user: "user/loggedInUser",
-      loggedIn: "isAuthenticated",
+      user: "auth/getUser",
+      loggedIn: "auth/isAuthenticated",
       loginState: "getLoginFormState",
       productState: "getProductModalState",
       notificationCount: "user/getCommentNotificationCount",
@@ -128,7 +128,7 @@ export default {
     })
   },
   async mounted() {
-    if (this.$store.getters.isAuthenticated) {
+    if (this.loggedIn) {
       await this.$store.dispatch("user/fetchCommentNotificationsCount");
       await this.$store.dispatch("wallet/wealth");
     }

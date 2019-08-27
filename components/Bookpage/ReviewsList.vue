@@ -147,7 +147,7 @@ export default {
       if (this.$store.getters.isAuthenticated) {
         reviews = await this.$store.dispatch("review/showAll", {
           bookId: this.$route.params.id,
-          userId: this.$store.getters["user/loggedInUser"].id,
+          userId: this.$store.getters["auth/getUser"].id,
           page: this.page++,
           limit: 10,
           direction: "desc",

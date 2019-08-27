@@ -17,7 +17,7 @@
         <VerticalLeftMobile
           @stripe="stripeOpen"
           v-touch:swipe.right="swipeRight"
-          v-if="mvRight"
+          v-if="mvRight&&auth"
           @toggle="toggleMenu"
         ></VerticalLeftMobile>
       </transition>
@@ -46,7 +46,6 @@ import {
 export default {
   components: {
     Horizontal: hydrateWhenVisible(() => import("./main-nav/Horizontal")),
-    Vertical: hydrateWhenVisible(() => import("./main-nav/Vertical")),
     VerticalRightMobile: hydrateWhenVisible(() =>
       import("./mobile-nav/Vertical-right")
     ),
@@ -83,7 +82,7 @@ export default {
   },
   computed: {
     user() {
-      return this.$store.getters["user/loggedInUser"];
+      return this.$store.getters["auth/getUser"];
     },
     ...mapGetters({
       auth: "auth/isAuthenticated",
@@ -96,7 +95,6 @@ export default {
       this.$store.commit("DROPDOWN_FALSE");
     },
     toggleMenu(val) {
-      val;
       if (val) {
         if (!this.auth) {
           return this.$router.push("/auth/login");

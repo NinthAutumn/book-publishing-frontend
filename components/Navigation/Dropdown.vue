@@ -82,7 +82,7 @@ export default {
   },
   computed: {
     ...mapGetters({
-      user: "user/loggedInUser",
+      user: "auth/getUser",
       wealth: "wallet/getWealth",
       token: "wallet/getToken"
     })
@@ -102,7 +102,12 @@ export default {
   },
   methods: {
     async logOut() {
+      // this.$nuxt.refresh;
+      // return;
       await this.$store.dispatch("auth/logout");
+      this.$nuxt.refresh(true);
+      // console.log(this.$nuxt);
+
       this.$axios.setHeader("Authorization", null);
     }
   }

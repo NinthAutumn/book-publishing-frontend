@@ -68,7 +68,7 @@ export default {
   computed: {
     ...mapGetters({
       chapter_count: "book/getBookChapterCount",
-      auth: "user/loggedInUser"
+      auth: "auth/getUser"
     })
   },
   data() {

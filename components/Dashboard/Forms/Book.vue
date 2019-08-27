@@ -235,7 +235,7 @@ export default {
       book: "book/getBook",
       genres: "book/getBookGenres",
       tags: "book/getBookTags",
-      user: "user/loggedInUser"
+      user: "auth/getUser"
     }),
     isFormInValid() {
       return Object.keys(this.fields).some(key => this.fields[key].invalid);

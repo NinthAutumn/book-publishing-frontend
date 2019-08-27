@@ -29,7 +29,7 @@ export default {
         this.$axios.defaults.headers.common[
           "Authorization"
         ] = `Bearer ${access_token}`;
-        await this.$store.dispatch("user/fetchUser");
+        await this.$store.dispatch("auth/fetchUser");
         // this.$router.go(0);
       } catch (error) {
         console.log(error);
