@@ -28,7 +28,10 @@
 
       <div class="dashboard-book__footer flex-row flex--align flex--between">
         <div class="dashboard-book__actions flex-row flex--align">
-          <div class="dashboard-book__action dashboard-book__action--news">
+          <div
+            @click.stop="$emit('toggleAnnouncement',book.id)"
+            class="dashboard-book__action dashboard-book__action--news"
+          >
             <fa icon="newspaper"></fa>
           </div>
           <nuxt-link

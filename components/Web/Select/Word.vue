@@ -45,6 +45,12 @@ export default {
       clicked: false
     };
   },
+  updated() {
+    if (this.value) {
+      this.selected = true;
+      this.selected_item = this.value;
+    }
+  },
   mounted() {
     if (this.value) {
       this.selected = true;

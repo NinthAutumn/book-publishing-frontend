@@ -3,8 +3,9 @@
     <ul class="dash-booklist__list">
       <li class="dash-booklist__item" v-for="(book, index) in books" :key="index">
         <!-- <Book :book="book"></Book> -->
-        <book-card :book="book"></book-card>
+        <book-card @toggleAnnouncement="toggleAnn" :book="book"></book-card>
       </li>
+      <announce-form :bookId="bookId" @toggleAnnouncement="toggleAnn" v-model="announce"></announce-form>
     </ul>
   </div>
 </template>
@@ -16,12 +17,27 @@ export default {
   },
   data() {
     return {
-      image: false
+      image: false,
+      announce: false,
+      bookId: ""
     };
+  },
+  methods: {
+    toggleAnn(val) {
+      if (val) {
+        this.announce = true;
+        this.bookId = val;
+      } else {
+        this.announce = false;
+        this.bookId = "";
+      }
+      // this.announce = !this.announce;
+    }
   },
   components: {
     Book: () => import("./Book"),
-    BookCard: () => import("@/components/Web/Cards/Book/Dashboard")
+    BookCard: () => import("@/components/Web/Cards/Book/Dashboard"),
+    AnnounceForm: () => import("@/components/Web/Modals/Announcement/Form")
   }
 };
 </script>
