@@ -165,6 +165,7 @@ module.exports = {
 
   ],
 
+
   /*
    ** Nuxt.js modules
    */

@@ -100,13 +100,19 @@ export default {
       });
     }
   },
+  // transition (to, from) {
+  //   if (!from) return 'slide-left'
+  //   return +to.query.page < +from.query.page ? 'slide-right' : 'slide-left'
+  // }
   layout: "chapter-nav/Chapter",
   computed: {
     ...mapGetters({
       title: "chapter/getChapterBookTitle"
+      // chapter:'chapter/getChapter'
     })
   },
   scrollToTop: true,
+  pageTransition: false,
   head() {
     return {
       title: this.title
