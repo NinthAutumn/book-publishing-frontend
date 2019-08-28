@@ -43,8 +43,6 @@ export const actions = {
       let trackId = this.$axios.defaults.headers.common['TrackId']
       delete this.$axios.defaults.headers.common['Authorization']
       delete this.$axios.defaults.headers.common['TrackId']
-      console.log(file);
-      delete this.$axios.defaults.headers.common['Content-Type']
       await this.$axios.put(uploadConfig.data.url, file, {
         headers: {
           'Content-Type': file.type,
@@ -79,7 +77,6 @@ export const actions = {
       let trackId = this.$axios.defaults.headers.common['TrackId']
       delete this.$axios.defaults.headers.common['Authorization']
       delete this.$axios.defaults.headers.common['TrackId']
-      delete this.$axios.defaults.headers.common['Content-Type']
       const res = await this.$axios.put(data.url, file, {
         headers: {
           'Content-Type': file.type
@@ -125,33 +122,5 @@ export const actions = {
 
     }
   },
-  async multiImage({
-    commit
-  }, file) {
-    try {
-      const uploadConfig = await this.$axios.get('/upload')
-      // delete this.$axios.defaults.headers.common["Authorization"]
-      // delete this.$axios.defaults.headers.common["TrackId"]
-      await this.$axios.put(uploadConfig.data.url, file, {
-        headers: {
-          'Content-Type': 'image',
-          "Authorization": null,
-          "TrackId": null
-        }
-      })
-      commit('PUSH_URL', uploadConfig.data.id)
-      // const token = this.$storage.getUniversal('access_token')
-      // let track_id = $storage.getUniversal('track_id')
-      // this.$axios.defaults.headers.common['Authorization'] = token
-      // this.$axios.defaults.headers.common["TrackId"] = track_id
-      return Promise.resolve()
-
-    } catch (error) {
-
-    }
-
-
-
-  }
 
 }
