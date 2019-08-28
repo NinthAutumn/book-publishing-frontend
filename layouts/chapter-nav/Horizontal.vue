@@ -7,12 +7,8 @@
       <div class="left-menu flex flex--align">
         <nuxt-link v-ripple tag="div" to="/" class="site-logo">ノーブル</nuxt-link>
         <div class="nav-title flex flex--align">
-          <nuxt-link
-            class="nav-title__book"
-            v-text="`${title}/`"
-            :to="`/books/${$route.params.id}`"
-          ></nuxt-link>
-          <span class="nav-title__chapter-index" v-text="`第${chapter.index}話:`"></span>
+          <nuxt-link class="nav-title__book" v-text="`${title}`" :to="`/books/${$route.params.id}`"></nuxt-link>
+          <span class="nav-title__chapter-index" v-text="`/第${chapter.index}話:`"></span>
           <div class="nav-title__chapter">
             <h4 v-text="chapter.title"></h4>
           </div>
@@ -286,16 +282,10 @@ export default {
     width: 10rem;
     #{$self}__username {
       font-size: 1.2rem;
-      // margin-right: 2rem;
     }
     #{$self}__icon {
       font-size: 1.4rem;
     }
-    // margin-right: 2rem;
-  }
-  &:hover {
-  }
-  &:focus {
   }
 }
 .dropdown-inactive {
@@ -312,16 +302,12 @@ export default {
   right: 5px;
   z-index: 2200;
   transition: 300ms;
-  -webkit-box-shadow: 0px 2px 12px 3px rgba(191, 191, 191, 1);
-  -moz-box-shadow: 0px 2px 12px 3px rgba(191, 191, 191, 1);
   box-shadow: 0px 2px 12px 3px rgba(191, 191, 191, 1);
   border-radius: 10px;
   background-image: none;
 }
 
 .h-nav {
-  // border-bottom-right-radius: 1rem;
-  // border-bottom-left-radius: 1rem;
   .nav-title {
     max-width: 100%;
     white-space: nowrap;
@@ -431,34 +417,10 @@ ul {
 .menu-active {
   background-color: #eaecf5;
 }
-.menu-inactive {
-  -webkit-animation: flip-diagonal-2-br 300ms
-    cubic-bezier(0.455, 0.03, 0.515, 0.955) both;
-  animation: flip-diagonal-2-br 300ms cubic-bezier(0.455, 0.03, 0.515, 0.955)
-    both;
-}
 .left-menu {
   margin-left: 10px;
   max-width: 100%;
 }
-// .profile-pic {
-//   border-radius: 100px;
-//   margin-right: 10px;
-//   max-width: 45px;
-
-//   position: relative;
-//   border: 1px solid #ffd700;
-//   &:hover {
-//     -webkit-box-shadow: 0px 2px 4px 0px rgba(217, 217, 217, 1);
-//     -moz-box-shadow: 0px 2px 4px 0px rgba(217, 217, 217, 1);
-//     box-shadow: 0px 2px 4px 0px rgba(217, 217, 217, 1);
-//   }
-//   &:focus {
-//     -webkit-box-shadow: 0px 0px 4px 0px rgba(217, 217, 217, 1);
-//     -moz-box-shadow: 0px 0px 4px 0px rgba(217, 217, 217, 1);
-//     box-shadow: 0px 0px 4px 0px rgba(217, 217, 217, 1);
-//   }
-// }
 
 .profile-info {
   display: flex;
@@ -508,26 +470,5 @@ ul {
   content: "arif";
   background-color: black !important;
   color: black !important;
-}
-
-@-webkit-keyframes flip-diagonal-2-br {
-  0% {
-    -webkit-transform: rotate3d(-1, 1, 0, 0deg);
-    transform: rotate3d(-1, 1, 0, 0deg);
-  }
-  100% {
-    -webkit-transform: rotate3d(-1, 1, 0, 180deg);
-    transform: rotate3d(-1, 1, 0, 180deg);
-  }
-}
-@keyframes flip-diagonal-2-br {
-  0% {
-    -webkit-transform: rotate3d(-1, 1, 0, 0deg);
-    transform: rotate3d(-1, 1, 0, 0deg);
-  }
-  100% {
-    -webkit-transform: rotate3d(-1, 1, 0, 180deg);
-    transform: rotate3d(-1, 1, 0, 180deg);
-  }
 }
 </style>

@@ -12,7 +12,12 @@
         ></v-img>
       </div>
       <div class="book-scard__meta">
-        <div class="book-scard__title" v-line-clamp="1" v-text="book.title"></div>
+        <nuxt-link
+          :to="`/books/${book.id}`"
+          class="book-scard__title"
+          v-line-clamp="1"
+          v-text="book.title"
+        ></nuxt-link>
         <div class="flex-divider flex-row">
           <div class="book-scard__genre" v-text="`${book.pen_name}・${book.name}`"></div>
         </div>
@@ -31,6 +36,8 @@
 
 <script>
 export default {
+  name: "search-bookcard",
+  serverCacheKey: props => props.book.id,
   props: {
     book: {
       type: Object

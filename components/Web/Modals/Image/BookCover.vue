@@ -1,57 +1,59 @@
 <template>
   <div class="image-modal dialog dialog__container" v-if="container">
-    <transition name="grow-shrink" appear>
-      <div class="image-modal__container dialog__content" v-if="value">
-        <div class="image-modal__header flex-row flex--between">
-          <div class="image-modal__nav">
-            <div
-              class="image-modal__nav-item"
-              :key="key"
-              v-for="(value,key) in nav"
-              v-text="value.name"
-              @click="selected = value.key"
-              :class="{'image-modal__nav-item--selected': selected === value.key}"
-            ></div>
+    <client-only>
+      <transition name="grow-shrink" appear>
+        <div class="image-modal__container dialog__content" v-if="value">
+          <div class="image-modal__header flex-row flex--between">
+            <div class="image-modal__nav">
+              <div
+                class="image-modal__nav-item"
+                :key="key"
+                v-for="(value,key) in nav"
+                v-text="value.name"
+                @click="selected = value.key"
+                :class="{'image-modal__nav-item--selected': selected === value.key}"
+              ></div>
+            </div>
+            <div class="image-modal__upload">
+              <label
+                for="file-upload"
+                class="custom-file-upload"
+                v-ripple
+                v-text="!loading? 'カバーを投稿': '投稿中...'"
+              >
+                <fa style="margin-right:0.5rem;" icon="plus"></fa>
+              </label>
+              <input　 id="file-upload" type="file" accept="image/*" @change="onFileChange" />
+            </div>
           </div>
-          <div class="image-modal__upload">
-            <label
-              for="file-upload"
-              class="custom-file-upload"
-              v-ripple
-              v-text="!loading? 'カバーを投稿': '投稿中...'"
-            >
-              <fa style="margin-right:0.5rem;" icon="plus"></fa>
-            </label>
-            <input　 id="file-upload" type="file" accept="image/*" @change="onFileChange" />
-          </div>
-        </div>
 
-        <div class="image-modal__image-list">
-          <transition name="slide-right">
-            <div class="image-modal__list image-modal__list--site" v-if="selected === 'site'">
-              <div
-                class="image-modal__item"
-                v-for="item in site"
-                :key="item.id"
-                @click="selectImage(item)"
-              >
-                <v-img :src="item.url"></v-img>
+          <div class="image-modal__image-list">
+            <transition name="slide-right">
+              <div class="image-modal__list image-modal__list--site" v-if="selected === 'site'">
+                <div
+                  class="image-modal__item"
+                  v-for="item in site"
+                  :key="item.id"
+                  @click="selectImage(item)"
+                >
+                  <v-img :src="item.url"></v-img>
+                </div>
               </div>
-            </div>
-            <div class="image-modal__list image-modal__list--user" v-if="selected === 'user'">
-              <div
-                @click="selectImage(item)"
-                class="image-modal__item"
-                v-for="item in list"
-                :key="item.id"
-              >
-                <v-img :src="item.url"></v-img>
+              <div class="image-modal__list image-modal__list--user" v-if="selected === 'user'">
+                <div
+                  @click="selectImage(item)"
+                  class="image-modal__item"
+                  v-for="item in list"
+                  :key="item.id"
+                >
+                  <v-img :src="item.url"></v-img>
+                </div>
               </div>
-            </div>
-          </transition>
+            </transition>
+          </div>
         </div>
-      </div>
-    </transition>
+      </transition>
+    </client-only>
   </div>
 </template>
 
@@ -131,6 +133,9 @@ export default {
       this.$emit("selectImage", item);
       this.$emit("input", false);
     },
+    // create_blob(file) {
+    //   return file
+    // },
     async onFileChange(e) {
       this.loading = true;
       this.$nuxt.$loading.start();
@@ -144,7 +149,7 @@ export default {
         }
         for (let key of cover_keys) {
           await this.upload({
-            file: this.file,
+            file: this.cover[key].file,
             unique,
             size: this.cover[key].name
           });
@@ -161,16 +166,27 @@ export default {
 
       this.loading = false;
     },
-    resizeHandler({ file, cover }) {
+    async resizeHandler({ file, cover }) {
       try {
+        // import { readAndCompressImage } from "browser-image-resizer";
+        const resize = require("browser-image-resizer").readAndCompressImage;
         if (!cover.name) {
           this.image = file;
           this.cover["default"]["file"] = file;
           return Promise.resolve();
         }
-        imageResize.resize(file, cover.size, (blob, didItResize) => {
-          this.cover[cover.name]["file"] = blob;
-        });
+        const config = {
+          qualit: 0.8,
+          maxWidth: cover["size"]["width"],
+          maxHeight: cover["size"]["height"],
+          mimeType: file.type
+        };
+        let newFile = await resize(file, config);
+        console.log(newFile);
+        this.cover[cover.name]["file"] = newFile;
+        // imageResize.resize(file, cover.size, (blob, didItResize) => {
+
+        // });
         return Promise.resolve();
       } catch (error) {
         console.log(error);

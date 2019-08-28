@@ -76,23 +76,28 @@
         </div>
       </div>
     </nav>
-    <transition name="grow-shrink" class="loginform">
-      <AuthModal v-if="loginState"></AuthModal>
-    </transition>
-    <transition name="grow-shrink" class="productform">
-      <product-modal v-if="productState"></product-modal>
-    </transition>
-    <transition name="grow-shrink">
-      <setting-form v-if="dialog"></setting-form>
-    </transition>
     <Username></Username>
-    <transition name="grow-shrink">
-      <sub-main v-if="subscribe"></sub-main>
-    </transition>
+
+    <client-only>
+      <transition name="grow-shrink" class="loginform">
+        <AuthModal v-if="loginState"></AuthModal>
+      </transition>
+      <transition name="grow-shrink" class="productform">
+        <product-modal v-if="productState"></product-modal>
+      </transition>
+      <transition name="grow-shrink">
+        <setting-form v-if="dialog"></setting-form>
+      </transition>
+      <transition name="grow-shrink">
+        <sub-main v-if="subscribe"></sub-main>
+      </transition>
+    </client-only>
   </div>
 </template>
 <script>
 import { mapGetters } from "vuex";
+import { hydrateWhenVisible } from "vue-lazy-hydration";
+
 export default {
   name: "Horizontal",
   data() {
@@ -109,11 +114,17 @@ export default {
     AuthModal: () => import("@/components/Navigation/Auth/AuthModal"),
     Dropdown: () => import("@/components/Navigation/Dropdown"),
     ProductModal: () => import("@/components/Navigation/Stripe/ProductModal"),
-    SettingForm: () => import("@/components/Navigation/Setting"),
-    NotificationList: () => import("@/components/Navigation/Notification"),
+    SettingForm: hydrateWhenVisible(() =>
+      import("@/components/Navigation/Setting")
+    ),
+    NotificationList: hydrateWhenVisible(() =>
+      import("@/components/Navigation/Notification")
+    ),
     Currency: () => import("@/components/All/Currency"),
     Username: () => import("@/components/Navigation/Username"),
-    SubMain: () => import("@/components/Navigation/Subscribe/SubMain")
+    SubMain: hydrateWhenVisible(() =>
+      import("@/components/Navigation/Subscribe/SubMain")
+    )
   },
   computed: {
     ...mapGetters({

@@ -34,6 +34,8 @@
 import { TrinityRingsSpinner } from "epic-spinners";
 
 export default {
+  name: "detailed-bookcardM",
+  serverCacheKey: props => props.book.id,
   props: {
     book: Object
   },

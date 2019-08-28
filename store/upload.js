@@ -38,16 +38,22 @@ export const actions = {
     file,
   }) {
     try {
-      const uploadConfig = await this.$axios.get(`/upload`)
+      const uploadConfig = await this.$axios.get(`/upload?filetype=${file}`)
+      let auth = this.$axios.defaults.headers.common['Authorization']
+      let trackId = this.$axios.defaults.headers.common['TrackId']
+      delete this.$axios.defaults.headers.common['Authorization']
+      delete this.$axios.defaults.headers.common['TrackId']
+      console.log(file);
+      delete this.$axios.defaults.headers.common['Content-Type']
       await this.$axios.put(uploadConfig.data.url, file, {
         headers: {
-          'Content-Type': 'image',
-          "Authorization": null,
-          "TrackId": null
+          'Content-Type': file.type,
         },
         baseURL: ""
       })
       commit('ADD_URL', uploadConfig.data.filename)
+      this.$axios.defaults.headers.common['Authorization'] = auth
+      this.$axios.defaults.headers.common['TrackId'] = trackId
       return Promise.resolve({
         url: `https://storage.googleapis.com/theta-images/${uploadConfig.data.filepath}`,
         path: uploadConfig.data.filepath,
@@ -65,19 +71,26 @@ export const actions = {
     unique
   }) {
     try {
-      const uploadConfig = await this.$axios.get(`/upload/cover?size=${size}&unique=${unique}`)
-      await this.$axios.put(uploadConfig.data.url, file, {
+      const {
+        data
+      } = await this.$axios.get(`/upload/cover?size=${size}&unique=${unique}&filetype=${file.type}`)
+      let auth = this.$axios.defaults.headers.common['Authorization']
+
+      let trackId = this.$axios.defaults.headers.common['TrackId']
+      delete this.$axios.defaults.headers.common['Authorization']
+      delete this.$axios.defaults.headers.common['TrackId']
+      delete this.$axios.defaults.headers.common['Content-Type']
+      const res = await this.$axios.put(data.url, file, {
         headers: {
-          'Content-Type': 'image',
-          "Authorization": null,
-          "TrackId": null
+          'Content-Type': file.type
         },
         baseURL: ""
       })
-      commit('ADD_URL', uploadConfig.data.filename)
+      this.$axios.defaults.headers.common['Authorization'] = auth
+      this.$axios.defaults.headers.common['TrackId'] = trackId
       return Promise.resolve({
-        url: `https://storage.googleapis.com/theta-images/${uploadConfig.data.filepath}`,
-        path: uploadConfig.data.filepath,
+        url: `https://noble-img-directory.s3-ap-northeast-1.amazonaws.com/${data.filepath}`,
+        path: data.filepath,
       })
     } catch (error) {
       alert(error)
@@ -87,19 +100,25 @@ export const actions = {
     commit
   }, file) {
     try {
-      const uploadConfig = await this.$axios.get('/upload')
+
+      const uploadConfig = await this.$axios.get(`/upload?filetype=${file.type}`)
+      let auth = this.$axios.defaults.headers.common['Authorization']
+      let trackId = this.$axios.defaults.headers.common['TrackId']
+      delete this.$axios.defaults.headers.common['Authorization']
+      delete this.$axios.defaults.headers.common['TrackId']
+      delete this.$axios.defaults.headers.common['Content-Type']
+
       await this.$axios.put(uploadConfig.data.url, file, {
         headers: {
-          'Content-Type': 'image',
-          "Authorization": null,
-          "TrackId": null
+          'Content-Type': file.type,
         },
         baseURL: ""
       })
-      commit('ADD_URL', uploadConfig.data.filename)
+      this.$axios.defaults.headers.common['Authorization'] = auth
+      this.$axios.defaults.headers.common['TrackId'] = trackId
       return Promise.resolve({
-        url: `https://storage.googleapis.com/theta-images/${uploadConfig.data.filename}`,
-        path: uploadConfig.data.filename,
+        url: `https://noble-img-directory.s3-ap-northeast-1.amazonaws.com/${uploadConfig.data.filepath}`,
+        path: uploadConfig.data.filepath,
         id: uploadConfig.data.id
       })
     } catch (error) {

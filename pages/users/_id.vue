@@ -20,17 +20,24 @@
 
 <script>
 import { mapGetters } from "vuex";
+import { hydrateWhenVisible } from "vue-lazy-hydration";
+
 export default {
   auth: false,
   components: {
-    ProfileNav: () => import("@/components/User/ProfileNav"),
-    UserContent: () => import("@/components/User/Content"),
-    MobileProfile: () => import("@/components/Mobile/Cards/User/Profile"),
-    MobileBooks: () => import("@/components/Mobile/List/Book"),
-    MobileMoment: () => import("@/components/Mobile/List/Moment")
-  },
-  methods: {
-    changeSticky() {}
+    ProfileNav: hydrateWhenVisible(() =>
+      import("@/components/User/ProfileNav")
+    ),
+    UserContent: hydrateWhenVisible(() => import("@/components/User/Content")),
+    MobileProfile: hydrateWhenVisible(() =>
+      import("@/components/Mobile/Cards/User/Profile")
+    ),
+    MobileBooks: hydrateWhenVisible(() =>
+      import("@/components/Mobile/List/Book")
+    ),
+    MobileMoment: hydrateWhenVisible(() =>
+      import("@/components/Mobile/List/Moment")
+    )
   },
   async fetch({ store, route }) {
     await store.dispatch("user/fetchProfile", { userId: route.params.id });

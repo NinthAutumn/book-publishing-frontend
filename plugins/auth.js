@@ -14,14 +14,8 @@ export default async function ({
 }) {
   const {
     $storage,
-    $axios,
-
+    $axios
   } = app
-
-
-  // if (!store.getters['auth/isAuthenticated']) {
-  //   return
-  // }
   let token = $storage.getUniversal('access_token')
   const refresh = $storage.getUniversal('refresh_token')
   let strategy = $storage.getUniversal('strategy')
@@ -60,10 +54,8 @@ export default async function ({
           $storage.setUniversal('access_token', access_token)
           $axios.defaults.headers.common['Authorization'] = 'Bearer ' + access_token
         } catch (error) {
-          // store.commit('auth/')
           console.log(error);
           throw new Error('トークンの再生に失敗した')
-          // refresher.close()
         }
 
       }, expdate);
@@ -76,16 +68,6 @@ export default async function ({
   }
 
   $axios.defaults.headers.common['TrackId'] = track_id
-
-
-  // const redirectSSL = require('redirect-ssl')
-
-  // // Add middleware
-  // app.use(redirectSSL)
-
-  // Or if want to provide options
-  // app.use(redirectSSL.create({ redirectPort: 8443 }))
-
 
 
 }

@@ -96,8 +96,7 @@ export default {
       }
     }
   }
-  thead {
-  }
+
   &__row-header {
     font-size: 1.4rem !important;
     color: #83848f;

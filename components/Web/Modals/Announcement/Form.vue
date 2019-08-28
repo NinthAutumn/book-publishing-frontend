@@ -52,6 +52,8 @@
 
 <script>
 export default {
+  name: "ann-form",
+  serverCacheKey: props => true,
   props: ["value", "bookId"],
   data() {
     return {

@@ -134,7 +134,6 @@ export default {
     })
   },
   methods: {
-    sortSelect() {},
     navLineOut() {
       this.line = this.selectedTab;
     },

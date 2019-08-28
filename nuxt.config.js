@@ -146,9 +146,6 @@ module.exports = {
       src: '@/plugins/skeleton',
       ssr: false
     }, {
-      src: '@/plugins/gAuth',
-      ssr: false,
-    }, {
       src: '@/plugins/epicSpinners',
       ssr: false,
     },
@@ -199,6 +196,7 @@ module.exports = {
       defaultLocale: 'ja'
     }],
     ['@nuxtjs/component-cache', {
+      max: 10000,
       maxAge: 1000 * 60 * 60
     }],
     ['@nuxtjs/google-adsense', {

@@ -13,36 +13,36 @@
     </div>
     <div class="is-mobile" v-else>
       <mobile-horizontal @toggle="toggleMenu"></mobile-horizontal>
-      <transition name="slide-left">
-        <VerticalLeftMobile
-          @stripe="stripeOpen"
-          v-touch:swipe.right="swipeRight"
-          v-if="mvRight&&auth"
-          @toggle="toggleMenu"
-        ></VerticalLeftMobile>
-      </transition>
-      <transition name="slide-right">
-        <VerticalRightMobile
-          :user="user"
-          v-if="mvLeft"
-          @toggle="toggleMenu"
-          v-touch:swipe.left="swipeLeft"
-        ></VerticalRightMobile>
-      </transition>
-      <transition name="slide-up">
-        <stripe-modal @stripe="stripeOpen" v-if="stripe"></stripe-modal>
-      </transition>
+      <client-only>
+        <transition name="slide-left">
+          <VerticalLeftMobile
+            @stripe="stripeOpen"
+            v-touch:swipe.right="swipeRight"
+            v-if="mvRight&&auth"
+            @toggle="toggleMenu"
+          ></VerticalLeftMobile>
+        </transition>
+
+        <transition name="slide-right">
+          <VerticalRightMobile
+            :user="user"
+            v-if="mvLeft"
+            @toggle="toggleMenu"
+            v-touch:swipe.left="swipeLeft"
+          ></VerticalRightMobile>
+        </transition>
+
+        <transition name="slide-up">
+          <stripe-modal @stripe="stripeOpen" v-if="stripe"></stripe-modal>
+        </transition>
+      </client-only>
       <nuxt class="mobile-nuxt"></nuxt>
     </div>
   </div>
 </template>
 <script>
 import { mapGetters } from "vuex";
-import {
-  hydrateWhenVisible,
-  hydrateWhenIdle,
-  hydrateOnInteraction
-} from "vue-lazy-hydration";
+import { hydrateWhenVisible } from "vue-lazy-hydration";
 export default {
   components: {
     Horizontal: hydrateWhenVisible(() => import("./main-nav/Horizontal")),

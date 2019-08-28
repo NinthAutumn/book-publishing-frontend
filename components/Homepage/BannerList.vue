@@ -23,6 +23,8 @@
 
 <script>
 export default {
+  name: "banner-list",
+  serverCacheKey: ()=>true,
   data() {
     return {
       paginationSize: 10,

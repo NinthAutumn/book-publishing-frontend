@@ -1,17 +1,18 @@
 <template>
   <div class="search-book">
-    <div class="search-book__cover">
+    <nuxt-link :to="`/books/${book.id}`" tag="div" class="search-book__cover">
       <v-img
         class="search-book__image"
         :src="book.cover"
+        :lazy-src="lazyCover"
         :aspect-ratio="1/1.5"
         max-width="14rem"
         min-width="12rem"
         alt="Book cover"
       ></v-img>
-    </div>
+    </nuxt-link>
     <div class="search-book__meta">
-      <div class="search-book__title">{{book.title}}</div>
+      <nuxt-link :to="`/books/${book.id}`" class="search-book__title">{{book.title}}</nuxt-link>
       <div class="search-book__rating">
         <v-rating color="#FF8D29" readonly size="20" half-increments :value="+book.rating"></v-rating>
       </div>
@@ -30,7 +31,7 @@
         </div>
       </div>
       <div class="search-book__synopsis">
-        <v-clamp autoresize :max-lines="2" :expanded="opened">
+        <v-clamp autoresize :max-lines="4" :expanded="opened">
           {{book.synopsis}}
           <template v-slot:before="clamped">{{setClamp(clamped.clamped)}}</template>
         </v-clamp>
@@ -60,7 +61,8 @@ export default {
   data() {
     return {
       opened: false,
-      clamp: false
+      clamp: false,
+      lazyCover: require("~/assets/img/NobleCardLight.png")
     };
   },
   methods: {

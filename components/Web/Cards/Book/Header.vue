@@ -21,6 +21,7 @@
             v-for="(value,key) in meta"
             :key="key"
             :style="value.style"
+            @click="contentHandler(key)"
           >
             <fa class="book-header__icon" :icon="value.icon"></fa>
             <div class="book-header__info" v-text="value.data"></div>
@@ -169,6 +170,17 @@ export default {
           this.bookmarkHandler();
           break;
       }
+    },
+    contentHandler(key) {
+      const action = {
+        genre: () => {
+          return this.$router.push(`/browse?genre=${this.book.name}`);
+        },
+        view: () => {},
+        word: () => {},
+        chapter: () => {}
+      };
+      return action[key]();
     },
     async bookmarkHandler() {
       this.loading = "bookmark";

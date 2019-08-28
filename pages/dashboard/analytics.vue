@@ -3,11 +3,9 @@
     <header class="analytic-page__header">アナリティクス</header>
     <main-graph></main-graph>
     <div class="flex-divider flex-row flex--between">
-      <!-- <transaction-graph class="analytic-page__graph"></transaction-graph> -->
       <funnel-graph></funnel-graph>
       <pie-graph class="analytic-page__pie"></pie-graph>
     </div>
-    <!-- <transaction-list class="analytic-page__list"></transaction-list> -->
   </div>
 </template>
 
@@ -16,7 +14,6 @@ import { mapGetters } from "vuex";
 export default {
   layout: "user-nav/User",
   async fetch({ store, params }) {
-    // await store.dispatch("dashboard/fetchTransactionGraph", { time:  });
     await store.dispatch("dashboard/fetchTransactionPie");
     await store.dispatch("analytic/fetchUserBooks", { funnel: false });
     await store.dispatch("analytic/fetchUserBooks", { funnel: true });
@@ -39,10 +36,6 @@ export default {
 
 <style lang="scss">
 .analytic-page {
-  // display: grid;
-  // grid-template-areas: "header header" "graph pie" "list list ";
-  /* autoprefixer: ignore next */
-  // grid-gap: 1.5rem;
   &__header {
     font-size: 3rem;
   }

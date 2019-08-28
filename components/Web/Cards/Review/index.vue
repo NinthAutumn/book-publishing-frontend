@@ -36,6 +36,8 @@
 
 <script>
 export default {
+  name: "revew-card",
+  serverCacheKey: props => props.book.id + "::" + props.review.id,
   props: {
     review: Object,
     book: Object

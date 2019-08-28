@@ -111,6 +111,7 @@
 </template>
 
 <script>
+import { hydrateWhenVisible } from "vue-lazy-hydration";
 import { mapGetters } from "vuex";
 
 export default {
@@ -120,11 +121,13 @@ export default {
     };
   },
   components: {
-    Horizontal: () => import("./Horizontal"),
-    LeftV: () => import("./Left-V"),
-    RightV: () => import("./Right-V"),
-    MobileHorizontal: () => import("./MobileHorizontal"),
-    SettingForm: () => import("@/components/Navigation/Setting")
+    Horizontal: hydrateWhenVisible(() => import("./Horizontal")),
+    LeftV: hydrateWhenVisible(() => import("./Left-V")),
+    RightV: hydrateWhenVisible(() => import("./Right-V")),
+    MobileHorizontal: hydrateWhenVisible(() => import("./MobileHorizontal")),
+    SettingForm: hydrateWhenVisible(() =>
+      import("@/components/Navigation/Setting")
+    )
   },
   computed: {
     ...mapGetters({
@@ -201,20 +204,12 @@ export default {
   width: 74px;
   font-size: 30px;
   top: 0;
-  // &:hover {
-  //   background-color: $primary;
-  //   cursor: pointer;
-  //   color: white;
-  //   transition: 300ms;
-  // }
 }
 
 .left-vertical-nav {
   position: fixed;
-  // top: 60px;
-  // left: 12rem;
+
   left: 14.4rem;
-  // left: 0;
   .book-cover {
     height: 16.8rem;
     width: 11rem;
@@ -224,14 +219,12 @@ export default {
 .next-chapter-title {
   position: sticky !important;
   height: 100vh;
-  // width: 50px;
   -webkit-text-orientation: upright;
   text-orientation: upright;
   font-size: 16px;
   top: 0;
   -ms-writing-mode: tb-rl;
   writing-mode: vertical-rl;
-  // margin-left: 1rem;
   text-align: center;
   &__content {
     white-space: nowrap;
@@ -245,16 +238,6 @@ export default {
   // -ms-text-combine-horizontal: all;
 }
 
-.yikes {
-  // transition: 200ms;
-}
-/* .chapter-page .menu-active {
-  margin-left: 240px;
-  margin-top: 6.6rem;
-  padding: 1rem 5rem;
-  transition: 300ms;
-  position: relative !important;
-} */
 @media only screen and (max-width: 1304px) {
   .move-left {
     transform: translateX(0);

@@ -34,6 +34,9 @@
 
 <script>
 export default {
+  name: "banner-list",
+  serverCacheKey: props =>
+    props.book.id + "::" + props.score || props.vote + "::" + props.index,
   props: {
     book: Object,
     index: Number,

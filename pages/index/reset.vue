@@ -73,10 +73,6 @@ export default {
     }
   },
   mounted() {
-    if (!this.$route.query.token) {
-      // return this.$router.push("/");
-    }
-
     this.token = this.$route.query.token;
   }
 };

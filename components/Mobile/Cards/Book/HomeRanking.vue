@@ -48,6 +48,8 @@
 import { TrinityRingsSpinner } from "epic-spinners";
 
 export default {
+  name: "home-ranking",
+  serverCacheKey: props => props.book.id,
   props: {
     title: String,
     books: Array

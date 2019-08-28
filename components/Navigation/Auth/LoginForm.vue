@@ -146,6 +146,7 @@ export default {
           });
         }
         this.loading = false;
+        w;
         this.$store.commit("LOGIN_FALSE");
         this.$storage.setUniversal("FAILED_LOGIN_COUNT", 0);
         this.$nuxt.refresh();

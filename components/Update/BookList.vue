@@ -42,7 +42,6 @@ export default {
   },
   methods: {
     checkWidth() {
-      // console.log(this.$refs["books"]);
       this.width = this.$refs.bookList.clientWidth;
     }
   },

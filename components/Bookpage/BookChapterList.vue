@@ -201,7 +201,7 @@ export default {
           background-color: #fff;
         }
       }
-      border-bottom: 1px solid #aab7c4;
+      // border-bottom: 1px solid #aab7c4;
       // border-radius: 1rem;
       // background-color: #fff8f8;
 
