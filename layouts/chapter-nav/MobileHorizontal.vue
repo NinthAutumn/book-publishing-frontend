@@ -20,7 +20,7 @@ export default {
   },
   methods: {
     goBack() {
-      this.$router.push(`/books/${this.$route.params.id}`);
+      this.$router.go(-1);
     }
   }
 };

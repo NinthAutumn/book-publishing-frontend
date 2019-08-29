@@ -72,7 +72,7 @@ export default {
       width: 1rem;
       height: 1rem !important;
     }
-    margin-right: 5px;
+    // margin-right: 5px;
   }
   // perspective: 400px;
   // perspective-origin: 100% 100%;
@@ -106,23 +106,6 @@ export default {
       transform: scale(1.1) translateY(-2px);
       transition: 300ms;
     }
-    &--back {
-      // top: 1px;
-      // // transform: rotate3d(0, 1, 0, 40deg);
-      // left: 1px;
-      // position: absolute;
-
-      // background-color: $secondary;
-      // // box-shadow: 1px 1px 5px grey;
-      // border-radius: 1000px;
-      // transition: 300ms;
-    }
-
-    // box-shadow: inset 1px 1px 5px rgb(253, 225, 225);
-    //   1px 1px 5px rgb(255, 241, 241);
-    // box-shadow: 1px 1px 5px grey;
-    // border-radius: 25000px;
-    // background-color: #ffffff;
   }
 }
 </style>

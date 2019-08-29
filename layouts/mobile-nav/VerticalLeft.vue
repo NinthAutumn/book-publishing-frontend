@@ -17,12 +17,12 @@
           <Currency
             width="2rem"
             height="4rem"
-            fontSize="1.8rem"
+            fontSize="1.6rem"
             style="margin-right:1rem;"
             marginRight="0.75rem"
             :amount="wealth"
           ></Currency>
-          <Vote fontSize="1.8rem" :amount="token"></Vote>
+          <Vote fontSize="1.6rem" :amount="token"></Vote>
         </div>
         <div class="mobile-vleft__buy" @click.stop="$emit('stripe')">買う</div>
       </div>
@@ -160,6 +160,7 @@ export default {
     align-items: center;
     border-bottom: 1px solid #e3e8ee;
     // padding-bottom: 1.5rem;
+
     @media screen and (max-width: 320px) {
       #{$self}__buy {
         font-size: 1.3rem !important;
@@ -168,6 +169,7 @@ export default {
     }
     #{$self}__buy {
       font-size: 1.6rem;
+      white-space: nowrap;
       // paddin
       padding: 0.2rem 2.5rem;
       border-radius: 0.5rem;
@@ -186,15 +188,7 @@ export default {
 
     // margin-bottom: 1rem;
     position: relative;
-    // &::after {
-    //   position: absolute;
-    //   bottom: 0;
-    //   width: 90vw;
-    //   left: 0;
-    //   height: 1px;
-    //   content: "";
-    //   background-color: black;
-    // }
+
     border-bottom: 1px solid #e3e8ee;
   }
   &__logout {

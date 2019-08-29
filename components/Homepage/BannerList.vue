@@ -24,7 +24,7 @@
 <script>
 export default {
   name: "banner-list",
-  serverCacheKey: ()=>true,
+  serverCacheKey: () => true,
   data() {
     return {
       paginationSize: 10,
@@ -47,18 +47,14 @@ export default {
         { cover: require(`../../assets/banner1.png?size=325`), link: "/" }
       ],
       mobileOption: {
-        slidesPerView: 1.1,
+        slidesPerView: 1.005,
         spaceBetween: 15,
-        freeMode: true,
-        mousewheel: {
-          invert: true,
-          sensitivity: 1,
-          forceToAxis: true
-        },
-        navigation: {
-          nextEl: ".swiper-button-next",
-          prevEl: ".swiper-button-prev"
-        },
+        freeMode: false,
+        // mousewheel: {
+        //   invert: true,
+        //   sensitivity: 1,
+        //   forceToAxis: true
+        // },
         on: {},
         breakpoints: {}
       },

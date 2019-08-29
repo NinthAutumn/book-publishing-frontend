@@ -22,7 +22,7 @@
             >
               <template v-slot:placeholder>
                 <div class="review-moment__loading">
-                  <trinity-rings-spinner :animation-duration="1500" :size="30" color="#ff1d5e"/>
+                  <trinity-rings-spinner :animation-duration="1500" :size="30" color="#ff1d5e" />
                 </div>
               </template>
             </v-img>
@@ -80,7 +80,9 @@ export default {
 
   &__container {
     display: flex;
-
+    #{$self}__content {
+      word-break: break-word;
+    }
     #{$self}__avatar {
       // width: 5rem;
       min-width: 4rem;
