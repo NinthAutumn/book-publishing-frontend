@@ -72,7 +72,7 @@ export default {
       width: 1rem;
       height: 1rem !important;
     }
-    // margin-right: 5px;
+    margin-right: 0.4rem;
   }
   // perspective: 400px;
   // perspective-origin: 100% 100%;

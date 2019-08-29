@@ -4,12 +4,11 @@
       class="browse-page__header flex-row flex--align"
       :class="{'browse-page__header--mobile':$device.isMobile}"
     >
-      <!-- <blob v-if="!$device.isMobile" class="header-blob"></blob> -->
       <header>作品を探す</header>
     </div>
     <div class="flex-divider browse-page__section flex">
       <div class="flex-divider" style="flex-grow:1;">
-        <div class="browse-page__sorting-list flex-row" v-if="!$device.isMobile">
+        <div class="browse-page__sorting-list flex-row">
           <div class="flex-divider flex-row">
             <div class="browse-page__sort-type">
               <Select
@@ -50,25 +49,13 @@
             <button
               class="browse-page__open-tags flex-row flex--align flex--center"
               @click="openTag"
-              v-if="!tag_search&&!$device.isMobile"
             >
-              <fa class="browse-page__open-tags__icon" icon="expand"></fa>タグで探す
-            </button>
-            <button
-              class="browse-page__open-tags flex-row flex--align flex--center"
-              @click="openTag"
-              v-if="tag_search"
-            >
-              <fa class="browse-page__open-tags__icon" icon="compress"></fa>タグをしまう
+              <fa class="browse-page__open-tags__icon" :icon="tag_search?'compress':'expand'"></fa>
+              {{tag_search? 'タグをしまう':'タグで探す'}}
             </button>
           </div>
+        </div>
 
-          <div class="browse-page__filter-tag"></div>
-          <div class="browse-page__filter-bookstate"></div>
-        </div>
-        <div class="browse-list__sort-mobile" v-else>
-          <div class="browse-list__option" v-for="type in sort_type" :key="type.key"></div>
-        </div>
         <transition name="grow-shrink">
           <div class="browse-page__filter" v-if="selected_genre.length > 0">
             <transition-group
@@ -88,7 +75,7 @@
         <transition name="tag-summon">
           <TagCreate v-if="tag_search" v-model="tag_list"></TagCreate>
         </transition>
-        <div v-loading.fullscreen="loading" class="browse-page__content flex-row">
+        <div class="browse-page__content flex-row">
           <BookList
             :type="type"
             :genres="selected_genre"
@@ -136,22 +123,6 @@ export default {
       } else {
         this.modalDirection = "right";
       }
-    },
-    async infiniteHandler($state) {
-      const books = await this.$store.dispatch("book/browseBooks", {
-        type: this.type,
-        direction: this.direction,
-        genres: this.selected_genre,
-        tags: this.tag_list,
-        page: 1,
-        limit: 20,
-        infinite: true
-      });
-      if (books.length > 0) {
-        $state.loaded();
-      } else {
-        $state.complete();
-      }
     }
   },
   created() {
@@ -193,10 +164,7 @@ export default {
   data() {
     return {
       type: 5,
-      direction: "desc",
       genre: "",
-      page: 1,
-      limit: 20,
       loading: true,
       modalDirection: "right",
       selected_genre: [],

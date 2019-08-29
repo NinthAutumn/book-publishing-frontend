@@ -14,14 +14,7 @@
       </div>
       <div class="mobile-vleft__wealth flex-row flex--between">
         <div class="flex-divider flex-row">
-          <Currency
-            width="2rem"
-            height="4rem"
-            fontSize="1.6rem"
-            style="margin-right:1rem;"
-            marginRight="0.75rem"
-            :amount="wealth"
-          ></Currency>
+          <Currency fontSize="1.6rem" :amount="wealth"></Currency>
           <Vote fontSize="1.6rem" :amount="token"></Vote>
         </div>
         <div class="mobile-vleft__buy" @click.stop="$emit('stripe')">買う</div>

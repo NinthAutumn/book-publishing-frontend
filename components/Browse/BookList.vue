@@ -1,15 +1,8 @@
 <template>
-  <div class="library-booklist">
+  <div class="browse-booklist">
     <ul class="browse-booklist__list">
-      <li class="library-booklist__item" v-for="(book) in books" :key="book.id">
-        <!-- <Book :book="book"></Book> -->
-        <book-card
-          rating
-          :cover="book.cover"
-          :book="book"
-          :type="'search'"
-          :isMobile="$device.isMobile"
-        ></book-card>
+      <li class="browse-booklist__item" v-for="(book,index) in books" :key="book.id">
+        <book-card :index="index" rating :cover="book.cover" :book="book" :type="'search'"></book-card>
       </li>
     </ul>
     <no-ssr>
@@ -48,8 +41,7 @@ export default {
     }
   },
   components: {
-    BookCard: () => import("@/components/Web/Cards/Book"),
-    Book: () => import("./Book")
+    BookCard: () => import("@/components/Web/Cards/Book/Search"),
   },
   methods: {
     async infiniteHandler($state) {

@@ -1,6 +1,6 @@
 <template>
   <div class="book-scard">
-    <nuxt-link class="book-scard__container" :to="`/books/${book.id}`">
+    <nuxt-link tag="div" class="book-scard__container" :to="`/books/${book.id}`">
       <div class="book-scard__cover">
         <v-img
           class="book-scard__img"
@@ -36,12 +36,13 @@
 
 <script>
 export default {
-  name: "search-bookcard",
-  serverCacheKey: props => props.book.id,
+  name: "browse-bookcard",
+  serverCacheKey: props => props.book.id + "::" + props.index,
   props: {
     book: {
       type: Object
-    }
+    },
+    index: Number
   },
   data() {
     return {

@@ -8,7 +8,7 @@
             <label for="avatar-uploader">本のカバー</label>
             <div class="book-form__cover">
               <v-img
-                @click="image = !image"
+                @click.stop="image = !image"
                 style="border-radius:0.5rem;"
                 class="book-form__img"
                 v-if="imageUrl"
@@ -16,7 +16,7 @@
                 :aspect-ratio="1/1.5"
                 width="150"
               ></v-img>
-              <div @click="image = !image" v-else class="book-form__cover-place">
+              <div @click.stop="image = !image" v-else class="book-form__cover-place">
                 <fa icon="plus"></fa>
               </div>
             </div>

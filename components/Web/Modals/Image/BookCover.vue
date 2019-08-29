@@ -1,7 +1,7 @@
 <template>
   <div class="image-modal dialog dialog__container" v-if="container">
     <transition name="grow-shrink" appear>
-      <div class="image-modal__container dialog__content" v-if="value">
+      <div class="image-modal__container dialog__content" v-if="value" v-click-outside="closeModal">
         <div class="image-modal__header flex-row flex--between">
           <div class="image-modal__nav">
             <div
@@ -128,13 +128,13 @@ export default {
     ...mapActions({
       upload: "upload/uploadCover"
     }),
-    selectImage(item) {
-      this.$emit("selectImage", item);
+    closeModal() {
       this.$emit("input", false);
     },
-    // create_blob(file) {
-    //   return file
-    // },
+    selectImage(item) {
+      this.$emit("selectImage", item);
+      this.closeModal;
+    },
     async onFileChange(e) {
       this.loading = true;
       this.$nuxt.$loading.start();
@@ -162,7 +162,6 @@ export default {
       } catch (error) {
         console.log(error);
       }
-
       this.loading = false;
     },
     async resizeHandler({ file, cover }) {
@@ -182,9 +181,6 @@ export default {
         };
         let newFile = await resize(file, config);
         this.cover[cover.name]["file"] = newFile;
-        // imageResize.resize(file, cover.size, (blob, didItResize) => {
-
-        // });
         return Promise.resolve();
       } catch (error) {
         console.log(error);
@@ -207,9 +203,6 @@ export default {
   $self: &;
   &__container {
     width: 70vw;
-    // height: 70vh;
-    // max-height: 50vh;
-    // overflow: auto;
     position: relative;
     #{$self}__upload {
       label {
