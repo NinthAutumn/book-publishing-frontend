@@ -28,16 +28,10 @@
       </div>
       <button
         v-ripple
-        v-if="!reviewed&&!$device.isMobile"
         @click.stop="reviewOpen"
         class="review-open button"
-      >レビューを書く</button>
-      <button
-        v-ripple
-        v-else-if="!$device.isMobile"
-        @click="reviewOpen"
-        class="review-open button"
-      >レビューを編集</button>
+        v-text="reviewed? 'レビューを編集':'レビューを書く'"
+      ></button>
     </div>
     <hr />
     <ul class="list">
@@ -54,7 +48,7 @@
         v-model="sort"
       ></Select>
       <li class="show" v-for="(review, index) in reviews" :key="index">
-        <Review :review="review"></Review>
+        <Review @editReview="reviewOpen" :review="review"></Review>
         <hr />
       </li>
       <no-ssr>
@@ -182,6 +176,16 @@ hr {
 .list {
 }
 
+.review-open {
+  padding: 1rem 2rem;
+  background-color: #fff;
+  color: white;
+  background-color: #2a2f45;
+  border-radius: 0.5rem;
+  font-size: 1.5rem;
+  // border: 1px solid #2a2f45;
+  box-shadow: 0 2px 5px 0 rgba(60, 66, 87, 0.1), 0 1px 1px 0 rgba(0, 0, 0, 0.07);
+}
 li {
   transition: 300ms;
 }
@@ -190,17 +194,10 @@ li {
 }
 .review-form-modal {
   background-color: #f1f3f7;
-  -webkit-box-shadow: 0 13px 27px -5px rgba(50, 50, 93, 0.25),
-    0 8px 16px -8px rgba(0, 0, 0, 0.3), 0 -6px 16px -6px rgba(0, 0, 0, 0.025);
+
   box-shadow: 0 13px 27px -5px rgba(50, 50, 93, 0.25),
     0 8px 16px -8px rgba(0, 0, 0, 0.3), 0 -6px 16px -6px rgba(0, 0, 0, 0.025);
-  -webkit-transition-property: color, background-color, -webkit-box-shadow,
-    -webkit-transform;
-  transition-property: color, background-color, -webkit-box-shadow,
-    -webkit-transform;
-  transition-property: color, background-color, box-shadow, transform;
-  transition-property: color, background-color, box-shadow, transform,
-    -webkit-box-shadow, -webkit-transform;
+
   .review-form__header {
     font-size: 2rem;
     padding: 1rem 0;

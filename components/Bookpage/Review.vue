@@ -58,7 +58,7 @@
           v-if="$store.getters.isAuthenticated"
         >
           <div v-if="$store.getters['auth/getUser'].id === review.user_id">
-            <span>編集</span>|
+            <span @click.stop="$emit('editReview')">編集</span>|
             <span @click="toggleWarning">削除</span>
             <v-dialog v-model="deleteModal" persistent max-width="290">
               <v-card>
