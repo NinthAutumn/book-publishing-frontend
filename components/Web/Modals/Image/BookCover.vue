@@ -1,32 +1,31 @@
 <template>
   <div class="image-modal dialog dialog__container" v-if="container">
-    <client-only>
-      <transition name="grow-shrink" appear>
-        <div class="image-modal__container dialog__content" v-if="value">
-          <div class="image-modal__header flex-row flex--between">
-            <div class="image-modal__nav">
-              <div
-                class="image-modal__nav-item"
-                :key="key"
-                v-for="(value,key) in nav"
-                v-text="value.name"
-                @click="selected = value.key"
-                :class="{'image-modal__nav-item--selected': selected === value.key}"
-              ></div>
-            </div>
-            <div class="image-modal__upload">
-              <label
-                for="file-upload"
-                class="custom-file-upload"
-                v-ripple
-                v-text="!loading? 'カバーを投稿': '投稿中...'"
-              >
-                <fa style="margin-right:0.5rem;" icon="plus"></fa>
-              </label>
-              <input　 id="file-upload" type="file" accept="image/*" @change="onFileChange" />
-            </div>
+    <transition name="grow-shrink" appear>
+      <div class="image-modal__container dialog__content" v-if="value">
+        <div class="image-modal__header flex-row flex--between">
+          <div class="image-modal__nav">
+            <div
+              class="image-modal__nav-item"
+              :key="key"
+              v-for="(value,key) in nav"
+              v-text="value.name"
+              @click="selected = value.key"
+              :class="{'image-modal__nav-item--selected': selected === value.key}"
+            ></div>
           </div>
-
+          <div class="image-modal__upload">
+            <label
+              for="file-upload"
+              class="custom-file-upload"
+              v-ripple
+              v-text="!loading? 'カバーを投稿': '投稿中...'"
+            >
+              <fa style="margin-right:0.5rem;" icon="plus"></fa>
+            </label>
+            <input　 id="file-upload" type="file" accept="image/*" @change="onFileChange" />
+          </div>
+        </div>
+        <div class="image-modal__main">
           <div class="image-modal__image-list">
             <transition name="slide-right">
               <div class="image-modal__list image-modal__list--site" v-if="selected === 'site'">
@@ -36,7 +35,7 @@
                   :key="item.id"
                   @click="selectImage(item)"
                 >
-                  <v-img :src="item.url"></v-img>
+                  <v-img :aspect-ratio="1/1.5" :src="item.url"></v-img>
                 </div>
               </div>
               <div class="image-modal__list image-modal__list--user" v-if="selected === 'user'">
@@ -46,14 +45,14 @@
                   v-for="item in list"
                   :key="item.id"
                 >
-                  <v-img :src="item.url"></v-img>
+                  <v-img :aspect-ratio="1/1.5" :src="item.url"></v-img>
                 </div>
               </div>
             </transition>
           </div>
         </div>
-      </transition>
-    </client-only>
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -182,7 +181,6 @@ export default {
           mimeType: file.type
         };
         let newFile = await resize(file, config);
-        console.log(newFile);
         this.cover[cover.name]["file"] = newFile;
         // imageResize.resize(file, cover.size, (blob, didItResize) => {
 
@@ -209,9 +207,10 @@ export default {
   $self: &;
   &__container {
     width: 70vw;
-    height: 70vh;
+    // height: 70vh;
     // max-height: 50vh;
-    overflow: auto;
+    // overflow: auto;
+    position: relative;
     #{$self}__upload {
       label {
         user-select: none;
@@ -239,6 +238,7 @@ export default {
     }
     #{$self}__nav {
       display: flex;
+
       #{$self}__nav-item {
         font-size: 1.6rem;
         // margin-right: 1rem;
@@ -261,6 +261,11 @@ export default {
     .upload-btn {
       padding: 0 !important;
     }
+    #{$self}__main {
+      height: 70vh;
+      // max-height: 50vh;
+      overflow: auto;
+    }
     #{$self}__list {
       display: grid;
       width: 100%;
@@ -275,8 +280,8 @@ export default {
         border: 1px solid #dadce0;
         border-radius: 0.5rem;
         padding: 0.5rem;
-        max-height: 21rem;
-        overflow: auto;
+        // max-height: 21rem;
+        overflow: hidden;
         &:hover {
           cursor: pointer;
           box-shadow: 0 2px 5px 0 rgba(60, 66, 87, 0.1),

@@ -93,9 +93,6 @@ export default {
     this.failed = this.$storage.getUniversal("FAILED_LOGIN_COUNT");
   },
   methods: {
-    // async stateOff() {
-    //   await this.$store.commit("LOGIN_FALSE");
-    // },
     onError(error) {
       // alert(error);
     },
@@ -146,7 +143,7 @@ export default {
           });
         }
         this.loading = false;
-        w;
+        // w;
         this.$store.commit("LOGIN_FALSE");
         this.$storage.setUniversal("FAILED_LOGIN_COUNT", 0);
         this.$nuxt.refresh();
@@ -155,7 +152,6 @@ export default {
         console.log(error);
         this.loading = false;
         if (!this.failed) {
-          // console.log(alert()/);
           this.failed = 1;
           this.$storage.setUniversal("FAILED_LOGIN_COUNT", 1);
         } else {
