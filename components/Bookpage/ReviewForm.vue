@@ -84,7 +84,7 @@ export default {
             duration: 1000,
             icon: "extension"
           });
-          error;
+          // error;
         }
       } else {
         try {

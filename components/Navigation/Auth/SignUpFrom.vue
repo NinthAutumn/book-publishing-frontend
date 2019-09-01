@@ -21,16 +21,16 @@
         <input
           ref="username"
           name="username"
-          v-validate="'required|min:3'"
+          v-validate="'required|min:3|alpha_dash'"
           placeholder="ユーザー名"
           data-vv-as="ユーザー名"
           class="signup-form__input signup-form__input--username elevation-1"
-          :class="{'signup-form__input--error': errors.has('username')||!usernameAvailable}"
+          :class="{'signup-form__input--error': errors.has('username')||usernameAvailable}"
           type="text"
           v-model="username"
         />
         <span v-if="errors.first('username')" class="help is-danger">{{ errors.first('username') }}</span>
-        <span v-else-if="!usernameAvailable" class="help is-danger">このユーザー名はもう使われています</span>
+        <span v-else-if="usernameAvailable" class="help is-danger">このユーザー名はもう使われています</span>
       </div>
       <div class="flex-divider signup-form__control">
         <label for="email">メールアドレス</label>
@@ -95,7 +95,9 @@ export default {
   },
   watch: {
     username: async function(username) {
-      await this.$store.dispatch("user/checkUsername", { username });
+      if (username.length > 2) {
+        await this.$store.dispatch("user/checkUsername", { username });
+      }
     }
   },
   loading: false,
@@ -104,7 +106,7 @@ export default {
       return Object.keys(this.fields).some(key => this.fields[key].invalid);
     },
     ...mapGetters({
-      usernameAvailable: "user/isUsernameAvailable"
+      usernameAvailable: "user/userNameExists"
     })
   },
   methods: {

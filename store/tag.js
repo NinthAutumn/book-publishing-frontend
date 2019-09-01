@@ -28,7 +28,7 @@ export const actions = {
     try {
       const {
         data
-      } = await this.$axios.get(`/tag/list?search=${search}&limit=${limit}&page=${page}`)
+      } = await this.$axios.get(`/v1/tag/list?search=${search}&limit=${limit}&page=${page}`)
       infinite ? commit('PUSH_TAGS', data) : commit('SET_TAGS', data)
       if (data.error) {
         return Promise.reject(data.error)

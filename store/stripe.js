@@ -40,7 +40,7 @@ export const actions = {
     type
   }) {
     try {
-      const res = await this.$axios.get(`/stripe/paymentMethods?customerId=${customerId}&type=${type}`)
+      const res = await this.$axios.get(`/v1/stripe/paymentMethods?customerId=${customerId}&type=${type}`)
       commit('SET_PAYMENT_METHODS', _.get(res, 'data', []))
     } catch (error) {
       return Promise.reject(error)
@@ -52,7 +52,7 @@ export const actions = {
     customerId
   }) {
     try {
-      const res = await this.$axios.get(`/stripe/customer?customerId=${customerId}`)
+      const res = await this.$axios.get(`/v1/stripe/customer?customerId=${customerId}`)
       commit('SET_CUSTOMER', _.get(res, 'data', {}))
     } catch (error) {
       return Promise.reject(error)
@@ -67,7 +67,7 @@ export const actions = {
     skuId
   }) {
     try {
-      const res = await this.$axios.post('/stripe/paymentIntent', {
+      const res = await this.$axios.post('/v1/stripe/paymentIntent', {
         customerId,
         payment_method_id,
         amount,
@@ -99,7 +99,7 @@ export const actions = {
     phone
   }) {
     try {
-      const res = await this.$axios.post('/stripe/customer', {
+      const res = await this.$axios.post('/v1/stripe/customer', {
         fullname,
         email,
         phone
@@ -113,7 +113,7 @@ export const actions = {
     paymentMethodId
   }) {
     try {
-      const res = await this.$axios.patch('/stripe/paymentMethod/save', {
+      const res = await this.$axios.patch('/v1/stripe/paymentMethod/save', {
         customerId,
         paymentMethodId
       })
@@ -129,7 +129,7 @@ export const actions = {
     planId
   }) {
     try {
-      const res = await this.$axios.post('/stripe/subscription', {
+      const res = await this.$axios.post('/v1/stripe/subscription', {
         paymentMethod,
         stripePlanId
       })
@@ -158,7 +158,7 @@ export const actions = {
     cover,
     back = ""
   }) {
-    const res = await this.$axios.post('/stripe/connect/account', {
+    const res = await this.$axios.post('/v1/stripe/connect/account', {
       person,
       cover,
       back

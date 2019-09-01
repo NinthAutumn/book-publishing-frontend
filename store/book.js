@@ -63,7 +63,7 @@ export const actions = {
     userId = ""
   }) {
     try {
-      const res = await this.$axios.get(`book/show?id=${id}&userId=${userId}`)
+      const res = await this.$axios.get(`/v1/book/show?id=${id}&userId=${userId}`)
       commit('SET_BOOK', get(res, 'data.book', {}))
     } catch (error) {
 
@@ -83,7 +83,7 @@ export const actions = {
   async fetchBookChapterCount({
     commit
   }, id) {
-    const res = await this.$axios.get("/book/count?bookId=" + id).catch((error) => {
+    const res = await this.$axios.get("/v1/book/count?bookId=" + id).catch((error) => {
       return {
         error
       }
@@ -96,7 +96,7 @@ export const actions = {
     try {
       const {
         data
-      } = await this.$axios.post('/book/add', book)
+      } = await this.$axios.post('/v1/book/add', book)
       // if (res.data.noAuthor) {
       //   return commit('CHANGE_AUTHOR_STATE')
       // }
@@ -116,7 +116,7 @@ export const actions = {
     infinite = false
   }) {
 
-    const res = await this.$axios.patch('/book/mobile/browse', {
+    const res = await this.$axios.patch('/v1/book/mobile/browse', {
       type,
       genre,
       page,
@@ -150,7 +150,7 @@ export const actions = {
     infinite = false
   }) {
 
-    const res = await this.$axios.patch('/book/browse', {
+    const res = await this.$axios.patch('/v1/book/browse', {
       genres,
       gfilter,
       tfilter,
@@ -177,7 +177,7 @@ export const actions = {
     page = 1,
     limit = 10
   }) {
-    const taglist = await this.$axios.get('/tag/list?limit=' + limit + '&page=' + page)
+    const taglist = await this.$axios.get('/v1/tag/list?limit=' + limit + '&page=' + page)
     commit('SET_TAG_LIST', taglist.data)
   },
   async searchTags({
@@ -189,7 +189,7 @@ export const actions = {
     infinite = false
   }) {
     try {
-      const res = await this.$axios.get(`/tag/query?search=${search}&limit=${limit}&page=${page}`)
+      const res = await this.$axios.get(`/v1/tag/query?search=${search}&limit=${limit}&page=${page}`)
       if (infinite) {
         commit('PUSH_TAG_LIST', res.data)
       } else {
@@ -212,7 +212,7 @@ export const actions = {
     limit
   }) {
     try {
-      const res = await this.$axios.get(`/tag/query?search=${search}&limit=${limit}&page=${page}`)
+      const res = await this.$axios.get(`/v1/tag/query?search=${search}&limit=${limit}&page=${page}`)
       commit('SET_TAG_LIST', res.data)
       return Promise.resolve(res.data)
     } catch (error) {
@@ -226,7 +226,7 @@ export const actions = {
   async fetchRecommended({
     commit,
   }) {
-    await this.$axios.get('/analytic/book/recommended').then((res) => {
+    await this.$axios.get('/v1/analytic/book/recommended').then((res) => {
       commit('SET_RECOMMENDED', res.data)
     })
     // await this.$axios.get('/analytic/book/trending').then((res) => {
@@ -241,7 +241,7 @@ export const actions = {
     infinite = false
   }) {
     try {
-      const res = await this.$axios.get(`/book/update?limit=${limit}&page=${page}`)
+      const res = await this.$axios.get(`/v1/book/update?limit=${limit}&page=${page}`)
       if (infinite) {
         commit('SET_MORE_LATEST_BOOKS', res.data)
       } else {
@@ -260,7 +260,7 @@ export const actions = {
     limit
   }) {
     try {
-      const res = await this.$axios.get(`/book/update?limit=${limit}&page=${page}`)
+      const res = await this.$axios.get(`/v1/book/update?limit=${limit}&page=${page}`)
       commit('SET_MORE_LATEST_BOOKS', res.data)
       return Promise.resolve(res.data)
     } catch (error) {
@@ -275,7 +275,7 @@ export const actions = {
     infinite = false
   }) {
     try {
-      const res = await this.$axios.get(`/book/announcements?bookId=${bookId}&page=${page}`)
+      const res = await this.$axios.get(`/v1/book/announcements?bookId=${bookId}&page=${page}`)
       if (infinite) {
         commit('PUSH_ANNOUNCEMENTS', res.data)
         return Promise.resolve({
@@ -295,7 +295,7 @@ export const actions = {
     bookId
   }) {
     try {
-      const res = await this.$axios.post(`/book/announcement`, {
+      const res = await this.$axios.post(`/v1/book/announcement`, {
         title,
         content,
         bookId
@@ -310,7 +310,7 @@ export const actions = {
     bookId
   }) {
     try {
-      const res = await this.$axios.post(`/book/vote?bookId=${bookId}`)
+      const res = await this.$axios.post(`/v1/book/vote?bookId=${bookId}`)
       if (res.data.error) {
         return Promise.resolve({
           error: res.data.error
@@ -325,7 +325,7 @@ export const actions = {
     commit
   }, bookId) {
     try {
-      const res = await this.$axios.get(`/book/category?bookId=${bookId}`)
+      const res = await this.$axios.get(`/v1/book/category?bookId=${bookId}`)
       commit('SET_BOOK_GENRES', res.data.genres)
       commit('SET_BOOK_TAGS', res.data.tags)
     } catch (error) {
@@ -336,7 +336,7 @@ export const actions = {
     commit
   }) {
     try {
-      const res = await this.$axios.get(`/book/genres`)
+      const res = await this.$axios.get(`/v1/book/genres`)
       commit('SET_GENRES', res.data)
     } catch (error) {
 
@@ -348,7 +348,7 @@ export const actions = {
     book
   }) {
     try {
-      const res = await this.$axios.patch('/book/', {
+      const res = await this.$axios.patch('/v1/book/', {
         book
       })
     } catch (error) {

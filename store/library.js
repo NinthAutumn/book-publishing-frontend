@@ -59,7 +59,7 @@ export const actions = {
     commit
   }, bookId) {
     try {
-      const status = await this.$axios.get('/library/check?bookId=' + bookId)
+      const status = await this.$axios.get('/v1/library/check?bookId=' + bookId)
       if (!status) {
         return
       }
@@ -75,7 +75,7 @@ export const actions = {
     sortby = 0
   }) {
     try {
-      const res = await this.$axios.get(`/library?type=bookmark&sortby=${sortby}`)
+      const res = await this.$axios.get(`/v1/library?type=bookmark&sortby=${sortby}`)
       commit('SET_BOOKMARK', res.data)
     } catch (error) {
       Promise.reject(error)
@@ -85,7 +85,7 @@ export const actions = {
   async getHistory({
     commit
   }) {
-    await this.$axios.get('/library/history').then((res) => {
+    await this.$axios.get('/v1/library/history').then((res) => {
       if (res) {
         commit('GET_HISTORY', res.data)
       }
@@ -95,7 +95,7 @@ export const actions = {
   async getRead_Later({
     commit
   }) {
-    await this.$axios.get('/library/show?type=readLater').then((res) => {
+    await this.$axios.get('/v1/library/show?type=readLater').then((res) => {
       if (!res) {
         return
       }
@@ -107,7 +107,7 @@ export const actions = {
   }, {
     store
   }) {
-    await this.$axios.post('/library', {
+    await this.$axios.post('/v1/library', {
       store
     })
   },
@@ -115,7 +115,7 @@ export const actions = {
     commit
   }) {
     try {
-      const res = await this.$axios.get('/library/show/chapters')
+      const res = await this.$axios.get('/v1/library/show/chapters')
       if (res) {
         const {
           chapters
@@ -138,7 +138,7 @@ export const actions = {
     chapterId
   }) {
     try {
-      const res = await this.$axios.patch('/library/update/chapters?chapterId=' + chapterId)
+      const res = await this.$axios.patch('/v1/library/update/chapters?chapterId=' + chapterId)
       dispatch('fetchLatestChapters')
     } catch (error) {
       console.log(error);
@@ -149,7 +149,7 @@ export const actions = {
     commit
   }) {
     try {
-      const res = await this.$axios.get('/library/reviews')
+      const res = await this.$axios.get('/v1/library/reviews')
       commit('SET_REVIEWS', res.data)
     } catch (error) {
       Promise.reject(error)
@@ -162,7 +162,7 @@ export const actions = {
     bookId
   }) {
     try {
-      const res = await this.$axios.post(`/library/history`, {
+      const res = await this.$axios.post(`/v1/library/history`, {
         chapterId,
         bookId
       })

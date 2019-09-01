@@ -53,7 +53,7 @@ export const getters = {
       return true
     }
   },
-  isUsernameAvailable: state => state.username,
+  userNameExists: state => state.username,
   getProfileStats: state => state.stats,
   getAuthor: state => state.author,
   getCommentNotification: state => state.commentNotification,
@@ -187,7 +187,7 @@ export const actions = {
     commit
   }) {
     try {
-      const update = await this.$axios.get('/user/bookupdate')
+      const update = await this.$axios.get('/v1/user/bookupdate')
       commit('GET_BOOKMARK_UPDATE', update)
     } catch (error) {
 
@@ -199,7 +199,7 @@ export const actions = {
     userId
   }) {
     try {
-      const res = await this.$axios.get(`/user/profile?userId=${userId}`)
+      const res = await this.$axios.get(`/v1/user/profile?userId=${userId}`)
       commit('SET_PROFILE', get(res, 'data'))
       Promise.resolve(res)
     } catch (error) {
@@ -212,7 +212,7 @@ export const actions = {
     userId
   }) {
     try {
-      const res = await this.$axios.get(`/review/me`)
+      const res = await this.$axios.get(`/v1/review/me`)
       commit('SET_USER_REVIEWS', get(res, 'data'))
     } catch (error) {
       return Promise.reject(error)
@@ -224,7 +224,7 @@ export const actions = {
     userId
   }) {
     try {
-      const res = await this.$axios.get(`/user/profile/stats?userId=${userId}`)
+      const res = await this.$axios.get(`/v1/user/profile/stats?userId=${userId}`)
       commit('SET_PROFILE_STATS', get(res, 'data'))
     } catch (error) {
       return Promise.reject(error)
@@ -238,7 +238,7 @@ export const actions = {
     page = 1
   }) {
     try {
-      const res = await this.$axios.get(`/user/profile/reviews?userId=${userId}&page=${page}`)
+      const res = await this.$axios.get(`/v1/user/profile/reviews?userId=${userId}&page=${page}`)
       commit('SET_PROFILE_REVIEWS', get(res, 'data'))
       return Promise.resolve()
     } catch (error) {
@@ -252,7 +252,7 @@ export const actions = {
     page = 1
   }) {
     try {
-      const res = await this.$axios.get(`/user/profile/comments?userId=${userId}&page=${page}`)
+      const res = await this.$axios.get(`/v1/user/profile/comments?userId=${userId}&page=${page}`)
       commit('SET_USER_COMMENTS', get(res, 'data'))
       return Promise.resolve()
     } catch (error) {
@@ -265,7 +265,7 @@ export const actions = {
     userId
   }) {
     try {
-      const res = await this.$axios.get(`/user/profile/books?userId=${userId}`)
+      const res = await this.$axios.get(`/v1/user/profile/books?userId=${userId}`)
       commit('SET_PROFILE_BOOKS', get(res, 'data'))
       return Promise.resolve()
     } catch (error) {
@@ -280,7 +280,7 @@ export const actions = {
     infinite = false
   }) {
     try {
-      const res = await this.$axios.get(`/notification/chapter?page=${page}&limit=${limit}`)
+      const res = await this.$axios.get(`/v1/notification/chapter?page=${page}&limit=${limit}`)
       if (infinite) {
         commit('PUSH_NOTIFICATION', get(res, 'data'))
         return Promise.resolve(get(res, 'data'))
@@ -305,7 +305,7 @@ export const actions = {
     author
   }) {
     try {
-      const res = await this.$axios.post(`/author`, author)
+      const res = await this.$axios.post(`/v1/author`, author)
       await dispatch('fetchAuthor')
     } catch (error) {
       return Promise.reject(error)
@@ -318,10 +318,10 @@ export const actions = {
     username
   }) {
     try {
-      const res = await this.$axios.get(`/user/usernameAvailable?username=${username}`, {
-        progress: false
+      const res = await this.$axios.get(`/v2/user/show/isUsername?username=${username}`, {
+        progress: false,
       })
-      commit('SET_USERNAME_AVAILABILITY', get(res, 'data'))
+      commit('SET_USERNAME_AVAILABILITY', get(res, 'data.available'))
     } catch (error) {
       return Promise.reject(error)
     }
@@ -333,7 +333,7 @@ export const actions = {
     infinite = false
   }) {
     try {
-      const res = await this.$axios.get(`/notification/comment?page=${page}`)
+      const res = await this.$axios.get(`/v1/notification/comment?page=${page}`)
       if (infinite) {
         commit('PUSH_COMMENT_NOTIFICATION', res.data)
       } else {
@@ -349,7 +349,7 @@ export const actions = {
     commit
   }) {
     try {
-      const res = await this.$axios.get(`/notification/comment/count`)
+      const res = await this.$axios.get(`/v1/notification/comment/count`)
       commit('SET_COMMENT_NOTIFICATION_COUNT', res.data.count)
 
     } catch (error) {
@@ -361,7 +361,7 @@ export const actions = {
     dispatch
   }) {
     try {
-      this.$axios.patch(`/notification/comment/read`).then(() => {
+      this.$axios.patch(`/v1/notification/comment/read`).then(() => {
         dispatch('fetchCommentNotificationsCount')
       })
     } catch (error) {

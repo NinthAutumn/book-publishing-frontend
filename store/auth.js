@@ -47,8 +47,8 @@ export const actions = {
     try {
       const {
         data
-      } = await this.$axios.post('/auth/login', {
-        username: user.username,
+      } = await this.$axios.post('/v2/auth/login', {
+        credential: user.username,
         password: user.password
       })
       if (data.error) {
@@ -81,7 +81,7 @@ export const actions = {
     try {
       const {
         data
-      } = await this.$axios.post(`/auth/social/${strategy}?token=${token}`)
+      } = await this.$axios.post(`/v2/auth/social/${strategy}?token=${token}`)
       commit('SET_AUTH', {
         access_token: data.access_token,
         refresh_token: data.refresh_token,
@@ -125,14 +125,14 @@ export const actions = {
     try {
       const {
         data
-      } = await this.$axios.get('/user')
+      } = await this.$axios.get('/v2/user/me', {})
       commit('SET_USER', data)
-      await dispatch('wallet/wealth', '', {
-        root: true
-      })
-      await dispatch('user/fetchUserSettings', '', {
-        root: true
-      })
+      // await dispatch('wallet/wealth', '', {
+      //   root: true
+      // })
+      // await dispatch('user/fetchUserSettings', '', {
+      //   root: true
+      // })
     } catch (error) {
       console.log(error);
     }
@@ -146,7 +146,7 @@ export const actions = {
     try {
       const {
         data
-      } = await this.$axios.post('/auth/signup', {
+      } = await this.$axios.post('/v2/auth/signup', {
         username: user.username,
         email: user.email,
         password: user.password
@@ -182,7 +182,7 @@ export const actions = {
     try {
       const {
         data
-      } = await this.$axios.patch('/auth/setPassword', {
+      } = await this.$axios.patch('/v2/auth/setPassword', {
         password,
         token
       })
@@ -203,7 +203,7 @@ export const actions = {
     try {
       const {
         data
-      } = await this.$axios.patch('/auth/resend', {
+      } = await this.$axios.patch('/v2/auth/resend', {
         email
       })
       if (data.error) {
@@ -223,7 +223,7 @@ export const actions = {
     try {
       const {
         data
-      } = await this.$axios.patch('/auth/forgot', {
+      } = await this.$axios.patch('/v2/auth/forgot', {
         email
       })
       if (data.error) {

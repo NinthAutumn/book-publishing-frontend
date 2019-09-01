@@ -147,13 +147,13 @@ export default {
     },
     async googleAuth(googleUser) {},
     async google_submit() {
-      await window.google_auth2.signIn().then(
-        async val =>
-          await this.auth({
-            token: val.Zi.access_token,
-            strategy: "google"
-          })
-      );
+      await window.google_auth2.signIn().then(async val => {
+        await this.auth({
+          token: val.Zi.access_token,
+          strategy: "google"
+        });
+        this.$nuxt.refresh();
+      });
     }
   }
 };

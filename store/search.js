@@ -28,7 +28,7 @@ export const actions = {
     commit
   }, query) {
     commit('LOADING')
-    await this.$axios.get(`/search?search=${query}&page=${1}`).then((res) => {
+    await this.$axios.get(`/v1/search?search=${query}&page=${1}`).then((res) => {
 
       commit('QUERIED_BOOKS', res.data)
 

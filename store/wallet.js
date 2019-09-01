@@ -30,7 +30,7 @@ export const actions = {
     amount
   }) {
     try {
-      const res = await this.$axios.post('/transaction/chapter', {
+      const res = await this.$axios.post('/v1/transaction/chapter', {
         chapterId,
         amount,
         bookId,
@@ -50,7 +50,7 @@ export const actions = {
     commit
   }, ) {
     try {
-      const res = await this.$axios.get('/user/wealth')
+      const res = await this.$axios.get('/v1/user/wealth')
       if (res) {
         commit('SET_WEALTH', res.data.wealth)
         commit('SET_VOTE_TOKEN', res.data.vote_token)
@@ -67,7 +67,7 @@ export const actions = {
     form
   }) {
     try {
-      const res = await this.$axios.post(`/transaction/coin`, {
+      const res = await this.$axios.post(`/v1/transaction/coin`, {
         form
       })
     } catch (error) {
@@ -80,7 +80,7 @@ export const actions = {
     transactionId
   }) {
     try {
-      const res = await this.$axios.patch(`/transaction/redeem?`, {
+      const res = await this.$axios.patch(`/v1/transaction/redeem?`, {
         transactionId
       })
       return Promise.resolve()
@@ -92,7 +92,7 @@ export const actions = {
     commit
   }) {
     try {
-      const res = await this.$axios.get(`/transaction/payout/list`)
+      const res = await this.$axios.get(`/v1/transaction/payout/list`)
       commit('SET_PAYOUT_LIST', res.data)
       return Promise.resolve(res.data)
     } catch (error) {

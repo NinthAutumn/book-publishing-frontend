@@ -33,9 +33,17 @@ html {
     font-size: calc(10px + (14 - 10) * ((100vw - 300px) / (450 - 300)));
     // line-height: 28px;
   }
-
-
 }
+
+
+// @media screen and (max-width:1080px) {
+
+//   *,
+//   html {
+//     font-size: calc(8px + (14 - 8) * ((100vw - 1080px) / (1920 - 1080)));
+//     // line-height: 28px;
+//   }
+// }
 
 // html {
 //   @include fluid-type($min_width, $max_width, $min_font, $max_font);

@@ -48,7 +48,7 @@ export const actions = {
     commit
   }) {
     try {
-      const res = await this.$axios.get(`/subscription/plan/site`)
+      const res = await this.$axios.get(`/v1/subscription/plan/site`)
       commit('SET_SITE_PLANS', get(res, 'data', {}))
     } catch (error) {
 
@@ -58,7 +58,7 @@ export const actions = {
     commit
   }) {
     try {
-      const res = await this.$axios.get(`/subscription`)
+      const res = await this.$axios.get(`/v1/subscription`)
       commit('SET_SUBSCRIPTION', get(res, 'data', {}))
     } catch (error) {
 
@@ -71,7 +71,7 @@ export const actions = {
     planId
   }) {
     try {
-      const subscriptions = await this.$axios.post(`/subscription/`, {
+      const subscriptions = await this.$axios.post(`/v1/subscription/`, {
         planId,
         subscription
       })

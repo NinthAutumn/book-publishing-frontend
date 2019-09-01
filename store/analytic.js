@@ -80,7 +80,7 @@ export const actions = {
     infinite
   }) {
     try {
-      const res = await this.$axios.get(`/analytic/trending?time=${time}&page=${page}`)
+      const res = await this.$axios.get(`/v1/analytic/trending?time=${time}&page=${page}`)
       if (infinite) {
         commit('PUSH_TRENDING', res.data)
       } else {
@@ -103,9 +103,9 @@ export const actions = {
     try {
       let res = ""
       if (genre) {
-        res = await this.$axios.get(`/analytic/ranking/genre?time=${time}&page=${page}&genre=${genre}&limit=${limit}`)
+        res = await this.$axios.get(`/v1/analytic/ranking/genre?time=${time}&page=${page}&genre=${genre}&limit=${limit}`)
       } else {
-        res = await this.$axios.get(`/analytic/ranking?time=${time}&page=${page}`)
+        res = await this.$axios.get(`/v1/analytic/ranking?time=${time}&page=${page}`)
       }
       if (infinite) {
         commit('PUSH_RANKING', res.data)
@@ -123,7 +123,7 @@ export const actions = {
     type
   }) {
     try {
-      const res = await this.$axios.get(`/analytic/book/views?time=${type}`)
+      const res = await this.$axios.get(`/v1/analytic/book/views?time=${type}`)
       commit('SET_VIEWS', res.data)
       return Promise.resolve(res.data)
     } catch (error) {
@@ -136,7 +136,7 @@ export const actions = {
     funnel = false
   }) {
     try {
-      const res = await this.$axios.get(`/analytic/book/list?funnel=${funnel}`)
+      const res = await this.$axios.get(`/v1/analytic/book/list?funnel=${funnel}`)
       commit('SET_BOOKS', res.data)
       return Promise.resolve(res.data)
 
@@ -148,7 +148,7 @@ export const actions = {
     commit
   }) {
     try {
-      const res = await this.$axios.get(`/analytic/comment/list`)
+      const res = await this.$axios.get(`/v1/analytic/comment/list`)
       commit('SET_COMMENTS', res.data)
       return Promise.resolve(res.data)
 
@@ -160,7 +160,7 @@ export const actions = {
     commit
   }) {
     try {
-      const res = await this.$axios.get(`/analytic/home/recommended`)
+      const res = await this.$axios.get(`/v1/analytic/home/recommended`)
       commit('SET_RECOMMENDED', res.data)
       return Promise.resolve(res.data)
 
@@ -172,7 +172,7 @@ export const actions = {
     commit
   }) {
     try {
-      const res = await this.$axios.get(`/analytic/book/latest`)
+      const res = await this.$axios.get(`/v1/analytic/book/latest`)
       commit('SET_LATEST', res.data)
       return Promise.resolve(res.data)
 
@@ -186,7 +186,7 @@ export const actions = {
     try {
       const {
         data
-      } = await this.$axios.get('/analytic/home/frequency')
+      } = await this.$axios.get('/v1/analytic/home/frequency')
       commit('SET_FREQUENT', data)
     } catch (error) {
       console.log(error);
@@ -196,7 +196,7 @@ export const actions = {
     commit
   }) {
     try {
-      const res = await this.$axios.get(`/analytic/review/trending`)
+      const res = await this.$axios.get(`/v1/analytic/review/trending`)
       commit('SET_REVIEW_TRENDING', res.data)
       return Promise.resolve(res.data)
 
@@ -213,7 +213,7 @@ export const actions = {
     limit = 10
   }) {
     try {
-      const res = await this.$axios.get(`/analytic/vote?time=${time}&page=${page}&limit=${limit}`)
+      const res = await this.$axios.get(`/v1/analytic/vote?time=${time}&page=${page}&limit=${limit}`)
       if (infinite) {
         commit('PUSH_VOTE_RANKING', res.data)
       } else {

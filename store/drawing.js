@@ -24,7 +24,7 @@ export const actions = {
     try {
       const {
         data
-      } = await this.$axios.get('/drawing/list')
+      } = await this.$axios.get('/v1/drawing/list')
       commit('SET_DRAWINGS', data.drawings)
       return Promise.resolve(data.drawings)
     } catch (error) {
@@ -40,7 +40,7 @@ export const actions = {
       const {
         data
       } = await this.$axios.get(
-        `/drawing/chapter/${chapterId}`
+        `/v1/drawing/chapter/${chapterId}`
       );
       // console.log(data.drawings);
       commit('SET_CHAPTER_DRAWINGS', data.drawings)

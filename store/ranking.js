@@ -44,14 +44,14 @@ export const actions = {
     page
   }) {
 
-    await this.$axios.get(`/analytic/book/rankinglist?days=${days}&limit=${limit}&page=${page}`).then((res) => {
+    await this.$axios.get(`/v1/analytic/book/rankinglist?days=${days}&limit=${limit}&page=${page}`).then((res) => {
       commit('SET_RANKING_LIST', res.data)
     })
   },
   async fetchHomeRankingList({
     commit
   }) {
-    const res = await this.$axios.get(`/ranking/mobile/home`)
+    const res = await this.$axios.get(`/v1/ranking/mobile/home`)
     commit('SET_RANKINGS', res.data)
   },
   async fetchGenreRanking({
@@ -62,7 +62,7 @@ export const actions = {
     page,
     genre
   }) {
-    await this.$axios.patch(`/analytic/book/genreranking?days=${days}&limit=${limit}&page=${page}`, {
+    await this.$axios.patch(`/v1/analytic/book/genreranking?days=${days}&limit=${limit}&page=${page}`, {
       genre
     }).then((res) => {
       commit('SET_RANKING_LIST', res.data)
@@ -74,7 +74,7 @@ export const actions = {
     bookId
   }) {
     try {
-      await this.$axios.post(`/analytic/book/trending?bookId=${bookId}`)
+      await this.$axios.post(`/v1/analytic/book/trending?bookId=${bookId}`)
     } catch (error) {
       return Promise.reject(error)
     }
@@ -89,7 +89,7 @@ export const actions = {
     try {
       const {
         data
-      } = await this.$axios.get(`/ranking/${bookId}?type=${type}&period=${period}`)
+      } = await this.$axios.get(`/v1/ranking/${bookId}?type=${type}&period=${period}`)
       if (data.error) {
         return Promise.reject(data.error)
       }

@@ -22,6 +22,10 @@ module.exports = {
         content: '最新WEB小説投稿・閲覧サイト ノーブル'
       },
       {
+        name: "language",
+        content: "Japanese"
+      },
+      {
         property: "og:type",
         content: 'website'
       },
@@ -205,6 +209,7 @@ module.exports = {
       test: true,
 
     }],
+    '@nuxtjs/axios',
     ['nuxt-fontawesome', {
       component: 'fa',
       imports: [{
@@ -253,7 +258,25 @@ module.exports = {
     "nuxt-compress",
   ],
   axios: {
-    baseURL: process.env.SERVER_URL + '/v1'
+    // baseURL: process.env.SERVER_URL + '/v1',
+    proxy: true
+  },
+  proxy: {
+    '/v2': {
+      target: process.env.NEST_SERVER_URL,
+      changeOrigin: true,
+      pathRewrite: {
+        '^/v2': ''
+      }
+    },
+    '/v1': {
+      target: process.env.SERVER_URL,
+      changeOrigin: true,
+      pathRewrite: {
+        '^/v1/': ''
+      }
+    }
+
   },
 
   auth: {

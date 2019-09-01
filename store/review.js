@@ -109,7 +109,7 @@ export const actions = {
     try {
       const {
         data
-      } = await this.$axios.get(`/review/show?id=${id}`);
+      } = await this.$axios.get(`/v1/review/show?id=${id}`);
       if (data.error) {
         return Promise.reject(data.error)
       }
@@ -132,7 +132,7 @@ export const actions = {
     next = false,
     preview = false
   }) {
-    const res = await this.$axios.get(`/review/book?bookId=${bookId}&limit=${limit}&page=${page}&userId=${userId}&direction=${direction}&type=${type}`)
+    const res = await this.$axios.get(`/v1/review/book?bookId=${bookId}&limit=${limit}&page=${page}&userId=${userId}&direction=${direction}&type=${type}`)
     if (preview) {
       commit('SET_REVIEW_LENGTH', res.data.review_count)
 
@@ -223,7 +223,7 @@ export const actions = {
   async userReviews({
     commit
   }) {
-    const res = await this.$axios.get('/review/my')
+    const res = await this.$axios.get('/v1/review/my')
     if (!res) {
       return
     }
@@ -234,7 +234,7 @@ export const actions = {
   }, {
     bookId
   }) {
-    const review = await this.$axios.get('/review/myreview?bookId=' + bookId)
+    const review = await this.$axios.get('/v1/review/myreview?bookId=' + bookId)
     if (!review) {
       return
     }
@@ -246,7 +246,7 @@ export const actions = {
     id,
     review
   }) {
-    const update = await this.$axios.patch('/review?id=' + id, {
+    const update = await this.$axios.patch('/v1/review?id=' + id, {
       review
     })
   },
@@ -256,7 +256,7 @@ export const actions = {
     days
   }) {
     try {
-      const res = await this.$axios.get(`/analytic/review/trending?days=${days}`)
+      const res = await this.$axios.get(`/v1/analytic/review/trending?days=${days}`)
       commit('SET_TRENDING', res.data)
       return Promise.resolve()
     } catch (error) {
@@ -269,7 +269,7 @@ export const actions = {
     bookId
   }) {
     try {
-      const res = await this.$axios.get(`/review/isreviewed?bookId=${bookId}`)
+      const res = await this.$axios.get(`/v1/review/isreviewed?bookId=${bookId}`)
       commit('SET_IS_REVIEWED', res.data.reviewed)
     } catch (error) {
       return Promise.reject(error)

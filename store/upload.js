@@ -38,7 +38,7 @@ export const actions = {
     file,
   }) {
     try {
-      const uploadConfig = await this.$axios.get(`/upload?filetype=${file}`)
+      const uploadConfig = await this.$axios.get(`/v1/upload?filetype=${file}`)
       let auth = this.$axios.defaults.headers.common['Authorization']
       let trackId = this.$axios.defaults.headers.common['TrackId']
       delete this.$axios.defaults.headers.common['Authorization']
@@ -71,7 +71,7 @@ export const actions = {
     try {
       const {
         data
-      } = await this.$axios.get(`/upload/cover?size=${size}&unique=${unique}&filetype=${file.type}`)
+      } = await this.$axios.get(`/v1/upload/cover?size=${size}&unique=${unique}&filetype=${file.type}`)
       let auth = this.$axios.defaults.headers.common['Authorization']
 
       let trackId = this.$axios.defaults.headers.common['TrackId']
@@ -98,7 +98,7 @@ export const actions = {
   }, file) {
     try {
 
-      const uploadConfig = await this.$axios.get(`/upload?filetype=${file.type}`)
+      const uploadConfig = await this.$axios.get(`/v1/upload?filetype=${file.type}`)
       let auth = this.$axios.defaults.headers.common['Authorization']
       let trackId = this.$axios.defaults.headers.common['TrackId']
       delete this.$axios.defaults.headers.common['Authorization']
