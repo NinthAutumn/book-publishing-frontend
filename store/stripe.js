@@ -40,7 +40,7 @@ export const actions = {
     type
   }) {
     try {
-      const res = await this.$axios.get(`/v1/stripe/paymentMethods?customerId=${customerId}&type=${type}`)
+      const res = await this.$axios.get(`/v2/stripe/payment/list?customer_id=${customerId}&type=${type}`)
       commit('SET_PAYMENT_METHODS', _.get(res, 'data', []))
     } catch (error) {
       return Promise.reject(error)
@@ -67,7 +67,7 @@ export const actions = {
     skuId
   }) {
     try {
-      const res = await this.$axios.post('/v1/stripe/paymentIntent', {
+      const res = await this.$axios.post('/v2/stripe/paymentIntent', {
         customerId,
         payment_method_id,
         amount,
@@ -113,9 +113,9 @@ export const actions = {
     paymentMethodId
   }) {
     try {
-      const res = await this.$axios.patch('/v1/stripe/paymentMethod/save', {
+      const res = await this.$axios.patch('/v2/stripe/payment/save', {
         customerId,
-        paymentMethodId
+        payment_method_id: paymentMethodId
       })
     } catch (error) {
 
@@ -129,7 +129,7 @@ export const actions = {
     planId
   }) {
     try {
-      const res = await this.$axios.post('/v1/stripe/subscription', {
+      const res = await this.$axios.post('/v2/stripe/subscription', {
         paymentMethod,
         stripePlanId
       })

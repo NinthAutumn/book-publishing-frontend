@@ -51,7 +51,7 @@ export default {
     for (let tag of tags) {
       object.push({
         key: tag.name,
-        sum: tag.books,
+        sum: tag.book_count,
         selected: false,
         value: tag.id
       });
@@ -69,7 +69,7 @@ export default {
   },
   methods: {
     async createTag() {
-      const { data } = await this.$axios.post("/book/tag", {
+      const { data } = await this.$axios.post("/v2/tag", {
         name: this.search
       });
       let name = this.search;

@@ -53,7 +53,7 @@ export default {
     });
     let object = [];
     tags.forEach(item => {
-      object.push({ key: item.name, sum: item.books, selected: false });
+      object.push({ key: item.name, sum: item.book_count, selected: false });
     });
     this.selected = object;
   },
@@ -66,7 +66,7 @@ export default {
       });
       let object = [];
       this.tags.forEach(item => {
-        object.push({ key: item.name, sum: item.books, selected: false });
+        object.push({ key: item.name, sum: item.book_count, selected: false });
       });
       this.selected = object;
       this.selected.forEach(tag => {

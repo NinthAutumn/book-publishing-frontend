@@ -77,7 +77,7 @@ export const actions = {
     try {
       const {
         data
-      } = await this.$axios.get(`/v1/comment/chapter?sortBy=${sortBy}&page=${page}&limit=${limit}&chapterId=${chapterId}`)
+      } = await this.$axios.get(`/v2/comment/chapter?sortBy=${sortBy}&page=${page}&limit=${limit}&chapter_id=${chapterId}`)
       if (infinite) {
         commit('PUSH_COMMENTS_LIST', data)
 
@@ -100,11 +100,11 @@ export const actions = {
     parentId = null
   }) {
     try {
-      const res = await this.$axios.post('/v1/comment', {
-        bookId,
-        chapterId,
+      const res = await this.$axios.post('/v2/comment', {
+        book_id: bookId,
+        chapter_id: chapterId,
         content,
-        parentId
+        parent_id: parentId
       })
 
       // let comment = {}
@@ -123,9 +123,9 @@ export const actions = {
     chapterId,
     content
   }) {
-    await this.$axios.post('/v1/comment', {
-      bookId,
-      chapterId,
+    await this.$axios.post('/v2/comment', {
+      book_id: bookId,
+      chapter_id: chapterId,
       content
     })
   },
@@ -136,9 +136,8 @@ export const actions = {
     data
   }) {
     try {
-      const res = await this.$axios.patch('/v1/comment/vote', {
-        commentId: commentId,
-        data: data
+      const res = await this.$axios.patch(`/v2/comment/${commentId}/vote`, {
+        vote: data
       })
       Promise.resolve()
     } catch (error) {
@@ -156,7 +155,7 @@ export const actions = {
     try {
       const {
         data
-      } = await this.$axios.get(`/v1/comment/mobile?chapterId=${chapterId}&page=${page}&sortBy=${sortBy}`)
+      } = await this.$axios.get(`/v2/comment?mobile=true&chapter_id=${chapterId}&page=${page}&sortBy=${sortBy}&limit=30`)
       if (infinite) {
         commit('PUSH_COMMENTS_LIST', data)
       } else {
@@ -187,7 +186,9 @@ export const actions = {
     comment
   }) {
     try {
-      const res = await this.$axios.patch(`/v1/comment`, comment)
+      const res = await this.$axios.patch(`/v2/comment/${comment.id}`, {
+        content: comment.content
+      })
 
     } catch (error) {
 
@@ -202,11 +203,11 @@ export const actions = {
     parentId = null
   }) {
 
-    await this.$axios.post('/v1/comment', {
-      bookId,
-      chapterId,
+    await this.$axios.post('/v2/comment', {
+      book_id: bookId,
+      chapter_id: chapterId,
       content,
-      parentId
+      parent_id: parentId
     })
     // commit('SHIFT_COMMENT')
   }

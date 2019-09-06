@@ -379,9 +379,9 @@ export default {
       try {
         const report = {
           type: "chapter",
-          reportId: this.chapter.id,
+          type_id: this.chapter.id,
           problem: this.report.problem,
-          moreInfo: this.report.moreInfo
+          more_info: this.report.moreInfo
         };
         try {
           this.loading = true;

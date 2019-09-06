@@ -145,7 +145,7 @@ export default {
           page: this.page++,
           limit: 10,
           direction: "desc",
-          type: "likes",
+          type: this.sort,
           next: true
         });
       } else {
@@ -154,7 +154,7 @@ export default {
           page: this.page++,
           limit: 10,
           direction: "desc",
-          type: "likes",
+          type: this.sort,
           next: true
         });
       }

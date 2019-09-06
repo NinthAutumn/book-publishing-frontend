@@ -124,7 +124,7 @@ export const actions = {
     interval
   }) {
     try {
-      const res = await this.$axios.get(`/v1/analytic/dashboard/main?time=${time}&type=${type}&interval=${interval}`)
+      const res = await this.$axios.get(`/v2/analytic/graph?time=${time}&type=${type}&interval=${interval}`)
       return Promise.resolve(res.data)
     } catch (error) {
       return Promise.reject(error)

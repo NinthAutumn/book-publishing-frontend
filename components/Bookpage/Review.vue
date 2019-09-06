@@ -168,9 +168,9 @@ export default {
     reportReview: async function() {
       const report = {
         type: "review",
-        reportId: this.review.id,
+        type_id: this.review.id,
         problem: this.report.problem,
-        moreInfo: this.report.moreInfo
+        more_info: this.report.moreInfo
       };
       try {
         this.loading = true;

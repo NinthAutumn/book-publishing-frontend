@@ -60,30 +60,22 @@ export const actions = {
     dispatch
   }, {
     id,
-    userId = ""
   }) {
     try {
-      const res = await this.$axios.get(`/v1/book/show?id=${id}&userId=${userId}`)
-      commit('SET_BOOK', get(res, 'data.book', {}))
+      const res = await this.$axios.get(`/v2/book/${id}`)
+      commit('SET_BOOK', get(res, 'data', {}))
     } catch (error) {
-
+      console.log(error);
     }
 
     // await dispatch('fetchBookView', id)
     // await dispatch('fetchBookChapterCount', id)
 
   },
-  async fetchBookView({
-    commit
-  }, id) {
-    // await this.$axios.get("/book/view?id=" + id).then((res) => {
-    //   commit('SET_BOOK_VIEW', res.data)
-    // })
-  },
   async fetchBookChapterCount({
     commit
   }, id) {
-    const res = await this.$axios.get("/v1/book/count?bookId=" + id).catch((error) => {
+    const res = await this.$axios.get(`/v2/chapter/${id}/count`).catch((error) => {
       return {
         error
       }
@@ -92,14 +84,15 @@ export const actions = {
   },
   async addBook({
     commit
-  }, book) {
+  }, {
+    book,
+    tags,
+    genres
+  }) {
     try {
       const {
         data
-      } = await this.$axios.post('/v1/book/add', book)
-      // if (res.data.noAuthor) {
-      //   return commit('CHANGE_AUTHOR_STATE')
-      // }
+      } = await this.$axios.post('/v2/book', book)
       return Promise.resolve()
     } catch (error) {
       return Promise.reject(error)
@@ -116,7 +109,7 @@ export const actions = {
     infinite = false
   }) {
 
-    const res = await this.$axios.patch('/v1/book/mobile/browse', {
+    const res = await this.$axios.patch('/v1/book/show/browse', {
       type,
       genre,
       page,
@@ -143,28 +136,31 @@ export const actions = {
     direction = 'desc',
     genres,
     page,
-    gfilter = true,
     tags = [],
-    tfilter = true,
     limit = 20,
     infinite = false
   }) {
-
-    const res = await this.$axios.patch('/v1/book/browse', {
-      genres,
-      gfilter,
-      tfilter,
-      tags,
-      direction,
-      type,
-      page,
-      limit
-    })
-    if (infinite) {
-      commit('BROWSE_BOOKS_NEXT', res.data)
-      return Promise.resolve(res.data)
+    try {
+      const res = await this.$axios.patch('/v2/book/show/browse', {
+        genres,
+        tags,
+        direction,
+        type,
+        page,
+        limit
+      })
+      if (infinite) {
+        commit('BROWSE_BOOKS_NEXT', res.data)
+        return Promise.resolve(res.data)
+      }
+      commit('BROWSE_BOOKS', res.data)
+    } catch (error) {
+      console.log(error);
     }
-    commit('BROWSE_BOOKS', res.data)
+
+
+    // const res = await this.$axios.get()
+
   },
   async editBook({
     commit
@@ -189,7 +185,7 @@ export const actions = {
     infinite = false
   }) {
     try {
-      const res = await this.$axios.get(`/v1/tag/query?search=${search}&limit=${limit}&page=${page}`)
+      const res = await this.$axios.get(`/v2/tag/query?search=${search}&limit=${limit}&page=${page}`)
       if (infinite) {
         commit('PUSH_TAG_LIST', res.data)
       } else {
@@ -212,7 +208,7 @@ export const actions = {
     limit
   }) {
     try {
-      const res = await this.$axios.get(`/v1/tag/query?search=${search}&limit=${limit}&page=${page}`)
+      const res = await this.$axios.get(`/v2/tag/query?search=${search}&limit=${limit}&page=${page}`)
       commit('SET_TAG_LIST', res.data)
       return Promise.resolve(res.data)
     } catch (error) {
@@ -241,7 +237,7 @@ export const actions = {
     infinite = false
   }) {
     try {
-      const res = await this.$axios.get(`/v1/book/update?limit=${limit}&page=${page}`)
+      const res = await this.$axios.get(`/v2/book/show/latest?limit=${limit}&page=${page}`)
       if (infinite) {
         commit('SET_MORE_LATEST_BOOKS', res.data)
       } else {
@@ -260,7 +256,7 @@ export const actions = {
     limit
   }) {
     try {
-      const res = await this.$axios.get(`/v1/book/update?limit=${limit}&page=${page}`)
+      const res = await this.$axios.get(`/v2/book/show/latest?limit=${limit}&page=${page}`)
       commit('SET_MORE_LATEST_BOOKS', res.data)
       return Promise.resolve(res.data)
     } catch (error) {
@@ -272,10 +268,11 @@ export const actions = {
   }, {
     bookId,
     page = 1,
-    infinite = false
+    infinite = false,
+    limit = 5
   }) {
     try {
-      const res = await this.$axios.get(`/v1/book/announcements?bookId=${bookId}&page=${page}`)
+      const res = await this.$axios.get(`/v2/announcement/book/${bookId}?page=${page}&limit=${limit}`)
       if (infinite) {
         commit('PUSH_ANNOUNCEMENTS', res.data)
         return Promise.resolve({
@@ -295,10 +292,10 @@ export const actions = {
     bookId
   }) {
     try {
-      const res = await this.$axios.post(`/v1/book/announcement`, {
+      const res = await this.$axios.post(`/v2/announcement/book`, {
         title,
         content,
-        bookId
+        book_id: bookId
       })
     } catch (error) {
       return Promise.reject(error)
@@ -310,14 +307,17 @@ export const actions = {
     bookId
   }) {
     try {
-      const res = await this.$axios.post(`/v1/book/vote?bookId=${bookId}`)
-      if (res.data.error) {
+      const {
+        data
+      } = await this.$axios.post(`/v2/book/${bookId}/vote`)
+      if (data.error) {
         return Promise.resolve({
-          error: res.data.error
+          error: data.error
         })
       }
       return Promise.resolve()
     } catch (error) {
+      console.log(error);
       return Promise.reject(error)
     }
   },
@@ -325,7 +325,7 @@ export const actions = {
     commit
   }, bookId) {
     try {
-      const res = await this.$axios.get(`/v1/book/category?bookId=${bookId}`)
+      const res = await this.$axios.get(`/v2/book/${bookId}/category`)
       commit('SET_BOOK_GENRES', res.data.genres)
       commit('SET_BOOK_TAGS', res.data.tags)
     } catch (error) {
@@ -336,7 +336,8 @@ export const actions = {
     commit
   }) {
     try {
-      const res = await this.$axios.get(`/v1/book/genres`)
+      const res = await this.$axios.get(`/v2/genre`)
+      // console.log(res.data);
       commit('SET_GENRES', res.data)
     } catch (error) {
 
@@ -348,7 +349,7 @@ export const actions = {
     book
   }) {
     try {
-      const res = await this.$axios.patch('/v1/book/', {
+      const res = await this.$axios.patch('/v1/book', {
         book
       })
     } catch (error) {

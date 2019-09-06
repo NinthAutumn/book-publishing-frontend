@@ -84,38 +84,7 @@ export default {
       this.$store
         .dispatch("analytic/fetchUserViews", { type: this.type })
         .then(async () => {
-          let row = Object.keys(this.time);
-          this.chartData = {
-            columns: ["date"],
-            rows: []
-          };
-          if (this.type === "total") {
-          } else {
-            let i = this.type - 1;
-            while (i >= 0) {
-              let date = this.$moment()
-                .subtract(i, "days")
-                .format("YYYY-MM-DD");
-              this.chartData.rows.push({ date });
-              i--;
-            }
-            row.forEach(item => {
-              this.chartData.rows.forEach((el, index) => {
-                if (el.date === item) {
-                  this.object = {
-                    date: item
-                  };
-                  this.time[item].forEach(book => {
-                    if (this.chartData.columns.indexOf(book.title) === -1) {
-                      this.chartData.columns.push(book.title);
-                    }
-                    this.object[book.title] = book.views;
-                  });
-                  this.chartData.rows[index] = this.object;
-                }
-              });
-            });
-          }
+          this.chartData = this.time;
         });
       this.loading = false;
     }

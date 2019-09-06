@@ -225,7 +225,7 @@ export default {
             icon: "check_circle"
           });
         } else {
-          await this.$store.dispatch("wallet/buyCoin", { form });
+          await this.$store.dispatch("wallet/buyCoin", { sku_id: this.skuId });
           await this.$store.dispatch("wallet/wealth");
           this.$store.commit("TOGGLE_PRODUCT_MODAL");
           return this.$toast.show("クラウンコインの購入に成功しました", {

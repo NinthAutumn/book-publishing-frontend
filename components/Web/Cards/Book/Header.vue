@@ -85,7 +85,7 @@ export default {
     this.meta["chapter"]["data"] = `${this.chapter_count || 0}話`;
     this.meta["view"]["data"] = `${this.book.view || 0}回`;
     const { data } = await this.$axios.get(
-      `/book/wordCount?bookId=${this.$route.params.id}`
+      `/v2/book/${this.$route.params.id}/wordCount`
     );
     this.meta["word"]["data"] = `${data.word_count || 0}字`;
     this.bookmarked = this.book.bookmarked;

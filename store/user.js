@@ -159,12 +159,13 @@ export const actions = {
   async fetchUserSettings({
     commit
   }) {
-    await this.$axios.get('/user/setting').then((res) => {
-      commit('SET_FONT_FAMILY', res.data.chapterFontFamily)
-      commit('SET_FONT_SIZE', res.data.chapterFontSize)
-      commit('SET_THEME', res.data.chapterTheme)
-      commit('SET_UPDATE_VIEW', res.data.updateDisplay)
-    })
+    const {
+      data
+    } = await this.$axios.get('/v2/user/show/setting')
+    commit('SET_FONT_FAMILY', data.chapterFontFamily)
+    commit('SET_FONT_SIZE', data.chapterFontSize)
+    commit('SET_THEME', data.chapterTheme)
+    commit('SET_UPDATE_VIEW', data.updateDisplay)
   },
   async setSetting({
     commit
@@ -280,7 +281,7 @@ export const actions = {
     infinite = false
   }) {
     try {
-      const res = await this.$axios.get(`/v1/notification/chapter?page=${page}&limit=${limit}`)
+      const res = await this.$axios.get(`/v2/notification/chapter?page=${page}&limit=${limit}`)
       if (infinite) {
         commit('PUSH_NOTIFICATION', get(res, 'data'))
         return Promise.resolve(get(res, 'data'))
@@ -292,7 +293,7 @@ export const actions = {
     commit
   }) {
     try {
-      const res = await this.$axios.get(`/author`)
+      const res = await this.$axios.get(`/v2/author`)
       commit('SET_AUTHOR', get(res, 'data'))
     } catch (error) {
       return Promise.reject(error)
@@ -305,7 +306,7 @@ export const actions = {
     author
   }) {
     try {
-      const res = await this.$axios.post(`/v1/author`, author)
+      const res = await this.$axios.post(`/v2/author`, author)
       await dispatch('fetchAuthor')
     } catch (error) {
       return Promise.reject(error)
@@ -333,7 +334,7 @@ export const actions = {
     infinite = false
   }) {
     try {
-      const res = await this.$axios.get(`/v1/notification/comment?page=${page}`)
+      const res = await this.$axios.get(`/v2/notification/comment?page=${page}`)
       if (infinite) {
         commit('PUSH_COMMENT_NOTIFICATION', res.data)
       } else {
@@ -349,7 +350,7 @@ export const actions = {
     commit
   }) {
     try {
-      const res = await this.$axios.get(`/v1/notification/comment/count`)
+      const res = await this.$axios.get(`/v2/notification/comment/count`)
       commit('SET_COMMENT_NOTIFICATION_COUNT', res.data.count)
 
     } catch (error) {
@@ -361,7 +362,7 @@ export const actions = {
     dispatch
   }) {
     try {
-      this.$axios.patch(`/v1/notification/comment/read`).then(() => {
+      this.$axios.patch(`/v2/notification/comment/read`).then(() => {
         dispatch('fetchCommentNotificationsCount')
       })
     } catch (error) {

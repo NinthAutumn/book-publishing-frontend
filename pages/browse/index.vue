@@ -166,6 +166,8 @@ export default {
       type: 5,
       genre: "",
       loading: true,
+      genre_list: [],
+      direction: "desc",
       modalDirection: "right",
       selected_genre: [],
       sort_type: [

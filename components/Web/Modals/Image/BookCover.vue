@@ -190,7 +190,7 @@ export default {
   },
   async mounted() {
     this.container = this.value;
-    const { data } = await this.$axios.get("/drawing/cover/list");
+    const { data } = await this.$axios.get("/v2/drawing/cover/list");
     const { user, site } = data;
     this.list = user;
     this.site = site;

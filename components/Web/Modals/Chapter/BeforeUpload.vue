@@ -113,18 +113,18 @@ export default {
       const chapter = {
         title: this.form.title,
         content: this.form.content,
-        wordCount: this.form.wordCount,
+        word_count: this.form.wordCount,
         locked: this.form.locked,
-        volumeId: this.form.volume.id,
+        volume_id: this.form.volume.id,
         index: this.index,
         state,
         header: this.form.header,
         footer: this.form.footer,
-        bookId,
-        drawings: this.form.drawings
+        book_id: bookId
       };
       await this.$store.dispatch("chapter/createChapter", {
         chapter,
+        drawings: this.form.drawings,
         date: this.form.date
       });
     }

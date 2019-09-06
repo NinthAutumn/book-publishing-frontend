@@ -350,11 +350,11 @@ export default {
       try {
         let book = {
           title: this.form.title,
-          tags: this.form.tags,
-          genres: this.form.genre,
           synopsis: this.form.synopsis,
-          main_genre: this.form.main_genre[0],
-          paid: this.form.paid
+          main_genre_id: this.form.main_genre[0].id,
+          paid: this.form.paid,
+          tags: this.form.tags,
+          genres: this.form.genre
         };
         if (this.$route.query.bookId) {
           if (this.form.cover.medium) {
@@ -406,7 +406,9 @@ export default {
         }
         book["cover"] = this.form.cover.url;
 
-        await this.$store.dispatch("book/addBook", book);
+        await this.$store.dispatch("book/addBook", {
+          book
+        });
         this.$toast.show("本の投稿に成功しました", {
           theme: "toasted-primary",
           position: "top-right",

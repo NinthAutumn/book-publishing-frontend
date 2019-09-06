@@ -189,7 +189,7 @@ export default {
         skuId: this.skuId,
         source
       };
-      await this.$store.dispatch("wallet/buyCoin", { form });
+      await this.$store.dispatch("wallet/buyCoin", { sku_id: this.skuId });
     },
     handlePayment: async function() {
       this.loading = true;
@@ -234,7 +234,7 @@ export default {
           fullname: `${this.form.lastname} ${this.form.firstname}`,
           skuId: this.skuId
         };
-        await this.$store.dispatch("wallet/buyCoin", { form });
+        await this.$store.dispatch("wallet/buyCoin", { sku_id: this.skuId });
         this.$store.commit("TOGGLE_PRODUCT_MODAL");
         return this.$toast.show("クラウンコインの購入に成功しました", {
           icon: "check_circle",
@@ -285,7 +285,7 @@ export default {
         amount: this.price,
         skuId: this.skuId
       });
-      let clientSecret =   this.paymentIntent.client_secret
+      let clientSecret = this.paymentIntent.client_secret;
       const {
         error: confirmError,
         paymentIntent

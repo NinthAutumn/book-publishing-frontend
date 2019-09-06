@@ -242,9 +242,9 @@ export default {
       try {
         const report = {
           type: "chapter",
-          reportId: this.comment.id,
+          type_id: this.comment.id,
           problem: this.report.problem,
-          moreInfo: this.report.moreInfo
+          more_info: this.report.moreInfo
         };
 
         this.loading = true;
@@ -269,7 +269,7 @@ export default {
     async patchComment() {
       let comment = {
         content: this.editContent,
-        commentId: this.comment.id
+        id: this.comment.id
       };
       this.current = this.editContent;
       await this.$store.dispatch("comment/patchComment", { comment });

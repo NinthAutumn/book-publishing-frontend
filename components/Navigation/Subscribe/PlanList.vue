@@ -109,7 +109,7 @@ export default {
       }
     },
     selectCard: function() {
-      (this.plan_index);
+      this.plan_index;
       if (this.disable) {
         return this.$toast.show("まだこのプランはサポートされていません", {
           duration: 2000,
@@ -122,27 +122,26 @@ export default {
     }
   },
   async mounted() {
-    this.$store.dispatch("subscription/fetchSubscription").then(val => {
-      this.plan.forEach(item => {
-        if (item.interval === "month") {
-          this.selected_option = {
-            id: item.id,
-            price: item.price,
-            interval: "月間",
-            interval_short: "月",
-            stripe_plan_id: item.stripe_plan_id,
-            name: this.plan_key,
-            status: item.status
-          };
-        }
-        this.options[item.interval].value.id = item.id;
-        this.options[item.interval].value.status = item.status;
-        this.options[item.interval].value.price = item.price;
-      });
-      if (this.selected === this.plan_index) {
-        this.$store.commit("subscription/SET_SITE_PLAN", this.selected_option);
+    await this.$store.dispatch("subscription/fetchSubscription");
+    this.plan.forEach(item => {
+      if (item.interval === "month") {
+        this.selected_option = {
+          id: item.id,
+          price: item.price,
+          interval: "月間",
+          interval_short: "月",
+          stripe_plan_id: item.stripe_plan_id,
+          name: this.plan_key,
+          status: item.status
+        };
       }
+      this.options[item.interval].value.id = item.id;
+      this.options[item.interval].value.status = item.status;
+      this.options[item.interval].value.price = item.price;
     });
+    if (this.selected === this.plan_index) {
+      this.$store.commit("subscription/SET_SITE_PLAN", this.selected_option);
+    }
   }
 };
 </script>

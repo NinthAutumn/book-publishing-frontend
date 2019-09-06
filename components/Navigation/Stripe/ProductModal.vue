@@ -121,7 +121,7 @@ export default {
   },
   async mounted() {
     this.loading = true;
-    const { data } = await this.$axios.get("/stripe/product/list");
+    const { data } = await this.$axios.get("/v2/stripe/product/site");
     this.products = data;
     this.loading = false;
     // element-loading-background="rgba(0, 0, 0, 0.8)"

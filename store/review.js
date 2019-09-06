@@ -132,7 +132,7 @@ export const actions = {
     next = false,
     preview = false
   }) {
-    const res = await this.$axios.get(`/v1/review/book?bookId=${bookId}&limit=${limit}&page=${page}&userId=${userId}&direction=${direction}&type=${type}`)
+    const res = await this.$axios.get(`/v2/review/book?book_id=${bookId}&limit=${limit}&page=${page}&user_id=${userId}&direction=${direction}&type=${type}`)
     if (preview) {
       commit('SET_REVIEW_LENGTH', res.data.review_count)
 

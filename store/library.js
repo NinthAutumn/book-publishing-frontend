@@ -55,27 +55,13 @@ export const mutations = {
 }
 
 export const actions = {
-  async checkBookmark({
-    commit
-  }, bookId) {
-    try {
-      const status = await this.$axios.get('/v1/library/check?bookId=' + bookId)
-      if (!status) {
-        return
-      }
-      commit('BOOKMARK_STATUS', status.data.bookmarked)
-    } catch (error) {
-      throw error
-    }
-
-  },
   async getBookmark({
     commit
   }, {
     sortby = 0
   }) {
     try {
-      const res = await this.$axios.get(`/v1/library?type=bookmark&sortby=${sortby}`)
+      const res = await this.$axios.get(`/v2/library/show/list?type=bookmark&sortBy=${sortby}`)
       commit('SET_BOOKMARK', res.data)
     } catch (error) {
       Promise.reject(error)
@@ -85,21 +71,11 @@ export const actions = {
   async getHistory({
     commit
   }) {
-    await this.$axios.get('/v1/library/history').then((res) => {
+    await this.$axios.get('/v2/library/show/history').then((res) => {
       if (res) {
         commit('GET_HISTORY', res.data)
       }
 
-    })
-  },
-  async getRead_Later({
-    commit
-  }) {
-    await this.$axios.get('/v1/library/show?type=readLater').then((res) => {
-      if (!res) {
-        return
-      }
-      commit('GET_READ_LATER', res.data)
     })
   },
   async patchStore({
@@ -107,8 +83,9 @@ export const actions = {
   }, {
     store
   }) {
-    await this.$axios.post('/v1/library', {
-      store
+    await this.$axios.patch('/v2/library', {
+      type: store.type,
+      book_id: store.bookId
     })
   },
   async fetchLatestChapters({
@@ -162,9 +139,9 @@ export const actions = {
     bookId
   }) {
     try {
-      const res = await this.$axios.post(`/v1/library/history`, {
-        chapterId,
-        bookId
+      const res = await this.$axios.post(`/v2/library/history`, {
+        chapter_id: chapterId,
+        book_id: bookId
       })
     } catch (error) {
 

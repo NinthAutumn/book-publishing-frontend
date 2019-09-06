@@ -6,7 +6,8 @@ export const state = () => ({
   list: [],
   trending: [],
   ranking: {},
-  rankings: {}
+  rankings: {},
+  voteRanking: []
 })
 
 export const getters = {
@@ -17,7 +18,9 @@ export const getters = {
     return state.trending
   },
   getRankingsList: state => state.rankings,
-  getBookRanking: state => state.ranking
+  getBookRanking: state => state.ranking,
+  getVoteRanking: state => state.voteRanking,
+
 }
 
 export const mutations = {
@@ -32,10 +35,34 @@ export const mutations = {
   },
   SET_BOOK_RANKING(state, ranking) {
     state.ranking = ranking
-  }
+  },
+  SET_VOTE_RANKING: (state, voteRanking) => {
+    state.voteRanking = voteRanking
+  },
 }
 
 export const actions = {
+  fetchVoteRanking: async function ({
+    commit
+  }, {
+    time,
+    page,
+    infinite,
+    limit = 10
+  }) {
+    try {
+      const res = await this.$axios.get(`/v2/ranking/vote?period=${time}&page=${page}&limit=${limit}`)
+      if (infinite) {
+        commit('PUSH_VOTE_RANKING', res.data)
+      } else {
+        commit('SET_VOTE_RANKING', res.data)
+      }
+      return Promise.resolve(res.data)
+    } catch (error) {
+      console.log(error);
+      return Promise.reject(error)
+    }
+  },
   async fetchRanking({
     commit
   }, {
@@ -89,7 +116,7 @@ export const actions = {
     try {
       const {
         data
-      } = await this.$axios.get(`/v1/ranking/${bookId}?type=${type}&period=${period}`)
+      } = await this.$axios.get(`/v2/ranking/${bookId}/vote?type=${type}&period=${period}`)
       if (data.error) {
         return Promise.reject(data.error)
       }

@@ -62,17 +62,19 @@ export default {
       try {
         this.author.avatar.generateBlob(
           blob => {
-            this.$store.dispatch("upload/image", blob).then(async url => {
-              const author = {
-                avatar: url.url,
-                avatar_path: url.path,
-                penname: this.author.penname
-              };
-              await this.$store.dispatch("user/postAuthor", { author });
-              this.$toast.success("おめでとうございます、作者になりました", {
-                duration: 1200
+            this.$store
+              .dispatch("upload/uploadAvatar", blob)
+              .then(async url => {
+                const author = {
+                  avatar: url.url,
+                  pen_name: this.author.penname
+                };
+
+                await this.$store.dispatch("user/postAuthor", { author });
+                this.$toast.success("おめでとうございます、作者になりました", {
+                  duration: 1200
+                });
               });
-            });
           },
           "image/jpeg",
           0.8

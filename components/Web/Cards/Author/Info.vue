@@ -24,7 +24,7 @@ export default {
     };
   },
   async mounted() {
-    const { data } = await this.$axios.get(`/author/${this.id}`);
+    const { data } = await this.$axios.get(`/v2/author/${this.id}`);
     this.author = data;
   }
 };

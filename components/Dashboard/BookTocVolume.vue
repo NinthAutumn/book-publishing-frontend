@@ -51,7 +51,6 @@ export default {
   },
   methods: {
     async editChapter(chapterId) {
-      // await this.$store.dispatch("chapter/fetchChapterDetail", { chapterId });
       this.$router.push(
         `/dashboard/books/${this.$route.params.id}/new?chapterId=${chapterId}`
       );

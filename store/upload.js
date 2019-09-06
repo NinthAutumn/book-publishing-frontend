@@ -71,7 +71,7 @@ export const actions = {
     try {
       const {
         data
-      } = await this.$axios.get(`/v1/upload/cover?size=${size}&unique=${unique}&filetype=${file.type}`)
+      } = await this.$axios.get(`/v2/upload/image/cover?size=${size}&unique=${unique}&filetype=${file.type}`)
       let auth = this.$axios.defaults.headers.common['Authorization']
 
       let trackId = this.$axios.defaults.headers.common['TrackId']
@@ -86,7 +86,7 @@ export const actions = {
       this.$axios.defaults.headers.common['Authorization'] = auth
       this.$axios.defaults.headers.common['TrackId'] = trackId
       return Promise.resolve({
-        url: `https://noble-img-directory.s3-ap-northeast-1.amazonaws.com/${data.filepath}`,
+        url: data.image_url,
         path: data.filepath,
       })
     } catch (error) {
@@ -98,14 +98,16 @@ export const actions = {
   }, file) {
     try {
 
-      const uploadConfig = await this.$axios.get(`/v1/upload?filetype=${file.type}`)
+      const {
+        data
+      } = await this.$axios.get(`/v2/upload/image?filetype=${file.type}`)
       let auth = this.$axios.defaults.headers.common['Authorization']
       let trackId = this.$axios.defaults.headers.common['TrackId']
       delete this.$axios.defaults.headers.common['Authorization']
       delete this.$axios.defaults.headers.common['TrackId']
       delete this.$axios.defaults.headers.common['Content-Type']
 
-      await this.$axios.put(uploadConfig.data.url, file, {
+      await this.$axios.put(data.url, file, {
         headers: {
           'Content-Type': file.type,
         },
@@ -114,9 +116,9 @@ export const actions = {
       this.$axios.defaults.headers.common['Authorization'] = auth
       this.$axios.defaults.headers.common['TrackId'] = trackId
       return Promise.resolve({
-        url: `https://noble-img-directory.s3-ap-northeast-1.amazonaws.com/${uploadConfig.data.filepath}`,
-        path: uploadConfig.data.filepath,
-        id: uploadConfig.data.id
+        url: data.image_url,
+        path: data.filepath,
+        id: data.drawing.id
       })
     } catch (error) {
 
