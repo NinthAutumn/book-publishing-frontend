@@ -177,121 +177,9 @@ export default {
         .then(data => {
           this.chartData = data;
         });
-    },
-    changeDateTransaction: async function() {
-      this.$store
-        .dispatch("dashboard/fetchTransactionGraph", {
-          time: this.type,
-          interval: 0
-        })
-        .then(transaction => {
-          let row = Object.keys(transaction);
-          let i = this.type - 1;
-          this.chartData = {
-            columns: ["date"],
-            rows: []
-          };
-          while (i >= 0) {
-            let date = this.$moment()
-              .subtract(i, "days")
-              .format("YYYY-MM-DD");
-            this.chartData.rows.push({ date });
-            // this.chartData.labels.push(date);
-            i--;
-          }
-          row.forEach(item => {
-            this.chartData.rows.forEach((el, index) => {
-              if (el.date === item) {
-                this.object = {
-                  date: item
-                };
-                transaction[item].forEach(book => {
-                  if (this.chartData.columns.indexOf(book.title) === -1) {
-                    this.chartData.columns.push(book.title);
-                    // this.chartData.labels.push()
-                  }
-                  this.object[book.title] = book.sum;
-                });
-                this.chartData.rows[index] = this.object;
-              }
-            });
-          });
-        });
-    },
-    changeDateViews: async function() {
-      this.$store
-        .dispatch("analytic/fetchUserViews", { type: this.type })
-        .then(async time => {
-          let row = Object.keys(time);
-          this.chartData = {
-            columns: ["date"],
-            rows: []
-          };
-          if (this.type === "total") {
-          } else {
-            let i = this.type - 1;
-            while (i >= 0) {
-              let date = this.$moment()
-                .subtract(i, "days")
-                .format("YYYY-MM-DD");
-              this.chartData.rows.push({ date });
-              i--;
-            }
-            row.forEach(item => {
-              this.chartData.rows.forEach((el, index) => {
-                if (el.date === item) {
-                  this.object = {
-                    date: item
-                  };
-                  time[item].forEach(book => {
-                    if (this.chartData.columns.indexOf(book.title) === -1) {
-                      this.chartData.columns.push(book.title);
-                    }
-                    this.object[book.title] = book.views;
-                  });
-                  this.chartData.rows[index] = this.object;
-                }
-              });
-            });
-          }
-        });
-    },
-    changeDateVote: async function() {
-      this.$store
-        .dispatch("dashboard/fetchVotesBar", { time: this.type })
-        .then(time => {
-          let row = Object.keys(time);
-          this.chartData = {
-            columns: ["date"],
-            rows: []
-          };
-          let i = this.type - 1;
-          while (i >= 0) {
-            let date = this.$moment()
-              .subtract(i, "days")
-              .format("YYYY-MM-DD");
-            this.chartData.rows.push({ date });
-            i--;
-          }
-          row.forEach(item => {
-            this.chartData.rows.forEach((el, index) => {
-              if (el.date === item) {
-                this.object = {
-                  date: item
-                };
-                time[item].forEach(book => {
-                  if (this.chartData.columns.indexOf(book.title) === -1) {
-                    this.chartData.columns.push(book.title);
-                  }
-                  this.object[book.title] = book.votes;
-                });
-                this.chartData.rows[index] = this.object;
-              }
-            });
-          });
-        });
     }
   },
+
   mounted: async function() {
     this.$store
       .dispatch("dashboard/fetchMainAnalytics", {
@@ -300,7 +188,7 @@ export default {
         interval: 0
       })
       .then(data => {
-        console.log(data);
+        // console.log(data);
         this.chartData = data;
       });
   }

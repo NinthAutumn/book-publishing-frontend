@@ -178,7 +178,8 @@ export default {
     ...mapGetters({
       latestIndex: "chapter/getNewIndex",
       chapter: "chapter/getChapter",
-      drawings: "upload/getMultipleFile"
+      drawings: "upload/getMultipleFile",
+      volume_list: "chapter/getVolumeList"
     })
   },
   mounted: async function() {
@@ -188,7 +189,7 @@ export default {
       this.form.header = this.chapter.header;
       this.form.footer = this.chapter.footer;
       const { data } = await this.$axios.get(
-        `/drawing/chapter/${this.$route.query.chapterId}`
+        `v2/drawing/chapter/${this.$route.query.chapterId}`
       );
       data.drawings.forEach(drawing => {
         this.form.drawings[drawing.id] = drawing;
@@ -199,7 +200,7 @@ export default {
   },
   created() {
     this.form.date = this.$moment().subtract(18, "year");
-    this.$store.getters["chapter/getVolumeList"].forEach((volume, index) => {
+    this.$store.volume_list.forEach((volume, index) => {
       if (index === 0) {
         this.volumes.push({
           key: volume.title,

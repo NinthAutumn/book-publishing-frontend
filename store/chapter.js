@@ -173,8 +173,6 @@ export const actions = {
     try {
       const res = await this.$axios.get(`/v2/chapter/${chapterId}`)
       const {
-        next,
-        prev,
         chapter
       } = res.data
       commit('SET_CHAPTER', chapter)
@@ -184,7 +182,8 @@ export const actions = {
       commit('SET_CHAPTER_COUNT', data.count)
 
     } catch (error) {
-      return Promise.reject(error.response.message)
+      console.log(error);
+      return Promise.reject(error)
     }
   },
   async fetchChapterDetail({
@@ -207,7 +206,7 @@ export const actions = {
   }, {
     bookId,
     index,
-    settingIndex
+    settingIndex = 0
   }) {
     try {
       const res = await this.$axios.get(`/v2/chapter/${bookId}/nav?index=${index}&setting_index=${settingIndex}`)
@@ -274,6 +273,7 @@ export const actions = {
   }, bookId) {
     try {
       const res = await this.$axios.get(`/v2/chapter/volume/${bookId}`)
+      // console.log(res.data);
       commit('SET_VOLUME_LIST', res.data)
     } catch (error) {
       return Promise.reject(error)
@@ -284,15 +284,12 @@ export const actions = {
     commit
   }, {
     chapter,
-    drawings,
-    date
+
   }) {
     try {
-      await this.$axios.post('/v2/chapter', {
-        chapter,
-        drawings,
-        date
-      })
+      await this.$axios.post('/v2/chapter',
+        chapter
+      )
       return Promise.resolve()
     } catch (error) {
       return Promise.reject(error)
@@ -302,10 +299,10 @@ export const actions = {
     commit
   }, {
     bookId,
-    volumeId = ""
+    volumeId = null
   }) {
     try {
-      const res = await this.$axios.get(`/v1/chapter/latestIndex?bookId=${bookId}&volumeId=${volumeId}`)
+      const res = await this.$axios.get(`/v2/chapter/${bookId}/index${volumeId? `?volume_id=${volumeId}`:''}`)
       const {
         index
       } = res.data

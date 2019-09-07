@@ -120,12 +120,12 @@ export default {
         state,
         header: this.form.header,
         footer: this.form.footer,
-        book_id: bookId
-      };
-      await this.$store.dispatch("chapter/createChapter", {
-        chapter,
+        book_id: bookId,
         drawings: this.form.drawings,
         date: this.form.date
+      };
+      await this.$store.dispatch("chapter/createChapter", {
+        chapter
       });
     }
   }

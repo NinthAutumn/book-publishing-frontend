@@ -99,7 +99,7 @@ export default {
         title: "",
         wordCount: 0,
         bookId: this.$route.params.id,
-        drawings: {}
+        drawings: []
         // locked: false
       },
       beforeUpload: false

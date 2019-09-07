@@ -250,26 +250,13 @@ export const actions = {
       review
     })
   },
-  async fetchTrendingReviews({
-    commit
-  }, {
-    days
-  }) {
-    try {
-      const res = await this.$axios.get(`/v1/analytic/review/trending?days=${days}`)
-      commit('SET_TRENDING', res.data)
-      return Promise.resolve()
-    } catch (error) {
-      return Promise.reject(error)
-    }
-  },
   async fetchIsReviewed({
     commit
   }, {
     bookId
   }) {
     try {
-      const res = await this.$axios.get(`/v1/review/isreviewed?bookId=${bookId}`)
+      const res = await this.$axios.get(`/v2/review/${bookId}/reviewed`)
       commit('SET_IS_REVIEWED', res.data.reviewed)
     } catch (error) {
       return Promise.reject(error)

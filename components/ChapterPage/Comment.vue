@@ -11,7 +11,7 @@
         <div class="comment-modal__avatar flex-column flex--align flex--left">
           <v-avatar size="40" v-if="!comment.deleted">
             <v-img v-if="comment.user_id === chapter.author_id" :src="comment.author_avatar"></v-img>
-            <v-img v-else :src="comment.avatar.img"></v-img>
+            <v-img v-else :src="comment.avatar? comment.avatar.img:avatar"></v-img>
           </v-avatar>
         </div>
         <div class="comment-modal__div">
@@ -188,7 +188,8 @@ export default {
         "児童虐待",
         "その他"
       ],
-      loading: false
+      loading: false,
+      avatar: require("~/assets/profile.png")
     };
   },
   watch: {
