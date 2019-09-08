@@ -30,7 +30,7 @@
       v-if="!chapter.locked"
       @step-progress="progressHandler"
     >
-      <adsbygoogle v-if="!user.status" :ad-layout="'in-article'" :ad-format="'fluid'" />
+      <adsbygoogle v-if="!user.status||!user" :ad-layout="'in-article'" :ad-format="'fluid'" />
       <div
         data-step="1"
         :style="{'font-size':font + 'px', 'font-family':fontStyle}"

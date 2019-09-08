@@ -2,7 +2,7 @@
   <div class="update-mobile" v-ripple>
     <nuxt-link
       tag="div"
-      :to="`books/${book[0].book_id}`"
+      :to="`books/${book? book[0].book_id: ''}`"
       class="update-mobile__cover"
       style=" border-radius: 0.4rem;"
     >
@@ -26,7 +26,12 @@
 export default {
   props: {
     chapters: Array,
-    book: Array
+    book: {
+      type: Array,
+      default: () => {
+        return [{ title: "", cover: "" }];
+      }
+    }
   },
   data() {
     return {

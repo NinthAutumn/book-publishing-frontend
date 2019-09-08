@@ -12,14 +12,16 @@
           <div
             @click.stop="$store.commit('SET_CONTRACT_MODAL_STATE')"
             class="contract-button button--shadow button"
-            v-if="author.verified === 'unverified'"
+            :class="{'contract-button--pending':author.status==='pending', }"
+            v-if="author.status !== 'verified'"
+            v-text="author.status==='pending'? '本人確認を検討中': '本人確認を行う'"
           >
-            <fa icon="file-contract" class style="margin-right:5px;"></fa>本人確認
+            <fa icon="file-contract" class style="margin-right:5px;"></fa>
           </div>
-          <div
+          <!-- <div
             class="contract-button contract-button--pending button--shadow button"
             v-if="author.verified === 'pending'"
-          >本人確認を検討中</div>
+          ></div>-->
           <nuxt-link
             v-if="$route.name ==='dashboard-books-id-index-draft'||$route.name ==='dashboard-books-id-index-published'||$route.name ==='dashboard-books-id-index'||$route.name ==='dashboard-books-id-index-deleted'||$route.name ==='dashboard-books-id-new'"
             class="write-chapter"

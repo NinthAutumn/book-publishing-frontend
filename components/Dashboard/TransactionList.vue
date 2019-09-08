@@ -11,7 +11,11 @@
         <td class="flex-column flex--align flex--center">
           <v-avatar class="elevation-1" :size="35">
             <!-- :src="`https://storage.googleapis.com/theta-images/${props.item.avatar}`" -->
-            <v-img :src="props.item.avatar.img" :aspect-ratio="1/1.5" max-width="5rem"></v-img>
+            <v-img
+              :src="props.item.avatar?props.item.avatar:avatar"
+              :aspect-ratio="1/1.5"
+              max-width="5rem"
+            ></v-img>
           </v-avatar>
         </td>
         <td class="transaction-list__item transaction-list__item--title">{{ props.item.username }}</td>
@@ -41,7 +45,8 @@ export default {
         { text: "金額", value: "amount", sortable: false },
         { text: "時間", value: "date", sortable: false }
       ],
-      loading: false
+      loading: false,
+      avatar: require("~/assets/profile.png")
     };
   },
   computed: {

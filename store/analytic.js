@@ -8,7 +8,8 @@ export const state = () => ({
   latest: [],
   reviews: [],
   voteRanking: [],
-  frequent: []
+  frequent: [],
+  funnel_select: []
 })
 
 export const getters = {
@@ -21,7 +22,8 @@ export const getters = {
   getLatest: state => state.latest,
   getTrendingReviews: state => state.reviews,
   getVoteRanking: state => state.voteRanking,
-  getFrequent: state => state.frequent
+  getFrequent: state => state.frequent,
+  getFunnelBookList: state => state.funnel_select
 }
 
 export const mutations = {
@@ -42,6 +44,11 @@ export const mutations = {
   },
   SET_COMMENTS: (state, comments) => {
     state.comments = comments
+  },
+  PUSH_COMMENTS: (state, comments) => {
+    comments.forEach((comment) => {
+      state.comments.push(comment)
+    })
   },
   SET_LATEST: (state, latest) => {
     state.latest = latest
@@ -69,6 +76,9 @@ export const mutations = {
   },
   SET_FREQUENT: (state, frequent) => {
     state.frequent = frequent
+  },
+  SET_FUNNEL_SELECT(state, funnel) {
+    state.funnel_select = funnel
   }
 }
 export const actions = {
@@ -133,13 +143,24 @@ export const actions = {
       console.log(error);
     }
   },
-  fetchUserBooks: async function ({
+  fetchFunnelSelectList: async function ({
     commit
-  }, {
-    funnel = false
   }) {
     try {
-      const res = await this.$axios.get(`/v1/analytic/book/list?funnel=${funnel}`)
+      const {
+        data
+      } = await this.$axios.get(`/v2/analytic/select/funnel`)
+      commit('SET_FUNNEL_SELECT', data)
+      return Promise.resolve(data)
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  fetchUserBooks: async function ({
+    commit
+  }) {
+    try {
+      const res = await this.$axios.get(`/v2/book/user/list`)
       commit('SET_BOOKS', res.data)
       return Promise.resolve(res.data)
 
@@ -149,10 +170,20 @@ export const actions = {
   },
   fetchUserComments: async function ({
     commit
+  }, {
+    limit = 10,
+    page = 1,
+    infinite = false,
   }) {
     try {
-      const res = await this.$axios.get(`/v1/analytic/comment/list`)
-      commit('SET_COMMENTS', res.data)
+      // return
+      const res = await this.$axios.get(`/v2/comment/user/book/list?page=${page}&limit=${limit}`)
+      if (infinite) {
+        comment('PUSH_COMMENTS', res.data)
+      } else {
+        commit('SET_COMMENTS', res.data)
+
+      }
       return Promise.resolve(res.data)
 
     } catch (error) {

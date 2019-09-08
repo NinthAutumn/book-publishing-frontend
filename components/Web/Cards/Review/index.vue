@@ -5,7 +5,7 @@
         <div class="flex-divider flex-row flex--align flex--between">
           <div class="flex-divider flex-row flex--align flex--between">
             <v-avatar :size="40" class="review-card__avatar">
-              <v-img :src="review.avatar.img"></v-img>
+              <v-img :src="review.avatar"></v-img>
             </v-avatar>
             <div class="flex-divider">
               <div class="review-card__title" v-text="review.title"></div>

@@ -16,7 +16,7 @@
           <div class="mr-page__nav mr-page__nav--top flex--between" v-if="nav">
             <div class="flex-divider flex-row flex--align">
               <v-avatar :size="40" class="mr-page__img" v-if="review.avatar">
-                <v-img :src="book.user_id === review.user_id? book.avatar : review.avatar.img"></v-img>
+                <v-img :src="book.user_id === review.user_id? book.avatar : review.avatar"></v-img>
               </v-avatar>
               <div class="flex-divider">
                 <div class="mr-page__title mr-page__title--nav" v-text="review.title"></div>
@@ -34,7 +34,7 @@
           <div class="flex-divider flex-row flex--align">
             <div class="mr-page__avatar">
               <v-avatar :size="50" class="mr-page__img" v-if="review.avatar">
-                <v-img :src="book.user_id === review.user_id? book.avatar : review.avatar.img"></v-img>
+                <v-img :src="book.user_id === review.user_id? book.avatar : review.avatar"></v-img>
               </v-avatar>
             </div>
             <div class="flex-divider flex-column">

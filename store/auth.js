@@ -65,6 +65,7 @@ export const actions = {
       this.$storage.setUniversal('strategy', strategy)
       this.$axios.defaults.headers.common['Authorization'] = 'Bearer ' + data.access_token
       await dispatch('fetchUser')
+
       return Promise.resolve({
         error: null
       })
@@ -127,6 +128,12 @@ export const actions = {
         data
       } = await this.$axios.get('/v2/user/me', {})
       commit('SET_USER', data)
+      await dispatch('wallet/wealth', {}, {
+        root: true
+      })
+      await dispatch('user/fetchUserSettings', {}, {
+        root: true
+      })
       // await dispatch('wallet/wealth', '', {
       //   root: true
       // })

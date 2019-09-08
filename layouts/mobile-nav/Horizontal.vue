@@ -19,7 +19,7 @@
         <v-img
           width="3.5rem"
           height="3.5rem"
-          :src="$store.getters['auth/isAuthenticated']&&user.avatar? user.avatar.img:avatar"
+          :src="$store.getters['auth/isAuthenticated']&&user.avatar? user.avatar:avatar"
         ></v-img>
         <!-- <v-img v-else :src="avatar"></v-img> -->
         <div class="mobile-horizontal__notification" v-if="notificationCount"></div>

@@ -147,6 +147,28 @@ export default {
         this.$store.commit("LOGIN_FALSE");
         this.$storage.setUniversal("FAILED_LOGIN_COUNT", 0);
         this.$nuxt.refresh();
+        // if(this.$forceUpdate)
+        if (this.$route.name === "books-id-chaptersId") {
+          await this.$store.dispatch("comment/fetchCommentList", {
+            chapterId: this.$route.params.chaptersId,
+            sortBy: 0,
+            page: 1,
+            limit: 10,
+            direction: 0
+          });
+        }
+        if (this.$route.name === "books-id") {
+          await this.$store.dispatch("review/showAll", {
+            bookId: this.$route.params.id,
+            page: 1,
+            limit: 10,
+            type: 0
+          });
+          await this.$store.dispatch("review/fetchIsReviewed", {
+            bookId: this.$route.params.id
+          });
+        }
+        // if(this.$route.path)
         this.$emit("loginAction");
       } catch (error) {
         console.log(error);

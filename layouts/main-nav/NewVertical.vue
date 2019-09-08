@@ -8,7 +8,7 @@
         >
           <div class="vertical-nav__user-avatar">
             <v-avatar size="80" class="vertical-nav__avatar">
-              <v-img :src="user.avatar? user.avatar.img: avatar"></v-img>
+              <v-img :src="user.avatar? user.avatar: avatar"></v-img>
             </v-avatar>
           </div>
           <div class="vertical-nav__user-wallet">

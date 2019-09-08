@@ -90,7 +90,7 @@ export const actions = {
     commit
   }) {
     try {
-      const res = await this.$axios.get(`/v1/transaction/payout/list`)
+      const res = await this.$axios.get(`/v2/transaction/payout/list`)
       commit('SET_PAYOUT_LIST', res.data)
       return Promise.resolve(res.data)
     } catch (error) {

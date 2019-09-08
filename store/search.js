@@ -26,9 +26,13 @@ export const mutations = {
 export const actions = {
   async searchBooks({
     commit
-  }, query) {
+  }, {
+    query,
+    page = 1,
+    limit = 10
+  }) {
     commit('LOADING')
-    await this.$axios.get(`/v1/search?search=${query}&page=${1}`).then((res) => {
+    await this.$axios.get(`/v2/book/show/search?search=${query}&page=${page}`).then((res) => {
 
       commit('QUERIED_BOOKS', res.data)
 

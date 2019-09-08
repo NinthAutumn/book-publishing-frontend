@@ -168,29 +168,22 @@ export default {
   },
   methods: {
     getAnalytics: async function() {
-      this.$store
-        .dispatch("dashboard/fetchMainAnalytics", {
-          time: this.type,
-          type: this.dataSelected,
-          interval: this.interval
-        })
-        .then(data => {
-          this.chartData = data;
-        });
+      const data = await this.$store.dispatch("dashboard/fetchMainAnalytics", {
+        time: this.type,
+        type: this.dataSelected,
+        interval: this.interval
+      });
+      this.chartData = data;
     }
   },
 
   mounted: async function() {
-    this.$store
-      .dispatch("dashboard/fetchMainAnalytics", {
-        time: this.type,
-        type: this.dataSelected,
-        interval: 0
-      })
-      .then(data => {
-        // console.log(data);
-        this.chartData = data;
-      });
+    const data = await this.$store.dispatch("dashboard/fetchMainAnalytics", {
+      time: this.type,
+      type: this.dataSelected,
+      interval: 0
+    });
+    this.chartData = data;
   }
 };
 </script>

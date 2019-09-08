@@ -39,22 +39,17 @@ export default {
     if (store.getters["auth/isAuthenticated"]) {
       await store.dispatch("user/fetchUserSettings");
     }
+    await store.dispatch("book/fetchLatestBooks", {
+      page: 1,
+      limit: 30,
+      structured: true
+    });
   },
-  async mounted() {
-    try {
-      await this.$store.dispatch("book/fetchLatestBooks", {
-        page: 1,
-        limit: 30
-      });
-      this.loading = false;
-    } catch (error) {
-      this.loading = false;
-    }
-  },
+  async mounted() {},
   data() {
     return {
       page: 2,
-      loading: true
+      loading: false
     };
   },
   methods: {

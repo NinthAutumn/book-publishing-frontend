@@ -65,31 +65,25 @@ export default {
     Select: () => import("@/components/All/Select")
   },
   methods: {
-    changeDateHandler() {
+    async changeDateHandler() {
       this.chartData.rows = [];
-      this.$store
-        .dispatch("dashboard/fetchPieAnalytics", {
-          type: this.dataSelected,
-          time: 7
-        })
-        .then(books => {
-          books.forEach(item => {
-            this.chartData.rows.push({ book: item.title, sum: item.sum });
-          });
-        });
+      const books = await this.$store.dispatch("dashboard/fetchPieAnalytics", {
+        type: this.dataSelected,
+        time: 7
+      });
+      books.forEach(item => {
+        this.chartData.rows.push({ book: item.title, sum: item.sum });
+      });
     }
   },
   async mounted() {
-    this.$store
-      .dispatch("dashboard/fetchPieAnalytics", {
-        type: this.dataSelected,
-        time: 7
-      })
-      .then(books => {
-        books.forEach(item => {
-          this.chartData.rows.push({ book: item.title, sum: item.sum });
-        });
-      });
+    const books = await this.$store.dispatch("dashboard/fetchPieAnalytics", {
+      type: this.dataSelected,
+      time: 7
+    });
+    books.forEach(item => {
+      this.chartData.rows.push({ book: item.title, sum: item.sum });
+    });
   }
 };
 </script>

@@ -11,7 +11,7 @@
         max="50"
         v-validate="'required'"
         data-vv-as="タイトル"
-      >
+      />
       <label for="title">情報</label>
       <textarea v-model="volume.description" class="volume-form__desc" placeholder="章の説明・あらすじ・情報"></textarea>
       <div class="divider flex flex--right">
@@ -33,13 +33,13 @@ export default {
       volume: {
         title: "",
         description: "",
-        bookId: 0
+        book_id: 0
       },
       state: this.value
     };
   },
   async mounted() {
-    this.volume.bookId = this.$route.params.id;
+    this.volume.book_id = this.$route.params.id;
   },
   watch: {},
   methods: {
@@ -58,6 +58,10 @@ export default {
           icon: "extension"
         });
       }
+      await this.$store.dispatch("chapter/fetchPublishedList", {
+        bookId: this.$route.params.id
+      });
+      this.toggleVolume();
     }
   }
 };

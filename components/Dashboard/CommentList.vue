@@ -6,7 +6,7 @@
       <li class="dash-comments__item" v-for="(comment, index) in comments" :key="index">
         <div class="dash-comments__avatar">
           <v-avatar :size="45" style="box-shadow:1px 1px 5px rgb(240, 240, 240);">
-            <v-img :src="comment.avatar.img"></v-img>
+            <v-img :src="comment.avatar? comment.avatar:avatar"></v-img>
           </v-avatar>
         </div>
         <div class="flex-divider" style="width:100%;">
@@ -34,12 +34,21 @@
 <script>
 export default {
   async mounted() {
-    await this.$store.dispatch("analytic/fetchUserComments");
+    await this.$store.dispatch("analytic/fetchUserComments", {
+      limit: 10,
+      page: 1,
+      infinite: false
+    });
   },
   computed: {
     comments() {
       return this.$store.getters["analytic/getComments"];
     }
+  },
+  data() {
+    return {
+      avatar: require("~/assets/profile.png")
+    };
   }
 };
 </script>

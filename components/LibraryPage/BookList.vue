@@ -73,7 +73,7 @@ export default {
       if (Object.keys(this.select).length < 1) {
         return;
       }
-      await this.$axios.patch("/library/bulk", {
+      await this.$axios.patch("/v2/library/bulk", {
         list: this.select
       });
       await this.$store.dispatch("library/getBookmark", { sortby: 3 });

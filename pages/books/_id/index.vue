@@ -153,6 +153,9 @@ export default {
     if (this.$device.isMobile) {
       return;
     }
+    await this.$store.dispatch("review/fetchBookReviewCount", {
+      bookId: this.$route.params.id
+    });
     this.head = {
       title: this.book.title,
       desc: this.book.synopsis

@@ -276,6 +276,7 @@ export default {
           books = await this.$store.dispatch("analytic/fetchTrending", {
             page: this.page++,
             time: "weekly",
+            authors: true,
             infinite: true
           });
           break;

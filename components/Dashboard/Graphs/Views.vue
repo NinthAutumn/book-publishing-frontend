@@ -16,13 +16,7 @@
 
     <div class="views-bargraph__graph" v-loading="loading" ref="bargraph">
       <no-ssr>
-        <ve-line
-          ref="view-bar"
-          judge-width
-          :height="height"
-          :settings="chartSetting"
-          :data="chartData"
-        ></ve-line>
+        <ve-line ref="view-bar" judge-width :height="height" :settings="chartSetting" :data="time"></ve-line>
       </no-ssr>
     </div>
   </div>
@@ -81,57 +75,15 @@ export default {
   methods: {
     async changeDate() {
       this.loading = true;
-      this.$store
-        .dispatch("analytic/fetchUserViews", { type: this.type })
-        .then(async () => {
-          this.chartData = this.time;
-        });
+      await this.$store.dispatch("analytic/fetchUserViews", {
+        type: this.type
+      });
       this.loading = false;
     }
   },
 
   async mounted() {
-    this.$moment();
     this.isMounted = true;
-    let row = Object.keys(this.time);
-    let i = 6;
-    while (i >= 0) {
-      let date = this.$moment()
-        .subtract(i, "days")
-        .format("YYYY-MM-DD");
-      this.chartData.rows.push({ date });
-      i--;
-    }
-    row.forEach(item => {
-      this.chartData.rows.forEach((el, index) => {
-        if (el.date === item) {
-          this.object = {
-            date: item
-          };
-          this.time[item].forEach(book => {
-            if (this.chartData.columns.indexOf(book.title) === -1) {
-              this.chartData.columns.push(book.title);
-            }
-            this.object[book.title] = book.views;
-          });
-          this.chartData.rows[index] = this.object;
-        }
-      });
-    });
-
-    row;
-    // this.$store.getters["analytic/getTotalViews"].forEach(day => {
-    //   this.object = {
-    //     date: day._id.day
-    //   };
-    //   day.views.forEach(book => {
-    //     if (this.chartData.columns.indexOf(book.book[0]) === -1) {
-    //       this.chartData.columns.push(book.book[0]);
-    //     }
-    //     this.object[book.book[0]] = book.view;
-    //   });
-    //   this.chartData.rows.push(this.object);
-    // });
   }
 };
 </script>

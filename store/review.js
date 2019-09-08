@@ -68,7 +68,7 @@ export const mutations = {
       state.trending.push(review)
     })
   },
-  SET_REVIEW_LENGTH(state, count) {
+  SET_REVIEW_COUNT(state, count) {
     state.count = count
   },
   SET_IS_REVIEWED: (state, reviewed) => {
@@ -119,6 +119,16 @@ export const actions = {
 
     }
   },
+  async fetchBookReviewCount({
+    commit
+  }, {
+    bookId
+  }) {
+    const {
+      data
+    } = await this.$axios.get(`/v2/review/book/${bookId}/count`)
+    commit('SET_REVIEW_COUNT', data)
+  },
   async showAll({
     commit,
     rootState
@@ -133,9 +143,8 @@ export const actions = {
     preview = false
   }) {
     const res = await this.$axios.get(`/v2/review/book?book_id=${bookId}&limit=${limit}&page=${page}&user_id=${userId}&direction=${direction}&type=${type}`)
-    if (preview) {
-      commit('SET_REVIEW_LENGTH', res.data.review_count)
 
+    if (preview) {
       commit('SET_PREVIEW', res.data.reviews)
       return Promise.resolve()
     }
@@ -143,7 +152,6 @@ export const actions = {
       commit('SET_NEXT_REVIEWS', res.data.reviews)
       return Promise.resolve(res.data.reviews)
     }
-    commit('SET_REVIEW_LENGTH', res.data.review_count)
 
     commit('SET_REVIEWS', res.data.reviews)
     return Promise.resolve(res.data.reviews)
@@ -160,10 +168,10 @@ export const actions = {
       recommended = true
     }
     try {
-      await this.$axios.post('/review', {
+      await this.$axios.post('/v2/review', {
         title: review.title,
         content: review.content,
-        bookId: bookId,
+        book_id: bookId,
         rating: review.rating,
         recommended: recommended,
       })
@@ -179,9 +187,9 @@ export const actions = {
     data
   }) {
     try {
-      const res = await this.$axios.patch('/review/vote', {
-        reviewId: reviewId,
-        data: data
+      console.log(data);
+      const res = await this.$axios.patch(`/v2/review/vote/${reviewId}`, {
+        vote: data
       })
       // commit('CHANGE_LIKES')
       Promise.resolve()
@@ -246,9 +254,7 @@ export const actions = {
     id,
     review
   }) {
-    const update = await this.$axios.patch('/v1/review?id=' + id, {
-      review
-    })
+    const update = await this.$axios.patch(`/v2/review/${id}`, review)
   },
   async fetchIsReviewed({
     commit

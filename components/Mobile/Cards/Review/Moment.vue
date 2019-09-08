@@ -3,7 +3,7 @@
     <div class="review-moment__container">
       <div class="review-moment__avatar">
         <v-avatar size="30">
-          <v-img :src="$route.query.author? user.author_avatar : user.avatar.img"></v-img>
+          <v-img :src="$route.query.author? user.author_avatar : user.avatar"></v-img>
         </v-avatar>
       </div>
       <div class="review-moment__meta">

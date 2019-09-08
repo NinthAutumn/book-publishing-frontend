@@ -12,8 +12,8 @@
         placeholder="本を名前、ジャンル、タグなどで検索..."
         v-model="searchItem"
         @focus="clickedSearch"
-      >
-      <input type="submit" class="search-bar__button" value="検索">
+      />
+      <input type="submit" class="search-bar__button" value="検索" />
     </form>
   </div>
 </template>
@@ -23,12 +23,16 @@ export default {
   data() {
     return {
       searchItem: "",
-      button: false
+      button: false,
+      page: 1
     };
   },
   methods: {
     async searchOutput() {
-      await this.$store.dispatch("search/searchBooks", this.searchItem);
+      await this.$store.dispatch("search/searchBooks", {
+        query: this.searchItem,
+        page: this.page
+      });
       this.$router.push("/search?query=" + this.searchItem);
       this.button = !this.button;
     },
@@ -38,6 +42,13 @@ export default {
     dropOff() {
       this.$store.commit("DROPDOWN_FALSE");
     }
+  },
+  async mounted() {
+    this.searchItem = this.$route.query.query;
+    await this.$store.dispatch("search/searchBooks", {
+      query: this.searchItem,
+      page: this.page
+    });
   }
 };
 </script>

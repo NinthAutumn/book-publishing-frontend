@@ -1,6 +1,6 @@
 <template>
   <div class="bank-list">
-    <div class="bank-list__container">
+    <div class="bank-list__container" v-if="verified">
       <div class="bank-list__header">
         <div class="bank-list__title">貴方への支払方法</div>
       </div>
@@ -19,6 +19,9 @@
         </div>
       </transition>
     </div>
+    <div class="bank-list__unverified" v-if="!verified">
+      <div class="bank-list__unverified-text">本人確認が必要です</div>
+    </div>
   </div>
 </template>
 
@@ -32,7 +35,8 @@ export default {
       modal: false,
       modalContainer: false,
       banks: [],
-      loading: false
+      loading: false,
+      verified: true
     };
   },
   methods: {
@@ -41,23 +45,22 @@ export default {
     },
     async selectDefault(bank) {
       this.loading = true;
-      const res = await this.$axios.patch(
-        "/stripe/connect/account/external/default",
-        {
-          bankId: bank.id
-        }
-      );
-      const { data } = await this.$axios.get(
-        "/stripe/connect/account/external/list"
-      );
+      const res = await this.$axios.patch("/v2/connect/external/default", {
+        bank_id: bank.id
+      });
+      const { data } = await this.$axios.get("/v2/connect/external/list");
       this.banks = data;
       this.loading = false;
     }
   },
   async mounted() {
-    const { data } = await this.$axios.get(
-      "/stripe/connect/account/external/list"
-    );
+    const { data } = await this.$axios.get("/v2/connect/external/list");
+    if (data.error) {
+      this.banks = [];
+      if (data.error === "本人確認がされていません")
+        return (this.verified = false);
+      return this.$toast.error(data.error);
+    }
     this.banks = data;
     console.log(this.banks);
   },
@@ -75,6 +78,27 @@ export default {
   border-radius: 0.4rem;
   padding: 1rem;
   $self: &;
+  position: relative;
+  &__container {
+    // position: relative;
+  }
+  &__unverified {
+    border-radius: 0.4rem;
+    z-index: 100;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.082);
+    #{$self}__unverified-text {
+      font-size: 1.4rem;
+      color: rgb(82, 80, 80);
+    }
+  }
   &__title {
     font-size: 1.6rem;
     font-weight: bold;

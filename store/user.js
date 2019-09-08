@@ -162,10 +162,10 @@ export const actions = {
     const {
       data
     } = await this.$axios.get('/v2/user/show/setting')
-    commit('SET_FONT_FAMILY', data.chapterFontFamily)
-    commit('SET_FONT_SIZE', data.chapterFontSize)
-    commit('SET_THEME', data.chapterTheme)
-    commit('SET_UPDATE_VIEW', data.updateDisplay)
+    commit('SET_FONT_FAMILY', data.chapter_font_family)
+    commit('SET_FONT_SIZE', data.chapter_font_size)
+    commit('SET_THEME', data.chapter_theme)
+    commit('SET_UPDATE_VIEW', data.update_display)
   },
   async setSetting({
     commit
@@ -200,7 +200,7 @@ export const actions = {
     userId
   }) {
     try {
-      const res = await this.$axios.get(`/v1/user/profile?userId=${userId}`)
+      const res = await this.$axios.get(`/v2/user/${userId}/profile`)
       commit('SET_PROFILE', get(res, 'data'))
       Promise.resolve(res)
     } catch (error) {
@@ -225,7 +225,7 @@ export const actions = {
     userId
   }) {
     try {
-      const res = await this.$axios.get(`/v1/user/profile/stats?userId=${userId}`)
+      const res = await this.$axios.get(`/v2/user/${userId}/profile/stats`)
       commit('SET_PROFILE_STATS', get(res, 'data'))
     } catch (error) {
       return Promise.reject(error)
@@ -239,7 +239,7 @@ export const actions = {
     page = 1
   }) {
     try {
-      const res = await this.$axios.get(`/v1/user/profile/reviews?userId=${userId}&page=${page}`)
+      const res = await this.$axios.get(`/v2/user/${userId}/profile/reviews?page=${page}`)
       commit('SET_PROFILE_REVIEWS', get(res, 'data'))
       return Promise.resolve()
     } catch (error) {
@@ -266,7 +266,7 @@ export const actions = {
     userId
   }) {
     try {
-      const res = await this.$axios.get(`/v1/user/profile/books?userId=${userId}`)
+      const res = await this.$axios.get(`/v2/user/${userId}/profile/books`)
       commit('SET_PROFILE_BOOKS', get(res, 'data'))
       return Promise.resolve()
     } catch (error) {

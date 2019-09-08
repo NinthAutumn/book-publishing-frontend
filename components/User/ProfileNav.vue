@@ -8,13 +8,16 @@
             :size="180"
             class="profile-nav__avatar-img"
             @click.stop="$store.commit('TOGGLE_SETTING_MODAL')"
-            v-if="user.avatar"
           >
             <!-- <img
             :src="`https://storage.googleapis.com/theta-images/${user.avatar}`"
             alt="user profile picture"
             >-->
-            <img :src="$route.query.author?user.author_avatar:user.avatar.img" alt />
+            <v-img
+              v-if="user.avatar&&user.author_avatar"
+              :src="$route.query.author?user.author_avatar:user.avatar"
+            ></v-img>
+            <v-img v-else :src="avatar"></v-img>
           </v-avatar>
         </div>
       </transition>
@@ -23,7 +26,7 @@
         <transition name="twitter-nav">
           <div class="profile-nav__fixed-avatar" v-if="scrolled">
             <v-avatar class="profile-nav__avatar-img" :size="45">
-              <img :src="$route.query.author?user.author_avatar:user.avatar.img" alt />
+              <img :src="$route.query.author?user.author_avatar:user.avatar" alt />
             </v-avatar>
             <div class="flex-divider flex-column flex--between">
               <div
@@ -82,7 +85,8 @@ export default {
           value: this.$store.getters["user/getProfileStats"].comment_count
         }
       ],
-      scrolled: false
+      scrolled: false,
+      avatar: require("~/assets/profile.png")
     };
   },
   methods: {

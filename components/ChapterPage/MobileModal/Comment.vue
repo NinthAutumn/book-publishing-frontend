@@ -2,9 +2,7 @@
   <div class="mobile-comment__item">
     <div class="mobile-comment__avatar">
       <v-avatar size="40">
-        <v-img
-          :src="chapter.author_id === comment.user_id? comment.author_avatar : comment.avatar.img"
-        ></v-img>
+        <v-img :src="chapter.author_id === comment.user_id? comment.author_avatar : comment.avatar"></v-img>
       </v-avatar>
     </div>
     <div class="mobile-comment__meta">

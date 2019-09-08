@@ -158,7 +158,7 @@ export const actions = {
     cover,
     back = ""
   }) {
-    const res = await this.$axios.post('/v1/stripe/connect/account', {
+    const res = await this.$axios.post('/v2/connect/account', {
       person,
       cover,
       back

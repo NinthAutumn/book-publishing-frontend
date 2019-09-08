@@ -61,10 +61,11 @@ export const actions = {
     commit
   }, {
     page,
-    infinite = false
+    infinite = false,
+    limit = 10
   }) {
     try {
-      const res = await this.$axios.get(`/v1/analytic/dashboard/transactions?page=${page}`)
+      const res = await this.$axios.get(`/v2/analytic/transaction/history?page=${page}&limit=${limit}`)
 
       if (infinite) {
         commit('PUSH_TRANSACTIONS', res.data)
@@ -80,7 +81,7 @@ export const actions = {
     commit
   }) {
     try {
-      const res = await this.$axios.get(`/v1/analytic/dashboard/earning/pie`)
+      const res = await this.$axios.get(`/v2/analytic/earning/pie`)
       commit('SET_TRANSACTION_PIE', res.data)
     } catch (error) {
       return Promise.reject(error)
@@ -91,7 +92,7 @@ export const actions = {
   }) {
     try {
       try {
-        const res = await this.$axios.get(`/v1/analytic/dashboard/stats`)
+        const res = await this.$axios.get(`/v2/analytic/user/stats`)
         commit('SET_STATISTICS', res.data)
         return Promise.resolve(res.data)
       } catch (error) {
@@ -108,7 +109,7 @@ export const actions = {
   }) {
 
     try {
-      const res = await this.$axios.get(`/v1/analytic/dashboard/ranking?type=${type}`)
+      const res = await this.$axios.get(`/v2/ranking/vote/user?type=${type}`)
       commit('SET_RANKING', res.data)
       return Promise.resolve(res.data)
     } catch (error) {
@@ -137,7 +138,7 @@ export const actions = {
     time
   }) {
     try {
-      const res = await this.$axios.get(`/v1/analytic/dashboard/pie?time=${time}&type=${type}`)
+      const res = await this.$axios.get(`/v2/analytic/pie?time=${time}&type=${type}`)
       return Promise.resolve(res.data)
     } catch (error) {
       return Promise.reject(error)
@@ -149,7 +150,7 @@ export const actions = {
     search
   }) {
     try {
-      const res = await this.$axios.get(`/v1/author/bank?search=${search}`)
+      const res = await this.$axios.get(`/v2/author/show/bank?query=${search}`)
       commit('SET_BANKS', res.data)
     } catch (error) {
       return Promise.reject(error)
@@ -162,7 +163,7 @@ export const actions = {
     bankCode
   }) {
     try {
-      const res = await this.$axios.get(`/v1/author/bank/shop?search=${search}&bankCode=${bankCode}`)
+      const res = await this.$axios.get(`/v2/author/show/bank/shop?query=${search}&bank=${bankCode}`)
       commit('SET_SHOPS', res.data)
     } catch (error) {
       return Promise.reject(error)
@@ -176,7 +177,7 @@ export const actions = {
     try {
       const {
         data
-      } = await this.$axios.get(`/v1/analytic/dashboard/earning/total`)
+      } = await this.$axios.get(`/v2/analytic/earning/total`)
       commit('SET_TOTAL_COINS', data.total)
     } catch (error) {
       return Promise.reject(error)
@@ -188,7 +189,7 @@ export const actions = {
     try {
       const {
         data
-      } = await this.$axios.get(`/v1/analytic/dashboard/earning/totalEarning`)
+      } = await this.$axios.get(`/v2/analytic/earning/total`)
       commit('SET_TOTAL_EARNING', data.total)
     } catch (error) {
       return Promise.reject(error)
@@ -202,7 +203,7 @@ export const actions = {
     try {
       const {
         data
-      } = await this.$axios.get(`/v1/analytic/dashboard/funnel?bookId=${bookId}`)
+      } = await this.$axios.get(`/v2/analytic/funnel/${bookId}`)
       return Promise.resolve(data)
     } catch (error) {
       return Promise.reject(error)
@@ -212,13 +213,12 @@ export const actions = {
     commit
   }, {
     bookId,
-    type
   }) {
     try {
       const {
         data
-      } = await this.$axios.get(`/v1/analytic/dashboard/book?bookId=${bookId}&type=${type}`)
-      commit('SET_STATISTICS', data.stat)
+      } = await this.$axios.get(`/v2/analytic/book/show/${bookId}`)
+      commit('SET_STATISTICS', data)
       return Promise.resolve(data)
     } catch (error) {
       return Promise.reject(error)

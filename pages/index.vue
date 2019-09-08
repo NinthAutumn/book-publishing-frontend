@@ -9,7 +9,7 @@
     </div>
     <nav-list v-if="$device.isMobile"></nav-list>
     <div class="main-books">
-      <div class="flex-divider flex-row">
+      <div class="flex-divider flex-row flex--between">
         <div class="card-title">
           <h3>おすすめ</h3>
           <Recommended></Recommended>
@@ -19,7 +19,7 @@
           <Ranking></Ranking>
         </div>
       </div>
-      <adsbygoogle v-if="!user.status" />
+      <adsbygoogle v-if="!user.status||!user" />
       <div class="card-title flex flex--align">
         <h3>評価が高いレビュー</h3>
       </div>
@@ -35,7 +35,7 @@
       </div>
       <BooksList :trendings="latest"></BooksList>
       <mobile-ranking v-if="$device.isMobile"></mobile-ranking>
-      <adsbygoogle v-if="!user.status" />
+      <adsbygoogle v-if="!user.status||!user" />
       <div class="card-title">
         <h3>更新頻度が高い</h3>
       </div>
@@ -95,7 +95,11 @@ export default {
   },
   async mounted() {
     await this.$store.dispatch("analytic/fetchHighFrequent");
-    await this.$store.dispatch("analytic/fetchLatest");
+    await this.$store.dispatch("book/fetchLatestBooks", {
+      page: 1,
+      limit: 10,
+      structured: false
+    });
     await this.$store.dispatch("analytic/fetchTrending", {
       time: "weekly",
       page: 1
@@ -122,7 +126,7 @@ export default {
   computed: {
     ...mapGetters({
       trending: "analytic/getTrendingList",
-      latest: "analytic/getLatest",
+      latest: "book/getLatest",
       recommended: "analytic/getRecommended",
       frequent: "analytic/getFrequent",
       user: "auth/getUser"

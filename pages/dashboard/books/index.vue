@@ -13,7 +13,7 @@
 export default {
   layout: "user-nav/User",
   async fetch({ store }) {
-    await store.dispatch("analytic/fetchUserBooks", { funnel: false });
+    await store.dispatch("analytic/fetchUserBooks");
   },
   data() {
     return {

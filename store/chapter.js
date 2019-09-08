@@ -372,7 +372,7 @@ export const actions = {
     bookId
   }) {
     try {
-      const res = await this.$axios.get(`/v1/book/title?bookId=${bookId}`)
+      const res = await this.$axios.get(`/v2/book/${bookId}/title`)
 
       commit('SET_BOOK_TITLE', res.data.title)
     } catch (error) {
@@ -386,8 +386,8 @@ export const actions = {
     volume
   }) {
     try {
-      const res = await this.$axios.post(`/v1/chapter/volume`, volume)
-      if (res.data.error) {
+      const res = await this.$axios.post(`/v2/chapter/volume`, volume)
+      if (res.error) {
         return {
           error: res.data.error
         }

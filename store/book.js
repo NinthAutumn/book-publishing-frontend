@@ -63,6 +63,7 @@ export const actions = {
   }) {
     try {
       const res = await this.$axios.get(`/v2/book/${id}`)
+
       commit('SET_BOOK', get(res, 'data', {}))
     } catch (error) {
       console.log(error);
@@ -234,10 +235,11 @@ export const actions = {
   }, {
     page,
     limit,
-    infinite = false
+    infinite = false,
+    structured
   }) {
     try {
-      const res = await this.$axios.get(`/v2/book/show/latest?limit=${limit}&page=${page}`)
+      const res = await this.$axios.get(`/v2/book/show/latest?limit=${limit}&page=${page}${structured? '&structured=true':''}`)
       if (infinite) {
         commit('SET_MORE_LATEST_BOOKS', res.data)
       } else {

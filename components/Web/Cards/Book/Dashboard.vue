@@ -81,7 +81,7 @@ export default {
       bookId: this.book.id
       // type: this.type
     });
-    this.stats = data.stat;
+    this.stats = data;
   }
 };
 </script>

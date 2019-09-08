@@ -4,7 +4,7 @@
       <div class="flex-divider flex-row flex--align">
         <div class="review-mobile__avatar">
           <v-avatar :size="50" class="review-mobile__img">
-            <v-img :src="book.user_id === review.user_id? book.avatar : review.avatar.img"></v-img>
+            <v-img :src="book.user_id === review.user_id? book.avatar : review.avatar"></v-img>
           </v-avatar>
         </div>
         <div class="flex-divider flex-column">

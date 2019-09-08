@@ -8,7 +8,7 @@
         </div>
         <div class="mobile-vleft__avatar">
           <v-avatar size="50">
-            <v-img :src="auth? user.avatar.img: avatar"></v-img>
+            <v-img :src="auth? user.avatar: avatar"></v-img>
           </v-avatar>
         </div>
       </div>

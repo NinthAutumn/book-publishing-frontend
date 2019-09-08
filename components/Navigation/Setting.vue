@@ -11,7 +11,7 @@
           :canvas-color="'default'"
           :placeholder="'アバター'"
           v-model="user.avatar"
-          :initial-image="current.avatar? current.avatar.img : avatar"
+          :initial-image="current.avatar? current.avatar : avatar"
           @file-choose="handleCroppaFileChoose"
         ></croppa>
       </div>
@@ -91,13 +91,13 @@ export default {
             await this.$store.dispatch("auth/fetchUser");
           });
 
-          // this.user.avatar.img
+          // this.user.avatar
         } else {
           this.user.avatar = {
-            img: this.current.avatar.img,
+            img: this.current.avatar,
             path: this.current.avatar.path
           };
-          // this.user.avatar.img
+          // this.user.avatar
           await this.$store.dispatch("user/patchUser", { user: this.user });
           await this.$store.dispatch("auth/fetchUser");
         }

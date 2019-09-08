@@ -4,7 +4,11 @@
       <li class="user-activity__item" v-for="(item, index) in list" :key="index">
         <div class="user-activity__avatar">
           <v-avatar size="45">
-            <img :src="$route.query.author?user.author_avatar:user.avatar.img" alt>
+            <v-img
+              v-if="user.avatar&&user.author_avatar"
+              :src="$route.query.author?user.author_avatar:user.avatar"
+            ></v-img>
+            <v-img v-else :src="avatar"></v-img>
           </v-avatar>
         </div>
         <div class="user-activity__meta">
@@ -44,7 +48,8 @@ export default {
   },
   data() {
     return {
-      readMore: false
+      readMore: false,
+      avatar: require("~/assets/profile.png")
     };
   },
   methods: {
@@ -74,6 +79,7 @@ export default {
       width: 100%;
     }
     #{$self}__rating {
+      margin-bottom: 0.5rem;
       .v-icon {
         padding: 0 !important;
       }
@@ -85,9 +91,11 @@ export default {
     }
     #{$self}__content {
       font-size: 1.4rem;
+      margin-bottom: 1rem;
     }
     #{$self}__title {
       font-size: 1.6rem;
+      margin-bottom: 0.5rem;
     }
     #{$self}__parent {
       font-size: 1.4rem;

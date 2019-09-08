@@ -40,7 +40,7 @@ export const actions = {
       const {
         data
       } = await this.$axios.get(
-        `/v1/drawing/chapter/${chapterId}`
+        `/v2/drawing/chapter/${chapterId}`
       );
       // console.log(data.drawings);
       commit('SET_CHAPTER_DRAWINGS', data.drawings)

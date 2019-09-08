@@ -10,7 +10,7 @@
       >
         <div class="mobile-inbox__avatar">
           <v-avatar size="25" v-if="notification.avatar">
-            <v-img :src="notification.avatar.img"></v-img>
+            <v-img :src="notification.avatar"></v-img>
           </v-avatar>
         </div>
         <div class="mobile-inbox__meta flex-column">

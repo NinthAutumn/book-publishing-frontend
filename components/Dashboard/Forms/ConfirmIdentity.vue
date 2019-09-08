@@ -172,7 +172,7 @@ export default {
         let res;
         if (this.selected_card.require) {
           formData.append("cover", this.form.back.file);
-          res = await this.$axios.post("/stripe/connect/account", formData, {
+          res = await this.$axios.post("/v2/connect/account", formData, {
             headers: {
               "Content-Type": "multipart/form-data"
             }
@@ -189,12 +189,12 @@ export default {
           //   back: this.form.back
           // });
         } else {
-          res = await this.$axios.post("/stripe/connect/account", formData, {
+          res = await this.$axios.post("/v2/connect/account", formData, {
             headers: {
               "Content-Type": "multipart/form-data"
             }
           });
-          if (res.status !== 200) {
+          if (res.status !== 200 && res.status !== 201) {
             throw new Error("bad");
           }
           if (res.data.error) {

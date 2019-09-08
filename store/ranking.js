@@ -78,7 +78,7 @@ export const actions = {
   async fetchHomeRankingList({
     commit
   }) {
-    const res = await this.$axios.get(`/v1/ranking/mobile/home`)
+    const res = await this.$axios.get(`/v2/ranking/mobile/ranking`)
     commit('SET_RANKINGS', res.data)
   },
   async fetchGenreRanking({

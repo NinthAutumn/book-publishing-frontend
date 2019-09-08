@@ -13,11 +13,15 @@ export default {
     async authTwitter() {
       try {
         const { oauth_token, oauth_verifier } = this.$route.query;
-        const { data } = await this.$axios.post("/auth/social/twitter/login", {
-          oauth_token,
-          oauth_verifier
-        });
+        const { data } = await this.$axios.post(
+          "/v2/auth/social/twitter/login",
+          {
+            oauth_token,
+            oauth_verifier
+          }
+        );
         if (data.error) {
+          this.$router.push("/");
           return this.$toast.error(data.error);
         }
 

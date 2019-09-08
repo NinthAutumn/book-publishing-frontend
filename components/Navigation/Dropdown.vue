@@ -8,7 +8,7 @@
             :class="{'profile-dropdown__profile-pic--bronze':user.status==='bronze'}"
           >
             <v-avatar size="50">
-              <img :src="user.avatar? user.avatar.img : avatar" />
+              <img :src="user.avatar? user.avatar : avatar" />
             </v-avatar>
           </div>
           <div class="profile-dropdown__user-text">

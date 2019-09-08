@@ -141,7 +141,7 @@ export default {
       if (Object.keys(this.bulk_items).length < 1) {
         return;
       }
-      await this.$axios.patch("/library/bulk", {
+      await this.$axios.patch("/v2/library/bulk", {
         list: this.bulk_items
       });
       await this.$store.dispatch("library/getBookmark", { sortby: 3 });

@@ -14,7 +14,7 @@
             :src="book.cover + '/m'"
             :aspect-ratio="1/1.5"
             :lazy-src="cover"
-            max-width="17rem"
+            max-width="20rem"
             :min-width="$device.isMobile?'8rem':'12rem'"
             alt="Book cover"
             style="border-radius: 0.4rem;     box-shadow: 0 2px 5px 0 rgba(60,66,87, 0.1), 0 1px 1px 0 rgba(0, 0, 0, .07); "

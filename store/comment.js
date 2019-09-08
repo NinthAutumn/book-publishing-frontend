@@ -155,7 +155,7 @@ export const actions = {
     try {
       const {
         data
-      } = await this.$axios.get(`/v2/comment?mobile=true&chapter_id=${chapterId}&page=${page}&sortBy=${sortBy}&limit=30`)
+      } = await this.$axios.get(`/v2/comment/chapter?mobile=true&chapter_id=${chapterId}&page=${page}&sortBy=${sortBy}&limit=30`)
       if (infinite) {
         commit('PUSH_COMMENTS_LIST', data)
       } else {

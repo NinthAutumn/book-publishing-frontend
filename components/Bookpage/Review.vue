@@ -6,7 +6,7 @@
     </div>
     <div class="reviews-like">
       <v-avatar :size="size">
-        <v-img :src="book.user_id === review.user_id? book.avatar : review.avatar.img"></v-img>
+        <v-img :src="book.user_id === review.user_id? book.avatar : review.avatar"></v-img>
       </v-avatar>
 
       <p

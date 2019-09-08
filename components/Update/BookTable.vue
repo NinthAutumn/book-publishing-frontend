@@ -22,7 +22,7 @@
               >{{book[0].name}}</nuxt-link>
               <nuxt-link
                 tag="td"
-                :to="`/books/${book[0].book_id}`"
+                :to="`books/${book? book[0].book_id: ''}`"
                 class="book-table__row-title"
               >{{book[0].title}}</nuxt-link>
               <nuxt-link

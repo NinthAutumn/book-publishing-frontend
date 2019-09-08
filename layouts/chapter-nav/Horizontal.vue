@@ -41,7 +41,7 @@
               class="profile-pic__avatar"
               :class="{'profile-pic__avatar--bronze':user.status === 'bronze'}"
             >
-              <img :src="user.avatar? user.avatar.img:avatar" />
+              <img :src="user.avatar? user.avatar:avatar" />
             </v-avatar>
             <div class="profile-pic__info">
               <div class="profile-pic__meta">
@@ -65,7 +65,7 @@
         </span>
         <div class="not-loggedin" v-else>
           <v-avatar size="35" class="profile-pic__avatar" @click.stop="loginInState()">
-            <img :src="auth? user.avatar.img:avatar" />
+            <img :src="auth? user.avatar:avatar" />
           </v-avatar>
         </div>
       </div>

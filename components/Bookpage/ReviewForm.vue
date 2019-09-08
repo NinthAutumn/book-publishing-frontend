@@ -75,7 +75,7 @@ export default {
             page: 1,
             limit: 10,
             direction: "desc",
-            type: "likes"
+            type: 0
           });
         } catch (error) {
           this.$toast.show("レビューの投稿に失敗しました", {
@@ -101,7 +101,7 @@ export default {
             page: 1,
             limit: 10,
             direction: "desc",
-            type: "likes"
+            type: 0
           });
           this.$toast.show("レビューの投稿に成功しました", {
             theme: "toasted-primary",

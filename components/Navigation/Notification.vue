@@ -13,7 +13,7 @@
       >
         <div class="notification-component__avatar">
           <v-avatar v-if="notification.avatar">
-            <v-img :src="notification.avatar.img"></v-img>
+            <v-img :src="notification.avatar"></v-img>
           </v-avatar>
         </div>
         <div class="nofitication-component__meta">

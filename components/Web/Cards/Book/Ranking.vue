@@ -35,7 +35,7 @@
         <div class="book-ranking__score">
           <fa v-if="vote" class="book-ranking__bolt" icon="bolt"></fa>
           <!-- <span v-></span> -->
-          <div class="book-ranking__points" v-text="vote? score: `ポイント：　${score}`"></div>
+          <div v-if="score" class="book-ranking__points" v-text="vote? score: `ポイント：　${score}`"></div>
         </div>
       </div>
     </div>

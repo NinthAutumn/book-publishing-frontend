@@ -1,15 +1,15 @@
 <template>
   <div class="update-books">
     <ul class="update-books__date-list" ref="bookList">
-      <li class="update-books__date-item" v-for="(books, index) in latestBooks" :key="index">
-        <div class="update-books__date-title">{{books.date}}</div>
+      <li class="update-books__date-item" v-for="(value, key) in latestBooks" :key="key">
+        <div class="update-books__date-title">{{key}}</div>
         <ul
           class="update-books__book-list"
           :class="{'update-books__book-list--small': width < 930, 'update-books__book-list--large':width>1350 }"
         >
-          <li class="update-books__book-item" v-for="(book, index) in books.book" :key="index">
-            <book-card v-if="!$device.isMobile" :book="book" type="update"></book-card>
-            <book-mobile v-else :book="book"></book-mobile>
+          <li class="update-books__book-item" v-for="(value, key) in value" :key="key">
+            <book-card v-if="!$device.isMobile" :book="value" type="update"></book-card>
+            <book-mobile v-else :book="value"></book-mobile>
           </li>
         </ul>
       </li>

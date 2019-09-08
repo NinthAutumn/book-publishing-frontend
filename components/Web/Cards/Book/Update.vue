@@ -2,7 +2,7 @@
   <div class="update-book">
     <nuxt-link
       tag="div"
-      :to="`/books/${book[0].book_id}`"
+      :to="`books/${book? book[0].book_id: ''}`"
       class="update-book__cover"
       style=" border-radius: 0.4rem;"
     >
@@ -18,7 +18,7 @@
     </nuxt-link>
     <div class="update-book__meta">
       <nuxt-link
-        :to="`/books/${book[0].book_id}`"
+        :to="`books/${book? book[0].book_id: ''}`"
         class="update-book__title"
         v-line-clamp="2"
       >{{book[0].title}}</nuxt-link>
@@ -50,8 +50,12 @@ export default {
   name: "update-bookcard",
   serverCacheKey: props => props.book.id,
   props: {
-    // chapters: Array,
-    book: Array
+    book: {
+      type: Array,
+      default: () => {
+        return [{ title: "", cover: "" }];
+      }
+    }
   },
   data() {
     return {

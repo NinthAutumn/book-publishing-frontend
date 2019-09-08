@@ -2,7 +2,7 @@
   <div class="mobile-profile">
     <div tag="div" class="mobile-profile__avatar">
       <v-avatar size="100" v-if="profile.avatar">
-        <v-img :src="author&&profile.author_avatar? profile.author_avatar:profile.avatar.img"></v-img>
+        <v-img :src="author&&profile.author_avatar? profile.author_avatar:profile.avatar"></v-img>
       </v-avatar>
       <div class="mobile-profile__name" v-text="author? profile.pen_name : profile.username"></div>
     </div>

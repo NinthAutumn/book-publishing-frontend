@@ -6,7 +6,7 @@
         <div class="transaction-list__component transaction-list__component--avatar">
           <v-avatar class="elevation-1" :size="35">
             <!-- :src="`https://storage.googleapis.com/theta-images/${props.item.avatar}`" -->
-            <v-img :src="transaction.avatar.img" :aspect-ratio="1/1.5" max-width="5rem"></v-img>
+            <v-img :src="transaction.avatar" :aspect-ratio="1/1.5" max-width="5rem"></v-img>
           </v-avatar>
         </div>
         <div
@@ -94,7 +94,8 @@ export default {
           transactionId: this.transactionId
         });
         await this.$store.dispatch("dashboard/fetchTransactionList", {
-          page: 1
+          page: 1,
+          limit: 10
         });
         this.redeem = false;
       } catch (error) {
@@ -115,7 +116,8 @@ export default {
         "dashboard/fetchTransactionList",
         {
           page: this.page++,
-          infinite: true
+          infinite: true,
+          limit: 10
         }
       );
       if (transaction.length > 0) {
@@ -131,7 +133,8 @@ export default {
   async mounted() {
     this.loading = true;
     await this.$store.dispatch("dashboard/fetchTransactionList", {
-      page: 1
+      page: 1,
+      limit: 10
     });
     this.loading = false;
   }

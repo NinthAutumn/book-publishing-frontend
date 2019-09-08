@@ -21,7 +21,7 @@ import { mapGetters } from "vuex";
 export default {
   computed: {
     ...mapGetters({
-      books: "analytic/getBookList"
+      books: "analytic/getFunnelBookList"
     })
   },
   watch: {
@@ -63,7 +63,7 @@ export default {
   },
   async mounted() {
     if (this.books[0]) {
-      (this.books[0]);
+      this.books[0];
       // alert(this.books[0]);
       this.bookId = {
         id: this.books[0].value.id,
@@ -75,14 +75,6 @@ export default {
         title: 0
       };
     }
-
-    // this.books.forEach(book => {
-    //   this.book_list.push({
-    //     key: `ID: ${book.id}`,
-    //     value: { id: book.id, title: book.title }
-    //   });
-    // });
-
     const data = await this.$store.dispatch("dashboard/fetchBookFunnel", {
       bookId: this.bookId.id
     });

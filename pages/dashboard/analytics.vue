@@ -15,8 +15,8 @@ export default {
   layout: "user-nav/User",
   async fetch({ store, params }) {
     await store.dispatch("dashboard/fetchTransactionPie");
-    await store.dispatch("analytic/fetchUserBooks", { funnel: false });
-    await store.dispatch("analytic/fetchUserBooks", { funnel: true });
+    await store.dispatch("analytic/fetchUserBooks");
+    await store.dispatch("analytic/fetchFunnelSelectList");
   },
   computed: {
     ...mapGetters({

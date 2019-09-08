@@ -124,7 +124,7 @@ export default {
           break;
         case "twitter":
           // console.log(window.twttr);
-          const { data } = await this.$axios.get("auth/social/twitter/url");
+          const { data } = await this.$axios.get("/v2/auth/social/twitter/url");
 
           window.open(data.url);
           this.$toast.show(`ツイッターの対応は現在工作通です`, {

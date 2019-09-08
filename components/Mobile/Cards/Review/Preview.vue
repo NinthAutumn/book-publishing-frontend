@@ -4,7 +4,7 @@
       <div class="flex-divider flex-row flex--align">
         <div class="mbp-reviewp__avatar">
           <v-avatar :size="50" class="mbp-reviewp__img">
-            <v-img :src="book.user_id === review.user_id? book.avatar : review.avatar.img"></v-img>
+            <v-img :src="book.user_id === review.user_id? book.avatar : review.avatar"></v-img>
           </v-avatar>
         </div>
         <div class="flex-divider flex-column" style="text-overflow:ellipsis;overflow:hidden;">
