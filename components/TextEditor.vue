@@ -66,7 +66,7 @@ export default {
     console.log(this.content);
     if (this.content) {
       this.text = this.content;
-      this.changes();
+      // this.changes();
     }
   },
   created() {
@@ -112,7 +112,10 @@ export default {
       this.placehold = this.placeholder;
     },
     changes() {
+      this.text = this.text.replace(/(<\/[^>]+>)/gi, "\n");
+      this.text = this.text.replace(/(<br>)/gi, "\n");
       this.text = this.text.replace(/(<([^>]+)>)/gi, "");
+
       this.textArray = this.text.split(/\n/);
       let temp = [];
       this.textArray.forEach((text, index) => {

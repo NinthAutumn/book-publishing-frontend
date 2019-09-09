@@ -81,7 +81,7 @@ export default {
     },
     selectImage(drawing) {
       if (this.selected[drawing.id]) {
-        this.selected[drawing.id] = null;
+        delete this.selected[drawing.id];
       } else {
         this.selected[drawing.id] = drawing;
       }
@@ -141,7 +141,8 @@ export default {
       background-color: #e3e8ee;
       display: flex;
       flex-wrap: wrap;
-      justify-content: space-between;
+      // justify-content: space-between;
+
       overflow: auto;
       height: 40rem;
       // height: 100%;

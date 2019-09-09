@@ -136,7 +136,7 @@
           <input
             type="submit"
             class="form-submit form-submit--primary book-form__submit"
-            value="投稿"
+            :value="$route.query.bookId? '更新':'投稿'"
             @click="postBook"
           />
         </div>
@@ -157,22 +157,6 @@ export default {
       loading: false,
       content: "",
       imageUrl: "",
-      image: {
-        small: {
-          url: ""
-        },
-        medium: {
-          url: ""
-        },
-        large: {
-          url: ""
-        },
-        normal: {
-          url: ""
-        }
-
-        // small:{}
-      },
       rotation: 0,
       preGenre: [],
       oldImageUrl: "",
@@ -265,6 +249,7 @@ export default {
       this.form.title = this.book.title;
       this.form.synopsis = this.book.synopsis;
       this.imageUrl = this.book.cover;
+      this.form.url = this.book.cover;
       this.oldImageUrl = this.book.cover;
       this.form.coverPath = this.book.cover_path;
       this.form.main_genre.push({
@@ -324,9 +309,6 @@ export default {
       this.tip = !this.tip;
     },
     handleCoverSelect(image) {
-      // if(image.id === this.form.cover){
-
-      // }
       this.form.cover = image;
       this.image = false;
       this.imageUrl = image.url;
@@ -355,29 +337,11 @@ export default {
           paid: this.form.paid,
           tags: this.form.tags,
           genres: this.form.genre
+          // word_count:
         };
         if (this.$route.query.bookId) {
-          if (this.form.cover.medium) {
-            let keys = Object.keys(this.form.cover);
-            let uid = uuid();
-            for (let i of keys) {
-              const { url, path } = await this.$store.dispatch(
-                "upload/uploadCover",
-                {
-                  file: this.form.cover[i].url,
-                  size: this.form.cover[i].size,
-                  unique: uid
-                }
-              );
-            }
+          book["cover"] = this.form.cover.url;
 
-            book[
-              "cover"
-            ] = `https://storage.googleapis.com/theta-images/${this.user.id}/${uid}`;
-            book["coverPath"] = `/${this.user.id}/${uid}`;
-          } else {
-            book["cover"] = this.oldImageUrl;
-          }
           book["id"] = this.$route.query.bookId;
           await this.$store.dispatch("book/updateBook", { book });
           this.$toast.show(`作品のアップデートに成功しました`, {
@@ -389,21 +353,9 @@ export default {
           this.loading = false;
           return;
         }
-        if (!this.form.cover) {
+        if (!this.form.cover)
           return this.$toast.error("作品のカバーを選択してください");
-          // let keys = Object.keys(this.form.cover);
-          // let uid = uuid();
-          // for (let i of keys) {
-          //   const { url, path } = await this.$store.dispatch(
-          //     "upload/uploadCover",
-          //     {
-          //       file: this.form.cover[i].url,
-          //       size: this.form.cover[i].size,
-          //       unique: uid
-          //     }
-          //   );
-          // }
-        }
+
         book["cover"] = this.form.cover.url;
 
         await this.$store.dispatch("book/addBook", {

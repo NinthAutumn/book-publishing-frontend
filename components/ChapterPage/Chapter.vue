@@ -45,18 +45,7 @@
       :ad-layout="'in-article'"
       :ad-format="'fluid'"
     />
-    <div v-if="!chapter.locked" class="chapter-actions">
-      <!-- <div class="chapter-actions__list">
-        <div class="chapter-actions__item chapter-actions__item--report">
-          <fa icon="flag"></fa>
-          <div class="chapter-actions__text">話を報告する</div>
-        </div>
-        <div class="chapter-actions__item chapter-actions__item--vote">
-          <fa icon="bolt"></fa>
-          <div class="chapter-actions__text">この作品に投票する</div>
-        </div>
-      </div>-->
-    </div>
+    <div v-if="!chapter.locked" class="chapter-actions"></div>
     <div class="chapter-payblock" v-if="chapter.locked">
       <div class="payblock-price">
         <Currency size="large" :amount="chapter.price"></Currency>

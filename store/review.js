@@ -242,7 +242,7 @@ export const actions = {
   }, {
     bookId
   }) {
-    const review = await this.$axios.get('/v1/review/myreview?bookId=' + bookId)
+    const review = await this.$axios.get(`/v2/review/user/${bookId}/show`)
     if (!review) {
       return
     }

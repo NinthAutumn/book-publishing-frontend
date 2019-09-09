@@ -232,7 +232,7 @@ export default {
         },
         投票: {
           icon: "bolt",
-          message: "この作品に投票を掛ける",
+          message: "投票を掛ける",
           type: "vote"
         }
       }
@@ -246,17 +246,9 @@ export default {
     }
   },
   mounted: async function() {
-    // this.height = this.$refs.chapter.clientHeight + "px";
-    await this.$store.dispatch("chapter/fetchUnstructuredList", {
-      bookId: this.$route.params.id
-    });
-    // this.simpleList.forEach(val => {
-    //   this.list.push(val.index);
+    // await this.$store.dispatch("chapter/fetchUnstructuredList", {
+    //   bookId: this.$route.params.id
     // });
-    // this.min = this.simpleList[0];
-    // this.max = this.list[this.list.length - 1];
-    // this.selected = this.chapter.index;
-    // this.chapter.content.split("<p></p>");
   },
   methods: {
     change: function() {

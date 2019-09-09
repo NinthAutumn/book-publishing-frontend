@@ -43,7 +43,7 @@ export default {
   },
   async mounted() {
     const { data } = await this.$axios.get(
-      `/ranking/${this.$route.params.id}?period=daily&type=vote`
+      `/v2/ranking/${this.$route.params.id}/vote?period=daily`
     );
     console.log(data);
     if (!data) {

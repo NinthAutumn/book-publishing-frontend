@@ -188,8 +188,9 @@ export default {
       this.form.title = this.chapter.title;
       this.form.header = this.chapter.header;
       this.form.footer = this.chapter.footer;
+      this.form.state = this.chapter.state;
       const { data } = await this.$axios.get(
-        `v2/drawing/chapter/${this.$route.query.chapterId}`
+        `/v2/drawing/chapter/${this.$route.query.chapterId}`
       );
       data.drawings.forEach(drawing => {
         this.form.drawings[drawing.id] = drawing;
@@ -290,7 +291,8 @@ export default {
         locked: false,
         drawings: {},
         header: "",
-        footer: ""
+        footer: "",
+        state: "published"
       },
       lang: {
         days: ["日", "月", "火", "水", "木", "金", "土"],
@@ -384,9 +386,9 @@ export default {
       let chapter = {
         title: this.form.title,
         content: this.form.content,
-        wordCount: this.form.wordCount.length,
+        word_count: this.form.wordCount.length,
         locked: this.form.locked,
-        volumeId: this.form.volume.id,
+        volume_id: this.form.volume.id,
         index: this.$store.getters["chapter/getNewIndex"],
         state,
         header: this.form.header,
@@ -407,10 +409,13 @@ export default {
       let chapter = {
         title: this.form.title,
         content: this.form.content,
-        wordCount: this.form.wordCount.length,
+        word_count: this.form.wordCount.length,
         header: this.form.header,
         footer: this.form.footer,
-        drawings: this.form.drawings
+        drawings: this.form.drawings,
+        state: state,
+        book_id: bookId
+        // date: this.form.date
       };
       await this.$store.dispatch("chapter/patchChapter", {
         chapter,

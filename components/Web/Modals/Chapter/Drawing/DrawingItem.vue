@@ -42,6 +42,7 @@ export default {
   min-width: 10rem;
   min-height: 10rem;
   margin-bottom: 1rem;
+  margin-right: 0.5rem;
   &__content {
     #{$self}__img {
       box-shadow: 0 2px 5px 0 rgba(60, 66, 87, 0.1),

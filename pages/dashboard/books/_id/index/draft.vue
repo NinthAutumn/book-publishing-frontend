@@ -14,7 +14,14 @@ export default {
   components: {
     BookToc: () => import("@/components/Dashboard/BookToc")
   },
-  transition: "slide-fade"
+  transition: "slide-fade",
+  async mounted() {
+    await this.$store.dispatch("chapter/fetchChapterList", {
+      bookId: this.$route.params.id,
+      state: "draft",
+      structured: false
+    });
+  }
 };
 </script>
 

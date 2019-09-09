@@ -3,7 +3,7 @@
     <transition name="slide-right">
       <ul class="mobile-toc__volumes" v-touch:swipe.left="closeTOC" v-click-outside="closeTOC">
         <div class="mobile-toc__spinner" v-if="loading">
-          <breeding-rhombus-spinner :animation-duration="1000" :size="50" color="#ff1d5e"/>
+          <breeding-rhombus-spinner :animation-duration="1000" :size="50" color="#ff1d5e" />
         </div>
         <li class="mobile-toc__volume" v-for="volume in list" :key="volume.volume">
           <h3 class="mobile-toc__volume-title">{{`第${volume.volume}章 ${volume.title||""}`}}</h3>
@@ -61,8 +61,10 @@ export default {
     this.loading = true;
   },
   mounted: async function() {
-    await this.$store.dispatch("chapter/fetchPublishedList", {
-      bookId: this.$route.params.id
+    await this.$store.dispatch("chapter/fetchChapterList", {
+      bookId: this.$route.params.id,
+      state: "published",
+      structured: true
     });
     this.loading = false;
     const chapter = document.querySelector(".nuxt-link-exact-active");

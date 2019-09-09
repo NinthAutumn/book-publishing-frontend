@@ -351,9 +351,7 @@ export const actions = {
     book
   }) {
     try {
-      const res = await this.$axios.patch('/v1/book', {
-        book
-      })
+      const res = await this.$axios.patch(`/v2/book/${book.id}`, book)
     } catch (error) {
 
     }

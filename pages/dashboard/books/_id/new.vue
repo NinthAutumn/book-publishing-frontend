@@ -23,7 +23,6 @@ export default {
   },
   created() {},
   async fetch({ store, route }) {
-    // await store.dispatch("chapter/fetchPublishedTOC", params.id);
     if (route.query.chapterId) {
       await store.dispatch("chapter/fetchChapterDetail", {
         chapterId: route.query.chapterId

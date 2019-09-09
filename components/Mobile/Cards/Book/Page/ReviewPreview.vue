@@ -28,7 +28,7 @@
       </div>
       <div class="pmb-reviewp__form" @click="$emit('toggleForm')">
         <fa class="pmb-reviewp__icon" icon="pen"></fa>
-        <div class="pmb-reviewp__create">レビューを書く</div>
+        <div class="pmb-reviewp__create" v-text="reviewed? 'レビューを編集する':'レビューを書く'"></div>
       </div>
     </div>
   </div>
@@ -44,7 +44,8 @@ export default {
   computed: {
     ...mapGetters({
       reviewCount: "review/getReviewCount",
-      preview: "review/getPreviewReviews"
+      preview: "review/getPreviewReviews",
+      reviewed: "review/isReviewed"
     })
   },
   async mounted() {
@@ -53,7 +54,7 @@ export default {
       page: 1,
       limit: 5,
       direction: "desc",
-      type: "likes",
+      type: 0,
       preview: true
     });
     if (window.screen.width < 321) {

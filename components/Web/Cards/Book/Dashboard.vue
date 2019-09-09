@@ -40,6 +40,12 @@
           >
             <fa icon="scroll"></fa>
           </nuxt-link>
+          <nuxt-link
+            :to="`/dashboard/books/new?bookId=${book.id}`"
+            class="dashboard-book__action dashboard-book__action--setting"
+          >
+            <fa icon="cog"></fa>
+          </nuxt-link>
         </div>
         <nuxt-link
           tag="div"
@@ -157,6 +163,9 @@ export default {
         &--news {
           margin-right: 1rem;
           background-color: #2a2f45;
+        }
+        &--toc {
+          margin-right: 1rem;
         }
       }
     }

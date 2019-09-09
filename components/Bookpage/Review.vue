@@ -250,7 +250,7 @@ export default {
           page: 1,
           limit: 10,
           direction: "desc",
-          type: "likes"
+          type: 0
         });
         await this.$store.dispatch("review/fetchIsReviewed", {
           bookId: this.$route.params.id

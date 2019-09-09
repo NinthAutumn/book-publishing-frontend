@@ -97,8 +97,10 @@ export default {
     }
   },
   async mounted() {
-    await this.$store.dispatch("chapter/fetchPublishedList", {
-      bookId: this.$route.params.id
+    await this.$store.dispatch("chapter/fetchChapterList", {
+      bookId: this.$route.params.id,
+      state: "published",
+      structured: true
     });
     this.today = this.$moment().toDate();
   }

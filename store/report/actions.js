@@ -6,9 +6,7 @@ const actions = {
   }) {
     const {
       data
-    } = await this.$axios.post(` /v2/report`, {
-      report
-    })
+    } = await this.$axios.post(`/v2/report`, report)
   },
 }
 

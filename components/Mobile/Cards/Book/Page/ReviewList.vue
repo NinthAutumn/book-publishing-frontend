@@ -37,7 +37,7 @@
 
         <div class="mbp-reviews__form" @click="$emit('toggleForm')">
           <fa class="mbp-reviews__icon" icon="pen"></fa>
-          <div class="mbp-reviews__create">レビューを書く</div>
+          <div class="mbp-reviews__create" v-text="reviewed? 'レビューを編集する':'レビューを書く'"></div>
         </div>
       </div>
     </transition>
@@ -83,7 +83,7 @@ export default {
         bookId: this.$route.params.id,
         page: 1,
         limit: 10,
-        type: this.sort
+        type: 0
       });
     },
     async infiniteHandler($state) {
@@ -95,7 +95,7 @@ export default {
           page: this.page++,
           limit: 10,
           direction: "desc",
-          type: this.sort,
+          type: 0,
           next: true
         });
       } else {
@@ -104,7 +104,7 @@ export default {
           page: this.page++,
           limit: 10,
           direction: "desc",
-          type: this.sort,
+          type: 0,
           next: true
         });
       }
@@ -118,7 +118,8 @@ export default {
   computed: {
     ...mapGetters({
       reviewCount: "review/getReviewCount",
-      reviews: "review/getReviews"
+      reviews: "review/getReviews",
+      reviewed: "review/isReviewed"
     })
   }
 };

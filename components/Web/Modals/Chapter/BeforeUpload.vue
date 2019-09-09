@@ -124,9 +124,17 @@ export default {
         drawings: this.form.drawings,
         date: this.form.date
       };
-      await this.$store.dispatch("chapter/createChapter", {
-        chapter
-      });
+
+      if (this.$route.query.chapterId) {
+        await this.$store.dispatch("chapter/patchChapter", {
+          chapter,
+          chapterId: this.$route.query.chapterId
+        });
+      } else {
+        await this.$store.dispatch("chapter/createChapter", {
+          chapter
+        });
+      }
     }
   }
 };

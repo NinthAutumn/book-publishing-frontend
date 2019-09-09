@@ -50,7 +50,7 @@ export default {
     }
     try {
       if (this.auth) {
-        const { data } = await this.$axios.get(`/library/${this.book.id}`);
+        const { data } = await this.$axios.get(`/v2/library/${this.book.id}`);
         this.latestChapter = data;
       }
     } catch (error) {}

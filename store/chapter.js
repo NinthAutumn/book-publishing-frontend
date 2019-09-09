@@ -29,17 +29,13 @@ export const state = () => ({
 
 export const getters = {
   getChapterList: (state) => {
-    return state.list
+    return state.chapter_list['published']
   },
   getDeleted: (state) => {
-    return state.unlist.filter((chapter) => {
-      return chapter.state === 'deleted'
-    })
+    return state.chapter_list['deleted']
   },
   getDraft: (state) => {
-    return state.unlist.filter((chapter) => {
-      return chapter.state === 'draft'
-    })
+    return state.chapter_list['draft']
   },
   getNextChapter: (state) => {
     return state.navigation.next
@@ -62,7 +58,7 @@ export const getters = {
   getChapter: state => state.chapter,
   getModalState: state => state.modal,
   getNotPublished: state => state.unlist,
-  getPublishedList: state => state.list,
+  getPublishedList: state => state.chapter_list['published'],
   getSimpleList: state => state.list_simple
 }
 
@@ -98,9 +94,9 @@ export const mutations = {
   SET_MODAL(state, type) {
     state.modal = type
   },
-  TOC_REVERSE(state) {
-    state.list = state.list.reverse()
-    state.list.forEach((volume) => {
+  TOC_REVERSE(state, status) {
+    state.chapter_list['published'] = state.chapter_list['published'].reverse()
+    state.chapter_list['published'].forEach((volume) => {
       volume.chapters.reverse()
     })
   },
@@ -248,7 +244,7 @@ export const actions = {
     bookId
   }) {
     try {
-      const res = await this.$axios.get(`/v1/chapter/notpublished?bookId=${bookId}`)
+      const res = await this.$axios.get(`/v2/chapter/${bookId}/list?structured=false&state=draft`)
       commit('SET_NOT_CHAPTER_LIST', res.data)
     } catch (error) {
       return Promise.reject(error)
@@ -412,10 +408,7 @@ export const actions = {
     chapter
   }) {
     try {
-      await this.$axios.patch('/v1/chapter', {
-        chapter,
-        chapterId
-      })
+      await this.$axios.patch(`/v2/chapter/${chapterId}`, chapter)
     } catch (error) {
 
     }

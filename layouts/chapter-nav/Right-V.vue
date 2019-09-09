@@ -66,16 +66,16 @@ export default {
     Setting: () => import("@/components/ChapterPage/Modal/Setting"),
     Images: () => import("@/components/ChapterPage/Modal/Images")
   },
-  async mounted() {
-   
-  },
+  async mounted() {},
   methods: {
     async table() {
       if (this.modal === "table") {
         this.$store.commit("chapter/SET_MODAL", "");
       } else {
-        await this.$store.dispatch("chapter/fetchPublishedList", {
-          bookId: this.$route.params.id
+        await this.$store.dispatch("chapter/fetchChapterList", {
+          bookId: this.$route.params.id,
+          state: "published",
+          structured: true
         });
         this.$store.commit("chapter/SET_MODAL", "table");
       }

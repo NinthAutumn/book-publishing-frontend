@@ -24,9 +24,9 @@ export const actions = {
     try {
       const {
         data
-      } = await this.$axios.get('/v1/drawing/list')
-      commit('SET_DRAWINGS', data.drawings)
-      return Promise.resolve(data.drawings)
+      } = await this.$axios.get('/v2/drawing/me')
+      commit('SET_DRAWINGS', data)
+      return Promise.resolve(data)
     } catch (error) {
       return Promise.reject(error)
     }

@@ -3,7 +3,10 @@
     <div class="chapter-form__wrapper">
       <div class="chapter-form__container">
         <div class="chapter-form__nav flex-row flex--align flex--between">
-          <div class="chapter-form__label flex-row" v-if="!$route.query.chapterId">
+          <div
+            class="chapter-form__label flex-row"
+            v-if="!$route.query.chapterId||form.state !== 'published'"
+          >
             第
             <word-select v-model="form.volume" :options="volume_list" label="章を選ぶ"></word-select>
             章 {{form.volume.index === 0? 0 :latestIndex}}話
@@ -21,9 +24,10 @@
           </div>
           <div class="chapter-form__button-list flex-row">
             <div
-              v-if="!$route.query.chapterId"
+              v-if="!$route.query.chapterId||form.state !== 'published'"
               class="chapter-form__button chapter-form__button--save"
               v-text="'話を保存'"
+              @click="handleChapterSaveDraft"
             ></div>
             <div
               @click="$route.query.chapterId? handleUpdate():handleChapter()"
@@ -99,7 +103,8 @@ export default {
         title: "",
         wordCount: 0,
         bookId: this.$route.params.id,
-        drawings: []
+        drawings: {},
+        state: ""
         // locked: false
       },
       beforeUpload: false
@@ -144,11 +149,17 @@ export default {
       let chapter = {
         title: this.form.title,
         content: this.form.content,
-        wordCount: this.form.wordCount,
+        state,
+        word_count: this.form.wordCount,
         header: this.form.header,
         footer: this.form.footer,
-        drawings: this.form.drawings
+        drawings: this.form.drawings,
+        book_id: bookId
       };
+      if (this.form.state === "draft") {
+        return this.handleChapter();
+      }
+
       try {
         await this.$store.dispatch("chapter/patchChapter", {
           chapter,
@@ -158,6 +169,30 @@ export default {
 
       this.loading = false;
       this.$router.push("/dashboard/books/");
+    },
+    async handleChapterSaveDraft() {
+      const bookId = this.$route.params.id;
+      let chapter = {
+        title: this.form.title,
+        content: this.form.content,
+        word_count: this.form.wordCount,
+        locked: this.form.locked,
+        state: "draft",
+        header: this.form.header,
+        footer: this.form.footer,
+        book_id: bookId,
+        drawings: this.form.drawings
+      };
+      if (this.$route.query.chapterId) {
+        await this.$store.dispatch("chapter/patchChapter", {
+          chapter,
+          chapterId: this.$route.query.chapterId
+        });
+      } else {
+        await this.$store.dispatch("chapter/createChapter", {
+          chapter
+        });
+      }
     },
     handleChapter() {
       if (this.form.title.length < 1)
@@ -202,12 +237,17 @@ export default {
       this.form.title = this.chapter.title;
       this.form.content = this.chapter.content;
       // console.log(this.chapterDrawings);
-
+      this.form.state = this.chapter.state;
       this.form.footer = this.chapter.footer;
       this.chapter.footer ? (this.footer = true) : (this.footer = false);
       this.form.header = this.chapter.header;
       this.chapter.header ? (this.header = true) : (this.header = false);
-      this.form.volume = this.volume_list[this.chapter.volume_id].value;
+      if (this.chapter.state === "published") {
+        this.form.volume = this.volume_list[this.chapter.volume_id].value;
+      } else {
+        let keys = Object.keys(this.volume_list);
+        this.form.volume = this.volume_list[keys[keys.length - 1]].value;
+      }
     } else {
       let keys = Object.keys(this.volume_list);
       this.form.volume = this.volume_list[keys[keys.length - 1]].value;

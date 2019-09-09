@@ -90,13 +90,15 @@ export default {
     this.today = this.$moment().toDate();
   },
   async mounted() {
-    await this.$store.dispatch("chapter/fetchPublishedList", {
-      bookId: this.$route.params.id
+    await this.$store.dispatch("chapter/fetchChapterList", {
+      bookId: this.$route.params.id,
+      state: "published",
+      structured: true
     });
   },
   methods: {
     async asc() {
-      this.$store.commit("chapter/TOC_REVERSE");
+      this.$store.commit("chapter/TOC_REVERSE", "published");
       this.ascending = !this.ascending;
     }
   },

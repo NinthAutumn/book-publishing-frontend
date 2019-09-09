@@ -16,7 +16,24 @@
         ></croppa>
       </div>
       <label for="username">ユーザー名</label>
-      <input v-model="user.username" placeholder="ユーザー名" required />
+      <input
+        :class="{'setting-form__input--error': errors.has('username')||usernameAvailable}"
+        v-model="user.username"
+        v-validate="'required|min:3|alpha_dash'"
+        placeholder="ユーザー名"
+        class="setting-form__input"
+        name="username"
+        data-vv-as="ユーザー名"
+        required
+      />
+      <span
+        v-if="errors.first('username')"
+        class="setting-form__error is-danger"
+      >{{ errors.first('username') }}</span>
+      <span
+        v-else-if="usernameAvailable&&user.username !== current.username"
+        class="setting-form__error help is-danger"
+      >このユーザー名はもう使われています</span>
       <v-radio-group v-model="user.gender" row>
         <v-radio
           v-for="n in genders"
@@ -55,10 +72,21 @@ export default {
       ]
     };
   },
+  watch: {
+    "user.username": async function(username) {
+      if (username === this.current.username) {
+        return;
+      }
+      if (username.length > 2) {
+        await this.$store.dispatch("user/checkUsername", { username });
+      }
+    }
+  },
   computed: {
     ...mapGetters({
       current: "auth/getUser",
-      profile: "user/getProfile"
+      profile: "user/getProfile",
+      usernameAvailable: "user/userNameExists"
     })
   },
   async mounted() {
@@ -75,6 +103,10 @@ export default {
     },
     async updateHandler() {
       try {
+        await this.$validator.validateAll();
+        if (this.errors.any()) {
+          return this.$toast.error("");
+        }
         if (this.user.newAvatar) {
           // alert(this.user.avatar.generateDataUrl());
 
@@ -83,20 +115,14 @@ export default {
               "upload/uploadAvatar",
               blob
             );
-            this.user.avatar = {
-              img: url,
-              path
-            };
+            this.user.avatar = url;
             await this.$store.dispatch("user/patchUser", { user: this.user });
             await this.$store.dispatch("auth/fetchUser");
           });
 
           // this.user.avatar
         } else {
-          this.user.avatar = {
-            img: this.current.avatar,
-            path: this.current.avatar.path
-          };
+          this.user.avatar = this.current.avatar;
           // this.user.avatar
           await this.$store.dispatch("user/patchUser", { user: this.user });
           await this.$store.dispatch("auth/fetchUser");
@@ -166,9 +192,20 @@ export default {
     font-size: 1.4rem;
     color: rgb(122, 122, 122);
   }
-  input {
+  &__error {
+    font-size: 1.4rem;
+    color: orangered;
+  }
+  &__input {
     font-size: 1.5rem;
+    &:focus,
+    &:active {
+      outline: none;
+    }
     padding: 1rem 1.2rem;
+    &--error {
+      border-left: 2px solid orangered;
+    }
     border-radius: 0.5rem;
     border: 1px solid rgb(228, 228, 228);
     margin: 1rem 0;

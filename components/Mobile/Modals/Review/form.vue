@@ -16,7 +16,6 @@
         <hr />
         <div class="flex-divider flex-column">
           <label for="title">タイトル</label>
-
           <input
             ref="title"
             class="mrf-modal__input"
@@ -26,18 +25,17 @@
             v-model="form.title"
           />
         </div>
-        <!-- <hr /> -->
-        <label for="content"></label>
-
+        <!-- <label for="content"></label> -->
         <text-editor
           name="本文"
           placeholder="レビュー本文"
           class="mrf-modal__content"
           v-model="form.content"
+          :content="oldReview.content"
           v-validate="'required||min:5'"
           data-vv-as="本文"
         ></text-editor>
-        <div class="mrf-modal__button" v-text="reviewed? '編集する':'投稿する'"></div>
+        <div @click="handleUpload" class="mrf-modal__button" v-text="reviewed? '編集する':'投稿する'"></div>
       </div>
     </transition>
   </div>
@@ -95,7 +93,7 @@ export default {
             page: 1,
             limit: 10,
             direction: "desc",
-            type: "likes"
+            type: 0
           });
         } else {
           await this.$store.dispatch("review/addReview", {
@@ -107,15 +105,23 @@ export default {
             page: 1,
             limit: 10,
             direction: "desc",
-            type: "likes"
+            type: 0
           });
-          this.$toast.success(
-            this.reviewed
-              ? "レビューの編集に成功しました"
-              : "レビューの投稿に成功しました"
-          );
-          this.$emit("toggleForm");
         }
+        this.$toast.success(
+          this.reviewed
+            ? "レビューの編集に成功しました"
+            : "レビューの投稿に成功しました"
+        );
+
+        await this.$store.dispatch("review/showAll", {
+          bookId: this.$route.params.id,
+          page: 1,
+          limit: 10,
+          type: 0,
+          preview: true
+        });
+        this.$emit("toggleForm");
       } catch (error) {
         this.$toast.error(
           this.reviewed
@@ -196,6 +202,7 @@ export default {
   }
   &__content {
     // height: 100%;
+    border: 0 !important;
     .text-editor__count {
       display: none;
     }

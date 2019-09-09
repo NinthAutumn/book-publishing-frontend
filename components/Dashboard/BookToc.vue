@@ -5,8 +5,10 @@
       <div class="book-toc__chapter-item" v-if="toc.length < 1">
         <div class="book-toc__title">まだ話はありません</div>
       </div>
-      <div
+      <nuxt-link
         v-else
+        :to="`/dashboard/books/${$route.params.id}/new?chapterId=${chapter.id}`"
+        tag="div"
         class="book-toc__chapter-item"
         v-for="(chapter,index) in toc"
         :key="index"
@@ -22,7 +24,7 @@
           <div class="book-toc__delete" v-show="deleteButton === index">削除</div>
           <div class="book-toc__created-at">{{chapter.created_at}}</div>
         </div>
-      </div>
+      </nuxt-link>
     </div>
 
     <div class="book-toc__volume" v-for="(volume,index) in toc" :key="index" v-else>
@@ -98,7 +100,11 @@ export default {
       justify-content: space-between;
       background-color: #fff;
       color: #6772e5;
+      user-select: none;
       // margin-bottom: 2px;
+      &:hover {
+        cursor: pointer;
+      }
       &:hover {
         background-color: rgb(248, 248, 248);
       }
