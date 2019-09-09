@@ -1,7 +1,7 @@
 window.gapiOnLoadCallback = () => {
   window.gapi.load("auth2", () => {
     window.google_auth2 = window.gapi.auth2.init({
-      client_id: "1011183696401-881iv1102bbj3outp8o6vnb4qjcigs94.apps.googleusercontent.com",
+      client_id: "1011183696401-m674j5hnthaqc4m3hd44p3ms63uqbi0k.apps.googleusercontent.com",
       fetch_basic_profile: true,
       scope: "profile email"
     });

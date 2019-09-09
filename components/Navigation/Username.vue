@@ -1,6 +1,6 @@
 <template>
   <transition name="up-down">
-    <div class="username-form dialog dialog__container" v-if="open">
+    <div class="username-form dialog dialog__container" v-if="open || modal">
       <!-- <div class="username-form__close" v-if="$store.state.auth.strategy === 'local'"></div> -->
       <div class="username-form__container dialog__content">
         <div class="flex-divider flex-row flex--align flex--center" style="margin-bottom:1rem;">
@@ -29,6 +29,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   data() {
     return {
@@ -37,10 +38,17 @@ export default {
       avatar: {},
       newAvatar: false,
       user: {
-        username: this.$store.getters["auth/getUser"].username || "",
+        username: "",
         avatar_path: ""
       }
     };
+  },
+  computed: {
+    ...mapGetters({
+      modal: "auth/getUsernameModalState",
+      loggedInUser: "auth/getUser",
+      auth: "auth/isAuthenticated"
+    })
   },
   methods: {
     async setUsername() {
@@ -68,11 +76,16 @@ export default {
       this.newAvatar = true;
     }
   },
+  updated() {
+    if (this.auth && !this.loggedInUser.username) {
+      if (this.$store.state.auth.strategy === "local") {
+        return;
+      }
+      this.open = true;
+    }
+  },
   async mounted() {
-    if (
-      this.$store.getters["auth/isAuthenticated"] &&
-      !this.$store.getters["auth/getUser"].username
-    ) {
+    if (this.auth && !this.loggedInUser.username) {
       if (this.$store.state.auth.strategy === "local") {
         return;
       }

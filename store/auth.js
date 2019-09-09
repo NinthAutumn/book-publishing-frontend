@@ -4,7 +4,8 @@ export const state = () => ({
   refresh_token: "",
   strategy: "",
   user: {},
-  path: ""
+  path: "",
+  usernameModal: false
 })
 
 export const getters = {
@@ -13,7 +14,8 @@ export const getters = {
   getAccessToken: state => state.token,
   getRefreshToken: state => state.refresh_token,
   getUser: state => state.user,
-  getPath: state => state.path
+  getPath: state => state.path,
+  getUsernameModalState: state => state.usernameModal
 }
 
 export const mutations = {
@@ -38,6 +40,9 @@ export const mutations = {
   },
   SET_AUTH_PATH: (state, path) => {
     state.path = path
+  },
+  TOGGLE_USERNAME_MODAL(state) {
+    state.usernameModal = !state.usernameModal
   }
 }
 
@@ -79,7 +84,8 @@ export const actions = {
     }
   },
   async socialAuth({
-    commit
+    commit,
+    dispatch
   }, {
     strategy,
     token

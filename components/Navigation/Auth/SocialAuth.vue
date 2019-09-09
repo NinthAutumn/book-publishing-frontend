@@ -99,6 +99,8 @@ export default {
                     token: res.authResponse.accessToken,
                     strategy: "facebook"
                   });
+                  // this.$router.go(0);
+                  // this.$nuxt.refresh();
                 } else {
                   this.$toast.show(`フェースブックのログインに失敗しました`, {
                     theme: "toasted-primary",
@@ -121,6 +123,9 @@ export default {
               icon: "extension"
             });
           }
+          this.$store.commit("LOGIN_FALSE");
+          this.$emit("loginAction");
+          this.$nuxt.refresh();
           break;
         case "google":
           this.google_submit();
@@ -145,7 +150,6 @@ export default {
       if (value === "local") {
       } else {
       }
-      this.$emit("loginAction");
     },
     async changeStep() {
       this.$store.commit("SET_AUTH_PAGE", 2);
@@ -157,8 +161,35 @@ export default {
           token: val.Zi.access_token,
           strategy: "google"
         });
-        this.$nuxt.refresh();
+        // this.$store.commit("auth/TOGGLE_USERNAME_MODAL");
+        // this.$nuxt.refresh();
+        // this.$router.go(0);
       });
+      if (this.$route.name === "books-id-chaptersId") {
+        await this.$store.dispatch("comment/fetchCommentList", {
+          chapterId: this.$route.params.chaptersId,
+          sortBy: 0,
+          page: 1,
+          limit: 10,
+          direction: 0
+        });
+      }
+      if (this.$route.name === "books-id") {
+        await this.$store.dispatch("review/showAll", {
+          bookId: this.$route.params.id,
+          page: 1,
+          limit: 10,
+          type: 0
+        });
+        await this.$store.dispatch("review/fetchIsReviewed", {
+          bookId: this.$route.params.id
+        });
+      }
+
+      this.$store.commit("LOGIN_FALSE");
+      this.$emit("loginAction");
+      this.$nuxt.refresh();
+      this.$store.commit("auth/TOGGLE_USERNAME_MODAL");
     }
   }
 };
