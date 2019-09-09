@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapMutations } from "vuex";
 export default {
   data: function() {
     return {
@@ -78,6 +78,9 @@ export default {
   },
   async mounted() {},
   methods: {
+    ...mapMutations({
+      setAuth: "auth/SET_AUTH_PATH"
+    }),
     ...mapActions({
       auth: "auth/socialAuth"
     }),
@@ -124,9 +127,11 @@ export default {
           break;
         case "twitter":
           // console.log(window.twttr);
+          this.$storage.setUniversal("path", this.$route.path);
+          // this.setAuth(this.$route.path);
           const { data } = await this.$axios.get("/v2/auth/social/twitter/url");
+          window.location.replace(data.url);
 
-          window.open(data.url);
           this.$toast.show(`ツイッターの対応は現在工作通です`, {
             theme: "toasted-primary",
             position: "top-right",

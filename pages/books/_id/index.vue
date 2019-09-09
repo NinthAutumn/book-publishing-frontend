@@ -45,6 +45,7 @@ export default {
       id: route.params.id
     });
   },
+  async mounted() {},
   computed: {
     ...mapGetters({
       book: "book/getBook",

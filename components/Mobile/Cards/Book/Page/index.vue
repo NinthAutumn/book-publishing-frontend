@@ -22,6 +22,8 @@
 </template>
 
 <script>
+import { hydrateWhenVisible } from "vue-lazy-hydration";
+
 export default {
   props: {
     book: Object
@@ -31,8 +33,10 @@ export default {
       reviewModal: false
     };
   },
-  mounted() {
-    // this.reviewModal = this.$route.query.review || false;
+  async mounted() {
+    await this.$store.dispatch("review/fetchBookReviewCount", {
+      bookId: this.$route.params.id
+    });
   },
   methods: {
     reviewModalState: function() {
@@ -69,13 +73,17 @@ export default {
     }
   },
   components: {
-    HeaderCard: () => import("./Header"),
-    SummaryCard: () => import("./Summary"),
-    ReviewList: () => import("./ReviewPreview"),
-    RankingList: () => import("./Ranking"),
-    ReviewModal: () => import("./ReviewList"),
-    ReviewPage: () => import("@/components/Mobile/Cards/Review/Page"),
-    ReviewForm: () => import("@/components/Mobile/Modals/Review/form")
+    HeaderCard: hydrateWhenVisible(() => import("./Header")),
+    SummaryCard: hydrateWhenVisible(() => import("./Summary")),
+    ReviewList: hydrateWhenVisible(() => import("./ReviewPreview")),
+    RankingList: hydrateWhenVisible(() => import("./Ranking")),
+    ReviewModal: hydrateWhenVisible(() => import("./ReviewList")),
+    ReviewPage: hydrateWhenVisible(() =>
+      import("@/components/Mobile/Cards/Review/Page")
+    ),
+    ReviewForm: hydrateWhenVisible(() =>
+      import("@/components/Mobile/Modals/Review/form")
+    )
   }
 };
 </script>

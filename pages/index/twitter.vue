@@ -6,6 +6,11 @@ export default {
   async mounted() {
     await this.authTwitter();
   },
+  computed: {
+    ...mapGetters({
+      path: "auth/getPath"
+    })
+  },
   methods: {
     ...mapMutations({
       auth: "auth/SET_AUTH"
@@ -26,15 +31,18 @@ export default {
         }
 
         const { access_token, refresh_token } = data;
-        this.auth({ access_token, refresh_token, strategy: "twitter" });
-        this.$storage.setUniversal("access_token", access_token);
-        this.$storage.setUniversal("refresh_token", refresh_token);
-        this.$storage.setUniversal("strategy", "twitter");
         this.$axios.defaults.headers.common[
           "Authorization"
         ] = `Bearer ${access_token}`;
+
+        this.auth({ access_token, refresh_token, strategy: "twitter" });
+        this.$nuxt.refresh();
+        this.$storage.setUniversal("access_token", access_token);
+        this.$storage.setUniversal("refresh_token", refresh_token);
+        this.$storage.setUniversal("strategy", "twitter");
+
         await this.$store.dispatch("auth/fetchUser");
-        // this.$router.go(0);
+        this.$router.push(this.$storage.getUniversal("path"));
       } catch (error) {
         console.log(error);
       }

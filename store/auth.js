@@ -3,7 +3,8 @@ export const state = () => ({
   loggedIn: false,
   refresh_token: "",
   strategy: "",
-  user: {}
+  user: {},
+  path: ""
 })
 
 export const getters = {
@@ -11,7 +12,8 @@ export const getters = {
   getStrategy: state => state.strategy,
   getAccessToken: state => state.token,
   getRefreshToken: state => state.refresh_token,
-  getUser: state => state.user
+  getUser: state => state.user,
+  getPath: state => state.path
 }
 
 export const mutations = {
@@ -34,6 +36,9 @@ export const mutations = {
   SET_USER: (state, user) => {
     state.user = user
   },
+  SET_AUTH_PATH: (state, path) => {
+    state.path = path
+  }
 }
 
 export const actions = {
@@ -126,7 +131,7 @@ export const actions = {
     try {
       const {
         data
-      } = await this.$axios.get('/v2/user/me', {})
+      } = await this.$axios.get('/v2/user/me')
       commit('SET_USER', data)
       await dispatch('wallet/wealth', {}, {
         root: true

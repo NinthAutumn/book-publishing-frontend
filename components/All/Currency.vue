@@ -38,6 +38,7 @@ export default {
 <style lang="scss">
 .currency {
   height: 100%;
+  margin-right: 0.5rem;
   &--large {
     display: flex;
     align-items: center;
