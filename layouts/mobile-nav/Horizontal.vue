@@ -11,6 +11,10 @@
         @click="$router.push('/')"
       ></v-img>
     </div>
+    <nuxt-link class="mobile-horizontal__search" to="/search">
+      <fa icon="search" class="mobile-horizontal__search-icon"></fa>
+      <div class="mobile-horizontal__text">検索</div>
+    </nuxt-link>
     <div class="mobile-horizontal__profile" v-ripple @click="toggleMenu(true)">
       <!-- <v-avatar class="mobile-horizontal__avatar" :size="40" v-if="!loggedIn">
         <img :src="avatar">
@@ -65,6 +69,25 @@ export default {
   padding: 0 1.5rem;
   // border-radius: 2rem;
   // border-bottom--radius: 2rem;
+  &__search {
+    width: 10rem;
+    height: 3rem;
+    background-color: #f4f6f8;
+    border-radius: 10rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    color: #4a4b4c;
+    #{$self}__search-icon {
+      font-size: 1.3rem;
+      // margin-left: 0.5rem;
+    }
+    #{$self}__text {
+      font-size: 1.3rem;
+      margin-left: 1rem;
+    }
+  }
   &__meta {
     // padding: 1rem;
     transition: 200ms;

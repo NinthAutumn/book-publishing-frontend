@@ -16,9 +16,9 @@
             <nuxt-link :to="`/books/${book.id}`" v-for="(book,index) in  item.list" :key="index">
               <BookCard v-ripple :book="book"></BookCard>
             </nuxt-link>
-            <no-ssr>
+            <client-only>
               <infinite-loading :identifier="infinite[items[tab].key]" @infinite="infiniteHandler"></infinite-loading>
-            </no-ssr>
+            </client-only>
           </v-tab-item>
         </v-tabs-items>
       </v-tabs>

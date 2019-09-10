@@ -21,6 +21,14 @@ export const mutations = {
   },
   LOADING_FIN: (state) => {
     state.isLoading = false
+  },
+  PUSH_BOOKS: (state, books) => {
+    books.forEach((book) => {
+      state.books.push(book)
+    })
+  },
+  RESET_BOOKS(state) {
+    state.books = []
   }
 }
 export const actions = {
@@ -29,15 +37,24 @@ export const actions = {
   }, {
     query,
     page = 1,
-    limit = 10
+    limit = 10,
+    infinite = false
   }) {
-    commit('LOADING')
-    await this.$axios.get(`/v2/book/show/search?search=${query}&page=${page}`).then((res) => {
+    try {
+      const {
+        data
+      } = await this.$axios.get(`/v2/book/show/search?search=${query}&page=${page}&limit=${limit}`)
+      // console.log(data);
+      if (!infinite) {
+        commit('QUERIED_BOOKS', data)
+      } else {
+        commit('PUSH_BOOKS', data)
+      }
+      return Promise.resolve(data)
+    } catch (error) {
+      return Promise.reject(error)
+    }
 
-      commit('QUERIED_BOOKS', res.data)
 
-      // commit('RATING_FIX')
-      commit('LOADING_FIN')
-    })
   }
 }
