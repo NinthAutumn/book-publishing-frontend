@@ -63,6 +63,7 @@ export default {
     padding: 0.5rem;
     box-shadow: 0 2px 5px 0 rgba(60, 66, 87, 0.1),
       0 1px 1px 0 rgba(0, 0, 0, 0.07);
+    max-width: 100%;
     border-radius: 0.5rem;
     margin-bottom: 1rem;
     #{$self}__ranking {
@@ -82,6 +83,7 @@ export default {
       align-items: center;
       justify-content: center;
       background-color: #2a2f45;
+      // max-width: 100%;
       color: white;
       &--0 {
         color: white;
@@ -110,8 +112,16 @@ export default {
       justify-content: space-between;
       flex-direction: column;
       flex-grow: 1;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+      max-width: 100%;
     }
     #{$self}__author {
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+      max-width: 100%;
       font-size: 1.1rem;
       padding: 0.15rem 1rem;
       border-radius: 50rem;
@@ -128,6 +138,10 @@ export default {
     }
     #{$self}__title {
       font-size: 1.5rem;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+      max-width: 100%;
     }
     .v-icon {
       padding: 0 !important;

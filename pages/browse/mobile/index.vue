@@ -99,11 +99,12 @@ export default {
         state: {
           title: "状態",
           list: [
-            { selected: true, key: "全部" },
+            { selected: true, key: "全部", value: "all" },
             { selected: false, key: "連載中", value: "ongoing" },
-            { selected: false, key: "完結", value: "finished" }
+            { selected: false, key: "完結", value: "completed" }
           ]
         }
+        // state;
       }
     };
   },
@@ -147,6 +148,7 @@ export default {
         limit: 20,
         genre: this.selected_filter.key,
         tag: this.$route.query.tag || null,
+        state: this.selected_state.value,
         limit: 10,
         infinite: true
       });
@@ -231,7 +233,7 @@ export default {
 .mobile-browse {
   $self: &;
   &__nav {
-    height: 4.5rem;
+    height: 4rem;
     width: 100%;
     position: fixed;
     top: 0;
@@ -239,17 +241,17 @@ export default {
     background-color: rgb(247, 244, 244);
     z-index: 1000;
     color: black;
-    font-size: 1.6rem;
+    font-size: 1.4rem;
     display: flex;
     align-items: center;
     padding: 0.5rem;
     font-weight: bold;
     #{$self}__icon {
       padding: 0.5rem 1rem;
-      font-size: 2rem;
+      font-size: 1.4rem;
     }
     p {
-      font-size: 2rem;
+      font-size: 1.4rem;
       margin-left: 1rem;
     }
   }
@@ -344,18 +346,21 @@ export default {
 }
 .v-tabs__item {
   color: black;
+  font-size: 1.4rem !important;
   // font-weight: bold;
 }
-
+.v-tabs__container {
+  height: 30px !important;
+}
 .v-tabs__wrapper {
   position: fixed;
-  top: 4rem;
+  top: 3.5rem;
   left: 0;
   background-color: rgb(247, 244, 244);
   width: 100%;
   z-index: 1000;
 }
 .v-tabs__slider {
-  background-color: black !important;
+  background-color: $primary !important;
 }
 </style>

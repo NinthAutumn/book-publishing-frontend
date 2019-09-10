@@ -108,7 +108,8 @@ export const actions = {
     page,
     tag = "全部",
     infinite = false,
-    limit = 10
+    limit = 10,
+    state = "ongoing"
   }) {
 
     const res = await this.$axios.patch('/v2/book/show/browse/mobile', {
@@ -116,7 +117,8 @@ export const actions = {
       genre,
       page,
       tag,
-      limit
+      limit,
+      state
     })
 
     if (infinite) {
