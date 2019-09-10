@@ -22,8 +22,8 @@
           </div>
         </div>
         <div class="mobile-detailed__rating">
-          <v-rating color="#FF8D29" readonly :size="15" half-increments :value="+book.rating"></v-rating>
-          {{book.rating}}
+          <v-rating color="#FF8D29" readonly :size="18" half-increments :value="+book.rating"></v-rating>
+          <!-- {{book.rating}} -->
         </div>
       </div>
     </div>
@@ -58,7 +58,8 @@ export default {
     display: flex;
     #{$self}__genres {
       display: flex;
-      overflow: auto;
+      // overflow: auto;
+      flex-wrap: wrap;
       @media screen and (max-width: 320px) {
         #{$self}__genre-item {
           font-size: 1.1rem !important;
@@ -68,9 +69,10 @@ export default {
 
       #{$self}__genre-item {
         padding: 0.25rem 2rem;
+        margin-bottom: 0.2rem;
         border-radius: 2rem;
         margin-right: 1rem;
-        font-size: 1.2rem;
+        font-size: 1rem;
         background-color: #e3e8ee;
         font-weight: bold;
         opacity: 0.8;
@@ -81,13 +83,13 @@ export default {
       flex-direction: column;
       #{$self}__title {
         font-weight: bold;
-        font-size: 1.55rem;
+        font-size: 1.5rem;
         line-height: 1.8rem;
-        margin-bottom: 0.5rem;
+        margin-bottom: 0.2rem;
       }
       #{$self}__pen-name {
         color: #aab7c4;
-        font-size: 1.3rem;
+        font-size: 1.1rem;
       }
     }
     #{$self}__cover {
@@ -110,9 +112,10 @@ export default {
       display: flex;
       align-items: center;
       // align-self: flex-end;
+
       justify-self: flex-end;
-      margin-top: auto;
-      font-size: 1.3rem;
+      // margin-top: auto;
+      font-size: 0.8rem;
       .v-icon {
         padding: 0;
       }

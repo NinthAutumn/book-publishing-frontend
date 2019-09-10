@@ -104,17 +104,19 @@ export const actions = {
     commit
   }, {
     type,
-    genre,
+    genre = "全部",
     page,
-    tag,
-    infinite = false
+    tag = "全部",
+    infinite = false,
+    limit = 10
   }) {
 
-    const res = await this.$axios.patch('/v1/book/show/browse', {
+    const res = await this.$axios.patch('/v2/book/show/browse/mobile', {
       type,
       genre,
       page,
       tag,
+      limit
     })
 
     if (infinite) {

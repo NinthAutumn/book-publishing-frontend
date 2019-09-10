@@ -39,16 +39,18 @@
             <fa icon="angle-down"></fa>
           </div>
         </div>
-        <div class="mobile-browse__options" v-for="(filter,key) in filters" :key="filter.title">
-          <div class="mobile-browse__option-title" v-text="filter.title"></div>
-          <div class="mobile-browse__modal-list">
-            <div
-              class="mobile-browse__option"
-              :class="{'mobile-browse__option--selected': item.selected}"
-              v-for="(item,index) in filter.list"
-              @click="filterHander(key,index)"
-              :key="index"
-            >{{item.key}}</div>
+        <div class="mobile-browse__options-container">
+          <div class="mobile-browse__options" v-for="(filter,key) in filters" :key="filter.title">
+            <div class="mobile-browse__option-title" v-text="filter.title"></div>
+            <div class="mobile-browse__modal-list">
+              <div
+                class="mobile-browse__option"
+                :class="{'mobile-browse__option--selected': item.selected}"
+                v-for="(item,index) in filter.list"
+                @click="filterHander(key,index)"
+                :key="index"
+              >{{item.key}}</div>
+            </div>
           </div>
         </div>
       </div>
@@ -85,6 +87,7 @@ export default {
         word: 4
       },
       selected_filter: { key: "全部", value: 0 },
+      selected_state: { key: "全部", value: "all" },
       noMore: false,
       loading: false,
       modal: false,
@@ -93,9 +96,13 @@ export default {
           title: "ジャンル",
           list: [{ selected: true, key: "全部", value: 0 }]
         },
-        type: {
-          title: "type",
-          list: [{ selected: true, key: "全部" }]
+        state: {
+          title: "状態",
+          list: [
+            { selected: true, key: "全部" },
+            { selected: false, key: "連載中", value: "ongoing" },
+            { selected: false, key: "完結", value: "finished" }
+          ]
         }
       }
     };
@@ -108,19 +115,7 @@ export default {
   components: {
     BookCard: () => import("@/components/Mobile/Cards/Book/Detailed")
   },
-  watch: {
-    selected_filter: function(val) {
-      this.items.forEach(val => {
-        val.list = [];
-      });
-      Object.keys(this.page).forEach(val => {
-        this.page[val] = 1;
-      });
-      Object.keys(this.infinite).forEach(val => {
-        this.infinite[val] += 5;
-      });
-    }
-  },
+  watch: {},
   async mounted() {
     await this.$store.dispatch("book/fetchAllGenres");
     this.genres.forEach(genre => {
@@ -152,7 +147,7 @@ export default {
         limit: 20,
         genre: this.selected_filter.key,
         tag: this.$route.query.tag || null,
-        // selected_filter:
+        limit: 10,
         infinite: true
       });
       if (books.length > 0) {
@@ -183,19 +178,50 @@ export default {
       this.modal = !this.modal;
     },
     filterHander(key, index) {
-      this.filters[key].list.forEach((item, i) => {
-        if (index === i) {
-          item.selected = true;
-          this.selected_filter = item;
-          // this.$route.query.genre = item.key;
-          this.$router.replace({
-            path: "/browse/mobile",
-            query: { genre: item.key }
-          });
-        } else {
-          item.selected = false;
-        }
-      });
+      if (key === "genre") {
+        this.filters[key].list.forEach((item, i) => {
+          if (index === i) {
+            item.selected = true;
+            this.selected_filter = item;
+            // this.$route.query.genre = item.key;
+            this.$router.replace({
+              path: "/browse/mobile",
+              query: { genre: item.key }
+            });
+          } else {
+            item.selected = false;
+          }
+        });
+        this.items.forEach(val => {
+          val.list = [];
+        });
+        Object.keys(this.page).forEach(val => {
+          this.page[val] = 1;
+        });
+        Object.keys(this.infinite).forEach(val => {
+          this.infinite[val] += 5;
+        });
+      } else if (key === "state") {
+        this.filters[key].list.forEach((item, i) => {
+          if (index === i) {
+            item.selected = true;
+            this.selected_state = item;
+            // this.$route.query.genre = item.key;
+            // this.$router.push()
+          } else {
+            item.selected = false;
+          }
+        });
+        this.items.forEach(val => {
+          val.list = [];
+        });
+        Object.keys(this.page).forEach(val => {
+          this.page[val] = 1;
+        });
+        Object.keys(this.infinite).forEach(val => {
+          this.infinite[val] += 5;
+        });
+      }
     }
   }
 };
@@ -256,20 +282,23 @@ export default {
       }
     }
   }
+
   &__modal {
     width: 100%;
     height: 50vh;
     position: fixed;
     bottom: 0;
     background-color: #fff;
-    overflow: auto;
+    // overflow: auto;
     padding: 1rem;
     #{$self}__modal-list {
       display: flex;
       flex-wrap: wrap;
-      overflow: auto;
     }
-
+    #{$self}__options-container {
+      overflow: auto;
+      height: 87%;
+    }
     #{$self}__modal-header {
       margin-bottom: 0.5rem;
       display: flex;
@@ -295,8 +324,8 @@ export default {
     }
 
     #{$self}__option {
-      font-size: 1.2rem;
-      padding: 0.5rem 2rem;
+      font-size: 1.1rem;
+      padding: 0.3rem 1.8rem;
       background-color: #e3e8ee;
       color: #2e2e2f;
       border-radius: 2rem;

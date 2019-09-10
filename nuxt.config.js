@@ -263,7 +263,7 @@ module.exports = {
   },
   proxy: {
     '/v2': {
-      target: process.env.NEST_SERVER_URL,
+      target: process.env.NEST_SERVER_URL + '',
       changeOrigin: true,
       pathRewrite: {
         '^/v2': ''
