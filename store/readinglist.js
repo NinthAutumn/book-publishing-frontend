@@ -4,43 +4,74 @@ export const state = () => ({
 })
 
 export const getters = {
-
+  getUserReadingList: state => state.list
 }
 
 export const mutations = {
-  SHOW(state, list) {
-
-  },
-  EDIT(state) {
-
+  SET_USER_READING_LIST(state, list) {
+    state.list = list
   }
-
 }
 
 export const actions = {
-  getList: async ({
+  async setReadingList({
     commit
-  }) => {
-
+  }, {
+    readingList
+  }) {
+    try {
+      await this.$axios.post('/v2/readinglist/', readingList)
+    } catch (error) {
+      return Promise.reject(error)
+    }
   },
-  createList: async ({
+  async addBookToReadingList({
     commit
-  }, readinglist) => {
-    const create = await this.$axios.post('/readinglist/new', readinglist)
+  }, {
+    id,
+    book
+  }) {
+    try {
+      await this.$axios.post(`/v2/readinglist/${id}`, book)
+    } catch (error) {
+      return Promise.reject(error)
+    }
   },
-  addBook: async ({
+  async likeBookToReadingList({
     commit
-  }, readinglist) => {
-    const add = await this.$axios.patch('/readinglist/addbook', readinglist)
+  }, {
+    id
+  }) {
+    try {
+      await this.$axios.patch(`/v2/readinglist/${id}/like`)
+    } catch (error) {
+      return Promise.reject(error)
+    }
   },
-  removeBook: async ({
+  async fetchMyReadingList({
     commit
-  }) => {
-    const remove = await this.$axios.patch('/readinglist/removebook', readinglist)
+  }) {
+    try {
+      const {
+        data
+      } = await this.$axios.get('/v2/readinglist/show/me')
+      commit('SET_USER_READING_LIST', data)
+    } catch (error) {
+      return Promise.reject(error)
+    }
   },
-  followList: async ({
+  async fetchUserReadingList({
     commit
-  }) => {
-
+  }, {
+    user_id
+  }) {
+    try {
+      const {
+        data
+      } = await this.$axios.get(`/v2/readinglist/show/user?user_id=${user_id}`)
+      commit('SET_USER_READING_LIST', data)
+    } catch (error) {
+      return Promise.reject(error)
+    }
   }
 }
