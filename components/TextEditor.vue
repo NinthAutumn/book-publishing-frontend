@@ -63,7 +63,6 @@ export default {
     }
   },
   mounted() {
-    console.log(this.content);
     if (this.content) {
       this.text = this.content;
       // this.changes();
@@ -78,6 +77,7 @@ export default {
   },
   methods: {
     createRuby() {
+      this.$refs.text.focus();
       let rubyText = " |ルビをつける字《ルビ》";
       if (!this.activeE || this.activeE.tagName.toUpperCase() !== "TEXTAREA") {
         this.text = this.text + rubyText;
@@ -103,7 +103,14 @@ export default {
         value = this.$refs.text.value;
 
       this.text = value.substr(0, start - 1) + rubyText + value.substr(end);
-      this.$refs.text.setSelectionRange(start + 1, end);
+
+      setTimeout(() => {
+        this.$refs.text.setSelectionRange(start + 1, end + 1);
+      }, 0);
+
+      // console.log(start);
+      // this.$refs.text.selectionStart = start + 1;
+      // this.$refs.text.selectionEnd = end;
     },
     contentFocus() {
       this.placehold = "";
@@ -112,9 +119,13 @@ export default {
       this.placehold = this.placeholder;
     },
     changes() {
-      this.text = this.text.replace(/(<\/[^>]+>)/gi, "\n");
-      this.text = this.text.replace(/(<br>)/gi, "\n");
-      this.text = this.text.replace(/(<([^>]+)>)/gi, "");
+      this.text = this.text
+        .replace(/<ruby>/gi, "|")
+        .replace(/<\/rt><\/ruby>/gi, "》")
+        .replace(/<rt>/gi, "《")
+        .replace(/(<\/[^>]+>)/gi, "\n")
+        .replace(/(<br>)/gi, "\n")
+        .replace(/(<([^>]+)>)/gi, "");
 
       this.textArray = this.text.split(/\n/);
       let temp = [];
@@ -157,6 +168,8 @@ export default {
     },
     selectEvent(event) {
       this.activeE = event.target;
+
+      console.log();
     }
   }
 };
