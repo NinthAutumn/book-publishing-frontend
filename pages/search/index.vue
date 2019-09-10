@@ -4,17 +4,23 @@
     class="search-page"
     :class="{'search-page--mobile':$device.isMobile,'page-padding':!$device.isMobile}"
   >
-    <div class="search-page__bar">
+    <div class="search-page__bar" v-if="!$device.isMobile">
       <input ref="search" v-model="query" type="text" class="search-page__input" placeholder="検索" />
     </div>
-    <nuxt-link
-      :to="`/books/${book.id}`"
-      class="search-page__list"
-      v-for="book in books"
-      :key="book.id"
-    >
-      <Books v-ripple :book="book"></Books>
-    </nuxt-link>
+    <div class="search-page__container" v-if="!$device.isMobile">
+      <BookWeb :books="books"></BookWeb>
+    </div>
+    <div class="search-page__container" v-else>
+      <nuxt-link
+        :to="`/books/${book.id}`"
+        class="search-page__list"
+        v-for="book in books"
+        :key="book.id"
+      >
+        <Books v-ripple :book="book"></Books>
+      </nuxt-link>
+    </div>
+
     <client-only>
       <infinite-loading :identifier="id" @infinite="infiniteHandler"></infinite-loading>
     </client-only>
@@ -26,6 +32,7 @@ export default {
   name: "search",
   components: {
     Books: () => import("@/components/Mobile/Cards/Book/Detailed"),
+    BookWeb: () => import("@/components/SearchPage/Books"),
     SearchBar: () => import("@/components/Navigation/SearchBar")
   },
   computed: {
