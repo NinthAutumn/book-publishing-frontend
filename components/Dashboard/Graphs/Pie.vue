@@ -23,10 +23,10 @@
       </div>
     </div>
     <div class="pie-graph__graph">
-      <no-ssr>
+      <client-only>
         <ve-pie v-if="graph === 0" :data="chartData" :settings="chartSetting"></ve-pie>
         <ve-ring v-if="graph=== 1" :data="chartData" :settings="chartSetting"></ve-ring>
-      </no-ssr>
+      </client-only>
     </div>
   </div>
 </template>

@@ -19,9 +19,9 @@
     </div>
     <BookList v-loading="loading" :latestBooks="latestBooks" v-if="update_view === 'grid'"></BookList>
     <book-table :latestBooks="latestBooks" v-if="update_view === 'list'"></book-table>
-    <no-ssr>
+    <client-only>
       <infinite-loading @infinite="infiniteHandler"></infinite-loading>
-    </no-ssr>
+    </client-only>
   </div>
 </template>
 

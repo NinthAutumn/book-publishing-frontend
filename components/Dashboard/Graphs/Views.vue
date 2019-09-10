@@ -15,9 +15,9 @@
     </div>
 
     <div class="views-bargraph__graph" v-loading="loading" ref="bargraph">
-      <no-ssr>
+      <client-only>
         <ve-line ref="view-bar" judge-width :height="height" :settings="chartSetting" :data="time"></ve-line>
-      </no-ssr>
+      </client-only>
     </div>
   </div>
 </template>

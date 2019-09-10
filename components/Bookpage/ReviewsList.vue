@@ -51,9 +51,9 @@
         <Review @editReview="reviewOpen" :review="review"></Review>
         <hr />
       </li>
-      <no-ssr>
+      <client-only>
         <infinite-loading @infinite="infiniteHandler"></infinite-loading>
-      </no-ssr>
+      </client-only>
     </ul>
   </div>
 </template>

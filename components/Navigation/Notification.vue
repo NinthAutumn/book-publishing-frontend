@@ -25,9 +25,9 @@
           >{{$moment(notification.created_at).startOf('second').fromNow()}}</span>
         </div>
       </nuxt-link>
-      <no-ssr>
+      <client-only>
         <infinite-loading @infinite="infiniteHandler"></infinite-loading>
-      </no-ssr>
+      </client-only>
     </ul>
   </div>
 </template>

@@ -33,9 +33,9 @@
           class="book-announcement__created"
         >{{$moment(announcement.created_at).startOf('seconds').fromNow()}}</div>
       </li>
-      <no-ssr>
+      <client-only>
         <infinite-loading @infinite="infiniteHandler"></infinite-loading>
-      </no-ssr>
+      </client-only>
     </ul>
   </div>
 </template>

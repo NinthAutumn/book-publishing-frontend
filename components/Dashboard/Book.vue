@@ -38,9 +38,9 @@
           :gradient="['#6fa8dc', '#42b983']"
         ></v-sparkline>
 
-        <!-- <no-ssr>
+        <!-- <client-only>
           <bars :data="value" :gradient="['#6fa8dc', '#42b983']"></bars>
-        </no-ssr>-->
+        </client-only>-->
       </div>
     </div>
     <div class="dash-book__buttons">

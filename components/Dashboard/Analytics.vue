@@ -16,9 +16,9 @@
           <div class="flex-divider flex-row flex--align flex--between">
             <div class="main-analytics__stats">
               <div v-if="index===0&&!value.stats" class="no-rank">未定</div>
-              <no-ssr v-else>
+              <client-only v-else>
                 <countTo :startVal="0" :endVal="value.stats" :duration="1000"></countTo>
-              </no-ssr>
+              </client-only>
             </div>
             <fa :icon="value.icon" class="main-analytics__icon"></fa>
           </div>

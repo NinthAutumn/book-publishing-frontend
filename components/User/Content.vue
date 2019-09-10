@@ -108,12 +108,13 @@ export default {
     }
     #{$self}__meta-icon {
       display: flex;
-      justify-content: flex-start;
+      justify-self: flex-start;
       min-width: 30px;
       font-size: 1.8rem;
     }
     #{$self}__meta-text {
       font-size: 1.6rem;
+      word-break: break-word;
       &--meta {
         display: flex;
         align-items: center;

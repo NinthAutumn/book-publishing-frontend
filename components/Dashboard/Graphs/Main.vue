@@ -53,7 +53,7 @@
     </div>
 
     <div class="vote-graph__graph">
-      <no-ssr>
+      <client-only>
         <ve-histogram
           :data-zoom="dataZoom"
           v-if="graph===0"
@@ -70,7 +70,7 @@
         >
           <!-- <div class="data-empty">data empty</div> -->
         </ve-line>
-      </no-ssr>
+      </client-only>
     </div>
   </div>
 </template>

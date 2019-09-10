@@ -22,11 +22,11 @@
         </div>
         <div v-if="!notification.read" class="latest-chapters__notification"></div>
       </li>
-      <no-ssr>
-        <no-ssr>
+      <client-only>
+        <client-only>
           <infinite-loading @infinite="infiniteHandler"></infinite-loading>
-        </no-ssr>
-      </no-ssr>
+        </client-only>
+      </client-only>
     </ul>
   </div>
 </template>

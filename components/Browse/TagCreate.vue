@@ -19,9 +19,9 @@
         :class="{selected: tag.selected}"
       >{{tag.key}}({{tag.sum}})</li>
     </transition-group>
-    <no-ssr>
+    <client-only>
       <infinite-loading @infinite="infiniteHandler"></infinite-loading>
-    </no-ssr>
+    </client-only>
   </div>
 </template>
 

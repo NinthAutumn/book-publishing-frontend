@@ -9,9 +9,9 @@
         class="funne-graph__book-title"
         style="padding:1rem 2rem;font-size:1.4rem;"
       >{{bookId.title}}</div>
-      <no-ssr>
+      <client-only>
         <ve-funnel :data="chartData" :settings="chartSetting"></ve-funnel>
-      </no-ssr>
+      </client-only>
     </div>
   </div>
 </template>

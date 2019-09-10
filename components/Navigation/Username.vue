@@ -4,7 +4,7 @@
       <!-- <div class="username-form__close" v-if="$store.state.auth.strategy === 'local'"></div> -->
       <div class="username-form__container dialog__content">
         <div class="flex-divider flex-row flex--align flex--center" style="margin-bottom:1rem;">
-          <no-ssr>
+          <client-only>
             <croppa
               :accept="'image/*'"
               :canvas-color="'default'"
@@ -14,7 +14,7 @@
               :height="150"
               @file-choose="fileChoose"
             ></croppa>
-          </no-ssr>
+          </client-only>
         </div>
         <div>アバターは要否です</div>
         <div class="username-form__username">

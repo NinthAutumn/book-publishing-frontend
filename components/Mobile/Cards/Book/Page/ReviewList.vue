@@ -30,9 +30,9 @@
             :review="review"
             :book="book"
           ></review-card>
-          <no-ssr>
+          <client-only>
             <infinite-loading @infinite="infiniteHandler"></infinite-loading>
-          </no-ssr>
+          </client-only>
         </div>
 
         <div class="mbp-reviews__form" @click="$emit('toggleForm')">

@@ -149,9 +149,9 @@
         :key="book.id"
       ></ranking-card>
     </transition-group>
-    <no-ssr>
+    <client-only>
       <infinite-loading :identifier="infiniteId" @infinite="infiniteHandler"></infinite-loading>
-    </no-ssr>
+    </client-only>
   </div>
 </template>
 

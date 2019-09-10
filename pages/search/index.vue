@@ -5,7 +5,7 @@
     :class="{'search-page--mobile':$device.isMobile,'page-padding':!$device.isMobile}"
   >
     <div class="search-page__bar">
-      <input v-model="query" type="text" class="search-page__input" placeholder="検索" />
+      <input ref="search" v-model="query" type="text" class="search-page__input" placeholder="検索" />
     </div>
     <nuxt-link
       :to="`/books/${book.id}`"
@@ -38,6 +38,9 @@ export default {
       page: 1,
       id: 0
     };
+  },
+  mounted() {
+    this.$refs.search.focus();
   },
   asyncData({ route }) {
     return {

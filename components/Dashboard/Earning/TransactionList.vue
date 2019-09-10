@@ -43,9 +43,9 @@
           <div class="transaction-list__button" @click="openRedeem(transaction.id)">清算する</div>
         </div>
       </div>
-      <no-ssr>
+      <client-only>
         <infinite-loading @infinite="infiniteHandler"></infinite-loading>
-      </no-ssr>
+      </client-only>
       <v-dialog v-model="redeem" max-width="290">
         <v-card>
           <v-card-title class="headline">クラウンコイン化する</v-card-title>

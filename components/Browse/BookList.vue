@@ -5,9 +5,9 @@
         <book-card :index="index" rating :cover="book.cover" :book="book" :type="'search'"></book-card>
       </li>
     </ul>
-    <no-ssr>
+    <client-only>
       <infinite-loading @infinite="infiniteHandler"></infinite-loading>
-    </no-ssr>
+    </client-only>
   </div>
 </template>
 <script>
