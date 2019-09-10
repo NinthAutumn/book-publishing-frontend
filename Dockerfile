@@ -17,7 +17,7 @@ ENV NUXT_HOST=0.0.0.0
 # set app port
 ENV NUXT_PORT=8080
 ENV STRIPE_KEY=pk_live_2WoTAiPewhp9sgG6DsTE09uF
-ENV NEST_SERVER_URL=http://api.nobles.jp/api
+ENV NEST_SERVER_URL=https://api.nobles.jp/api
 # ENV HOST 0.0.0.0
 EXPOSE 8080
 

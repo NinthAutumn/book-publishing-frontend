@@ -23,7 +23,7 @@
         </div>
         <v-rating color="#FF8D29" readonly :size="20" half-increments :value="+book.rating"></v-rating>
 
-        <div class="flex-divider flex-row">
+        <div class="flex-divider flex-row book-scard__genre-wrapper">
           <div class="book-scard__genres" v-for="(genre,index) in book.genres" :key="genre">
             <div class="book-scard__genre-container" v-if="index < 3">{{genre}}</div>
           </div>
@@ -100,8 +100,13 @@ export default {
       #{$self}__title {
         font-size: 1.8rem;
       }
+      #{$self}__genre-wrapper {
+        display: flex;
+        flex-wrap: wrap;
+      }
       #{$self}__genres {
         #{$self}__genre-container {
+          margin-bottom: 0.5rem;
           font-size: 1.2rem;
           padding: 0.1rem 2rem;
           border: 1px solid $primary;

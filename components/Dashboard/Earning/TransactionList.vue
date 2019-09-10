@@ -44,7 +44,7 @@
         </div>
       </div>
       <client-only>
-        <infinite-loading @infinite="infiniteHandler"></infinite-loading>
+        <infinite-loading :identifier="id" @infinite="infiniteHandler"></infinite-loading>
       </client-only>
       <v-dialog v-model="redeem" max-width="290">
         <v-card>
@@ -55,7 +55,7 @@
             <v-spacer></v-spacer>
             <v-btn color="red darken-1" flat="flat" @click="redeem = false">キャンセル</v-btn>
 
-            <v-btn color="blue darken-1" flat="flat" @click="redeemTransaction()">クラウン化します</v-btn>
+            <v-btn color="blue darken-1" flat="flat" @click="redeemTransaction">クラウン化します</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -64,6 +64,7 @@
 </template>
 
 <script>
+import { setTimeout } from "timers";
 export default {
   data() {
     return {
@@ -79,7 +80,8 @@ export default {
       loading: false,
       page: 2,
       transactionId: "",
-      redeem: false
+      redeem: false,
+      id: 0
     };
   },
   computed: {
@@ -90,13 +92,21 @@ export default {
   methods: {
     async redeemTransaction() {
       try {
-        const redeem = await this.$store.dispatch("wallet/patchRedeem", {
-          transactionId: this.transactionId
-        });
-        await this.$store.dispatch("dashboard/fetchTransactionList", {
-          page: 1,
-          limit: 10
-        });
+        this.$store
+          .dispatch("wallet/patchRedeem", {
+            transactionId: this.transactionId
+          })
+          .then(async () => {
+            await this.$store.dispatch("dashboard/fetchTransactionList", {
+              page: 1,
+              limit: 10
+            });
+            this.page = 2;
+            this.id++;
+          });
+
+        console.log("here");
+
         this.redeem = false;
       } catch (error) {
         this.$toast.show("清算に失敗しました", {
@@ -204,14 +214,14 @@ export default {
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 10%;
+        width: 15%;
       }
       &--currency {
         text-align: left;
         width: 20%;
       }
       &--created-at {
-        width: 10%;
+        width: 15%;
       }
       #{$self}__button {
         padding: 1rem 1.25rem;

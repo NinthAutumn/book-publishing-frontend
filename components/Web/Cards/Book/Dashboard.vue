@@ -3,7 +3,12 @@
     <div class="dashboard-book__container">
       <div class="dashboard-book__content flex-row flex--between">
         <div class="dashboard-book__information">
-          <div class="dashboard-book__title" v-text="book.title"></div>
+          <nuxt-link
+            tag="div"
+            :to="`/books/${book.id}`"
+            class="dashboard-book__title"
+            v-text="book.title"
+          ></nuxt-link>
           <div v-swiper:mySwiper="swiperOption">
             <div class="swiper-wrapper">
               <div class="swiper-slide" v-for="(value,key) in stats" :key="key">

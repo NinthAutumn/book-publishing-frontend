@@ -80,7 +80,7 @@ export const actions = {
     transactionId
   }) {
     try {
-      const res = await this.$axios.patch(`/v2/transaction/${transactionId}/redeem?`)
+      const res = await this.$axios.patch(`/v2/transaction/${transactionId}/redeem`)
       return Promise.resolve()
     } catch (error) {
       return Promise.reject(error)
