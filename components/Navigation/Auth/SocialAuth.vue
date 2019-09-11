@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import { mapActions, mapMutations } from "vuex";
+import { mapActions, mapMutations, mapGetters } from "vuex";
 export default {
   data: function() {
     return {
@@ -76,7 +76,11 @@ export default {
       google_ready: false
     };
   },
-  async mounted() {},
+  computed: {
+    ...mapGetters({
+      user: "auth/getUser"
+    })
+  },
   methods: {
     ...mapMutations({
       setAuth: "auth/SET_AUTH_PATH"
@@ -126,6 +130,9 @@ export default {
           this.$store.commit("LOGIN_FALSE");
           this.$emit("loginAction");
           this.$nuxt.refresh();
+          if (!this.user.username) {
+            this.$store.commit("auth/TOGGLE_USERNAME_MODAL");
+          }
           break;
         case "google":
           this.google_submit();
@@ -189,7 +196,9 @@ export default {
       this.$store.commit("LOGIN_FALSE");
       this.$emit("loginAction");
       this.$nuxt.refresh();
-      this.$store.commit("auth/TOGGLE_USERNAME_MODAL");
+      if (!this.user.username) {
+        this.$store.commit("auth/TOGGLE_USERNAME_MODAL");
+      }
     }
   }
 };

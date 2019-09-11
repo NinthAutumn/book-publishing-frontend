@@ -1,6 +1,6 @@
 <template>
   <transition name="up-down">
-    <div class="username-form dialog dialog__container" v-if="open || modal">
+    <div class="username-form dialog dialog__container" v-if=" modal">
       <!-- <div class="username-form__close" v-if="$store.state.auth.strategy === 'local'"></div> -->
       <div class="username-form__container dialog__content">
         <div class="flex-divider flex-row flex--align flex--center" style="margin-bottom:1rem;">
@@ -13,6 +13,7 @@
               :width="150"
               :height="150"
               @file-choose="fileChoose"
+              :initial-image="loggedInUser.avatar"
             ></croppa>
           </client-only>
         </div>
@@ -66,30 +67,15 @@ export default {
         } else {
           await this.$store.dispatch("user/patchUser", { user: this.user });
         }
-
+        this.$store.commit("auth/TOGGLE_USERNAME_MODAL");
         this.open = false;
       } catch (error) {
         console.log(error);
+        this.$store.commit("auth/TOGGLE_USERNAME_MODAL");
       }
     },
     fileChoose() {
       this.newAvatar = true;
-    }
-  },
-  updated() {
-    if (this.auth && !this.loggedInUser.username) {
-      if (this.$store.state.auth.strategy === "local") {
-        return;
-      }
-      this.open = true;
-    }
-  },
-  async mounted() {
-    if (this.auth && !this.loggedInUser.username) {
-      if (this.$store.state.auth.strategy === "local") {
-        return;
-      }
-      this.open = true;
     }
   }
 };

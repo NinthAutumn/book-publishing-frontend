@@ -99,7 +99,7 @@ export default {
   },
   methods: {
     closeModal() {
-      this.$store.commit("TOGGLE_SETTING_MODAL", true);
+      this.$store.commit("TOGGLE_SETTING_MODAL");
     },
     async updateHandler() {
       try {

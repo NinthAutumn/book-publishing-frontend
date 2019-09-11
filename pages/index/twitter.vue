@@ -8,7 +8,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      path: "auth/getPath"
+      path: "auth/getPath",
+      user: "auth/getUser"
     })
   },
   methods: {
@@ -43,6 +44,9 @@ export default {
 
         await this.$store.dispatch("auth/fetchUser");
         this.$router.push(this.$storage.getUniversal("path"));
+        if (!this.user.username) {
+          this.$store.commit("auth/TOGGLE_USERNAME_MODAL");
+        }
       } catch (error) {
         console.log(error);
       }

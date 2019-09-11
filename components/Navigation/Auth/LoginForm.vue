@@ -1,5 +1,5 @@
 <template>
-  <div class="login-form">
+  <div class="login-form" :class="{'login-form--mobile':$device.isMobile}">
     <div class="login-form__item" v-loading="loading">
       <div @click="changePage(0)" class="flex-row go-back">
         <div class="divider flex-row flex--align">
@@ -216,6 +216,9 @@ export default {
   height: 90%;
   // padding: 30px;
   padding: 3rem;
+  &--mobile {
+    padding: 1.5rem;
+  }
   // justify-content: space-around;
   width: 100%;
   // padding: 30px;

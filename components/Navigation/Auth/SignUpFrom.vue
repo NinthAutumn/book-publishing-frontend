@@ -1,5 +1,5 @@
 <template>
-  <div class="sign-up">
+  <div class="sign-up" :class="{'sign-up--mobile':$device.isMobile}">
     <form @submit.prevent="signUp" class="signup-form" v-loading="loading">
       <div @click="signOff" class="flex-row go-back">
         <div class="divider flex-row flex--align">
@@ -203,6 +203,16 @@ export default {
   $self: &;
   max-width: 44rem;
   max-height: 60rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 100%;
+  height: 90%;
+  padding: 3rem;
+
+  &--mobile {
+    padding: 1.5rem !important;
+  }
   .signup-form__input {
     height: 47px;
     padding: 12px 14px;
@@ -260,12 +270,6 @@ export default {
     background-color: #fff;
     color: black;
   }
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  width: 100%;
-  height: 90%;
-  padding: 3rem;
 
   .help {
     color: red;
