@@ -113,6 +113,7 @@ export const actions = {
     paymentMethodId
   }) {
     try {
+      console.log(paymentMethodId);
       const res = await this.$axios.patch('/v2/stripe/payment/save', {
         customerId,
         payment_method_id: paymentMethodId

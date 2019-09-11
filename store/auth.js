@@ -157,7 +157,8 @@ export const actions = {
 
   },
   async signup({
-    commit
+    commit,
+    dispatch
   }, {
     user
   }) {
@@ -182,6 +183,16 @@ export const actions = {
           error: error
         })
       }
+      commit('SET_AUTH', {
+        access_token: data.access_token,
+        refresh_token: data.refresh_token,
+        strategy: 'local'
+      })
+      this.$storage.setUniversal('access_token', data.access_token)
+      this.$storage.setUniversal('refresh_token', data.refresh_token)
+      this.$storage.setUniversal('strategy', 'local')
+      this.$axios.defaults.headers.common['Authorization'] = 'Bearer ' + data.access_token
+      await dispatch('fetchUser')
       return Promise.resolve({
         error: null
       })
@@ -225,7 +236,7 @@ export const actions = {
         email
       })
       if (data.error) {
-        return Promise.reject(data.error)
+        return Promise.reject(data)
       }
       return Promise.resolve()
     } catch (error) {

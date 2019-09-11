@@ -21,10 +21,10 @@ export default {
       this.loading = false;
       return this.$router.push("/");
     }
-    const { data } = await this.$axios.patch("/auth/verify", {
+    const { data } = await this.$axios.patch("/v2/auth/verify", {
       token: this.$route.query.token
     });
-    if (!data.found) {
+    if (data.error) {
       this.loading = false;
       this.$router.push({ path: "/", query: {} });
       return this.$toast.error("アカウント確認に失敗しました", {

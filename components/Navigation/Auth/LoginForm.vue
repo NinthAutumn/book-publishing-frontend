@@ -2,7 +2,7 @@
   <div class="login-form">
     <div class="login-form__item" v-loading="loading">
       <div @click="changePage(0)" class="flex-row go-back">
-        <div class="divider">
+        <div class="divider flex-row flex--align">
           <Zondicon class="zond-back" icon="arrow-thick-left"></Zondicon>
         </div>
         <div class="divider">

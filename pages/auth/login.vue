@@ -3,17 +3,24 @@
     <transition name="slide-fade">
       <social-auth @loginAction="login" v-if="step === 0"></social-auth>
       <login-form @loginAction="login" v-if="step === 1"></login-form>
-      <sign-up-from @loginAction="login" v-if="step === 2"></sign-up-from>
+      <sign-up-from @setEmail="setEmail" @loginAction="login" v-if="step === 2"></sign-up-from>
       <forgot-password v-if="step === 3"></forgot-password>
+      <sent-email :email="email" v-if="step === 4"></sent-email>
     </transition>
-    <div class="auth-modal__footer">
-      <ul class="auth-modal__footer__list flex-row flex--align flex--center">
+    <div class="login-page__footer">
+      <ul class="login-page__footer__list flex-row flex--align flex--center">
         <li
-          class="auth-modal__footer__item"
+          class="login-page__footer__item"
           v-for="(footer,index) in footerList"
           :key="footer.value"
         >
-          <span>{{footer.key}}</span>
+          <span v-if="!footer.link">{{footer.key}}</span>
+          <nuxt-link
+            tag="span"
+            class="login-page__footer__link"
+            v-else
+            :to="footer.link"
+          >{{footer.key}}</nuxt-link>
           <i v-if="index !== 2">|</i>
         </li>
       </ul>
@@ -30,9 +37,14 @@ export default {
       password: "",
       footerList: [
         { key: "© nobles 2019", value: "copyright" },
-        { key: "利用規約", value: "toc" },
-        { key: "プライバシーポリシー", value: "privacy policy" }
-      ]
+        { key: "利用規約", value: "toc", link: "/about/tos" },
+        {
+          key: "プライバシーポリシー",
+          value: "privacy policy",
+          link: "/about/pp"
+        }
+      ],
+      email: ""
       // step:0
     };
   },
@@ -41,7 +53,8 @@ export default {
     LoginForm: () => import("@/components/Navigation/Auth/LoginForm"),
     SignUpFrom: () => import("@/components/Navigation/Auth/SignUpFrom"),
     ForgotPassword: () => import("@/components/Navigation/Auth/ForgotPassword"),
-    SocialAuth: () => import("@/components/Navigation/Auth/SocialAuth")
+    SocialAuth: () => import("@/components/Navigation/Auth/SocialAuth"),
+    SentEmail: () => import("@/components/Navigation/Auth/SentEmail")
   },
   computed: {
     ...mapGetters({
@@ -51,6 +64,9 @@ export default {
   methods: {
     login() {
       this.$router.go(-1);
+    },
+    setEmail(val) {
+      this.email = val.email;
     }
   },
   beforeCreate() {
@@ -69,6 +85,36 @@ export default {
 <style scoped lang="scss">
 .login-page {
   // max-width: 50%;
+  &__footer {
+    $self: &;
+    &__list {
+      i {
+        display: inline-block;
+        width: 0;
+        overflow: hidden;
+        text-indent: 9999px;
+        height: 1rem;
+        margin: 0 0.3em;
+        vertical-align: middle;
+        border-left: 1px solid;
+      }
+      #{$self}__item {
+        #{$self}__link {
+          cursor: pointer;
+          color: #556cd6;
+        }
+        font-size: 1.3rem;
+        span {
+          font-size: 1.3rem;
+        }
+        i {
+          font-size: 1.3rem;
+        }
+        // margin-right: 2rem;
+        // border-right: 1px solid grey;
+      }
+    }
+  }
 }
 // .menu-active {
 //   margin-left: 24rem;

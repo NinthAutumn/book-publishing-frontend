@@ -53,9 +53,10 @@ export default {
         if (this.errors.any()) {
           return;
         }
-        await this.$store.dispatch("auth/setPasswordToken", {
+        const { error } = await this.$store.dispatch("auth/setPasswordToken", {
           email: this.email
         });
+        if (error) return this.$toast.error(error);
         return this.$toast.success(
           "記入されたメールにパスワードリセットトークンが送られました",
           { icon: "extension" }

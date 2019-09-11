@@ -63,22 +63,22 @@ export default {
   data() {
     return {
       products: [
-        { amount: 30, value: 100, selected: false, id: "sku_FYNYB8CJUXAkuh" },
-        { amount: 150, value: 500, selected: false, id: "sku_FYNZyBHIUFrmV4" },
-        { amount: 300, value: 1000, selected: false, id: "sku_FYNZ0Zc6GUdtGR" },
-        { amount: 750, value: 2500, selected: false, id: "sku_FYNZ5xGK6styIY" },
-        {
-          amount: 1500,
-          value: 5000,
-          selected: false,
-          id: "sku_FYNah0tP7OPGvL"
-        },
-        {
-          amount: 3000,
-          value: 10000,
-          selected: false,
-          id: "sku_FYNaMcXbE3aPMq"
-        }
+        // { amount: 30, value: 100, selected: false, id: "sku_FYNYB8CJUXAkuh" },
+        // { amount: 150, value: 500, selected: false, id: "sku_FYNZyBHIUFrmV4" },
+        // { amount: 300, value: 1000, selected: false, id: "sku_FYNZ0Zc6GUdtGR" },
+        // { amount: 750, value: 2500, selected: false, id: "sku_FYNZ5xGK6styIY" },
+        // {
+        //   amount: 1500,
+        //   value: 5000,
+        //   selected: false,
+        //   id: "sku_FYNah0tP7OPGvL"
+        // },
+        // {
+        //   amount: 3000,
+        //   value: 10000,
+        //   selected: false,
+        //   id: "sku_FYNaMcXbE3aPMq"
+        // }
       ],
       open: true,
       loading: false,
@@ -123,6 +123,7 @@ export default {
     this.loading = true;
     const { data } = await this.$axios.get("/v2/stripe/product/site");
     this.products = data;
+    this.id = this.products[1].id;
     this.loading = false;
     // element-loading-background="rgba(0, 0, 0, 0.8)"
     await this.$store.dispatch("stripe/fetchPaymentMethods", {

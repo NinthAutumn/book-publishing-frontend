@@ -46,12 +46,13 @@ export default {
       `/v2/ranking/${this.$route.params.id}/vote?period=daily`
     );
     console.log(data);
-    if (!data) {
+    if (!data || data === "undefined") {
       this.ranking = {
         ranking: "999+",
         votes: 0
       };
     } else {
+      console.log(data);
       this.ranking = data;
     }
   },

@@ -1,7 +1,7 @@
 <template>
   <div class="sent-mail">
     <div @click="moveAuth(2)" class="flex-row go-back">
-      <div class="divider">
+      <div class="divider flex-row flex--align">
         <Zondicon class="zond-back" icon="arrow-thick-left"></Zondicon>
       </div>
       <div class="divider">
@@ -62,6 +62,8 @@ export default {
     padding: 1rem;
     font-weight: bold;
     background-color: #e1f0f9;
+    margin-bottom: 1rem;
+    border-radius: 0.5rem;
   }
   &__button {
     font-size: 1.4rem;

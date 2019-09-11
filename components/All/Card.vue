@@ -68,7 +68,13 @@ export default {
   // color: black;
   @media screen and (max-width: 450px) {
     #{$self}__brand {
-      left: 1rem;
+      left: 0.5rem;
+      top: 0.5rem;
+      box-shadow: none !important;
+    }
+    #{$self}__digits {
+      margin-bottom: 0.2rem !important;
+      align-self: flex-end;
     }
   }
   &__brand {

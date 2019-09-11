@@ -2,7 +2,7 @@
   <div class="sign-up">
     <form @submit.prevent="signUp" class="signup-form" v-loading="loading">
       <div @click="signOff" class="flex-row go-back">
-        <div class="divider">
+        <div class="divider flex-row flex--align">
           <Zondicon class="zond-back" icon="arrow-thick-left"></Zondicon>
         </div>
         <div class="divider">
@@ -144,7 +144,7 @@ export default {
           this.$emit("setEmail", { email: this.email });
           this.$store.commit("SET_AUTH_PAGE", 4);
           return this.$toast.show(
-            "アカウント作成に成功しました、あとはEメール確認が必要なので登録されたメールアドレスに確認メールが送られました",
+            "Eメール確認が必要なので登録されたメールアドレスに確認メールが送られました",
             {
               duration: 4000,
               theme: "toasted-primary",

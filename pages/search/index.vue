@@ -4,7 +4,7 @@
     class="search-page"
     :class="{'search-page--mobile':$device.isMobile,'page-padding':!$device.isMobile}"
   >
-    <div class="search-page__bar" v-if="!$device.isMobile">
+    <div class="search-page__bar" v-if="$device.isMobile">
       <input ref="search" v-model="query" type="text" class="search-page__input" placeholder="検索" />
     </div>
     <div class="search-page__container" v-if="!$device.isMobile">

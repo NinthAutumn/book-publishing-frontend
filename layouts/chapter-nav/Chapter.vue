@@ -3,6 +3,19 @@
     class="chapter-page"
     :class="{'chapter-page--black': theme === 'black','chapter-page--default': theme === 'default','chapter-page--ruby': theme === 'ruby','chapter-page--tan': theme === 'tan','chapter-page--sapphire': theme === 'sapphire', 'chapter-page--mobile': $device.isMobile}"
   >
+    <div class="user-status" v-if="auth">
+      <div v-if="!user.verified">
+        <transition>
+          <div
+            class="user-status__banner"
+            :class="{'user-status__banner--mobile':$device.isMobile}"
+          >
+            <div class="user-status__text" v-text="`${user.email}　の　確認ができていません。`"></div>
+            <div class="user-status__send">確認メールを再送信する</div>
+          </div>
+        </transition>
+      </div>
+    </div>
     <Horizontal v-if="!$device.isMobile"></Horizontal>
     <MobileHorizontal v-else></MobileHorizontal>
     <LeftV></LeftV>
@@ -137,7 +150,8 @@ export default {
       theme: "user/getTheme",
       modal: "chapter/getModalState",
       imageModal: "getImageModalState",
-      auth: "auth/isAuthenticated"
+      auth: "auth/isAuthenticated",
+      user: "auth/getUser"
     })
   },
   methods: {

@@ -182,9 +182,10 @@ export default {
     margin-bottom: 2rem;
   }
   &--mobile {
+    padding-top: 3rem !important;
     #{$self}__container {
       padding: 0.5rem 1rem;
-      padding-top: 5rem;
+      padding-top: 1rem;
     }
   }
   &__container {

@@ -93,8 +93,8 @@ export default {
         },
         s: {
           size: {
-            width: 50, // maximum width
-            height: 75
+            width: 55, // maximum width
+            height: 82.5
           },
           name: "s",
           file: ""
