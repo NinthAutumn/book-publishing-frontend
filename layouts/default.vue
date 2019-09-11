@@ -5,6 +5,13 @@
     <transition name="grow-shrink" class="loginform">
       <AuthModal v-if="loginState"></AuthModal>
     </transition>
+    <transition name="grow-shrink" v-if="$device.isMobile">
+      <notification-list
+        @close="closeNotification"
+        v-if="notification"
+        v-click-outside="closeNotification"
+      ></notification-list>
+    </transition>
     <div class="user-status" v-if="auth">
       <div v-if="!user.verified">
         <transition>
@@ -37,6 +44,7 @@
             v-touch:swipe.right="swipeRight"
             v-if="mvRight&&auth"
             @toggle="toggleMenu"
+            @notificationOpen="closeNotification"
           ></VerticalLeftMobile>
         </transition>
 
@@ -76,6 +84,9 @@ export default {
     StripeModal: hydrateWhenVisible(() =>
       import("@/components/Navigation/Stripe/ProductModal")
     ),
+    NotificationList: hydrateWhenVisible(() =>
+      import("@/components/Navigation/Notification")
+    ),
     UsernameModal: () => import("@/components/Navigation/Username"),
     AuthModal: () => import("@/components/Navigation/Auth/AuthModal")
   },
@@ -96,6 +107,7 @@ export default {
       mvLeft: false,
       mvRight: false,
       stripe: false,
+      notification: false,
       links: ["Home", "About Us", "Team", "Services", "Blog", "Contact Us"]
     };
   },
@@ -143,6 +155,9 @@ export default {
     },
     swipeRight() {
       this.mvRight = false;
+    },
+    closeNotification() {
+      this.notification = !this.notification;
     },
 
     swipeLeft() {

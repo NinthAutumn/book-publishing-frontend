@@ -1,8 +1,8 @@
 <template>
   <div class="book-table">
     <ul class="update-books__date-list">
-      <li class="update-books__date-item" v-for="(dates, index) in latestBooks" :key="index">
-        <div class="update-books__date-title">{{dates.date}}</div>
+      <li class="update-books__date-item" v-for="(value, key) in latestBooks" :key="key">
+        <div class="update-books__date-title">{{key}}</div>
         <table>
           <thead class="book-table__header">
             <th
@@ -13,7 +13,7 @@
             >{{item}}</th>
           </thead>
           <tbody>
-            <tr v-for="(book, index) in dates.book" :key="index">
+            <tr v-for="(book, index) in value" :key="index">
               <nuxt-link
                 v-if="!$device.isMobile"
                 tag="td"

@@ -72,13 +72,13 @@ export default {
       }
       if (change) {
         const setting = {
-          type: "chapterFontFamily",
+          type: "chapter_font_family",
           change: "serif"
         };
         await this.$store.dispatch("user/setSetting", setting);
       } else {
         const setting = {
-          type: "chapterFontFamily",
+          type: "chapter_font_family",
           change: this.defaultFont
         };
         await this.$store.dispatch("user/setSetting", setting);
@@ -107,7 +107,7 @@ export default {
           break;
       }
       const setting = {
-        type: "chapterFontSize",
+        type: "chapter_font_size",
         change: this.fontSize
       };
       await this.$store.dispatch("user/setSetting", setting);

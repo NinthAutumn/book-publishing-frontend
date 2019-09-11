@@ -31,7 +31,7 @@ export default {
         return this.$store.commit("LOGIN_STATE");
       }
       const setting = {
-        type: "chapterTheme",
+        type: "chapter_theme",
         change: theme
       };
       await this.$store.dispatch("user/setSetting", setting);

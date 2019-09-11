@@ -163,7 +163,11 @@
 import { mapGetters } from "vuex";
 export default {
   name: "comment-modal",
-  props: { children: Array, comment: Object, depth: Number },
+  props: {
+    children: Array,
+    comment: Object,
+    depth: Number
+  },
   data() {
     return {
       showChildren: true,

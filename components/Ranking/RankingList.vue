@@ -396,6 +396,8 @@ export default {
       display: flex;
       border-radius: 10px;
       box-shadow: 1px 1px 5px rgb(243, 243, 243);
+      min-height: 4rem;
+      max-height: 4.5rem;
       font-size: 10px;
     }
     &__item {

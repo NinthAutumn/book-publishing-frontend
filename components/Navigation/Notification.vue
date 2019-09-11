@@ -1,7 +1,10 @@
 <template>
   <div class="notification-component" v-loading="loading">
-    <div class="notification-component__header">
+    <div class="notification-component__header flex-row flex--align flex--between">
       <div class="notification-component__title">通知</div>
+      <div class="notification-component__close" @click="$emit('close')" v-if="$device.isMobile">
+        <fa icon="times"></fa>
+      </div>
     </div>
     <ul class="notification-component__list">
       <nuxt-link
@@ -9,7 +12,7 @@
         v-for="(notification,index) in notifications"
         :key="index"
         tag="li"
-        :to="`/books/${notification.book_id}/${notification.chapter_id}?comment=${notification.comment_id}#comments`"
+        :to="$device.isMobile?`/books/${notification.book_id}/${notification.chapter_id}?comment=${notification.comment_id}#comments`: ''"
       >
         <div class="notification-component__avatar">
           <v-avatar v-if="notification.avatar">
@@ -72,6 +75,24 @@ export default {
 </script>
 
 <style lang="scss">
+@media screen and (max-width: 450px) {
+  .notification-component {
+    position: fixed;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    border-radius: 0.4rem;
+    z-index: 10000;
+    background-color: #fff;
+    $self: &;
+    &__list {
+      background-color: #fff;
+      height: 100% !important;
+    }
+  }
+}
 .notification-component {
   position: fixed;
   top: 5rem;
@@ -86,6 +107,9 @@ export default {
   &__header {
     font-size: 1.8rem;
     #{$self}__title {
+      font-size: inherit;
+    }
+    #{$self}__close {
       font-size: inherit;
     }
     padding: 1.6rem;

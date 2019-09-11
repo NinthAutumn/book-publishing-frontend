@@ -2,7 +2,7 @@
   <div class="divider chapter-wrapper">
     <main class="divider chapter-container" :class="{'chapter-container--mobile':$device.isMobile}">
       <Chapter v-if="!nochapter&&!$device.isMobile"></Chapter>
-      <mobile-chapter v-if="$device.isMobile"></mobile-chapter>
+      <mobile-chapter :comment="$route.query.comment" v-if="$device.isMobile"></mobile-chapter>
       <div v-if="nochapter" class="chapter-closed" @click="nochapter=false">
         <fa icon="expand-arrows-alt"></fa>
       </div>
@@ -66,15 +66,15 @@ export default {
     }
   },
   auth: false,
-  async fetch({ store, params, query }) {
-    const index = params.chaptersId;
+  async fetch({ store, route }) {
+    const index = route.params.chaptersId;
     if (store.getters["auth/isAuthenticated"]) {
       await store.dispatch("chapter/fetchChapter", {
-        chapterId: params.chaptersId,
-        bookId: params.id
+        chapterId: route.params.chaptersId,
+        bookId: route.params.id
       });
       await store.dispatch("user/fetchUserSettings");
-      if (!query.comment) {
+      if (!route.query.comment) {
         await store.dispatch("library/postHistory", {
           chapterId: params.chaptersId,
           bookId: params.id
@@ -82,8 +82,8 @@ export default {
       }
     } else {
       await store.dispatch("chapter/fetchChapter", {
-        chapterId: params.chaptersId,
-        bookId: params.id
+        chapterId: route.params.chaptersId,
+        bookId: route.params.id
       });
     }
   },

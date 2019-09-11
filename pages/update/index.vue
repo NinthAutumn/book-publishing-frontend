@@ -3,7 +3,7 @@
     <div class="update-page__title">
       <fa class="update-page__title--icon" icon="globe"></fa>更新された小説
     </div>
-    <div class="update-page__nav">
+    <div class="update-page__nav" v-if="!$device.isMobile">
       <fa
         @click.stop="updateView('grid')"
         :class="{'update-page__icon--selected':update_view === 'grid'}"
@@ -17,8 +17,12 @@
         icon="th-list"
       ></fa>
     </div>
-    <BookList v-loading="loading" :latestBooks="latestBooks" v-if="update_view === 'grid'"></BookList>
-    <book-table :latestBooks="latestBooks" v-if="update_view === 'list'"></book-table>
+    <BookList
+      v-loading="loading"
+      :latestBooks="latestBooks"
+      v-if="!$device.isMobile?update_view === 'grid':true"
+    ></BookList>
+    <book-table :latestBooks="latestBooks" v-if="!$device.isMobile?update_view === 'list':false"></book-table>
     <client-only>
       <infinite-loading @infinite="infiniteHandler"></infinite-loading>
     </client-only>
@@ -71,7 +75,7 @@ export default {
         return this.$store.commit("LOGIN_STATE");
       }
       await this.$store.dispatch("user/setSetting", {
-        type: "updateDisplay",
+        type: "update_display",
         change: setting
       });
     }

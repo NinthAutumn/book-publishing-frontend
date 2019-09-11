@@ -183,6 +183,7 @@ export default {
       import("@/components/ChapterPage/MobileModal/Comments")
     )
   },
+  props: ["comment"],
   computed: {
     ...mapGetters({
       fontStyle: "user/getFontFamily",
@@ -246,9 +247,10 @@ export default {
     }
   },
   mounted: async function() {
-    // await this.$store.dispatch("chapter/fetchUnstructuredList", {
-    //   bookId: this.$route.params.id
-    // });
+    if (this.comment) {
+      this.navigation = !this.navigation;
+      this.openModal(4);
+    }
   },
   methods: {
     change: function() {

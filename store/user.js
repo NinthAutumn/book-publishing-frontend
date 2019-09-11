@@ -173,15 +173,14 @@ export const actions = {
     type,
     change
   }) {
-    const res = await this.$axios.patch('/user/setting', {
+    const res = await this.$axios.patch('/v2/user/setting', {
       type,
       change
     })
-    commit('SET_FONT_FAMILY', res.data.chapterFontFamily)
-    commit('SET_FONT_SIZE', res.data.chapterFontSize)
-    commit('SET_THEME', res.data.chapterTheme)
-
-    commit('SET_UPDATE_VIEW', res.data.updateDisplay)
+    commit('SET_FONT_FAMILY', res.data.chapter_font_family)
+    commit('SET_FONT_SIZE', res.data.chapter_font_size)
+    commit('SET_THEME', res.data.chapter_theme)
+    commit('SET_UPDATE_VIEW', res.data.update_display)
 
   },
   async getBookUpdate({

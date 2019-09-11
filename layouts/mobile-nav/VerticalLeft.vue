@@ -21,17 +21,26 @@
       </div>
       <div class="mobile-vleft__nav" v-cloak>
         <div class="mobile-vleft__menu">
-          <nuxt-link
-            :to="menu.link"
+          <div
             tag="div"
             class="mobile-vleft__item"
+            v-for="(menu,key) in menu_list"
+            :key="key"
             v-ripple
-            v-for="menu in menu_list"
-            :key="menu.title"
           >
-            <div class="mobile-vleft__title" v-text="menu.title"></div>
-            <fa class="mobile-vleft__icon" :icon="menu.icon"></fa>
-          </nuxt-link>
+            <div
+              class="mobile-vleft__item-cont"
+              v-if="key === 'inbox'"
+              @click.stop="$emit('notificationOpen')"
+            >
+              <div class="mobile-vleft__title" v-text="menu.title"></div>
+              <fa class="mobile-vleft__icon" :icon="menu.icon"></fa>
+            </div>
+            <nuxt-link class="mobile-vleft__item-cont" :to="menu.link" v-else>
+              <div class="mobile-vleft__title" v-text="menu.title"></div>
+              <fa class="mobile-vleft__icon" :icon="menu.icon"></fa>
+            </nuxt-link>
+          </div>
         </div>
         <!-- <div v-ripple @click="logout" class="mobile-vleft__logout">サインアウト</div> -->
 
@@ -128,12 +137,21 @@ export default {
   &__nav {
     padding: 1.5rem;
     #{$self}__item {
+      #{$self}__item-cont {
+        font-size: 1.5rem;
+        // padding: 1rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+      }
       font-size: 1.5rem;
       padding: 1rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
       // text-align: center;
+      width: 100%;
       #{$self}__title {
         font-size: 1.5rem;
       }

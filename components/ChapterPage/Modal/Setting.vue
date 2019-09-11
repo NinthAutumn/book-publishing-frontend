@@ -83,7 +83,7 @@ export default {
         return this.$store.commit("LOGIN_STATE");
       }
       const setting = {
-        type: "chapterTheme",
+        type: "chapter_theme",
         change: theme
       };
       await this.$store.dispatch("user/setSetting", setting);
@@ -95,13 +95,13 @@ export default {
       }
       if (change) {
         const setting = {
-          type: "chapterFontFamily",
+          type: "chapter_font_family",
           change: "serif"
         };
         await this.$store.dispatch("user/setSetting", setting);
       } else {
         const setting = {
-          type: "chapterFontFamily",
+          type: "chapter_font_family",
           change: this.defaultFont
         };
         this.fontFamily = this.defaultFont;
@@ -132,7 +132,7 @@ export default {
           break;
       }
       const setting = {
-        type: "chapterFontSize",
+        type: "chapter_font_size",
         change: this.fontSize
       };
       await this.$store.dispatch("user/setSetting", setting);
