@@ -306,7 +306,12 @@ export const actions = {
     author
   }) {
     try {
-      const res = await this.$axios.post(`/v2/author`, author)
+      const {
+        data
+      } = await this.$axios.post(`/v2/author`, author)
+      if (data.error) {
+        return Promise.resolve(data)
+      }
       await dispatch('fetchAuthor')
     } catch (error) {
       return Promise.reject(error)

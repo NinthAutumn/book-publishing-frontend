@@ -1,3 +1,7 @@
+import {
+  promised
+} from "q";
+
 export const state = () => ({
   comments: []
 })
@@ -100,15 +104,19 @@ export const actions = {
     parentId = null
   }) {
     try {
-      const res = await this.$axios.post('/v2/comment', {
+      const {
+        data
+      } = await this.$axios.post('/v2/comment', {
         book_id: bookId,
         chapter_id: chapterId,
         content,
         parent_id: parentId
       })
-
+      if (data.error) {
+        return Promise.resolve(data)
+      }
       // let comment = {}
-      commit('PUSH_COMMENT', res.data, parentId)
+      commit('PUSH_COMMENT', data, parentId)
       return Promise.resolve()
     } catch (error) {
       console.log(error);
@@ -123,11 +131,16 @@ export const actions = {
     chapterId,
     content
   }) {
-    await this.$axios.post('/v2/comment', {
+    const {
+      data
+    } = await this.$axios.post('/v2/comment', {
       book_id: bookId,
       chapter_id: chapterId,
       content
     })
+    if (data.error) {
+      return Promise.resolve(data)
+    }
   },
   async likeComment({
     commit
@@ -203,12 +216,17 @@ export const actions = {
     parentId = null
   }) {
 
-    await this.$axios.post('/v2/comment', {
+    const {
+      data
+    } = await this.$axios.post('/v2/comment', {
       book_id: bookId,
       chapter_id: chapterId,
       content,
       parent_id: parentId
     })
+    if (data.error) {
+      return Promise.resolve(data)
+    }
     // commit('SHIFT_COMMENT')
   }
 }

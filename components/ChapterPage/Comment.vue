@@ -286,12 +286,18 @@ export default {
       const content = this.content;
       const parentId = this.comment.id;
       try {
-        const res = await this.$store.dispatch("comment/addComment", {
-          bookId,
-          chapterId,
-          content,
-          parentId
-        });
+        const { error, code } = await this.$store.dispatch(
+          "comment/addComment",
+          {
+            bookId,
+            chapterId,
+            content,
+            parentId
+          }
+        );
+        if (error) {
+          return this.$toast.error(error);
+        }
         this.$toast.show("返信の投稿に成功しました", {
           theme: "toasted-primary",
           position: "top-right",

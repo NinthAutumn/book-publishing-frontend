@@ -88,18 +88,30 @@ export default {
         this.parent_id;
 
         if (this.parent_id) {
-          await this.$store.dispatch("comment/addCommentMobile", {
-            bookId: this.$route.params.id,
-            chapterId: this.$route.params.chaptersId,
-            content: this.content,
-            parentId: this.parent_id
-          });
+          const { error, code } = await this.$store.dispatch(
+            "comment/addCommentMobile",
+            {
+              bookId: this.$route.params.id,
+              chapterId: this.$route.params.chaptersId,
+              content: this.content,
+              parentId: this.parent_id
+            }
+          );
+          if (error) {
+            return this.$toast.error(error);
+          }
         } else {
-          await this.$store.dispatch("comment/addCommentMobile", {
-            bookId: this.$route.params.id,
-            chapterId: this.$route.params.chaptersId,
-            content: this.content
-          });
+          const { error, code } = await this.$store.dispatch(
+            "comment/addCommentMobile",
+            {
+              bookId: this.$route.params.id,
+              chapterId: this.$route.params.chaptersId,
+              content: this.content
+            }
+          );
+          if (error) {
+            return this.$toast.error(error);
+          }
         }
         await this.$store.dispatch("comment/fetchMobileComments", {
           chapterId: this.$route.params.chaptersId

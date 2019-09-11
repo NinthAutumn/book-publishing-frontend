@@ -96,10 +96,16 @@ export default {
             type: 0
           });
         } else {
-          await this.$store.dispatch("review/addReview", {
-            review: this.form,
-            bookId: this.$route.params.id
-          });
+          const { error, code } = await this.$store.dispatch(
+            "review/addReview",
+            {
+              review: this.form,
+              bookId: this.$route.params.id
+            }
+          );
+          if (error) {
+            return this.$toast.error(error);
+          }
           await this.$store.dispatch("review/showAll", {
             bookId: this.$route.params.id,
             page: 1,

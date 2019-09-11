@@ -168,13 +168,18 @@ export const actions = {
       recommended = true
     }
     try {
-      await this.$axios.post('/v2/review', {
+      const {
+        data
+      } = await this.$axios.post('/v2/review', {
         title: review.title,
         content: review.content,
         book_id: bookId,
         rating: review.rating,
         recommended: recommended,
       })
+      if (data.error) {
+        return Promise.resolve(data)
+      }
     } catch (error) {
       return Promise.reject(error)
     }

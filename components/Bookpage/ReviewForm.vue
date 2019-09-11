@@ -91,10 +91,16 @@ export default {
           if (!this.review.rating) {
             this.$toast.error("レビューを投稿するには投票が必要です");
           }
-          await this.$store.dispatch("review/addReview", {
-            review: this.review,
-            bookId: this.$route.params.id
-          });
+          const { error, code } = await this.$store.dispatch(
+            "review/addReview",
+            {
+              review: this.review,
+              bookId: this.$route.params.id
+            }
+          );
+          if (error) {
+            return this.$toast.error(error);
+          }
           await this.$store.dispatch("review/showAll", {
             bookId: this.$route.params.id,
             userId: this.$store.getters["auth/getUser"].id,

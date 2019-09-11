@@ -102,12 +102,12 @@ export default {
       if (!this.content) {
         return (this.error = true);
       }
-      await this.$store.dispatch("comment/addComment", {
+      const { error, code } = await this.$store.dispatch("comment/addComment", {
         bookId,
         chapterId,
         content: this.content
       });
-
+      if (error) return this.$toast.error(error);
       this.$toast.show("コメントの投稿に成功！", {
         theme: "toasted-primary",
         position: "top-right",

@@ -13,6 +13,7 @@
       Eメールがあなたに送られました、
       もし貴方の受信トレイにメールが届いていなければ、
       スパムやプロモーションにあるかもしれません。
+      <br />
       <br />*また、メールが届くのに数分から数十分かかることがあります。
     </p>
     <div class="sent-mail__email">{{email}}</div>
@@ -56,10 +57,11 @@ export default {
   &__content {
     margin-bottom: 1rem;
   }
-  &__mail {
+  &__email {
     font-size: 1.6rem;
     padding: 1rem;
     font-weight: bold;
+    background-color: #e1f0f9;
   }
   &__button {
     font-size: 1.4rem;

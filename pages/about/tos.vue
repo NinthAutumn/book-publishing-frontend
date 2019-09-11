@@ -1,5 +1,9 @@
 <template>
-  <div id="tos-page" class="tos-page page-padding">
+  <div
+    id="tos-page"
+    class="tos-page"
+    :class="{'page-padding':!$device.isMobile,'tos-page--mobile':$device.isMobile}"
+  >
     <div class="tos-page__container">
       <div class="flex-divider flex-row flex--center">
         <v-img width="5rem" max-width="5rem" :src="icon"></v-img>
@@ -156,8 +160,8 @@ export default {
           desc: "<p></p>",
           list: [
             "利用者様は、クラウンコインを利用して有料作品及びコンテンツを購読・利用することができます。",
-            "前項による購読・利用権限は、利用者様が次の各号に定める事由に該当した場合、消滅します。 本サービスの解約または退会、本規約第6条に基づく禁止行為により解除、本サイトのサービス終了"
-          ,"購読・利用権限が消滅したことにより生じた損害については、弊社は一切の責任を負わないものとします。"
+            "前項による購読・利用権限は、利用者様が次の各号に定める事由に該当した場合、消滅します。 本サービスの解約または退会、本規約第6条に基づく禁止行為により解除、本サイトのサービス終了",
+            "購読・利用権限が消滅したことにより生じた損害については、弊社は一切の責任を負わないものとします。"
           ]
         }
       }
@@ -176,6 +180,12 @@ export default {
     border-bottom: 1px solid grey;
     padding: 2rem;
     margin-bottom: 2rem;
+  }
+  &--mobile {
+    #{$self}__container {
+      padding: 0.5rem 1rem;
+      padding-top: 5rem;
+    }
   }
   &__container {
     padding: 3rem 20rem;

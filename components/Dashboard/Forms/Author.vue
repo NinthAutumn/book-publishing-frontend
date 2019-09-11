@@ -70,7 +70,16 @@ export default {
                   pen_name: this.author.penname
                 };
 
-                await this.$store.dispatch("user/postAuthor", { author });
+                const { error, code } = await this.$store.dispatch(
+                  "user/postAuthor",
+                  { author }
+                );
+                if (error) {
+                  if (code === 100) {
+                    this.$router.push("/");
+                  }
+                  return this.$toast.error(error);
+                }
                 this.$toast.success("おめでとうございます、作者になりました", {
                   duration: 1200
                 });
