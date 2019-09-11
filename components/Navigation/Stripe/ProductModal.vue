@@ -5,7 +5,7 @@
         <div class="product-modal__header flex-row flex--between flex--align">
           <fa @click="goBack" v-if="step > 1" icon="arrow-left" class="product-modal__back"></fa>クラウンコインを入手
           <fa
-            @click="$device.isMobile? $emit('stripe') :$store.commit('TOGGLE_PRODUCT_MODAL')"
+            @click="$device.isMobile? $emit('stripe') :$store.commit('TOGGLE_PRODUCT_MODAL',false)"
             class="product-modal__close"
             icon="times"
           ></fa>
@@ -46,9 +46,16 @@
               v-model="step"
               v-if="step === 2"
               :coin="coin"
+              @stripe="$emit('stripe')"
               :skuId="id"
             ></payment-method>
-            <payment-form-card v-if="step === 3" :price="price" :coin="coin" :skuId="id"></payment-form-card>
+            <payment-form-card
+              @stripe="$emit('stripe')"
+              v-if="step === 3"
+              :price="price"
+              :coin="coin"
+              :skuId="id"
+            ></payment-form-card>
           </transition>
         </div>
       </div>

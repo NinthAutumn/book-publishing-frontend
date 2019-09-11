@@ -235,7 +235,8 @@ export default {
           skuId: this.skuId
         };
         await this.$store.dispatch("wallet/buyCoin", { sku_id: this.skuId });
-        this.$store.commit("TOGGLE_PRODUCT_MODAL");
+        this.$store.commit("TOGGLE_PRODUCT_MODAL", false);
+        this.$emit("stripe");
         return this.$toast.show("クラウンコインの購入に成功しました", {
           icon: "check_circle",
           duration: 1000,

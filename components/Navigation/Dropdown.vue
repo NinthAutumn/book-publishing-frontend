@@ -27,7 +27,7 @@
           <div class="flex-divider flex-row flex--right">
             <div
               class="profile-dropdown__wallet__buy-more"
-              @click="$store.commit('TOGGLE_PRODUCT_MODAL')"
+              @click="$store.commit('TOGGLE_PRODUCT_MODAL',true)"
             >買う</div>
           </div>
         </div>
@@ -54,7 +54,7 @@
             tag="div"
             class="profile-dropdown__nav-link flex flex--align"
             v-text="item.title"
-            @click.stop="$store.commit('TOGGLE_SETTING_MODAL')"
+            @click.stop="$store.commit('TOGGLE_SETTING_MODAL',true)"
           ></div>
           <nuxt-link
             v-else

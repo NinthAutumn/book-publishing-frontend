@@ -129,6 +129,7 @@ export default {
     },
     stripeOpen() {
       this.stripe = !this.stripe;
+      if (!this.stripe) return (this.mvRight = true);
       // if(stripe)
       this.mvRight = false;
       this.mvLeft = false;

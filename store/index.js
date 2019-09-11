@@ -44,8 +44,8 @@ export const mutations = {
   TOGGLE_VOLUME(state) {
     state.volumeModal = !state.volumeModal
   },
-  TOGGLE_PRODUCT_MODAL(state) {
-    state.productModal = !state.productModal
+  TOGGLE_PRODUCT_MODAL(state, status) {
+    state.productModal = status
   },
   SET_AUTH_PAGE(state, page) {
     state.authStep = page
