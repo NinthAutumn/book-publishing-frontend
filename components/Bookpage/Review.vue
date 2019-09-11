@@ -242,9 +242,7 @@ export default {
     deleteReview: async function() {
       this.loading = true;
       try {
-        await this.$axios.delete(
-          `/review?reviewId=${this.review.id}&rating=${this.review.rating}&bookId=${this.review.book_id}`
-        );
+        await this.$axios.delete(`/v2/review/${this.review.id}`);
         await this.$store.dispatch("review/showAll", {
           bookId: this.$route.params.id,
           page: 1,

@@ -76,8 +76,8 @@ export default {
       await store.dispatch("user/fetchUserSettings");
       if (!route.query.comment) {
         await store.dispatch("library/postHistory", {
-          chapterId: params.chaptersId,
-          bookId: params.id
+          chapterId: route.params.chaptersId,
+          bookId: route.params.id
         });
       }
     } else {
