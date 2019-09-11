@@ -68,7 +68,7 @@ export default {
     },
     async updateFontFamily(change) {
       if (!this.auth) {
-        return this.$router.push("/auth/login");
+        return this.$store.commit("LOGIN_STATE");
       }
       if (change) {
         const setting = {
@@ -87,7 +87,7 @@ export default {
     },
     async updateFontSize(type) {
       if (!this.auth) {
-        return this.$router.push("/auth/login");
+        return this.$store.commit("LOGIN_STATE");
       }
       switch (type) {
         case "increase":

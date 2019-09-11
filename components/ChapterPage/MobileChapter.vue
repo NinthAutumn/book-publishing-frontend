@@ -323,7 +323,7 @@ export default {
     },
     actionHandler: async function(type) {
       if (!this.auth) {
-        return this.$router.push("/auth/login");
+        return this.$store.commit("LOGIN_STATE");
       }
       if (type === "vote") {
         try {
@@ -392,7 +392,7 @@ export default {
     purchase: async function() {
       try {
         if (!this.$store.getters["auth/isAuthenticated"]) {
-          return this.$router.push("/auth/login");
+          return this.$store.commit("LOGIN_STATE");
         }
         await this.$store.dispatch("wallet/buyChapter", {
           bookId: this.$route.params.id,

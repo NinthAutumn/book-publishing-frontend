@@ -22,7 +22,7 @@ export const mutations = {
   SET_AUTH: (state, {
     access_token,
     refresh_token,
-    strategy
+    strategy = "local"
   }) => {
     state.token = access_token
     state.refresh_token = refresh_token

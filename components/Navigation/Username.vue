@@ -19,7 +19,18 @@
         </div>
         <div>アバターは要否です</div>
         <div class="username-form__username">
-          <v-text-field v-model="user.username" label="ユーザー名*"></v-text-field>
+          <v-text-field
+            v-validate="'required|min:3|alpha_dash'"
+            placeholder="ユーザー名"
+            data-vv-as="ユーザー名"
+            v-model="user.username"
+            label="ユーザー名*"
+          ></v-text-field>
+          <div
+            class="username-form__error"
+            v-if="errors.first('username')"
+          >>{{ errors.first('username') }}</div>
+          <div class="username-form__error" v-else-if="usernamAvailable">ユーザー名はもう使われています</div>
         </div>
         <div class="username-form__submit">
           <div class="username-form__button" v-ripple @click="setUsername">更新</div>
@@ -44,16 +55,25 @@ export default {
       }
     };
   },
+  watch: {
+    "user.username": async function(username) {
+      if (username.length > 2) {
+        await this.$store.dispatch("user/checkUsername", { username });
+      }
+    }
+  },
   computed: {
     ...mapGetters({
       modal: "auth/getUsernameModalState",
       loggedInUser: "auth/getUser",
-      auth: "auth/isAuthenticated"
+      auth: "auth/isAuthenticated",
+      usernameAvailable: "user/userNameExists"
     })
   },
   methods: {
     async setUsername() {
       try {
+        if (usernameAvailable) return;
         if (this.newAvatar) {
           this.avatar.generateBlob(async blob => {
             const url = await this.$store.dispatch("upload/uploadAvatar", blob);
@@ -68,10 +88,12 @@ export default {
           await this.$store.dispatch("user/patchUser", { user: this.user });
         }
         this.$store.commit("auth/TOGGLE_USERNAME_MODAL");
+        await this.$store.dispatch("auth/fetchUser");
         this.open = false;
       } catch (error) {
         console.log(error);
         this.$store.commit("auth/TOGGLE_USERNAME_MODAL");
+        await this.$store.dispatch("auth/fetchUser");
       }
     },
     fileChoose() {
@@ -94,6 +116,9 @@ export default {
     //  background-color: lightblue;
     //  border: 2px solid grey;
     border-radius: 1rem;
+  }
+  &__error {
+    font-size: 1.4rem;
   }
   &__submit {
     width: 100%;

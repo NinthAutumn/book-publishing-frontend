@@ -15,7 +15,7 @@
       <fa icon="search" class="mobile-horizontal__search-icon"></fa>
       <div class="mobile-horizontal__text">検索</div>
     </nuxt-link>
-    <div class="mobile-horizontal__profile" v-ripple @click="toggleMenu(true)">
+    <div class="mobile-horizontal__profile" v-ripple @click.stop="toggleMenu(true)">
       <!-- <v-avatar class="mobile-horizontal__avatar" :size="40" v-if="!loggedIn">
         <img :src="avatar">
       </v-avatar>-->

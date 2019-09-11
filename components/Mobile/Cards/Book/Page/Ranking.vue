@@ -63,7 +63,7 @@ export default {
         if (!this.auth) {
           this.$toast.error(`投票をするにはログインかアカウント作成が必要です`);
           this.loading = false;
-          return this.$router.push("/auth/login");
+          return this.$store.commit("LOGIN_STATE");
         }
         const { error } = await this.$store.dispatch("book/postVote", {
           bookId: this.$route.params.id

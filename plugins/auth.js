@@ -42,7 +42,7 @@ export default async function ({
 
       let refresher = setInterval(async function () {
         try {
-          const res = await $axios.patch('/auth/token', {
+          const res = await $axios.patch('/v2/auth/token', {
             refresh: refresh_token
           })
           let access_token = res.data.token

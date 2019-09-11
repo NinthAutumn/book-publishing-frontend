@@ -1,6 +1,10 @@
 <template>
   <div>
     <div v-if="$nuxt.isOffline">今オフラインです</div>
+    <username-modal></username-modal>
+    <transition name="grow-shrink" class="loginform">
+      <AuthModal v-if="loginState"></AuthModal>
+    </transition>
     <div class="user-status" v-if="auth">
       <div v-if="!user.verified">
         <transition>
@@ -71,7 +75,9 @@ export default {
     NewVertical: hydrateWhenVisible(() => import("./main-nav/NewVertical")),
     StripeModal: hydrateWhenVisible(() =>
       import("@/components/Navigation/Stripe/ProductModal")
-    )
+    ),
+    UsernameModal: () => import("@/components/Navigation/Username"),
+    AuthModal: () => import("@/components/Navigation/Auth/AuthModal")
   },
   async mounted() {
     if (this.auth) {
@@ -97,7 +103,8 @@ export default {
     ...mapGetters({
       auth: "auth/isAuthenticated",
       user: "auth/getUser",
-      subscription: "subscription/getSubscription"
+      subscription: "subscription/getSubscription",
+      loginState: "getLoginFormState"
     })
   },
   watch: {},
@@ -118,7 +125,7 @@ export default {
     toggleMenu(val) {
       if (val) {
         if (!this.auth) {
-          return this.$router.push("/auth/login");
+          return this.$store.commit("LOGIN_STATE");
         }
         this.mvRight = !this.mvRight;
         this.mvLeft = false;

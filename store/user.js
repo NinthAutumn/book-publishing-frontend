@@ -13,7 +13,7 @@ export const state = () => ({
   comments: [],
   notification: [],
   author: {},
-  username: true,
+  username: false,
   profile: {},
   stats: {},
   commentNotification: [],

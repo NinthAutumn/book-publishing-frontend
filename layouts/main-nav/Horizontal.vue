@@ -76,12 +76,8 @@
         </div>
       </div>
     </nav>
-    <Username></Username>
 
     <client-only>
-      <transition name="grow-shrink" class="loginform">
-        <AuthModal v-if="loginState"></AuthModal>
-      </transition>
       <transition name="grow-shrink" class="productform">
         <product-modal v-if="productState"></product-modal>
       </transition>
@@ -121,7 +117,6 @@ export default {
       import("@/components/Navigation/Notification")
     ),
     Currency: () => import("@/components/All/Currency"),
-    Username: () => import("@/components/Navigation/Username"),
     SubMain: hydrateWhenVisible(() =>
       import("@/components/Navigation/Subscribe/SubMain")
     )
@@ -130,7 +125,7 @@ export default {
     ...mapGetters({
       user: "auth/getUser",
       loggedIn: "auth/isAuthenticated",
-      loginState: "getLoginFormState",
+
       productState: "getProductModalState",
       notificationCount: "user/getCommentNotificationCount",
       wealth: "wallet/getWealth",

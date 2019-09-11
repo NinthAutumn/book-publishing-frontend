@@ -1,6 +1,9 @@
 <template>
   <div class="dialog dialog__container">
     <div class="auth-modal dialog__content" v-click-outside="close">
+      <div class="auth-modal__header flex-row flex--align flex--right" v-if="$device.isMobile">
+        <fa @click="close" icon="times"></fa>
+      </div>
       <transition name="slide-fade">
         <social-auth v-if="step === 0"></social-auth>
         <login-form v-if="step === 1"></login-form>
@@ -81,8 +84,24 @@ export default {
   box-sizing: border-box;
   background-color: rgb(255, 255, 255);
   $self: &;
+  &__header {
+    font-size: 1.8rem;
+    color: #2a2f45;
+  }
+
   &__footer {
     $self: &;
+    @media screen and (max-width: 450px) {
+      &__item {
+        span {
+          font-size: 1.2rem !important;
+        }
+        i {
+          font-size: 1.2rem !important;
+        }
+        font-size: 1.2rem !important;
+      }
+    }
     &__list {
       i {
         display: inline-block;

@@ -99,7 +99,7 @@ export default {
       switch (key) {
         case "bookmark":
           if (!this.auth) {
-            this.$router.push("/auth/login");
+            this.$store.commit("LOGIN_STATE");
           }
           this.bookmarkHandler();
           break;
