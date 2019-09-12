@@ -20,6 +20,7 @@
         :class="{selected: tag.selected}"
       >{{tag.key}}({{tag.sum}})</li>
     </transition-group>
+    <client-only></client-only>
   </div>
 </template>
 
@@ -91,11 +92,12 @@ export default {
         search: this.search
       });
       let object = [];
+
       tags.forEach(item => {
         object.push({
           key: item.name,
           value: item.id,
-          sum: item.books,
+          sum: item.book_count,
           selected: false
         });
       });

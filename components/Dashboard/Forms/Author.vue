@@ -18,6 +18,7 @@
           v-model="author.avatar"
         ></croppa>
       </div>
+
       <v-card-text>
         <v-text-field
           v-model="author.penname"
@@ -31,6 +32,7 @@
           style="font-size:1.6rem!important"
         ></v-text-field>
       </v-card-text>
+      <div class="create-author__error" v-if="author_error" v-text="author_error"></div>
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn color="blue darken-1" flat @click="createAuthor">作者になる</v-btn>
@@ -47,13 +49,19 @@ export default {
       author: {
         penname: "",
         avatar: {}
-      }
+      },
+      author_error: "",
+      url: ""
     };
+  },
+  mounted() {
+    this.author.penname = this.user.username;
   },
   computed: {
     ...mapGetters({
       isAuthor: "user/isAuthor",
-      url: "upload/getUrl"
+      url: "upload/getUrl",
+      user: "auth/getUser"
     })
   },
   methods: {
@@ -78,6 +86,7 @@ export default {
                   if (code === 100) {
                     this.$router.push("/");
                   }
+                  this.author_error = error;
                   return this.$toast.error(error);
                 }
                 this.$toast.success("おめでとうございます、作者になりました", {
@@ -111,6 +120,11 @@ export default {
     top: 0;
     left: 0;
     z-index: -1;
+  }
+  &__error {
+    font-size: 1.4rem;
+    color: orangered;
+    margin: 0.5rem 0;
   }
   .v-text-field__slot {
     font-size: 1.6rem !important;

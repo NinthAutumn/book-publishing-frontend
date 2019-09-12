@@ -73,7 +73,7 @@ export default {
   methods: {
     async setUsername() {
       try {
-        if (usernameAvailable) return;
+        if (this.usernameAvailable) return;
         if (this.newAvatar) {
           this.avatar.generateBlob(async blob => {
             const url = await this.$store.dispatch("upload/uploadAvatar", blob);

@@ -16,7 +16,7 @@
 
     <div class="views-bargraph__graph" v-loading="loading" ref="bargraph">
       <client-only>
-        <ve-line ref="view-bar" judge-width :height="height" :settings="chartSetting" :data="time"></ve-line>
+        <ve-line ref="view-bar" :height="height" :settings="chartSetting" :data="time"></ve-line>
       </client-only>
     </div>
   </div>
@@ -58,13 +58,6 @@ export default {
     },
     menu() {
       return this.$store.getters.getDMenuState;
-    },
-    widthBar() {
-      if (this.isMounted) {
-        return this.$refs["bargraph"].clientWidth;
-      } else {
-        return 0;
-      }
     }
   },
   watch: {
