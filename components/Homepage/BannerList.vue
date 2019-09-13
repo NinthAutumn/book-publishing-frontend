@@ -29,22 +29,22 @@ export default {
     return {
       paginationSize: 10,
       images: [
-        { cover: require(`../../assets/banner5.png?size=500`), link: "/" },
-        { cover: require(`../../assets/banner2.png?size=500`), link: "/" },
+        { cover: require(`~/assets/banner5.png?size=500`), link: "/" },
+        { cover: require(`~/assets/banner2.png?size=500`), link: "/" },
         {
-          cover: require(`../../assets/banner3.png?size=500`),
+          cover: require(`~/assets/banner3.png?size=500`),
           link: "/rankings"
         },
-        { cover: require(`../../assets/banner1.png?size=500`), link: "/" }
+        { cover: require(`~/assets/banner1.png?size=500`), link: "/" }
       ],
       mimages: [
-        { cover: require(`../../assets/banner5.png?size=325`), link: "/" },
-        { cover: require(`../../assets/banner2.png?size=325`), link: "/" },
+        { cover: require(`~/assets/banner5.png?size=325`), link: "/" },
+        { cover: require(`~/assets/banner2.png?size=325`), link: "/" },
         {
-          cover: require(`../../assets/banner3.png?size=325`),
+          cover: require(`~/assets/banner3.png?size=325`),
           link: "/rankings"
         },
-        { cover: require(`../../assets/banner1.png?size=325`), link: "/" }
+        { cover: require(`~/assets/banner1.png?size=325`), link: "/" }
       ],
       mobileOption: {
         slidesPerView: 1.005,

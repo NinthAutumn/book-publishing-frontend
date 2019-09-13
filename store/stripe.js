@@ -131,8 +131,8 @@ export const actions = {
   }) {
     try {
       const res = await this.$axios.post('/v2/stripe/subscription', {
-        paymentMethod,
-        stripePlanId
+        payment_method: paymentMethod,
+        stripe_plan_id: stripePlanId
       })
 
       commit('SET_PAYMENT_INTENT', _.get(res, 'data.payment.intent', {}))

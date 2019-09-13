@@ -89,7 +89,7 @@ export default {
     return {
       menuStates: "menu-inactive",
       notification: false,
-      avatar: require("~/assets/profile.png")
+      avatar: require("~/assets/img/profile.png")
     };
   },
   async mounted() {
@@ -352,7 +352,7 @@ export default {
     }
   }
   &--tan {
-    background: url("../../assets/noise/noise-tan-container.png");
+    background: url("~assets/img/tanContainer.png");
     box-shadow: none;
     border-bottom: 1px solid #d8ceb3;
   }
@@ -379,7 +379,7 @@ export default {
     }
   }
   &--ruby {
-    background: url("../../assets/noise/noise-ruby-container.png");
+    background: url("~assets/img/rubyContainer.png");
     box-shadow: none;
     border-bottom: 1px solid #e0115f;
   }

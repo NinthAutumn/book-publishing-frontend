@@ -64,7 +64,7 @@ export default {
         bio: "",
         newAvatar: false
       },
-      avatar: require("~/assets/profile.png"),
+      avatar: require("~/assets/img/profile.png"),
       genders: [
         { key: "男性", value: "male" },
         { key: "女性", value: "female" },

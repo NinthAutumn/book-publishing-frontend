@@ -53,7 +53,7 @@ export default {
   left: 0;
   background-color: #fff;
   &--default {
-    background: url("../../../assets/noise/noise-default-container.png");
+    background: url("~assets/img/defaultContainer.png");
     border-color: #dae0e6;
   }
   &--black {
@@ -61,15 +61,15 @@ export default {
     border-color: black;
   }
   &--tan {
-    background: url("../../../assets/noise/noise-tan-container.png");
+    background: url("~assets/img/tanContainer.png");
     border-color: #eed368;
   }
   &--ruby {
-    background: url("../../../assets/noise/noise-ruby-container.png");
+    background: url("~assets/img/rubyContainer.png");
     border-color: red;
   }
   &--sapphire {
-    background: url("../../../assets/noise/noise-sapphire-container.png");
+    background: url("~assets/img/sapphireContainer.png");
     border-color: blue;
   }
   &__options {
@@ -89,7 +89,7 @@ export default {
         0 1px 1px 0 rgba(0, 0, 0, 0.07);
       border: 1px solid #dae0e6;
       &--default {
-        background: url("../../../assets/noise/noise-default-container.png");
+        background: url("~assets/img/defaultContainer.png");
         border-color: #dae0e6;
       }
       &--black {
@@ -97,15 +97,15 @@ export default {
         border-color: black;
       }
       &--tan {
-        background: url("../../../assets/noise/noise-tan-container.png");
+        background: url("~assets/img/tanContainer.png");
         border-color: #eed368;
       }
       &--ruby {
-        background: url("../../../assets/noise/noise-ruby-container.png");
+        background: url("~assets/img/rubyContainer.png");
         border-color: red;
       }
       &--sapphire {
-        background: url("../../../assets/noise/noise-sapphire-container.png");
+        background: url("~assets/img/sapphireContainer.png");
         border-color: blue;
       }
     }

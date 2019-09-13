@@ -7,7 +7,11 @@
           class="vertical-nav__profile-container"
         >
           <div class="vertical-nav__user-avatar">
-            <v-avatar size="80" class="vertical-nav__avatar">
+            <v-avatar
+              size="80"
+              class="vertical-nav__avatar"
+              :class="{'vertical-nav__avatar--bronze':user.status === 'bronze'}"
+            >
               <v-img :src="user.avatar? user.avatar: avatar"></v-img>
             </v-avatar>
           </div>
@@ -52,7 +56,7 @@ import { mapGetters } from "vuex";
 export default {
   data() {
     return {
-      avatar: require("~/assets/profile.png"),
+      avatar: require("~/assets/img/profile.png"),
       menu_list: [
         {
           title: "ホーム",
@@ -157,6 +161,12 @@ export default {
         margin-bottom: 2rem;
       }
       #{$self}__avatar {
+        &--bronze {
+          border: 2px solid $bronze;
+          box-shadow: 0 2px 5px 0 rgba(60, 66, 87, 0.1),
+            0 1px 1px 0 rgba(0, 0, 0, 0.07), 0 0 2px #cd7f32,
+            inset 0 0 2px #cd7f32 !important;
+        }
         box-shadow: 0 2px 5px 0 rgba(60, 66, 87, 0.1),
           0 1px 1px 0 rgba(0, 0, 0, 0.07);
       }

@@ -130,7 +130,7 @@ export default {
           this.$store.commit("LOGIN_FALSE");
           this.$emit("loginAction");
           this.$nuxt.refresh();
-          if (!this.user.username) {
+          if (!this.user.username && this.user) {
             this.$store.commit("auth/TOGGLE_USERNAME_MODAL");
           }
           break;
@@ -196,7 +196,7 @@ export default {
       this.$store.commit("LOGIN_FALSE");
       this.$emit("loginAction");
       this.$nuxt.refresh();
-      if (!this.user.username) {
+      if (!this.user.username && this.user) {
         this.$store.commit("auth/TOGGLE_USERNAME_MODAL");
       }
     }

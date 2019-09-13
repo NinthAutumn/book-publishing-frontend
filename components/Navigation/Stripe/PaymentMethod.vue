@@ -87,11 +87,11 @@ export default {
           key: "カード",
           icon: "credit-card",
           img: [
-            require("@/assets/img/jcb.png"),
-            require("@/assets/img/visa.png"),
-            require("@/assets/img/mastercard.png"),
-            require("@/assets/img/amex.png"),
-            require("@/assets/img/diner.png")
+            require("~/assets/img/jcb.png"),
+            require("~/assets/img/visa.png"),
+            require("~/assets/img/mastercard.png"),
+            require("~/assets/img/amex.png"),
+            require("~/assets/img/diner.png")
           ],
           value: "card",
           step: 3

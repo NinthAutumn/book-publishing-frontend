@@ -20,7 +20,7 @@ export default {
   props: {
     cover: {
       type: [String, Object],
-      default: require("@/assets/img/NobleCardLight.png")
+      default: require("~/assets/img/NobleCardLight.png")
     },
     title: {
       type: [String]
@@ -36,7 +36,7 @@ export default {
   },
   data() {
     return {
-      lazyCover: require("@/assets/img/NobleCardLight.png")
+      lazyCover: require("~/assets/img/NobleCardLight.png")
     };
   },
   components: {

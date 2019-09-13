@@ -38,8 +38,8 @@
           :class="{readmore: readMore}"
         ></div>-->
         <div v-if="review.content.length > limit" class="buts">
-          <a @click="toggleCollapse" v-if="!readMore" class="reviews-content-text-more">>>詳細</a>
-          <a @click="toggleCollapse" v-else class="reviews-content-text-more">{{'<<'}}一部を表示</a>
+          <a @click="toggleCollapse" v-if="!readMore" class="reviews-content-text-more">詳細 ></a>
+          <a @click="toggleCollapse" v-else class="reviews-content-text-more" v-text="'< 一部を表示'"></a>
         </div>
       </div>
       <div class="flex-divider flex-row">
@@ -117,8 +117,8 @@
 </template>
 
 <script>
-// import ArrowDown from "@/assets/svg/arrow-down.svg";
-// import ArrowUp from "@/assets/svg/arrow-up.svg";
+// import ArrowDown from "~/assets/svg/arrow-down.svg";
+// import ArrowUp from "~/assets/svg/arrow-up.svg";
 import { toNumber } from "lodash";
 import { mapGetters } from "vuex";
 export default {

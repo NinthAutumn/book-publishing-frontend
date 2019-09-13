@@ -97,7 +97,7 @@ export default {
       ],
       loading: true,
       product: false,
-      avatar: require("~/assets/profile.png")
+      avatar: require("~/assets/img/profile.png")
     };
   },
   methods: {
@@ -139,6 +139,7 @@ export default {
     &--bronze {
       img {
         border: 2px solid $bronze;
+        box-shadow: 0 0 2px #cd7f32, inset 0 0 2px #cd7f32 !important;
       }
     }
     img {

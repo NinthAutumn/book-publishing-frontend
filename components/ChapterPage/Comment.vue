@@ -193,7 +193,7 @@ export default {
         "その他"
       ],
       loading: false,
-      avatar: require("~/assets/profile.png")
+      avatar: require("~/assets/img/profile.png")
     };
   },
   watch: {

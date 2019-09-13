@@ -86,7 +86,7 @@ export default {
         }
       ],
       scrolled: false,
-      avatar: require("~/assets/profile.png")
+      avatar: require("~/assets/img/profile.png")
     };
   },
   methods: {

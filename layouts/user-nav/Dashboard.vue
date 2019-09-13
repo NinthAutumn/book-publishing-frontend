@@ -83,7 +83,7 @@
   </div>
 </template>
 <script>
-// import HomeIcon from "../../assets/home-icon";
+// import HomeIcon from "~/assets/home-icon";
 // import { fas } from "@fortawesome/free-solid-svg-icons";
 // import { faGithub } from '@fortawesome/free-brands-svg-icons'
 import { mapGetters } from "vuex";

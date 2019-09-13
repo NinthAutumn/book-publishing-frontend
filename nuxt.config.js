@@ -59,7 +59,6 @@ module.exports = {
    ** Customize the progress-bar color
    */
   loading: {
-
     color: '#af9bd0',
     height: '3px',
     continuous: true
@@ -91,16 +90,16 @@ module.exports = {
       ssr: false
     },
     {
-      src: '~/plugins/swiper',
+      src: '~plugins/swiper',
       ssr: false
     },
     {
       ssr: false,
-      src: '~/plugins/avatar'
+      src: '~plugins/avatar'
     },
     {
       ssr: false,
-      src: '~/plugins/swipeTab'
+      src: '~plugins/swipeTab'
     },
     {
       ssr: false,
@@ -279,44 +278,7 @@ module.exports = {
 
   },
 
-  auth: {
-    strategies: {
-      google: {
-        client_id: process.env.GOOGLE_CLIENT_ID,
-        user: false,
-        redirect_uri: process.env.REDIRECT_URI
-      },
-      facebook: {
-        client_id: process.env.FACEBOOK_CLIENT_ID,
-        userinfo_endpoint: false,
-        scope: ['public_profile', 'email'],
-        redirect_uri: process.env.REDIRECT_URI
-      },
-      local: {
-        _scheme: '~/auth/local.js',
-        endpoints: {
-          login: {
-            url: 'auth/login',
-            method: 'post',
-            propertyName: false
-          },
-          user: {
-            url: 'user/show',
-            method: 'get',
-            propertyName: false
-          },
-          logout: false
-        }
-      }
-    },
-    redirect: {
-      login: '/auth/login',
-      logout: '/',
-      callback: '/',
-      home: '/'
-    },
-    plugins: ['~/plugins/auth.js']
-  },
+
   router: {
     middleware: ['auth'],
     linkActiveClass: 'active-link'
@@ -335,10 +297,27 @@ module.exports = {
   /*
    ** Build configuration
    */
+
   build: {
     /*
      ** You can extend webpack config here
      */
+    // analyze: true,
+
+    splitChunks: {
+      layouts: true,
+    },
+    optimization: {
+      splitChunks: {
+        name: true
+      }
+    },
+    filenames: {
+      // img: ({
+      //   isDev
+      // }) => isDev ? '[path][name].[ext]' : 'img/[hash:8].[ext]',
+
+    },
     extend(config, ctx) {
       config.module.rules.unshift({
         test: /\.(png|jpe?g|gif)$/,
@@ -350,7 +329,7 @@ module.exports = {
             quality: 85,
             placeholderSize: 30,
             name: 'img/[name].[hash:hex:7].[width].[ext]',
-            adapter: require('responsive-loader/sharp')
+            adapter: require('responsive-loader/sharp'),
           }
         }
       })
@@ -360,20 +339,18 @@ module.exports = {
         if (Array.isArray(value.use)) {
           value.use.forEach(u => {
             if (u.loader === 'css-loader' && u.options) {
-              delete u.options.minimize;
+              // delete u.options.minimize;
             }
           });
         }
         if (String(value.test) === String(/\.(png|jpe?g|gif|svg|webp)$/)) {
           // reduce to svg and webp, as other images are handled above
-          value.test = /\.(svg|webp)$/
+          // value.test = /\.(svg|webp)$/
           // keep the configuration from image-webpack-loader here unchanged
         }
       })
     },
-    splitChunks: {
-      layouts: true
-    },
+
     extractCSS: true,
     styleResources: {
       sass: ['./assets/css/abstracts/main.scss']

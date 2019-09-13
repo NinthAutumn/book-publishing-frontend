@@ -156,7 +156,7 @@ export default {
   flex-direction: column;
 
   &--default {
-    background: url("../../../assets/noise/noise-default-container.png");
+    background: url("~assets/img/defaultContainer.png");
     border-color: #dae0e6;
 
     #{$self}__header {
@@ -178,7 +178,7 @@ export default {
     }
   }
   &--tan {
-    background: url("../../../assets/noise/noise-tan-container.png");
+    background: url("~assets/img/tanContainer.png");
     border-color: #eed368;
     #{$self}__header {
       background-color: #e9e1b8;
@@ -191,16 +191,16 @@ export default {
       #{$self}__input {
         border-color: #eed368;
         border: 1px solid;
-        background: url("../../../assets/noise/noise-tan-container.png");
+        background: url("~assets/img/tanContainer.png");
       }
     }
   }
   &--ruby {
-    background: url("../../../assets/noise/noise-ruby-container.png");
+    background: url("~assets/img/rubyContainer.png");
     border-color: red;
   }
   &--sapphire {
-    background: url("../../../assets/noise/noise-sapphire-container.png");
+    background: url("~assets/img/sapphireContainer.png");
     border-color: blue;
   }
   &__none {

@@ -46,7 +46,7 @@ export default {
         { text: "時間", value: "date", sortable: false }
       ],
       loading: false,
-      avatar: require("~/assets/profile.png")
+      avatar: require("~/assets/img/profile.png")
     };
   },
   computed: {

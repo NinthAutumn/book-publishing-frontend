@@ -37,7 +37,7 @@ export default {
   },
   data() {
     return {
-      avatar: require("~/assets/profile.png"),
+      avatar: require("~/assets/img/profile.png"),
       menus: {
         home: {
           title: "ホーム",

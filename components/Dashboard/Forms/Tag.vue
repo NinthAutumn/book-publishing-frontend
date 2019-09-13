@@ -20,7 +20,6 @@
         :class="{selected: tag.selected}"
       >{{tag.key}}({{tag.sum}})</li>
     </transition-group>
-    <client-only></client-only>
   </div>
 </template>
 

@@ -47,7 +47,7 @@ export default {
   props: ["book", "index", "score", "vote"],
   data() {
     return {
-      cover: require("@/assets/img/NobleCardLight.png")
+      cover: require("~/assets/img/NobleCardLight.png")
     };
   }
 };

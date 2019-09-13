@@ -70,7 +70,7 @@
           <!-- <img
             class=""
             style="border-radius:10rem;"
-            src="~/assets/profile.png"
+            src="~/assets/img/profile.png"
 
           />-->
         </div>
@@ -102,7 +102,7 @@ export default {
       profile: false,
       notification: false,
       head: "ノーブル",
-      avatar: require("~/assets/profile.png?webp&url")
+      avatar: require("~/assets/img/profile.png?webp&url")
     };
   },
   components: {

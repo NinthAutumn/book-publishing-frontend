@@ -41,7 +41,7 @@ export default {
   },
   data() {
     return {
-      lazyCover: require("@/assets/img/NobleCardLight.png")
+      lazyCover: require("~/assets/img/NobleCardLight.png")
     };
   },
   components: {

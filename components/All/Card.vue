@@ -1,7 +1,7 @@
 <template>
   <div class="card-component" v-ripple :class="{'card-component--selected':selected}">
     <div class="card-component__brand">
-      <v-img :src="require(`@/assets/img/${brand}.png`)" width="3rem"></v-img>
+      <v-img :src="require(`~/assets/img/${brand}.png`)" width="3rem"></v-img>
     </div>
     <div class="card-component__header">
       <div class="card-component__digits">{{`•••• •••• •••• ${last}`}}</div>

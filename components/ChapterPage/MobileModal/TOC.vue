@@ -114,7 +114,7 @@ export default {
   }
   &--tan {
     #{$self}__volumes {
-      background: url("../../../assets/noise/noise-tan-all.png");
+      background: url("~assets/img/noise-tan-all.png");
       //  colo
       border: 1px solid #e7dfbd !important;
       // color: #2b352f !important;

@@ -117,7 +117,7 @@ export default {
 .chapters-modal {
   background-color: white;
   &--default {
-    background: url("../../assets/noise/noise-default-container.png");
+    background: url("~assets/img/defaultContainer.png");
     color: black;
   }
   &--black {
@@ -126,15 +126,15 @@ export default {
     color: rgb(215, 218, 220);
   }
   &--tan {
-    background: url("../../assets/noise/noise-tan-container.png");
+    background: url("~assets/img/tanContainer.png");
     color: #2b352f;
   }
   &--ruby {
-    background: url("../../assets/noise/noise-ruby-container.png");
+    background: url("~assets/img/rubyContainer.png");
     color: #f7bfd4;
   }
   &--sapphire {
-    background: url("../../assets/noise/noise-sapphire-container.png");
+    background: url("~assets/img/sapphireContainer.png");
     color: #d4e6fd;
   }
   &--image {

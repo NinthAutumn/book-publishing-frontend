@@ -291,7 +291,7 @@ export default {
       border: 1px solid #dae0e6;
       box-shadow: 1px 1px 5px 0 rgb(212, 212, 212);
       &--white {
-        background: url("../../../assets/noise/noise-default-container.png");
+        background: url("~assets/img/defaultContainer.png");
         border: 1px solid #dae0e6;
       }
       &--black {
@@ -299,15 +299,15 @@ export default {
         border: 1px solid black;
       }
       &--tan {
-        background: url("../../../assets/noise/noise-tan-container.png");
+        background: url("~assets/img/tanContainer.png");
         border: 1px solid #eed368;
       }
       &--ruby {
-        background: url("../../../assets/noise/noise-ruby-container.png");
+        background: url("~assets/img/rubyContainer.png");
         border: 1px solid red;
       }
       &--sapphire {
-        background: url("../../../assets/noise/noise-sapphire-container.png");
+        background: url("~assets/img/sapphireContainer.png");
         border: 1px solid blue;
       }
     }

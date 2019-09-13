@@ -24,8 +24,8 @@
           <div class="user-activity__content" v-if="reviews&&readMore" v-html="item.content"></div>
           <p class="user-activity__content" v-else-if="comment">{{item.content}}</p>
           <div v-if="reviews&&item.content.length > 251" class="buts">
-            <a @click="toggleCollapse" v-if="!readMore" class="reviews-content-text-more">>>詳細</a>
-            <a @click="toggleCollapse" v-else class="reviews-content-text-more">{{'<<'}}一部を表示</a>
+            <a @click="toggleCollapse" v-if="!readMore" class="reviews-content-text-more">詳細></a>
+            <a @click="toggleCollapse" v-else class="reviews-content-text-more">{{'<'}}一部を表示</a>
           </div>
 
           <nuxt-link :to="'/books/'+item.book_id" tag="div" class="user-activity__parent">
@@ -49,7 +49,7 @@ export default {
   data() {
     return {
       readMore: false,
-      avatar: require("~/assets/profile.png")
+      avatar: require("~/assets/img/profile.png")
     };
   },
   methods: {

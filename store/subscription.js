@@ -72,7 +72,7 @@ export const actions = {
   }) {
     try {
       const subscriptions = await this.$axios.post(`/v2/subscription`, {
-        planId,
+        plan_id: planId,
         subscription
       })
       return Promise.resolve()

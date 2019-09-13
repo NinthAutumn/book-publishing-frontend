@@ -363,9 +363,9 @@ export default {
     // background-color: #fff;
   }
   &--default {
-    background: url("../../assets/noise/noise-default-all.png");
+    background: url("~assets/img/noise-default-all.png");
     .chapter-container {
-      background: url("../../assets/noise/noise-default-container.png");
+      background: url("~assets/img/defaultContainer.png");
     }
   }
   &--black {
@@ -390,18 +390,18 @@ export default {
   }
   &--tan {
     // background-color: #e7dfbd;
-    background: url("../../assets/noise/noise-tan-all.png");
+    background: url("~assets/img/noise-tan-all.png");
     .chapter-container {
       color: #2b352f !important;
       // background-color: #eed368 !important;
-      background: url("../../assets/noise/noise-tan-container.png");
+      background: url("~assets/img/tanContainer.png");
       border: 1px solid #e7dfbd !important;
     }
   }
   &--ruby {
-    background: url("../../assets/noise/noise-ruby-all.png");
+    background: url("~assets/img/noise-ruby-all.png");
     .chapter-container {
-      background: url("../../assets/noise/noise-ruby-container.png");
+      background: url("~assets/img/rubyContainer.png");
       color: #fdd4e4;
       border: 1px solid red !important;
     }
@@ -410,9 +410,9 @@ export default {
     }
   }
   &--sapphire {
-    background: url("../../assets/noise/noise-sapphire-all.png");
+    background: url("~assets/img/noise-sapphire-all.png");
     .chapter-container {
-      background: url("../../assets/noise/noise-sapphire-container.png");
+      background: url("~assets/img/sapphireContainer.png");
       color: #d4e6fd;
       border: 1px solid blue !important;
     }
