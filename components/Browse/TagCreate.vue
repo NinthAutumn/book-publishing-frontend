@@ -20,7 +20,7 @@
       >{{tag.key}}({{tag.sum}})</li>
     </transition-group>
     <client-only>
-      <infinite-loading @infinite="infiniteHandler"></infinite-loading>
+      <infinite-loading :identifier="id" @infinite="infiniteHandler"></infinite-loading>
     </client-only>
   </div>
 </template>
@@ -32,12 +32,16 @@ export default {
       search: "",
       selected: [],
       object: [],
-      page: 2
+      page: 1,
+      id: 1
     };
   },
   watch: {
     search: function(val) {
-      this.filterTags();
+      this.selected = [];
+      // this.filterTags();
+      this.page = 1;
+      this.id++;
     }
   },
   computed: {
@@ -46,16 +50,16 @@ export default {
     }
   },
   async mounted() {
-    const { tags } = await this.$store.dispatch("book/searchTags", {
-      page: 1,
-      limit: 30,
-      search: this.search
-    });
-    let object = [];
-    tags.forEach(item => {
-      object.push({ key: item.name, sum: item.book_count, selected: false });
-    });
-    this.selected = object;
+    // const { tags } = await this.$store.dispatch("book/searchTags", {
+    //   page: 1,
+    //   limit: 30,
+    //   search: this.search
+    // });
+    // let object = [];
+    // tags.forEach(item => {
+    //   object.push({ key: item.name, sum: item.book_count, selected: false });
+    // });
+    // this.selected = object;
   },
   methods: {
     async filterTags() {
@@ -91,7 +95,7 @@ export default {
     async infiniteHandler($state) {
       const { tags } = await this.$store.dispatch("book/searchTags", {
         page: this.page++,
-        limit: 20,
+        limit: 30,
         search: this.search,
         infinite: true
       });
@@ -100,8 +104,15 @@ export default {
         tags.forEach(item => {
           this.selected.push({
             key: item.name,
-            sum: item.books,
+            sum: item.book_count,
             selected: false
+          });
+        });
+        this.selected.forEach(tag => {
+          this.object.forEach(t => {
+            if (tag.key === t) {
+              tag.selected = true;
+            }
           });
         });
         $state.loaded();

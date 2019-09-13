@@ -60,7 +60,7 @@ export default {
   components: {
     TextEditor: () => import("@/components/TextEditor")
   },
-  watch: {},
+  computed: {},
   methods: {
     async addReview() {
       if (this.reviewed) {
@@ -69,28 +69,24 @@ export default {
             id: this.$store.state.review.myReview.id,
             review: this.review
           });
-          await this.$store.dispatch("review/showAll", {
-            bookId: this.$route.params.id,
-            userId: this.$store.getters["auth/getUser"].id,
-            page: 1,
-            limit: 10,
-            direction: "desc",
-            type: 0
-          });
         } catch (error) {
+          alert(error);
           this.$toast.show("レビューの投稿に失敗しました", {
             theme: "toasted-primary",
             position: "top-right",
             duration: 1000,
             icon: "extension"
           });
-          // error;
+          console.log(error);
         }
       } else {
         try {
           if (!this.review.rating) {
-            this.$toast.error("レビューを投稿するには投票が必要です");
+            return this.$toast.error("レビューを投稿するには投票が必要です");
           }
+          if (!this.review.title || !this.review.content)
+            return this.$toast.error("レビューはタイトルと本文は必須欄です");
+
           const { error, code } = await this.$store.dispatch(
             "review/addReview",
             {
@@ -103,11 +99,12 @@ export default {
           }
           await this.$store.dispatch("review/showAll", {
             bookId: this.$route.params.id,
-            userId: this.$store.getters["auth/getUser"].id,
             page: 1,
             limit: 10,
-            direction: "desc",
             type: 0
+          });
+          await this.$store.dispatch("review/fetchIsReviewed", {
+            bookId: this.$route.params.id
           });
           this.$toast.show("レビューの投稿に成功しました", {
             theme: "toasted-primary",
@@ -118,6 +115,7 @@ export default {
 
           this.$emit("input", false);
         } catch (error) {
+          console.log(error);
           this.$toast.show("レビューの投稿に失敗しました", {
             theme: "toasted-primary",
             position: "top-right",
@@ -127,6 +125,13 @@ export default {
           // (error);
         }
       }
+
+      await this.$store.dispatch("review/showAll", {
+        bookId: this.$route.params.id,
+        page: 1,
+        limit: 10,
+        type: 0
+      });
     }
   }
 };

@@ -286,15 +286,17 @@ export default {
     &__item {
       margin-bottom: 5px;
       margin-top: 5px;
-      height: 35px;
+      // height: 35px;
       font-size: 14px;
       margin-right: 5px;
       // background-color: $secondary-light;
       box-shadow: 1px 1px 5px rgb(240, 240, 240);
       color: white;
-      padding: 5px;
+      padding: 0.2rem 2rem;
       box-sizing: border-box;
       background-color: #f4648a;
+      border-radius: 10rem;
+      user-select: none;
     }
   }
   &__filter {

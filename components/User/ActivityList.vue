@@ -88,6 +88,7 @@ export default {
       img {
         box-sizing: 1px 1px 5px rgb(243, 243, 243);
       }
+      margin-right: 1rem;
     }
     #{$self}__content {
       font-size: 1.4rem;

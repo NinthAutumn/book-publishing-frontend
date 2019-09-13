@@ -117,7 +117,9 @@ export const actions = {
       }
       // let comment = {}
       commit('PUSH_COMMENT', data, parentId)
-      return Promise.resolve()
+      return Promise.resolve({
+        error: null
+      })
     } catch (error) {
       console.log(error);
       return Promise.reject(error)
@@ -131,16 +133,26 @@ export const actions = {
     chapterId,
     content
   }) {
-    const {
-      data
-    } = await this.$axios.post('/v2/comment', {
-      book_id: bookId,
-      chapter_id: chapterId,
-      content
-    })
-    if (data.error) {
-      return Promise.resolve(data)
+    try {
+      const {
+        data
+      } = await this.$axios.post('/v2/comment', {
+        book_id: bookId,
+        chapter_id: chapterId,
+        content
+      })
+      if (data.error) {
+        return Promise.resolve(data)
+      }
+      return Promise.resolve({
+        error: null
+      })
+    } catch (error) {
+      return Promise.reject({
+        error: error
+      })
     }
+
   },
   async likeComment({
     commit

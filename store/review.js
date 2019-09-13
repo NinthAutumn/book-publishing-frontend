@@ -109,7 +109,7 @@ export const actions = {
     try {
       const {
         data
-      } = await this.$axios.get(`/v1/review/show?id=${id}`);
+      } = await this.$axios.get(`/v2/review/${id}/show`);
       if (data.error) {
         return Promise.reject(data.error)
       }
@@ -164,7 +164,7 @@ export const actions = {
     bookId
   }) {
     let recommended = false
-    if (review.rating.total > 3) {
+    if (review.rating > 3) {
       recommended = true
     }
     try {
@@ -180,6 +180,9 @@ export const actions = {
       if (data.error) {
         return Promise.resolve(data)
       }
+      return Promise.resolve({
+        error: null
+      })
     } catch (error) {
       return Promise.reject(error)
     }
@@ -232,15 +235,6 @@ export const actions = {
       return
     }
     commit('GET_REVIEWED', status.data.checked)
-  },
-  async userReviews({
-    commit
-  }) {
-    const res = await this.$axios.get('/v1/review/my')
-    if (!res) {
-      return
-    }
-    commit('GET_MYREVIEWS', res.data)
   },
   async myReview({
     commit

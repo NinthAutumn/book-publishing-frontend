@@ -4,7 +4,7 @@
       <div class="book-toc__volume-index">{{`第${volume.volume}章`}}</div>
       <div class="book-toc__volume-title" v-if="!editVolume">{{volume.volume_title}}</div>
       <div class="book-toc__volume-edit flex-row flex--align" v-else>
-        <input type="text" v-model="volume_title" />
+        <input type="text" v-model="volume_title" @keypress.enter="updateVolume" maxlength="100" />
         <div class="book-toc__edit" v-ripple @click="updateVolume">更新</div>
         <div class="book-toc__edit--cancel" v-ripple @click="editVolume=!editVolume">キャンセル</div>
       </div>
@@ -23,7 +23,9 @@
         @click="editChapter(chapter.id)"
       >
         <div class="flex-divider flex-row flex--align">
-          <div class="book-toc__index">{{chapter.index}}</div>
+          <div
+            class="book-toc__index"
+          >{{`${chapter.index}${chapter.setting_index? `.${chapter.setting_index}`:''}`}}</div>
           <div class="book-toc__title">{{chapter.title}}</div>
         </div>
         <div class="flex-divider flex-row flex--align">

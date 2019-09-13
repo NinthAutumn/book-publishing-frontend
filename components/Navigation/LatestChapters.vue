@@ -57,10 +57,6 @@ export default {
     })
   },
   methods: {
-    async removeInbox(chapterId, bookId) {
-      await this.$store.dispatch("library/patchLatestChapters", { chapterId });
-      this.$router.push("/books/" + bookId + "/" + chapterId);
-    },
     async clickHandler(bookId, chapterId, id) {
       //  :to="`/books/${notification.book_id}/${notification.chapter_id}`"
       await this.$axios.patch(`/v2/notification/object/${id}`);

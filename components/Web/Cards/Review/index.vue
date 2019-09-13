@@ -76,7 +76,7 @@ export default {
       padding: 0 !important;
     }
     width: 40rem;
-
+    min-height: 25rem;
     margin: 1rem;
     margin-bottom: 2rem;
     padding: 1rem;

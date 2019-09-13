@@ -1,7 +1,12 @@
 <template>
   <div class="text-editor">
-    <div class="text-editor__nav">
-      <button v-if="ruby" class="text-editor__ruby-button" @click.prevent="createRuby">ルビを振る</button>
+    <div class="text-editor__nav" v-if="ruby">
+      <button
+        v-if="ruby"
+        class="text-editor__button text-editor__button--ruby text-editor__ruby-button"
+        @click.prevent="createRuby"
+      >ルビを振る</button>
+      <button @click.prevent="drawing_modal=true" class="text-editor__button">画像を挟む</button>
     </div>
     <textarea
       :class="{'text-editor__disappear': !placehold, 'text-editor__textarea--nav': ruby}"
@@ -12,6 +17,14 @@
       @select="selectEvent"
     ></textarea>
     <p class="text-editor__count" v-text="textLength"></p>
+    <drawing-modal
+      @select="insertImage"
+      v-model="insertDrawings"
+      editor
+      :multiple="false"
+      v-if="drawing_modal"
+      @close="toggleDrawingModal"
+    ></drawing-modal>
   </div>
 </template>
 
@@ -32,7 +45,9 @@ export default {
       selectedText: "",
       activeE: "",
       text: "",
-      placehold: this.placeholder
+      placehold: this.placeholder,
+      drawing_modal: false,
+      insertDrawings: {}
     };
   },
   watch: {
@@ -59,7 +74,8 @@ export default {
         .replace(/\s/g, "")
         .replace(/[|]/g, "")
         .replace(/[》]/g, "")
-        .replace(/[《]/g, "").length;
+        .replace(/[《]/g, "")
+        .replace(/\[(.*?)\]/g, ``).length;
     }
   },
   mounted() {
@@ -68,14 +84,58 @@ export default {
       // this.changes();
     }
   },
-  created() {
-    // this.text = this.value;
-    // this.changes();
-    // if (this.content) {
-    //   this.text = this.content;
-    // }
+  components: {
+    DrawingModal: () => import("@/components/Web/Modals/Chapter/Drawing")
   },
   methods: {
+    toggleDrawingModal() {
+      // this.$refs.text.focus();
+
+      this.drawing_modal = !this.drawing_modal;
+    },
+    insertImage() {
+      this.drawing_modal = !this.drawing_modal;
+      this.$refs.text.focus();
+      console.log("safadsfdsaf");
+      // console.log(thiinsertDrawings);
+      // console.log(Object.keys());
+      Object.keys(this.insertDrawings).forEach((val, index) => {
+        console.log(this.insertDrawings[val]);
+        if (
+          !this.activeE ||
+          this.activeE.tagName.toUpperCase() !== "TEXTAREA"
+        ) {
+          this.text = this.text + "\n\n" + `[${this.insertDrawings[val].url}]`;
+        } else {
+          let start = this.activeE.selectionStart;
+          let end = this.activeE.selectionEnd;
+          let rubyK = [];
+          this.text.split("").forEach((item, index) => {
+            if (end > index && index >= start) {
+              rubyK.push(item);
+            }
+          });
+
+          if (!rubyK.length) {
+            this.text = this.text + rubyText;
+            return;
+          }
+
+          // rubyText = `${rubyK.join("")}《ルビ》`;
+
+          let selectionStart = this.activeE.selectionStart,
+            value = this.$refs.text.value;
+
+          this.text =
+            value.substr(0, start - 1) +
+            "\n\n" +
+            `[${this.insertDrawings[val].url}]` +
+            "\n\n" +
+            value.substr(end);
+        }
+      });
+      // this.insertDrawings.forEach(() => {});
+    },
     createRuby() {
       this.$refs.text.focus();
       let rubyText = " |ルビをつける字《ルビ》";
@@ -105,7 +165,11 @@ export default {
       this.text = value.substr(0, start - 1) + rubyText + value.substr(end);
 
       setTimeout(() => {
-        this.$refs.text.setSelectionRange(start + 1, end + 1);
+        if (start === 0) {
+          this.$refs.text.setSelectionRange(start + 2, end + 2);
+        } else {
+          this.$refs.text.setSelectionRange(start + 1, end + 1);
+        }
       }, 0);
 
       // console.log(start);
@@ -119,6 +183,7 @@ export default {
       this.placehold = this.placeholder;
     },
     changes() {
+      this.text = this.text.replace();
       this.text = this.text
         .replace(/<ruby>/gi, "|")
         .replace(/<\/rt><\/ruby>/gi, "》")
@@ -134,6 +199,9 @@ export default {
           .replace(/[|]/g, "<ruby>")
           .replace(/[》]/g, "</rt></ruby>")
           .replace(/[《]/g, "<rt>");
+        this.textArray[index] = text
+          .replace(/\[/g, `<img src="`)
+          .replace(/\]/g, `" >`);
       });
       let br = 0;
       this.realArray = this.textArray
@@ -186,12 +254,15 @@ export default {
   border: 1px solid #ddd;
   &__nav {
     border-bottom: 1px solid #b8b8b8;
+    position: sticky;
+    top: 100px;
+    background-color: #fff;
   }
-  &__ruby-button {
+  &__button {
     height: 30px;
     background-color: #fff;
     // border: 1px solid grey;
-    border-top-left-radius: 0.4rem;
+
     font-size: 13px;
     // margin-bottom: 5px;
     transition: 200ms;
@@ -209,6 +280,11 @@ export default {
       color: white;
       transition: 200ms;
     }
+    &--ruby {
+      border-top-left-radius: 0.4rem;
+    }
+  }
+  &__ruby-button {
   }
   &__title {
     position: absolute;

@@ -5,7 +5,7 @@
         <div class="author-info__name" v-text="author.pen_name"></div>
         <a :href="`mailto:${author.email}`" class="author-info__contact" v-text="'連絡先'"></a>
       </div>
-      <div class="author-info__avatar">
+      <div class="author-info__avatar" @click="$router.push(`/users/${id}?author=true`)">
         <v-avatar size="100">
           <v-img :src="author.avatar"></v-img>
         </v-avatar>

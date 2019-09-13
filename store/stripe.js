@@ -46,18 +46,6 @@ export const actions = {
       return Promise.reject(error)
     }
   },
-  fetchCustomer: async function ({
-    commit
-  }, {
-    customerId
-  }) {
-    try {
-      const res = await this.$axios.get(`/v1/stripe/customer?customerId=${customerId}`)
-      commit('SET_CUSTOMER', _.get(res, 'data', {}))
-    } catch (error) {
-      return Promise.reject(error)
-    }
-  },
   postPaymentIntent: async function ({
     commit
   }, {
@@ -90,21 +78,6 @@ export const actions = {
     } catch (error) {
       return Promise.reject()
     }
-  },
-  postCustomer: async function ({
-    commit
-  }, {
-    fullname,
-    email,
-    phone
-  }) {
-    try {
-      const res = await this.$axios.post('/v1/stripe/customer', {
-        fullname,
-        email,
-        phone
-      })
-    } catch (error) {}
   },
   savePaymentMethod: async function ({
     commit

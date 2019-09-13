@@ -6,8 +6,8 @@
     <Analytics></Analytics>
     <div class="user-dashboard__content">
       <div class="flex-divider flex-row" style=" margin-bottom: 2rem;">
-        <ViewBarGraph class="user-dashboard__view" height="300px"></ViewBarGraph>
         <comment-list class="user-dashboard__comment-list"></comment-list>
+        <ViewBarGraph class="user-dashboard__view" height="300px"></ViewBarGraph>
       </div>
       <div class="flex-divider flex-row" style="flex-direction:row-reverse;flex-wrap:wrap;">
         <transaction-list class="user-dashboard__transaction-list"></transaction-list>
@@ -61,11 +61,12 @@ export default {
     // margin-bottom: 1rem;
     padding-bottom: 10px;
     #{$self}__view {
-      flex-grow: 1;
+      margin-left: 2rem;
+      width: 100%;
     }
     #{$self}__comment-list {
       grid-area: commentlist;
-      margin-left: 2rem;
+      // flex-grow: 1;
     }
     #{$self}__transaction-list {
       width: 100%;

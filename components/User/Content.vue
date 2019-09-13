@@ -4,8 +4,9 @@
       <div class="profile-content__meta">
         <div
           class="profile-content__meta-text profile-content__meta-text--username"
-          v-text="$route.query.author?user.pen_name: user.username"
+          v-text="$route.query.author?`${user.pen_name} (作者)`: user.username"
         ></div>
+
         <div
           class="profile-content__meta-text profile-content__meta-text--meta"
           v-for="(meta, index) in metas"
@@ -105,6 +106,7 @@ export default {
       grid-area: meta;
       padding-left: 5rem;
       padding-top: 5rem;
+      padding-right: 1rem;
     }
     #{$self}__meta-icon {
       display: flex;

@@ -16,13 +16,15 @@
 export default {
   props: {
     drawing: Object,
-    selected: Boolean
+    selected: Boolean,
+    notmultiple: Boolean
   },
   data() {
     return {
       selectedImg: false
     };
   },
+
   mounted() {
     this.selectedImg = !!this.selected;
   },

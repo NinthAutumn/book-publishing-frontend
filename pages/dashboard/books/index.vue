@@ -15,6 +15,11 @@ export default {
   async fetch({ store }) {
     await store.dispatch("analytic/fetchUserBooks");
   },
+  mounted() {
+    if (this.books.length < 1) {
+      this.$router.push("/dashboard/books/new");
+    }
+  },
   data() {
     return {
       dialog: false,

@@ -38,7 +38,13 @@
         </div>
         <form action.prevent>
           <label for="title"></label>
-          <input v-model="form.title" type="text" placeholder="タイトル" class="chapter-form__input" />
+          <input
+            maxlength="100"
+            v-model="form.title"
+            type="text"
+            placeholder="タイトル"
+            class="chapter-form__input"
+          />
           <div class="chapter-form__content">
             <div class="chapter-form__announcement chapter-form__announcement--header">
               <div class="chapter-form__announcement-form flex-column" v-if="header">

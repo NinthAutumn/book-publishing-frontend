@@ -34,7 +34,7 @@
           <div class="divider flex flex-column" style="width:100%;">
             <label for="book-title">タイトル*</label>
             <input
-              minlength="2"
+              maxlength="250"
               type="text"
               v-validate="'required||min:5'"
               data-vv-as="タイトル"
@@ -47,6 +47,7 @@
             <span class="form-error">{{ errors.first('book-title') }}</span>
             <label for="synopsis">あらすじ*</label>
             <textarea
+              maxlength="1500"
               class="book-form__input book-form__input--textarea"
               name="synopsis"
               for="synopsis"

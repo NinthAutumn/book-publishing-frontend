@@ -119,7 +119,7 @@ export default {
 .review-list {
   .swiper-slide {
     // max-width: 60rem;
-    width: 52rem;
+    width: 44rem;
   }
 }
 .my-swiper {

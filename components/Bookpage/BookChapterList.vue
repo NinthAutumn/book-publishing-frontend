@@ -26,7 +26,9 @@
               v-ripple
             >
               <div class="flex-divider flex-row" style="height:100%;max-width:100%;">
-                <div class="book-chapters__chapter-item__content--index">{{chapter.index}}</div>
+                <div
+                  class="book-chapters__chapter-item__content--index"
+                >{{`${chapter.index}${chapter.setting_index? `.${chapter.setting_index}`:''}` }}</div>
                 <div
                   class="flex-divider flex--between flex-column book-chapters__chapter-item__content book-chapters__chapter-item__content--divider"
                 >

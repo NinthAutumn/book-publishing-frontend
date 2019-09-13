@@ -63,48 +63,12 @@ export const actions = {
       return Promise.reject(error)
     }
   },
-  async fetchRanking({
-    commit
-  }, {
-    days,
-    limit,
-    page
-  }) {
 
-    await this.$axios.get(`/v1/analytic/book/rankinglist?days=${days}&limit=${limit}&page=${page}`).then((res) => {
-      commit('SET_RANKING_LIST', res.data)
-    })
-  },
   async fetchHomeRankingList({
     commit
   }) {
     const res = await this.$axios.get(`/v2/ranking/mobile/ranking`)
     commit('SET_RANKINGS', res.data)
-  },
-  async fetchGenreRanking({
-    commit
-  }, {
-    days,
-    limit,
-    page,
-    genre
-  }) {
-    await this.$axios.patch(`/v1/analytic/book/genreranking?days=${days}&limit=${limit}&page=${page}`, {
-      genre
-    }).then((res) => {
-      commit('SET_RANKING_LIST', res.data)
-    })
-  },
-  async postVote({
-    commit
-  }, {
-    bookId
-  }) {
-    try {
-      await this.$axios.post(`/v1/analytic/book/trending?bookId=${bookId}`)
-    } catch (error) {
-      return Promise.reject(error)
-    }
   },
   async fetchBookRanking({
     commit

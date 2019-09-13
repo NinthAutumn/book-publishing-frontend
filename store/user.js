@@ -183,16 +183,7 @@ export const actions = {
     commit('SET_UPDATE_VIEW', res.data.update_display)
 
   },
-  async getBookUpdate({
-    commit
-  }) {
-    try {
-      const update = await this.$axios.get('/v1/user/bookupdate')
-      commit('GET_BOOKMARK_UPDATE', update)
-    } catch (error) {
 
-    }
-  },
   async fetchProfile({
     commit
   }, {
@@ -204,18 +195,6 @@ export const actions = {
       Promise.resolve(res)
     } catch (error) {
       Promise.reject(error)
-    }
-  },
-  async fetchMyReviews({
-    commit
-  }, {
-    userId
-  }) {
-    try {
-      const res = await this.$axios.get(`/v1/review/me`)
-      commit('SET_USER_REVIEWS', get(res, 'data'))
-    } catch (error) {
-      return Promise.reject(error)
     }
   },
   async fetchProfileStats({
@@ -252,7 +231,7 @@ export const actions = {
     page = 1
   }) {
     try {
-      const res = await this.$axios.get(`/v1/user/profile/comments?userId=${userId}&page=${page}`)
+      const res = await this.$axios.get(`/v2/comment/user/book/list?page=${page}`)
       commit('SET_USER_COMMENTS', get(res, 'data'))
       return Promise.resolve()
     } catch (error) {

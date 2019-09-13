@@ -172,15 +172,7 @@ export const actions = {
   }) {
 
   },
-  async fetchTagList({
-    commit
-  }, {
-    page = 1,
-    limit = 10
-  }) {
-    const taglist = await this.$axios.get('/v1/tag/list?limit=' + limit + '&page=' + page)
-    commit('SET_TAG_LIST', taglist.data)
-  },
+
   async searchTags({
     commit
   }, {
@@ -224,16 +216,6 @@ export const actions = {
   async deleteBook({
     commit
   }) {},
-  async fetchRecommended({
-    commit,
-  }) {
-    await this.$axios.get('/v1/analytic/book/recommended').then((res) => {
-      commit('SET_RECOMMENDED', res.data)
-    })
-    // await this.$axios.get('/analytic/book/trending').then((res) => {
-    //   commit('TRENDING', res.data)
-    // })
-  },
   async fetchLatestBooks({
     commit
   }, {

@@ -88,40 +88,6 @@ export const actions = {
       book_id: store.bookId
     })
   },
-  async fetchLatestChapters({
-    commit
-  }) {
-    try {
-      const res = await this.$axios.get('/v1/library/show/chapters')
-      if (res) {
-        const {
-          chapters
-        } = res.data
-
-        commit('SET_LATEST_CHAPTERS', {
-          chapters
-        })
-      }
-
-    } catch (error) {
-      console.log(error.status);
-      throw error
-    }
-
-  },
-  async patchLatestChapters({
-    dispatch
-  }, {
-    chapterId
-  }) {
-    try {
-      const res = await this.$axios.patch('/v1/library/update/chapters?chapterId=' + chapterId)
-      dispatch('fetchLatestChapters')
-    } catch (error) {
-      console.log(error);
-      throw error
-    }
-  },
   async fetchReviews({
     commit
   }) {

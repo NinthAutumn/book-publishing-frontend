@@ -25,11 +25,12 @@
           :drawing="drawing"
           v-for="drawing in defDrawings"
           :key="drawing.id"
+          :notmultiple="multiple"
         ></drawing-item>
         <!-- <div class="drawing-modal__add"></div> -->
       </div>
 
-      <!-- {{fileList}} -->
+      <div class="drawing-modal__submit" @click="$emit('select')" v-if="editor">選んだ画像を挟む</div>
     </div>
   </div>
 </template>
@@ -46,19 +47,24 @@ export default {
     })
   },
   props: {
-    value: Object
+    editor: Boolean,
+    value: Object,
+    multiple: {
+      type: Boolean,
+      default: true
+    }
   },
   data() {
     return {
       selected: {},
       defDrawings: [],
       files: "",
-      lodaing: false
+      loading: false
     };
   },
   methods: {
     ...mapActions({
-      upload: "upload/image",
+      upload: "upload/uploadAvatar",
       fetchDrawings: "drawing/fetchAllDrawings"
     }),
     async onFileChange(e) {
@@ -80,20 +86,26 @@ export default {
       this.loading = false;
     },
     selectImage(drawing) {
+      if (!this.multiple) {
+        const bug = { [drawing.id]: drawing };
+        this.$emit("input", bug);
+        return this.$emit("select");
+      }
       if (this.selected[drawing.id]) {
         delete this.selected[drawing.id];
       } else {
         this.selected[drawing.id] = drawing;
       }
       this.$emit("input", this.selected);
-      this.selected;
-      this.defDrawings;
     }
   },
   async mounted() {
     await this.$store.dispatch("drawing/fetchAllDrawings");
     this.defDrawings = this.drawings;
-    this.selected = this.value;
+
+    if (this.value) {
+      this.selected = this.value;
+    }
   }
 };
 </script>

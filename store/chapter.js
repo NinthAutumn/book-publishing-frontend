@@ -131,33 +131,6 @@ export const mutations = {
   }
 }
 export const actions = {
-  async fetchMobileChapter({
-    commit
-  }, {
-    chapterId,
-    userId = "",
-    bookId
-  }) {
-    try {
-      const res = await this.$axios.get(`/v1/chapter?chapterId=${chapterId}&userId=${userId}`)
-      const {
-        next,
-        prev,
-        chapter
-      } = res.data
-      commit('SET_CHAPTER_MOBILE', chapter)
-
-
-
-      const {
-        data
-      } = await this.$axios.get(`/v2/chapter/${bookId}/count`)
-      commit('SET_CHAPTER_COUNT', data.count)
-
-    } catch (error) {
-      return Promise.reject(error.response.message)
-    }
-  },
   async fetchChapter({
     commit,
     state
@@ -308,60 +281,7 @@ export const actions = {
       return Promise.reject(error)
     }
   },
-  async fetchLatestBooks({
-    commit
-  }, {
-    limit = 10,
-    page = 1
-  }) {
-    try {
-      const res = await this.$axios.get(`/v1/chapter/latestbooks?limit=${limit}&page=${page}`)
-      commit('SET_LATEST_BOOKS', res.data)
-      return Promise.resolve()
-    } catch (error) {
-      return Promise.reject(error)
-    }
-  },
-  async fetchMoreLatestBooks({
-    commit
-  }, {
-    limit,
-    page
-  }) {
-    try {
-      const res = await this.$axios.get(`/v1/chapter/latestbooks?limit=${limit}&page=${page}`)
-      commit('LOAD_LATEST_BOOKS', res.data)
-      return Promise.resolve(res.data)
-    } catch (error) {
-      return Promise.reject(error)
-    }
-  },
-  fetchUnstructuredList: async function ({
-    commit
-  }, {
-    bookId
-  }) {
-    try {
-      const res = await this.$axios.get(`/v1/chapter/unstructuredList?bookId=${bookId}`)
-      commit('SET_SIMPLE_LIST', get(res, 'data'))
-    } catch (error) {
 
-    }
-  },
-  async fetchMoreLatestBooksSimple({
-    commit
-  }, {
-    limit,
-    page
-  }) {
-    try {
-      const res = await this.$axios.get(`/v1/chapter/latestbooks/simple?limit=${limit}&page=${page}`)
-      commit('LOAD_LATEST_BOOKS_SIMPLE', res.data)
-      return Promise.resolve(res.data)
-    } catch (error) {
-      return Promise.reject(error)
-    }
-  },
   async fetchChapterBookTitle({
     commit
   }, {
@@ -419,9 +339,8 @@ export const actions = {
     title,
     id
   }) {
-    await this.$axios.patch('/v1/chapter/volume', {
-      title,
-      id
+    await this.$axios.patch(`/v2/chapter/volume/${id}/title`, {
+      title
     })
   }
 
