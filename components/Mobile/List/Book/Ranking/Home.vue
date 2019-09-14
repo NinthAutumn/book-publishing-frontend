@@ -28,7 +28,7 @@ export default {
       swiperOption: {
         slidesPerView: 1.1,
         spaceBetween: 0,
-        freeMode: true,
+        freeMode: false,
         mousewheel: {
           invert: true,
           sensitivity: 1,

@@ -55,7 +55,7 @@
         name="email"
         placeholder="example@example.com"
       />
-      <label for="phone">携帯番号*</label>
+      <label for="phone">携帯番号* (国番号必要)</label>
       <input
         class="profile-form__input profile-form__input--email"
         v-model="form.phone"

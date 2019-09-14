@@ -4,7 +4,7 @@
       <div class="book-header__cover">
         <v-img
           v-if="!$device.isMobile"
-          class="book__cover"
+          class="book-header__img"
           :src="book.cover+'/l'"
           alt="book cover"
           max-width="20rem"
@@ -12,6 +12,11 @@
           :lazy-src="cover"
           :aspect-ratio="1/1.5"
         ></v-img>
+        <div
+          class="book-header__status"
+          :class="{'book-header__status--completed':book.status === 'completed'}"
+          v-text="status"
+        ></div>
       </div>
       <div class="book-header__content">
         <div class="book-header__title" v-text="book.title"></div>
@@ -101,11 +106,19 @@ export default {
     ...mapGetters({
       chapter_count: "book/getBookChapterCount",
       auth: "auth/isAuthenticated"
-    })
+    }),
+    status() {
+      return this.status_types[this.book.status];
+    }
   },
   data() {
     return {
       cover: require("~/assets/img/NobleCardLight@2x.png"),
+      status_types: {
+        completed: "完結",
+        ongoing: "連載中",
+        hiatus: "休憩中"
+      },
       meta: {
         genre: {
           style: {
@@ -255,6 +268,30 @@ export default {
     user-select: none;
     #{$self}__cover {
       grid-area: cover;
+      position: relative;
+      #{$self}__img {
+        border-radius: 0.5rem;
+        box-shadow: 0 2px 5px 0 rgba(60, 66, 87, 0.1),
+          0 1px 1px 0 rgba(0, 0, 0, 0.07);
+      }
+    }
+    #{$self}__status {
+      font-size: 1.6rem;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      border-radius: 0.5rem;
+      padding: 0.5rem 1rem;
+      box-shadow: 0 2px 5px 0 rgba(60, 66, 87, 0.1),
+        0 1px 1px 0 rgba(0, 0, 0, 0.07);
+      color: white;
+      font-weight: bold;
+      background-color: #2a2f45;
+      &--completed {
+        background-color: white;
+        // text-shadow: 1px 1px 5px #2a2f4527;
+        color: #2a2f45;
+      }
     }
     #{$self}__author {
       grid-area: avatar;

@@ -4,12 +4,12 @@
       <nuxt-link
         :to="`/books/${book.id}`"
         class="recommendation-books__ranking__item"
-        v-for="book in ranking"
+        v-for="(book,index) in ranking"
         :key="book.id"
         tag="div"
         v-ripple
       >
-        <div class="recommendation-books__ranking__index">{{book.dense_rank}}.</div>
+        <div class="recommendation-books__ranking__index">{{index+1}}.</div>
         <!-- <div class="recommendation-books__ranking__cover"> -->
         <v-img
           :src="book.cover+'/s'"

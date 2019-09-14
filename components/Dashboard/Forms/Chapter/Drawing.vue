@@ -69,7 +69,7 @@ export default {
         //   old: false,
         //   url: URL.createObjectURL(file)
         // });
-        await this.$store.dispatch("upload/image", file);
+        await this.$store.dispatch("upload/uploadAvatar", file);
       }
 
       await this.$store.dispatch("drawing/fetchAllDrawings");

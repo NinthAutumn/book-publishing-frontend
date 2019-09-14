@@ -1,6 +1,6 @@
 <template>
   <div class="review-card">
-    <div class="review-card__container">
+    <div class="review-card__container" @click.stop="$emit('selectReview',review.id)">
       <div class="review-card__header">
         <div class="flex-divider flex-row flex--align flex--between">
           <div class="flex-divider flex-row flex--align flex--between">

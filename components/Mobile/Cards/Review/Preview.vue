@@ -37,6 +37,23 @@
             <fa icon="caret-left" class="mbp-reviewp__icon"></fa>
           </div>
         </div>
+        <div v-else class="mbp-reviewp__rating-nav flex-row flex--right flex--align">
+          <div
+            class="mbp-reviewp__rate mbp-reviewp__rate--dislike"
+            @click="dislikedReview"
+            :class="{'mbp-reviewp__rate--disliked':disliked}"
+          >
+            <fa class="mbp-reviewp__rate-icon mbp-reviewp__rate-icon--dislike" icon="thumbs-up"></fa>
+          </div>
+          <div class="mbp-reviewp__rating" v-text="likeNumber"></div>
+          <div
+            class="mbp-reviewp__rate mbp-reviewp__rate--like"
+            @click="likedReview"
+            :class="{'mbp-reviewp__rate--liked':liked}"
+          >
+            <fa class="mbp-reviewp__rate-icon mbp-reviewp__rate-icon--like" icon="thumbs-up"></fa>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -51,7 +68,10 @@ export default {
   },
   data() {
     return {
-      open: false
+      open: false,
+      liked: false,
+      disliked: false,
+      likeNumber: 0
     };
   },
   methods: {
@@ -61,9 +81,57 @@ export default {
       } else {
         return string;
       }
+    },
+    async likedReview() {
+      if (this.liked) {
+        await this.$store.dispatch("review/likeReview", {
+          reviewId: this.review.id,
+          data: 0
+        });
+        this.likeNumber--;
+        this.liked = false;
+      } else {
+        await this.$store.dispatch("review/likeReview", {
+          reviewId: this.review.id,
+          data: 1
+        });
+        this.liked = true;
+        if (this.disliked) {
+          this.likeNumber = _.toNumber(this.likeNumber) + 2;
+          this.disliked = false;
+        } else {
+          this.likeNumber++;
+        }
+      }
+    },
+    async dislikedReview() {
+      if (this.disliked) {
+        await this.$store.dispatch("review/likeReview", {
+          reviewId: this.review.id,
+          data: 0
+        });
+        this.likeNumber++;
+        this.disliked = false;
+      } else {
+        await this.$store.dispatch("review/likeReview", {
+          reviewId: this.review.id,
+          data: -1
+        });
+        this.disliked = true;
+        if (this.liked) {
+          this.likeNumber = _.toNumber(this.likeNumber) - 2;
+          this.liked = false;
+        } else {
+          this.likeNumber--;
+        }
+      }
     }
   },
-  filters: {}
+  mounted() {
+    this.liked = this.review.voted > 0;
+    this.disliked = this.review.voted < 0;
+    this.likeNumber = this.review.likes;
+  }
 };
 </script>
 
@@ -120,15 +188,41 @@ export default {
       align-items: center;
       // justify-content: center;
       color: black;
-      font-size: 1.8rem;
+      font-size: 1.4rem;
+      margin: 0 1rem;
       #{$self}__icon {
         margin-right: 0.5rem;
         color: #ff8d29;
       }
       #{$self}__rate {
         color: #ff8d29;
-        font-size: 1.6rem;
+        font-size: 1.3rem;
         font-weight: bold;
+      }
+    }
+    #{$self}__rating-nav {
+      background-color: #fff;
+    }
+    #{$self}__rate {
+      // height: 4rem;
+      // width: 10rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      color: rgb(133, 133, 133);
+      &--liked {
+        // margin-left: 0.5rem;
+        color: orangered;
+      }
+      &--disliked {
+        // margin-right: 0.5rem;
+        color: #7193ff;
+      }
+      #{$self}__rate-icon {
+        &--dislike {
+          transform: rotate(180deg) translateY(-5px);
+        }
       }
     }
     #{$self}__nav {
@@ -136,6 +230,7 @@ export default {
       align-items: center;
       justify-content: flex-end;
       color: $secondary;
+
       #{$self}__icon {
         margin-left: 0.5rem;
       }

@@ -84,7 +84,7 @@
 
         <div
           class="select-component__list select-component__list--multiple"
-          :class="{modalDR: modalD === 'right',modalDL: modalD !== 'right',top: top, bottom: bottom}"
+          :class="{modalDR: modalD === 'right',modalDL: modalD !== 'right',top: top, bottom: bottom,modalTopRight:topright}"
           v-if="multiple && modal&&genre"
           :style="gridSetting"
           v-click-outside="closeModal"
@@ -106,7 +106,7 @@
         </div>
         <div
           class="select-component__list select-component__list--multiple"
-          :class="{modalDR: modalD === 'right',modalDL: modalD !== 'right',top: top, bottom: bottom}"
+          :class="{modalDR: modalD === 'right',modalDL: modalD !== 'right',top: top, bottom: bottom, modalTopRight:topright}"
           v-if="multiple && modal&&!genre"
           :style="gridSetting"
           v-click-outside="closeModal"
@@ -149,6 +149,7 @@ export default {
     modalD: String,
     icon: String,
     top: Boolean,
+    topright: Boolean,
     bottom: Boolean,
     fontSize: [Number, String],
     theme: String,
@@ -399,6 +400,10 @@ export default {
 }
 .modalDL {
   left: 0px;
+}
+.modalTopRight {
+  top: 0px !important;
+  right: 0px !important;
 }
 
 .select-component {

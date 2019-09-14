@@ -339,7 +339,7 @@ export const actions = {
     try {
       const res = await this.$axios.patch(`/v2/book/${book.id}`, book)
     } catch (error) {
-
+      console.log(error);
     }
   }
 }

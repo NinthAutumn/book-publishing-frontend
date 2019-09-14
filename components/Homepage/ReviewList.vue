@@ -3,7 +3,12 @@
     <div v-swiper:mySwiper="!$device.isMobile? swiperOption:mobileOption">
       <div class="swiper-wrapper">
         <div class="swiper-slide" v-for="(review,index) in reviews" :key="index">
-          <Review v-if="!$device.isMobile" :height="height" :review="review"></Review>
+          <Review
+            @selectReview="reviewPage"
+            v-if="!$device.isMobile"
+            :height="height"
+            :review="review"
+          ></Review>
           <mobile-review
             v-else
             @selectReview="reviewPage"
@@ -27,7 +32,12 @@
         </div>
       </div>
     </div>-->
-    <review-page :book="{}" @selectReview="reviewPage" v-model="$route.query.review"></review-page>
+    <div class="review-show" v-if="$device.isMobile">
+      <review-page :book="{}" @selectReview="reviewPage" v-model="$route.query.review"></review-page>
+    </div>
+    <div class="review-show" v-else>
+      <review-modal @selectReview="reviewPage" v-model="$route.query.review"></review-modal>
+    </div>
   </div>
 </template>
 <script>
@@ -78,7 +88,8 @@ export default {
   components: {
     Review: () => import("@/components/Web/Cards/Review"),
     MobileReview: () => import("@/components/Mobile/Cards/Review/Preview"),
-    ReviewPage: () => import("@/components/Mobile/Cards/Review/Page")
+    ReviewPage: () => import("@/components/Mobile/Cards/Review/Page"),
+    ReviewModal: () => import("@/components/Web/Modals/Review")
   },
   methods: {
     reviewPage: function(state) {

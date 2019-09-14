@@ -18,7 +18,7 @@
         </transition>
       </div>
       <div class="pmb-header__title" v-text="book.title"></div>
-      <div class="pmb-header__author">{{`by ${book.pen_name} ・ ${book.status}`}}</div>
+      <div class="pmb-header__author">{{`by ${book.pen_name} ・ ${status}`}}</div>
       <nav class="pmb-header__nav">
         <div
           class="pmb-header__nav-item"
@@ -69,7 +69,15 @@ export default {
     ...mapGetters({
       chapter_count: "book/getBookChapterCount",
       auth: "auth/getUser"
-    })
+    }),
+    status() {
+      let status_types = {
+        completed: "完結",
+        ongoing: "連載中",
+        hiatus: "休憩中"
+      };
+      return status_types[this.book.status];
+    }
   },
   data() {
     return {

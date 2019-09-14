@@ -9,9 +9,9 @@
         :key="book.id"
         v-ripple=" $device.isMobile"
       >
-        <div class="recommendation-books__cover">
+        <div class="recommendation-books__cover" ref="cover">
           <v-img
-            :src="book.cover + '/m'"
+            :src="book.cover + `${cover_size > 150? '/l':'/m'}`"
             :aspect-ratio="1/1.5"
             :lazy-src="cover"
             max-width="20rem"
@@ -52,10 +52,13 @@ import { mapGetters } from "vuex";
 export default {
   data() {
     return {
-      cover: require("~/assets/img/NobleCardLight.png?size=200")
+      cover: require("~/assets/img/NobleCardLight.png?size=200"),
+      cover_size: 0
     };
   },
-  components: {},
+  mounted() {
+    this.cover_size = this.$refs.cover.clientWidth;
+  },
   computed: {
     ...mapGetters({
       books: "analytic/getRecommended"
@@ -134,6 +137,7 @@ export default {
   &__list {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
     /* autoprefixer: ignore next */
     grid-gap: 1.5rem;
     padding-right: 2rem;
@@ -149,6 +153,7 @@ export default {
       }
       #{$self}__cover {
         margin-right: 2rem;
+        width: 50%;
         // overflow: hidden;
         #{$self}__img {
           // box-shadow: 0 2px 5px 0 rgba(60, 66, 87, 0.1),
@@ -160,6 +165,7 @@ export default {
         }
       }
       #{$self}__meta {
+        width: 50%;
         padding: 1rem 0;
       }
       #{$self}__title {

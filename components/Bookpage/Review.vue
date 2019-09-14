@@ -409,6 +409,7 @@ export default {
     padding-bottom: 0px !important;
     display: flex;
     flex-direction: column;
+    word-break: break-all;
     width: 100%;
     box-sizing: border-box;
     // height: 150px;

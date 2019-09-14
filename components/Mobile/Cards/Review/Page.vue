@@ -2,7 +2,7 @@
   <div
     class="mr-page dialog dialog__container"
     :class="{'mr-page--disabled':!value}"
-    style="padding-bottom:5rem!important;"
+    style="padding-bottom:10rem!important;"
   >
     <transition name="slide-left">
       <div
@@ -20,7 +20,13 @@
               </v-avatar>
               <div class="flex-divider">
                 <div class="mr-page__title mr-page__title--nav" v-text="review.title"></div>
-                <v-rating color="#FF8D29" readonly :size="15" half-increments :value="+book.rating"></v-rating>
+                <v-rating
+                  color="#FF8D29"
+                  readonly
+                  :size="15"
+                  half-increments
+                  :value="review.rating"
+                ></v-rating>
               </div>
             </div>
 
@@ -39,7 +45,7 @@
             </div>
             <div class="flex-divider flex-column">
               <div class="mr-page__title" v-text="review.title"></div>
-              <v-rating color="#FF8D29" readonly :size="18" half-increments :value="+book.rating"></v-rating>
+              <v-rating color="#FF8D29" readonly :size="18" half-increments :value="+review.rating"></v-rating>
               <div class="flex-divider flex-row flex--align">
                 <div class="mr-page__author" v-text="review.username"></div>
                 <div class="mr-page__writer" v-if="book.user_id === review.user_id">作者</div>
@@ -53,6 +59,32 @@
         <div class="mr-page__meta">
           <div class="mr-page__content" v-html="review.content"></div>
         </div>
+        <nuxt-link
+          v-ripple
+          :to="`/books/${review.book_id}`"
+          tag="div"
+          class="mr-page__footer flex-row"
+        >
+          <div class="mr-page__cover">
+            <v-img
+              class="mr-page__cover-img"
+              :src="review.cover"
+              :lazy-src="lazyCover"
+              :aspect-ratio="1/1.5"
+              width="3rem"
+            ></v-img>
+          </div>
+          <div class="mr-page__book-meta">
+            <div class="mr-page__book-title" v-text="review.book_title"></div>
+            <v-rating
+              color="#FF8D29"
+              readonly
+              :size="15"
+              half-increments
+              :value="review.book_rating"
+            ></v-rating>
+          </div>
+        </nuxt-link>
         <div class="mr-page__nav mr-page__nav--bottom flex-row flex--between flex--align">
           <div
             class="mr-page__rate mr-page__rate--dislike"
@@ -90,7 +122,8 @@ export default {
       nav: false,
       liked: false,
       disliked: false,
-      likeNumber: 0
+      likeNumber: 0,
+      lazyCover: require("~/assets/img/NobleCardLight.png")
     };
   },
   watch: {
@@ -197,9 +230,6 @@ export default {
     //     item.value = this.books_count;
     //   }
     // });
-  },
-  destroyed() {
-    // window.removeEventListener("onscroll", this.toggleNav);
   }
 };
 </script>
@@ -222,6 +252,38 @@ export default {
       display: flex;
       align-items: center;
       justify-content: center;
+    }
+    #{$self}__footer {
+      display: flex;
+      position: fixed;
+      bottom: 5rem;
+      left: 0;
+      background-color: #fff;
+      padding: 0.5rem 1rem;
+      width: 100vw;
+      // align-items: center;
+      // justify-content: center;
+      #{$self}__cover {
+        margin-right: 1rem;
+        #{$self}__cover-img {
+          box-shadow: 0 2px 5px 0 rgba(60, 66, 87, 0.1),
+            0 1px 1px 0 rgba(0, 0, 0, 0.07);
+          border-radius: 0.5rem;
+        }
+      }
+      #{$self}__book-meta {
+        max-width: 100%;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        #{$self}__book-title {
+          font-size: 1.4rem;
+          font-weight: bold;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          white-space: nowrap;
+        }
+      }
     }
     #{$self}__rate {
       height: 4rem;
@@ -278,8 +340,7 @@ export default {
           0 3px 6px 0 rgba(0, 0, 0, 0.07);
       }
     }
-    // box-shadow: 0 7px 14px 0 rgba(60, 66, 87, 0.1),
-    //   0 3px 6px 0 rgba(0, 0, 0, 0.07);
+
     #{$self}__meta {
       padding: 1rem;
       border-radius: 1rem;

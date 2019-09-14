@@ -21,8 +21,8 @@
           <v-rating color="#FF8D29" readonly :size="17" half-increments :value="+book.rating"></v-rating>
         </div>
         <div class="flex-divider flex-row flex--right">
-          <div class="mranking-card__point" v-if="!vote" v-text=" `ポイント${book.score}`"></div>
-          <div class="mranking-card__point" v-else>
+          <div class="mranking-card__point" v-if="!vote&&book.score" v-text=" `ポイント${book.score}`"></div>
+          <div class="mranking-card__point" v-else-if="vote">
             <fa class="mranking-card__bolt" icon="bolt"></fa>
             {{book.score}}
           </div>

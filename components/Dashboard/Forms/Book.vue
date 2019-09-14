@@ -55,6 +55,26 @@
               v-model="form.synopsis"
             ></textarea>
           </div>
+          <div class="book-form__type" style="margin-bottom:2rem;">
+            <Select
+              :width="120"
+              v-model="form.type"
+              name="タイプ"
+              :object="book_type"
+              transition="grow-shrink"
+              def="連載"
+            ></Select>
+          </div>
+          <div class="book-form__type" style="margin-bottom:2rem;">
+            <Select
+              :width="120"
+              v-model="form.status"
+              name="ステータス"
+              :object="book_status"
+              transition="grow-shrink"
+              def="連載中"
+            ></Select>
+          </div>
           <div class="book-form__main-genre">
             <Select
               transition="grow-shrink"
@@ -63,10 +83,9 @@
               :data="items"
               icon="location-arrow"
               v-model="form.main_genre"
-              top
               genre
+              top
               :limit="1"
-              style="margin-bottom:2rem;"
               :disabled="form.genre.length > 0"
               disableMessage="メインジャンルをまた選ぶには関連ジャンルを全部選択解除してください"
             ></Select>
@@ -94,22 +113,21 @@
             :latestData="preGenre"
             icon="location-arrow"
             v-model="form.genre"
-            top
             genre
+            top
             :limit="6"
-            style="margin-bottom:2rem;"
           ></Select>
-          <label for>関連ジャンル</label>
-          <transition-group tag="ul" name="list" class="book-form__genre-list">
-            <li
-              class="book-form__genre-item"
-              v-for="(genre) in form.genre"
-              :key="genre.name"
-              v-text="genre.name"
-            ></li>
-          </transition-group>
-          <span>*最高６ジャンルまで &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; *必ず1ジャンルを選択</span>
         </div>
+        <label for>関連ジャンル</label>
+        <transition-group tag="ul" name="list" class="book-form__genre-list">
+          <li
+            class="book-form__genre-item"
+            v-for="(genre) in form.genre"
+            :key="genre.name"
+            v-text="genre.name"
+          ></li>
+        </transition-group>
+        <span>*最高６ジャンルまで &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; *必ず1ジャンルを選択</span>
         <TagCreate :limit="6" v-model="form.tags"></TagCreate>
         <div class="book-form__genre">
           <label for>タグ</label>
@@ -164,6 +182,16 @@ export default {
       paid: false,
       tip: false,
       scale: 1,
+      book_type: [
+        { key: "短編", value: "short" },
+        { key: "連載", value: "serial" },
+        { key: "エッセイ", value: "essay" }
+      ],
+      book_status: [
+        { key: "連載中", value: "ongoing" },
+        { key: "完結", value: "completed" },
+        { key: "休暇", value: "hiatus" }
+      ],
       form: {
         paid: true,
         synopsis: "",
@@ -172,7 +200,9 @@ export default {
         main_genre: [],
         genre: [],
         cover: {},
-        coverPath: ""
+        coverPath: "",
+        type: "serial",
+        status: "ongoing"
       },
       search: "",
       selected: [],
@@ -247,7 +277,9 @@ export default {
       for (let tag of this.tags) {
         this.form.tags.push({ name: tag.name, id: tag.id });
       }
+      this.form.type = this.book.type;
       this.form.title = this.book.title;
+      this.form.status = this.book.status
       this.form.synopsis = this.book.synopsis;
       this.imageUrl = this.book.cover;
       this.form.url = this.book.cover;
@@ -337,8 +369,9 @@ export default {
           main_genre_id: this.form.main_genre[0].id,
           paid: this.form.paid,
           tags: this.form.tags,
-          genres: this.form.genre
-          // word_count:
+          genres: this.form.genre,
+          type: this.form.type,
+          status:this.form.status
         };
         if (this.$route.query.bookId) {
           book["cover"] = this.form.cover.url;
@@ -652,43 +685,44 @@ export default {
       transition: 300ms;
     }
   }
+  span {
+    color: grey;
+  }
+  &__genre-title {
+    font-size: 1.6rem;
+    margin-top: 1rem;
+  }
+  &__genre-item {
+    padding: 0.5rem 1rem;
+    font-size: 1.4rem;
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
+    border-radius: 0.5rem;
+    color: $primary;
+    border: 1px solid $primary;
+    &--tag {
+      color: $secondary;
+      border: 1px solid $secondary;
+    }
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  &__genre-list {
+    // margin-top: 0.5rem;
+    display: flex;
+    box-shadow: 0 1px 3px 0 #e6ebf1;
+    -webkit-transition: box-shadow 150ms ease;
+    transition: box-shadow 150ms ease;
+    padding: 0.5rem;
+    flex-wrap: wrap;
+    min-height: 4.5rem;
+    background-color: #fff;
+    margin-bottom: 0.8rem;
+  }
   &__genre {
     margin-bottom: 2rem;
-    span {
-      color: grey;
-    }
-    #{$self}__genre-list {
-      // margin-top: 0.5rem;
-      display: flex;
-      box-shadow: 0 1px 3px 0 #e6ebf1;
-      -webkit-transition: box-shadow 150ms ease;
-      transition: box-shadow 150ms ease;
-      padding: 0.5rem;
-      flex-wrap: wrap;
-      min-height: 4.5rem;
-      background-color: #fff;
-      margin-bottom: 0.8rem;
-    }
-    #{$self}__genre-title {
-      font-size: 1.6rem;
-      margin-top: 1rem;
-    }
-    #{$self}__genre-item {
-      padding: 0.5rem 1rem;
-      font-size: 1.4rem;
-      margin-right: 0.5rem;
-      margin-bottom: 0.5rem;
-      border-radius: 0.5rem;
-      color: $primary;
-      border: 1px solid $primary;
-      &--tag {
-        color: $secondary;
-        border: 1px solid $secondary;
-      }
-      &:hover {
-        cursor: pointer;
-      }
-    }
   }
   &__container {
     background-color: rgb(245, 245, 245);
