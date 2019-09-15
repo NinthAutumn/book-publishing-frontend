@@ -386,7 +386,9 @@ export default {
         if (item.key === this.selected_item) {
           this.multiData[index].selected = true;
           item.selected = true;
-          this.selectedData.push(this.selected_item);
+          this.selectedData.push(item);
+          // console.log(item);
+          this.$emit("input", [item]);
         }
       });
     }

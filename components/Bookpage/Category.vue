@@ -2,25 +2,37 @@
   <div class="book-tags">
     <p class="book-tags__title">タグ</p>
     <ul class="book-tags__list flex-row">
-      <li class="book-tags__item" v-for="(tag, index) in tags" :key="index" v-ripple>{{tag.name}}</li>
+      <li class="book-tags__item" v-for="(tag, index) in tags" :key="index" v-ripple>{{tag}}</li>
     </ul>
     <p class="book-tags__title">ジャンル</p>
     <ul class="book-tags__list flex-row">
       <nuxt-link
-        :to="`/browse?genre=${tag.name}`"
+        :to="`/browse?genre=${tag}`"
         tag="li"
         class="book-tags__item book-tags__item--genre"
         v-for="(tag, index) in genres"
         :key="index"
         v-ripple
-      >{{tag.name}}</nuxt-link>
+      >{{tag}}</nuxt-link>
     </ul>
   </div>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
-  props: ["tags", "genres"]
+  async mounted() {
+    await this.$store.dispatch(
+      "book/fetchBookGenreAndTags",
+      this.$route.params.id
+    );
+  },
+  computed: {
+    ...mapGetters({
+      genres: "book/getBookGenres",
+      tags: "book/getBookTags"
+    })
+  }
 };
 </script>
 

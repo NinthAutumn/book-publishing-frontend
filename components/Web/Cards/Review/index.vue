@@ -83,6 +83,12 @@ export default {
     box-shadow: 0 7px 14px 0 rgba(60, 66, 87, 0.1),
       0 3px 6px 0 rgba(0, 0, 0, 0.07);
     border-radius: 1rem;
+    &:hover {
+      cursor: pointer;
+      transform: scale(1.01);
+      transition: 200ms;
+    }
+    transition: transform 200ms;
     #{$self}__author {
       font-size: 1.4rem;
       opacity: 0.9;

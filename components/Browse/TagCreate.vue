@@ -19,9 +19,6 @@
         :class="{selected: tag.selected}"
       >{{tag.key}}({{tag.sum}})</li>
     </transition-group>
-    <client-only>
-      <infinite-loading :identifier="id" @infinite="infiniteHandler"></infinite-loading>
-    </client-only>
   </div>
 </template>
 
@@ -36,12 +33,13 @@ export default {
       id: 1
     };
   },
+  props: ["value"],
   watch: {
     search: function(val) {
-      this.selected = [];
-      // this.filterTags();
-      this.page = 1;
-      this.id++;
+      // this.selected = [];
+      this.filterTags();
+      // this.page = 1;
+      // this.id++;
     }
   },
   computed: {
@@ -49,44 +47,64 @@ export default {
       return this.$store.getters["book/getTagList"];
     }
   },
+  updated() {
+    if (this.value.length > 0) {
+      this.selected.length > 0;
+      this.selected.forEach(val => {
+        this.value.forEach(tag => {
+          if (val.value === tag) {
+            val.selected = true;
+          }
+        });
+      });
+    }
+  },
   async mounted() {
-    // const { tags } = await this.$store.dispatch("book/searchTags", {
-    //   page: 1,
-    //   limit: 30,
-    //   search: this.search
-    // });
-    // let object = [];
-    // tags.forEach(item => {
-    //   object.push({ key: item.name, sum: item.book_count, selected: false });
-    // });
-    // this.selected = object;
+    this.filterTags();
+    if (this.value.length > 0) {
+      this.selected.length > 0;
+      this.selected.forEach(val => {
+        this.value.forEach(tag => {
+          if (val.value === tag) {
+            val.selected = true;
+          }
+        });
+      });
+    }
   },
   methods: {
     async filterTags() {
-      await this.$store.dispatch("book/searchTags", {
+      const { tags } = await this.$store.dispatch("book/searchTags", {
         page: 1,
-        limit: 30,
+        limit: 40,
         search: this.search
       });
       let object = [];
-      this.tags.forEach(item => {
-        object.push({ key: item.name, sum: item.book_count, selected: false });
+      tags.forEach(item => {
+        object.push({
+          key: item.name,
+          value: item.id,
+          sum: item.book_count,
+          selected: false
+        });
       });
       this.selected = object;
       this.selected.forEach(tag => {
         this.object.forEach(t => {
-          if (tag.key === t) {
+          if (tag.value === t) {
             tag.selected = true;
           }
         });
       });
     },
     async selectTag(name) {
+      // return console.log(this.selected[name]);
       this.selected[name].selected = !this.selected[name].selected;
       let temparray = [];
+
       this.selected.forEach(tag => {
         if (tag.selected) {
-          temparray.push(tag.key);
+          temparray.push(tag.value);
         }
       });
       this.object = temparray;
@@ -95,7 +113,7 @@ export default {
     async infiniteHandler($state) {
       const { tags } = await this.$store.dispatch("book/searchTags", {
         page: this.page++,
-        limit: 30,
+        limit: 40,
         search: this.search,
         infinite: true
       });
@@ -104,6 +122,7 @@ export default {
         tags.forEach(item => {
           this.selected.push({
             key: item.name,
+            value: item.id,
             sum: item.book_count,
             selected: false
           });

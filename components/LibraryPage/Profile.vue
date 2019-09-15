@@ -1,7 +1,7 @@
 <template>
   <div class="library-up">
     <div class="library-up__container">
-      <div class="library-up__avatar flex flex--align flex-column flex--center">
+      <div class="library-up__avatar flex-row flex--align flex-column flex--center">
         <div class="library-up__avatar__img">
           <v-avatar :size="80" class="profile-nav__avatar-img">
             <!-- <img
@@ -12,34 +12,24 @@
           </v-avatar>
         </div>
         <div class="library-up__avatar__username" v-text="user.username"></div>
-        <div class="library-up__avatar__founding-date">{{$moment(user.createdAt).year()}} 年から</div>
+        <div class="library-up__avatar__founding-date">{{$moment(user.created_at).year()}} 年から</div>
       </div>
       <ul class="library-up__data__list">
-        <li class="library-up__data__item flex flex--align flex--between">
+        <li class="library-up__data__item flex-row flex--align flex--between">
           <label class="library-up__data__header">ブックマーク数</label>
-          <label
-            class="library-up__data__stats"
-            v-if="this.$store.state.library.bookmarks"
-            v-text="this.$store.state.library.bookmarks.length + '個'"
-          ></label>
-          <label class="library-up__data__stats" v-else v-text="0+ '個'"></label>
+          <label class="library-up__data__stats" v-text="`${profile.bookmark}個`"></label>
         </li>
-        <li class="library-up__data__item flex flex--between flex--align">
+        <li class="library-up__data__item flex-row flex--between flex--between flex--align">
           <label class="library-up__data__header">レビュー数</label>
-          <label
-            class="library-up__data__stats"
-            v-if="this.$store.state.review.myReviews"
-            v-text="this.$store.state.review.myReviews.length + '個'"
-          ></label>
-          <label class="library-up__data__stats" v-else v-text="0 + '個'"></label>
+          <label class="library-up__data__stats" v-text="`${profile.review}個`"></label>
         </li>
-        <li class="library-up__data__item flex flex--align">
+        <li class="library-up__data__item flex-row flex--between flex--align">
           <label class="library-up__data__header">リスト数</label>
-          <label class="library-up__data__stats"></label>
+          <label class="library-up__data__stats" v-text="`${profile.list}個`"></label>
         </li>
-        <li class="library-up__data__item flex flex--align">
-          <label class="library-up__data__header">購入本数</label>
-          <label class="library-up__data__stats"></label>
+        <li class="library-up__data__item flex-row flex--between flex--align">
+          <label class="library-up__data__header">購入話数</label>
+          <label class="library-up__data__stats" v-text="`${profile.transaction}個`"></label>
         </li>
       </ul>
     </div>
@@ -50,9 +40,13 @@
 import { mapGetters } from "vuex";
 
 export default {
+  async mounted() {
+    await this.$store.dispatch("library/fetchUserProfile");
+  },
   computed: {
     ...mapGetters({
-      user: "auth/getUser"
+      user: "auth/getUser",
+      profile: "library/getProfile"
     })
   },
   data() {

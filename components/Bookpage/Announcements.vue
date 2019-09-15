@@ -96,7 +96,9 @@ export default {
 .book-announcement {
   $self: &;
   // max-width: 0rem;
+
   padding: 1rem;
+  padding-bottom: 0;
   max-width: 100%;
   #{$self}__header {
     font-size: 1.7rem;
@@ -109,6 +111,7 @@ export default {
       display: flex;
       justify-content: space-between;
       padding: 1rem;
+      // padding-bottom:
       border-bottom: 1px solid rgb(226, 226, 226);
       box-shadow: 0;
       transition: 300ms ease;

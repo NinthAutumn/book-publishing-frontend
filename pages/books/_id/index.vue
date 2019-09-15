@@ -20,7 +20,8 @@
       </div>
       <div class="book__synopsis" v-show="tabs.open === 'review'">
         <BookContent :book="book"></BookContent>
-        <Tags :tags="tags" :genres="genres" v-if="!$device.isMobile"></Tags>
+        <book-category v-if="!$device.isMobile"></book-category>
+        <!-- <Tags :tags="tags" :genres="genres" ></Tags> -->
         <section class="book__reviews">
           <div class="book__reviews__title">レビュー({{reviewCount}})</div>
           <ReviewsList :rating="book.rating"></ReviewsList>
@@ -37,7 +38,6 @@ import { hydrateWhenVisible } from "vue-lazy-hydration";
 export default {
   auth: false,
   async asyncData({ store, route, app }) {
-    await store.dispatch("book/fetchBookGenreAndTags", route.params.id);
     await store.dispatch("book/fetchBookChapterCount", route.params.id);
   },
   async fetch({ store, route }) {
@@ -147,7 +147,8 @@ export default {
     BookHeader: () => import("@/components/Web/Cards/Book/Header"),
     MobilePage: hydrateWhenVisible(() =>
       import("@/components/Mobile/Cards/Book/Page")
-    )
+    ),
+    BookCategory: () => import("@/components/Bookpage/Category")
   },
   pageTransition: false,
   async mounted() {

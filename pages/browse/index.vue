@@ -32,8 +32,9 @@
             </div>
           </div>
           <div class="flex-divider flex-row flex--right" style="width:100%;">
-            <div class="browse-page__filter-genre">
-              <Select
+            <div class="browse-page__filter-genre" style="margin-right:1rem;">
+              <genre-select v-model="selected_genre"></genre-select>
+              <!-- <Select
                 v-model="selected_genre"
                 transition="grow-shrink"
                 multiple
@@ -44,7 +45,7 @@
                 name="ジャンル"
                 :modalD="modalDirection"
                 :selected_item="$route.query.genre"
-              ></Select>
+              ></Select>-->
             </div>
             <button
               class="browse-page__open-tags flex-row flex--align flex--center"
@@ -72,9 +73,7 @@
             </transition-group>
           </div>
         </transition>
-        <transition name="tag-summon">
-          <TagCreate v-if="tag_search" v-model="tag_list"></TagCreate>
-        </transition>
+        <TagCreate v-if="tag_search" v-model="tag_list"></TagCreate>
         <div class="browse-page__content flex-row">
           <BookList
             :type="type"
@@ -96,7 +95,8 @@ export default {
   components: {
     Select: () => import("@/components/All/Select"),
     BookList: () => import("@/components/Browse/BookList"),
-    TagCreate: () => import("@/components/Browse/TagCreate")
+    TagCreate: () => import("@/components/Browse/TagCreate"),
+    GenreSelect: () => import("@/components/Web/Select/Genre")
   },
   computed: {
     ...mapGetters({
@@ -106,11 +106,16 @@ export default {
   methods: {
     async refresh() {
       this.loading = true;
+      const genres = this.selected_genre.map(genre => {
+        return genre.id;
+      });
+      const tags = this.tag_list;
+
       await this.$store.dispatch("book/browseBooks", {
         type: this.type,
         direction: this.direction,
-        genres: this.selected_genre,
-        tags: this.tag_list,
+        genres,
+        tags,
         page: 1,
         limit: 20
       });
@@ -129,9 +134,6 @@ export default {
     if (this.$device.isMobile) {
       return this.$router.push("/browse/mobile");
     }
-    if (this.$route.query.genre && this.$route.query.genre !== "undefined") {
-      this.selected_genre.push({ name: this.$route.query.genre });
-    }
   },
   watch: {
     selected_genre: function(val) {
@@ -147,13 +149,18 @@ export default {
       this.refresh();
     }
   },
-  async fetch({ store }) {
+  async fetch({ store, route }) {
     // await store.dispatch("book/fetchAllGenres");
-    await store.dispatch("book/fetchAllGenres");
+    let direction = 0,
+      type = 5,
+      genres = [],
+      tags = [];
+
     await store.dispatch("book/browseBooks", {
-      type: 5,
-      direction: "desc",
-      genres: [],
+      type,
+      direction,
+      tags,
+      genres,
       page: 1,
       limit: 20
     });
@@ -163,13 +170,16 @@ export default {
   },
   data() {
     return {
-      type: 5,
+      type: this.$route.query.type || 5,
       genre: "",
       loading: true,
       genre_list: [],
-      direction: "desc",
+      direction: this.$route.query.direction || 0,
       modalDirection: "right",
-      selected_genre: [],
+      selected_genre:
+        this.$route.query.genre && this.$route.query.genre !== "undefined"
+          ? [{ name: this.$route.query.genre }]
+          : [],
       sort_type: [
         { key: "栞数", value: 1 },
         { key: "話数", value: 2 },
@@ -177,10 +187,7 @@ export default {
         { key: "評価", value: 4 },
         { key: "視聴回数", value: 5 }
       ],
-      sort_directions: [
-        { key: "上り", value: "asc" },
-        { key: "下り", value: "desc" }
-      ],
+      sort_directions: [{ key: "上り", value: 1 }, { key: "下り", value: 0 }],
       tag_list: [],
       tag_search: false
     };

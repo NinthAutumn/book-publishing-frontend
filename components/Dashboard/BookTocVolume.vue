@@ -30,7 +30,11 @@
         </div>
         <div class="flex-divider flex-row flex--align">
           <!-- <div class="book-toc__delete">削除</div> -->
-          <div class="book-toc__created-at">{{$moment(chapter.created_at).calendar()}}</div>
+          <div
+            v-if="chapter.state === 'published'"
+            class="book-toc__created-at"
+          >{{$moment(chapter.created_at).calendar()}}</div>
+          <div v-if="chapter.state === 'scheduled'" class="book-toc__created-at">スケジュールされている話です</div>
         </div>
       </div>
     </div>

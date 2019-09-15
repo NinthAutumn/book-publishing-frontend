@@ -6,7 +6,8 @@ export const state = () => ({
   read_later: [],
   history: [],
   latestChapters: [],
-  reviews: []
+  reviews: [],
+  profile: {}
 })
 
 export const getters = {
@@ -18,7 +19,8 @@ export const getters = {
   },
   getReviews: state => state.reviews,
   getBookmarks: state => state.bookmarks,
-  getHistory: state => state.history
+  getHistory: state => state.history,
+  getProfile: state => state.profile
 }
 
 
@@ -51,6 +53,9 @@ export const mutations = {
   },
   SET_REVIEWS: (state, reviews) => {
     state.reviews = reviews
+  },
+  SET_PROFILE: (state, profile) => {
+    state.profile = profile
   }
 }
 
@@ -63,10 +68,24 @@ export const actions = {
     try {
       const res = await this.$axios.get(`/v2/library/show/list?type=bookmark&sortBy=${sortby}`)
       commit('SET_BOOKMARK', res.data)
+      return Promise.resolve(res.data)
     } catch (error) {
       Promise.reject(error)
     }
 
+  },
+  async fetchUserProfile({
+    commit
+  }) {
+    try {
+      const {
+        data
+      } = await this.$axios.get('/v2/library/show/profile')
+      commit('SET_PROFILE', data)
+      return Promise.resolve(data)
+    } catch (error) {
+      return Promise.reject(error)
+    }
   },
   async getHistory({
     commit

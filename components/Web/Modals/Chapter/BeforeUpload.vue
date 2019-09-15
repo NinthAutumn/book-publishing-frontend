@@ -40,7 +40,7 @@
                 :not-before="$moment()"
                 :minute-step="1"
                 :lang="lang"
-                v-model="date"
+                v-model="form.date"
               ></date-picker>
             </div>
           </transition>

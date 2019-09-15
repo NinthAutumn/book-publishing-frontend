@@ -38,15 +38,20 @@
                     <p>{{chapter.title}}</p>
                   </div>
                   <div
+                    class="book-chapters__state"
+                    v-if="chapter.state === 'scheduled'"
+                  >話はまだ公開されていません,このメッセージは作者である貴方しか見えません</div>
+                  <div
+                    v-else
                     class="book-chapters__chapter-item__content book-chapters__chapter-item__content--chapter-meta"
                   >
                     <p
                       class="book-chapters__chapter-item__content book-chapters__chapter-item__content--createdAt"
-                      v-if="today < $moment(chapter.created_at).add(6, 'days').toDate()"
+                      v-if="today < $moment(chapter.created_at).add(6, 'days').toDate()&&chapter.created_at"
                     >{{$moment(chapter.created_at).startOf('minute').fromNow()}}</p>
                     <p
                       class="book-chapters__chapter-item__content--createdAt"
-                      v-else
+                      v-else-if="chapter.created_at"
                     >{{$moment(chapter.created_at).format('l')}}</p>
                     <fa
                       class="book-chapters_chapter-item__content--locked"

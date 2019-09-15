@@ -1,5 +1,7 @@
 // import {
 //   axios
+import Vue from 'vue'
+
 // } from 'axios'
 import {
   get
@@ -138,7 +140,7 @@ export const actions = {
     commit
   }, {
     type,
-    direction = 'desc',
+    direction = 0,
     genres,
     page,
     tags = [],
@@ -146,14 +148,7 @@ export const actions = {
     infinite = false
   }) {
     try {
-      const res = await this.$axios.patch('/v2/book/show/browse', {
-        genres,
-        tags,
-        direction,
-        type,
-        page,
-        limit
-      })
+      const res = await this.$axios.get(`/v2/book/show/browse?genres=${genres}&tags=${tags}&direction=${direction}&page=${page}&limit=${limit}&type=${type}`)
       if (infinite) {
         commit('BROWSE_BOOKS_NEXT', res.data)
         return Promise.resolve(res.data)
@@ -183,12 +178,7 @@ export const actions = {
   }) {
     try {
       const res = await this.$axios.get(`/v2/tag/query?search=${search}&limit=${limit}&page=${page}`)
-      if (infinite) {
-        commit('PUSH_TAG_LIST', res.data)
-      } else {
-        commit('SET_TAG_LIST', res.data)
 
-      }
       return Promise.resolve({
         tags: res.data
       })
@@ -355,9 +345,18 @@ export const mutations = {
     state.bookGenres = genres
   },
   SET_GENRES(state, genres) {
-    state.genres = genres
-  },
 
+    genres.forEach((genre) => {
+      state.genres.push({
+        ...genre,
+        selected: false
+      })
+    })
+
+  },
+  REMOVE_GENRES(state) {
+    state.genres = []
+  },
   SET_RECOMMENDED(state, books) {
     state.recommended = books
   },
@@ -379,11 +378,11 @@ export const mutations = {
   SET_TAG_LIST(state, tags) {
     state.tagList = tags
   },
-  PUSH_TAG_LIST(state, tags) {
-    tags.forEach((tag) => {
-      state.tagList.push(tag)
-    })
-  },
+  // PUSH_TAG_LIST(state, tags) {
+  //   tags.forEach((tag) => {
+  //     state.tagList.push(tag)
+  //   })
+  // },
   SET_BOOK_VIEW(state, view) {
     state.view = view
   },
@@ -452,5 +451,12 @@ export const mutations = {
     books.forEach((book) => {
       state.books[type].push(book)
     })
+  },
+  SELECT_GENRE: (state, {
+    index,
+    genre
+  }) => {
+    Vue.set(state.genres, index, genre);
+
   }
 }

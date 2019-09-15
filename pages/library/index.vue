@@ -9,8 +9,12 @@
         @mouseenter="navLine('Bookmark')"
         class="library__nav__item"
       >ブックマーク</div>
-      <!-- <div @mouseenter="navLine('readingList')" class="library__nav__item">再生リスト</div>
-      <div @mouseenter="navLine('review')" class="library__nav__item">レビュー</div>
+      <div
+        @click="navSelect('readinglist')"
+        @mouseenter="navLine('readinglist')"
+        class="library__nav__item"
+      >リーディングリスト</div>
+      <!-- <div @mouseenter="navLine('review')" class="library__nav__item">レビュー</div>
       <div @mouseenter="navLine('bought')" class="library__nav__item">購入済み</div>-->
       <div
         @click="navSelect('history')"
@@ -68,6 +72,15 @@
       <div class="library-history" v-if="selectedTabName=== 'history'||selected_item=== '歴史'">
         <HistoryBook :books="history"></HistoryBook>
       </div>
+      <div
+        class="library-reading"
+        v-if="selectedTabName=== 'readinglist'||selected_item=== 'リーディングリスト'"
+      >
+        <div class="library-reading__nav">
+          <!-- <div class="library-reading__create" >リストを作る</div> -->
+        </div>
+        <reading-grid></reading-grid>
+      </div>
       <div class="library-profile" v-if="!$device.isMobile">
         <Profile></Profile>
       </div>
@@ -90,6 +103,9 @@ export default {
     Select: hydrateWhenVisible(() => import("@/components/All/Select")),
     HistoryBook: hydrateWhenVisible(() =>
       import("@/components/LibraryPage/HistoryBook")
+    ),
+    ReadingGrid: hydrateWhenVisible(() =>
+      import("@/components/Web/Lists/Reading/Grid")
     )
   },
   data() {
@@ -113,7 +129,7 @@ export default {
       order: "更新順",
       selected_item: "ブックマーク",
       editMode: false,
-      nav_list: ["ブックマーク", "レビュー", "購入済み", "歴史"]
+      nav_list: ["ブックマーク", "リーディングリスト", "購入済み", "歴史"]
     };
   },
   mounted() {
@@ -155,11 +171,17 @@ export default {
           };
           this.selectedTabName = "bookmark";
           break;
-
+        case "readinglist":
+          this.selectedTab = {
+            width: "142px",
+            left: "106px"
+          };
+          this.selectedTabName = "readinglist";
+          break;
         case "history":
           this.selectedTab = {
             width: "32px",
-            left: "106px"
+            left: "258px"
           };
           this.selectedTabName = "history";
           await this.$store.dispatch("library/getHistory");
@@ -174,10 +196,17 @@ export default {
             left: "0px"
           };
           break;
+        case "readinglist":
+          this.line = {
+            width: "142px",
+            left: "106px"
+          };
+          // this.selectedTabName = "readinglist";
+          break;
         case "history":
           this.line = {
             width: "32px",
-            left: "106px"
+            left: "258px"
           };
           break;
       }

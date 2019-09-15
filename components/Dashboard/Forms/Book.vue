@@ -279,7 +279,7 @@ export default {
       }
       this.form.type = this.book.type;
       this.form.title = this.book.title;
-      this.form.status = this.book.status
+      this.form.status = this.book.status;
       this.form.synopsis = this.book.synopsis;
       this.imageUrl = this.book.cover;
       this.form.url = this.book.cover;
@@ -371,7 +371,7 @@ export default {
           tags: this.form.tags,
           genres: this.form.genre,
           type: this.form.type,
-          status:this.form.status
+          status: this.form.status
         };
         if (this.$route.query.bookId) {
           book["cover"] = this.form.cover.url;
@@ -403,7 +403,7 @@ export default {
         });
 
         this.loading = false;
-        return this.$router.push("/dashboard");
+        return this.$router.push("/dashboard/books");
       } catch (error) {
         this.$toast.show("本の投稿に失敗しました！", {
           theme: "toasted-primary",

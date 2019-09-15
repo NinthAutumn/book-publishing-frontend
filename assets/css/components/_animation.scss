@@ -139,6 +139,33 @@
   }
 }
 
+.slide-right-fade {
+
+
+  &-enter {
+    transform: translateX(-10%);
+    opacity: 0;
+
+    &-active {
+      transition: 300ms;
+    }
+  }
+
+  &-leave {
+    // transform: translateX(-50%);
+
+    &-active {
+      transition: 300ms;
+    }
+
+    &-to {
+      transform: translateX(-10%);
+      opacity: 0;
+    }
+  }
+
+}
+
 .slide-right {
   @keyframes slide-down {
     from {

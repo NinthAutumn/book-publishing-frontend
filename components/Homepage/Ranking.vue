@@ -31,7 +31,7 @@
         <!-- </div> -->
         <div class="recommendation-books__ranking__meta">
           <div class="recommendation-books__ranking__title">{{book.title}}</div>
-          <div class="recommendation-books__ranking__author">うん戦乱</div>
+          <div class="recommendation-books__ranking__author">{{book.pen_name}}</div>
         </div>
       </nuxt-link>
     </div>

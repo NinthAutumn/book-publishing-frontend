@@ -4,12 +4,16 @@ export const state = () => ({
 })
 
 export const getters = {
-  getUserReadingList: state => state.list
+  getUserReadingList: state => state.list,
+  getReadingList: state => state.show
 }
 
 export const mutations = {
   SET_USER_READING_LIST(state, list) {
     state.list = list
+  },
+  SET_READING_LIST(state, list) {
+    state.show = list
   }
 }
 
@@ -20,7 +24,7 @@ export const actions = {
     readingList
   }) {
     try {
-      await this.$axios.post('/v2/readinglist/', readingList)
+      await this.$axios.post('/v2/readinglist', readingList)
     } catch (error) {
       return Promise.reject(error)
     }
@@ -37,7 +41,7 @@ export const actions = {
       return Promise.reject(error)
     }
   },
-  async likeBookToReadingList({
+  async likeReadingList({
     commit
   }, {
     id
@@ -56,6 +60,20 @@ export const actions = {
         data
       } = await this.$axios.get('/v2/readinglist/show/me')
       commit('SET_USER_READING_LIST', data)
+    } catch (error) {
+      return Promise.reject(error)
+    }
+  },
+  async fetchReadingList({
+    commit
+  }, {
+    id
+  }) {
+    try {
+      const {
+        data
+      } = await this.$axios.get(`/v2/readinglist/${id}`)
+      commit('SET_READING_LIST', data)
     } catch (error) {
       return Promise.reject(error)
     }

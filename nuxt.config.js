@@ -35,7 +35,7 @@ module.exports = {
       },
       {
         property: "og:title",
-        content: '最新WEB小説投稿・閲覧サイト ノーブルp'
+        content: '最新WEB小説投稿・閲覧サイト ノーブル'
       },
       {
         property: 'og:description',

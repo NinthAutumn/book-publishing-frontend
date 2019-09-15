@@ -47,7 +47,9 @@ export default {
     };
   },
   mounted() {
-    this.$refs.search.focus();
+    if (this.$device.isMobile) {
+      this.$refs.search.focus();
+    }
   },
   asyncData({ route }) {
     return {
