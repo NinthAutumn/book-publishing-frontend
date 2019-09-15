@@ -72,6 +72,9 @@ export default {
   display: flex;
   $self: &;
   &--mobile {
+    #{$self}__meta {
+      width: 100% !important;
+    }
     #{$self}__list {
       display: grid;
       grid-template-columns: repeat(3, 1fr);

@@ -36,9 +36,14 @@
       <BooksList :trendings="latest"></BooksList>
       <mobile-ranking v-if="$device.isMobile"></mobile-ranking>
       <adsbygoogle v-if="!user.status||!user" />
+      <div class="card-title" v-if="!$device.isMobile">
+        <h3>人気急上昇中のリーディングリスト</h3>
+      </div>
+      <reading-list v-if="!$device.isMobile" :reading="reading"></reading-list>
       <div class="card-title">
         <h3>更新頻度が高い</h3>
       </div>
+
       <BooksList :trendings="frequent"></BooksList>
     </div>
   </div>
@@ -75,6 +80,9 @@ export default {
     ),
     NavList: hydrateOnInteraction(() =>
       import("@/components/Mobile/Layout/Nav")
+    ),
+    ReadingList: hydrateOnInteraction(() =>
+      import("@/components/Web/Lists/Reading/Swiper")
     )
   },
   async fetch({ store }) {
@@ -104,6 +112,7 @@ export default {
       time: "weekly",
       page: 1
     });
+    await this.$store.dispatch("ranking/fetchTrendingReadingList");
     await this.$store.dispatch("analytic/fetchTrendingReviews");
     window.addEventListener("resize", this.handleResize);
     this.handleResize();
@@ -129,7 +138,8 @@ export default {
       latest: "book/getLatest",
       recommended: "analytic/getRecommended",
       frequent: "analytic/getFrequent",
-      user: "auth/getUser"
+      user: "auth/getUser",
+      reading: "ranking/getTrendingReadingList"
     })
   },
   auth: false

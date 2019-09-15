@@ -7,7 +7,8 @@ export const state = () => ({
   trending: [],
   ranking: {},
   rankings: {},
-  voteRanking: []
+  voteRanking: [],
+  reading: []
 })
 
 export const getters = {
@@ -20,6 +21,7 @@ export const getters = {
   getRankingsList: state => state.rankings,
   getBookRanking: state => state.ranking,
   getVoteRanking: state => state.voteRanking,
+  getTrendingReadingList: state => state.reading
 
 }
 
@@ -39,6 +41,9 @@ export const mutations = {
   SET_VOTE_RANKING: (state, voteRanking) => {
     state.voteRanking = voteRanking
   },
+  SET_TRENDING_READING_LIST(state, list) {
+    state.reading = list
+  }
 }
 
 export const actions = {
@@ -69,6 +74,19 @@ export const actions = {
   }) {
     const res = await this.$axios.get(`/v2/ranking/mobile/ranking`)
     commit('SET_RANKINGS', res.data)
+  },
+
+  async fetchTrendingReadingList({
+    commit
+  }) {
+    try {
+      const {
+        data
+      } = await this.$axios.get(`/v2/ranking/trending/reading`)
+      commit('SET_TRENDING_READING_LIST', data)
+    } catch (error) {
+      return Promise.reject(error)
+    }
   },
   async fetchBookRanking({
     commit

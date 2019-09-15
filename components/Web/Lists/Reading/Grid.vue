@@ -29,6 +29,7 @@ export default {
   &__container {
     display: grid;
     grid-template-columns: repeat(auto-fill, 19rem);
+    grid-gap: 1rem;
   }
 }
 </style>

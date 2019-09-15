@@ -1,11 +1,17 @@
 export const state = () => ({
   show: {},
-  list: []
+  list: [],
+  listWithoutBooks: [],
+  modal: false,
+  selected_book: ""
 })
 
 export const getters = {
   getUserReadingList: state => state.list,
-  getReadingList: state => state.show
+  getReadingList: state => state.show,
+  getUserReadingListWithoutBook: state => state.listWithoutBooks,
+  getModalState: state => state.modal,
+  getSelectedBook: state => state.selected_book
 }
 
 export const mutations = {
@@ -14,6 +20,13 @@ export const mutations = {
   },
   SET_READING_LIST(state, list) {
     state.show = list
+  },
+  SET_USER_READING_LIST_WITHOUT_BOOK(state, list) {
+    state.listWithoutBooks = list
+  },
+  TOGGLE_STATE(state, id) {
+    state.modal = !state.modal
+    state.selected_book = id
   }
 }
 
@@ -21,12 +34,21 @@ export const actions = {
   async setReadingList({
     commit
   }, {
-    readingList
+    title,
+    description
   }) {
     try {
-      await this.$axios.post('/v2/readinglist', readingList)
+      const {
+        data
+      } = await this.$axios.post('/v2/readinglist', {
+        title,
+        description
+      })
+      return Promise.resolve(data)
     } catch (error) {
-      return Promise.reject(error)
+      return Promise.resolve({
+        error
+      })
     }
   },
   async addBookToReadingList({
@@ -48,6 +70,20 @@ export const actions = {
   }) {
     try {
       await this.$axios.patch(`/v2/readinglist/${id}/like`)
+    } catch (error) {
+      return Promise.reject(error)
+    }
+  },
+  async fetchMyReadingListWithoutBooks({
+    commit
+  }, {
+    id
+  }) {
+    try {
+      const {
+        data
+      } = await this.$axios.get(`/v2/readinglist/show/me/${id}/list`)
+      commit('SET_USER_READING_LIST_WITHOUT_BOOK', data)
     } catch (error) {
       return Promise.reject(error)
     }

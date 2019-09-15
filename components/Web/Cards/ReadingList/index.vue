@@ -96,11 +96,14 @@ export default {
 <style lang="scss">
 .reading-list {
   $self: &;
+  max-width: 19rem;
   &__container {
     padding: 1rem 2rem;
     padding-top: 0.5rem;
     width: 100%;
     min-height: 30rem;
+    max-width: 19rem;
+    box-sizing: border-box;
     box-shadow: 0 2px 5px 0 rgba(60, 66, 87, 0.1),
       0 1px 1px 0 rgba(0, 0, 0, 0.07);
     border-radius: 0.5rem;
@@ -152,14 +155,14 @@ export default {
             0 1px 1px 0 rgba(0, 0, 0, 0.07);
           &--1 {
             grid-column: 2/6;
-            grid-row: 2/4;
+            grid-row: 4/6;
             z-index: 1000;
           }
           &--2 {
             z-index: 100;
             grid-row-start: 1;
             grid-column: 4/6;
-            grid-row: 1/4;
+            grid-row: 3/6;
             justify-self: center;
           }
         }
@@ -188,7 +191,7 @@ export default {
           }
           &--3 {
             grid-column: 2/4;
-            grid-row: 2/6;
+            grid-row: 3/6;
             z-index: 10;
           }
         }

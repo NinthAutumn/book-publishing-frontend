@@ -44,13 +44,20 @@
           v-text="`${((book.read/book.chapter_count)*100).toFixed(0)}%`"
         ></span>
       </div>
-      <nuxt-link
-        tag="div"
-        :to="`/books/${book.book_id||book.id}`"
-        v-line-clamp="clampLine"
-        class="book-card__title"
-        v-text="book.title"
-      ></nuxt-link>
+      <div class="book-card__footer flex-row flex--align flex--between">
+        <nuxt-link
+          tag="div"
+          :to="`/books/${book.book_id||book.id}`"
+          v-line-clamp="clampLine"
+          class="book-card__title"
+          v-text="book.title"
+        ></nuxt-link>
+        <div class="book-card__menu" @click.stop="toggleModal" v-if="!$device.isMobile">
+          <fa icon="ellipsis-v"></fa>
+          <select-modal v-if="modal" @toggle="toggleModal" :bookId="book.book_id||book.id"></select-modal>
+        </div>
+      </div>
+
       <div v-if="book.name" class="book-card__genre" v-text="book.name"></div>
       <div class="book-card__rating flex-row flex--align" v-if="!isMobile">
         <v-rating
@@ -109,13 +116,17 @@ export default {
       timer: false,
       lockTimer: false,
       touchduration: 500,
-      selected: false
+      selected: false,
+      modal: false
     };
   },
   components: {
-    // TrinityRingsSpinner
+    SelectModal: () => import("@/components/Web/Modals/Book/Select")
   },
   methods: {
+    toggleModal() {
+      this.modal = !this.modal;
+    },
     startHandler(e) {
       if (!this.progress) {
         return;
@@ -262,8 +273,13 @@ export default {
       font-size: 0.9rem;
     }
   }
-  &__title {
+  &__footer {
     margin-top: 0.5rem;
+    #{$self}__menu {
+      font-size: 1.4rem;
+    }
+  }
+  &__title {
     font-size: 1.4rem;
     font-weight: bold;
   }

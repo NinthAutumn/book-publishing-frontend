@@ -2,6 +2,7 @@
   <div>
     <div v-if="$nuxt.isOffline">今オフラインです</div>
     <username-modal></username-modal>
+    <reading-modal v-if="readingModal"></reading-modal>
     <transition name="grow-shrink" class="loginform">
       <AuthModal v-if="loginState"></AuthModal>
     </transition>
@@ -88,7 +89,8 @@ export default {
       import("@/components/Navigation/Notification")
     ),
     UsernameModal: () => import("@/components/Navigation/Username"),
-    AuthModal: () => import("@/components/Navigation/Auth/AuthModal")
+    AuthModal: () => import("@/components/Navigation/Auth/AuthModal"),
+    ReadingModal: () => import("@/components/Web/Modals/ReadingList/Create")
   },
   async mounted() {
     if (this.auth) {
@@ -116,7 +118,8 @@ export default {
       auth: "auth/isAuthenticated",
       user: "auth/getUser",
       subscription: "subscription/getSubscription",
-      loginState: "getLoginFormState"
+      loginState: "getLoginFormState",
+      readingModal: "reading/getModalState"
     })
   },
   watch: {},

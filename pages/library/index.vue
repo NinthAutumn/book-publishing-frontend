@@ -255,6 +255,9 @@ export default {
     max-width: 300px;
   }
   $self: &;
+  &-reading {
+    flex-grow: 1;
+  }
   &-history {
     margin-right: 10px;
     flex-grow: 1;
