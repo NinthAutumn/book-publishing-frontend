@@ -36,17 +36,19 @@ export default {
           "Authorization"
         ] = `Bearer ${access_token}`;
 
-        this.auth({ access_token, refresh_token, strategy: "twitter" });
-        this.$nuxt.refresh();
+        await this.auth({ access_token, refresh_token, strategy: "twitter" });
+
         this.$storage.setUniversal("access_token", access_token);
         this.$storage.setUniversal("refresh_token", refresh_token);
         this.$storage.setUniversal("strategy", "twitter");
 
         await this.$store.dispatch("auth/fetchUser");
-        this.$router.push(this.$storage.getUniversal("path"));
+
+        this.$nuxt.refresh();
         if (!this.user.username) {
           this.$store.commit("auth/TOGGLE_USERNAME_MODAL");
         }
+        this.$router.push(this.$storage.getUniversal("path"));
       } catch (error) {
         console.log(error);
       }

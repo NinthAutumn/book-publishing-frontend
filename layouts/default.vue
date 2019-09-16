@@ -98,6 +98,9 @@ export default {
       if (this.subscription.payment_due) {
         alert("payment is due but it failed ");
       }
+      if (!this.user.username) {
+        this.$store.commit("auth/TOGGLE_USERNAME_MODAL");
+      }
     }
 
     if (this.$device.isMobile) {

@@ -30,7 +30,7 @@
             class="username-form__error"
             v-if="errors.first('username')"
           >>{{ errors.first('username') }}</div>
-          <div class="username-form__error" v-else-if="usernamAvailable">ユーザー名はもう使われています</div>
+          <div class="username-form__error" v-else-if="usernameAvailable">ユーザー名はもう使われています</div>
         </div>
         <div class="username-form__submit">
           <div class="username-form__button" v-ripple @click="setUsername">更新</div>

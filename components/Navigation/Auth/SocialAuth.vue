@@ -105,6 +105,12 @@ export default {
                   });
                   // this.$router.go(0);
                   // this.$nuxt.refresh();
+                  if (!this.user.username && this.user) {
+                    this.$store.commit("auth/TOGGLE_USERNAME_MODAL");
+                  }
+                  this.$store.commit("LOGIN_FALSE");
+                  this.$emit("loginAction");
+                  this.$nuxt.refresh();
                 } else {
                   this.$toast.show(`フェースブックのログインに失敗しました`, {
                     theme: "toasted-primary",
@@ -127,35 +133,19 @@ export default {
               icon: "extension"
             });
           }
-          this.$store.commit("LOGIN_FALSE");
-          this.$emit("loginAction");
-          this.$nuxt.refresh();
-          if (!this.user.username && this.user) {
-            this.$store.commit("auth/TOGGLE_USERNAME_MODAL");
-          }
+
           break;
         case "google":
-          this.google_submit();
+          await this.google_submit();
+
           break;
         case "twitter":
-          // console.log(window.twttr);
           this.$storage.setUniversal("path", this.$route.path);
-          // this.setAuth(this.$route.path);
           const { data } = await this.$axios.get("/v2/auth/social/twitter/url");
-          window.location.replace(data.url);
-
-          this.$toast.show(`ツイッターの対応は現在工作通です`, {
-            theme: "toasted-primary",
-            position: "top-right",
-            duration: 2000,
-            icon: "extension"
-          });
+          window.location = data.url;
           break;
         default:
           break;
-      }
-      if (value === "local") {
-      } else {
       }
     },
     async changeStep() {
@@ -163,42 +153,47 @@ export default {
     },
     async googleAuth(googleUser) {},
     async google_submit() {
-      await window.google_auth2.signIn().then(async val => {
-        await this.auth({
-          token: val.Zi.access_token,
-          strategy: "google"
+      try {
+        await window.google_auth2.signIn().then(async val => {
+          await this.auth({
+            token: val.Zi.access_token,
+            strategy: "google"
+          });
+          // this.$store.commit("auth/TOGGLE_USERNAME_MODAL");
+          // this.$nuxt.refresh();
+          // this.$router.go(0);
         });
-        // this.$store.commit("auth/TOGGLE_USERNAME_MODAL");
-        // this.$nuxt.refresh();
-        // this.$router.go(0);
-      });
-      if (this.$route.name === "books-id-chaptersId") {
-        await this.$store.dispatch("comment/fetchCommentList", {
-          chapterId: this.$route.params.chaptersId,
-          sortBy: 0,
-          page: 1,
-          limit: 10,
-          direction: 0
-        });
-      }
-      if (this.$route.name === "books-id") {
-        await this.$store.dispatch("review/showAll", {
-          bookId: this.$route.params.id,
-          page: 1,
-          limit: 10,
-          type: 0
-        });
-        await this.$store.dispatch("review/fetchIsReviewed", {
-          bookId: this.$route.params.id
-        });
-      }
+        if (this.$route.name === "books-id-chaptersId") {
+          await this.$store.dispatch("comment/fetchCommentList", {
+            chapterId: this.$route.params.chaptersId,
+            sortBy: 0,
+            page: 1,
+            limit: 10,
+            direction: 0
+          });
+        }
+        if (this.$route.name === "books-id") {
+          await this.$store.dispatch("review/showAll", {
+            bookId: this.$route.params.id,
+            page: 1,
+            limit: 10,
+            type: 0
+          });
+          await this.$store.dispatch("review/fetchIsReviewed", {
+            bookId: this.$route.params.id
+          });
+        }
+        if (!this.user.username && this.user) {
+          this.$store.commit("auth/TOGGLE_USERNAME_MODAL");
+        }
+        this.$store.commit("LOGIN_FALSE");
+        this.$emit("loginAction");
+        this.$nuxt.refresh();
+      } catch (error) {}
 
-      this.$store.commit("LOGIN_FALSE");
-      this.$emit("loginAction");
-      this.$nuxt.refresh();
-      if (!this.user.username && this.user) {
-        this.$store.commit("auth/TOGGLE_USERNAME_MODAL");
-      }
+      // if (!this.user.username && this.user) {
+      //   this.$store.commit("auth/TOGGLE_USERNAME_MODAL");
+      // }
     }
   }
 };
