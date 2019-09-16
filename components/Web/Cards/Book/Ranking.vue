@@ -4,7 +4,7 @@
       <div class="book-ranking__cover">
         <div
           class="book-ranking__ranking"
-          :class="`book-ranking__ranking--${index}`"
+          :class="`book-ranking__ranking--${noColor? '':index}`"
           v-text="index + 1"
         ></div>
         <v-img
@@ -44,7 +44,13 @@
 
 <script>
 export default {
-  props: ["book", "index", "score", "vote"],
+  props: {
+    book: Object,
+    index: Number,
+    score: [String, Number],
+    vote: Boolean,
+    noColor: Boolean
+  },
   data() {
     return {
       cover: require("~/assets/img/NobleCardLight.png")

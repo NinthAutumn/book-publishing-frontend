@@ -217,6 +217,16 @@ export default {
     cursor: pointer;
   }
 }
+@media screen and (min-width: 1137px) {
+  .el-icon-menu {
+    display: none;
+  }
+}
+@media screen and (max-width: 1136px) {
+  .el-icon-menu {
+    // display: visibl;
+  }
+}
 .loginform {
   width: 440px;
   margin: auto;
@@ -422,34 +432,6 @@ nav {
       // position: absolute;
       font-weight: 300;
     }
-  }
-}
-
-.popper__arrow::after,
-.el-popper {
-  content: "arif";
-  background-color: black !important;
-  color: black !important;
-}
-
-@-webkit-keyframes flip-diagonal-2-br {
-  0% {
-    -webkit-transform: rotate3d(-1, 1, 0, 0deg);
-    transform: rotate3d(-1, 1, 0, 0deg);
-  }
-  100% {
-    -webkit-transform: rotate3d(-1, 1, 0, 180deg);
-    transform: rotate3d(-1, 1, 0, 180deg);
-  }
-}
-@keyframes flip-diagonal-2-br {
-  0% {
-    -webkit-transform: rotate3d(-1, 1, 0, 0deg);
-    transform: rotate3d(-1, 1, 0, 0deg);
-  }
-  100% {
-    -webkit-transform: rotate3d(-1, 1, 0, 180deg);
-    transform: rotate3d(-1, 1, 0, 180deg);
   }
 }
 </style>

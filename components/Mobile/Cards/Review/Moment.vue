@@ -6,7 +6,7 @@
           <v-img :src="$route.query.author? user.author_avatar : user.avatar"></v-img>
         </v-avatar>
       </div>
-      <div class="review-moment__meta">
+      <div class="review-moment__meta" v-if="review.type === 'review'">
         <div class="review-moment__title" v-text="review.title"></div>
         <!-- {{review.rating}} -->
         <v-rating color="#FF8D29" readonly size="20" half-increments :value="+review.rating"></v-rating>
@@ -28,7 +28,7 @@
             </v-img>
           </div>
           <div class="review-moment__divider">
-            <div class="review-moment__book-title" v-line-clamp="2">{{review.book_title}}</div>
+            <div class="review-moment__book-title" v-line-clamp="1">{{review.book_title}}</div>
             <div class="review-moment__author">{{review.pen_name}} ・ {{review.genre_name}}</div>
           </div>
         </div>
@@ -74,38 +74,71 @@ export default {
     0 3px 6px 0 rgba(0, 0, 0, 0.07);
   padding: 0.5rem;
   border-radius: 0.5rem;
+  max-width: 100%;
+  overflow: hidden;
   .v-icon {
     padding: 0 !important;
   }
 
   &__container {
+    widows: 100%;
     display: flex;
+    max-width: 100%;
+    overflow: hidden;
     #{$self}__content {
       word-break: break-word;
+      max-width: 100%;
     }
     #{$self}__avatar {
       // width: 5rem;
       min-width: 4rem;
     }
+    #{$self}__meta {
+      max-width: 100%;
+      overflow: hidden;
+    }
     #{$self}__title {
-      font-size: 1.7rem;
+      max-width: 100%;
+      font-size: 1.6rem;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+      word-break: break-word;
     }
     .v-icon {
       padding: 0 !important;
     }
     #{$self}__book {
+      overflow: hidden;
       display: flex;
       border-radius: 0.5rem;
       padding: 0.5rem 1rem;
+      max-width: 100%;
       background-color: #f7fafc;
+      white-space: nowrap;
+      overflow: hidden;
+      word-break: break-word;
+      #{$self}__divider {
+        max-width: 100%;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
       #{$self}__book-cover {
         margin-right: 0.5rem;
         border-radius: 0.5rem;
         overflow: hidden;
+
         min-width: 5rem;
+        max-width: 100%;
       }
       #{$self}__book-title {
+        max-width: 100%;
         font-size: 1.4rem;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        word-break: break-word;
       }
       #{$self}__author {
         font-size: 1.2rem;

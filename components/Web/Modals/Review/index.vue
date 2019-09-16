@@ -3,7 +3,7 @@
     <transition name="grow-shrink">
       <div
         class="mreview-modal__container dialog__content"
-        v-if="review&&value"
+        v-if="value"
         v-click-outside="closeModal"
       >
         <div class="mreview-modal__header flex-row">

@@ -17,11 +17,18 @@
       <span class="update-book__cover-meta">{{book.length}}</span>
     </nuxt-link>
     <div class="update-book__meta">
-      <nuxt-link
-        :to="`books/${book? book[0].book_id: ''}`"
-        class="update-book__title"
-        v-line-clamp="2"
-      >{{book[0].title}}</nuxt-link>
+      <div class="flex-divider flex-row flex--align flex--between">
+        <nuxt-link
+          :to="`books/${book? book[0].book_id: ''}`"
+          class="update-book__title"
+          v-line-clamp="2"
+        >{{book[0].title}}</nuxt-link>
+        <div class="update-book__menu" @click.stop="toggleModal">
+          <fa icon="ellipsis-v"></fa>
+          <select-modal top v-if="modal" @toggle="toggleModal" :bookId="book?book[0].book_id:1"></select-modal>
+        </div>
+      </div>
+
       <div class="update-book__chapter-list">
         <div
           class="update-book__chapter-item"
@@ -59,10 +66,19 @@ export default {
   },
   data() {
     return {
-      cover: require("~/assets/img/NobleCardLight.png")
+      cover: require("~/assets/img/NobleCardLight.png"),
+      modal: false
     };
   },
-  methods: {},
+  components: {
+    SelectModal: () => import("@/components/Web/Modals/Book/Select")
+  },
+  methods: {
+    toggleModal() {
+      // alert("sdafs");
+      this.modal = !this.modal;
+    }
+  },
   filters: {
     truncate: (string, number) => {
       if (string.length > number) {
@@ -82,6 +98,7 @@ export default {
     cursor: pointer;
   }
   display: flex;
+
   &__cover {
     position: relative;
     height: 100%;
@@ -117,6 +134,11 @@ export default {
     flex-direction: column;
     justify-content: space-between;
     width: 100%;
+
+    #{$self}__menu {
+      font-size: 1.6rem;
+      position: relative;
+    }
     #{$self}__title {
       font-size: 1.6rem;
       max-width: 100%;

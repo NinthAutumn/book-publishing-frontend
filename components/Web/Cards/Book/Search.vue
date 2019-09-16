@@ -1,7 +1,7 @@
 <template>
   <div class="book-scard">
-    <nuxt-link tag="div" class="book-scard__container" :to="`/books/${book.id}`">
-      <div class="book-scard__cover">
+    <div tag="div" class="book-scard__container">
+      <nuxt-link tag="div" class="book-scard__cover" :to="`/books/${book.id}`">
         <v-img
           class="book-scard__img"
           :src="book.cover + '/m'"
@@ -10,14 +10,21 @@
           max-width="15rem"
           min-width="5rem"
         ></v-img>
-      </div>
+      </nuxt-link>
       <div class="book-scard__meta">
-        <nuxt-link
-          :to="`/books/${book.id}`"
-          class="book-scard__title"
-          v-line-clamp="1"
-          v-text="book.title"
-        ></nuxt-link>
+        <div class="book-scard__header flex-divider flex-row flex--align flex--between">
+          <nuxt-link
+            :to="`/books/${book.id}`"
+            class="book-scard__title"
+            v-line-clamp="1"
+            v-text="book.title"
+          ></nuxt-link>
+          <div class="book-scard__menu" @click.stop="toggleModal" v-if="!$device.isMobile">
+            <fa icon="ellipsis-v"></fa>
+            <select-modal v-if="modal" @toggle="toggleModal" :bookId="book.id"></select-modal>
+          </div>
+        </div>
+
         <div class="flex-divider flex-row">
           <div class="book-scard__genre" v-text="`${book.pen_name}・${book.name}`"></div>
         </div>
@@ -30,7 +37,7 @@
         </div>
         <div class="book-scard__synopsis" v-line-clamp="4" v-text="book.synopsis"></div>
       </div>
-    </nuxt-link>
+    </div>
   </div>
 </template>
 
@@ -46,8 +53,18 @@ export default {
   },
   data() {
     return {
-      lazyCover: require("~/assets/img/NobleCardLight.png?webp")
+      lazyCover: require("~/assets/img/NobleCardLight.png?webp"),
+      modal: false
     };
+  },
+  components: {
+    SelectModal: () => import("@/components/Web/Modals/Book/Select")
+  },
+  methods: {
+    toggleModal() {
+      // alert("in here");
+      this.modal = !this.modal;
+    }
   }
 };
 </script>
@@ -97,6 +114,9 @@ export default {
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      #{$self}__menu {
+        font-size: 1.8rem;
+      }
       #{$self}__title {
         font-size: 1.8rem;
       }

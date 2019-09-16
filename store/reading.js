@@ -3,7 +3,13 @@ export const state = () => ({
   list: [],
   listWithoutBooks: [],
   modal: false,
-  selected_book: ""
+  selected_book: "",
+  selected_list: "",
+  latest: [],
+  listByBook: [],
+  listInfo: {},
+  listModal: false,
+  books: []
 })
 
 export const getters = {
@@ -11,7 +17,13 @@ export const getters = {
   getReadingList: state => state.show,
   getUserReadingListWithoutBook: state => state.listWithoutBooks,
   getModalState: state => state.modal,
-  getSelectedBook: state => state.selected_book
+  getSelectedBook: state => state.selected_book,
+  getLatestList: state => state.latest,
+  getListByBook: state => state.listByBook,
+  getListInfo: state => state.listInfo,
+  getSelectedList: state => state.selected_list,
+  getListModalState: state => state.listModal,
+  getListBooks: state => state.books
 }
 
 export const mutations = {
@@ -27,6 +39,22 @@ export const mutations = {
   TOGGLE_STATE(state, id) {
     state.modal = !state.modal
     state.selected_book = id
+  },
+  SET_LATEST(state, list) {
+    state.latest = list
+  },
+  SET_LIST_BY_BOOK(state, list) {
+    state.listByBook = list
+  },
+  SET_READING_LIST_INFO(state, list) {
+    state.listInfo = list
+  },
+  TOGGLE_LIST_MODAL(state, id) {
+    state.listModal = !state.listModal
+    state.selected_list = id
+  },
+  SET_READING_LIST_BOOKS(state, list) {
+    state.books = list
   }
 }
 
@@ -70,6 +98,78 @@ export const actions = {
   }) {
     try {
       await this.$axios.patch(`/v2/readinglist/${id}/like`)
+    } catch (error) {
+      return Promise.reject(error)
+    }
+  },
+  async fetchReadingListInfo({
+    commit
+  }, {
+    id
+  }) {
+    try {
+      const {
+        data
+      } = await this.$axios.get(`/v2/readinglist/show/${id}/info`)
+      commit('SET_READING_LIST_INFO', data)
+    } catch (error) {
+      return Promise.reject(error)
+    }
+  },
+  async fetchListByBookId({
+    commit
+  }, {
+    book_id,
+    page = 1,
+    limit = 10
+  }) {
+    try {
+      const {
+        data
+      } = await this.$axios.get(`/v2/readinglist/show/book?book_id=${book_id}&page=${page}&limit=${limit}`)
+      commit('SET_LIST_BY_BOOK', data)
+    } catch (error) {
+      return Promise.reject(error)
+    }
+  },
+  async fetchReadingListBookList({
+    commit
+  }, {
+    page = 1,
+    limit = 10,
+    id
+  }) {
+    try {
+      const {
+        data
+      } = await this.$axios.get(`/v2/readinglist/show/${id}/book?page=${page}&limit=${limit}`)
+      commit('SET_READING_LIST_BOOKS', data)
+    } catch (error) {
+      return Promise.reject(error)
+    }
+  },
+  async fetchLatestReadingList({
+    commit
+  }, {
+    page = 1,
+    limit = 10
+  }) {
+    try {
+      const {
+        data
+      } = await this.$axios.get(`/v2/readinglist/show/latest?page=${page}&limit=${limit}`)
+      commit('SET_LATEST', data)
+    } catch (error) {
+      return Promise.reject(error)
+    }
+  },
+  async followReadingList({
+    commit
+  }, {
+    id
+  }) {
+    try {
+      await this.$axios.patch(`/v2/readinglist/${id}/follow`)
     } catch (error) {
       return Promise.reject(error)
     }

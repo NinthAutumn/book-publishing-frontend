@@ -91,7 +91,7 @@ export default {
   },
   methods: {
     changeSticky: function() {
-      if (document.documentElement.scrollTop > 120) {
+      if (document.documentElement.scrollTop > 105) {
         this.scrolled = true;
       } else {
         this.scrolled = false;

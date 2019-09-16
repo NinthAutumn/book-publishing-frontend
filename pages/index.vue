@@ -37,14 +37,17 @@
       <mobile-ranking v-if="$device.isMobile"></mobile-ranking>
       <adsbygoogle v-if="!user.status||!user" />
       <div class="card-title" v-if="!$device.isMobile">
-        <h3>人気急上昇中のリーディングリスト</h3>
+        <h3>人気急上昇中のリスト</h3>
       </div>
       <reading-list v-if="!$device.isMobile" :reading="reading"></reading-list>
       <div class="card-title">
         <h3>更新頻度が高い</h3>
       </div>
-
       <BooksList :trendings="frequent"></BooksList>
+      <div class="card-title" v-if="!$device.isMobile">
+        <h3>最新リスト</h3>
+      </div>
+      <reading-list v-if="!$device.isMobile" :reading="latestReading"></reading-list>
     </div>
   </div>
 </template>
@@ -78,10 +81,8 @@ export default {
     MobileRanking: hydrateWhenVisible(() =>
       import("@/components/Mobile/List/Book/Ranking/Home")
     ),
-    NavList: hydrateOnInteraction(() =>
-      import("@/components/Mobile/Layout/Nav")
-    ),
-    ReadingList: hydrateOnInteraction(() =>
+    NavList: hydrateWhenVisible(() => import("@/components/Mobile/Layout/Nav")),
+    ReadingList: hydrateWhenVisible(() =>
       import("@/components/Web/Lists/Reading/Swiper")
     )
   },
@@ -112,6 +113,10 @@ export default {
       time: "weekly",
       page: 1
     });
+    await this.$store.dispatch("reading/fetchLatestReadingList", {
+      page: 1,
+      limit: 10
+    });
     await this.$store.dispatch("ranking/fetchTrendingReadingList");
     await this.$store.dispatch("analytic/fetchTrendingReviews");
     window.addEventListener("resize", this.handleResize);
@@ -139,7 +144,8 @@ export default {
       recommended: "analytic/getRecommended",
       frequent: "analytic/getFrequent",
       user: "auth/getUser",
-      reading: "ranking/getTrendingReadingList"
+      reading: "ranking/getTrendingReadingList",
+      latestReading: "reading/getLatestList"
     })
   },
   auth: false

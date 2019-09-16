@@ -11,7 +11,7 @@
             <v-img v-else :src="avatar"></v-img>
           </v-avatar>
         </div>
-        <div class="user-activity__meta">
+        <div class="user-activity__meta" v-if="item.type === 'review'">
           <div class="user-activity__title">{{item.title}}</div>
           <div v-if="reviews&&item.rating" class="user-activity__rating">
             <v-rating color="#FF8D29" readonly size="20" half-increments :value="item.rating"></v-rating>
@@ -31,6 +31,22 @@
           <nuxt-link :to="'/books/'+item.book_id" tag="div" class="user-activity__parent">
             <fa class="user-activity__parent__icon" icon="book"></fa>
             {{item.book_title}}
+          </nuxt-link>
+        </div>
+        <div class="user-activity__meta" v-else>
+          <div class="user-activity__content" v-text="item.content"></div>
+
+          <nuxt-link
+            :to="`/books/${item.book_id}/${item.chapter_id}`"
+            tag="div"
+            class="user-activity__parent"
+          >
+            <div
+              class="user-activity__child"
+              v-if="item.parent_content"
+              v-text="`${item.parent_user}: ${item.parent_content}`"
+            ></div>
+            {{`${item.book_title}: 第${item.rating}話`}}
           </nuxt-link>
         </div>
       </li>
@@ -97,6 +113,13 @@ export default {
     #{$self}__title {
       font-size: 1.6rem;
       margin-bottom: 0.5rem;
+    }
+    #{$self}__child {
+      padding: 1rem;
+      font-size: 1.3rem;
+      border-radius: 0.5rem;
+      background-color: rgb(248, 248, 248);
+      margin-bottom: 1rem;
     }
     #{$self}__parent {
       font-size: 1.4rem;

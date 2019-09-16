@@ -171,6 +171,7 @@ export default {
 <style lang="scss" >
 hr {
   border: 0.5px solid #c2bac3;
+  margin: 1rem 0;
 }
 
 .list {

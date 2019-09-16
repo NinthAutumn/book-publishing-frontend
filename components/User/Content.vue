@@ -23,8 +23,7 @@
 
       <div class="profile-content__activity">
         <div class="profile-content__activity-nav flex-row">
-          <div class="profile-content__title profile-content__title--activity">レビュー</div>
-          <div class="profile-content__title profile-content__title--activity">コメント</div>
+          <div class="profile-content__title profile-content__title--activity">アクティビーリスト</div>
         </div>
         <activity-list reviews :user="user" :list="reviews"></activity-list>
       </div>

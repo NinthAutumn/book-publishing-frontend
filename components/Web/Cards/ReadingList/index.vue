@@ -1,10 +1,22 @@
 <template>
   <div class="reading-list">
-    <div class="reading-list__container">
+    <div
+      class="reading-list__container"
+      @click.stop="$store.commit('reading/TOGGLE_LIST_MODAL',reading.id)"
+    >
       <div class="reading-list__header">
         <div class="reading-list__like-number" v-text="likes"></div>
         <div @click="likeHandler" class="reading-list__like">
-          <fa class="reading-list__icon" :icon="heart"></fa>
+          <fa class="reading-list__icon reading-list__icon--like" :icon="heart"></fa>
+        </div>
+        <div
+          class="reading-list__follow"
+          :class="{'reading-list__follow--followed':followed}"
+          v-if="!library&&reading.user_id !== user.id"
+          @click="followHandler"
+        >
+          <fa class="reading-list__icon reading-list__icon--like" icon="stream"></fa>
+          <span class="tooltiptext" v-text="followed? 'フォローを解除':'フォロー'"></span>
         </div>
       </div>
       <div
@@ -23,19 +35,7 @@
       </div>
       <div class="reading-list__footer">
         <div class="reading-list__title" v-text="reading.title"></div>
-        <div class="reading-list__menu" @click.stop="toggleModal" v-if="!library">
-          <fa icon="ellipsis-v"></fa>
-          <transition name="slide-right-fade">
-            <div class="reading-list__modal" v-if="modal" v-click-outside="toggleModal">
-              <div
-                class="reading-list__select"
-                v-for="(option,key) in options"
-                :key="key"
-                v-text="option.title"
-              ></div>
-            </div>
-          </transition>
-        </div>
+        <div class="reading-list__menu" @click.stop="toggleModal" v-if="!library"></div>
       </div>
     </div>
   </div>
@@ -45,9 +45,14 @@
 import { mapGetters } from "vuex";
 export default {
   props: { reading: Object, library: Boolean },
-  computed: {},
+  computed: {
+    ...mapGetters({
+      user: "auth/getUser"
+    })
+  },
   mounted() {
     this.likes = this.reading.likes;
+    this.followed = this.reading.followed;
     if (this.reading.liked) {
       this.heart.prefix = "fa";
     }
@@ -55,6 +60,12 @@ export default {
   methods: {
     toggleModal() {
       this.modal = !this.modal;
+    },
+    async followHandler() {
+      this.followed = !this.followed;
+      await this.$store.dispatch("reading/followReadingList", {
+        id: this.reading.id
+      });
     },
     async likeHandler() {
       if (this.heart.prefix === "far") {
@@ -78,6 +89,7 @@ export default {
         prefix: "far",
         iconName: "heart"
       },
+      followed: false,
       modal: false,
       likes: 0,
       options: {
@@ -96,7 +108,7 @@ export default {
 <style lang="scss">
 .reading-list {
   $self: &;
-  max-width: 19rem;
+  width: 19rem;
   &__container {
     padding: 1rem 2rem;
     padding-top: 0.5rem;
@@ -115,6 +127,39 @@ export default {
       #{$self}__like-number {
         font-size: 1.5rem;
         margin-right: 0.5rem;
+      }
+      #{$self}__follow {
+        font-size: 2rem;
+        margin-left: 1rem;
+        color: rgb(185, 185, 185);
+        position: relative;
+        // display: inline-block;
+
+        &--followed {
+          color: black;
+        }
+        &:hover {
+          cursor: pointer;
+          .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+            transition: opacity 200ms;
+          }
+        }
+        .tooltiptext {
+          visibility: hidden;
+          opacity: 0;
+          transition: opacity 200ms;
+          min-width: 6rem;
+          background-color: black;
+          text-align: center;
+          color: #fff;
+          padding: 0.5rem 1rem;
+          border-radius: 0.5rem;
+          right: 110%;
+          position: absolute;
+          z-index: 1;
+        }
       }
       #{$self}__like {
         color: red;
