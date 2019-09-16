@@ -156,6 +156,10 @@ export default {
           icon: "bolt",
           title: "投票をかける"
         },
+        list: {
+          icon: "list",
+          title: "リストに入れる"
+        },
         support: {
           icon: "gift",
           title: "サポートする"
@@ -178,6 +182,9 @@ export default {
           break;
         case "support":
           this.$toast.show("現在サポート機能が公開されていません");
+          break;
+        case "list":
+          this.$store.commit("reading/TOGGLE_STATE", this.book.id);
           break;
         default:
           this.bookmarkHandler();
@@ -353,6 +360,10 @@ export default {
         &--bookmark {
           border-color: $secondary;
           color: $secondary;
+        }
+        &--list {
+          border-color: #00c5ff;
+          color: #00c5ff;
         }
         &--vote {
           border-color: #f4648a;

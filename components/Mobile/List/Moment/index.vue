@@ -33,12 +33,12 @@ export default {
       nav: {
         review: {
           value: 0,
-          key: "レビュー"
-        },
-        comment: {
-          value: 1,
-          key: "コメント"
+          key: "アクティビティー"
         }
+        // comment: {
+        //   value: 1,
+        //   key: "コメント"
+        // }
       },
       selected: 0
     };

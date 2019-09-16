@@ -69,7 +69,7 @@
 </template>
 <script>
 import { mapGetters } from "vuex";
-import { hydrateWhenVisible } from "vue-lazy-hydration";
+import { hydrateWhenVisible, hydrateSsrOnly } from "vue-lazy-hydration";
 export default {
   components: {
     Horizontal: hydrateWhenVisible(() => import("./main-nav/Horizontal")),
@@ -83,12 +83,10 @@ export default {
       import("./mobile-nav/Horizontal")
     ),
     NewVertical: hydrateWhenVisible(() => import("./main-nav/NewVertical")),
-    StripeModal: hydrateWhenVisible(() =>
+    StripeModal: hydrateSsrOnly(() =>
       import("@/components/Navigation/Stripe/ProductModal")
     ),
-    NotificationList: hydrateWhenVisible(() =>
-      import("@/components/Navigation/Notification")
-    ),
+    NotificationList: () => import("@/components/Navigation/Notification"),
     UsernameModal: () => import("@/components/Navigation/Username"),
     AuthModal: () => import("@/components/Navigation/Auth/AuthModal"),
     ReadingModal: () => import("@/components/Web/Modals/ReadingList/Create"),

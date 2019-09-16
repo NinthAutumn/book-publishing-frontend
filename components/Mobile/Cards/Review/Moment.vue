@@ -33,6 +33,20 @@
           </div>
         </div>
       </div>
+      <div class="review-moment__meta" v-else-if="review.type === 'comment'">
+        <div class="review-moment__content" v-text="review.content"></div>
+        <div class="review-moment__book flex-column">
+          <div
+            class="review-moment__parent"
+            v-if="review.parent_content"
+            v-text="`${review.parent_user}: ${review.parent_content}`"
+          ></div>
+          <div
+            class="review-moment__book-title review-moment__book-title--chapter"
+            v-text="`${review.book_title}: 第${review.rating}話`"
+          ></div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -88,6 +102,7 @@ export default {
     #{$self}__content {
       word-break: break-word;
       max-width: 100%;
+      font-size: 1.4rem;
     }
     #{$self}__avatar {
       // width: 5rem;
@@ -95,6 +110,7 @@ export default {
     }
     #{$self}__meta {
       max-width: 100%;
+      width: 100%;
       overflow: hidden;
     }
     #{$self}__title {
@@ -105,6 +121,12 @@ export default {
       overflow: hidden;
       word-break: break-word;
     }
+    #{$self}__parent {
+      font-size: 1.4rem;
+      margin-bottom: 0.5rem;
+      padding: 0.5rem;
+      word-break: break-word;
+    }
     .v-icon {
       padding: 0 !important;
     }
@@ -113,6 +135,7 @@ export default {
       display: flex;
       border-radius: 0.5rem;
       padding: 0.5rem 1rem;
+      width: 100%;
       max-width: 100%;
       background-color: #f7fafc;
       white-space: nowrap;
@@ -139,6 +162,10 @@ export default {
         white-space: nowrap;
         overflow: hidden;
         word-break: break-word;
+
+        &--chapter {
+          font-size: 1.2rem;
+        }
       }
       #{$self}__author {
         font-size: 1.2rem;

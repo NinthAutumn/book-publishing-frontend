@@ -114,6 +114,7 @@ export default {
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      width: 100%;
       #{$self}__menu {
         font-size: 1.8rem;
       }

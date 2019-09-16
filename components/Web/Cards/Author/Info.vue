@@ -3,7 +3,7 @@
     <div class="author-info__container">
       <div class="author-info__meta">
         <div class="author-info__name" v-text="author.pen_name"></div>
-        <a :href="`mailto:${author.email}`" class="author-info__contact" v-text="'連絡先'"></a>
+        <!-- <a :href="`mailto:${author.email}`" class="author-info__contact" v-text="'連絡先'"></a> -->
       </div>
       <div class="author-info__avatar" @click="$router.push(`/users/${id}?author=true`)">
         <v-avatar size="100">
