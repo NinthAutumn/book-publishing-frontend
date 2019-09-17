@@ -128,18 +128,18 @@
           ></li>
         </transition-group>
         <span>*最高６ジャンルまで &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; *必ず1ジャンルを選択</span>
-        <TagCreate :limit="6" v-model="form.tags"></TagCreate>
+        <TagCreate :limit="12" v-model="form.tags"></TagCreate>
         <div class="book-form__genre">
           <label for>タグ</label>
           <transition-group tag="ul" name="list" class="book-form__genre-list">
             <li
               class="book-form__genre-item book-form__genre-item--tag"
               v-for="(tag) in form.tags"
-              :key="tag.id"
+              :key="tag.name"
               v-text="tag.name"
             ></li>
           </transition-group>
-          <span>*最高６タグまで &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; *必ず1タグを選択</span>
+          <span>*最高12タグまで &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; *必ず1タグを選択</span>
         </div>
         <div class="book-form__paid flex-divider flex--align flex-row--reverse">
           <fa icon="question-circle" :style="{fontSize:14}" @mouseenter="toggleTip"></fa>

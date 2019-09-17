@@ -21,7 +21,7 @@
           ></nuxt-link>
           <div class="book-scard__menu" @click.stop="toggleModal" v-if="!$device.isMobile">
             <fa icon="ellipsis-v"></fa>
-            <select-modal v-if="modal" @toggle="toggleModal" :bookId="book.id"></select-modal>
+            <select-modal top v-if="modal" @toggle="toggleModal" :bookId="book.id"></select-modal>
           </div>
         </div>
 
@@ -116,6 +116,7 @@ export default {
       justify-content: space-between;
       width: 100%;
       #{$self}__menu {
+        position: relative;
         font-size: 1.8rem;
       }
       #{$self}__title {

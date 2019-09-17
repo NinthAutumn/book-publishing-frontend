@@ -126,14 +126,14 @@ export default {
     // overflow: hidden;
     position: fixed;
     left: 0;
-    top: 5.1rem;
+    top: 5rem;
     background-color: #fff;
-    border-radius: 1rem;
+    // border-radius: 1rem;
     @media screen and (max-width: 1136px) {
       box-shadow: 0 7px 14px 0 rgba(60, 66, 87, 0.1),
         0 3px 6px 0 rgba(0, 0, 0, 0.07);
       z-index: 10000;
-      height: 92.5vh;
+      height: 100%;
     }
     .nuxt-link-exact-active {
       background-color: black !important;

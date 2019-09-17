@@ -16,7 +16,7 @@
         @click="selectTag(index)"
         v-for="(tag,index) in selected"
         :key="tag.key"
-        :class="{selected: tag.selected}"
+        :class="{'browse-create__item--selected': tag.selected}"
       >{{tag.key}}({{tag.sum}})</li>
     </transition-group>
   </div>
@@ -28,7 +28,7 @@ export default {
     return {
       search: "",
       selected: [],
-      object: [],
+      object: {},
       page: 1,
       id: 1
     };
@@ -47,51 +47,60 @@ export default {
       return this.$store.getters["book/getTagList"];
     }
   },
-  updated() {
-    if (this.value.length > 0) {
-      this.selected.length > 0;
-      this.selected.forEach(val => {
-        this.value.forEach(tag => {
-          if (val.value === tag) {
-            val.selected = true;
-          }
-        });
-      });
-    }
-  },
+  async updated() {},
   async mounted() {
-    this.filterTags();
-    if (this.value.length > 0) {
-      this.selected.length > 0;
-      this.selected.forEach(val => {
-        this.value.forEach(tag => {
-          if (val.value === tag) {
+    let object = [];
+    const { tags } = await this.$store.dispatch("tag/fetchTagList", {
+      page: 1,
+      limit: 30,
+      search: this.search
+    });
+    tags.forEach(tag => {
+      object.push({
+        key: tag.name,
+        sum: tag.book_count,
+        selected: false,
+        value: tag.id
+      });
+    });
+
+    if (this.value) {
+      this.value.forEach(key => {
+        object.forEach(val => {
+          if (val.value == key.id || val.key === key.name) {
             val.selected = true;
+            if (!key.id) {
+              this.object[val.value] = { id: val.value, name: val.key };
+            } else {
+              this.object[key.id] = key;
+            }
           }
         });
       });
     }
+    this.selected = object;
   },
   methods: {
     async filterTags() {
-      const { tags } = await this.$store.dispatch("book/searchTags", {
+      const { tags } = await this.$store.dispatch("tag/fetchTagList", {
         page: 1,
-        limit: 40,
+        limit: 30,
         search: this.search
       });
       let object = [];
-      tags.forEach(item => {
+      tags.forEach(tag => {
         object.push({
-          key: item.name,
-          value: item.id,
-          sum: item.book_count,
-          selected: false
+          key: tag.name,
+          sum: tag.book_count,
+          selected: false,
+          value: tag.id
         });
       });
       this.selected = object;
-      this.selected.forEach(tag => {
-        this.object.forEach(t => {
-          if (tag.value === t) {
+
+      Object.keys(this.object).forEach(key => {
+        this.selected.forEach(tag => {
+          if (tag.value === parseInt(key)) {
             tag.selected = true;
           }
         });
@@ -101,14 +110,28 @@ export default {
       // return console.log(this.selected[name]);
       this.selected[name].selected = !this.selected[name].selected;
       let temparray = [];
-
-      this.selected.forEach(tag => {
-        if (tag.selected) {
-          temparray.push(tag.value);
-        }
+      let tag_id = this.selected[name].value;
+      if (this.object[tag_id]) {
+        delete this.object[tag_id];
+      } else {
+        this.object[tag_id] = {
+          id: this.selected[name].value,
+          name: this.selected[name].key
+        };
+      }
+      if (Object.keys(this.object).length > this.limit) {
+        this.selected[name].selected = false;
+        delete this.object[tag_id];
+      }
+      let tags = [];
+      Object.keys(this.object).forEach(key => {
+        tags.push(this.object[key]);
       });
-      this.object = temparray;
-      this.$emit("input", temparray);
+
+      // this.object
+      // console.log(tags);
+      this.$emit("input", tags);
+      this.$emit("selected");
     },
     async infiniteHandler($state) {
       const { tags } = await this.$store.dispatch("book/searchTags", {
@@ -166,14 +189,6 @@ export default {
   }
   .selected {
     // border: 1px solid $secondary;
-    color: white !important;
-    background-color: grey !important;
-    &:hover {
-      cursor: pointer;
-      color: grey;
-      border: 1px solid grey;
-      transition: 200ms;
-    }
   }
   &__list {
     display: flex;
@@ -195,6 +210,16 @@ export default {
       user-select: none;
       transition: 200ms;
       border-radius: 100px;
+      &--selected {
+        color: white;
+        background-color: grey;
+        &:hover {
+          cursor: pointer;
+          color: grey;
+          border: 1px solid grey;
+          transition: 200ms;
+        }
+      }
       &:hover {
         cursor: pointer;
         color: white;

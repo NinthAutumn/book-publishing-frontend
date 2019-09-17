@@ -12,7 +12,7 @@
         v-for="(notification,index) in notifications"
         :key="index"
         tag="li"
-        :to="$device.isMobile?`/books/${notification.book_id}/${notification.chapter_id}?comment=${notification.comment_id}#comments`: ''"
+        :to="`/books/${notification.book_id}/${notification.chapter_id}?comment=${notification.comment_id}#comment${notification.comment_id}`"
       >
         <div class="notification-component__avatar">
           <v-avatar v-if="notification.avatar">

@@ -249,7 +249,9 @@ export default {
           }
         });
       }
+
       this.$emit("input", this.selectedData);
+      this.$emit("selected");
     },
     openModal: function() {
       if (this.disabled) {
@@ -272,6 +274,7 @@ export default {
       });
       this.selectedData = [];
       this.$emit("input", []);
+      this.$emit("selected");
     },
     select: function(index) {
       if (this.object) {
@@ -284,7 +287,9 @@ export default {
               this.modal = false;
             }
             e.selected = !e.selected;
+
             this.$emit("input", e.value);
+            this.$emit("selected");
           } else {
             e.selected = false;
           }
@@ -299,7 +304,9 @@ export default {
               this.modal = false;
             }
             e.selected = !e.selected;
+
             this.$emit("input", e.key);
+            this.$emit("selected");
           } else {
             e.selected = false;
           }
@@ -355,7 +362,6 @@ export default {
             // this.modal = false;
           }
           e.selected = !e.selected;
-          // this.$emit("input", e.value);
         }
       });
     } else if (this.value) {
@@ -364,7 +370,6 @@ export default {
           if (e.value === this.value) {
             this.selectD = e.key;
             e.selected = !e.selected;
-            // this.$emit("input", e.value);
           }
         });
       } else {
@@ -389,6 +394,7 @@ export default {
           this.selectedData.push(item);
           // console.log(item);
           this.$emit("input", [item]);
+          this.$emit("selected");
         }
       });
     }

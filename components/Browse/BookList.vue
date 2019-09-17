@@ -18,7 +18,7 @@ export default {
     history: Boolean,
     type: Number,
     genres: Array,
-    direction: String,
+    direction: [String, Number],
     tags: Array
   },
   data() {
@@ -41,7 +41,7 @@ export default {
     }
   },
   components: {
-    BookCard: () => import("@/components/Web/Cards/Book/Search"),
+    BookCard: () => import("@/components/Web/Cards/Book/Search")
   },
   methods: {
     async infiniteHandler($state) {

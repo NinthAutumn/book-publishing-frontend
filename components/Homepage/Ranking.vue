@@ -9,7 +9,7 @@
         tag="div"
         v-ripple
       >
-        <div class="recommendation-books__ranking__index">{{index+1}}.</div>
+        <div class="recommendation-books__ranking__index">{{index+1}}</div>
         <!-- <div class="recommendation-books__ranking__cover"> -->
         <v-img
           :src="book.cover+'/s'"

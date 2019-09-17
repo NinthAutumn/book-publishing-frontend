@@ -1,19 +1,16 @@
 <template>
   <div class="reading-list">
-    <div
-      class="reading-list__container"
-      @click.stop="$store.commit('reading/TOGGLE_LIST_MODAL',reading.id)"
-    >
+    <div class="reading-list__container">
       <div class="reading-list__header">
         <div class="reading-list__like-number" v-text="likes"></div>
-        <div @click="likeHandler" class="reading-list__like">
+        <div @click.stop="likeHandler" class="reading-list__like">
           <fa class="reading-list__icon reading-list__icon--like" :icon="heart"></fa>
         </div>
         <div
           class="reading-list__follow"
           :class="{'reading-list__follow--followed':followed}"
           v-if="!library&&reading.user_id !== user.id"
-          @click="followHandler"
+          @click.stop="followHandler"
         >
           <fa class="reading-list__icon reading-list__icon--like" icon="stream"></fa>
           <span class="tooltiptext" v-text="followed? 'フォローを解除':'フォロー'"></span>
@@ -21,6 +18,7 @@
       </div>
       <div
         class="reading-list__books"
+        @click.stop="$store.commit('reading/TOGGLE_LIST_MODAL',reading.id)"
         :class="{'reading-list__books--1':reading.books.length === 1,'reading-list__books--2':reading.books.length === 2,'reading-list__books--3':reading.books.length === 3,'reading-list__books--4':reading.books.length === 4,'reading-list__books--all':reading.books.length >4}"
       >
         <v-img
@@ -34,8 +32,11 @@
         ></v-img>
       </div>
       <div class="reading-list__footer">
-        <div class="reading-list__title" v-text="reading.title"></div>
-        <div class="reading-list__menu" @click.stop="toggleModal" v-if="!library"></div>
+        <div
+          class="reading-list__title"
+          @click.stop="$store.commit('reading/TOGGLE_LIST_MODAL',reading.id)"
+          v-text="reading.title"
+        ></div>
       </div>
     </div>
   </div>
@@ -47,7 +48,8 @@ export default {
   props: { reading: Object, library: Boolean },
   computed: {
     ...mapGetters({
-      user: "auth/getUser"
+      user: "auth/getUser",
+      auth: "auth/isAuthenticated"
     })
   },
   mounted() {
@@ -62,12 +64,14 @@ export default {
       this.modal = !this.modal;
     },
     async followHandler() {
+      if (!this.auth) return this.$store.commit("LOGIN_STATE");
       this.followed = !this.followed;
       await this.$store.dispatch("reading/followReadingList", {
         id: this.reading.id
       });
     },
     async likeHandler() {
+      if (!this.auth) return this.$store.commit("LOGIN_STATE");
       if (this.heart.prefix === "far") {
         this.heart.prefix = "fa";
         this.likes++;

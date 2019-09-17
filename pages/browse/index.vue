@@ -18,6 +18,7 @@
                 :object="sort_type"
                 transition="grow-shrink"
                 def="視聴回数"
+                @selected="refresh"
               ></Select>
             </div>
             <div class="browse-page__sort-type browse-page__sort-type--direction">
@@ -28,12 +29,13 @@
                 :object="sort_directions"
                 transition="grow-shrink"
                 def="下り"
+                @selected="refresh"
               ></Select>
             </div>
           </div>
           <div class="flex-divider flex-row flex--right" style="width:100%;">
             <div class="browse-page__filter-genre" style="margin-right:1rem;">
-              <genre-select v-model="selected_genre"></genre-select>
+              <genre-select @selected="refresh" v-model="selected_genre"></genre-select>
               <!-- <Select
                 v-model="selected_genre"
                 transition="grow-shrink"
@@ -73,7 +75,23 @@
             </transition-group>
           </div>
         </transition>
-        <TagCreate v-if="tag_search" v-model="tag_list"></TagCreate>
+        <transition name="grow-shrink">
+          <div class="browse-page__filter" v-if="tag_list.length > 0">
+            <transition-group
+              tag="ul"
+              name="list"
+              class="browse-page__filter-list flex flex--align"
+            >
+              <li
+                class="browse-page__filter-list__item browse-page__filter-list__item--tag flex-row flex--align"
+                v-for="(genre) in tag_list"
+                :key="genre"
+                v-text="genre.name"
+              ></li>
+            </transition-group>
+          </div>
+        </transition>
+        <TagCreate @selected="refresh" v-if="tag_search" v-model="tag_list"></TagCreate>
         <div class="browse-page__content flex-row">
           <BookList
             :type="type"
@@ -109,7 +127,11 @@ export default {
       const genres = this.selected_genre.map(genre => {
         return genre.id;
       });
-      const tags = this.tag_list;
+      const tags = this.tag_list.map(tag => {
+        return tag.id;
+      });
+
+      // this.tag_list;
 
       await this.$store.dispatch("book/browseBooks", {
         type: this.type,
@@ -134,20 +156,23 @@ export default {
     if (this.$device.isMobile) {
       return this.$router.push("/browse/mobile");
     }
+    if (this.$route.query.genre && this.$route.query.genre !== "undefined") {
+      this.selected_genre = [{ name: this.$route.query.genre }];
+    }
+    if (this.$route.query.tag && this.$route.query.tag !== "undefined") {
+      this.tag_list = [{ name: this.$route.query.tag }];
+    }
   },
   watch: {
-    selected_genre: function(val) {
-      this.refresh();
-    },
-    type: function(val) {
-      this.refresh();
-    },
-    direction: function(val) {
-      this.refresh();
-    },
-    tag_list: function(val) {
-      this.refresh();
-    }
+    // selected_genre: function(val) {
+    //   this.refresh();
+    // },
+    // type: function(val) {
+    //   this.refresh();
+    // },
+    // direction: function(val) {
+    //   this.refresh();
+    // },
   },
   async fetch({ store, route }) {
     // await store.dispatch("book/fetchAllGenres");
@@ -155,6 +180,14 @@ export default {
       type = 5,
       genres = [],
       tags = [];
+
+    if (route.query.genre && route.query.genre !== "undefined") {
+      genres = [route.query.genre];
+    }
+    if (route.query.tag && route.query.tag !== "undefined") {
+      console.log(route.query.tag);
+      tags.push(route.query.tag);
+    }
 
     await store.dispatch("book/browseBooks", {
       type,
@@ -176,10 +209,7 @@ export default {
       genre_list: [],
       direction: this.$route.query.direction || 0,
       modalDirection: "right",
-      selected_genre:
-        this.$route.query.genre && this.$route.query.genre !== "undefined"
-          ? [{ name: this.$route.query.genre }]
-          : [],
+      selected_genre: [],
       sort_type: [
         { key: "栞数", value: 1 },
         { key: "話数", value: 2 },
@@ -302,6 +332,9 @@ export default {
       padding: 0.2rem 2rem;
       box-sizing: border-box;
       background-color: #f4648a;
+      &--tag {
+        background-color: $secondary;
+      }
       border-radius: 10rem;
       user-select: none;
     }

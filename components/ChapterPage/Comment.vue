@@ -2,7 +2,7 @@
   <section class="comment-modal">
     <article class="comment-modal__container" v-if="showChildren">
       <div
-        :id="`#comment${comment.id}`"
+        :id="`comment${comment.id}`"
         :style="indent"
         class="divider flex-row"
         :class="{'comment-modal__selected':$route.query.comment === `${comment.id}`}"

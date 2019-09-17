@@ -13,6 +13,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   props: {
     bookId: Number,
@@ -30,12 +31,18 @@ export default {
       }
     };
   },
+  computed: {
+    ...mapGetters({
+      auth: "auth/isAuthenticated"
+    })
+  },
   methods: {
     toggleModal() {
       this.$emit("toggle");
     },
     mainHandler(key) {
       if (key === "reading") {
+        if (!this.auth) return this.$store.commit("LOGIN_STATE");
         this.$store.commit("reading/TOGGLE_STATE", this.bookId);
       }
     }

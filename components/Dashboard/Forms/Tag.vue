@@ -14,8 +14,8 @@
     <transition-group name="list" class="tag-create__list">
       <li
         class="tag-create__item"
-        @click="selectTag(index)"
-        v-for="(tag,index) in selected"
+        @click="selectTag(key)"
+        v-for="(tag,key) in selected"
         :key="tag.key"
         :class="{selected: tag.selected}"
       >{{tag.key}}({{tag.sum}})</li>
@@ -33,7 +33,7 @@ export default {
     return {
       search: "",
       selected: [],
-      object: []
+      object: {}
     };
   },
   watch: {
@@ -48,21 +48,24 @@ export default {
       limit: 30,
       search: this.search
     });
-    for (let tag of tags) {
+    tags.forEach(tag => {
       object.push({
         key: tag.name,
         sum: tag.book_count,
         selected: false,
         value: tag.id
       });
-    }
+    });
+
     if (this.value) {
-      this.value.forEach(val => {
-        object.forEach(ob => {
-          if (ob.value === val.id) {
-            ob.selected = true;
+      this.value.forEach(key => {
+        object.forEach(val => {
+          if (val.value == key.id) {
+            val.selected = true;
           }
         });
+        this.object[key.id] = key;
+        // console.log(this.object);
       });
     }
     this.selected = object;
@@ -91,43 +94,49 @@ export default {
         search: this.search
       });
       let object = [];
-
-      tags.forEach(item => {
+      tags.forEach(tag => {
         object.push({
-          key: item.name,
-          value: item.id,
-          sum: item.book_count,
-          selected: false
+          key: tag.name,
+          sum: tag.book_count,
+          selected: false,
+          value: tag.id
         });
       });
       this.selected = object;
-      this.selected.forEach(tag => {
-        this.object.forEach(t => {
-          if (tag.key === t) {
+
+      Object.keys(this.object).forEach(key => {
+        this.selected.forEach(tag => {
+          if (tag.value === parseInt(key)) {
             tag.selected = true;
           }
         });
       });
     },
     async selectTag(name) {
+      // console.log(this.selected[name]);
       this.selected[name].selected = !this.selected[name].selected;
       let temparray = [];
-
-      this.selected.forEach(tag => {
-        if (tag.selected) {
-          temparray.push({ name: tag.key, id: tag.value });
-        }
-      });
-      if (temparray.length > this.limit) {
-        this.selected[name].selected = false;
-        temparray = temparray.filter(val => {
-          return val.name !== this.selected[name].key;
-        });
+      let tag_id = this.selected[name].value;
+      if (this.object[tag_id]) {
+        delete this.object[tag_id];
+      } else {
+        this.object[tag_id] = {
+          id: this.selected[name].value,
+          name: this.selected[name].key
+        };
       }
-      this.object = temparray;
-      console.log(temparray);
+      if (Object.keys(this.object).length > this.limit) {
+        this.selected[name].selected = false;
+        delete this.object[tag_id];
+      }
+      let tags = [];
+      Object.keys(this.object).forEach(key => {
+        tags.push(this.object[key]);
+      });
 
-      this.$emit("input", temparray);
+      // this.object
+      // console.log(tags);
+      this.$emit("input", tags);
     }
   }
 };

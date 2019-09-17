@@ -50,6 +50,7 @@ export default {
         return genre.selected;
       });
       this.$emit("input", selected_list);
+      this.$emit("selected");
     }
   },
 
