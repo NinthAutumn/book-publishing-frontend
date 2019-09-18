@@ -25,7 +25,7 @@ export default {
     },
     cover: {
       type: [String, Object],
-      default: require("~/assets/img/NobleCardLight.png")
+      default: () => require("~/assets/img/NobleCardLight.png")
     },
     book: {
       type: [Object, Array]

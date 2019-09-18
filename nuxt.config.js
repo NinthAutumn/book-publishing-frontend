@@ -39,8 +39,40 @@ module.exports = {
       },
       {
         property: 'og:description',
-        content: '優れた機能とデザインを雇用する令和を象徴する最新ネット小説投稿・閲覧サイトである。'
+        content: '機能とデザインを雇用する令和を象徴する最新ネット小説投稿・閲覧サイトである。'
       },
+      {
+        property: 'og:image',
+        content: '機能とデザインを雇用する令和を象徴する最新ネット小説投稿・閲覧サイトである。'
+      },
+      {
+        property: "og:site_name",
+        content: 'ノーブル'
+      },
+      {
+        property: "og:locale",
+        content: 'ja_JP'
+      },
+      {
+        name: 'twitter:card',
+        content: "summary"
+      },
+      {
+        name: 'twitter:site',
+        content: '@NoblesJp'
+      },
+      {
+        name: 'twitter:title',
+        content: '最新WEB小説投稿・閲覧サイト ノーブル'
+      },
+      {
+        name: 'twitter:description',
+        content: '機能とデザインを雇用する令和を象徴する最新ネット小説投稿・閲覧サイトである。'
+      },
+      {
+        name: 'twitter:url',
+        content: 'https://nobles.jp'
+      }
 
     ],
     link: [{

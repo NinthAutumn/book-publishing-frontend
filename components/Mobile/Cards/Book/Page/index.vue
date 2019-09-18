@@ -23,10 +23,14 @@
 
 <script>
 import { hydrateWhenVisible } from "vue-lazy-hydration";
+import { mapGetters } from "vuex";
 
 export default {
   props: {
     book: Object
+  },
+  computed: {
+    ...mapGetters({ listModalState: "reading/getListModalState" })
   },
   data() {
     return {
@@ -37,6 +41,10 @@ export default {
     await this.$store.dispatch("review/fetchBookReviewCount", {
       bookId: this.$route.params.id
     });
+
+    if (this.listModalState) {
+      this.$store.commit("reading/TOGGLE_LIST_MODAL");
+    }
   },
   methods: {
     reviewModalState: function() {

@@ -1,8 +1,3 @@
-import {
-  Avatar
-} from 'element-ui';
-
-
 export const state = () => ({
   url: '',
   urls: []
@@ -16,12 +11,12 @@ export const getters = {
 export const mutations = {
   ADD_URL(state, url) {
     state.url = {
-      url: `https://storage.googleapis.com/theta-images/${url}`,
+      url: `https://img.nobles.jp/${url}`,
       path: url
     }
   },
   PUSH_URL(state, url) {
-    state.urls.push(`https://storage.googleapis.com/theta-images/${url}`)
+    state.urls.push(`https://img.nobles.jp/${url}`)
   },
   REMOVE_URL(state, url) {
     state.url = ""
@@ -53,7 +48,7 @@ export const actions = {
       this.$axios.defaults.headers.common['Authorization'] = auth
       this.$axios.defaults.headers.common['TrackId'] = trackId
       return Promise.resolve({
-        url: `https://storage.googleapis.com/theta-images/${uploadConfig.data.filepath}`,
+        url: `https://img.nobles.jp/${uploadConfig.data.filepath}`,
         path: uploadConfig.data.filepath,
         id: uploadConfig.data.id
       })

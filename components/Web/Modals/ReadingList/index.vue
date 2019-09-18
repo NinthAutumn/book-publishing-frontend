@@ -1,7 +1,16 @@
 
 <template>
   <div class="reading-mmodal dialog dialog__container" :class="{'reading-mmodal--disabled':!state}">
-    <div class="reading-mmodal__container dialog__content" v-click-outside="close">
+    <div
+      class="reading-mmodal__container dialog__content"
+      :class="{'reading-mmodal__container--mobile':$device.isMobile}"
+      v-click-outside="close"
+    >
+      <div class="reading-mmodal__nav" v-if="$device.isMobile">
+        <div class="reading-mmodal__nav-icon" v-ripple @click="close">
+          <fa icon="chevron-down"></fa>
+        </div>
+      </div>
       <div class="reading-mmodal__header">
         <div class="flex-divider flex-row flex--align flex--between">
           <div class="reading-mmodal__title" v-text="show.title"></div>
@@ -12,7 +21,7 @@
         </div>
         <div class="reading-mmodal__description" v-text="show.description"></div>
       </div>
-      <div class="reading-mmodal__books">
+      <div class="reading-mmodal__books" v-if="!$device.isMobile">
         <book-card
           noColor
           :index="book.index -1"
@@ -20,6 +29,15 @@
           v-for="(book) in books"
           :key="book.id"
         ></book-card>
+      </div>
+      <div class="reading-mmodal__books reading-mmodal__books--mobile" v-else>
+        <mobile-card
+          noColor
+          :index="book.index -1"
+          :book="book"
+          v-for="(book) in books"
+          :key="book.id"
+        ></mobile-card>
       </div>
     </div>
   </div>
@@ -37,7 +55,8 @@ export default {
     })
   },
   components: {
-    BookCard: () => import("@/components/Web/Cards/Book/Ranking")
+    BookCard: () => import("@/components/Web/Cards/Book/Ranking"),
+    MobileCard: () => import("@/components/Mobile/Cards/Book/Ranking")
   },
   async mounted() {
     await this.$store.dispatch("reading/fetchReadingListInfo", {
@@ -59,6 +78,11 @@ export default {
     ...mapMutations({
       close: "reading/TOGGLE_LIST_MODAL"
     }),
+    handleClick(book) {
+      // this.$router.push(`/books/${book.id}`);
+      // this.$store.commit("reading/TOGGLE_LIST_MODAL");
+      // alert("sadfdsa");
+    },
     async followHandler() {
       this.followed = !this.followed;
       await this.$store.dispatch("reading/followReadingList", {
@@ -88,7 +112,8 @@ export default {
         iconName: "heart"
       },
       liked: false,
-      followed: false
+      followed: false,
+      likes: 0
     };
   }
 };
@@ -98,6 +123,22 @@ export default {
 .reading-mmodal {
   $self: &;
   &__container {
+    #{$self}__nav {
+      font-size: 1.6rem;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      // height: rem;
+      #{$self}__nav-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: inherit;
+        height: 4rem;
+        width: 4rem;
+        border-radius: 100rem;
+      }
+    }
     #{$self}__header {
       #{$self}__title {
         font-size: 1.7rem;

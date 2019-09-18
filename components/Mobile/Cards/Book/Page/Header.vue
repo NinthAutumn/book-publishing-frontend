@@ -26,7 +26,7 @@
           v-for="(value,key) in nav"
           :key="key"
           v-ripple
-          @click="navHandler(key)"
+          @click.stop="navHandler(key)"
         >
           <fa class="pmb-header__nav-icon" :icon="value.icon"></fa>
           <div class="pmb-header__nav-header" v-text="value.title"></div>
@@ -107,7 +107,7 @@ export default {
       switch (key) {
         case "bookmark":
           if (!this.auth) {
-            this.$store.commit("LOGIN_STATE");
+            return this.$store.commit("LOGIN_STATE");
           }
           this.bookmarkHandler();
           break;

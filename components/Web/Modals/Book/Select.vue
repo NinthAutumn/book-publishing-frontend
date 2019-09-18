@@ -63,7 +63,7 @@ export default {
     background-color: #fff;
   }
   bottom: 2rem;
-  z-index: 10000;
+  z-index: 10;
   left: 0;
   background-color: #fff;
   width: 100%;

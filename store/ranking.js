@@ -78,11 +78,14 @@ export const actions = {
 
   async fetchTrendingReadingList({
     commit
+  }, {
+    page = 1,
+    limit = 10
   }) {
     try {
       const {
         data
-      } = await this.$axios.get(`/v2/ranking/trending/reading`)
+      } = await this.$axios.get(`/v2/ranking/trending/reading?page=${page}&limit=${limit}`)
       commit('SET_TRENDING_READING_LIST', data)
     } catch (error) {
       return Promise.reject(error)

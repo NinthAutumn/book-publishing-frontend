@@ -36,18 +36,18 @@
       <BooksList :trendings="latest"></BooksList>
       <mobile-ranking v-if="$device.isMobile"></mobile-ranking>
       <adsbygoogle v-if="!user.status||!user" />
-      <div class="card-title" v-if="!$device.isMobile">
+      <div class="card-title">
         <h3>人気急上昇中のリスト</h3>
       </div>
-      <reading-list v-if="!$device.isMobile" :reading="reading"></reading-list>
+      <reading-list :reading="reading"></reading-list>
       <div class="card-title">
         <h3>更新頻度が高い</h3>
       </div>
       <BooksList :trendings="frequent"></BooksList>
-      <div class="card-title" v-if="!$device.isMobile">
+      <div class="card-title">
         <h3>最新リスト</h3>
       </div>
-      <reading-list v-if="!$device.isMobile" :reading="latestReading"></reading-list>
+      <reading-list :reading="latestReading"></reading-list>
     </div>
   </div>
 </template>
@@ -106,7 +106,7 @@ export default {
     await this.$store.dispatch("analytic/fetchHighFrequent");
     await this.$store.dispatch("book/fetchLatestBooks", {
       page: 1,
-      limit: 10,
+      limit: 12,
       structured: false
     });
     await this.$store.dispatch("analytic/fetchTrending", {
@@ -117,7 +117,10 @@ export default {
       page: 1,
       limit: 10
     });
-    await this.$store.dispatch("ranking/fetchTrendingReadingList");
+    await this.$store.dispatch("ranking/fetchTrendingReadingList", {
+      page: 1,
+      limit: 10
+    });
     await this.$store.dispatch("analytic/fetchTrendingReviews");
     window.addEventListener("resize", this.handleResize);
     this.handleResize();

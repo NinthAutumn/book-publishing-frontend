@@ -117,13 +117,23 @@ export default {
   &__list {
     display: grid;
     /* autoprefixer: ignore next; */
-    grid-template-columns: repeat(2, minmax(25rem, 100rem));
+
     /* autoprefixer: ignore next */
     grid-gap: 1rem;
   }
   @media screen and (max-width: 500px) {
     &__list {
       grid-template-columns: repeat(3, minmax(5rem, 15rem));
+    }
+  }
+  @media screen and (max-width: 1440px) {
+    &__list {
+      grid-template-columns: repeat(2, minmax(25rem, 100rem));
+    }
+  }
+  @media screen and (min-width: 1500px) {
+    &__list {
+      grid-template-columns: repeat(3, minmax(25rem, 100rem));
     }
   }
 }
