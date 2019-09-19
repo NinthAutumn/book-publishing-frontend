@@ -354,10 +354,17 @@ export default {
 </script>
 
 <style lang="scss">
+@media screen and (min-width: 1000px) {
+  .book-list {
+    // display: grid;
+    // grid-template-columns: repeat(auto-fit, minmax(57rem, 80rem));
+  }
+}
 #ranking-list {
   display: flex;
   justify-content: center;
   flex-direction: column;
+
   .book-list {
     display: flex;
     flex-wrap: wrap;

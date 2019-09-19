@@ -11,9 +11,6 @@
         <div class="theme__item theme__item--black" @click.stop="updateTheme('black')"></div>
         <div class="theme__item theme__item--white" @click.stop="updateTheme('default')"></div>
         <div class="theme__item theme__item--tan" @click.stop="updateTheme('tan')"></div>
-        <!-- <div class="theme__item theme__item--ruby" @click="updateTheme('ruby')"></div>
-        <div class="theme__item theme__item--sapphire" @click="updateTheme('sapphire')"></div>-->
-        <!-- <div class="theme__item"></div> -->
       </div>
     </div>
     <div class="font-style">
@@ -119,7 +116,6 @@ export default {
             break;
           }
           this.fontSize++;
-
           break;
         case "decrease":
           if (this.fontSize < 10) {
