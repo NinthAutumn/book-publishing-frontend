@@ -79,7 +79,7 @@ export default {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       /* autoprefixer: ignore next */
-      grid-gap: 1rem;
+      grid-gap: 0.5rem;
       padding: 0;
       #{$self}__item {
         margin: 0;

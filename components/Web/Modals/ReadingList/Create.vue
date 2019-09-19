@@ -1,9 +1,11 @@
 <template>
   <div class="reading-modal dialog dialog__container">
-    <div
-      class="reading-modal__container flex-column flex--between dialog__content"
-      v-click-outside="toggle"
-    >
+    <div class="reading-modal__container dialog__content" v-click-outside="toggle">
+      <div class="reading-modal__nav flex-row flex--align flex--right" v-if="$device.isMobile">
+        <div class="reading-modal__close" v-ripple @click="toggle">
+          <fa icon="chevron-down"></fa>
+        </div>
+      </div>
       <div class="reading-modal__header">保存先...</div>
       <div class="reading-modal__list">
         <item-component :bookId="selected" v-for="list in reading" :key="list.key" :list="list"></item-component>
@@ -96,15 +98,29 @@ export default {
   $self: &;
   &__container {
     min-height: 20rem;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
     #{$self}__list {
       max-height: 30rem;
       flex-grow: 1;
       // margin-bottom: auto;
       padding: 0.5rem 1rem;
+      margin-bottom: auto;
     }
     #{$self}__header {
       font-size: 1.7rem;
       margin-bottom: 0.5rem;
+    }
+    #{$self}__nav {
+      #{$self}__close {
+        font-size: 1.6rem;
+        height: 4rem;
+        width: 4rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
     }
     #{$self}__form {
       margin-top: 1rem;
@@ -161,9 +177,10 @@ export default {
       }
     }
     #{$self}__button {
-      font-size: 1.6rem;
+      font-size: 1.5rem;
       user-select: none;
       border-radius: 0.5rem;
+      margin-top: auto;
       &--small {
         padding: 0.5rem 2rem !important;
         color: white;

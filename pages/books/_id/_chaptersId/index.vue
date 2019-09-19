@@ -34,7 +34,6 @@ export default {
   async mounted() {
     if (this.$route.query.comment) {
       this.nochapter = true;
-      // this.$vuetify.goTo(`#comment${this.$route.query.comment}`);
     }
     await this.$store.dispatch("drawing/fetchChapterDrawings", {
       chapterId: this.$route.params.chaptersId

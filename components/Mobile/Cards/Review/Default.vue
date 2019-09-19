@@ -29,6 +29,7 @@
           v-else-if="review.content.length <limit || open"
           v-html="review.content"
         ></div>
+
         <div class="review-mobile__nav" v-if="review.content.length > limit-1">
           <div
             class="review-mobile__open"
@@ -41,6 +42,23 @@
           <div class="review-mobile__close" @click="open=!open" v-else>
             一部を表示
             <fa icon="caret-left" class="review-mobile__icon"></fa>
+          </div>
+        </div>
+        <div class="review-mobile__nav flex-row flex--align flex--right" v-else>
+          <div
+            class="review-mobile__rate review-mobile__rate--dislike"
+            @click="dislikedReview"
+            :class="{'review-mobile__rate--disliked':disliked}"
+          >
+            <fa class="review-mobile__rate-icon review-mobile__rate-icon--dislike" icon="thumbs-up"></fa>
+          </div>
+          <div class="review-mobile__rating" v-text="likeNumber"></div>
+          <div
+            class="review-mobile__rate review-mobile__rate--like"
+            @click="likedReview"
+            :class="{'review-mobile__rate--liked':liked}"
+          >
+            <fa class="review-mobile__rate-icon review-mobile__rate-icon--like" icon="thumbs-up"></fa>
           </div>
         </div>
       </div>
@@ -57,7 +75,10 @@ export default {
   },
   data() {
     return {
-      open: false
+      open: false,
+      liked: false,
+      disliked: false,
+      likeNumber: 0
     };
   },
   methods: {
@@ -66,6 +87,50 @@ export default {
         return (string || "").substring(0, number) + "...";
       } else {
         return string;
+      }
+    },
+    async likedReview() {
+      if (this.liked) {
+        await this.$store.dispatch("review/likeReview", {
+          reviewId: this.review.id,
+          data: 0
+        });
+        this.likeNumber--;
+        this.liked = false;
+      } else {
+        await this.$store.dispatch("review/likeReview", {
+          reviewId: this.review.id,
+          data: 1
+        });
+        this.liked = true;
+        if (this.disliked) {
+          this.likeNumber = _.toNumber(this.likeNumber) + 2;
+          this.disliked = false;
+        } else {
+          this.likeNumber++;
+        }
+      }
+    },
+    async dislikedReview() {
+      if (this.disliked) {
+        await this.$store.dispatch("review/likeReview", {
+          reviewId: this.review.id,
+          data: 0
+        });
+        this.likeNumber++;
+        this.disliked = false;
+      } else {
+        await this.$store.dispatch("review/likeReview", {
+          reviewId: this.review.id,
+          data: -1
+        });
+        this.disliked = true;
+        if (this.liked) {
+          this.likeNumber = _.toNumber(this.likeNumber) - 2;
+          this.liked = false;
+        } else {
+          this.likeNumber--;
+        }
       }
     }
   },
@@ -114,6 +179,7 @@ export default {
       display: flex;
       align-items: center;
       // justify-content: center;
+      margin: 0 1rem;
       color: black;
       font-size: 1.8rem;
       #{$self}__icon {
@@ -124,6 +190,29 @@ export default {
         color: #ff8d29;
         font-size: 1.6rem;
         font-weight: bold;
+      }
+    }
+
+    #{$self}__rate {
+      // height: 4rem;
+      // width: 10rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      color: rgb(133, 133, 133);
+      &--liked {
+        // margin-left: 0.5rem;
+        color: orangered;
+      }
+      &--disliked {
+        // margin-right: 0.5rem;
+        color: #7193ff;
+      }
+      #{$self}__rate-icon {
+        &--dislike {
+          transform: rotate(180deg) translateY(-5px);
+        }
       }
     }
     #{$self}__nav {

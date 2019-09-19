@@ -1,13 +1,5 @@
 <template>
   <section class="divider chapter-section" style="padding: 0 10px;">
-    <v-progress-linear
-      style="position:fixed!important; top:40px!important;left:0!important;"
-      color="grey"
-      height="5"
-      :value="currStepProgress * 100"
-      v-if="!modal&&!chapter.locked"
-    ></v-progress-linear>
-
     <div class="chapter-title" style="display:inline-block;">
       <header
         class="chapter-title__item"
@@ -23,23 +15,14 @@
       <p v-text="chapter.header"></p>
       <fa class="announcement-pin" icon="quote-right"></fa>
     </div>
-    <scrollama
-      @step-enter="stepEnterHandler"
-      @step-leave="stepLeaveHandler"
-      :progress="true"
-      v-if="!chapter.locked"
-      @step-progress="progressHandler"
-    >
-      <adsbygoogle v-if="!user.status||!user" :ad-layout="'in-article'" :ad-format="'fluid'" />
-      <div
-        data-step="1"
-        :style="{'font-size':font + 'px', 'font-family':fontStyle}"
-        class="chapter-content step1"
-        ref="chapterContent"
-        v-html="chapter.content"
-      ></div>
-      <!-- <partial name="chapter"></partial> -->
-    </scrollama>
+    <adsbygoogle v-if="!user.status||!user" :ad-layout="'in-article'" :ad-format="'fluid'" />
+    <div
+      data-step="1"
+      :style="{'font-size':font + 'px', 'font-family':fontStyle}"
+      class="chapter-content step1"
+      ref="chapterContent"
+      v-html="chapter.content"
+    ></div>
     <adsbygoogle
       v-if="!user.status&&!chapter.locked"
       :ad-layout="'in-article'"
@@ -66,9 +49,6 @@
 
 <script>
 import { mapGetters } from "vuex";
-// import Vue from 'vue'
-//
-// import Vue from "vue";
 export default {
   components: {
     Currency: () => import("@/components/All/Currency")
@@ -82,14 +62,6 @@ export default {
       font: "user/getFontSize"
     })
   },
-
-  watch: {},
-  data() {
-    return {
-      currStepProgress: null
-    };
-  },
-  async mounted() {},
   methods: {
     purchase: async function() {
       try {
@@ -113,13 +85,6 @@ export default {
           icon: "extension"
         });
       }
-    },
-    stepEnterHandler: async function({ element, index, direction }) {
-      element, index, direction;
-    },
-    stepLeaveHandler: async function({}) {},
-    progressHandler: async function({ progress }) {
-      this.currStepProgress = progress;
     }
   }
 };
@@ -170,12 +135,6 @@ export default {
   position: relative;
   padding: 20px;
   padding-top: 10px;
-  -webkit-box-shadow: 0 13px 27px -5px rgba(50, 50, 93, 0.25),
-    0 8px 16px -8px rgba(0, 0, 0, 0.3), 0 -6px 16px -6px rgba(0, 0, 0, 0.025);
-  box-shadow: 0 13px 27px -5px rgba(50, 50, 93, 0.25),
-    0 8px 16px -8px rgba(0, 0, 0, 0.3), 0 -6px 16px -6px rgba(0, 0, 0, 0.025);
-  -webkit-box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1),
-    0 3px 6px rgba(0, 0, 0, 0.08);
   box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
 
   font-family: "Noto Sans JP" !important;
@@ -245,9 +204,18 @@ export default {
 
   word-break: break-all;
   box-sizing: border-box;
+  img {
+    max-width: 90%;
+    display: block;
+    margin: 0 auto;
+  }
   ruby {
     font-family: inherit;
     font-size: inherit;
+  }
+  rb {
+    font-size: inherit;
+    font-family: inherit;
   }
   p {
     font-family: inherit;

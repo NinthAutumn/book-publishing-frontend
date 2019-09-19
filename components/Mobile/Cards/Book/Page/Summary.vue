@@ -4,7 +4,7 @@
       <div class="mbp-summary__genres">
         <div class="mbp-summary__title">ジャンル</div>
         <div class="mbp-summary__categories">
-          <div class="mbp-summary__category" v-for="item in genres" :key="item.id">{{item.name}}</div>
+          <div class="mbp-summary__category" v-for="item in genres" :key="item.id">{{item}}</div>
         </div>
       </div>
       <div class="mbp-summary__content">
@@ -18,7 +18,7 @@
       <div class="mbp-summary__extra" v-if="extra">
         <div class="mbp-summary__title">タグ</div>
         <div class="mbp-summary__categories">
-          <div class="mbp-summary__category" v-for="tag in tags" :key="tag.id">{{tag.name}}</div>
+          <div class="mbp-summary__category" v-for="tag in tags" :key="tag.id">{{tag}}</div>
         </div>
       </div>
     </div>
@@ -41,6 +41,12 @@ export default {
       genres: "book/getBookGenres",
       tags: "book/getBookTags"
     })
+  },
+  async mounted() {
+    await this.$store.dispatch(
+      "book/fetchBookGenreAndTags",
+      this.$route.params.id
+    );
   }
 };
 </script>

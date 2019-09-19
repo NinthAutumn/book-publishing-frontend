@@ -185,7 +185,9 @@ export default {
     changes() {
       this.text = this.text.replace();
       this.text = this.text
+        .replace(/<rp>\(<\/rp>/, "")
         .replace(/<ruby>/gi, "|")
+        .replace(/<rp>\)<\/rp>/, "")
         .replace(/<\/rt><\/ruby>/gi, "》")
         .replace(/<rt>/gi, "《")
         .replace(/(<\/[^>]+>)/gi, "\n")
@@ -198,10 +200,10 @@ export default {
         this.textArray[index] = text
           .replace(/[|]/g, "<ruby>")
           .replace(/[》]/g, "</rt></ruby>")
-          .replace(/[《]/g, "<rt>");
-        this.textArray[index] = text
+          .replace(/[《]/g, "<rt>")
           .replace(/\[/g, `<img src="`)
           .replace(/\]/g, `" >`);
+        // this.textArray[index] = text
       });
       let br = 0;
       this.realArray = this.textArray
@@ -217,8 +219,7 @@ export default {
           }
         })
         .map((value, index) => {
-          value;
-          value.replace(/[|]/, "<ruby>");
+          // value.replace(/[|]/, "<ruby>");
           if (value) {
             br = 0;
             return `<p>${value}</p>`;

@@ -62,12 +62,16 @@
           v-html="chapter.content"
           v-if="!chapter.locked"
         ></div>
-
         <div
           class="mobile-chapter__ann"
           :style="{  fontSize: `${this.font}px`}"
           v-if="chapter.footer"
         >{{chapter.footer}}</div>
+        <adsbygoogle
+          v-if="!user.status&&chapter.content"
+          :ad-layout="'in-article'"
+          :ad-format="'fluid'"
+        />
       </div>
     </div>
     <div class="mobile-chapter__locked-content" v-else>
@@ -82,39 +86,7 @@
       </div>
     </div>
     <transition name="slide-up">
-      <div
-        class="mobile-chapter__bottom"
-        :class="'mobile-chapter__bottom--'+ theme"
-        v-if="navigation"
-      >
-        <div class="mobile-chapter__navigation flex-row flex--align">
-          <div class="mobile-chapter__nav">
-            <fa icon="chevron-left"></fa>
-          </div>
-          <el-slider v-model="selected" :format-tooltip="formatTooltip" :max="max" @change="change"></el-slider>
-          <div class="mobile-chapter__nav">
-            <fa icon="chevron-right"></fa>
-          </div>
-        </div>
-        <!-- <v-slider :value="selected" :min="min" :max="max"></v-slider> -->
-        <div class="mobile-chapter__options">
-          <div class="mobile-chapter__option" v-ripple @click.stop="openModal">
-            <fa icon="list"></fa>
-          </div>
-          <div class="mobile-chapter__option" v-ripple @click.stop="openModal(1)">
-            <fa icon="tint"></fa>
-          </div>
-          <div class="mobile-chapter__option" v-ripple @click.stop="openModal(2)">
-            <fa icon="font"></fa>
-          </div>
-          <div class="mobile-chapter__option" v-ripple @click.stop="openModal(4)">
-            <fa icon="comment"></fa>
-          </div>
-          <div class="mobile-chapter__option" v-ripple @click.stop="openModal(3)">
-            <fa icon="image"></fa>
-          </div>
-        </div>
-      </div>
+      <footer-modal :theme="theme" @modalChange="openModal" v-if="navigation"></footer-modal>
     </transition>
     <div v-if="!chapter.locked" class="mobile-chapter__actions flex-row flex--align flex--center">
       <div
@@ -127,37 +99,7 @@
         <fa :icon="action.icon"></fa>
         <div class="mobile-chapter__message">{{action.message}}</div>
       </div>
-      <transition name="grow-shrink">
-        <div v-if="problem" class="report-dialog dialog dialog__container">
-          <div v-click-outside="actionHandler" class="report-dialog__container dialog__content">
-            <div v-loading="loading" @submit.prevent class="report-dialog__form flex-column">
-              <label class="flex-row flex--between flex--align">
-                報告の理由
-                <span>
-                  <fa @click="actionHandler" class="report-dialog__close" icon="times"></fa>
-                </span>
-              </label>
-              <v-radio-group v-model="report.problem">
-                <v-radio v-for="n in problems" :key="n" :label="n" :value="n"></v-radio>
-              </v-radio-group>
-              <textarea
-                v-model="report.moreInfo"
-                placeholder="詳しく報告の理由"
-                v-if="report.problem === 'その他'"
-                name="problem"
-                id
-              ></textarea>
-              <div class="flex-divider flex-row report-dialog__button">
-                <button
-                  class="report-dialog__submit report-dialog__submit--close"
-                  @click="actionHandler"
-                >キャンセル</button>
-                <button class="report-dialog__submit" @click="reportHandler">報告</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </transition>
+      <report-modal v-if="problem" @close="actionHandler"></report-modal>
     </div>
   </section>
 </template>
@@ -167,21 +109,29 @@ import { mapGetters } from "vuex";
 import { hydrateWhenVisible, hydrateSsrOnly } from "vue-lazy-hydration";
 
 export default {
+  created() {
+    return {};
+  },
   components: {
     Currency: () => import("@/components/All/Currency"),
-    TOC: hydrateWhenVisible(() =>
-      import("@/components/ChapterPage/MobileModal/TOC")
-    ),
     Theme: hydrateWhenVisible(() =>
       import("@/components/ChapterPage/MobileModal/Theme")
     ),
+    TOC: hydrateWhenVisible(() =>
+      import("@/components/ChapterPage/MobileModal/TOC")
+    ),
+
     FontSetting: hydrateWhenVisible(() =>
       import("@/components/ChapterPage/MobileModal/Font")
     ),
-    ImageM: () => import("@/components/ChapterPage/MobileModal/Images"),
+    ImageM: hydrateWhenVisible(() =>
+      import("@/components/ChapterPage/MobileModal/Images")
+    ),
     Comments: hydrateWhenVisible(() =>
       import("@/components/ChapterPage/MobileModal/Comments")
-    )
+    ),
+    ReportModal: hydrateWhenVisible(() => import("./MobileUtility/Report")),
+    FooterModal: hydrateWhenVisible(() => import("./MobileUtility/Footer"))
   },
   props: ["comment"],
   computed: {
@@ -210,21 +160,9 @@ export default {
       settingM: false,
       imageM: false,
       commentM: false,
-      problems: [
-        "差別的または攻撃的な内容",
-        "テロリズムの助長",
-        "スパムや誤解を招く話",
-        "児童虐待",
-        "その他"
-      ],
       loading: false,
-      selected: 0,
-      height: "100%",
       problem: false,
-      report: {
-        problem: "",
-        moreInfo: ""
-      },
+      height: "100%",
       actions: {
         リポート: {
           icon: "flag",
@@ -253,13 +191,6 @@ export default {
     }
   },
   methods: {
-    change: function() {
-      this.simpleList.forEach(chap => {
-        if (chap.index === this.selected) {
-          this.$router.push(`/books/${this.$route.params.id}/${chap.id}`);
-        }
-      });
-    },
     swipeLeft: function() {
       if (!this.next) {
         return this.$toast.show("これが最後の話です", {
@@ -293,9 +224,6 @@ export default {
       this.table = false;
 
       this.navigation = !this.navigation;
-    },
-    formatTooltip(val) {
-      return `${((val / this.max) * 100).toFixed(0)}%`;
     },
     closeNav: function() {
       this.navigation = false;
@@ -368,28 +296,6 @@ export default {
           break;
       }
       this.navigation = true;
-    },
-    reportHandler: async function() {
-      try {
-        const report = {
-          type: "chapter",
-          type_id: this.chapter.id,
-          problem: this.report.problem,
-          more_info: this.report.moreInfo
-        };
-        try {
-          this.loading = true;
-          await this.$store.dispatch("report/postReport", { report });
-          this.loading = false;
-          this.problem = !this.problem;
-          return this.$toast.show("報告に成功しました", {
-            theme: "toasted-primary",
-            position: "bottom-center",
-            duration: 1000,
-            icon: "check_circle"
-          });
-        } catch (error) {}
-      } catch (error) {}
     },
     purchase: async function() {
       try {
@@ -490,6 +396,15 @@ export default {
         font-size: inherit;
         font-family: inherit;
       }
+      rb {
+        font-size: inherit;
+        font-family: inherit;
+      }
+      img {
+        max-width: 90%;
+        display: block;
+        margin: 0 auto;
+      }
     }
     #{$self}__footer {
     }
@@ -535,53 +450,7 @@ export default {
       }
     }
   }
-  &__bottom {
-    position: fixed;
-    bottom: -1px;
-    height: 12rem;
-    left: 0;
-    width: 100vw;
-    z-index: 100;
-    &--black {
-      background-color: #19191a;
-      color: #949698;
-    }
-    &--tan {
-      background-color: #e9e1b8;
-    }
-    background-color: white;
-    // padding: 2rem;
-    padding: 1rem;
-    box-sizing: border-box;
 
-    #{$self}__options {
-      display: flex;
-      align-items: center;
-      justify-content: space-evenly;
-      #{$self}__option {
-        width: 5rem;
-        height: 5rem;
-        font-size: 2.5rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-    }
-    #{$self}__nav {
-      font-size: 2.5rem;
-      padding: 1rem 1.5rem;
-    }
-    .el-slider__bar {
-      background-color: #3b66f5;
-    }
-    .el-tooltip {
-      background-color: #3b66f5;
-      border: 0;
-    }
-    .el-slider {
-      flex-grow: 1;
-    }
-  }
   &__actions {
     #{$self}__action {
       font-size: 2.5rem;
@@ -600,67 +469,7 @@ export default {
     }
   }
 }
-.report-dialog {
-  $self: &;
-  .v-label {
-    line-height: 25px;
-  }
-  #{$self}__container {
-    border-radius: 2rem;
-    max-width: 95%;
-    // bottom: ;
-    max-height: 50vh;
-    #{$self}__form {
-      font-size: 3vh;
 
-      span {
-        padding: 0.5rem 0.75rem;
-        border-radius: 10rem;
-        background-color: #e3e8ee;
-      }
-      #{$self}__close {
-        font-size: 2vh;
-        color: #4f566b;
-      }
-      label {
-        font-size: 3vh;
-      }
-      textarea {
-        font-size: 3vh;
-        padding: 1rem;
-        box-sizing: border-box;
-        border-radius: 1rem;
-        margin-bottom: 0.5rem;
-        box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11),
-          0 1px 3px rgba(0, 0, 0, 0.08);
-      }
-      #{$self}__button {
-        width: 100%;
-        height: 7vh;
-        border-radius: 1rem;
-        justify-content: space-between;
-        box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11),
-          0 1px 3px rgba(0, 0, 0, 0.08);
-        overflow: hidden;
-      }
-      #{$self}__submit {
-        font-size: 3vh;
-        // align-self: flex-end;
-        // padding: 0 2rem;
-        width: 50%;
-        background-color: #566cd6;
-        color: white;
-        &--close {
-          background-color: white;
-          color: #566cd6;
-          // align-self: flex-start;
-        }
-      }
-    }
-
-    // background-color:;
-  }
-}
 .mobile-chapter__toasted {
   height: 8vh !important;
   width: 96% !important;

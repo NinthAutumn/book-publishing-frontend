@@ -48,6 +48,8 @@
 
 <script>
 import { mapGetters } from "vuex";
+import { hydrateWhenVisible } from "vue-lazy-hydration";
+
 export default {
   computed: {
     modal() {
@@ -61,10 +63,16 @@ export default {
     })
   },
   components: {
-    TOC: () => import("@/components/ChapterPage/Modal/TOC"),
-    Profile: () => import("@/components/ChapterPage/Modal/Profile"),
-    Setting: () => import("@/components/ChapterPage/Modal/Setting"),
-    Images: () => import("@/components/ChapterPage/Modal/Images")
+    TOC: hydrateWhenVisible(() => import("@/components/ChapterPage/Modal/TOC")),
+    Profile: hydrateWhenVisible(() =>
+      import("@/components/ChapterPage/Modal/Profile")
+    ),
+    Setting: hydrateWhenVisible(() =>
+      import("@/components/ChapterPage/Modal/Setting")
+    ),
+    Images: hydrateWhenVisible(() =>
+      import("@/components/ChapterPage/Modal/Images")
+    )
   },
   async mounted() {},
   methods: {
@@ -121,8 +129,10 @@ export default {
     color: black;
   }
   &--black {
+    .table-content {
+    }
     background-color: #1a1a1b;
-    // border-right: 1px solid rgb(63, 63, 63);
+    border: 1px solid black;
     color: rgb(215, 218, 220);
   }
   &--tan {

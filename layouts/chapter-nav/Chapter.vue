@@ -135,7 +135,6 @@ export default {
   },
   components: {
     Horizontal: hydrateWhenVisible(() => import("./Horizontal")),
-    LeftV: hydrateWhenVisible(() => import("./Left-V")),
     RightV: hydrateWhenVisible(() => import("./Right-V")),
     MobileHorizontal: hydrateWhenVisible(() => import("./MobileHorizontal")),
     SettingForm: hydrateWhenVisible(() =>

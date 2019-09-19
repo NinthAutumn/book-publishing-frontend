@@ -32,7 +32,7 @@
           <div class="book-page__review-title">レビュー({{reviewCount}})</div>
           <ReviewsList :rating="book.rating"></ReviewsList>
         </section>
-        <reading-carousel :reading="reading" class="book-page__carousel"></reading-carousel>
+        <reading-carousel v-if="reading.length > 0" :reading="reading" class="book-page__carousel"></reading-carousel>
       </div>
       <BookChapterList class="book-page__content" v-show="tabs.open ==='toc'"></BookChapterList>
     </div>

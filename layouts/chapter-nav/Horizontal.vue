@@ -83,6 +83,8 @@
 </template>
 <script>
 import { mapGetters } from "vuex";
+import { hydrateWhenVisible } from "vue-lazy-hydration";
+
 export default {
   name: "Horizontal",
   data() {
@@ -101,12 +103,22 @@ export default {
     }
   },
   components: {
-    AuthModal: () => import("@/components/Navigation/Auth/AuthModal"),
-    Dropdown: () => import("@/components/Navigation/Dropdown"),
-    ProductModal: () => import("@/components/Navigation/Stripe/ProductModal"),
-    NotificationList: () => import("@/components/Navigation/Notification"),
-    Currency: () => import("@/components/All/Currency"),
-    SubMain: () => import("@/components/Navigation/Subscribe/SubMain")
+    AuthModal: hydrateWhenVisible(() =>
+      import("@/components/Navigation/Auth/AuthModal")
+    ),
+    Dropdown: hydrateWhenVisible(() =>
+      import("@/components/Navigation/Dropdown")
+    ),
+    ProductModal: hydrateWhenVisible(() =>
+      import("@/components/Navigation/Stripe/ProductModal")
+    ),
+    NotificationList: hydrateWhenVisible(() =>
+      import("@/components/Navigation/Notification")
+    ),
+    Currency: hydrateWhenVisible(() => import("@/components/All/Currency")),
+    SubMain: hydrateWhenVisible(() =>
+      import("@/components/Navigation/Subscribe/SubMain")
+    )
   },
   computed: {
     ...mapGetters({

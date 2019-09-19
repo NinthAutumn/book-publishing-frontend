@@ -7,7 +7,7 @@
       <p>検索</p>
     </div>
     <div class="mobile-browse__tab">
-      <v-tabs v-model="tab" dark color="#e3e8ee">
+      <v-tabs v-model="tab" light color="#e3e8ee">
         <v-tabs-slider color="white"></v-tabs-slider>
         <v-tab v-for="item in items" :key="item.key">{{ item.value }}</v-tab>
         <v-tabs-items v-touch:swipe.left="swipeTab" v-touch:swipe.right="swipeRight">

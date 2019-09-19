@@ -18,6 +18,7 @@
     ></review-modal>
     <review-page :book="book" @selectReview="reviewPage" v-model="$route.query.review"></review-page>
     <review-form @toggleForm="toggleForm" v-model="$route.query.form"></review-form>
+    <add-button></add-button>
   </div>
 </template>
 
@@ -91,7 +92,8 @@ export default {
     ),
     ReviewForm: hydrateWhenVisible(() =>
       import("@/components/Mobile/Modals/Review/form")
-    )
+    ),
+    AddButton: hydrateWhenVisible(() => import("./Add"))
   }
 };
 </script>
