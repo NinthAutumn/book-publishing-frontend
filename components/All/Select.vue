@@ -196,36 +196,42 @@ export default {
     }
   },
   methods: {
+    genreMultiData() {
+      this.multiData.forEach((item, n) => {
+        if (n === index) {
+          item.selected = !item.selected;
+          if (item.selected) {
+            this.selectedData.push({ name: item.key, id: item.value });
+          } else {
+            this.selectedData = this.selectedData.filter(
+              element => element.name !== item.key
+            );
+          }
+        }
+      });
+    },
+    nonGenreMultiData() {
+      this.multiData.forEach((item, n) => {
+        if (n === index) {
+          item.selected = !item.selected;
+          if (item.selected) {
+            this.selectedData.push(item.key);
+          } else {
+            this.selectedData = this.selectedData.filter(
+              element => element !== item.key
+            );
+          }
+        }
+      });
+    },
     selected: function(index, disable) {
       if (disable) {
         return;
       }
       if (this.genre) {
-        this.multiData.forEach((item, n) => {
-          if (n === index) {
-            item.selected = !item.selected;
-            if (item.selected) {
-              this.selectedData.push({ name: item.key, id: item.value });
-            } else {
-              this.selectedData = this.selectedData.filter(
-                element => element.name !== item.key
-              );
-            }
-          }
-        });
+        this.genreMultiData();
       } else {
-        this.multiData.forEach((item, n) => {
-          if (n === index) {
-            item.selected = !item.selected;
-            if (item.selected) {
-              this.selectedData.push(item.key);
-            } else {
-              this.selectedData = this.selectedData.filter(
-                element => element !== item.key
-              );
-            }
-          }
-        });
+        this.nonGenreMultiData();
       }
 
       if (this.selectedData.length > this.limit) {
@@ -236,22 +242,25 @@ export default {
           icon: "extension"
         });
         this.selectedData.pop();
-        this.multiData.forEach((item, n) => {
-          if (n === index) {
-            item.selected = !item.selected;
-            if (item.selected) {
-              this.selectedData.push();
-            } else {
-              this.selectedData = this.selectedData.filter(
-                element => element !== item.key
-              );
-            }
-          }
-        });
+        this.pushIntoSelected();
       }
 
       this.$emit("input", this.selectedData);
       this.$emit("selected");
+    },
+    pushIntoSelected() {
+      this.multiData.forEach((item, n) => {
+        if (n === index) {
+          item.selected = !item.selected;
+          if (item.selected) {
+            this.selectedData.push();
+          } else {
+            this.selectedData = this.selectedData.filter(
+              element => element !== item.key
+            );
+          }
+        }
+      });
     },
     openModal: function() {
       if (this.disabled) {

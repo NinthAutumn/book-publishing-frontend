@@ -156,10 +156,15 @@ export default {
     MobilePage: hydrateWhenVisible(() =>
       import("@/components/Mobile/Cards/Book/Page")
     ),
-    BookCategory: () => import("@/components/Bookpage/Category"),
-    ReadingCarousel: () => import("@/components/Web/Lists/Reading/Carousel")
+    BookCategory: hydrateWhenVisible(() =>
+      import("@/components/Bookpage/Category")
+    ),
+    ReadingCarousel: hydrateWhenVisible(() =>
+      import("@/components/Web/Lists/Reading/Carousel")
+    )
   },
   pageTransition: false,
+
   async mounted() {
     if (this.$device.isMobile) {
       return;

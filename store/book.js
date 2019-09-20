@@ -345,7 +345,7 @@ export const mutations = {
     state.bookGenres = genres
   },
   SET_GENRES(state, genres) {
-
+    state.genres = []
     genres.forEach((genre) => {
       state.genres.push({
         ...genre,

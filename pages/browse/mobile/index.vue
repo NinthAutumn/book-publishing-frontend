@@ -119,7 +119,10 @@ export default {
   watch: {},
   async mounted() {
     await this.$store.dispatch("book/fetchAllGenres");
-    this.genres.forEach(genre => {
+    this.genres.forEach(this.mountedHandler);
+  },
+  methods: {
+    mountedHandler(genre) {
       if (genre.name === this.$route.query.genre) {
         this.filters["genre"].list.push({
           selected: true,
@@ -138,9 +141,7 @@ export default {
           value: genre.id
         });
       }
-    });
-  },
-  methods: {
+    },
     async infiniteHandler($state) {
       const books = await this.$store.dispatch("book/browseMobileBooks", {
         type: this.items[this.tab].key,

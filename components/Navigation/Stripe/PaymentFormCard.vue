@@ -246,7 +246,6 @@ export default {
       }
     }
   },
-  async created() {},
   async mounted() {
     const elements = this.stripe.elements({ locale: "ja" });
     const self = this;
@@ -295,13 +294,8 @@ export default {
       });
 
       if (confirmError) {
-        // Report to the browser that the payment failed, prompting it to
-        // re-show the payment interface, or show an error message and close
-        // the payment interface.
         ev.complete("fail");
       } else {
-        // Report to the browser that the confirmation was successful, prompting
-        // it to close the browser payment method collection interface.
         ev.complete("success");
         // Let Stripe.js handle the rest of the payment flow.
         const { error } = await stripe.handleCardPayment(clientSecret);

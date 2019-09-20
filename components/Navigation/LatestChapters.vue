@@ -23,9 +23,7 @@
         <div v-if="!notification.read" class="latest-chapters__notification"></div>
       </li>
       <client-only>
-        <client-only>
-          <infinite-loading @infinite="infiniteHandler"></infinite-loading>
-        </client-only>
+        <infinite-loading @infinite="infiniteHandler"></infinite-loading>
       </client-only>
     </ul>
   </div>

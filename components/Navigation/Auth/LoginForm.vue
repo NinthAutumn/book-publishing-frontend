@@ -66,6 +66,7 @@
 
 <script>
 import SignUpFrom from "./SignUpFrom";
+import { mapActions } from "vuex";
 export default {
   data() {
     return {
@@ -103,6 +104,54 @@ export default {
     changePage(page) {
       this.$store.commit("SET_AUTH_PAGE", page);
     },
+    ...mapActions({
+      postLogin: "auth/login",
+      fetchComments: "comment/fetchCommentList",
+      fetchReviews: "review/showAll",
+      checkIsReviewed: "review/fetchIsReviewed"
+    }),
+    errorCount() {
+      if (!this.failed) {
+        this.$storage.setUniversal("FAILED_LOGIN_COUNT", 1);
+        this.failed = 1;
+      } else {
+        this.failed++;
+        this.$storage.setUniversal(
+          "FAILED_LOGIN_COUNT",
+          this.$storage.getUniversal("FAILED_LOGIN_COUNT") + 1
+        );
+      }
+    },
+    async checkRoute() {
+      if (this.$route.name === "books-id-chaptersId") {
+        await this.fetchComments({
+          chapterId: this.$route.params.chaptersId,
+          sortBy: 0,
+          page: 1,
+          limit: 10,
+          direction: 0
+        });
+      }
+      if (this.$route.name === "books-id") {
+        await this.fetchReviews({
+          bookId: this.$route.params.id,
+          page: 1,
+          limit: 10,
+          type: 0
+        });
+        await this.checkIsReviewed({ bookId: this.$route.params.id });
+      }
+    },
+    errorHandler(error) {
+      this.errorCount();
+
+      this.loading = false;
+      this.bigError = error;
+      return this.$toast.error(error, {
+        duration: 2000,
+        icon: "extension"
+      });
+    },
     async login() {
       this.bigError = false;
       this.loading = true;
@@ -112,78 +161,28 @@ export default {
         password: this.form.password
       };
       try {
-        // await this.$recaptcha.execute();
-        // await this.$recaptcha.render();
-
         if (this.failed > 5) {
           const token = await this.$recaptcha.getResponse();
         }
-        const { error } = await this.$store.dispatch("auth/login", {
+        const { error } = await this.postLogin({
           user: this.form,
           strategy: "local"
         });
 
         if (error) {
-          if (!this.failed) {
-            this.$storage.setUniversal("FAILED_LOGIN_COUNT", 1);
-            this.failed = 1;
-          } else {
-            this.failed++;
-            this.$storage.setUniversal(
-              "FAILED_LOGIN_COUNT",
-              this.$storage.getUniversal("FAILED_LOGIN_COUNT") + 1
-            );
-          }
-
-          this.loading = false;
-          this.bigError = error;
-          return this.$toast.error(error, {
-            duration: 2000,
-            icon: "extension"
-          });
+          return this.errorHandler(error);
         }
         this.loading = false;
         // w;
         this.$store.commit("LOGIN_FALSE");
         this.$storage.setUniversal("FAILED_LOGIN_COUNT", 0);
         this.$nuxt.refresh();
-        // if(this.$forceUpdate)
-        if (this.$route.name === "books-id-chaptersId") {
-          await this.$store.dispatch("comment/fetchCommentList", {
-            chapterId: this.$route.params.chaptersId,
-            sortBy: 0,
-            page: 1,
-            limit: 10,
-            direction: 0
-          });
-        }
-        if (this.$route.name === "books-id") {
-          await this.$store.dispatch("review/showAll", {
-            bookId: this.$route.params.id,
-            page: 1,
-            limit: 10,
-            type: 0
-          });
-          await this.$store.dispatch("review/fetchIsReviewed", {
-            bookId: this.$route.params.id
-          });
-        }
-        // if(this.$route.path)
+        this.checkRoute();
         this.$emit("loginAction");
       } catch (error) {
         console.log(error);
         this.loading = false;
-        if (!this.failed) {
-          this.failed = 1;
-          this.$storage.setUniversal("FAILED_LOGIN_COUNT", 1);
-        } else {
-          this.failed++;
-          this.$storage.setUniversal(
-            "FAILED_LOGIN_COUNT",
-            this.$storage.getUniversal("FAILED_LOGIN_COUNT") + 1
-          );
-        }
-
+        this.errorCount();
         if (error === "Failed to execute") {
           this.bigError = "ロボット認証に失敗しました";
           return this.$toast.error(this.bigError, {
@@ -219,14 +218,10 @@ export default {
   &--mobile {
     padding: 1.5rem;
   }
-  // justify-content: space-around;
   width: 100%;
   // padding: 30px;
   $self: &;
   &__item {
-    // border-radius: 10px;
-    #{$self}__container {
-    }
     #{$self}__input {
       height: 47px;
       padding: 12px 14px;
@@ -234,9 +229,6 @@ export default {
       background-color: white;
       border: 1px solid transparent;
       border-radius: 4px;
-      // box-shadow: 0 1px 3px 0 #d9d1dd;
-      -webkit-transition: box-shadow 150ms ease;
-      transition: box-shadow 150ms ease;
       font-size: 1.6rem;
       transition: 300ms;
       margin-bottom: 2rem;
@@ -250,35 +242,16 @@ export default {
       &:focus,
       &:hover {
         outline: none;
-        -webkit-box-shadow: 0 13px 27px -5px rgba(50, 50, 93, 0.25),
-          0 8px 16px -8px rgba(0, 0, 0, 0.3),
-          0 -6px 16px -6px rgba(0, 0, 0, 0.025) !important;
         box-shadow: 0 13px 27px -5px rgba(50, 50, 93, 0.25),
           0 8px 16px -8px rgba(0, 0, 0, 0.3),
           0 -6px 16px -6px rgba(0, 0, 0, 0.025) !important;
-        -webkit-transition-property: color, background-color, -webkit-box-shadow,
-          -webkit-transform;
-        transition-property: color, background-color, -webkit-box-shadow,
-          -webkit-transform;
-        transition-property: color, background-color, box-shadow, transform;
-        transition-property: color, background-color, box-shadow, transform,
-          -webkit-box-shadow, -webkit-transform;
-        -webkit-transition-duration: 0.15s;
-        transition-duration: 0.15s;
-        transition: 300ms;
       }
     }
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    -ms-flex-direction: column;
-    flex-direction: column;
 
-    // height: 100%;
+    display: flex;
+
+    flex-direction: column;
     width: 100%;
-    -webkit-box-sizing: border-box;
     box-sizing: border-box;
   }
 
@@ -288,17 +261,14 @@ export default {
     font-size: 14px;
     font-weight: 500;
     font-variant: normal;
-    -webkit-font-smoothing: antialiased;
     color: #6b7c93;
   }
   .login__input {
-    // border-color: #c8cecf;
     &:focus {
       border-color: $primary;
     }
   }
   .login__submit {
-    // background-color: #;
     border-radius: 0;
     margin: 10px 0;
     transition: 300ms;

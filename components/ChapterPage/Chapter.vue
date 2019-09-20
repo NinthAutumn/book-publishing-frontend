@@ -48,7 +48,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 export default {
   components: {
     Currency: () => import("@/components/All/Currency")
@@ -63,17 +63,21 @@ export default {
     })
   },
   methods: {
+    ...mapActions({
+      buyChapter: "wallet/buyChapter",
+      fetchChapter: "chapter/FetchChapter"
+    }),
     purchase: async function() {
       try {
         if (!this.$store.getters["auth/isAuthenticated"]) {
           return this.$store.commit("LOGIN_STATE");
         }
-        await this.$store.dispatch("wallet/buyChapter", {
+        await this.buyChapter({
           bookId: this.$route.params.id,
           chapterId: this.$route.params.chaptersId,
-          amount: this.$store.state.chapter.chapter.price
+          amount: this.chapter.price
         });
-        await this.$store.dispatch("chapter/fetchChapter", {
+        await this.fetchChapter({
           chapterId: this.$route.params.chaptersId,
           bookId: this.$route.params.id
         });

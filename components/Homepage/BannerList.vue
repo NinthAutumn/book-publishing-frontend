@@ -50,11 +50,6 @@ export default {
         slidesPerView: 1.005,
         spaceBetween: 15,
         freeMode: false,
-        // mousewheel: {
-        //   invert: true,
-        //   sensitivity: 1,
-        //   forceToAxis: true
-        // },
         on: {},
         breakpoints: {}
       },

@@ -142,13 +142,6 @@ export default {
 
 <style lang="scss">
 .product-modal {
-  // width: 100%;
-  // margin-top: 2rem;
-  // position: relative;
-  // display: flex;
-  // align-items: center;
-  // justify-content: center;
-  // border-radius: 0.4rem;
   $self: &;
   #card-element {
   }

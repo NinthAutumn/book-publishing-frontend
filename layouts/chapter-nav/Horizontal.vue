@@ -5,7 +5,10 @@
   >
     <nav>
       <div class="left-menu flex flex--align">
-        <nuxt-link v-ripple tag="div" to="/" class="site-logo">ノーブル</nuxt-link>
+        <nuxt-link v-ripple tag="div" to="/" class="site-logo flex-row">
+          ノーブル
+          <div class="beta-small">ベータ</div>
+        </nuxt-link>
         <div class="nav-title flex flex--align">
           <nuxt-link class="nav-title__book" v-text="`${title}`" :to="`/books/${$route.params.id}`"></nuxt-link>
           <span class="nav-title__chapter-index" v-text="`/第${chapter.index}話:`"></span>
@@ -225,6 +228,15 @@ export default {
 .signupform {
   width: 30%;
   margin: auto;
+}
+.beta-small {
+  font-size: 1rem;
+  color: white;
+  // margin-left: 1rem;
+  align-self: flex-start;
+  padding: 0.2rem 1rem;
+  background-color: $secondary;
+  border-radius: 10rem;
 }
 .not-loggedin {
   &__img {

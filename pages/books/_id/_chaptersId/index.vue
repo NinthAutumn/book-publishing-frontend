@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 import { hydrateWhenVisible, hydrateSsrOnly } from "vue-lazy-hydration";
 
 export default {
@@ -35,33 +35,29 @@ export default {
     if (this.$route.query.comment) {
       this.nochapter = true;
     }
-    await this.$store.dispatch("drawing/fetchChapterDrawings", {
-      chapterId: this.$route.params.chaptersId
-    });
-    await this.$store.dispatch("chapter/fetchChapterNav", {
-      index: this.$store.getters["chapter/getChapter"].index,
+    await this.fetchDrawing({ chapterId: this.$route.params.chaptersId });
+    await this.fetchNav({
+      index: this.chapter.index,
       bookId: this.$route.params.id,
-      settingIndex: this.$store.getters["chapter/getChapter"].setting_index
+      settingIndex: this.chapter.setting_index
     });
   },
   methods: {
+    ...mapActions({
+      fetchChapter: "chapter/fetchChapter",
+      fetchNav: "chapter/fetchChapterNav",
+      fetchDrawing: "drawing/fetchChapterDrawings"
+    }),
     async nextChapter() {
       const bookId = this.$route.params.id,
         chapterId = this.chapter.navigation.next._id;
-
-      await this.$store.dispatch("chapter/fetchChapter", {
-        bookId,
-        chapterId
-      });
+      await this.fetchChapter({ bookId, chapterId });
       this.$router.push(`/books/${bookId}/${chapterId}`);
     },
     async prevChapter() {
       const bookId = this.$route.params.id,
         chapterId = this.chapter.navigation.prev._id;
-      await this.$store.dispatch("chapter/fetchChapter", {
-        bookId,
-        chapterId
-      });
+      await this.fetchChapter({ bookId, chapterId });
       this.$router.push(`/books/${bookId}/${chapterId}`);
     }
   },

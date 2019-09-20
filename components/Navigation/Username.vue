@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 export default {
   data() {
     return {
@@ -71,29 +71,34 @@ export default {
     })
   },
   methods: {
+    ...mapActions({
+      uploadAvatar: "upload/uploadAvatar",
+      patchUser: "user/patchUser",
+      fetchUser: "auth/fetchUser"
+    }),
+    async generateBlobHandler(blob) {
+      const url = await this.uploadAvatar(blob);
+      this.user = {
+        avatar: url.url,
+        username: this.user.username
+      };
+      this.user["initial"] = true;
+      await this.patchUser({ user: this.user });
+    },
     async setUsername() {
       try {
         if (this.usernameAvailable) return;
         if (this.newAvatar) {
-          this.avatar.generateBlob(async blob => {
-            const url = await this.$store.dispatch("upload/uploadAvatar", blob);
-            this.user = {
-              avatar: url.url,
-              username: this.user.username
-            };
-            this.user["initial"] = true;
-            await this.$store.dispatch("user/patchUser", { user: this.user });
-          });
+          this.avatar.generateBlob(this.generateBlobHandler);
         } else {
-          await this.$store.dispatch("user/patchUser", { user: this.user });
+          await this.patchUser({ user: this.user });
         }
         this.$store.commit("auth/TOGGLE_USERNAME_MODAL");
-        await this.$store.dispatch("auth/fetchUser");
+        await this.fetchUser();
         this.open = false;
       } catch (error) {
-        console.log(error);
         this.$store.commit("auth/TOGGLE_USERNAME_MODAL");
-        await this.$store.dispatch("auth/fetchUser");
+        await this.fetchUser();
       }
     },
     fileChoose() {

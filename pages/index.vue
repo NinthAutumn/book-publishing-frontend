@@ -28,12 +28,12 @@
         <h3>今日人気の作品</h3>
       </div>
 
-      <BooksList :trendings="trending"></BooksList>
+      <BooksList :books="trending"></BooksList>
 
       <div class="card-title">
         <h3>更新された作品</h3>
       </div>
-      <BooksList :trendings="latest"></BooksList>
+      <BooksList :books="latest"></BooksList>
       <mobile-ranking v-if="$device.isMobile"></mobile-ranking>
       <adsbygoogle v-if="!user.status||!user" />
       <div class="card-title">
@@ -43,7 +43,7 @@
       <div class="card-title">
         <h3>更新頻度が高い</h3>
       </div>
-      <BooksList :trendings="frequent"></BooksList>
+      <BooksList :books="frequent"></BooksList>
       <div class="card-title">
         <h3>最新リスト</h3>
       </div>
@@ -58,13 +58,10 @@ import {
   hydrateWhenIdle,
   hydrateOnInteraction
 } from "vue-lazy-hydration";
-
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 export default {
   components: {
-    BooksList: hydrateWhenVisible(() =>
-      import("@/components/Homepage/BooksList")
-    ),
+    BooksList: hydrateWhenVisible(() => import("@/components/Web/Lists/Book")),
     ReviewList: hydrateWhenVisible(() =>
       import("@/components/Homepage/ReviewList")
     ),
@@ -97,31 +94,17 @@ export default {
   data() {
     return {
       compo: false,
-
       width: 0,
       height: 0
     };
   },
   async mounted() {
-    await this.$store.dispatch("analytic/fetchHighFrequent");
-    await this.$store.dispatch("book/fetchLatestBooks", {
-      page: 1,
-      limit: 12,
-      structured: false
-    });
-    await this.$store.dispatch("analytic/fetchTrending", {
-      time: "weekly",
-      page: 1
-    });
-    await this.$store.dispatch("reading/fetchLatestReadingList", {
-      page: 1,
-      limit: 10
-    });
-    await this.$store.dispatch("ranking/fetchTrendingReadingList", {
-      page: 1,
-      limit: 10
-    });
-    await this.$store.dispatch("analytic/fetchTrendingReviews");
+    await this.fetchFrequent();
+    await this.fetchLatestBook({ page: 1, limit: 12, structured: false });
+    await this.fetchTrending({ time: "weekly", page: 1 });
+    await this.fetchLatestReading({ page: 1, limit: 10 });
+    await this.fetchTrendingReading({ page: 1, limit: 10 });
+    await this.fetchTrendingReview();
     window.addEventListener("resize", this.handleResize);
     this.handleResize();
     // this.compo = this.checkMobile() ? Header : null;
@@ -130,6 +113,14 @@ export default {
     window.removeEventListener("resize", this.handleResize);
   },
   methods: {
+    ...mapActions({
+      fetchTrendingReading: "analytic/fetchTrendingReviews",
+      fetchLatestReading: "reading/fetchLatestReadingList",
+      fetchTrending: "analytic/fetchTrending",
+      fetchTrendingReview: "analytic/fetchTrendingReviews",
+      fetchLatestBook: "book/fetchLatestBooks",
+      fetchFrequent: "analytic/fetchHighFrequent"
+    }),
     checkMobile() {
       return window ? window.innerWidth < 1 : true;
     },

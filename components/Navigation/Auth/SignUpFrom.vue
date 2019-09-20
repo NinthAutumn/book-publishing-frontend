@@ -118,7 +118,6 @@ export default {
       user: "auth/fetchUser"
     }),
     async signUp() {
-      // const isValid = await this.$refs.observer.validate();
       await this.$validator.validateAll();
       if (!this.errors.any()) {
         this.createError = "";
@@ -221,12 +220,9 @@ export default {
     border: 1px solid transparent;
     width: 100%;
     border-radius: 4px;
-    // box-shadow: 0 1px 3px 0 #d9d1dd;
-    -webkit-transition: box-shadow 150ms ease;
     transition: box-shadow 150ms ease;
     font-size: 1.6rem;
     transition: 300ms;
-    // margin-bottom: 2rem;
     border-left: 5px solid #f5f5f5;
     &--error {
       border-left: 5px solid #ff6160;
@@ -240,22 +236,10 @@ export default {
     &:focus,
     &:hover {
       outline: none;
-      -webkit-box-shadow: 0 13px 27px -5px rgba(50, 50, 93, 0.25),
-        0 8px 16px -8px rgba(0, 0, 0, 0.3),
-        0 -6px 16px -6px rgba(0, 0, 0, 0.025) !important;
+
       box-shadow: 0 13px 27px -5px rgba(50, 50, 93, 0.25),
         0 8px 16px -8px rgba(0, 0, 0, 0.3),
         0 -6px 16px -6px rgba(0, 0, 0, 0.025) !important;
-      -webkit-transition-property: color, background-color, -webkit-box-shadow,
-        -webkit-transform;
-      transition-property: color, background-color, -webkit-box-shadow,
-        -webkit-transform;
-      transition-property: color, background-color, box-shadow, transform;
-      transition-property: color, background-color, box-shadow, transform,
-        -webkit-box-shadow, -webkit-transform;
-      -webkit-transition-duration: 0.15s;
-      transition-duration: 0.15s;
-      transition: 300ms;
     }
   }
   .signup-form__control {
@@ -276,7 +260,6 @@ export default {
     font-size: 16px;
     margin-top: 5px;
   }
-  // transition: 300ms;
   .signup-title {
     font-weight: bold;
   }
@@ -289,17 +272,9 @@ export default {
     // padding: 30px;
     width: 100%;
     box-sizing: border-box;
-    // grid-column-start: 2;
-    // grid-row-start: 2;
+
     input {
       padding-left: 5px;
-      // font-size: 16px;
-      // height: 30px;
-      // border: 1px solid grey;
-      // margin-bottom: 10px;
-
-      // box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-      // border-radius: 10px;
     }
     label {
       display: block;

@@ -174,6 +174,23 @@ export default {
         last: last
       };
     },
+    serverRequiresAction() {},
+    serverError() {
+      if (this.sub) {
+        return this.$toast.show("会員登録に失敗しました", {
+          theme: "toasted-primary",
+          position: "top-right",
+          duration: 2000,
+          icon: "extension"
+        });
+      }
+      return this.$toast.show("クラウンコインの購入に失敗しました", {
+        theme: "toasted-primary",
+        position: "top-right",
+        duration: 2000,
+        icon: "extension"
+      });
+    },
     handleServerResponse: async function(response) {
       if (response.error) {
         return this.$toast.show(response.error, {
@@ -187,20 +204,7 @@ export default {
           this.paymentIntent.client_secret
         );
         if (result.error) {
-          if (this.sub) {
-            return this.$toast.show("会員登録に失敗しました", {
-              theme: "toasted-primary",
-              position: "top-right",
-              duration: 2000,
-              icon: "extension"
-            });
-          }
-          return this.$toast.show("クラウンコインの購入に失敗しました", {
-            theme: "toasted-primary",
-            position: "top-right",
-            duration: 2000,
-            icon: "extension"
-          });
+          this.serverError();
         } else {
           const res = await this.$axios.get("/stripe/confirmPayment", {
             payment_intent_id: this.paymentIntent.id
@@ -249,7 +253,6 @@ export default {
     font-size: 1.6rem;
     text-align: right;
     margin-bottom: 1rem;
-    // margin-right: 0.5rem;
     padding: 0 2rem;
   }
   &__container {

@@ -8,8 +8,11 @@
           v-if="$device.isDesktop||$device.isTablet"
           tag="div"
           to="/"
-          class="site-logo"
-        >ノーブル</nuxt-link>
+          class="site-logo flex-row"
+        >
+          ノーブル
+          <div class="beta-small">ベータ</div>
+        </nuxt-link>
       </div>
       <SearchBar class="searchbar"></SearchBar>
 
@@ -91,7 +94,7 @@
   </div>
 </template>
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 import { hydrateWhenVisible } from "vue-lazy-hydration";
 
 export default {
@@ -125,7 +128,6 @@ export default {
     ...mapGetters({
       user: "auth/getUser",
       loggedIn: "auth/isAuthenticated",
-
       productState: "getProductModalState",
       notificationCount: "user/getCommentNotificationCount",
       wealth: "wallet/getWealth",
@@ -135,8 +137,8 @@ export default {
   },
   async mounted() {
     if (this.loggedIn) {
-      await this.$store.dispatch("user/fetchCommentNotificationsCount");
-      await this.$store.dispatch("wallet/wealth");
+      await this.fetchNotificationCount();
+      await this.fetchWealth();
     }
     if (this.notificationCount > 0) {
       this.head = `ノーブル　(${this.notificationCount})`;
@@ -148,6 +150,10 @@ export default {
     };
   },
   methods: {
+    ...mapActions({
+      fetchNotificationCount: "user/fetchCommentNotificationsCount",
+      fetchWealth: "wallet/wealth"
+    }),
     menuDrawer() {
       this.$store.commit("menuStateChange");
     },
@@ -270,6 +276,16 @@ export default {
   top: -1111px;
   height: 0;
   border-radius: 100px;
+}
+
+.beta-small {
+  font-size: 1rem;
+  color: white;
+  // margin-left: 1rem;
+  align-self: flex-start;
+  padding: 0.2rem 1rem;
+  background-color: $secondary;
+  border-radius: 10rem;
 }
 
 .h-nav {

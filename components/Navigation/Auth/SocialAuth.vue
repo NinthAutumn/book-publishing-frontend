@@ -21,8 +21,6 @@
         <svg-icon class="social-auth__icon social-auth__icon--google" name="google" v-else></svg-icon>
         <div class="social-auth__key">{{social.key}}</div>
       </li>
-      <!-- <div class="g-signin2" :data-onsuccess="socialGoogle"></div> -->
-      <!-- <GoogleLogin :params="params" :onSuccess="googleAuth">Login</GoogleLogin> -->
     </ul>
     <div class="social-auth__create-account">
       アカウントを持っていない?
@@ -86,8 +84,36 @@ export default {
       setAuth: "auth/SET_AUTH_PATH"
     }),
     ...mapActions({
-      auth: "auth/socialAuth"
+      auth: "auth/socialAuth",
+      fetchComments: "comment/fetchCommentList",
+      fetchReviews: "review/showAll",
+      checkIsReviewed: "review/fetchIsReviewed"
     }),
+    loginRefresh() {
+      if (!this.user.username && this.user) {
+        this.$store.commit("auth/TOGGLE_USERNAME_MODAL");
+      }
+      this.$store.commit("LOGIN_FALSE");
+      this.$emit("loginAction");
+      this.$nuxt.refresh();
+    },
+    async facebookAuth(res) {
+      if (res.authResponse) {
+        await this.auth({
+          token: res.authResponse.accessToken,
+          strategy: "facebook"
+        });
+        this.loginRefresh();
+        this.checkRoute();
+      } else {
+        this.$toast.show(`フェースブックのログインに失敗しました`, {
+          theme: "toasted-primary",
+          position: "top-right",
+          duration: 1000,
+          icon: "extension"
+        });
+      }
+    },
     async socialLogin(value) {
       switch (value) {
         case "local":
@@ -95,37 +121,10 @@ export default {
           break;
         case "facebook":
           try {
-            window.FB.login(
-              async res => {
-                if (res.authResponse) {
-                  // let token = ;
-                  await this.auth({
-                    token: res.authResponse.accessToken,
-                    strategy: "facebook"
-                  });
-                  // this.$router.go(0);
-                  // this.$nuxt.refresh();
-                  if (!this.user.username && this.user) {
-                    this.$store.commit("auth/TOGGLE_USERNAME_MODAL");
-                  }
-                  this.$store.commit("LOGIN_FALSE");
-                  this.$emit("loginAction");
-                  this.$nuxt.refresh();
-                } else {
-                  this.$toast.show(`フェースブックのログインに失敗しました`, {
-                    theme: "toasted-primary",
-                    position: "top-right",
-                    duration: 1000,
-                    icon: "extension"
-                  });
-                }
-              },
-              {
-                scope: "public_profile,email"
-              }
-            );
+            window.FB.login(this.facebookAuth, {
+              scope: "public_profile,email"
+            });
           } catch (error) {
-            console.log(error);
             this.$toast.show(`フェースブックのログインに失敗しました`, {
               theme: "toasted-primary",
               position: "top-right",
@@ -137,7 +136,6 @@ export default {
           break;
         case "google":
           await this.google_submit();
-
           break;
         case "twitter":
           this.$storage.setUniversal("path", this.$route.path);
@@ -151,7 +149,26 @@ export default {
     async changeStep() {
       this.$store.commit("SET_AUTH_PAGE", 2);
     },
-    async googleAuth(googleUser) {},
+    async checkRoute() {
+      if (this.$route.name === "books-id-chaptersId") {
+        await this.fetchComments({
+          chapterId: this.$route.params.chaptersId,
+          sortBy: 0,
+          page: 1,
+          limit: 10,
+          direction: 0
+        });
+      }
+      if (this.$route.name === "books-id") {
+        await this.fetchReviews({
+          bookId: this.$route.params.id,
+          page: 1,
+          limit: 10,
+          type: 0
+        });
+        await this.checkIsReviewed({ bookId: this.$route.params.id });
+      }
+    },
     async google_submit() {
       try {
         await window.google_auth2.signIn().then(async val => {
@@ -159,41 +176,11 @@ export default {
             token: val.Zi.access_token,
             strategy: "google"
           });
-          // this.$store.commit("auth/TOGGLE_USERNAME_MODAL");
-          // this.$nuxt.refresh();
-          // this.$router.go(0);
         });
-        if (this.$route.name === "books-id-chaptersId") {
-          await this.$store.dispatch("comment/fetchCommentList", {
-            chapterId: this.$route.params.chaptersId,
-            sortBy: 0,
-            page: 1,
-            limit: 10,
-            direction: 0
-          });
-        }
-        if (this.$route.name === "books-id") {
-          await this.$store.dispatch("review/showAll", {
-            bookId: this.$route.params.id,
-            page: 1,
-            limit: 10,
-            type: 0
-          });
-          await this.$store.dispatch("review/fetchIsReviewed", {
-            bookId: this.$route.params.id
-          });
-        }
-        if (!this.user.username && this.user) {
-          this.$store.commit("auth/TOGGLE_USERNAME_MODAL");
-        }
-        this.$store.commit("LOGIN_FALSE");
-        this.$emit("loginAction");
-        this.$nuxt.refresh();
-      } catch (error) {}
 
-      // if (!this.user.username && this.user) {
-      //   this.$store.commit("auth/TOGGLE_USERNAME_MODAL");
-      // }
+        this.loginRefresh();
+        this.checkRoute();
+      } catch (error) {}
     }
   }
 };

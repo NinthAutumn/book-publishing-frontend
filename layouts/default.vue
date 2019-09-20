@@ -2,6 +2,7 @@
   <div>
     <div v-if="$nuxt.isOffline">今オフラインです</div>
     <username-modal></username-modal>
+    <div class="beta-pill">ベータテスト中</div>
     <reading-list-modal v-if="state"></reading-list-modal>
     <reading-modal v-if="readingModal"></reading-modal>
     <transition name="grow-shrink" class="loginform">
@@ -86,7 +87,9 @@ export default {
     StripeModal: hydrateSsrOnly(() =>
       import("@/components/Navigation/Stripe/ProductModal")
     ),
-    NotificationList: () => import("@/components/Navigation/Notification"),
+    NotificationList: hydrateWhenVisible(() =>
+      import("@/components/Navigation/Notification")
+    ),
     UsernameModal: () => import("@/components/Navigation/Username"),
     AuthModal: () => import("@/components/Navigation/Auth/AuthModal"),
     ReadingModal: () => import("@/components/Web/Modals/ReadingList/Create"),
@@ -222,6 +225,17 @@ export default {
 //     background-color: #1a1a1b;
 //   }
 // }
+.beta-pill {
+  z-index: 100000;
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  background-color: $secondary;
+  color: white;
+  border-radius: 10rem;
+  font-size: 1.4rem;
+  padding: 0.5rem 2rem;
+}
 .user-status {
   $self: &;
   &__banner {
