@@ -51,6 +51,7 @@ export default {
   height: 95vh;
   $self: &;
   overflow: auto;
+  // border:1px solid
   .ripple-color {
     color: rgb(206, 206, 206);
   }

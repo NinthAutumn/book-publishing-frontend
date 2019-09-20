@@ -71,10 +71,8 @@ export default {
       this.loading = true;
       this.$nuxt.$loading.start();
       this.files = e.target.files || e.dataTransfer.files;
-      for (let file in this.file) {
-        await this.upload({
-          file
-        });
+      for (let file of this.files) {
+        await this.upload(file);
       }
       try {
         await this.fetchDrawings();

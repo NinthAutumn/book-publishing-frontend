@@ -98,9 +98,6 @@ export default {
     this.user.bio = this.profile.bio;
   },
   methods: {
-    closeModal() {
-      this.$store.commit("TOGGLE_SETTING_MODAL");
-    },
     async updateHandler() {
       try {
         await this.$validator.validateAll();

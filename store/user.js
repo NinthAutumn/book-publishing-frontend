@@ -183,7 +183,18 @@ export const actions = {
     commit('SET_UPDATE_VIEW', res.data.update_display)
 
   },
+  async patchProfile({
+    commit
+  }, {
+    profile
+  }) {
+    try {
+      const res = await this.$axios.patch(`/v2/user/profile`, profile)
+      commit('SET_PROFILE', get(res, 'data'))
+    } catch (error) {
 
+    }
+  },
   async fetchProfile({
     commit
   }, {
@@ -191,6 +202,17 @@ export const actions = {
   }) {
     try {
       const res = await this.$axios.get(`/v2/user/${userId}/profile`)
+      commit('SET_PROFILE', get(res, 'data'))
+      Promise.resolve(res)
+    } catch (error) {
+      Promise.reject(error)
+    }
+  },
+  async fetchUserProfile({
+    commit
+  }) {
+    try {
+      const res = await this.$axios.get(`/v2/user/my/show/profile`)
       commit('SET_PROFILE', get(res, 'data'))
       Promise.resolve(res)
     } catch (error) {

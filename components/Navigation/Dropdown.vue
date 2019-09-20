@@ -49,13 +49,13 @@
             class="profile-dropdown__nav-link flex flex--align"
             v-text="item.title"
           ></nuxt-link>
-          <div
+          <!-- <div
             v-else-if="item.title === '設定'"
             tag="div"
             class="profile-dropdown__nav-link flex flex--align"
             v-text="item.title"
             @click.stop="$store.commit('TOGGLE_SETTING_MODAL',true)"
-          ></div>
+          ></div>-->
           <nuxt-link
             v-else
             :to="item.link"
@@ -92,7 +92,7 @@ export default {
       navList: [
         { title: "プロフィール", link: "/users/" },
         { title: "ダッシュボード", link: "/dashboard" },
-        { title: "設定", link: "/users/setting" },
+        { title: "設定", link: "/auth/user/setting" },
         { title: "ログアウト", link: "/home" }
       ],
       loading: true,

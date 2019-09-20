@@ -193,6 +193,10 @@ module.exports = {
     },
     {
       src: '@/plugins/hydrate',
+    },
+    {
+      src: '@/plugins/cropper',
+      ssr: false,
     }
 
   ],
