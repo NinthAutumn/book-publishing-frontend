@@ -1,22 +1,12 @@
 <template>
   <section class="mobile-chapter">
     <transition name="slide-down">
-      <div class="mobile-chapter__top" :class="'mobile-chapter__top--'+ theme" v-if="navigation">
-        <div class="mobile-chapter__navigation" @click="goBack">
-          <fa icon="arrow-left"></fa>
-        </div>
-        <div class="mobile-chapter__meta">
-          <!-- <div class="mobile-chapter__select" v-ripple >
-            <fa icon="bookmark"></fa>
-          </div>-->
-          <div class="mobile-chapter__select" v-ripple @click.stop="actionHandler">
-            <fa icon="flag"></fa>
-          </div>
-          <div class="mobile-chapter__select" v-ripple @click.stop="actionHandler('vote')">
-            <fa icon="bolt"></fa>
-          </div>
-        </div>
-      </div>
+      <header-modal
+        :theme="theme"
+        @actionHandler="actionHandler"
+        @goBack="goBack"
+        v-if="navigation"
+      ></header-modal>
     </transition>
     <transition name="slide-right">
       <TOC v-if="table" @toggle="toggleModal"></TOC>
@@ -86,7 +76,13 @@
       </div>
     </div>
     <transition name="slide-up">
-      <footer-modal :theme="theme" @modalChange="openModal" v-if="navigation"></footer-modal>
+      <footer-modal
+        @prev="swipeRight"
+        @next="swipeLeft"
+        :theme="theme"
+        @modalChange="openModal"
+        v-if="navigation"
+      ></footer-modal>
     </transition>
     <div v-if="!chapter.locked" class="mobile-chapter__actions flex-row flex--align flex--center">
       <div
@@ -105,13 +101,10 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 import { hydrateWhenVisible, hydrateSsrOnly } from "vue-lazy-hydration";
 
 export default {
-  created() {
-    return {};
-  },
   components: {
     Currency: () => import("@/components/All/Currency"),
     Theme: hydrateWhenVisible(() =>
@@ -120,7 +113,6 @@ export default {
     TOC: hydrateWhenVisible(() =>
       import("@/components/ChapterPage/MobileModal/TOC")
     ),
-
     FontSetting: hydrateWhenVisible(() =>
       import("@/components/ChapterPage/MobileModal/Font")
     ),
@@ -131,7 +123,8 @@ export default {
       import("@/components/ChapterPage/MobileModal/Comments")
     ),
     ReportModal: hydrateWhenVisible(() => import("./MobileUtility/Report")),
-    FooterModal: hydrateWhenVisible(() => import("./MobileUtility/Footer"))
+    FooterModal: hydrateWhenVisible(() => import("./MobileUtility/Footer")),
+    HeaderModal: hydrateWhenVisible(() => import("./MobileUtility/Header"))
   },
   props: ["comment"],
   computed: {
@@ -189,8 +182,16 @@ export default {
       this.navigation = !this.navigation;
       this.openModal(4);
     }
+    await this.fetchList({
+      structured: false,
+      bookId: this.$route.params.id,
+      state: "published"
+    });
   },
   methods: {
+    ...mapActions({
+      fetchList: "chapter/fetchChapterList"
+    }),
     swipeLeft: function() {
       if (!this.next) {
         return this.$toast.show("これが最後の話です", {

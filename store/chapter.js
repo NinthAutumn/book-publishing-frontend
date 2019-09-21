@@ -206,6 +206,7 @@ export const actions = {
         chapters: res.data,
         state
       }
+      if (!structured) commit('SET_SIMPLE_LIST', res.data)
       commit('SET_BOOK_CHAPTER_LIST', list)
     } catch (error) {
       console.log(error);

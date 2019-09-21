@@ -41,7 +41,10 @@ export default {
       bookId: this.$route.params.id,
       settingIndex: this.chapter.setting_index
     });
-    if (!this.$route.query.comment) {
+    if (
+      !this.$route.query.comment &&
+      this.$store.getters["auth/isAuthenticated"]
+    ) {
       await this.postHistory({
         chapterId: this.$route.params.chaptersId,
         bookId: this.$route.params.id

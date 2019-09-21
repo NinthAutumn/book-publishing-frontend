@@ -58,7 +58,7 @@ export const getters = {
   getAuthor: state => state.author,
   getCommentNotification: state => state.commentNotification,
   getCommentNotificationCount: state => state.commentNotificationCount,
-  loggedInUser: state => state.user
+  getUser: state => state.user
 }
 
 export const mutations = {
@@ -193,6 +193,19 @@ export const actions = {
       commit('SET_PROFILE', get(res, 'data'))
     } catch (error) {
 
+    }
+  },
+  async fetchUserWithUserId({
+    commit
+  }, {
+    userId
+  }) {
+    try {
+      const res = await this.$axios.get(`/v2/user/${userId}/show`)
+      commit('SET_USER', get(res, 'data'))
+      return Promise.resolve(res)
+    } catch (error) {
+      return Promise.reject(error)
     }
   },
   async fetchProfile({

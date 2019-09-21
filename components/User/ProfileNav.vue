@@ -14,7 +14,7 @@
             alt="user profile picture"
             >-->
             <v-img
-              v-if="user.avatar&&user.author_avatar"
+              v-if="user.avatar||user.author_avatar"
               :src="$route.query.author?user.author_avatar:user.avatar"
             ></v-img>
             <v-img v-else :src="avatar"></v-img>
@@ -103,6 +103,7 @@ export default {
     // this.stat_menu[1].value = this.stats.review_count;
     // this.stat_menu[2].value = this.stats.likes;
     // this.stat_menu[3].value = this.stats.comment_like;
+    console.log(this.user);
   },
   created() {
     if (process.client) {

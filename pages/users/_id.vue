@@ -2,7 +2,7 @@
   <div class="user-profile">
     <div class="user-profile__web" v-if="!$device.isMobile">
       <profile-nav :books_count="books.length" :user="user"></profile-nav>
-      <user-content :books="books" :user="user"></user-content>
+      <user-content :profile="profile" :books="books" :user="user"></user-content>
     </div>
     <div class="user-profile__mobile page-padding" v-else>
       <mobile-profile :author="$route.query.author"></mobile-profile>
@@ -40,14 +40,16 @@ export default {
     )
   },
   async fetch({ store, route }) {
-    await store.dispatch("user/fetchProfile", { userId: route.params.id });
+    await store.dispatch("user/fetchUserWithUserId", {
+      userId: route.params.id
+    });
     await store.dispatch("user/fetchProfileStats", {
       userId: route.params.id
     });
   },
   computed: {
     ...mapGetters({
-      user: "user/getProfile",
+      user: "user/getUser",
       books: "user/getProfileBooks",
       current: "auth/getUser"
     }),

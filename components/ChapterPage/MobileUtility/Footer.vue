@@ -1,11 +1,11 @@
 <template>
   <div class="mobile-chapter__bottom" :class="'mobile-chapter__bottom--'+ theme">
     <div class="mobile-chapter__navigation flex-row flex--align">
-      <div class="mobile-chapter__nav">
+      <div class="mobile-chapter__nav" @click="$emit('prev')">
         <fa icon="chevron-left"></fa>
       </div>
       <el-slider v-model="selected" :format-tooltip="formatTooltip" :max="max" @change="change"></el-slider>
-      <div class="mobile-chapter__nav">
+      <div class="mobile-chapter__nav" @click="$emit('next')">
         <fa icon="chevron-right"></fa>
       </div>
     </div>
@@ -30,9 +30,23 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
 export default {
+  async created() {},
+  mounted() {
+    // console.log(this.simpleList);
+    this.selected = this.chapter.index || -this.chapter.setting_index;
+    this.max = this.simpleList[this.simpleList.length - 1].index;
+    this.min = this.simpleList[0].setting_index || 0;
+  },
   props: {
     theme: String
+  },
+  computed: {
+    ...mapGetters({
+      simpleList: "chapter/getSimpleList",
+      chapter: "chapter/getChapter"
+    })
   },
   data() {
     return {
@@ -42,6 +56,9 @@ export default {
     };
   },
   methods: {
+    ...mapActions({
+      fetchList: "chapter/fetchChapterList"
+    }),
     formatTooltip(val) {
       return `${((val / this.max) * 100).toFixed(0)}%`;
     },
