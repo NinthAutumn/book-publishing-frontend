@@ -27,7 +27,7 @@ export default {
 .sticky-right {
   position: fixed;
   top: 5rem;
-  right: 5rem;
+  right: 2rem;
   // display: block;
   padding: 0.5rem;
   .nuxt-link-exact-active {

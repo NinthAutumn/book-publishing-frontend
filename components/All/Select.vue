@@ -176,7 +176,8 @@ export default {
       gridSetting: {
         "grid-template-columns": `repeat(${this.column || 3}, 1fr)`,
         width: `${this.width || 350}px`
-      }
+      },
+      index: ""
     };
   },
   computed: {
@@ -196,7 +197,7 @@ export default {
     }
   },
   methods: {
-    genreMultiData() {
+    genreMultiData(index) {
       this.multiData.forEach((item, n) => {
         if (n === index) {
           item.selected = !item.selected;
@@ -210,7 +211,7 @@ export default {
         }
       });
     },
-    nonGenreMultiData() {
+    nonGenreMultiData(index) {
       this.multiData.forEach((item, n) => {
         if (n === index) {
           item.selected = !item.selected;
@@ -229,9 +230,9 @@ export default {
         return;
       }
       if (this.genre) {
-        this.genreMultiData();
+        this.genreMultiData(index);
       } else {
-        this.nonGenreMultiData();
+        this.nonGenreMultiData(index);
       }
 
       if (this.selectedData.length > this.limit) {
@@ -286,7 +287,7 @@ export default {
       this.$emit("selected");
     },
     objectSelectHandler(e, n) {
-      if (n === index) {
+      if (n === this.index) {
         if (e.selected) {
           this.selectD = "";
         } else {
@@ -301,7 +302,7 @@ export default {
       }
     },
     notObjectSelectHandler(e, n) {
-      if (n === index) {
+      if (n === this.index) {
         if (e.selected) {
           this.selectD = "";
         } else {
@@ -317,6 +318,7 @@ export default {
       }
     },
     select: function(index) {
+      this.index = index;
       if (this.object) {
         this.multiData.forEach(this.objectSelectHandler);
       } else {

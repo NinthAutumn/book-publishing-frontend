@@ -23,7 +23,6 @@
         </div>
         <div class="mobile-detailed__rating">
           <v-rating color="#FF6452" readonly :size="18" half-increments :value="+book.rating"></v-rating>
-          <!-- {{book.rating}} -->
         </div>
       </div>
     </div>

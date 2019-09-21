@@ -2,7 +2,6 @@
   <div>
     <div v-if="$nuxt.isOffline">今オフラインです</div>
     <username-modal></username-modal>
-    <div class="beta-pill">ベータテスト中</div>
     <reading-list-modal v-if="state"></reading-list-modal>
     <reading-modal v-if="readingModal"></reading-modal>
     <transition name="grow-shrink" class="loginform">

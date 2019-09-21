@@ -77,7 +77,7 @@ export default {
     &--account {
     }
     #{$self}__form {
-      width: 30vw;
+      // width: 30vw;
     }
   }
 }

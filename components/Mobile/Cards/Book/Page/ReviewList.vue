@@ -17,10 +17,6 @@
             <v-rating color="#FF6452" readonly :size="22" half-increments :value="+book.rating"></v-rating>
           </div>
         </div>
-        <!-- <div class="mbp-review__new flex-row flex--align flex--right"> -->
-
-        <!-- </div> -->
-
         <div class="mbp-reviews__list">
           <review-card
             @selectReview="handleSelect"
@@ -45,7 +41,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 export default {
   props: {
     book: Object,
@@ -75,11 +71,14 @@ export default {
     }
   },
   methods: {
+    ...mapActions({
+      fetchReviews: "review/showAll"
+    }),
     handleSelect(val) {
       this.$emit("selectReview", val);
     },
     async sortReview() {
-      await this.$store.dispatch("review/showAll", {
+      await this.fetchReviews({
         bookId: this.$route.params.id,
         page: 1,
         limit: 10,
@@ -87,27 +86,15 @@ export default {
       });
     },
     async infiniteHandler($state) {
-      let reviews = [];
-      if (this.$store.getters.isAuthenticated) {
-        reviews = await this.$store.dispatch("review/showAll", {
-          bookId: this.$route.params.id,
-          userId: this.$store.getters["auth/getUser"].id,
-          page: this.page++,
-          limit: 10,
-          direction: "desc",
-          type: 0,
-          next: true
-        });
-      } else {
-        reviews = await this.$store.dispatch("review/showAll", {
-          bookId: this.$route.params.id,
-          page: this.page++,
-          limit: 10,
-          direction: "desc",
-          type: 0,
-          next: true
-        });
-      }
+      const reviews = await this.fetchReviews({
+        bookId: this.$route.params.id,
+        page: this.page++,
+        limit: 10,
+        direction: "desc",
+        type: 0,
+        next: true
+      });
+
       if (reviews.length > 0) {
         $state.loaded();
       } else {
@@ -141,13 +128,7 @@ export default {
       display: flex;
       align-items: center;
       justify-content: center;
-      &:active,
-      &:focus,
-      &:hover {
-        // color: $secondary;
-      }
     }
-    // padding-bottom: 5rem !important;
     #{$self}__form {
       display: flex;
       align-items: center;
@@ -168,11 +149,7 @@ export default {
         font-size: 1.4rem;
       }
     }
-    // padding: 0 0.5rem;
-    // box-shadow: 0 7px 14px 0 rgba(60, 66, 87, 0.1),
-    //   0 3px 6px 0 rgba(0, 0, 0, 0.07);
-    // border-radius: 0.5rem;
-    // padding: 0.5rem;
+
     #{$self}__header {
       display: flex;
       align-items: center;

@@ -4,18 +4,13 @@
       <fa class="mcr-card__question" icon="question-circle"></fa>
       <div class="flex-divider flex-row flex--between">
         <div class="mcr-card__meta mcr-card__meta--rank">
-          <!-- <fa class="mcr-card__icon mcr-card__icon--rank" icon="pager"></fa> -->
           <div class="mcr-card__label" v-text="'今日の投票ランキング'"></div>
           <div class="mcr-card__number" v-text="`No.${ranking.ranking}`"></div>
         </div>
         <div class="flex-divider flex-row mcr-card__score">
           <fa class="mcr-card__icon mcr-card__icon--score" icon="bolt"></fa>
-          <!-- <div class="mcr-card__label" v-text="'投票トークン'"></div> -->
           <div class="mcr-card__number" v-text="`${ranking.votes}`"></div>
         </div>
-        <!-- <div class="mcr-card__meta mcr-card__meta--score"> -->
-
-        <!-- </div> -->
       </div>
       <hr />
       <div class="mcr-card__vote flex-row flex--right">
@@ -45,14 +40,12 @@ export default {
     const { data } = await this.$axios.get(
       `/v2/ranking/${this.$route.params.id}/vote?period=daily`
     );
-    console.log(data);
     if (!data || data === "undefined") {
       this.ranking = {
         ranking: "999+",
         votes: 0
       };
     } else {
-      console.log(data);
       this.ranking = data;
     }
   },
@@ -75,9 +68,7 @@ export default {
             icon: "extension"
           });
         }
-      } catch (error) {
-        console.log(error.message);
-      }
+      } catch (error) {}
       this.loading = false;
       this.ranking.votes++;
       await this.$store.dispatch("wallet/wealth");
@@ -91,16 +82,12 @@ export default {
   $self: &;
   &__container {
     padding: 1rem;
-    -webkit-box-shadow: 0 2px 4px 0 rgba(31, 33, 41, 0.08),
-      0 4px 16px 0 rgba(59, 102, 245, 0.12);
     box-shadow: 0 2px 4px 0 rgba(31, 33, 41, 0.08),
       0 4px 16px 0 rgba(59, 102, 245, 0.12);
     margin: 0rem 1rem;
     margin-bottom: 1rem;
     border-radius: 0.5rem;
     position: relative;
-
-    // border:1p
     #{$self}__label {
       font-size: 1.4rem;
       font-weight: bold;

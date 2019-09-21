@@ -218,31 +218,11 @@ export default {
         val = `${index}`;
       }
       return val;
-    }
-  },
-  created() {
-    if (this.$route.query.chapterId) {
-      this.chapterDrawings.forEach(drawing => {
-        this.form.drawings[drawing.id] = drawing;
-      });
-    }
-  },
-  async mounted() {
-    // let chan
-    this.volumes.forEach((volume, index) => {
-      let cool = this.coolerNumbers(volume.index);
-      this.volume_list[volume.id] = {
-        key: cool,
-        value: { id: volume.id, index: volume.index, key: cool }
-      };
-    });
-
-    if (this.$route.query.chapterId) {
-      // console.log(this.chapter);
+    },
+    chapterInitialItems() {
       this.content = this.chapter.content;
       this.form.title = this.chapter.title;
       this.form.content = this.chapter.content;
-      // console.log(this.chapterDrawings);
       this.form.state = this.chapter.state;
       this.form.footer = this.chapter.footer;
       this.chapter.footer ? (this.footer = true) : (this.footer = false);
@@ -254,6 +234,26 @@ export default {
         let keys = Object.keys(this.volume_list);
         this.form.volume = this.volume_list[keys[keys.length - 1]].value;
       }
+    }
+  },
+  created() {
+    if (this.$route.query.chapterId) {
+      this.chapterDrawings.forEach(drawing => {
+        this.form.drawings[drawing.id] = drawing;
+      });
+    }
+  },
+  async mounted() {
+    this.volumes.forEach((volume, index) => {
+      let cool = this.coolerNumbers(volume.index);
+      this.volume_list[volume.id] = {
+        key: cool,
+        value: { id: volume.id, index: volume.index, key: cool }
+      };
+    });
+
+    if (this.$route.query.chapterId) {
+      this.chapterInitialItems();
     } else {
       let keys = Object.keys(this.volume_list);
       this.form.volume = this.volume_list[keys[keys.length - 1]].value;

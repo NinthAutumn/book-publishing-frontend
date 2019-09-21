@@ -40,7 +40,9 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions, mapMutations } from "vuex";
+import { hydrateWhenVisible } from "vue-lazy-hydration";
+
 export default {
   async mounted() {
     this.bookmarked = this.book.bookmarked;
@@ -48,19 +50,14 @@ export default {
       this.nav["bookmark"]["icon"] = "bookmark";
       this.nav["bookmark"]["title"] = "ブックマーク済み";
     }
-    try {
-      if (this.auth) {
-        const { data } = await this.$axios.get(`/v2/library/${this.book.id}`);
-        this.latestChapter = data;
-      }
-    } catch (error) {}
-
+    if (this.auth) {
+      const { data } = await this.$axios.get(`/v2/library/${this.book.id}`);
+      this.latestChapter = data;
+    }
     this.nav["toc"]["title"] = `${this.chapter_count || 0}話`;
-    // this.showImage = true;
-    // this.
   },
   components: {
-    TocModal: () => import("./TOC")
+    TocModal: hydrateWhenVisible(() => import("./TOC"))
   },
   props: {
     book: Object
@@ -103,21 +100,55 @@ export default {
     };
   },
   methods: {
+    ...mapActions({
+      patchLibrary: "library/patchStore"
+    }),
+    ...mapMutations({
+      loginState: "LOGIN_STATE"
+    }),
     async navHandler(key) {
       switch (key) {
         case "bookmark":
-          if (!this.auth) {
-            return this.$store.commit("LOGIN_STATE");
-          }
+          if (!this.auth) return this.loginState();
           this.bookmarkHandler();
           break;
         case "toc":
           this.$router.push(`/books/${this.book.id}?toc=true`);
           break;
         default:
-          this.latestChapter;
           this.$router.push(`/books/${this.book.id}/${this.latestChapter.id}`);
           break;
+      }
+    },
+    async bookmarkedAlreadyHandler() {
+      try {
+        const remove = await this.patchLibrary({ store });
+        this.bookmarked = false;
+        this.nav["bookmark"]["icon"] = {
+          prefix: "far",
+          iconName: "bookmark"
+        };
+        this.nav["bookmark"]["title"] = "ブックマーク";
+      } catch (error) {
+        this.$toast.error(`ブックマーク解除に失敗しました`, {
+          position: "top-right",
+          duration: 1000,
+          icon: "extension"
+        });
+      }
+    },
+    async notBookmarkedHandler() {
+      try {
+        const addStore = await this.patchLibrary({ store });
+        this.bookmarked = true;
+        this.nav["bookmark"]["icon"] = "bookmark";
+        this.nav["bookmark"]["title"] = "ブックマーク済み";
+      } catch (error) {
+        this.$toast.error(`ブックマークに失敗しました`, {
+          position: "top-right",
+          duration: 1000,
+          icon: "extension"
+        });
       }
     },
     async bookmarkHandler() {
@@ -127,48 +158,14 @@ export default {
       };
       if (this.$store.state.loggedIn === false) {
         this.$toast.error(
-          `ブックマークをするにはログインかアカウント作成が必要です`,
-          {
-            position: "top-right",
-            duration: 1000,
-            icon: "extension"
-          }
+          `ブックマークをするにはログインかアカウント作成が必要です`
         );
-        return this.$store.commit("LOGIN_STATE");
+        return this.loginState();
       } else {
         if (this.bookmarked) {
-          try {
-            const remove = await this.$store.dispatch("library/patchStore", {
-              store
-            });
-            this.bookmarked = false;
-            this.nav["bookmark"]["icon"] = {
-              prefix: "far",
-              iconName: "bookmark"
-            };
-            this.nav["bookmark"]["title"] = "ブックマーク";
-          } catch (error) {
-            this.$toast.error(`ブックマーク解除に失敗しました`, {
-              position: "top-right",
-              duration: 1000,
-              icon: "extension"
-            });
-          }
+          this.bookmarkedAlreadyHandler();
         } else {
-          try {
-            const addStore = await this.$store.dispatch("library/patchStore", {
-              store
-            });
-            this.bookmarked = true;
-            this.nav["bookmark"]["icon"] = "bookmark";
-            this.nav["bookmark"]["title"] = "ブックマーク済み";
-          } catch (error) {
-            this.$toast.error(`ブックマークに失敗しました`, {
-              position: "top-right",
-              duration: 1000,
-              icon: "extension"
-            });
-          }
+          this.notBookmarkedHandler();
         }
       }
     }

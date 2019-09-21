@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 export default {
   props: {
     value: {
@@ -32,6 +32,9 @@ export default {
     };
   },
   methods: {
+    ...mapActions({
+      fetchGenres: "book/fetchAllGenres"
+    }),
     toggleModal() {
       this.modal = !this.modal;
     },
@@ -51,6 +54,22 @@ export default {
       });
       this.$emit("input", selected_list);
       this.$emit("selected");
+    },
+    genreWatch(genre, index) {
+      this.selected_list.forEach(selected => {
+        if (genre.name === selected.name) {
+          const news = {
+            name: genre.name,
+            selected: !genre.selected,
+            id: genre.id
+          };
+          this.$store.commit("book/SELECT_GENRE", {
+            index,
+            genre: news
+          });
+          selected.id = genre.id;
+        }
+      });
     }
   },
 
@@ -62,27 +81,12 @@ export default {
   watch: {
     genres() {
       if (this.selected_list.length < 1) return;
-      this.genres.forEach((genre, index) => {
-        this.selected_list.forEach(selected => {
-          if (genre.name === selected.name) {
-            const news = {
-              name: genre.name,
-              selected: !genre.selected,
-              id: genre.id
-            };
-            this.$store.commit("book/SELECT_GENRE", {
-              index,
-              genre: news
-            });
-            selected.id = genre.id;
-          }
-        });
-      });
+      this.genres.forEach(this.genreWatch);
       this.selected_list = [];
     }
   },
   async created() {
-    await this.$store.dispatch("book/fetchAllGenres");
+    await this.fetchGenres();
   },
   destroyed() {
     this.$store.commit("book/REMOVE_GENRES");

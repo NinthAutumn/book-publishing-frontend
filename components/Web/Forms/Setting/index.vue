@@ -54,11 +54,9 @@
           <div class="flex-divider flex-column">
             <label for="fullname">姓*</label>
             <input
-              :class="{'setting-form__input--error': errors.has('last_name')}"
               v-model="profile.last_name"
-              v-validate="'alpha'"
               placeholder="姓"
-              class="setting-form__input"
+              class="setting-form__input setting-form__input--small"
               name="last_name"
               data-vv-as="姓"
               required
@@ -68,11 +66,9 @@
           <div class="flex-divider flex-column">
             <label for="fullname">名*</label>
             <input
-              :class="{'setting-form__input--error': errors.has('first_name')}"
               v-model="profile.first_name"
-              v-validate="'alpha'"
               placeholder="名"
-              class="setting-form__input"
+              class="setting-form__input setting-form__input--small"
               name="first_name"
               data-vv-as="名"
               required
@@ -190,7 +186,6 @@ export default {
     this.user.username = this.current.username;
     this.user.gender = this.current.gender;
     this.user.avatar = this.current.avatar;
-    // this.user
     this.profile.bio = this.current_profile.bio;
     this.profile.last_name = this.current_profile.last_name;
     this.profile.first_name = this.current_profile.first_name;
@@ -198,14 +193,12 @@ export default {
   },
   methods: {
     onChange({ coordinates, canvas }) {
-      // this.coordinates = coordinates;
-      // You able to do different manipulations at a canvas
-      // but there we just get a cropped image
       this.user.avatar = canvas.toDataURL();
     },
     async updateHandler() {
       try {
         await this.$validator.validateAll();
+        // alert(this.errors.any());
         if (this.errors.any()) {
           return this.$toast.error("");
         }
@@ -234,10 +227,17 @@ export default {
 <style lang="scss">
 .setting-form {
   $self: &;
-
+  @media screen and (max-width: 1020px) {
+    &__container {
+      grid-template-areas: "main " "sub" "submit" !important;
+    }
+    &__submit {
+      max-width: 50rem !important;
+    }
+  }
   &__container {
     display: grid;
-    grid-template-areas: "main sub ." "main sub ." "submit submit submit";
+    grid-template-areas: "main sub ." "main sub  ." "submit submit .";
     .mx-datepicker {
       margin: 1rem 0;
     }
@@ -252,20 +252,22 @@ export default {
     #{$self}__main {
       padding: 2rem;
       display: flex;
-      min-width: 50rem;
+      width: 100%;
       // align-items: center;
       // justify-content: center;
       flex-direction: column;
       grid-area: main;
+      max-width: 50rem;
     }
     #{$self}__sub {
       grid-area: sub;
       padding: 2rem;
       display: flex;
-      min-width: 50rem;
+      width: 100%;
       // align-items: center;
       // justify-content: center;
       flex-direction: column;
+      max-width: 50rem;
     }
     #{$self}__avatar {
       width: 100%;
@@ -282,6 +284,7 @@ export default {
   &__submit {
     grid-area: submit;
     width: 100%;
+    max-width: 100rem;
     display: flex;
     align-items: center;
     justify-content: flex-end;
@@ -326,6 +329,8 @@ export default {
     border-radius: 0.5rem;
     border: 1px solid rgb(228, 228, 228);
     margin: 1rem 0;
+    &--small {
+    }
   }
   textarea {
     font-size: 1.6rem;
