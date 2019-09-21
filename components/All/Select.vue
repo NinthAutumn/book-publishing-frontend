@@ -285,41 +285,53 @@ export default {
       this.$emit("input", []);
       this.$emit("selected");
     },
+    objectSelectHandler(e, n) {
+      if (n === index) {
+        if (e.selected) {
+          this.selectD = "";
+        } else {
+          this.selectD = e.key;
+          this.modal = false;
+        }
+        e.selected = !e.selected;
+        this.$emit("input", e.value);
+        this.$emit("selected");
+      } else {
+        e.selected = false;
+      }
+    },
+    notObjectSelectHandler(e, n) {
+      if (n === index) {
+        if (e.selected) {
+          this.selectD = "";
+        } else {
+          this.selectD = e.key;
+          this.modal = false;
+        }
+        e.selected = !e.selected;
+
+        this.$emit("input", e.key);
+        this.$emit("selected");
+      } else {
+        e.selected = false;
+      }
+    },
     select: function(index) {
       if (this.object) {
-        this.multiData.forEach((e, n) => {
-          if (n === index) {
-            if (e.selected) {
-              this.selectD = "";
-            } else {
-              this.selectD = e.key;
-              this.modal = false;
-            }
-            e.selected = !e.selected;
-
-            this.$emit("input", e.value);
-            this.$emit("selected");
-          } else {
-            e.selected = false;
-          }
-        });
+        this.multiData.forEach(this.objectSelectHandler);
       } else {
-        this.multiData.forEach((e, n) => {
-          if (n === index) {
-            if (e.selected) {
-              this.selectD = "";
-            } else {
-              this.selectD = e.key;
-              this.modal = false;
-            }
-            e.selected = !e.selected;
-
-            this.$emit("input", e.key);
-            this.$emit("selected");
-          } else {
-            e.selected = false;
-          }
-        });
+        this.multiData.forEach(this.notObjectSelectHandler);
+      }
+    },
+    valueVolume(e, n) {
+      if (e.value.id === this.value.id) {
+        if (e.selected) {
+          this.selectD = "";
+        } else {
+          this.selectD = e.key;
+          // this.modal = false;
+        }
+        e.selected = !e.selected;
       }
     }
   },
@@ -352,27 +364,16 @@ export default {
   },
   mounted() {
     if (this.data && this.value) {
-      for (let store of this.value) {
-        for (let val of this.multiData) {
+      this.value.forEach(store => {
+        this.multiData.forEach(val => {
           if (store.name === val.key) {
             val.selected = !val.selected;
-
             this.selectedData.push(store);
           }
-        }
-      }
-    } else if (this.value && this.volume) {
-      this.multiData.forEach((e, n) => {
-        if (e.value.id === this.value.id) {
-          if (e.selected) {
-            this.selectD = "";
-          } else {
-            this.selectD = e.key;
-            // this.modal = false;
-          }
-          e.selected = !e.selected;
-        }
+        });
       });
+    } else if (this.value && this.volume) {
+      this.multiData.forEach(this.valueVolume);
     } else if (this.value) {
       if (this.object) {
         this.multiData.forEach((e, n) => {

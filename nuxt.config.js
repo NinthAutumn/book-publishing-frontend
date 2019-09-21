@@ -222,7 +222,7 @@ module.exports = {
     }],
     ['@nuxtjs/robots', {
       UserAgent: '*',
-      Disallow: '/',
+      Disallow: '',
       UserAgent: 'Googlebot',
       Disallow: '',
       UserAgent: 'Yahoo-slurp',

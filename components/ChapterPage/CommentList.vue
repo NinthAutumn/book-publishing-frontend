@@ -9,25 +9,7 @@
         <fa icon="comments" class="comment-header-icon"></fa>
         <h3 class="comment-header" style>コメント欄</h3>
       </div>
-
-      <div style="margin-bottom:5px;" class="divider" v-if="auth">
-        <div class="comment-list__error" v-if="error">
-          <p>コメントは何か書かないと投稿できません！</p>
-        </div>
-        <textarea
-          required
-          v-model="content"
-          class="form-input content-textarea"
-          placeholder="コメントを書く"
-        ></textarea>
-
-        <div class="divider flex-row flex--right">
-          <div @click="addComment" class="comment-form__submit flex-row flex--align flex--center">投稿</div>
-        </div>
-      </div>
-      <div class="flex-row flex--right" v-else>
-        <button class="comment-not" @click.stop="$store.commit('LOGIN_STATE')">ログインまたはアカウント作成</button>
-      </div>
+      <comment-form></comment-form>
       <div class="comment-unordered-list" v-if="comments.length > 0">
         <div class="comment-list__select flex-row flex--align" v-if="comments.length > 0">
           <Select
@@ -49,7 +31,9 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
+import { hydrateOnInteraction } from "vue-lazy-hydration";
+
 export default {
   computed: {
     ...mapGetters({
@@ -59,7 +43,8 @@ export default {
   },
   components: {
     Comment: () => import("@/components/ChapterPage/Comment"),
-    Select: () => import("@/components/All/Select")
+    Select: hydrateOnInteraction(() => import("@/components/All/Select")),
+    CommentForm: hydrateOnInteraction(() => import("./CommentForm"))
   },
 
   data() {
@@ -70,8 +55,7 @@ export default {
         { key: "問題的順", value: 2 }
       ],
       sort_by: 0,
-      content: "",
-      error: false,
+
       page: 2
     };
   },
@@ -87,7 +71,7 @@ export default {
     }
   },
   async mounted() {
-    await this.$store.dispatch("comment/fetchCommentList", {
+    await this.fetchComments({
       chapterId: this.$route.params.chaptersId,
       sortBy: this.sort_by,
       page: 1,
@@ -96,30 +80,9 @@ export default {
     });
   },
   methods: {
-    async addComment() {
-      const bookId = this.$route.params.id;
-      const chapterId = this.$route.params.chaptersId;
-      if (!this.content) {
-        return (this.error = true);
-      }
-      const { error, code } = await this.$store.dispatch("comment/addComment", {
-        bookId,
-        chapterId,
-        content: this.content
-      });
-      if (error) return this.$toast.error(error);
-      this.$toast.show("コメントの投稿に成功！", {
-        theme: "toasted-primary",
-        position: "top-right",
-        duration: 1000
-      });
-
-      await this.$store.dispatch("comment/fetchCommentList", {
-        chapterId: this.$route.params.chaptersId,
-        userId: this.$store.getters["auth/getUser"].id
-      });
-      this.content = "";
-    }
+    ...mapActions({
+      fetchComments: "comment/fetchCommentList"
+    })
   }
 };
 </script>

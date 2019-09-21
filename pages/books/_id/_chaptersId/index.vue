@@ -87,7 +87,7 @@ export default {
   computed: {
     ...mapGetters({
       title: "chapter/getChapterBookTitle",
-      chapter: "chapte/getChapter"
+      chapter: "chapter/getChapter"
     })
   },
   scrollToTop: true,

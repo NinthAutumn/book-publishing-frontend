@@ -18,20 +18,8 @@
           ></mobile-review>
         </div>
       </div>
-      <!-- <div class="background">
-        <div class="swiper-button-prev swiper-button-black" slot="button-prev"></div>
-      </div>
-      <div class="background">
-        <div class="swiper-button-next swiper-button-black" slot="button-next"></div>
-      </div>-->
     </div>
-    <!-- <div class="mobile-swiper--review" v-swiper:mySwiper="mobileOption" v-else>
-      <div class="swiper-wrapper">
-        <div class="swiper-slide" v-for="(review,index) in reviews" :key="index">
 
-        </div>
-      </div>
-    </div>-->
     <div class="review-show" v-if="$device.isMobile">
       <review-page :book="{}" @selectReview="reviewPage" v-model="$route.query.review"></review-page>
     </div>
@@ -42,6 +30,7 @@
 </template>
 <script>
 // import Review from "./Review";
+import { hydrateWhenVisible } from "vue-lazy-hydration";
 export default {
   props: ["height"],
   computed: {
@@ -52,9 +41,7 @@ export default {
   data() {
     return {
       word: 100,
-      // slidesNumber: 2,
       mobileOption: {
-        // loop: true,
         slidesPerView: 1.1,
         freeMode: true,
         mousewheel: {
@@ -67,7 +54,6 @@ export default {
         breakpoints: {}
       },
       swiperOption: {
-        // loop: true,
         autoHeight: true,
         slidesPerView: "auto",
         freeMode: true,
@@ -79,29 +65,35 @@ export default {
         navigation: {
           nextEl: ".swiper-button-next",
           prevEl: ".swiper-button-prev"
-        },
-        on: {},
-        breakpoints: {}
+        }
       }
     };
   },
   components: {
-    Review: () => import("@/components/Web/Cards/Review"),
-    MobileReview: () => import("@/components/Mobile/Cards/Review/Preview"),
-    ReviewPage: () => import("@/components/Mobile/Cards/Review/Page"),
-    ReviewModal: () => import("@/components/Web/Modals/Review")
+    Review: hydrateWhenVisible(() => import("@/components/Web/Cards/Review")),
+    MobileReview: hydrateWhenVisible(() =>
+      import("@/components/Mobile/Cards/Review/Preview")
+    ),
+    ReviewPage: hydrateWhenVisible(() =>
+      import("@/components/Mobile/Cards/Review/Page")
+    ),
+    ReviewModal: hydrateWhenVisible(() =>
+      import("@/components/Web/Modals/Review")
+    )
   },
   methods: {
+    reviewWithModal(state) {
+      if (this.$route.query.modal) {
+        this.$router.push(`?review=${state}&modal=true`);
+      } else {
+        this.$router.push(`?review=${state}`);
+      }
+    },
     reviewPage: function(state) {
       if (this.$route.query.review) {
-        this.$router.push("");
-      } else {
-        if (this.$route.query.modal) {
-          this.$router.push(`?review=${state}&modal=true`);
-        } else {
-          this.$router.push(`?review=${state}`);
-        }
+        return this.$router.push("");
       }
+      this.reviewWithModal(state);
     }
   },
   mounted() {
@@ -112,31 +104,18 @@ export default {
 };
 </script>
 <style lang="scss">
-.swiper-wrapper {
-  // z-index: -10;
-}
 .main-books {
   width: 100%;
-  // display: flex;
-  // justify-content: space-around;
-  // align-content: center;
 }
-.mobile-swiper--review {
-}
-
 .my-swiper {
   height: 100%;
 }
 .review-list {
   .swiper-slide {
-    // max-width: 60rem;
     width: 44rem;
   }
 }
 .my-swiper {
-  // height: 110%;/
-
-  // width: 80% !important;
   .swiper-slide {
     text-align: center;
     font-size: 38px;

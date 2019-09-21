@@ -36,7 +36,6 @@ export default {
   },
   async mount() {
     const chapter = document.querySelector(".nuxt-link-exact-active");
-    // this.$refs.chapters;
     chapter.scrollIntoView();
   }
 };

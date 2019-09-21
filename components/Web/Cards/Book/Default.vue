@@ -99,10 +99,6 @@ export default {
       type: [String, Object],
       default: ""
     },
-    // progress: {
-    //   type: [String, Number],
-    //   default: 0
-    // },
     isMobile: {
       type: Boolean,
       default: false
@@ -128,12 +124,9 @@ export default {
       this.modal = !this.modal;
     },
     startHandler(e) {
-      if (!this.progress) {
-        return;
-      }
-      if (this.lockTimer) {
-        return;
-      }
+      if (!this.progress) return;
+
+      if (this.lockTimer) return;
       this.timer = setTimeout(this.onlongtouch, this.touchduration);
       this.lockTimer = true;
     },
@@ -148,7 +141,6 @@ export default {
     },
     onlongtouch() {
       this.$emit("editModeToggle", this.book.id);
-      // alert("dope");
     },
     endHandler(e) {
       if (this.timer) {

@@ -57,6 +57,7 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 export default {
   data() {
     return {
@@ -75,6 +76,10 @@ export default {
     }
   },
   methods: {
+    ...mapActions({
+      setSetting: "user/setSetting",
+      fetchUserSetting: "user/fetchUserSettings"
+    }),
     async updateTheme(theme) {
       if (!this.$store.getters["auth/isAuthenticated"]) {
         return this.$store.commit("LOGIN_STATE");
@@ -83,8 +88,8 @@ export default {
         type: "chapter_theme",
         change: theme
       };
-      await this.$store.dispatch("user/setSetting", setting);
-      await this.$store.dispatch("user/fetchUserSettings");
+      await this.setSetting(setting);
+      await this.fetchUserSetting();
     },
     async updateFontFamily(change) {
       if (!this.$store.getters["auth/isAuthenticated"]) {
@@ -95,16 +100,16 @@ export default {
           type: "chapter_font_family",
           change: "serif"
         };
-        await this.$store.dispatch("user/setSetting", setting);
+        await this.setSetting(setting);
       } else {
         const setting = {
           type: "chapter_font_family",
           change: this.defaultFont
         };
         this.fontFamily = this.defaultFont;
-        await this.$store.dispatch("user/setSetting", setting);
+        await this.setSetting(setting);
       }
-      await this.$store.dispatch("user/fetchUserSettings");
+      await this.fetchUserSetting();
     },
     async updateFontSize(type) {
       if (!this.$store.getters["auth/isAuthenticated"]) {
@@ -112,15 +117,11 @@ export default {
       }
       switch (type) {
         case "increase":
-          if (this.fontSize > 24) {
-            break;
-          }
+          if (this.fontSize > 24) break;
           this.fontSize++;
           break;
         case "decrease":
-          if (this.fontSize < 10) {
-            break;
-          }
+          if (this.fontSize < 10) break;
           this.fontSize--;
           break;
         case "default":
@@ -131,7 +132,7 @@ export default {
         type: "chapter_font_size",
         change: this.fontSize
       };
-      await this.$store.dispatch("user/setSetting", setting);
+      await this.setSetting(setting);
     }
   }
 };

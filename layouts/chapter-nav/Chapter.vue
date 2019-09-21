@@ -18,7 +18,6 @@
     </div>
     <Horizontal v-if="!$device.isMobile"></Horizontal>
     <MobileHorizontal v-else></MobileHorizontal>
-    <LeftV></LeftV>
     <RightV v-if="!$device.isMobile"></RightV>
     <div v-if="imageModal" class="images-modal__dialog flex flex--align flex--center">
       <div class="images-modal__dialog__container" v-click-outside="closeImageDialog">

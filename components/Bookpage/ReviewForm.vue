@@ -38,6 +38,7 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 // import TextEditor from ;
 export default {
   props: {
@@ -62,76 +63,65 @@ export default {
   },
   computed: {},
   methods: {
-    async addReview() {
-      if (this.reviewed) {
-        try {
-          await this.$store.dispatch("review/updateReview", {
-            id: this.$store.state.review.myReview.id,
-            review: this.review
-          });
-        } catch (error) {
-          alert(error);
-          this.$toast.show("レビューの投稿に失敗しました", {
-            theme: "toasted-primary",
-            position: "top-right",
-            duration: 1000,
-            icon: "extension"
-          });
-          console.log(error);
-        }
-      } else {
-        try {
-          if (!this.review.rating) {
-            return this.$toast.error("レビューを投稿するには投票が必要です");
-          }
-          if (!this.review.title || !this.review.content)
-            return this.$toast.error("レビューはタイトルと本文は必須欄です");
-
-          const { error, code } = await this.$store.dispatch(
-            "review/addReview",
-            {
-              review: this.review,
-              bookId: this.$route.params.id
-            }
-          );
-          if (error) {
-            return this.$toast.error(error);
-          }
-          await this.$store.dispatch("review/showAll", {
-            bookId: this.$route.params.id,
-            page: 1,
-            limit: 10,
-            type: 0
-          });
-          await this.$store.dispatch("review/fetchIsReviewed", {
-            bookId: this.$route.params.id
-          });
-          this.$toast.show("レビューの投稿に成功しました", {
-            theme: "toasted-primary",
-            position: "top-right",
-            duration: 1000,
-            icon: "extension"
-          });
-
-          this.$emit("input", false);
-        } catch (error) {
-          console.log(error);
-          this.$toast.show("レビューの投稿に失敗しました", {
-            theme: "toasted-primary",
-            position: "top-right",
-            duration: 1000,
-            icon: "extension"
-          });
-          // (error);
-        }
+    ...mapActions({
+      updateReview: "review/updateReview",
+      fetchReviews: "review/showAll",
+      setReview: "review/addReview",
+      checkIsReviewed: "review/fetchIsReviewed"
+    }),
+    async updateReviewHandler() {
+      try {
+        await this.updateReview({
+          id: this.$store.state.review.myReview.id,
+          review: this.review
+        });
+        await this.fetchReviews({
+          bookId: this.$route.params.id,
+          page: 1,
+          limit: 10,
+          type: 0
+        });
+      } catch (error) {
+        this.$toast.error("レビューの投稿に失敗しました");
       }
+    },
+    checkValidation() {
+      let error = false;
+      if (!this.review.rating) {
+        error = true;
+        return this.$toast.error("レビューを投稿するには投票が必要です");
+      }
+      if (!this.review.title || !this.review.content) {
+        error = true;
+        return this.$toast.error("レビューはタイトルと本文は必須欄です");
+      }
+    },
+    async addReview() {
+      if (this.reviewed) return this.updateReviewHandler();
+      try {
+        const err = this.checkValidation();
+        if (err) return;
+        const { error, code } = await this.$store.dispatch("review/addReview", {
+          review: this.review,
+          bookId: this.$route.params.id
+        });
+        if (error) return this.$toast.error(error);
+        await this.fetchReviews({
+          bookId: this.$route.params.id,
+          page: 1,
+          limit: 10,
+          type: 0
+        });
+        await this.checkIsReviewed({
+          bookId: this.$route.params.id
+        });
+        this.$toast.success("レビューの投稿に成功しました");
 
-      await this.$store.dispatch("review/showAll", {
-        bookId: this.$route.params.id,
-        page: 1,
-        limit: 10,
-        type: 0
-      });
+        this.$emit("input", false);
+      } catch (error) {
+        console.log(error);
+        this.$toast.error("レビューの投稿に失敗しました");
+      }
     }
   }
 };

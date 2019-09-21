@@ -73,6 +73,7 @@
 
 
 <script>
+import { mapActions } from "vuex";
 export default {
   props: {
     coin: Number,
@@ -115,6 +116,12 @@ export default {
     // Currency: () => import("@/components/All/Currency")
   },
   methods: {
+    ...mapActions({
+      savePaymentMethod: "stripe/savePaymentMethod",
+      setSubscription: "stripe/setSubscription",
+      setPaymentIntent: "stripe/postPaymentIntent",
+      buyCoin: "wallet/buyCoin"
+    }),
     isNumber(evt) {
       evt = evt ? evt : window.event;
       let charCode = evt.which ? evt.which : evt.keyCode;
@@ -126,6 +133,24 @@ export default {
       } else {
         return true;
       }
+    },
+    async subscriptionHandler() {
+      let res;
+      // trycatch
+      if (this.sub) {
+        res = await this.setSubscription({
+          planId: this.selectedPlan.id,
+          stripePlanId: this.selectedPlan.stripe_plan_id,
+          paymentMethod: paymentMethod.id
+        });
+      } else {
+        res = await this.setPaymentIntent({
+          payment_method_id: paymentMethod.id,
+          amount: this.price,
+          skuId: this.skuId
+        });
+      }
+      return res;
     },
     buttonSelect: async function() {
       const { paymentMethod, error } = await this.stripe.createPaymentMethod(
@@ -145,28 +170,16 @@ export default {
       this.loading = true;
 
       if (this.saveCard) {
-        await this.$store.dispatch("stripe/savePaymentMethod", {
+        await this.savePaymentMethod({
           customerId: this.$store.getters["auth/getUser"].stripeCustomerId,
           paymentMethodId: paymentMethod.id
         });
       }
       let res;
       if (this.customer) {
-        if (this.sub) {
-          res = await this.$store.dispatch("stripe/setSubscription", {
-            planId: this.selectedPlan.id,
-            stripePlanId: this.selectedPlan.stripe_plan_id,
-            paymentMethod: paymentMethod.id
-          });
-        } else {
-          res = await this.$store.dispatch("stripe/postPaymentIntent", {
-            payment_method_id: paymentMethod.id,
-            amount: this.price,
-            skuId: this.skuId
-          });
-        }
+        res = await this.subscriptionHandler();
       } else {
-        res = await this.$store.dispatch("stripe/postPaymentIntent", {
+        res = await this.setPaymentIntent({
           payment_method_id: paymentMethod.id,
           amount: this.price,
           skuId: this.skuId
@@ -189,7 +202,7 @@ export default {
         skuId: this.skuId,
         source
       };
-      await this.$store.dispatch("wallet/buyCoin", { sku_id: this.skuId });
+      await this.buyCoin({ sku_id: this.skuId });
     },
     handlePayment: async function() {
       this.loading = true;
@@ -200,6 +213,21 @@ export default {
       });
       this.handleServerResponse(res);
       this.loading = false;
+    },
+    async responseRequiresAction() {
+      if (result.error) {
+        return this.$toast.show("クラウンコインの購入に失敗しました", {
+          icon: "extension",
+          duration: 1000,
+          position: "top-right",
+          theme: "toasted-primary"
+        });
+      } else {
+        const res = await this.$axios.get("/stripe/confirmPayment", {
+          payment_intent_id: this.paymentIntent.id
+        });
+        this.handleServerResponse(res);
+      }
     },
     handleServerResponse: async function(response) {
       if (response.error) {
@@ -214,19 +242,7 @@ export default {
         const result = await this.stripe.handleCardAction(
           this.paymentIntent.client_secret
         );
-        if (result.error) {
-          return this.$toast.show("クラウンコインの購入に失敗しました", {
-            icon: "extension",
-            duration: 1000,
-            position: "top-right",
-            theme: "toasted-primary"
-          });
-        } else {
-          const res = await this.$axios.get("/stripe/confirmPayment", {
-            payment_intent_id: this.paymentIntent.id
-          });
-          this.handleServerResponse(res);
-        }
+        this.responseRequiresAction();
       } else {
         const form = {
           phone: this.form.phone,
@@ -234,15 +250,50 @@ export default {
           fullname: `${this.form.lastname} ${this.form.firstname}`,
           skuId: this.skuId
         };
-        await this.$store.dispatch("wallet/buyCoin", { sku_id: this.skuId });
+        await this.buyCoin({ sku_id: this.skuId });
         this.$store.commit("TOGGLE_PRODUCT_MODAL", false);
         this.$emit("stripe");
-        return this.$toast.show("クラウンコインの購入に成功しました", {
+        return this.$toast.success("クラウンコインの購入に成功しました", {
           icon: "check_circle",
-          duration: 1000,
-          position: "top-right",
-          theme: "toasted-primary"
+          duration: 1000
         });
+      }
+    },
+    async checkPaymentAvailability() {
+      const result = await paymentRequest.canMakePayment();
+      if (result) {
+        prButton.mount("#payment-request-button");
+      } else {
+        document.getElementById("payment-request-button").style.display =
+          "none";
+      }
+    },
+    async mountPayment(ev) {
+      res = await this.setPaymentIntent({
+        payment_method_id: ev.paymentMethod.id,
+        amount: this.price,
+        skuId: this.skuId
+      });
+
+      let clientSecret = this.paymentIntent.client_secret;
+      const {
+        error: confirmError,
+        paymentIntent
+      } = await this.stripe.confirmPaymentIntent(clientSecret, {
+        payment_method: ev.paymentMethod.id
+      });
+
+      if (confirmError) {
+        ev.complete("fail");
+      } else {
+        ev.complete("success");
+        // Let Stripe.js handle the rest of the payment flow.
+        const { error } = await stripe.handleCardPayment(clientSecret);
+        if (error) {
+          // The payment failed -- ask your customer for a new payment method.
+        } else {
+          // The payment has succeeded.
+        }
       }
     }
   },
@@ -269,43 +320,8 @@ export default {
       paymentRequest
     });
 
-    (async () => {
-      // Check the availability of the Payment Request API first.
-      const result = await paymentRequest.canMakePayment();
-      if (result) {
-        prButton.mount("#payment-request-button");
-      } else {
-        document.getElementById("payment-request-button").style.display =
-          "none";
-      }
-    })();
-    paymentRequest.on("paymentmethod", async ev => {
-      res = await this.$store.dispatch("stripe/postPaymentIntent", {
-        payment_method_id: ev.paymentMethod.id,
-        amount: this.price,
-        skuId: this.skuId
-      });
-      let clientSecret = this.paymentIntent.client_secret;
-      const {
-        error: confirmError,
-        paymentIntent
-      } = await this.stripe.confirmPaymentIntent(clientSecret, {
-        payment_method: ev.paymentMethod.id
-      });
-
-      if (confirmError) {
-        ev.complete("fail");
-      } else {
-        ev.complete("success");
-        // Let Stripe.js handle the rest of the payment flow.
-        const { error } = await stripe.handleCardPayment(clientSecret);
-        if (error) {
-          // The payment failed -- ask your customer for a new payment method.
-        } else {
-          // The payment has succeeded.
-        }
-      }
-    });
+    await this.checkPaymentAvailability();
+    paymentRequest.on("paymentmethod", this.mountPayment);
     this.card = elements.create("card", { style: style });
     this.card.addEventListener("change", async function(event) {
       let displayError = document.getElementById("card-errors");

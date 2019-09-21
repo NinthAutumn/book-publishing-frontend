@@ -59,6 +59,7 @@
 </template>
 
 <script>
+import { mapGetters, mapActions, mapMutations } from "vuex";
 export default {
   props: {
     rating: Number
@@ -77,15 +78,12 @@ export default {
     };
   },
   computed: {
-    reviews() {
-      return this.$store.getters["review/getReviews"];
-    },
-    reviewed() {
-      return this.$store.getters["review/isReviewed"];
-    },
-    myReview() {
-      return this.$store.getters["review/getMyReview"];
-    }
+    ...mapGetters({
+      reviews: "review/getReviews",
+      reviewed: "review/isReviewed",
+      myReview: "review/getMyReview",
+      auth: "auth/isAuthenticated"
+    })
   },
   watch: {
     sort: {
@@ -96,13 +94,13 @@ export default {
     }
   },
   async mounted() {
-    await this.$store.dispatch("review/showAll", {
+    await this.fetchReviews({
       bookId: this.$route.params.id,
       page: 1,
       limit: 10,
       type: 0
     });
-    await this.$store.dispatch("review/fetchIsReviewed", {
+    await this.checkIsReviewed({
       bookId: this.$route.params.id
     });
   },
@@ -112,8 +110,16 @@ export default {
     Select: () => import("@/components/All/Select")
   },
   methods: {
+    ...mapActions({
+      fetchReviews: "review/showAll",
+      checkIsReviewed: "review/fetchIsReviewed",
+      fetchMyReview: "review/myReview"
+    }),
+    ...mapMutations({
+      toggleLogin: "LOGIN_STATE"
+    }),
     async sortReview() {
-      await this.$store.dispatch("review/showAll", {
+      await this.fetchReviews({
         bookId: this.$route.params.id,
         page: 1,
         limit: 10,
@@ -121,11 +127,10 @@ export default {
       });
     },
     async reviewOpen() {
-      if (!this.$store.getters.isAuthenticated) {
-        return this.$store.commit("LOGIN_STATE");
-      }
+      if (!this.auth) return this.toggleLogin();
+
       if (this.reviewed) {
-        await this.$store.dispatch("review/myReview", {
+        await this.fetchMyReview({
           bookId: this.$route.params.id
         });
         this.reviewState = !this.reviewState;
@@ -137,27 +142,15 @@ export default {
       this.reviewState = false;
     },
     async infiniteHandler($state) {
-      let reviews = [];
-      if (this.$store.getters.isAuthenticated) {
-        reviews = await this.$store.dispatch("review/showAll", {
-          bookId: this.$route.params.id,
-          userId: this.$store.getters["auth/getUser"].id,
-          page: this.page++,
-          limit: 10,
-          direction: "desc",
-          type: this.sort,
-          next: true
-        });
-      } else {
-        reviews = await this.$store.dispatch("review/showAll", {
-          bookId: this.$route.params.id,
-          page: this.page++,
-          limit: 10,
-          direction: "desc",
-          type: this.sort,
-          next: true
-        });
-      }
+      const reviews = await this.fetchReviews({
+        bookId: this.$route.params.id,
+        page: this.page++,
+        limit: 10,
+        direction: "desc",
+        type: this.sort,
+        next: true
+      });
+
       if (reviews.length > 0) {
         $state.loaded();
       } else {

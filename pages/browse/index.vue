@@ -108,13 +108,15 @@
 
 <script>
 import { mapGetters } from "vuex";
+import { hydrateWhenIdle, hydrateWhenVisible } from "vue-lazy-hydration";
+
 export default {
   auth: false,
   components: {
-    Select: () => import("@/components/All/Select"),
-    BookList: () => import("@/components/Browse/BookList"),
-    TagCreate: () => import("@/components/Browse/TagCreate"),
-    GenreSelect: () => import("@/components/Web/Select/Genre")
+    Select: hydrateWhenIdle(() => import("@/components/All/Select")),
+    BookList: hydrateWhenVisible(() => import("@/components/Browse/BookList")),
+    TagCreate: hydrateWhenIdle(() => import("@/components/Browse/TagCreate")),
+    GenreSelect: hydrateWhenIdle(() => import("@/components/Web/Select/Genre"))
   },
   computed: {
     ...mapGetters({
@@ -130,9 +132,6 @@ export default {
       const tags = this.tag_list.map(tag => {
         return tag.id;
       });
-
-      // this.tag_list;
-
       await this.$store.dispatch("book/browseBooks", {
         type: this.type,
         direction: this.direction,
@@ -163,19 +162,7 @@ export default {
       this.tag_list = [{ name: this.$route.query.tag }];
     }
   },
-  watch: {
-    // selected_genre: function(val) {
-    //   this.refresh();
-    // },
-    // type: function(val) {
-    //   this.refresh();
-    // },
-    // direction: function(val) {
-    //   this.refresh();
-    // },
-  },
   async fetch({ store, route }) {
-    // await store.dispatch("book/fetchAllGenres");
     let direction = 0,
       type = 5,
       genres = [],
@@ -185,7 +172,6 @@ export default {
       genres = [route.query.genre];
     }
     if (route.query.tag && route.query.tag !== "undefined") {
-      console.log(route.query.tag);
       tags.push(route.query.tag);
     }
 

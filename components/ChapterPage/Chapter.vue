@@ -35,14 +35,12 @@
       </div>
       <div class="payblock-buy button button--primary" @click.stop="purchase" :class="{}">ロック解除</div>
     </div>
-    <div class="divider" v-if="chapter.extra">
-      <div class="chapter-announcement chapter-announcement--footer" v-if="chapter.footer">
-        <h4>
-          <fa style="margin-right:10px;" icon="envelope"></fa>告知・メッセージ・下書き
-        </h4>
-        <p v-text="chapter.footer"></p>
-        <fa class="announcement-pin" icon="quote-right"></fa>
-      </div>
+    <div class="chapter-announcement chapter-announcement--footer" v-if="chapter.footer">
+      <h4>
+        <fa style="margin-right:10px;" icon="envelope"></fa>告知・メッセージ・下書き
+      </h4>
+      <p v-text="chapter.footer"></p>
+      <fa class="announcement-pin" icon="quote-right"></fa>
     </div>
   </section>
 </template>
@@ -65,7 +63,7 @@ export default {
   methods: {
     ...mapActions({
       buyChapter: "wallet/buyChapter",
-      fetchChapter: "chapter/FetchChapter"
+      fetchChapter: "chapter/fetchChapter"
     }),
     purchase: async function() {
       try {
