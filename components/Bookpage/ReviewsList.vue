@@ -24,7 +24,7 @@
     </div>
     <div class="book__reviews__divider flex flex--align flex--between">
       <div class="book__rating__all flex flex--align">
-        <v-rating color="#FF8D29" readonly size="30" half-increments :value="+rating"></v-rating>
+        <v-rating color="#FF6452" readonly size="30" half-increments :value="+rating"></v-rating>
       </div>
       <button
         v-ripple
@@ -150,7 +150,6 @@ export default {
         type: this.sort,
         next: true
       });
-
       if (reviews.length > 0) {
         $state.loaded();
       } else {

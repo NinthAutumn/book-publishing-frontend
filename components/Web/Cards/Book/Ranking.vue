@@ -28,7 +28,7 @@
           <div class="book-ranking__author" v-text="`${book.pen_name}・${book.name}`"></div>
         </div>
         <div class="book-ranking__rating">
-          <v-rating color="#FF8D29" readonly :size="17" half-increments :value="+book.rating"></v-rating>
+          <v-rating color="#FF6452" readonly :size="17" half-increments :value="+book.rating"></v-rating>
           <span v-text="book.rating"></span>
         </div>
         <div v-line-clamp="3" class="book-ranking__synopsis" v-text="book.synopsis"></div>

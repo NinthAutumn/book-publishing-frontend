@@ -34,7 +34,7 @@
             >{{genre}}</li>
           </ul>
           <div class="history-book__rating flex-row flex--align">
-            <v-rating color="#FF8D29" readonly size="20" half-increments :value="+book.rating"></v-rating>
+            <v-rating color="#FF6452" readonly size="20" half-increments :value="+book.rating"></v-rating>
             <span>{{book.rating}}</span>
           </div>
           <div class="history-book_synopsis-wrapper" style="height:5rem;">

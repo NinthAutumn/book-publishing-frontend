@@ -4,7 +4,7 @@
       <fa class="chapter-end-hr" icon="book-open"></fa>
     </div>
 
-    <div class="comment-list__item" style="padding: 0 10px;">
+    <div class="comment-list__item">
       <div class="divider flex-row flex--align">
         <fa icon="comments" class="comment-header-icon"></fa>
         <h3 class="comment-header" style>コメント欄</h3>
@@ -163,6 +163,7 @@ export default {
   }
   &__item {
     // padding-top: 10px;
+    padding: 1rem;
   }
 }
 .comment-not {

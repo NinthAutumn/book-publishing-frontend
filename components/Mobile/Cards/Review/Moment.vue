@@ -9,7 +9,7 @@
       <div class="review-moment__meta" v-if="review.type === 'review'">
         <div class="review-moment__title" v-text="review.title"></div>
         <!-- {{review.rating}} -->
-        <v-rating color="#FF8D29" readonly size="20" half-increments :value="+review.rating"></v-rating>
+        <v-rating color="#FF6452" readonly size="20" half-increments :value="+review.rating"></v-rating>
         <div class="review-moment__content" v-html="truncate(review.content, 100)"></div>
         <div class="review-moment__book">
           <div class="review-moment__book-cover">

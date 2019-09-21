@@ -4,7 +4,7 @@
       <div class="pmb-reviewp__header">
         <div class="pmb-reviewp__title">感想 ({{reviewCount}})</div>
         <div class="pmb-reviewp__rating">
-          <v-rating color="#FF8D29" readonly :size="22" half-increments :value="+book.rating"></v-rating>
+          <v-rating color="#FF6452" readonly :size="22" half-increments :value="+book.rating"></v-rating>
         </div>
         <div class="pmb-reviewp__all" @click.stop="$emit('openReviews')">
           全部見る

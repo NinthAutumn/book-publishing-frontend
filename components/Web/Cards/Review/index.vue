@@ -9,7 +9,7 @@
             </v-avatar>
             <div class="flex-divider">
               <div class="review-card__title" v-text="review.title"></div>
-              <v-rating color="#FF8D29" readonly size="17" half-increments :value="+review.rating"></v-rating>
+              <v-rating color="#FF6452" readonly size="17" half-increments :value="+review.rating"></v-rating>
               <div class="review-card__author" v-text="review.username"></div>
             </div>
           </div>

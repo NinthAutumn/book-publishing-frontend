@@ -4,7 +4,7 @@
       <h3 class="ranking-header__text">
         <fa class="ranking-header__icon" icon="crown"></fa>ランキング
       </h3>
-      <svg-icon v-if="!$device.isMobile" class="ranking-header__winner" name="winner"/>
+      <svg-icon v-if="!$device.isMobile" class="ranking-header__winner" name="winner" />
     </header>
     <ranking-list></ranking-list>
   </div>
@@ -13,7 +13,6 @@
 <script>
 export default {
   auth: false,
-  async fetch({ store }) {},
   components: {
     RankingList: () => import("@/components/Ranking/RankingList")
   }

@@ -18,7 +18,7 @@
           <div class="mranking-card__author" v-text="`${book.pen_name}・${book.name}`"></div>
         </div>
         <div class="mranking-card__rating">
-          <v-rating color="#FF8D29" readonly :size="17" half-increments :value="+book.rating"></v-rating>
+          <v-rating color="#FF6452" readonly :size="17" half-increments :value="+book.rating"></v-rating>
         </div>
         <div class="flex-divider flex-row flex--right">
           <div class="mranking-card__point" v-if="!vote&&book.score" v-text=" `ポイント${book.score}`"></div>

@@ -14,7 +14,7 @@
           </div>
           <div class="mreview-modal__meta">
             <div class="mreview-modal__title" v-text="review.title"></div>
-            <v-rating color="#FF8D29" readonly :size="15" half-increments :value="review.rating"></v-rating>
+            <v-rating color="#FF6452" readonly :size="15" half-increments :value="review.rating"></v-rating>
           </div>
         </div>
         <div class="mreview-modal__body">
@@ -56,7 +56,7 @@
             <div class="mreview-modal__book-title" v-text="review.book_title"></div>
             <div class="mreview-modal__author" v-text="`${review.pen_name} -  ${review.name}`"></div>
             <v-rating
-              color="#FF8D29"
+              color="#FF6452"
               readonly
               :size="15"
               half-increments

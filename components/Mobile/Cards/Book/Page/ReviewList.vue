@@ -14,7 +14,7 @@
         <div class="mbp-reviews__header">
           <div class="mbp-reviews__title">感想 ({{reviewCount}})</div>
           <div class="mbp-reviews__rating">
-            <v-rating color="#FF8D29" readonly :size="22" half-increments :value="+book.rating"></v-rating>
+            <v-rating color="#FF6452" readonly :size="22" half-increments :value="+book.rating"></v-rating>
           </div>
         </div>
         <!-- <div class="mbp-review__new flex-row flex--align flex--right"> -->

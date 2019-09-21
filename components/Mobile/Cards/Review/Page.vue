@@ -21,7 +21,7 @@
               <div class="flex-divider">
                 <div class="mr-page__title mr-page__title--nav" v-text="review.title"></div>
                 <v-rating
-                  color="#FF8D29"
+                  color="#FF6452"
                   readonly
                   :size="15"
                   half-increments
@@ -45,7 +45,7 @@
             </div>
             <div class="flex-divider flex-column">
               <div class="mr-page__title" v-text="review.title"></div>
-              <v-rating color="#FF8D29" readonly :size="18" half-increments :value="+review.rating"></v-rating>
+              <v-rating color="#FF6452" readonly :size="18" half-increments :value="+review.rating"></v-rating>
               <div class="flex-divider flex-row flex--align">
                 <div class="mr-page__author" v-text="review.username"></div>
                 <div class="mr-page__writer" v-if="book.user_id === review.user_id">作者</div>
@@ -77,7 +77,7 @@
           <div class="mr-page__book-meta">
             <div class="mr-page__book-title" v-text="review.book_title"></div>
             <v-rating
-              color="#FF8D29"
+              color="#FF6452"
               readonly
               :size="15"
               half-increments

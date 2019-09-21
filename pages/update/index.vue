@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions, mapMutations } from "vuex";
 import { hydrateWhenVisible } from "vue-lazy-hydration";
 
 export default {
@@ -57,12 +57,20 @@ export default {
     };
   },
   methods: {
+    ...mapActions({
+      fetchLatest: "book/fetchLatestBooks",
+      setSetting: "user/setSetting"
+    }),
+    ...mapMutations({
+      openLogin: "LOGIN_STATE"
+    }),
     infiniteHandler: async function($state) {
-      const array = await this.$store.dispatch("book/fetchLatestBooks", {
+      const array = await this.fetchLatest({
         page: this.page++,
         limit: 30,
         infinite: true
       });
+
       if (array.length < 1) {
         $state.complete();
       } else {
@@ -71,10 +79,8 @@ export default {
     },
 
     updateView: async function(setting) {
-      if (!this.loggedIn) {
-        return this.$store.commit("LOGIN_STATE");
-      }
-      await this.$store.dispatch("user/setSetting", {
+      if (!this.loggedIn) return this.openLogin();
+      await this.setSetting({
         type: "update_display",
         change: setting
       });

@@ -9,7 +9,7 @@
         </div>
         <div class="flex-divider flex-column" style="text-overflow:ellipsis;overflow:hidden;">
           <div class="mbp-reviewp__title" v-text="review.title"></div>
-          <v-rating color="#FF8D29" readonly :size="18" half-increments :value="+review.rating"></v-rating>
+          <v-rating color="#FF6452" readonly :size="18" half-increments :value="+review.rating"></v-rating>
           <div class="flex-divider flex-row flex--align">
             <div class="mbp-reviewp__author" v-text="review.username"></div>
             <div class="mbp-reviewp__writer" v-if="book.user_id === review.user_id">作者</div>

@@ -28,7 +28,7 @@
         <div class="flex-divider flex-row">
           <div class="book-scard__genre" v-text="`${book.pen_name}・${book.name}`"></div>
         </div>
-        <v-rating color="#FF8D29" readonly :size="20" half-increments :value="+book.rating"></v-rating>
+        <v-rating color="#FF6452" readonly :size="20" half-increments :value="+book.rating"></v-rating>
 
         <div class="flex-divider flex-row book-scard__genre-wrapper">
           <div class="book-scard__genres" v-for="(genre,index) in book.genres" :key="genre">

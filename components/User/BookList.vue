@@ -25,14 +25,14 @@
         </div>
         <div class="profile-books__meta profile-books__meta--rating">
           <v-rating
-            color="#FF8D29"
+            color="#FF6452"
             v-if="book.rating"
             readonly
             size="20"
             half-increments
             :value="+book.rating"
           ></v-rating>
-          <v-rating size="20" color="#FF8D29" v-else :readonly="true" :value="0"></v-rating>
+          <v-rating size="20" color="#FF6452" v-else :readonly="true" :value="0"></v-rating>
         </div>
         <div class="profile-books__meta profile-books__meta--synopsis">
           <p v-line-clamp="3">{{book.synopsis}}</p>

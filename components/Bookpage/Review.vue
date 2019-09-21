@@ -25,7 +25,7 @@
       <div class="reviews-content-title">{{review.title}}</div>
       <div class="flex-row flex--between">
         <div class="reviews-total-rating">
-          <v-rating color="#FF8D29" readonly size="20" half-increments :value="+review.rating"></v-rating>
+          <v-rating color="#FF6452" readonly size="20" half-increments :value="+review.rating"></v-rating>
         </div>
         <div class="reviews-author"></div>
       </div>

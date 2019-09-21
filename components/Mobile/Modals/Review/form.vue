@@ -11,7 +11,7 @@
 
         <label for="rating">評価</label>
         <div class="flex-divider flex-row flex--align flex--center">
-          <v-rating name="rating" color="#FF8D29" :size="50" half-increments :value="form.rating"></v-rating>
+          <v-rating name="rating" color="#FF6452" :size="50" half-increments :value="form.rating"></v-rating>
         </div>
         <hr />
         <div class="flex-divider flex-column">

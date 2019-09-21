@@ -164,7 +164,7 @@ export default {
           align-self: flex-start;
         }
         #{$self}__created {
-          font-size: 1.2rem;
+          font-size: 1rem;
         }
         #{$self}__title {
           font-size: 1.3rem;

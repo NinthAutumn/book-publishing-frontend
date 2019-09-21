@@ -41,12 +41,19 @@ export default {
       bookId: this.$route.params.id,
       settingIndex: this.chapter.setting_index
     });
+    if (!this.$route.query.comment) {
+      await this.postHistory({
+        chapterId: this.$route.params.chaptersId,
+        bookId: this.$route.params.id
+      });
+    }
   },
   methods: {
     ...mapActions({
       fetchChapter: "chapter/fetchChapter",
       fetchNav: "chapter/fetchChapterNav",
-      fetchDrawing: "drawing/fetchChapterDrawings"
+      fetchDrawing: "drawing/fetchChapterDrawings",
+      postHistory: "library/postHistory"
     }),
     async nextChapter() {
       const bookId = this.$route.params.id,
@@ -70,12 +77,6 @@ export default {
         bookId: route.params.id
       });
       await store.dispatch("user/fetchUserSettings");
-      if (!route.query.comment) {
-        await store.dispatch("library/postHistory", {
-          chapterId: route.params.chaptersId,
-          bookId: route.params.id
-        });
-      }
     } else {
       await store.dispatch("chapter/fetchChapter", {
         chapterId: route.params.chaptersId,

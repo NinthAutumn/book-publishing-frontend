@@ -34,7 +34,7 @@
         </div>
 
         <div class="book-header__rating">
-          <v-rating half-increments color="#FF8D29" readonly :size="25" :value="+book.rating"></v-rating>
+          <v-rating half-increments color="#FF6452" readonly :size="25" :value="+book.rating"></v-rating>
         </div>
       </div>
       <div class="book-header__announcement">

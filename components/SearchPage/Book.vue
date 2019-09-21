@@ -14,7 +14,7 @@
     <div class="search-book__meta">
       <nuxt-link :to="`/books/${book.id}`" class="search-book__title">{{book.title}}</nuxt-link>
       <div class="search-book__rating">
-        <v-rating color="#FF8D29" readonly size="20" half-increments :value="+book.rating"></v-rating>
+        <v-rating color="#FF6452" readonly size="20" half-increments :value="+book.rating"></v-rating>
       </div>
       <div class="search-book__category search-book__category--genre">
         <div class="search-book__category-list">

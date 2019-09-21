@@ -60,7 +60,6 @@ export default {
   computed: {
     ...mapGetters({
       isAuthor: "user/isAuthor",
-      url: "upload/getUrl",
       user: "auth/getUser"
     })
   },

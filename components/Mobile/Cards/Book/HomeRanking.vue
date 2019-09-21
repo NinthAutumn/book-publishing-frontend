@@ -35,7 +35,7 @@
             </div>
             <div class="home-ranking__genre" v-text="book.name"></div>
             <div class="home-ranking__rating flex-row flex--align">
-              <v-rating color="#FF8D29" readonly :size="15" half-increments :value="+book.rating"></v-rating>
+              <v-rating color="#FF6452" readonly :size="15" half-increments :value="+book.rating"></v-rating>
             </div>
           </div>
         </nuxt-link>

@@ -9,7 +9,7 @@
         </div>
         <div class="flex-divider flex-column">
           <div class="review-mobile__title" v-text="review.title"></div>
-          <v-rating color="#FF8D29" readonly :size="18" half-increments :value="+book.rating"></v-rating>
+          <v-rating color="#FF6452" readonly :size="18" half-increments :value="+book.rating"></v-rating>
           <div class="flex-divider flex-row flex--align">
             <div class="review-mobile__author" v-text="review.username"></div>
             <div class="review-mobile__writer" v-if="book.user_id === review.user_id">作者</div>

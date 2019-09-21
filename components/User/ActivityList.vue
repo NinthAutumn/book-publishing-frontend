@@ -14,7 +14,7 @@
         <div class="user-activity__meta" v-if="item.type === 'review'">
           <div class="user-activity__title">{{item.title}}</div>
           <div v-if="reviews&&item.rating" class="user-activity__rating">
-            <v-rating color="#FF8D29" readonly size="20" half-increments :value="item.rating"></v-rating>
+            <v-rating color="#FF6452" readonly size="20" half-increments :value="item.rating"></v-rating>
           </div>
           <div
             class="user-activity__content"

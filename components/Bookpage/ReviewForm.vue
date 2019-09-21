@@ -14,7 +14,7 @@
     />
     <div class="form-control">
       <v-rating
-        color="#FF8D29"
+        color="#FF6452"
         :hover="true"
         :half-increments="true"
         v-model="review.rating"
