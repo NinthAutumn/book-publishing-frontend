@@ -52,9 +52,6 @@ export default {
       volume_title: this.volume.volume_title
     };
   },
-  mounted() {
-    // this.volume_title =
-  },
   methods: {
     async editChapter(chapterId) {
       this.$router.push(

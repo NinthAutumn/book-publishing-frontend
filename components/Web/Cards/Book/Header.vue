@@ -184,6 +184,7 @@ export default {
           this.$toast.show("現在サポート機能が公開されていません");
           break;
         case "list":
+          return this.$store.commit("LOGIN_STATE");
           this.$store.commit("reading/TOGGLE_STATE", this.book.id);
           break;
         default:

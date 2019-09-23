@@ -4,52 +4,50 @@
       <header
         class="chapter-title__item"
         :style="{'font-family':fontStyle}"
-        v-if="chapter.index"
-      >{{`第${chapter.index}話: ${chapter.title}`}}</header>
-      <header v-else class :style="{'font-family':fontStyle}">{{chapter.title}}</header>
+        v-text="`${chapter.index? `第${chapter.index}話`:''} ${chapter.title}`"
+      ></header>
     </div>
-    <div class="chapter-announcement chapter-announcement--header" v-if="chapter.header">
-      <h4>
-        <fa style="margin-right:10px;" icon="envelope"></fa>告知・メッセージ・上書き
-      </h4>
-      <p v-text="chapter.header"></p>
-      <fa class="announcement-pin" icon="quote-right"></fa>
-    </div>
+    <transition>
+      <chapter-header
+        position="header"
+        v-if="chapter.header"
+        title="告知・メッセージ・上書き"
+        :content="chapter.footer"
+      ></chapter-header>
+    </transition>
     <adsbygoogle v-if="!user.status||!user" :ad-layout="'in-article'" :ad-format="'fluid'" />
-    <div
-      data-step="1"
-      :style="{'font-size':font + 'px', 'font-family':fontStyle}"
-      class="chapter-content step1"
-      ref="chapterContent"
-      v-html="chapter.content"
-    ></div>
+    <chapter-content :content="chapter.content" :font="font" :fontStyle="fontStyle"></chapter-content>
     <adsbygoogle
       v-if="!user.status&&!chapter.locked"
       :ad-layout="'in-article'"
       :ad-format="'fluid'"
     />
-    <div v-if="!chapter.locked" class="chapter-actions"></div>
     <div class="chapter-payblock" v-if="chapter.locked">
       <div class="payblock-price">
         <Currency size="large" :amount="chapter.price"></Currency>
       </div>
-      <div class="payblock-buy button button--primary" @click.stop="purchase" :class="{}">ロック解除</div>
+      <div class="payblock-buy button button--primary" @click.stop="purchase">ロック解除</div>
     </div>
-    <div class="chapter-announcement chapter-announcement--footer" v-if="chapter.footer">
-      <h4>
-        <fa style="margin-right:10px;" icon="envelope"></fa>告知・メッセージ・下書き
-      </h4>
-      <p v-text="chapter.footer"></p>
-      <fa class="announcement-pin" icon="quote-right"></fa>
-    </div>
+    <transition>
+      <chapter-header
+        position="footer"
+        v-if="chapter.footer"
+        title="告知・メッセージ・下書き"
+        :content="chapter.footer"
+      ></chapter-header>
+    </transition>
   </section>
 </template>
 
 <script>
 import { mapGetters, mapActions } from "vuex";
+import { hydrateWhenVisible, hydrateSsrOnly } from "vue-lazy-hydration";
+
 export default {
   components: {
-    Currency: () => import("@/components/All/Currency")
+    Currency: hydrateWhenVisible(() => import("@/components/All/Currency")),
+    ChapterContent: hydrateSsrOnly(() => import("./WebUtility/ChapterContent")),
+    ChapterHeader: hydrateSsrOnly(() => import("./WebUtility/ChapterHeader"))
   },
   computed: {
     ...mapGetters({
@@ -131,42 +129,6 @@ export default {
       &--report {
       }
     }
-  }
-}
-.chapter-announcement {
-  position: relative;
-  padding: 20px;
-  padding-top: 10px;
-  box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
-
-  font-family: "Noto Sans JP" !important;
-  border-radius: 1rem;
-  &--header {
-    margin-bottom: 10px;
-  }
-  &--footer {
-    margin-top: 10px;
-    margin-bottom: 10px;
-  }
-
-  .announcement-pin {
-    font-size: 40px;
-    position: absolute;
-    top: 5px;
-    right: 5px;
-    color: $primary-lighter;
-  }
-
-  h4 {
-    font-family: "Noto Sans JP", "sans-serif" !important;
-    font-size: 18px;
-    margin-top: 0;
-    margin-bottom: 5px;
-  }
-  p {
-    font-family: "Noto Sans JP", "sans-serif" !important;
-    font-size: 16px;
-    margin: 0 !important;
   }
 }
 

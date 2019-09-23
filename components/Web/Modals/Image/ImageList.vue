@@ -69,27 +69,17 @@ export default {
       fetchDrawings: "drawing/fetchAllDrawings"
     }),
     async uploadAvatar() {
-      // return console.log(this.files);
       const { url } = await this.upload(this.files);
       this.$emit("input", url);
       this.$emit("close");
-      // await this.fetchDrawings();
     },
     selectedHandler(drawing) {
-      // if (this.cover) {
-      //   this.selected = drawing.url;
-      //   this.edit = !this.edit;
-      //   return;
-      // }
       if (!this.multiple) {
         this.$emit("input", drawing.url);
         this.$emit("close");
       }
     },
     onChange({ coordinates, canvas }) {
-      // this.coordinates = coordinates;
-      // You able to do different manipulations at a canvas
-      // but there we just get a cropped image
       canvas.toBlob(blob => {
         this.files = blob;
       });
@@ -168,6 +158,9 @@ export default {
       color: white;
       border-radius: 0.5rem;
       margin-top: 1rem;
+      &:hover {
+        cursor: pointer;
+      }
     }
 
     #{$self}__select {
@@ -178,6 +171,7 @@ export default {
           color: $primary;
           background-color: #fff;
         }
+        font-size: 1.4rem;
         box-shadow: 0 2px 5px 0 rgba(60, 66, 87, 0.1),
           0 1px 1px 0 rgba(0, 0, 0, 0.07);
         color: white;
@@ -188,9 +182,13 @@ export default {
       }
     }
     #{$self}__upload {
+      font-size: 1.4rem;
       label {
         user-select: none;
+        font-size: 1.4rem;
         &:hover {
+          font-size: 1.4rem;
+          font-size: inherit;
           cursor: pointer;
           color: $secondary;
           background-color: #fff;

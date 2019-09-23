@@ -44,7 +44,6 @@
 <script>
 export default {
   name: "browse-bookcard",
-  serverCacheKey: props => props.book.id + "::" + props.index,
   props: {
     book: {
       type: Object

@@ -78,7 +78,6 @@
 // import { TrinityRingsSpinner } from "epic-spinners";
 export default {
   name: "default-bookcard",
-  serverCacheKey: props => props.book.id,
   props: {
     cover: {
       type: [String, Object],

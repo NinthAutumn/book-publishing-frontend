@@ -32,7 +32,6 @@
           <div class="book-page__review-title">レビュー({{reviewCount}})</div>
           <ReviewsList :rating="book.rating"></ReviewsList>
         </section>
-        <reading-carousel v-if="reading.length > 0" :reading="reading" class="book-page__carousel"></reading-carousel>
       </div>
       <BookChapterList class="book-page__content" v-show="tabs.open ==='toc'"></BookChapterList>
     </div>
@@ -60,8 +59,7 @@ export default {
       count: "book/getBookChapterCount",
       reviewCount: "review/getReviewCount",
       genres: "book/getBookGenres",
-      tags: "book/getBookTags",
-      reading: "reading/getListByBook"
+      tags: "book/getBookTags"
     })
   },
   data() {
@@ -158,9 +156,6 @@ export default {
     ),
     BookCategory: hydrateWhenVisible(() =>
       import("@/components/Bookpage/Category")
-    ),
-    ReadingCarousel: hydrateWhenVisible(() =>
-      import("@/components/Web/Lists/Reading/Carousel")
     )
   },
   pageTransition: false,
@@ -256,8 +251,8 @@ export default {
       &--main {
         display: grid;
         grid-template-areas:
-          "synopsis synopsis synopsis carousel"
-          "category category category carousel"
+          "synopsis synopsis synopsis synopsis"
+          "category category category category"
           "reviews reviews reviews reviews";
         grid-template-columns: 1fr 1fr 1fr 20rem;
         #{$self}__synopsis {

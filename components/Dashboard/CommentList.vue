@@ -16,15 +16,7 @@
               class="dash-comments__created-at"
             >{{$moment(comment.created_at).startOf('second').fromNow()}}</div>
           </div>
-
           <div class="dash-comments__comment">{{comment.content}}</div>
-          <!-- <div class="flex-divider flex-column dash-comments__book-info">
-            <div class="dash-comments__book-title">{{comment.title}}</div>
-            <div class="flex-divider flex-row flex--align">
-              <div class="dash-comments__chapter-index">第{{comment.index}}話:</div>
-              <div class="dash-comments__chapter-title">{{comment.chapter_title}}</div>
-            </div>
-          </div>-->
         </div>
       </li>
     </ul>

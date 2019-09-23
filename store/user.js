@@ -326,6 +326,9 @@ export const actions = {
         return Promise.resolve(data)
       }
       await dispatch('fetchAuthor')
+      return Promise.resolve({
+        error: null
+      })
     } catch (error) {
       return Promise.reject(error)
     }

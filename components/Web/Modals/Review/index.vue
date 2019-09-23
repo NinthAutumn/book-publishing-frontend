@@ -54,7 +54,9 @@
           </div>
           <div class="mreview-modal__meta">
             <div class="mreview-modal__book-title" v-text="review.book_title"></div>
-            <div class="mreview-modal__author" v-text="`${review.pen_name} -  ${review.name}`"></div>
+            <div class="flex-row">
+              <div class="mreview-modal__author" v-text="`${review.pen_name} -  ${review.name}`"></div>
+            </div>
             <v-rating
               color="#FF6452"
               readonly

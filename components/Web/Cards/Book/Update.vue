@@ -55,7 +55,6 @@
 <script>
 export default {
   name: "update-bookcard",
-  serverCacheKey: props => props.book.id,
   props: {
     book: {
       type: Array,

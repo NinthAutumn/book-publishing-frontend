@@ -10,14 +10,23 @@
       <v-card-title>
         <span class="headline">作者になる</span>
       </v-card-title>
-      <div class="flex-divider flex-row flex--align flex--center">
-        <croppa
-          :accept="'image/*'"
-          :canvas-color="'default'"
-          :placeholder="'作者としてのアバター'"
+      <!-- <div class="flex-divider flex-row flex--align flex--center"> -->
+      <div class="create-author__avatar flex-column flex--align">
+        <v-avatar size="150" @click.stop="picture =!picture">
+          <v-img :src="author.avatar"></v-img>
+        </v-avatar>
+        <button @click.stop="picture =!picture" class="create-author__upload">アバターを投稿</button>
+        <drawing-modal
+          :current="user.avatar?user.avatar:avatar"
+          :multiple="false"
+          @close="picture = !picture"
           v-model="author.avatar"
-        ></croppa>
+          editor
+          cover
+          v-if="picture"
+        ></drawing-modal>
       </div>
+      <!-- </div> -->
 
       <v-card-text>
         <v-text-field
@@ -48,14 +57,19 @@ export default {
     return {
       author: {
         penname: "",
-        avatar: {}
+        avatar: ""
       },
+      picture: false,
       author_error: "",
       url: ""
     };
   },
   mounted() {
+    this.author.avatar = this.user.avatar;
     this.author.penname = this.user.username;
+  },
+  components: {
+    DrawingModal: () => import("@/components/Web/Modals/Image/ImageList")
   },
   computed: {
     ...mapGetters({
@@ -65,38 +79,26 @@ export default {
   },
   methods: {
     async createAuthor() {
-      // return;
       try {
-        this.author.avatar.generateBlob(
-          blob => {
-            this.$store
-              .dispatch("upload/uploadAvatar", blob)
-              .then(async url => {
-                const author = {
-                  avatar: url.url,
-                  pen_name: this.author.penname
-                };
-
-                const { error, code } = await this.$store.dispatch(
-                  "user/postAuthor",
-                  { author }
-                );
-                if (error) {
-                  if (code === 100) {
-                    this.$router.push("/");
-                  }
-                  this.author_error = error;
-                  return this.$toast.error(error);
-                }
-                this.$toast.success("おめでとうございます、作者になりました", {
-                  duration: 1200
-                });
-              });
-          },
-          "image/jpeg",
-          0.8
-        );
+        const author = {
+          avatar: this.author.avatar,
+          pen_name: this.author.penname
+        };
+        const { error, code } = await this.$store.dispatch("user/postAuthor", {
+          author
+        });
+        if (error) {
+          if (code === 100) {
+            this.$router.push("/");
+          }
+          this.author_error = error;
+          return this.$toast.error(error);
+        }
+        this.$toast.success("おめでとうございます、作者になりました", {
+          duration: 1200
+        });
       } catch (error) {
+        console.log(error);
         this.$toast.error("作者の作成に失敗しました", {
           duration: 1200,
           icon: "extension"
@@ -110,6 +112,18 @@ export default {
 <style lang="scss">
 .create-author {
   z-index: 10;
+  &__avatar {
+    width: 100%;
+    // display:
+  }
+  &__upload {
+    margin-top: 1rem;
+    font-size: 1.4rem;
+    padding: 0.75rem 2rem;
+    background-color: $secondary;
+    color: white;
+    border-radius: 0.5rem;
+  }
   &::after {
     content: "";
     width: 100vw;

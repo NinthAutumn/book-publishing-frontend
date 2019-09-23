@@ -22,7 +22,7 @@
             v-model="sort_by"
           ></Select>
         </div>
-        <li v-for="(comment, index) in comments" :key="index">
+        <li v-for="(comment) in comments" :key="comment.id">
           <Comment :comment="comment" :depth="0" :children="comment.children"></Comment>
         </li>
       </div>
