@@ -403,7 +403,6 @@ export default {
           this.multiData[index].selected = true;
           item.selected = true;
           this.selectedData.push(item);
-          // console.log(item);
           this.$emit("input", [item]);
           this.$emit("selected");
         }

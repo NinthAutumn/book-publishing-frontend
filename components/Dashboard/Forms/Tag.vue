@@ -70,7 +70,6 @@ export default {
           }
         });
       });
-      console.log(select);
       this.$emit("input", select);
     }
     this.selected = object;
