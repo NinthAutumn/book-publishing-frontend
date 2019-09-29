@@ -14,11 +14,9 @@
         class="reviews-content-username"
       ></p>
       <!-- <p v-else class="reviews-content-username">{{review.username}}</p> -->
-      <div
-        class="reviews__user-info"
-        style="text-align:center;font-size:1.2rem;color:#566CD6;"
-        v-if="book.user_id === review.user_id"
-      >作者</div>
+      <div class="flex-row flex--align flex--center">
+        <div class="reviews__user-info" v-if="book.user_id === review.user_id">作者</div>
+      </div>
     </div>
 
     <div class="reviews-content">
@@ -304,6 +302,14 @@ export default {
 }
 
 .reviews {
+  &__user-info {
+    color: white;
+    padding: 0.25rem 1.5rem;
+    background-color: $secondary;
+    font-size: 1.2rem;
+
+    border-radius: 10rem;
+  }
   hr {
     color: black;
     background-color: black;

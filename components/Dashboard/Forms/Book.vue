@@ -251,17 +251,7 @@ export default {
       genres: "book/getBookGenres",
       tags: "book/getBookTags",
       user: "auth/getUser"
-    }),
-    isFormInValid() {
-      return Object.keys(this.fields).some(key => this.fields[key].invalid);
-    }
-  },
-  watch: {
-    // "form.tags": function(val) {
-    //   if (val.length > 5) {
-    //     this.form.tags.pop();
-    //   }
-    // }
+    })
   },
   components: {
     Select: () => import("@/components/All/Select"),
@@ -270,18 +260,12 @@ export default {
   },
   async created() {
     if (this.$route.query.bookId) {
-      for (let genre of this.genres) {
-        this.form.genre.push({ name: genre.name, id: genre.id });
-        this.preGenre.push({ name: genre.name, id: genre.id });
-      }
-      for (let tag of this.tags) {
-        this.form.tags.push({ name: tag.name, id: tag.id });
-      }
       this.form.type = this.book.type;
       this.form.title = this.book.title;
       this.form.status = this.book.status;
       this.form.synopsis = this.book.synopsis;
       this.imageUrl = this.book.cover;
+      this.form.tags = this.tags;
       this.form.url = this.book.cover;
       this.oldImageUrl = this.book.cover;
       this.form.coverPath = this.book.cover_path;
@@ -289,55 +273,13 @@ export default {
         name: this.book.genre_name,
         id: this.book.genre_id
       });
+      this.genres.forEach(genre => {
+        this.form.genre.push({ name: genre });
+        this.preGenre.push({ name: genre });
+      });
     }
   },
   methods: {
-    async handleAvatarSuccess(res, file) {
-      this.form.cover = file.raw;
-      try {
-        imageResize.resize(
-          file.raw,
-          {
-            width: 140, // maximum width
-            height: 210 // maximum height
-          },
-          (blob, didItResize) => {
-            this.image.medium = {
-              url: blob,
-              size: "m"
-            };
-          }
-        );
-        imageResize.resize(
-          file.raw,
-          {
-            width: 50, // maximum width
-            height: 75 // maximum height
-          },
-          (blob, didItResize) => {
-            this.image.small = {
-              url: blob,
-              size: "s"
-            };
-          }
-        );
-        imageResize.resize(
-          file.raw,
-          { width: 200, height: 300 },
-          (blob, didItResize) => {
-            this.image.large = {
-              url: blob,
-              size: "l"
-            };
-            this.imageUrl = window.URL.createObjectURL(blob);
-          }
-        );
-        this.image.normal = { url: file.raw, size: "" };
-        this.form.cover = this.image;
-      } catch (error) {
-        console.log(error);
-      }
-    },
     toggleTip() {
       this.tip = !this.tip;
     },
@@ -375,15 +317,9 @@ export default {
         };
         if (this.$route.query.bookId) {
           book["cover"] = this.form.cover.url;
-
           book["id"] = this.$route.query.bookId;
           await this.$store.dispatch("book/updateBook", { book });
-          this.$toast.show(`作品のアップデートに成功しました`, {
-            theme: "toasted-primary",
-            position: "top-right",
-            duration: 1000,
-            icon: "extension"
-          });
+          this.$toast.success(`作品のアップデートに成功しました`);
           this.loading = false;
           return;
         }
@@ -395,13 +331,7 @@ export default {
         await this.$store.dispatch("book/addBook", {
           book
         });
-        this.$toast.show("本の投稿に成功しました", {
-          theme: "toasted-primary",
-          position: "top-right",
-          duration: 1200,
-          icon: "check-circle"
-        });
-
+        this.$toast.success("本の投稿に成功しました");
         this.loading = false;
         return this.$router.push("/dashboard/books");
       } catch (error) {

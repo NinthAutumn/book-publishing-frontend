@@ -57,16 +57,21 @@ export default {
       });
     });
 
-    if (this.value) {
-      this.value.forEach(key => {
-        object.forEach(val => {
-          if (val.value == key.id) {
+    if (this.value.length > 0) {
+      let select = [];
+      object.forEach(val => {
+        this.value.forEach(key => {
+          if (val.key == key) {
             val.selected = true;
+            select.push({
+              id: val.value,
+              name: val.key
+            });
           }
         });
-        this.object[key.id] = key;
-        // console.log(this.object);
       });
+      console.log(select);
+      this.$emit("input", select);
     }
     this.selected = object;
   },
@@ -133,9 +138,6 @@ export default {
       Object.keys(this.object).forEach(key => {
         tags.push(this.object[key]);
       });
-
-      // this.object
-      // console.log(tags);
       this.$emit("input", tags);
     }
   }

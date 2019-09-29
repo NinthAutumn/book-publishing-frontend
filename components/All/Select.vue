@@ -243,13 +243,13 @@ export default {
           icon: "extension"
         });
         this.selectedData.pop();
-        this.pushIntoSelected();
+        this.pushIntoSelected(index);
       }
 
       this.$emit("input", this.selectedData);
       this.$emit("selected");
     },
-    pushIntoSelected() {
+    pushIntoSelected(index) {
       this.multiData.forEach((item, n) => {
         if (n === index) {
           item.selected = !item.selected;
@@ -388,7 +388,6 @@ export default {
         this.multiData.forEach((e, n) => {
           if (e === this.value) {
             this.selectD = e.key;
-
             e.selected = !e.selected;
           }
         });

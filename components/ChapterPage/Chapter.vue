@@ -15,7 +15,11 @@
         :content="chapter.footer"
       ></chapter-header>
     </transition>
-    <adsbygoogle v-if="!user.status||!user" :ad-layout="'in-article'" :ad-format="'fluid'" />
+    <adsbygoogle
+      v-if="(!user.status||!user)&&chapter.locked"
+      :ad-layout="'in-article'"
+      :ad-format="'fluid'"
+    />
     <chapter-content :content="chapter.content" :font="font" :fontStyle="fontStyle"></chapter-content>
     <adsbygoogle
       v-if="!user.status&&!chapter.locked"

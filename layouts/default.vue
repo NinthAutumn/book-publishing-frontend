@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="$nuxt.isOffline">今オフラインです</div>
+    <div v-if="$nuxt.isOffline" class="offline-message">今オフラインです</div>
     <username-modal></username-modal>
     <reading-list-modal v-if="state"></reading-list-modal>
     <reading-modal v-if="readingModal"></reading-modal>
@@ -182,48 +182,21 @@ export default {
 
 
 <style lang="scss">
-.slide-left {
-  @keyframes slide-down {
-    from {
-      transform: translateX(50%);
-    }
-
-    to {
-      transform: translateX(0);
-    }
-  }
-
-  &-enter {
-    transform: translateX(50%);
-
-    &-active {
-      transition: 300ms;
-    }
-  }
-
-  &-leave {
-    // transform: translateX(50%);
-
-    &-active {
-      transition: 300ms;
-    }
-
-    &-to {
-      transform: translateX(100%);
-    }
-  }
+.offline-left {
+  position: fixed;
+  top: 0rem;
+  width: 100%;
+  height: 2rem;
+  background-color: grey;
+  color: white;
+  font-size: 1.8rem;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100000;
 }
-// body {
-//   background-color: white;
-// }
 
-// .permanent {
-//   background-color: black;
-//   color: rgb(215, 218, 220);
-//   .review-card {
-//     background-color: #1a1a1b;
-//   }
-// }
 .beta-pill {
   z-index: 100000;
   position: fixed;
@@ -302,9 +275,7 @@ export default {
     transition: 300ms;
     position: relative !important;
   }
-  .nuxt-pages .menu-inactive {
-    // margin: 10px 50px !important;
-  }
+
   .v-nav {
     /* display: none; */
     z-index: 10000 !important;
@@ -312,11 +283,4 @@ export default {
     box-shadow: 1px 1px 5px 0px rgb(235, 235, 235) !important;
   }
 }
-/* body {
-  margin: 0;
-}
-* {
-  font-family: "Noto Sans JP", sans-serif;
-  font-size: 10px;
-} */
 </style>

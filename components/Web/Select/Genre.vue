@@ -1,7 +1,7 @@
 <template>
   <div class="genre-select">
     <div class="genre-select__container">
-      <div class="genre-select__input" v-text="'ジャンル'" @click.stop="toggleModal"></div>
+      <div class="genre-select__input" v-text="placeholder||'ジャンル'" @click.stop="toggleModal"></div>
       <div class="genre-select__modal" v-if="modal" v-click-outside="toggleModal">
         <div
           class="genre-select__option"
@@ -22,7 +22,13 @@ export default {
   props: {
     value: {
       type: Array
-    }
+    },
+    limit: Number,
+    disabled: {
+      type: [Object, Array, String],
+      default: () => ({ name: "" })
+    },
+    placeholder: String
   },
   data() {
     return {
@@ -40,6 +46,9 @@ export default {
     },
     selectGenreHandler(genre, index) {
       const { id, name, selected } = genre;
+      if (this.disabled.name === name) {
+        return;
+      }
       const news = {
         name: genre.name,
         selected: !genre.selected,
@@ -92,16 +101,12 @@ export default {
     this.$store.commit("book/REMOVE_GENRES");
   },
   async mounted() {
-    // console.log(this.value);
     if (this.value.length > 0) {
       this.value.forEach(genre => {
         this.selected_list.push({ name: genre.name });
       });
     }
     if (this.selected_list.length > 0) {
-      // Array.of(genre_list)
-
-      // console.log(this.selected_list, "aaaaaaaaaaaaa");
       this.$emit("input", this.selected_list);
     }
   }
@@ -127,7 +132,7 @@ export default {
     #{$self}__modal {
       box-shadow: 0 7px 14px 0 rgba(60, 66, 87, 0.1),
         0 3px 6px 0 rgba(0, 0, 0, 0.07);
-      width: 55rem;
+      width: 40rem;
       top: 0;
       border-radius: 0.5rem;
       right: 0;
@@ -135,10 +140,11 @@ export default {
       z-index: 11;
       position: absolute;
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(3, 1fr);
+      padding: 1rem 0;
       #{$self}__option {
         font-size: 1.4rem;
-        padding: 0.5rem 1rem;
+        padding: 1rem 0rem;
         &:hover {
           cursor: pointer;
           color: #f4648a;

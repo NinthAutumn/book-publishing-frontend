@@ -95,11 +95,6 @@ module.exports = {
     height: '3px',
     continuous: true
   },
-  generate: {
-    routes: [
-      '/ads.txt',
-    ]
-  },
   /*
    ** Global CSS
    */
@@ -213,7 +208,6 @@ module.exports = {
     '@nuxtjs/device',
     'nuxt-webfontloader',
     '@nuxtjs/axios',
-    '@nuxtjs/dotenv',
     '@nuxtjs/svg-sprite',
     '@nuxtjs/style-resources',
 
@@ -221,14 +215,12 @@ module.exports = {
       lang: 'ja',
     }],
     ['@nuxtjs/robots', {
-      UserAgent: '*',
-      Disallow: '',
       UserAgent: 'Googlebot',
-      Disallow: '',
+      Disallow: '/dashboard',
       UserAgent: 'Yahoo-slurp',
-      Disallow: '',
+      Disallow: '/dashboard',
       UserAgent: 'Msnbot',
-      Disallow: ''
+      Disallow: '/dashboard'
     }],
     ['@nuxtjs/moment', {
       locales: ['ja'],
@@ -241,10 +233,7 @@ module.exports = {
     ['@nuxtjs/google-adsense', {
       id: 'pub-4438410171989811',
       pageLevelAds: false,
-      test: true,
-
     }],
-    '@nuxtjs/axios',
     ['nuxt-fontawesome', {
       component: 'fa',
       imports: [{
@@ -273,9 +262,7 @@ module.exports = {
         ignoreExceptions: true //
       }
     }],
-    ['@nuxtjs/dotenv', {
-      /* module options */
-    }],
+    '@nuxtjs/dotenv',
     ['@nuxtjs/recaptcha', {
       siteKey: '6LcZRq4UAAAAAL74nLSlaPqv10TJXVxhzyANs49_',
       version: 2,
@@ -290,10 +277,16 @@ module.exports = {
       publishableKey: process.env.STRIPE_KEY || 'pk_live_2WoTAiPewhp9sgG6DsTE09uF',
       version: 'v3', // Default
     }],
-    "nuxt-compress",
+    ["nuxt-compress", {
+      gzip: {
+        cache: true
+      },
+      brotli: {
+        threshold: 10240
+      }
+    }],
   ],
   axios: {
-    // baseURL: process.env.SERVER_URL + '/v1',
     proxy: true
   },
   proxy: {
@@ -338,7 +331,6 @@ module.exports = {
     /*
      ** You can extend webpack config here
      */
-    // analyze: true,
 
     splitChunks: {
       layouts: true,
