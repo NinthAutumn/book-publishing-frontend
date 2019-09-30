@@ -8,7 +8,7 @@
         <li class="mobile-toc__volume" v-for="volume in list" :key="volume.volume">
           <h3 class="mobile-toc__volume-title">{{`第${volume.volume}章 ${volume.title||""}`}}</h3>
 
-          <ul class="mobile-toc__chapters" v-if="volume.chapters[0].title">
+          <ul class="mobile-toc__chapters" v-if="volume.chapters&&volume.chapters[0].title">
             <nuxt-link
               v-ripple="{class:'ripple-color'}"
               tag="li"

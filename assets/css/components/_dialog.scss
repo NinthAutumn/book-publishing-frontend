@@ -2,9 +2,13 @@
   $self: &;
 
   @media screen and (max-width:450px) {
+    body {
+      height: 100%;
+    }
+
     #{$self}__content {
-      width: 100vw !important;
-      height: 100vh !important;
+      width: 100% !important;
+      height: 100% !important;
       padding: 1rem !important;
     }
 

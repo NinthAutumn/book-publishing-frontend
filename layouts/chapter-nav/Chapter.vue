@@ -16,8 +16,9 @@
         </transition>
       </div>
     </div>
-    <Horizontal v-if="!$device.isMobile"></Horizontal>
-    <MobileHorizontal v-else></MobileHorizontal>
+    <component :is="mobileHorizontalNav" />
+    <!-- <Horizontal v-if="!$device.isMobile"></Horizontal>
+    <MobileHorizontal v-else></MobileHorizontal>-->
     <RightV v-if="!$device.isMobile"></RightV>
     <div v-if="imageModal" class="images-modal__dialog flex flex--align flex--center">
       <div class="images-modal__dialog__container" v-click-outside="closeImageDialog">
@@ -74,7 +75,7 @@
           <fa icon="angle-left"></fa>
         </nuxt-link>
         <div class="navigation-prev-cont" v-if="!prev&&!$device.isMobile"></div>
-        <nuxt class="yikes"></nuxt>
+        <nuxt></nuxt>
         <div class="navigation-prev-cont" v-if="!next&&!$device.isMobile"></div>
         <nuxt-link
           class="navigation-next flex-column flex--center flex--align"
@@ -133,9 +134,9 @@ export default {
     };
   },
   components: {
-    Horizontal: hydrateWhenVisible(() => import("./Horizontal")),
+    // Horizontal: hydrateWhenVisible(() => import("./Horizontal")),
     RightV: hydrateWhenVisible(() => import("./Right-V")),
-    MobileHorizontal: hydrateWhenVisible(() => import("./MobileHorizontal")),
+    // MobileHorizontal: hydrateWhenVisible(() => import("./MobileHorizontal")),
     SettingForm: hydrateWhenVisible(() =>
       import("@/components/Navigation/Setting")
     )
@@ -150,7 +151,11 @@ export default {
       imageModal: "getImageModalState",
       auth: "auth/isAuthenticated",
       user: "auth/getUser"
-    })
+    }),
+    mobileHorizontalNav() {
+      const name = this.$device.isMobile ? "MobileHorizontal" : "Horizontal";
+      return () => import(`./${name}`);
+    }
   },
   methods: {
     closeImageDialog() {

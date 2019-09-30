@@ -25,7 +25,7 @@
           <div class="pmb-toc__volume-title" v-text="`${volume.volume}章 ${volume.volume_title}`"></div>
           <div
             class="pmb-toc__chapters pmb-toc__chapters--none"
-            v-if="volume.chapters.length < 1"
+            v-if="!volume.chapters||volume.chapters.length < 1"
           >話はまだありません</div>
           <div
             class="pmb-toc__chapters pmb-toc__chapters--none"

@@ -7,13 +7,7 @@
     <transition name="grow-shrink" class="loginform">
       <AuthModal v-if="loginState"></AuthModal>
     </transition>
-    <transition name="grow-shrink" v-if="$device.isMobile">
-      <notification-list
-        @close="closeNotification"
-        v-if="notification"
-        v-click-outside="closeNotification"
-      ></notification-list>
-    </transition>
+
     <div class="user-status" v-if="auth">
       <div v-if="!user.verified">
         <transition>
@@ -27,68 +21,19 @@
         </transition>
       </div>
     </div>
-    <div class="not-mobile" v-if="!$device.isMobile">
-      <Horizontal></Horizontal>
-      <!-- <Vertical></Vertical> -->
+    <component :is="navInstance" />
+    <nuxt v-if="$device.isMobile" class="mobile-nuxt"></nuxt>
 
-      <NewVertical v-if="$store.state.menuState=== 'menu-active'"></NewVertical>
-      <div class="nuxt-pages">
-        <div class="dropdown"></div>
-        <nuxt :class="$store.state.menuState" class="permanent"></nuxt>
-      </div>
-    </div>
-    <div class="is-mobile" v-else>
-      <mobile-horizontal @toggle="toggleMenu"></mobile-horizontal>
-      <client-only>
-        <transition name="slide-left">
-          <VerticalLeftMobile
-            @stripe="stripeOpen"
-            v-touch:swipe.right="swipeRight"
-            v-if="mvRight&&auth"
-            @toggle="toggleMenu"
-            @notificationOpen="closeNotification"
-          ></VerticalLeftMobile>
-        </transition>
-
-        <transition name="slide-right">
-          <VerticalRightMobile
-            :user="user"
-            v-if="mvLeft"
-            @toggle="toggleMenu"
-            v-touch:swipe.left="swipeLeft"
-          ></VerticalRightMobile>
-        </transition>
-
-        <transition name="slide-up">
-          <stripe-modal @stripe="stripeOpen" v-if="stripe"></stripe-modal>
-        </transition>
-      </client-only>
-      <nuxt class="mobile-nuxt"></nuxt>
+    <div class="nuxt-pages" v-else>
+      <nuxt :class="$store.state.menuState" class="permanent"></nuxt>
     </div>
   </div>
 </template>
 <script>
 import { mapGetters } from "vuex";
-import { hydrateWhenVisible, hydrateSsrOnly } from "vue-lazy-hydration";
+import { hydrateWhenVisible } from "vue-lazy-hydration";
 export default {
   components: {
-    Horizontal: hydrateWhenVisible(() => import("./main-nav/Horizontal")),
-    VerticalRightMobile: hydrateWhenVisible(() =>
-      import("./mobile-nav/Vertical-right")
-    ),
-    VerticalLeftMobile: hydrateWhenVisible(() =>
-      import("./mobile-nav/VerticalLeft")
-    ),
-    MobileHorizontal: hydrateWhenVisible(() =>
-      import("./mobile-nav/Horizontal")
-    ),
-    NewVertical: hydrateWhenVisible(() => import("./main-nav/NewVertical")),
-    StripeModal: hydrateSsrOnly(() =>
-      import("@/components/Navigation/Stripe/ProductModal")
-    ),
-    NotificationList: hydrateWhenVisible(() =>
-      import("@/components/Navigation/Notification")
-    ),
     UsernameModal: () => import("@/components/Navigation/Username"),
     AuthModal: () => import("@/components/Navigation/Auth/AuthModal"),
     ReadingModal: () => import("@/components/Web/Modals/ReadingList/Create"),
@@ -104,17 +49,9 @@ export default {
         this.$store.commit("auth/TOGGLE_USERNAME_MODAL");
       }
     }
-
-    if (this.$device.isMobile) {
-      document.addEventListener("touchstart", { passive: true });
-    }
   },
   data() {
     return {
-      mvLeft: false,
-      mvRight: false,
-      stripe: false,
-      notification: false,
       links: ["Home", "About Us", "Team", "Services", "Blog", "Contact Us"]
     };
   },
@@ -126,13 +63,15 @@ export default {
       loginState: "getLoginFormState",
       readingModal: "reading/getModalState",
       state: "reading/getListModalState"
-    })
+    }),
+    navInstance() {
+      const name = this.$device.isMobile
+        ? "mobile-nav/Bundled"
+        : "main-nav/Bundled";
+      return () => import(`./${name}`);
+    }
   },
-  watch: {},
   methods: {
-    dropOff() {
-      this.$store.commit("DROPDOWN_FALSE");
-    },
     async resendHandler() {
       try {
         await this.$store.dispatch("auth/resendEmail", {
@@ -142,40 +81,7 @@ export default {
       } catch (error) {
         return this.$toast.error(error);
       }
-    },
-    toggleMenu(val) {
-      if (val) {
-        if (!this.auth) {
-          return this.$store.commit("LOGIN_STATE");
-        }
-        this.mvRight = !this.mvRight;
-        this.mvLeft = false;
-      } else {
-        this.mvLeft = !this.mvLeft;
-        this.mvRight = false;
-      }
-    },
-    stripeOpen() {
-      this.stripe = !this.stripe;
-      if (!this.stripe) return (this.mvRight = true);
-      // if(stripe)
-      this.mvRight = false;
-      this.mvLeft = false;
-    },
-    swipeRight() {
-      this.mvRight = false;
-    },
-    closeNotification() {
-      this.notification = !this.notification;
-    },
-
-    swipeLeft() {
-      this.mvLeft = false;
     }
-  },
-  transition: {
-    name: "slide-right",
-    mode: "out-in"
   }
 };
 </script>

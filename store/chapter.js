@@ -97,7 +97,7 @@ export const mutations = {
   TOC_REVERSE(state, status) {
     state.chapter_list['published'] = state.chapter_list['published'].reverse()
     state.chapter_list['published'].forEach((volume) => {
-      volume.chapters.reverse()
+      if (volume.chapters) volume.chapters.reverse()
     })
   },
   SET_CHAPTER_COUNT(state, count) {
