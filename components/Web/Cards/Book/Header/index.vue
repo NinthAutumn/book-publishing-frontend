@@ -40,29 +40,7 @@
       <div class="book-header__announcement">
         <announcement-card></announcement-card>
       </div>
-      <div class="book-header__actions">
-        <div class="book-header__actions-container">
-          <div
-            class="book-header__action-item"
-            v-for="(value,key) in actions"
-            :key="key"
-            :class="`book-header__action-item--${key}`"
-            v-ripple
-          >
-            <div
-              @click.stop="actionHandler(key)"
-              class="book-header__button"
-              :class="{'book-header__button--bookmarked': key==='bookmark'&&bookmarked}"
-            >
-              <div class="book-header__content" v-if="loading !== key">
-                <fa class="book-header__button-icon" :icon="value.icon"></fa>
-                <div class="book-header__button-text" v-text="value.title"></div>
-              </div>
-              <div class="book-header__content book-header__content--loading" v-else></div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <book-actions :auth="auth" :bookmarked="bookmarked" @toggleBookmark="bookmarkHandler"></book-actions>
 
       <div class="book-header__author" @mouseenter="author = true" @mouseleave="author = false">
         <v-avatar size="100" @click="author = true">
@@ -94,13 +72,11 @@ export default {
     );
     this.meta["word"]["data"] = `${data.word_count || 0}字`;
     this.bookmarked = this.book.bookmarked;
-    if (this.bookmarked) {
-      this.actions["bookmark"]["title"] = "ブックーク済み";
-    }
   },
   components: {
     AnnouncementCard: () => import("@/components/Bookpage/Announcements"),
-    AuthorCard: () => import("@/components/Web/Cards/Author/Info")
+    AuthorCard: () => import("@/components/Web/Cards/Author/Info"),
+    BookActions: () => import("./ActionList")
   },
   computed: {
     ...mapGetters({
@@ -151,47 +127,12 @@ export default {
           icon: "cube"
         }
       },
-      actions: {
-        vote: {
-          icon: "bolt",
-          title: "投票をかける"
-        },
-        list: {
-          icon: "list",
-          title: "リストに入れる"
-        },
-        support: {
-          icon: "gift",
-          title: "サポートする"
-        },
-        bookmark: {
-          icon: "bookmark",
-          title: "ブックマークする"
-        }
-      },
       bookmarked: false,
       author: false,
       loading: false
     };
   },
   methods: {
-    async actionHandler(key) {
-      switch (key) {
-        case "vote":
-          this.voteHandler();
-          break;
-        case "support":
-          this.$toast.show("現在サポート機能が公開されていません");
-          break;
-        case "list":
-          return this.$store.commit("LOGIN_STATE");
-          this.$store.commit("reading/TOGGLE_STATE", this.book.id);
-          break;
-        default:
-          this.bookmarkHandler();
-          break;
-      }
-    },
     contentHandler(key) {
       const action = {
         genre: () => {
@@ -203,63 +144,8 @@ export default {
       };
       return action[key]();
     },
-    async bookmarkHandler() {
-      this.loading = "bookmark";
-      const store = {
-        type: "bookmark",
-        bookId: this.book.id
-      };
-      if (!this.auth) {
-        this.$toast.error(
-          `ブックマークをするにはログインかアカウント作成が必要です`
-        );
-        this.loading = false;
-        return this.$store.commit("LOGIN_STATE");
-      }
-      if (this.bookmarked) {
-        try {
-          await this.$store.dispatch("library/patchStore", {
-            store
-          });
-          this.bookmarked = false;
-        } catch (error) {
-          this.$toast.error(`ブックマーク解除に失敗しました`);
-        }
-      } else {
-        try {
-          await this.$store.dispatch("library/patchStore", {
-            store
-          });
-          this.bookmarked = true;
-        } catch (error) {
-          this.$toast.error(`ブックマークを失敗しました`);
-        }
-      }
-      this.loading = false;
-    },
-    async voteHandler() {
-      this.loading = "vote";
-      try {
-        if (!this.auth) {
-          this.$toast.error(`投票をするにはログインかアカウント作成が必要です`);
-          this.loading = false;
-          return this.$store.commit("LOGIN_STATE");
-        }
-        const { error } = await this.$store.dispatch("book/postVote", {
-          bookId: this.$route.params.id
-        });
-        if (error) {
-          this.$toast.error(`${error}`, {
-            position: "top-right",
-            duration: 1000,
-            icon: "extension"
-          });
-        }
-      } catch (error) {
-        console.log(error.message);
-      }
-      this.loading = false;
-      await this.$store.dispatch("wallet/wealth");
+    bookmarkHandler(state) {
+      this.bookmarked = state;
     }
   }
 };
@@ -340,69 +226,7 @@ export default {
         }
       }
     }
-    #{$self}__actions {
-      grid-area: action;
-      justify-self: end;
-      align-self: end;
-      display: flex;
-      align-items: center;
-      #{$self}__actions-container {
-        display: flex;
-        align-items: center;
-      }
-      #{$self}__action-item {
-        border: 1px solid;
-        border-radius: 0.5rem;
-        margin-right: 1rem;
-        user-select: none;
-        &:hover {
-          cursor: pointer;
-        }
-        &--bookmark {
-          border-color: $secondary;
-          color: $secondary;
-        }
-        &--list {
-          border-color: #00c5ff;
-          color: #00c5ff;
-        }
-        &--vote {
-          border-color: #f4648a;
-          color: #f4648a;
-        }
-        &--support {
-          border-color: $primary;
-          color: $primary;
-        }
-        // &--
-      }
-      #{$self}__button {
-        #{$self}__content {
-          display: flex;
-          align-items: center;
-          font-size: 1.3rem;
-          width: 14rem;
-          height: 3.5rem;
-          padding: 0.4rem;
-          box-sizing: border-box;
-          justify-content: center;
-          box-shadow: 0 2px 5px 0 rgba(60, 66, 87, 0.1),
-            0 1px 1px 0 rgba(0, 0, 0, 0.07);
-        }
-        &--bookmarked {
-          color: white;
-          // border-color:none;
-          background: $secondary;
-        }
 
-        #{$self}__button-icon {
-          margin-right: 1rem;
-        }
-        #{$self}__button-text {
-          font-size: inherit;
-        }
-      }
-    }
     #{$self}__announcement {
       grid-area: announcement;
     }

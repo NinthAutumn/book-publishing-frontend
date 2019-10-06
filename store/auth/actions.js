@@ -1,52 +1,4 @@
-export const state = () => ({
-  token: '',
-  loggedIn: false,
-  refresh_token: "",
-  strategy: "",
-  user: {},
-  path: "",
-  usernameModal: false
-})
-
-export const getters = {
-  isAuthenticated: state => state.loggedIn,
-  getStrategy: state => state.strategy,
-  getAccessToken: state => state.token,
-  getRefreshToken: state => state.refresh_token,
-  getUser: state => state.user,
-  getPath: state => state.path,
-  getUsernameModalState: state => state.usernameModal
-}
-
-export const mutations = {
-  SET_AUTH: (state, {
-    access_token,
-    refresh_token,
-    strategy = "local"
-  }) => {
-    state.token = access_token
-    state.refresh_token = refresh_token
-    state.loggedIn = true
-    state.strategy = strategy
-  },
-  AUTH_LOGOUT(state) {
-    state.loggedIn = false
-    state.token = ""
-    state.refresh_token = ""
-    state.strategy = ""
-  },
-  SET_USER: (state, user) => {
-    state.user = user
-  },
-  SET_AUTH_PATH: (state, path) => {
-    state.path = path
-  },
-  TOGGLE_USERNAME_MODAL(state) {
-    state.usernameModal = !state.usernameModal
-  }
-}
-
-export const actions = {
+export default {
   async login({
     commit,
     dispatch
@@ -61,9 +13,8 @@ export const actions = {
         credential: user.username,
         password: user.password
       })
-      if (data.error) {
-        return Promise.reject(data.error)
-      }
+      if (data.error) return Promise.reject(data.error)
+
       commit('SET_AUTH', {
         access_token: data.access_token,
         refresh_token: data.refresh_token,
@@ -138,6 +89,7 @@ export const actions = {
       const {
         data
       } = await this.$axios.get('/v2/user/me')
+      if (!data) return await dispatch('logout')
       commit('SET_USER', data)
       await dispatch('wallet/wealth', {}, {
         root: true

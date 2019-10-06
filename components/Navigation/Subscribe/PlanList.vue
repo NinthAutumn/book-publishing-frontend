@@ -122,7 +122,6 @@ export default {
     }
   },
   async mounted() {
-    await this.$store.dispatch("subscription/fetchSubscription");
     this.plan.forEach(item => {
       if (item.interval === "month") {
         this.selected_option = {

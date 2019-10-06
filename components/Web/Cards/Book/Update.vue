@@ -137,6 +137,10 @@ export default {
     #{$self}__menu {
       font-size: 1.6rem;
       position: relative;
+      color: rgb(182, 182, 182);
+      &:hover {
+        color: grey;
+      }
     }
     #{$self}__title {
       font-size: 1.6rem;

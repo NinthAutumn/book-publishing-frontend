@@ -1,6 +1,6 @@
 <template>
   <div class="swiping-page" :class="{'swiping-page--mobile': $device.isMobile}" v-cloak>
-    <div v-if="trendings&&!$device.isMobile" v-swiper:mySwiper="swiperOption">
+    <div v-if="trendings" v-swiper:mySwiper="$device.isMobile?swiperMobile:swiperOption">
       <div class="swiper-wrapper">
         <div class="swiper-slide" v-for="(book) in trendings" :key="book.id">
           <book-card rating :cover="book.cover" :book="book" :isMobile="$device.isMobile"></book-card>
@@ -8,38 +8,12 @@
       </div>
       <div class="background" v-if="!$device.isMobile">
         <div class="swiper-button-next swiper-button-black" slot="button-next"></div>
-      </div>
-    </div>
-    <div v-if="trendings&&$device.isMobile" v-swiper:mySwiper="swiperMobile">
-      <div class="swiper-wrapper">
-        <div class="swiper-slide" v-for="(book) in trendings" :key="book.id">
-          <book-card rating :cover="book.cover" :book="book" :isMobile="$device.isMobile"></book-card>
-        </div>
-      </div>
-    </div>
-    <div v-if="!trendings&&!$device.isMobile" v-swiper:mySwiper="swiperOption">
-      <div class="swiper-wrapper">
-        <div class="swiper-slide" v-for="(book) in books" :key="book.id">
-          <book-card rating :cover="book.cover" :book="book" :isMobile="$device.isMobile"></book-card>
-        </div>
-      </div>
-      <div class="background" v-if="!$device.isMobile">
-        <div class="swiper-button-prev swiper-button-black" slot="button-prev"></div>
-      </div>
-      <div class="background" v-if="!$device.isMobile">
-        <div class="swiper-button-next swiper-button-black" slot="button-next"></div>
-      </div>
-    </div>
-    <div v-if="!trendings&&$device.isMobile" v-swiper:mySwiper="swiperMobile">
-      <div class="swiper-wrapper">
-        <div class="swiper-slide" v-for="(book) in books" :key="book.id">
-          <book-card rating :cover="book.cover" :book="book" :isMobile="$device.isMobile"></book-card>
-        </div>
       </div>
     </div>
   </div>
 </template>
 <script>
+import { hydrateWhenVisible } from "vue-lazy-hydration";
 export default {
   props: {
     books: Array,
@@ -78,10 +52,8 @@ export default {
     };
   },
   components: {
-    // Book: () => import("./Book"),
-    BookCard: () => import("@/components/Web/Cards/Book")
-  },
-  methods: {}
+    BookCard: hydrateWhenVisible(() => import("@/components/Web/Cards/Book"))
+  }
 };
 </script>
 <style lang="scss">
@@ -149,16 +121,10 @@ export default {
 }
 .swiper-button-next,
 .swiper-button-prev {
-  // position: relative;
   height: 100%;
   top: 21px;
   width: 50px;
   background-color: rgba(255, 255, 255, 0.945);
-
-  // filter: blur(1px);
-  // -webkit-box-shadow: 0px 0px 54px 0px rgba(219, 219, 219, 1);
-  // -moz-box-shadow: 0px 0px 54px 0px rgba(219, 219, 219, 1);
-  // box-shadow: 0px 0px 54px 0px rgba(219, 219, 219, 1);
 }
 
 .swiper-button-disabled {
@@ -179,9 +145,6 @@ export default {
 }
 
 .swiping-page {
-  // margin-left: 24rem;
-  // margin-top: 5rem;
-  // padding: 1rem 5rem;
   position: relative;
 }
 </style>

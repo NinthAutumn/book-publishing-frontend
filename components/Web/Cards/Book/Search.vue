@@ -32,7 +32,7 @@
 
         <div class="flex-divider flex-row book-scard__genre-wrapper">
           <div class="book-scard__genres" v-for="(genre,index) in book.genres" :key="genre">
-            <div class="book-scard__genre-container" v-if="index < 3">{{genre}}</div>
+            <div class="book-scard__genre-container" v-ripple v-if="index < 3">{{genre}}</div>
           </div>
         </div>
         <div class="book-scard__synopsis" v-line-clamp="4" v-text="book.synopsis"></div>
@@ -117,6 +117,10 @@ export default {
       #{$self}__menu {
         position: relative;
         font-size: 1.8rem;
+        color: rgb(182, 182, 182);
+        &:hover {
+          color: grey;
+        }
       }
       #{$self}__title {
         font-size: 1.8rem;
@@ -135,6 +139,13 @@ export default {
           background-color: white;
           color: $primary;
           margin-right: 1rem;
+          transform: scale(1);
+          transition: transform 200ms;
+          &:active,
+          &:focus {
+            transform: scale(0.95);
+            transition: transform 200ms;
+          }
         }
       }
       #{$self}__genre {

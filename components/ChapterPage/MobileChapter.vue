@@ -8,22 +8,31 @@
         v-if="navigation"
       ></header-modal>
     </transition>
-    <transition name="slide-right">
-      <TOC v-if="table" @toggle="toggleModal"></TOC>
-    </transition>
-    <transition name="slide-up">
-      <Theme v-if="themeM" @toggle="toggleModal" :theme="theme"></Theme>
-    </transition>
-    <transition name="slide-up">
-      <FontSetting v-if="settingM" :theme="theme" @toggle="toggleModal"></FontSetting>
-    </transition>
-    <transition name="slide-left">
-      <ImageM v-if="imageM" :drawings="chapter.drawings" :theme="theme" @toggle="toggleModal"></ImageM>
-    </transition>
-    <transition name="slide-left">
-      <Comments v-if="commentM" :chapter="chapter" :theme="theme" @toggle="toggleModal"></Comments>
+    <transition :name="modalTransition">
+      <component
+        :is="componentInstance"
+        @toggle="toggleModal"
+        :theme="theme"
+        :chapter="chapter"
+        :drawings="chapter.drawings"
+      />
     </transition>
 
+    <!-- <transition name="slide-right">
+      <TOC v-if="modal===5" @toggle="toggleModal"></TOC>
+    </transition>
+    <transition name="slide-up">
+      <Theme v-if="modal===1" @toggle="toggleModal" :theme="theme"></Theme>
+    </transition>
+    <transition name="slide-up">
+      <FontSetting v-if="modal===2" :theme="theme" @toggle="toggleModal"></FontSetting>
+    </transition>
+    <transition name="slide-left">
+      <ImageM v-if="modal===3" :drawings="chapter.drawings" :theme="theme" @toggle="toggleModal"></ImageM>
+    </transition>
+    <transition name="slide-left">
+      <Comments v-if="modal===4" :chapter="chapter" :theme="theme" @toggle="toggleModal"></Comments>
+    </transition>-->
     <div
       v-if="!chapter.locked"
       class="mobile-chapter__wrapper"
@@ -50,7 +59,6 @@
           class="mobile-chapter__content"
           :style="{  fontSize: `${font}px`, fontFamily: `${fontStyle}`}"
           v-html="chapter.content"
-          v-if="!chapter.locked"
         ></div>
         <div
           class="mobile-chapter__ann"
@@ -64,6 +72,7 @@
         />
       </div>
     </div>
+
     <div class="mobile-chapter__locked-content" v-else>
       <div class="mobile-chapter__title">{{`第${chapter.index}話 ${chapter.title}`}}</div>
       <!-- .mobile-chapter__ -->
@@ -107,21 +116,6 @@ import { hydrateWhenVisible, hydrateSsrOnly } from "vue-lazy-hydration";
 export default {
   components: {
     Currency: () => import("@/components/All/Currency"),
-    Theme: hydrateWhenVisible(() =>
-      import("@/components/ChapterPage/MobileModal/Theme")
-    ),
-    TOC: hydrateWhenVisible(() =>
-      import("@/components/ChapterPage/MobileModal/TOC")
-    ),
-    FontSetting: hydrateWhenVisible(() =>
-      import("@/components/ChapterPage/MobileModal/Font")
-    ),
-    ImageM: hydrateWhenVisible(() =>
-      import("@/components/ChapterPage/MobileModal/Images")
-    ),
-    Comments: hydrateWhenVisible(() =>
-      import("@/components/ChapterPage/MobileModal/Comments")
-    ),
     ReportModal: hydrateWhenVisible(() => import("./MobileUtility/Report")),
     FooterModal: hydrateWhenVisible(() => import("./MobileUtility/Footer")),
     HeaderModal: hydrateWhenVisible(() => import("./MobileUtility/Header"))
@@ -131,15 +125,35 @@ export default {
     ...mapGetters({
       fontStyle: "user/getFontFamily",
       theme: "user/getTheme",
-      modal: "chapter/getModalState",
       chapter: "chapter/getChapter",
       user: "auth/getUser",
       font: "user/getFontSize",
       next: "chapter/getNextChapter",
       prev: "chapter/getPrevChapter",
-      simpleList: "chapter/getSimpleList",
       auth: "auth/isAuthenticated"
-    })
+    }),
+    modalTransition() {
+      const transition = {
+        0: "",
+        1: "slide-up",
+        2: "slide-up",
+        3: "slide-left",
+        4: "slide-left",
+        5: "slide-right"
+      };
+      return transition[this.modal];
+    },
+    componentInstance() {
+      const instance = {
+        0: "",
+        1: () => import("./MobileModal/Theme"),
+        2: () => import("./MobileModal/Font"),
+        3: () => import("./MobileModal/Images"),
+        4: () => import("./MobileModal/Comments"),
+        5: () => import("./MobileModal/TOC")
+      };
+      return instance[this.modal];
+    }
   },
   data() {
     return {
@@ -153,6 +167,7 @@ export default {
       settingM: false,
       imageM: false,
       commentM: false,
+      modal: 0,
       loading: false,
       problem: false,
       height: "100%",
@@ -216,14 +231,7 @@ export default {
       this.$router.push({ path: `${this.prev.id}` });
     },
     tapNav: function(type) {
-      this.themeM = false;
-
-      this.commentM = false;
-      this.settingM = false;
-
-      this.imageM = false;
-      this.table = false;
-
+      this.modal = 0;
       this.navigation = !this.navigation;
     },
     closeNav: function() {
@@ -232,24 +240,9 @@ export default {
     goBack: function() {
       this.$router.push(`/books/${this.$route.params.id}`);
     },
+
     openModal: function(type) {
-      switch (type) {
-        case 1:
-          this.themeM = !this.themeM;
-          break;
-        case 2:
-          this.settingM = !this.settingM;
-          break;
-        case 3:
-          this.imageM = !this.imageM;
-          break;
-        case 4:
-          this.commentM = !this.commentM;
-          break;
-        default:
-          this.table = !this.table;
-          break;
-      }
+      this.modal = type;
       this.navigation = !this.navigation;
     },
     actionHandler: async function(type) {
@@ -279,23 +272,7 @@ export default {
       }
     },
     toggleModal(type) {
-      switch (type) {
-        case 1:
-          this.themeM = false;
-          break;
-        case 2:
-          this.settingM = false;
-          break;
-        case 3:
-          this.imageM = false;
-          break;
-        case 4:
-          this.commentM = false;
-          break;
-        default:
-          this.table = false;
-          break;
-      }
+      this.modal = 0;
       this.navigation = true;
     },
     purchase: async function() {

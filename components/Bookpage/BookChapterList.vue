@@ -201,7 +201,7 @@ export default {
       min-width: 100%;
       color: #2a2f45;
       &--disable {
-        display: none;
+        // display: none;
       }
       &:nth-child(4n - 1),
       &:nth-child(4n) {

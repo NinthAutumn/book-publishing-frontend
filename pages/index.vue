@@ -7,6 +7,7 @@
     <div class="head-banner">
       <BannerList></BannerList>
     </div>
+    <!-- <book-sekeleton></book-sekeleton> -->
     <nav-list v-if="$device.isMobile"></nav-list>
     <div class="main-books">
       <div class="flex-divider flex-row flex--between">
@@ -61,6 +62,7 @@ import {
 import { mapGetters, mapActions } from "vuex";
 export default {
   components: {
+    // BookSkeleton: () => import("@/components/Web/Cards/Skeleton/Book"),
     BooksList: hydrateWhenVisible(() => import("@/components/Web/Lists/Book")),
     ReviewList: hydrateWhenVisible(() =>
       import("@/components/Homepage/ReviewList")

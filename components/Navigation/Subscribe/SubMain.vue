@@ -10,7 +10,7 @@
         </div>
         <fa class="sub-modal__icon" icon="times" @click="toggle"></fa>
       </div>
-      <div class="sub-modal__content">
+      <div class="sub-modal__content" v-if="!loading">
         <transition name="slide-fade">
           <sub-list v-model="step" v-if="step===1"></sub-list>
           <PaymentMethod
@@ -29,6 +29,9 @@
           ></payment-form>
         </transition>
       </div>
+      <div class="sub-modal__loading" v-else>
+        <ripple-loader color="#556CD6" height="50rem"></ripple-loader>
+      </div>
     </div>
   </div>
 </template>
@@ -38,7 +41,8 @@ import { mapMutations, mapGetters } from "vuex";
 export default {
   data() {
     return {
-      step: 1
+      step: 1,
+      loading: false
     };
   },
   computed: {
@@ -56,7 +60,17 @@ export default {
     SubPaymentList: () => import("./SubPaymentList"),
     SubPaymentMethod: () => import("./SubPaymentMethod"),
     PaymentMethod: () => import("@/components/Navigation/Stripe/PaymentMethod"),
-    PaymentForm: () => import("@/components/Navigation/Stripe/PaymentFormCard")
+    PaymentForm: () => import("@/components/Navigation/Stripe/PaymentFormCard"),
+    RippleLoader: () => import("@/components/Web/Loaders/Ripple")
+  },
+  async mounted() {
+    this.loading = true;
+    await this.$store.dispatch("subscription/fetchSubscription");
+    await this.$store.dispatch("subscription/fetchSitePlans");
+    await this.$store.dispatch("stripe/fetchPaymentMethods", {
+      type: "card"
+    });
+    this.loading = false;
   }
 };
 </script>

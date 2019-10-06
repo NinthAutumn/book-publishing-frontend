@@ -20,16 +20,6 @@
                 <fa icon="plus"></fa>
               </div>
             </div>
-            <!-- <el-upload
-              class="avatar-uploader flex"
-              action
-              accept="image/*"
-              :show-file-list="false"
-              width="150"
-            >
-              <img v-if="imageUrl" :src="imageUrl" class="avatar" />
-              <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-            </el-upload>-->
           </div>
           <div class="divider flex flex-column" style="width:100%;">
             <label for="book-title">タイトル*</label>
@@ -150,7 +140,6 @@
           </transition>
           <v-checkbox label="有料作品にする" v-model="form.paid"></v-checkbox>
         </div>
-
         <div class="divider flex flex--right">
           <input
             type="submit"
@@ -167,7 +156,6 @@
 
 <script>
 import { mapGetters } from "vuex";
-// import webp from "webp-converter";
 import uuid from "uuid/v1";
 import imageResize from "@/static/js/imageresize.js";
 export default {
@@ -382,9 +370,7 @@ export default {
   .v-messages {
     display: none;
   }
-  .el-input__inner {
-    // height: 40px;
-  }
+
   .el-select {
     margin-bottom: 10px;
   }
@@ -421,21 +407,9 @@ export default {
     box-shadow: 0 2px 5px 0 rgba(60, 66, 87, 0.1),
       0 1px 1px 0 rgba(0, 0, 0, 0.07);
     &:hover {
-      -webkit-box-shadow: 0 13px 27px -5px rgba(50, 50, 93, 0.25),
-        0 8px 16px -8px rgba(0, 0, 0, 0.3),
-        0 -6px 16px -6px rgba(0, 0, 0, 0.025);
       box-shadow: 0 13px 27px -5px rgba(50, 50, 93, 0.25),
         0 8px 16px -8px rgba(0, 0, 0, 0.3),
         0 -6px 16px -6px rgba(0, 0, 0, 0.025);
-      -webkit-transition-property: color, background-color, -webkit-box-shadow,
-        -webkit-transform;
-      transition-property: color, background-color, -webkit-box-shadow,
-        -webkit-transform;
-      transition-property: color, background-color, box-shadow, transform;
-      transition-property: color, background-color, box-shadow, transform,
-        -webkit-box-shadow, -webkit-transform;
-      -webkit-transition-duration: 0.15s;
-      transition-duration: 0.15s;
     }
   }
   .avatar-uploader .el-upload:hover {
@@ -454,31 +428,6 @@ export default {
     width: 130px;
     height: 191px;
     display: block;
-  }
-}
-
-.vue-input-tag-wrapper {
-  border: 0px solid $primary !important;
-  border-bottom: 2px solid $primary !important;
-  -webkit-appearance: none !important;
-  font-size: 16px !important;
-  // height: 45px;
-  .input-tag {
-    border: 1px solid $secondary !important;
-    background-color: white !important;
-    border-radius: 100px !important;
-    padding: 3px 10px !important;
-  }
-  span {
-    font-size: 16px !important;
-    color: $secondary !important;
-  }
-  .remove::before {
-    color: $secondary !important;
-    font-size: 20px !important;
-  }
-  input {
-    font-size: 16px !important;
   }
 }
 
@@ -581,7 +530,7 @@ export default {
     color: #32325d;
     background-color: white;
     border: 1px solid transparent;
-    // border-radius: 4px;
+    border-radius: 0.4rem;
     box-shadow: 0 1px 3px 0 #e6ebf1;
     -webkit-transition: box-shadow 150ms ease;
     transition: box-shadow 150ms ease;
@@ -597,22 +546,9 @@ export default {
     &:focus,
     &:hover {
       outline: none;
-      -webkit-box-shadow: 0 13px 27px -5px rgba(50, 50, 93, 0.25),
-        0 8px 16px -8px rgba(0, 0, 0, 0.3),
-        0 -6px 16px -6px rgba(0, 0, 0, 0.025);
       box-shadow: 0 13px 27px -5px rgba(50, 50, 93, 0.25),
         0 8px 16px -8px rgba(0, 0, 0, 0.3),
         0 -6px 16px -6px rgba(0, 0, 0, 0.025);
-      -webkit-transition-property: color, background-color, -webkit-box-shadow,
-        -webkit-transform;
-      transition-property: color, background-color, -webkit-box-shadow,
-        -webkit-transform;
-      transition-property: color, background-color, box-shadow, transform;
-      transition-property: color, background-color, box-shadow, transform,
-        -webkit-box-shadow, -webkit-transform;
-      -webkit-transition-duration: 0.15s;
-      transition-duration: 0.15s;
-      transition: 300ms;
     }
   }
   span {
@@ -640,10 +576,9 @@ export default {
   }
 
   &__genre-list {
-    // margin-top: 0.5rem;
     display: flex;
     box-shadow: 0 1px 3px 0 #e6ebf1;
-    -webkit-transition: box-shadow 150ms ease;
+    border-radius: 0.4rem;
     transition: box-shadow 150ms ease;
     padding: 0.5rem;
     flex-wrap: wrap;
@@ -657,11 +592,9 @@ export default {
   &__container {
     background-color: rgb(245, 245, 245);
     padding: 50px;
-    // border-radius: 10px;
     box-shadow: 0 2px 5px 0 rgba(60, 66, 87, 0.1),
       0 1px 1px 0 rgba(0, 0, 0, 0.07);
     overflow: scroll;
-    // height: 80vh;
     width: 50rem;
   }
 
@@ -671,12 +604,10 @@ export default {
     color: #000000;
     font-weight: 400;
     text-align: center;
-    // mar
   }
   .form-error {
     font-size: 1.6rem;
     color: red;
-    // margin-bottom: 1rem;
   }
   &--input {
     line-height: 20px;

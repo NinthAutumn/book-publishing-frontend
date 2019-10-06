@@ -10,7 +10,7 @@
             icon="times"
           ></fa>
         </div>
-        <div class="product-modal__inside">
+        <div class="product-modal__inside" v-if="!loading">
           <p
             class="product-modal__description"
           >*クラウンコインとは本の話の購入・作者のサポート・広告のスキップなどができる nobles.jp ないの仮想通貨である</p>
@@ -57,6 +57,12 @@
               :skuId="id"
             ></payment-form-card>
           </transition>
+        </div>
+        <div class="product-modal__loading" v-else>
+          <div class="lds-ripple">
+            <div></div>
+            <div></div>
+          </div>
         </div>
       </div>
     </div>
@@ -150,6 +156,14 @@ export default {
       color: black;
     }
     background-color: #fff;
+    #{$self}__loading {
+      color: #6b7c93;
+      background-color: #f7f8f9;
+      height: 50rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
     #{$self}__container {
       min-height: 55rem;
       // border-radius: 0.4rem;
@@ -257,6 +271,38 @@ export default {
         transition: box-shadow 300ms, background-color 300ms;
       }
     }
+  }
+}
+.lds-ripple {
+  display: inline-block;
+  position: relative;
+  width: 64px;
+  height: 64px;
+}
+.lds-ripple div {
+  position: absolute;
+  border: 4px solid $secondary;
+  opacity: 1;
+  border-radius: 50%;
+  animation: lds-ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+}
+.lds-ripple div:nth-child(2) {
+  animation-delay: -0.5s;
+}
+@keyframes lds-ripple {
+  0% {
+    top: 28px;
+    left: 28px;
+    width: 0;
+    height: 0;
+    opacity: 1;
+  }
+  100% {
+    top: -1px;
+    left: -1px;
+    width: 58px;
+    height: 58px;
+    opacity: 0;
   }
 }
 </style>

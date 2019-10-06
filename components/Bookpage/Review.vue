@@ -30,11 +30,6 @@
       <div ref="review" class="reviews-content-text flex flex-column flex--between">
         <div v-if="!readMore" v-html="truncate(review.content, limit-1)"></div>
         <div v-if="readMore" v-html="review.content"></div>
-        <!-- <div
-          class="reviews-content-text--html"
-          v-html="review.content"
-          :class="{readmore: readMore}"
-        ></div>-->
         <div v-if="review.content.length > limit" class="buts">
           <a @click="toggleCollapse" v-if="!readMore" class="reviews-content-text-more">詳細 ></a>
           <a @click="toggleCollapse" v-else class="reviews-content-text-more" v-text="'< 一部を表示'"></a>
@@ -73,39 +68,13 @@
           <div v-else>
             <span @click.stop="toggleReport">報告</span>
             <transition name="grow-shrink">
-              <div class="report-review dialog dialog__container" v-if="problem">
-                <div class="report-review__container dialog__content">
-                  <form @submit.prevent class="report-review__form flex-column">
-                    <label class="flex-row flex--between flex--align">
-                      報告の理由
-                      <span>
-                        <fa @click="toggleReport" class="report-review__close" icon="times"></fa>
-                      </span>
-                    </label>
-                    <v-radio-group v-model="report.problem">
-                      <v-radio v-for="n in problems" :key="n" :label="n" :value="n"></v-radio>
-                    </v-radio-group>
-                    <textarea
-                      placeholder="詳しく報告の理由"
-                      v-if="report.problem === 'その他'"
-                      v-model="report.moreInfo"
-                      name="problem"
-                      id
-                    ></textarea>
-                    <div class="flex-divider flex-row report-review__button">
-                      <button
-                        class="report-review__submit report-review__submit--close"
-                        @click="toggleReport"
-                      >キャンセル</button>
-                      <button
-                        class="report-review__submit"
-                        v-loading="loading"
-                        @click="reportReview"
-                      >報告</button>
-                    </div>
-                  </form>
-                </div>
-              </div>
+              <report-dialog
+                type="review"
+                :type_id="review.id"
+                v-if="problem"
+                :problems="problems"
+                @toggleDialog="toggleReport"
+              ></report-dialog>
             </transition>
           </div>
         </div>
@@ -119,6 +88,7 @@
 // import ArrowUp from "~/assets/svg/arrow-up.svg";
 import { toNumber } from "lodash";
 import { mapGetters } from "vuex";
+// import {}
 export default {
   props: {
     review: Object
@@ -148,14 +118,12 @@ export default {
         "児童虐待",
         "その他"
       ],
-      problem: false,
-      report: {
-        problem: "",
-        moreInfo: ""
-      }
+      problem: false
     };
   },
-  components: {},
+  components: {
+    ReportDialog: () => import("@/components/Web/Modals/Report")
+  },
   methods: {
     toggleCollapse() {
       this.readMore = !this.readMore;
@@ -163,26 +131,7 @@ export default {
     toggleReport: function() {
       this.problem = !this.problem;
     },
-    reportReview: async function() {
-      const report = {
-        type: "review",
-        type_id: this.review.id,
-        problem: this.report.problem,
-        more_info: this.report.moreInfo
-      };
-      try {
-        this.loading = true;
-        await this.$store.dispatch("report/postReport", { report });
-        this.loading = false;
-        this.problem = !this.problem;
-        return this.$toast.show("報告に成功しました", {
-          theme: "toasted-primary",
-          position: "top-right",
-          duration: 1000,
-          icon: "check_circle"
-        });
-      } catch (error) {}
-    },
+
     async likedReview() {
       if (this.liked) {
         await this.$store.dispatch("review/likeReview", {
@@ -516,66 +465,5 @@ export default {
     }
   }
   transition: 300ms;
-}
-.report-review {
-  $self: &;
-
-  #{$self}__container {
-    border-radius: 2rem;
-    // bottom: ;
-    #{$self}__form {
-      font-size: 1.8rem;
-      span {
-        width: 3rem;
-        height: 3rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 10rem;
-        background-color: #e3e8ee;
-      }
-      #{$self}__close {
-        font-size: 1.6rem;
-        color: #4f566b;
-      }
-      label {
-        font-size: 1.8rem;
-      }
-      textarea {
-        font-size: 1.6rem;
-        padding: 1rem;
-        box-sizing: border-box;
-        border-radius: 1rem;
-        margin-bottom: 2rem;
-        box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11),
-          0 1px 3px rgba(0, 0, 0, 0.08);
-      }
-      #{$self}__button {
-        width: 100%;
-        height: 3.5rem;
-        border-radius: 1rem;
-        justify-content: space-between;
-        box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11),
-          0 1px 3px rgba(0, 0, 0, 0.08);
-        overflow: hidden;
-      }
-      #{$self}__submit {
-        font-size: 1.6rem;
-        // align-self: flex-end;
-        // padding: 0 2rem;
-        width: 50%;
-        background-color: #566cd6;
-        color: white;
-
-        &--close {
-          background-color: white;
-          color: #566cd6;
-          // align-self: flex-start;
-        }
-      }
-    }
-
-    // background-color:;
-  }
 }
 </style>

@@ -16,7 +16,7 @@
       ></chapter-header>
     </transition>
     <adsbygoogle
-      v-if="(!user.status||!user)&&chapter.locked"
+      v-if="(!user.status||!user)&&!chapter.locked"
       :ad-layout="'in-article'"
       :ad-format="'fluid'"
     />

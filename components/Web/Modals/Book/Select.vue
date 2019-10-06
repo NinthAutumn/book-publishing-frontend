@@ -79,6 +79,10 @@ export default {
       align-items: center;
       justify-content: center;
       padding: 0.5rem 1rem;
+      color: rgb(104, 104, 104);
+      &:hover {
+        color: black;
+      }
     }
   }
 }

@@ -51,6 +51,69 @@ export default {
       id: route.params.id
     });
   },
+  head() {
+    return {
+      title: this.book.title,
+      meta: [
+        {
+          name: "description",
+          content: this.book.synopsis
+        },
+        {
+          name: "title",
+          content: this.book.title
+        },
+        {
+          property: "og:type",
+          content: "book"
+        },
+        {
+          property: "og:url",
+          content: `https://nobles.jp/books/${this.$route.params.id}`
+        },
+        {
+          property: "og:title",
+          content: this.book.title
+        },
+        {
+          property: "og:description",
+          content: this.book.synopsis
+        },
+        {
+          property: "og:image",
+          content: this.book.cover
+        },
+        {
+          property: "og:site_name",
+          content: "ノーブル"
+        },
+        {
+          property: "og:locale",
+          content: "ja_JP"
+        },
+        {
+          name: "twitter:card",
+          content: "summary"
+        },
+        {
+          name: "twitter:site",
+          content: "@NoblesJp"
+        },
+        {
+          name: "twitter:title",
+          content: this.book.title
+        },
+        {
+          name: "twitter:description",
+          content: this.book.synopsis
+        },
+        {
+          name: "twitter:url",
+          content: `https://nobles.jp/books/${this.$route.params.id}`
+        }
+      ]
+    };
+  },
   async mounted() {},
   computed: {
     ...mapGetters({
@@ -188,17 +251,6 @@ export default {
     this.tabs.selected = {
       width: `${this.tabs.review}px`,
       left: left
-    };
-  },
-  head() {
-    return {
-      title: this.book.title,
-      meta: [
-        {
-          name: "description",
-          content: this.book.synopsis
-        }
-      ]
     };
   }
 };

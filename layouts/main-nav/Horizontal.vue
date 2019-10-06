@@ -144,11 +144,7 @@ export default {
       this.head = `ノーブル　(${this.notificationCount})`;
     }
   },
-  head() {
-    return {
-      title: this.head
-    };
-  },
+
   methods: {
     ...mapActions({
       fetchNotificationCount: "user/fetchCommentNotificationsCount",

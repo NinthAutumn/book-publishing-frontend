@@ -112,7 +112,8 @@ export default {
       lockTimer: false,
       touchduration: 500,
       selected: false,
-      modal: false
+      modal: false,
+      isVisible: false
     };
   },
   components: {
@@ -138,6 +139,7 @@ export default {
         this.$emit("removeBook", { bookId: this.book.book_id });
       }
     },
+
     onlongtouch() {
       this.$emit("editModeToggle", this.book.id);
     },
@@ -268,6 +270,10 @@ export default {
     margin-top: 0.5rem;
     #{$self}__menu {
       font-size: 1.4rem;
+      color: rgb(240, 240, 240);
+      &:hover {
+        color: grey;
+      }
     }
   }
   &__title {

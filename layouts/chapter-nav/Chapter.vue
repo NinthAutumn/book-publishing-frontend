@@ -326,22 +326,20 @@ export default {
   transition: 300ms;
   min-height: 100vh;
   // position: relative !important;
-  margin-top: 50px;
-  margin-right: 50px;
+  margin-top: 5rem;
+  margin-right: 5rem;
   background-color: #dae0e6;
   position: relative;
   &--mobile {
+    margin-top: 4rem;
     margin-right: 0;
   }
-  // .chapter-container
   .mobile-navigation--placeholder {
     width: 50%;
   }
   .mobile-navigation {
     display: flex;
     align-items: center;
-
-    // flex-direction: column;
     font-size: 2rem;
     padding: 1.5rem 1.5rem;
     width: 50%;

@@ -112,10 +112,7 @@ module.exports = {
   plugins: [
     '@/plugins/element-ui',
     '@/plugins/intercept',
-    {
-      src: '~plugins/vue-star-rating',
-      ssr: false
-    },
+
     {
       src: '~plugins/swiper',
       ssr: false
@@ -148,6 +145,7 @@ module.exports = {
       src: '@/plugins/pull-to',
       ssr: false
     },
+
     {
       src: '@/plugins/datePicker',
       ssr: false

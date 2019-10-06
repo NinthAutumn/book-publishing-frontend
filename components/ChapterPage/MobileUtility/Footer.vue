@@ -10,7 +10,7 @@
       </div>
     </div>
     <div class="mobile-chapter__options">
-      <div class="mobile-chapter__option" v-ripple @click.stop="$emit('modalChange')">
+      <div class="mobile-chapter__option" v-ripple @click.stop="$emit('modalChange',5)">
         <fa icon="list"></fa>
       </div>
       <div class="mobile-chapter__option" v-ripple @click.stop="$emit('modalChange',1)">

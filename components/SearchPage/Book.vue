@@ -78,9 +78,10 @@ export default {
   $self: &;
   display: flex;
 
-  border-bottom: 1px solid grey;
-  padding: 1rem;
+  border-bottom: 1px solid rgb(243, 243, 243);
+  margin: 1rem;
   position: relative;
+  padding-bottom: 1rem;
   &__cover {
     margin-right: 2rem;
     #{$self}__image {

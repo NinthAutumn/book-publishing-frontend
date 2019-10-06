@@ -29,7 +29,7 @@ export default {
 <style lang="scss">
 .mc-nav {
   $self: &;
-  height: 5rem;
+  height: 4rem;
   position: fixed;
   top: 0;
   left: 0;
@@ -52,10 +52,9 @@ export default {
     width: 100%;
     height: 100%;
     #{$self}__back {
-      font-size: 2.5rem;
-      height: 40px;
-      width: 40px !important;
-      min-width: 40px;
+      font-size: 1.6rem;
+      height: 3rem;
+      width: 3rem !important;
       display: flex;
       align-items: center;
       justify-content: center;

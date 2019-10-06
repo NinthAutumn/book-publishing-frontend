@@ -61,12 +61,7 @@ export default {
       this.$emit("input", 2);
     }
   },
-  async mounted() {
-    await this.$store.dispatch("subscription/fetchSitePlans");
-    await this.$store.dispatch("stripe/fetchPaymentMethods", {
-      type: "card"
-    });
-  }
+  async mounted() {}
 };
 </script>
 
