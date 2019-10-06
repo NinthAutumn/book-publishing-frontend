@@ -22,7 +22,7 @@
             class="report-dialog__submit report-dialog__submit--close"
             @click="$emit('toggleDialog')"
           >キャンセル</button>
-          <button class="report-dialog__submit" v-loading="loading" @click="reportReview">報告</button>
+          <button class="report-dialog__submit" v-loading="loading" @click="reportHandler">報告</button>
         </div>
       </form>
     </div>
@@ -45,7 +45,7 @@ export default {
     };
   },
   methods: {
-    async reportReview() {
+    async reportHandler() {
       const report = {
         type: this.type,
         type_id: this.type_id,

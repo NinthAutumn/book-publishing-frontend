@@ -1,12 +1,8 @@
 <template>
   <div class="mbp-summary">
     <div class="mbp-summary__container">
-      <div class="mbp-summary__genres">
-        <div class="mbp-summary__title">ジャンル</div>
-        <div class="mbp-summary__categories">
-          <div class="mbp-summary__category" v-for="item in genres" :key="item.id">{{item}}</div>
-        </div>
-      </div>
+      <book-category :categories="genres" title="ジャンル"></book-category>
+
       <div class="mbp-summary__content">
         <div class="mbp-summary__title">あらすじ</div>
         <div class="mbp-summary__synopsis" v-text="synopsis"></div>
@@ -15,12 +11,7 @@
         詳細
         <fa class="mbp-summary__nav-icon" icon="caret-down"></fa>
       </div>
-      <div class="mbp-summary__extra" v-if="extra">
-        <div class="mbp-summary__title">タグ</div>
-        <div class="mbp-summary__categories">
-          <div class="mbp-summary__category" v-for="tag in tags" :key="tag.id">{{tag}}</div>
-        </div>
-      </div>
+      <book-category :categories="tags" title="タグ" v-if="extra"></book-category>
     </div>
   </div>
 </template>
@@ -41,6 +32,9 @@ export default {
       genres: "book/getBookGenres",
       tags: "book/getBookTags"
     })
+  },
+  components: {
+    BookCategory: () => import("@/components/Mobile/Pills/BookCategory")
   },
   async mounted() {
     await this.$store.dispatch(

@@ -61,6 +61,9 @@ export const mutations = {
     comments.forEach((comment) => {
       state.comments.push(comment)
     })
+  },
+  SHIFT_COMMENT(state, comment) {
+    state.comments.unshift(comment)
   }
 }
 
@@ -116,7 +119,11 @@ export const actions = {
         return Promise.resolve(data)
       }
       // let comment = {}
-      commit('PUSH_COMMENT', data, parentId)
+      if (parentId) {
+        commit('PUSH_COMMENT', data, parentId)
+      } else {
+        commit('SHIFT_COMMENT', data)
+      }
       return Promise.resolve({
         error: null
       })

@@ -9,7 +9,7 @@
         <fa icon="comments" class="comment-header-icon"></fa>
         <h3 class="comment-header" style>コメント欄</h3>
       </div>
-      <comment-form></comment-form>
+      <comment-form :theme="theme"></comment-form>
       <div class="comment-unordered-list" v-if="comments.length > 0">
         <div class="comment-list__select flex-row flex--align" v-if="comments.length > 0">
           <Select
@@ -23,9 +23,24 @@
           ></Select>
         </div>
         <li v-for="(comment) in comments" :key="comment.id">
-          <Comment :comment="comment" :depth="0" :children="comment.children"></Comment>
+          <Comment
+            @toggleReport="toggleReportModal"
+            :comment="comment"
+            :theme="theme"
+            :auth="auth"
+            :author_id="chapter.author_id"
+            :depth="0"
+            :children="comment.children"
+          ></Comment>
         </li>
       </div>
+      <report-form
+        @toggleDialog="toggleReportModal"
+        :type_id="reportedCommentId"
+        :problems="problems"
+        type="comment"
+        v-if="report"
+      ></report-form>
     </div>
   </div>
 </template>
@@ -38,13 +53,18 @@ export default {
   computed: {
     ...mapGetters({
       comments: "comment/getComments",
-      auth: "auth/isAuthenticated"
+      auth: "auth/isAuthenticated",
+      chapter: "chapter/getChapter",
+      theme: "user/getTheme"
     })
   },
   components: {
-    Comment: () => import("@/components/ChapterPage/Comment"),
+    Comment: () => import("@/components/Web/Cards/Comment"),
     Select: hydrateOnInteraction(() => import("@/components/All/Select")),
-    CommentForm: hydrateOnInteraction(() => import("./CommentForm"))
+    CommentForm: hydrateOnInteraction(() =>
+      import("@/components/Web/Forms/Comment")
+    ),
+    ReportForm: () => import("@/components/Web/Modals/Report")
   },
 
   data() {
@@ -54,9 +74,18 @@ export default {
         { key: "最新順", value: 1 },
         { key: "問題的順", value: 2 }
       ],
+      problems: [
+        "差別的または攻撃的な内容",
+        "テロリズムの助長",
+        "スパムや誤解を招く話",
+        "児童虐待",
+        "広告",
+        "その他"
+      ],
       sort_by: 0,
-
-      page: 2
+      report: false,
+      page: 2,
+      reportedCommentId: ""
     };
   },
   watch: {
@@ -78,11 +107,26 @@ export default {
       limit: 10,
       direction: 0
     });
+    if (this.$route.query.comment) {
+      let comment = document.getElementById(`${this.$route.query.comment}`);
+      console.log(comment);
+      const scroll = setTimeout(() => {
+        if (comment) {
+          comment.scrollIntoView();
+          clearInterval(scroll);
+        }
+        comment = document.getElementById(`${this.$route.query.comment}`);
+      }, 100);
+    }
   },
   methods: {
     ...mapActions({
       fetchComments: "comment/fetchCommentList"
-    })
+    }),
+    toggleReportModal(id) {
+      this.reportedCommentId = id;
+      this.report = !this.report;
+    }
   }
 };
 </script>
@@ -92,40 +136,7 @@ export default {
   .select-component__name {
     color: black;
   }
-  .comment-form__submit {
-    // align-items:lef/
-    width: 10rem;
-    line-height: 0;
-    // text-align: center;
-    height: 3.5rem;
-    border-radius: 0;
-    box-sizing: border-box;
-    font-size: 1.2rem !important;
-    margin-top: 0;
-    background-color: #32325d;
-    color: white;
-    transition: 300ms;
-    border-radius: 0.4rem;
-    // margin-top: 3rem;
-    padding: 1rem;
-    box-shadow: 0px 2px 3px 0px #f5e2f5;
-    box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2),
-      0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12) !important;
-    transition: 200ms;
-    &--cancel {
-      margin-right: 1rem;
-      background-color: #fff;
-      color: #32325d;
-    }
-    &:hover {
-      color: #32325d;
-      background-color: white;
-      transition: 300ms;
 
-      user-select: none;
-      cursor: pointer;
-    }
-  }
   .comment-header-icon {
     font-size: 2rem;
     color: $secondary;

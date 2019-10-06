@@ -21,7 +21,6 @@ export default {
   },
   data() {
     return {
-      // slidesNumber: 7,
       swiperMobile: {
         slidesPerView: 3.5,
         spaceBetween: 5,
@@ -30,9 +29,7 @@ export default {
           invert: true,
           sensitivity: 1,
           forceToAxis: true
-        },
-        on: {},
-        breakpoints: {}
+        }
       },
       swiperOption: {
         slidesPerView: "auto",
@@ -45,9 +42,7 @@ export default {
         },
         navigation: {
           nextEl: ".swiper-button-next"
-        },
-        on: {},
-        breakpoints: {}
+        }
       }
     };
   },

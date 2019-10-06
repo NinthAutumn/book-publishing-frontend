@@ -9,7 +9,7 @@
         >
           <v-img
             :lazy-src="cover"
-            height="40vh"
+            :aspect-ratio="1/1.5"
             class="pmb-header__img"
             width="100vw"
             v-if="showImage"
@@ -17,21 +17,25 @@
           ></v-img>
         </transition>
       </div>
-      <div class="pmb-header__title" v-text="book.title"></div>
-      <div class="pmb-header__author">{{`by ${book.pen_name} ・ ${status}`}}</div>
-      <nav class="pmb-header__nav">
-        <div
-          class="pmb-header__nav-item"
-          :class="`pmb-header__nav-item--${key}`"
-          v-for="(value,key) in nav"
-          :key="key"
-          v-ripple
-          @click.stop="navHandler(key)"
-        >
-          <fa class="pmb-header__nav-icon" :icon="value.icon"></fa>
-          <div class="pmb-header__nav-header" v-text="value.title"></div>
+      <transition name="slide-up" appear>
+        <div class="pmb-header__main">
+          <div class="pmb-header__title" v-text="book.title"></div>
+          <div class="pmb-header__author">{{`by ${book.pen_name} ・ ${status}`}}</div>
+          <nav class="pmb-header__nav">
+            <div
+              class="pmb-header__nav-item"
+              :class="`pmb-header__nav-item--${key}`"
+              v-for="(value,key) in nav"
+              :key="key"
+              v-ripple
+              @click.stop="navHandler(key)"
+            >
+              <fa class="pmb-header__nav-icon" :icon="value.icon"></fa>
+              <div class="pmb-header__nav-header" v-text="value.title"></div>
+            </div>
+          </nav>
         </div>
-      </nav>
+      </transition>
     </div>
     <transition name="slide-up">
       <toc-modal :book="book" v-if="$route.query.toc"></toc-modal>
@@ -65,7 +69,7 @@ export default {
   computed: {
     ...mapGetters({
       chapter_count: "book/getBookChapterCount",
-      auth: "auth/getUser"
+      auth: "auth/isAuthenticated"
     }),
     status() {
       let status_types = {
@@ -156,7 +160,7 @@ export default {
         type: "bookmark",
         bookId: this.book.id
       };
-      if (this.$store.state.loggedIn === false) {
+      if (!this.auth) {
         this.$toast.error(
           `ブックマークをするにはログインかアカウント作成が必要です`
         );
@@ -182,6 +186,16 @@ export default {
     margin-bottom: 1rem;
     border-radius: 0.5rem;
     #{$self}__img {
+    }
+    position: relative;
+    #{$self}__main {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      max-width: 100%;
+      background-color: rgba(255, 255, 255, 0.952);
+      border-top-left-radius: 0.5rem;
+      border-top-right-radius: 0.5rem;
     }
     #{$self}__title {
       padding: 0 1rem;

@@ -387,47 +387,6 @@ export default {
     #{$self}__footer {
     }
   }
-  &__top {
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 5rem;
-    background-color: #fff;
-    z-index: 10000;
-    width: 100vw;
-    &--black {
-      background-color: #19191a;
-      color: #949698;
-    }
-    &--tan {
-      background-color: #e9e1b8;
-    }
-    padding: 0 1rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    #{$self}__navigation {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 2.5rem;
-      height: 4rem;
-      width: 4rem;
-    }
-    #{$self}__meta {
-      display: flex;
-      align-items: center;
-      font-size: 2rem;
-      #{$self}__select {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 2rem;
-        height: 4rem;
-        width: 4rem;
-      }
-    }
-  }
 
   &__actions {
     #{$self}__action {
