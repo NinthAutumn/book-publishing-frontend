@@ -336,7 +336,7 @@ export default {
   }
   &__wrapper {
     height: 100%;
-
+    user-select: none;
     #{$self}__container {
       display: inline-block;
       max-width: 100%;

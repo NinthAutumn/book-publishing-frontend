@@ -6,10 +6,18 @@
       </v-avatar>
     </div>
     <div class="mobile-comment__meta">
-      <div
-        class="mobile-comment__username"
-        v-text="comment.user_id === chapter.author_id ? comment.pen_name : comment.username"
-      ></div>
+      <div class="flex-divider flex-row flex--align mobile-comment__user">
+        <div
+          class="mobile-comment__username"
+          v-text="comment.user_id === chapter.author_id ? comment.pen_name : comment.username"
+        ></div>
+        <fa
+          class="mobile-comment__badge"
+          icon="feather-alt"
+          v-if="comment.user_id===chapter.author_id"
+        ></fa>
+      </div>
+
       <div
         class="mobile-comment__content"
         v-ripple
@@ -55,6 +63,7 @@ export default {
     comment: Object,
     chapter: Object
   },
+
   data() {
     return {
       current: this.comment.content,
@@ -136,20 +145,27 @@ export default {
       // align-items: center;
       margin-bottom: 0.75rem;
       flex-direction: column;
+      #{$self}__badge {
+        color: #3ecf8e;
+        font-size: 1.6rem;
+      }
+      #{$self}__user {
+      }
       #{$self}__username {
+        margin-right: 1rem;
         font-size: 1.6rem;
         font-weight: bold;
-        margin-bottom: 1rem;
       }
       #{$self}__text {
         font-size: 1.8rem;
-        // margin-bottom: 0.75rem;
+        margin-bottom: 0.75rem;
       }
       #{$self}__parent {
         border: 0.3px solid;
         margin-top: 0.75rem;
         border-radius: 0.5rem;
         padding: 0.5rem;
+        border-color: rgb(245, 245, 245);
         #{$self}__parent-user {
           font-size: 1.5rem;
           font-weight: bold;
