@@ -385,6 +385,8 @@ export default {
     box-shadow: none;
     border-bottom: 1px solid black;
     color: rgb(215, 218, 220);
+    box-shadow: 0 2px 5px 0 rgba(238, 238, 238, 0.1),
+      0 1px 1px 0 rgba(241, 241, 241, 0.07);
     .inbox-icon {
       color: rgb(215, 218, 220);
       &__count {
@@ -411,9 +413,7 @@ export default {
   height: 50px;
   width: 100%;
   position: fixed;
-  -webkit-box-shadow: 0px 2px 3px 0px rgba(245, 226, 245, 1);
-  -moz-box-shadow: 0px 2px 3px 0px rgba(245, 226, 245, 1);
-  box-shadow: 0px 2px 3px 0px rgba(245, 226, 245, 1);
+  box-shadow: 0 2px 5px 0 rgba(60, 66, 87, 0.1), 0 1px 1px 0 rgba(0, 0, 0, 0.07);
   top: 0;
   left: 0;
   background-color: white;

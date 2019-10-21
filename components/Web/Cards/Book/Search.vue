@@ -78,6 +78,11 @@ export default {
   }
   $self: &;
   &__container {
+    &:hover {
+      #{$self}__menu {
+        visibility: visible !important;
+      }
+    }
     .v-icon {
       padding: 0 !important;
     }
@@ -117,6 +122,7 @@ export default {
       #{$self}__menu {
         position: relative;
         font-size: 1.8rem;
+        visibility: hidden;
         color: rgb(182, 182, 182);
         &:hover {
           color: grey;
