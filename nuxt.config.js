@@ -338,12 +338,6 @@ module.exports = {
         name: true
       }
     },
-    filenames: {
-      // img: ({
-      //   isDev
-      // }) => isDev ? '[path][name].[ext]' : 'img/[hash:8].[ext]',
-
-    },
     extend(config, ctx) {
       config.module.rules.unshift({
         test: /\.(png|jpe?g|gif)$/,
@@ -379,7 +373,7 @@ module.exports = {
 
     extractCSS: true,
     styleResources: {
-      sass: ['./assets/css/abstracts/main.scss']
+      scss: ['./assets/css/abstracts/main.scss']
     },
     transpile: ['vue-clamp', 'resize-detector', 'lodash-es'],
     postcss: {

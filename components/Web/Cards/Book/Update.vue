@@ -95,6 +95,9 @@ export default {
   $self: &;
   &:hover {
     cursor: pointer;
+    #{$self}__menu {
+      visibility: visible !important;
+    }
   }
   display: flex;
 
@@ -135,6 +138,7 @@ export default {
     width: 100%;
 
     #{$self}__menu {
+      visibility: hidden;
       font-size: 1.6rem;
       position: relative;
       color: rgb(182, 182, 182);

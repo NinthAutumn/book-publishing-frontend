@@ -24,10 +24,10 @@ export default {
       list: {
         reading: {
           title: "リストに保存"
-        },
-        bookmark: {
-          title: "ブックマーク"
         }
+        // bookmark: {
+        //   title: "ブックマーク"
+        // }
       }
     };
   },
