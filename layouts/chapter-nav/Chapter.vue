@@ -3,18 +3,8 @@
     class="chapter-page"
     :class="{'chapter-page--black': theme === 'black','chapter-page--default': theme === 'default','chapter-page--ruby': theme === 'ruby','chapter-page--tan': theme === 'tan','chapter-page--sapphire': theme === 'sapphire', 'chapter-page--mobile': $device.isMobile}"
   >
-    <div class="user-status" v-if="auth">
-      <div v-if="!user.verified">
-        <transition>
-          <div
-            class="user-status__banner"
-            :class="{'user-status__banner--mobile':$device.isMobile}"
-          >
-            <div class="user-status__text" v-text="`${user.email}　の　確認ができていません。`"></div>
-            <div class="user-status__send" @click="resendHandler">確認メールを再送信する</div>
-          </div>
-        </transition>
-      </div>
+    <div v-if="auth">
+      <component :is="verifyComponent" :user="user" />
     </div>
     <component :is="mobileHorizontalNav" />
     <!-- <Horizontal v-if="!$device.isMobile"></Horizontal>
@@ -155,6 +145,9 @@ export default {
     mobileHorizontalNav() {
       const name = this.$device.isMobile ? "MobileHorizontal" : "Horizontal";
       return () => import(`./${name}`);
+    },
+    verifyComponent() {
+      return () => import("@/components/Web/Modals/Auth/Verify");
     }
   },
   methods: {

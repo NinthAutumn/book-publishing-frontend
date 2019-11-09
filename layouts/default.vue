@@ -8,18 +8,8 @@
       <AuthModal v-if="loginState"></AuthModal>
     </transition>
 
-    <div class="user-status" v-if="auth">
-      <div v-if="!user.verified">
-        <transition>
-          <div
-            class="user-status__banner"
-            :class="{'user-status__banner--mobile':$device.isMobile}"
-          >
-            <div class="user-status__text" v-text="`${user.email}　の　確認ができていません。`"></div>
-            <div class="user-status__send" @click="resendHandler">確認メールを再送信する</div>
-          </div>
-        </transition>
-      </div>
+    <div v-if="auth">
+      <component :is="verifyComponent" :user="user" />
     </div>
     <component :is="navInstance" />
     <nuxt v-if="$device.isMobile" class="mobile-nuxt"></nuxt>
@@ -69,20 +59,12 @@ export default {
         ? "mobile-nav/Bundled"
         : "main-nav/Bundled";
       return () => import(`./${name}`);
+    },
+    verifyComponent() {
+      return () => import("@/components/Web/Modals/Auth/Verify");
     }
   },
-  methods: {
-    async resendHandler() {
-      try {
-        await this.$store.dispatch("auth/resendEmail", {
-          email: this.user.email
-        });
-        return this.$toast.success("Eメールがまた送られました");
-      } catch (error) {
-        return this.$toast.error(error);
-      }
-    }
-  }
+  methods: {}
 };
 </script>
 
@@ -114,46 +96,7 @@ export default {
   font-size: 1.4rem;
   padding: 0.5rem 2rem;
 }
-.user-status {
-  $self: &;
-  &__banner {
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    // height: 3rem;
-    position: fixed;
-    background-color: rgb(255, 72, 72);
-    z-index: 1000000;
-    text-align: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0.5rem 0;
-    #{$self}__text {
-      font-size: 1.4rem;
-      color: white;
-      margin-right: 1rem;
-    }
-    #{$self}__send {
-      font-size: 1.3rem;
-      color: white;
-      background-color: $secondary;
-      border-radius: 0.5rem;
-      padding: 0.5rem 2rem;
-      width: 20rem;
-    }
-    &--mobile {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      #{$self}__text {
-        margin: 0;
-        font-size: 1rem;
-      }
-    }
-  }
-}
+
 .mobile-nuxt {
   padding-top: 5.2rem !important;
 }
@@ -162,7 +105,7 @@ export default {
 }
 
 .nuxt-pages .menu-active {
-  margin-left:220px;
+  margin-left: 220px;
   margin-top: 50px;
   // padding: 10px 50px;
   position: relative;
