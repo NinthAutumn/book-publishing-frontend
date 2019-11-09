@@ -159,6 +159,9 @@ export default {
   &:hover {
     user-select: none;
     cursor: pointer;
+    #{$self}__menu {
+      visibility: visible !important;
+    }
   }
   &__container {
     position: relative;
@@ -271,6 +274,7 @@ export default {
     #{$self}__menu {
       font-size: 1.4rem;
       color: rgb(240, 240, 240);
+      visibility: hidden;
       &:hover {
         color: grey;
       }
