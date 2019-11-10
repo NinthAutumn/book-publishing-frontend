@@ -1,27 +1,11 @@
 <template>
   <nav class="right-vertical-nav">
     <transition name="chapter-modal">
-      <div
-        class="chapters-modal"
-        v-if="modal"
-        :class="{'chapters-modal--black':theme === 'black','chapters-modal--tan':theme === 'tan','chapters-modal--ruby':theme === 'ruby','chapters-modal--default':theme === 'default','chapters-modal--sapphire':theme === 'sapphire'}"
-      >
-        <div class="chapters-modal__author-profile" v-if="modal === 'profile'">
-          <Profile></Profile>
-        </div>
-        <div class="chapters-modal__images" v-else-if="modal === 'image'">
-          <Images :drawings="drawings"></Images>
-        </div>
-        <div class="chapters-modal__table-of-content" v-else-if="modal === 'table'">
-          <TOC></TOC>
-        </div>
-        <div class="chapters-modal__user-setting" v-else-if="modal === 'setting'">
-          <Setting></Setting>
-        </div>
+      <div class="chapters-modal" v-if="modal">
+        <component :is="modalComponent" :drawings="drawings" />
       </div>
     </transition>
-    <div class="comments-modal"></div>
-    <div class="nav-container flex flex-column flex--align flex--center">
+    <div class="nav-container flex-column flex--align flex--center">
       <div class="nav-icons">
         <div class="nav-icon">
           <fa class="nav-icon__item nav-icon__item--author" icon="user-ninja"></fa>
@@ -30,14 +14,9 @@
           <fa class="nav-icon__item nav-icon__item--image" icon="image"></fa>
           <span class="image-count" v-if="drawings" v-text="drawings.length"></span>
         </div>
-        <!-- ユーザーの意見を聞いて　アップデートする -->
-        <!-- <div class="nav-icon" @click="comments">
-          <fa class="nav-icon__item nav-icon__item--comment" icon="comment"></fa>
-        </div>-->
         <div class="nav-icon" @click="table">
           <fa class="nav-icon__item" icon="list-ul"></fa>
         </div>
-
         <div class="nav-icon" @click="setting">
           <fa class="nav-icon__item nav-icon__item--cog" icon="cog"></fa>
         </div>
@@ -60,21 +39,18 @@ export default {
     },
     ...mapGetters({
       drawings: "drawing/getChapterDrawings"
-    })
+    }),
+    modalComponent() {
+      if (!this.modal) return;
+      const types = {
+        profile: "Modal/Profile",
+        setting: "Modal/Setting",
+        table: "Modal/TOC",
+        image: "Modal/Images"
+      };
+      return () => import(`@/components/ChapterPage/${types[this.modal]}`);
+    }
   },
-  components: {
-    TOC: hydrateWhenVisible(() => import("@/components/ChapterPage/Modal/TOC")),
-    Profile: hydrateWhenVisible(() =>
-      import("@/components/ChapterPage/Modal/Profile")
-    ),
-    Setting: hydrateWhenVisible(() =>
-      import("@/components/ChapterPage/Modal/Setting")
-    ),
-    Images: hydrateWhenVisible(() =>
-      import("@/components/ChapterPage/Modal/Images")
-    )
-  },
-  async mounted() {},
   methods: {
     async table() {
       if (this.modal === "table") {
@@ -123,29 +99,9 @@ export default {
   }
 }
 .chapters-modal {
-  background-color: white;
-  &--default {
-    background: url("~assets/img/defaultContainer.png");
-    color: black;
-  }
-  &--black {
-    .table-content {
-    }
-    background-color: #1a1a1b;
-    border: 1px solid black;
-    color: rgb(215, 218, 220);
-  }
-  &--tan {
-    background: url("~assets/img/tanContainer.png");
-    color: #2b352f;
-  }
-  &--ruby {
-    background: url("~assets/img/rubyContainer.png");
-    color: #f7bfd4;
-  }
-  &--sapphire {
-    background: url("~assets/img/sapphireContainer.png");
-    color: #d4e6fd;
+  @include themify($themes) {
+    background: themed("textBackgroundColor");
+    color: themed("textColor");
   }
   &--image {
   }
@@ -159,15 +115,11 @@ export default {
   height: 100vh;
   width: 400px;
   z-index: 2;
-  // box-shadow: 1px 1px
 
-  // background-color: white;
-  // top: 50px;
   &__author-profile {
     height: 100%;
   }
   &__images {
-    // background-color: black !important;
     height: 100%;
   }
   &__table-of-content {

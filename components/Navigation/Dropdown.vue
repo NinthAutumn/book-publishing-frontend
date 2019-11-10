@@ -126,13 +126,19 @@ export default {
   background-color: white;
   box-shadow: 0 7px 14px 0 rgba(60, 66, 87, 0.12),
     0 3px 6px 0 rgba(0, 0, 0, 0.12);
-  ul {
+  @include themify($themes) {
+    background: themed("textBackgroundColor");
+    color: themed("textColor");
   }
   &__user-info {
     padding: 16px;
     height: 100%;
     color: black;
     background-color: rgb(243, 243, 243);
+    @include themify($themes) {
+      background: themed("backgroundColor");
+      color: themed("textColor");
+    }
   }
   &__profile-pic {
     margin-right: 10px;
@@ -157,6 +163,9 @@ export default {
   &__email {
     font-size: 1.6rem;
     color: rgb(83, 83, 83);
+    @include themify($themes) {
+      color: themed("textColor");
+    }
   }
   &__wallet {
     font-size: 2rem;
@@ -174,9 +183,9 @@ export default {
     }
     &__content {
       color: black;
-      // padding: 1rem 1.5rem;
-      // border: 1px solid grey;
-      // box-shadow: inset 1px 1px 5px rgb(240, 240, 240);
+      @include themify($themes) {
+        color: themed("textColor");
+      }
       border-radius: 1rem;
     }
     &__buy-more {
@@ -193,14 +202,11 @@ export default {
 
       &:hover {
         cursor: pointer;
-        // background-color: $primary;
-        // color: white;
         transition: 300ms;
       }
       height: 3rem;
       width: 10rem;
       background-color: #2a2f45;
-      // border: 1px solid $primary;
       color: white;
     }
   }
@@ -212,15 +218,20 @@ export default {
       user-select: none;
       transition: 100ms;
       color: black;
+      @include themify($themes) {
+        color: themed("textColor");
+      }
       &:hover {
         background-color: rgb(248, 248, 248);
+        @include themify($themes) {
+          background: themed("textColor");
+          color: themed("textBackgroundColor");
+        }
         cursor: pointer;
         transition: 100ms;
       }
       height: 40px;
     }
-  }
-  &__nav-list {
   }
   &__nav-link {
     font-size: 16px;

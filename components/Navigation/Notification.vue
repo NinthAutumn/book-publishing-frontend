@@ -101,8 +101,13 @@ export default {
   color: black;
   border-radius: 0.4rem;
   background-color: #fff;
+
   box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14),
     0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.4);
+  @include themify($themes) {
+    background: themed("textBackgroundColor");
+    color: themed("textColor");
+  }
   $self: &;
   &__header {
     font-size: 1.8rem;
@@ -120,10 +125,23 @@ export default {
     #{$self}__item {
       padding: 1.6rem;
       background-color: #fff;
+      @include themify($themes) {
+        background: themed("textBackgroundColor");
+        color: themed("textColor");
+      }
       transition: background-color 150ms ease;
 
       &:hover {
         background-color: rgb(243, 243, 243);
+        @include themify($themes) {
+          color: themed("textBackgroundColor");
+          background: themed("textColor");
+        }
+        #{$self}__created-at {
+          @include themify($themes) {
+            color: themed("textBackgroundColor");
+          }
+        }
         cursor: pointer;
         user-select: none;
         transition: background-color 150ms ease;
@@ -135,6 +153,9 @@ export default {
       #{$self}__created-at {
         font-size: 1.4rem;
         color: grey;
+        @include themify($themes) {
+          color: themed("textColor");
+        }
       }
       #{$self}__avatar {
         display: flex;
@@ -143,14 +164,6 @@ export default {
         margin-right: 1.6rem;
         .v-avatar {
           box-shadow: 0 1px 3px 0 #e6ebf1;
-
-          transition: box-shadow 150ms ease, border 200ms ease,
-            -webkit-transform 150ms ease;
-          transition: box-shadow 150ms ease, transform 150ms ease,
-            border 200ms ease;
-          transition: box-shadow 150ms ease, transform 150ms ease,
-            border 200ms ease, -webkit-transform 150ms ease;
-          -webkit-user-select: none;
         }
       }
     }

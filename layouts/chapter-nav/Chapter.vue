@@ -1,115 +1,26 @@
 <template>
-  <div
-    class="chapter-page"
-    :class="{'chapter-page--black': theme === 'black','chapter-page--default': theme === 'default','chapter-page--ruby': theme === 'ruby','chapter-page--tan': theme === 'tan','chapter-page--sapphire': theme === 'sapphire', 'chapter-page--mobile': $device.isMobile}"
-  >
-    <div v-if="auth">
-      <component :is="verifyComponent" :user="user" />
-    </div>
-    <component :is="mobileHorizontalNav" />
-    <!-- <Horizontal v-if="!$device.isMobile"></Horizontal>
-    <MobileHorizontal v-else></MobileHorizontal>-->
-    <RightV v-if="!$device.isMobile"></RightV>
-    <div v-if="imageModal" class="images-modal__dialog flex flex--align flex--center">
-      <div class="images-modal__dialog__container" v-click-outside="closeImageDialog">
-        <div class="images-modal__dialog__close">
-          <fa class="images-modal__dialog__close__icon" icon="times" @click="closeImageDialog"></fa>
-        </div>
-        <div class="images-modal__dialog__content flex flex--align flex--center">
-          <img :src="$store.state.imageUrl" alt />
+  <div :class="`theme-${theme}`">
+    <div class="chapter-page">
+      <div v-if="auth">
+        <component :is="verifyComponent" :user="user" />
+      </div>
+      <component :is="mobileHorizontalNav" />
+      <component :is="rightVerticalComponent" />
+      <div class="chapter" :class="{'move-left': modal}">
+        <div
+          class="chapter-wrapper"
+          :class="{'flex-row':!$device.isMobile, 'flex-column':$device.isMobile}"
+        >
+          <nav-component icon="angle-left" theme="prev" :data="prev"></nav-component>
+          <nuxt></nuxt>
+          <nav-component icon="angle-right" theme="next" :data="next"></nav-component>
         </div>
       </div>
+      <transition name="grow-shrink">
+        <component :is="settingForm" />
+      </transition>
+      <component :is="showImageModal" />
     </div>
-    <div class="chapter" :class="{'move-left': modal}">
-      <div
-        class="chapter-wrapper"
-        :class="{'flex-row':!$device.isMobile, 'flex-column':$device.isMobile}"
-      >
-        <div class="flex-divider flex-row flex--align flex--between" v-if="$device.isMobile">
-          <nuxt-link
-            class="mobile-navigation mobile-navigation--prev"
-            v-if="prev"
-            :to="{path: `${prev.id}`}"
-          >
-            <span class="mobile-navigation__icon">
-              <fa icon="angle-left"></fa>
-            </span>
-            <span>前の話へ</span>
-          </nuxt-link>
-          <span class="mobile-navigation--placeholder" v-if="!prev"></span>
-          <span class="mobile-navigation--placeholder" v-if="!next"></span>
-          <nuxt-link
-            class="mobile-navigation mobile-navigation--next"
-            v-if="next"
-            :to="{path: `${next.id}`}"
-          >
-            <span>次の話へ</span>
-            <span class="mobile-navigation__icon">
-              <fa icon="angle-right"></fa>
-            </span>
-          </nuxt-link>
-        </div>
-        <!-- <adsbygoogle v-if="!$device.isMobile"/> -->
-        <div
-          v-if="prev&&!$device.isMobile"
-          class="next-chapter-title flex-column flex--center flex--align"
-        >
-          <div class="next-chapter-title__content" v-text="prev.title"></div>
-        </div>
-
-        <nuxt-link
-          class="navigation-prev flex-column flex--center flex--align"
-          v-if="prev&&!$device.isMobile"
-          :to="{path: `${prev.id}`}"
-        >
-          <fa icon="angle-left"></fa>
-        </nuxt-link>
-        <div class="navigation-prev-cont" v-if="!prev&&!$device.isMobile"></div>
-        <nuxt></nuxt>
-        <div class="navigation-prev-cont" v-if="!next&&!$device.isMobile"></div>
-        <nuxt-link
-          class="navigation-next flex-column flex--center flex--align"
-          v-if="next&&!$device.isMobile"
-          :to="{path: `${next.id}`}"
-        >
-          <fa icon="angle-right"></fa>
-        </nuxt-link>
-        <div
-          v-if="next&&!$device.isMobile"
-          class="next-chapter-title flex-column flex--center flex--align"
-        >
-          <div class="next-chapter-title__content" v-text="next.title"></div>
-        </div>
-        <div class="flex-divider flex-row flex--align flex--between" v-if="$device.isMobile">
-          <nuxt-link
-            class="mobile-navigation mobile-navigation--prev"
-            v-if="prev"
-            :to="{path: `${prev.id}`}"
-          >
-            <span class="mobile-navigation__icon">
-              <fa icon="angle-left"></fa>
-            </span>
-            <span>前の話へ</span>
-          </nuxt-link>
-          <span class="mobile-navigation--placeholder" v-if="!prev"></span>
-          <span class="mobile-navigation--placeholder" v-if="!next"></span>
-          <nuxt-link
-            class="mobile-navigation mobile-navigation--next"
-            v-if="next"
-            :to="{path: `${next.id}`}"
-          >
-            <span>次の話へ</span>
-            <span class="mobile-navigation__icon">
-              <fa icon="angle-right"></fa>
-            </span>
-          </nuxt-link>
-        </div>
-      </div>
-    </div>
-    <transition name="grow-shrink">
-      <setting-form v-if="dialog"></setting-form>
-    </transition>
-    <!-- <div class="block-move" v-if="modal"></div> -->
   </div>
 </template>
 
@@ -118,18 +29,8 @@ import { hydrateWhenVisible } from "vue-lazy-hydration";
 import { mapGetters } from "vuex";
 
 export default {
-  data() {
-    return {
-      blackTheme: this.$store.state.user.theme === "black"
-    };
-  },
   components: {
-    // Horizontal: hydrateWhenVisible(() => import("./Horizontal")),
-    RightV: hydrateWhenVisible(() => import("./Right-V")),
-    // MobileHorizontal: hydrateWhenVisible(() => import("./MobileHorizontal")),
-    SettingForm: hydrateWhenVisible(() =>
-      import("@/components/Navigation/Setting")
-    )
+    NavComponent: () => import("@/components/Web/Layout/Nav/Navigation")
   },
   computed: {
     ...mapGetters({
@@ -147,15 +48,25 @@ export default {
       return () => import(`./${name}`);
     },
     verifyComponent() {
-      if (this.user.verified)
+      if (!this.user.verified)
         return () => import("@/components/Web/Modals/Auth/Verify");
       return;
+    },
+    showImageModal() {
+      if (this.imageModal)
+        return () => import("@/components/Web/Modals/Image/ShowImage");
+      return;
+    },
+    settingForm() {
+      if (this.dialog) return () => import("@/components/Navigation/Setting");
+      return;
+    },
+    rightVerticalComponent() {
+      if (this.$device.isMobile) return;
+      return () => import("./Right-V");
     }
   },
   methods: {
-    closeImageDialog() {
-      this.$store.commit("TOGGLE_IMAGE");
-    },
     async resendHandler() {
       try {
         await this.$store.dispatch("auth/resendEmail", {
@@ -176,64 +87,6 @@ export default {
 </script>
 
 <style lang="scss">
-.user-status {
-  $self: &;
-  &__banner {
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    // height: 3rem;
-    position: fixed;
-    background-color: rgb(255, 72, 72);
-    z-index: 1000000;
-    text-align: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0.5rem 0;
-    #{$self}__text {
-      font-size: 1.4rem;
-      color: white;
-      margin-right: 1rem;
-    }
-    #{$self}__send {
-      font-size: 1.3rem;
-      color: white;
-      background-color: $secondary;
-      border-radius: 0.5rem;
-      padding: 0.5rem 2rem;
-      width: 20rem;
-    }
-    &--mobile {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      #{$self}__text {
-        margin: 0;
-        font-size: 1rem;
-      }
-    }
-  }
-}
-.chapter-modal--image {
-  background-color: black !important;
-}
-.navigation-next {
-  position: sticky !important;
-  height: 100vh;
-  width: 50px;
-  font-size: 30px;
-  top: 0;
-
-  &:hover {
-    background-color: $secondary;
-    cursor: pointer;
-    color: white;
-    transition: 300ms;
-  }
-}
-
 .move-left {
   transform: translateX(-210px);
   transition: 200ms;
@@ -245,59 +98,6 @@ export default {
   .prev-chapter-title {
     display: none;
   }
-}
-
-.navigation-prev {
-  position: sticky !important;
-  height: 100vh;
-  width: 50px;
-  font-size: 30px;
-  top: 0;
-  &:hover {
-    background-color: $primary;
-    cursor: pointer;
-    color: white;
-    transition: 300ms;
-  }
-}
-.navigation-prev-cont {
-  position: sticky !important;
-  height: 100vh;
-  width: 74px;
-  font-size: 30px;
-  top: 0;
-}
-
-.left-vertical-nav {
-  position: fixed;
-
-  left: 14.4rem;
-  .book-cover {
-    height: 16.8rem;
-    width: 11rem;
-    border-radius: 10px;
-  }
-}
-.next-chapter-title {
-  position: sticky !important;
-  height: 100vh;
-  -webkit-text-orientation: upright;
-  text-orientation: upright;
-  font-size: 16px;
-  top: 0;
-  -ms-writing-mode: tb-rl;
-  writing-mode: vertical-rl;
-  text-align: center;
-  &__content {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    font-size: 1.6rem;
-    height: 50vh;
-  }
-  // text-combine-upright: all;
-  // -webkit-text-combine: horizontal;
-  // -ms-text-combine-horizontal: all;
 }
 
 @media only screen and (max-width: 1304px) {
@@ -320,10 +120,12 @@ export default {
   // padding: 1rem 0rem;
   transition: 300ms;
   min-height: 100vh;
+  @include themify($themes) {
+    background: themed("backgroundColor");
+  }
   // position: relative !important;
-  margin-top: 5rem;
-  margin-right: 5rem;
-  background-color: #dae0e6;
+  margin-top: 50px;
+  margin-right: 50px;
   position: relative;
   &--mobile {
     margin-top: 4rem;
@@ -355,65 +157,6 @@ export default {
       span {
         margin-left: 1rem;
       }
-    }
-    // background-color: #fff;
-  }
-  &--default {
-    background: url("~assets/img/noise-default-all.png");
-    .chapter-container {
-      background: url("~assets/img/defaultContainer.png");
-    }
-  }
-  &--black {
-    background-color: #030303 !important;
-    .mobile-navigation {
-      color: rgb(215, 218, 220);
-    }
-    .next-chapter-title {
-      color: rgb(215, 218, 220) !important;
-    }
-    .navigation-prev {
-      color: rgb(215, 218, 220) !important;
-    }
-    .navigation-next {
-      color: rgb(215, 218, 220) !important;
-    }
-    .chapter-container {
-      background-color: rgb(26, 26, 27) !important;
-      color: rgb(215, 218, 220);
-      border: 1px solid rgb(71, 71, 71) !important;
-    }
-  }
-  &--tan {
-    // background-color: #e7dfbd;
-    background: url("~assets/img/noise-tan-all.png");
-    .chapter-container {
-      color: #2b352f !important;
-      // background-color: #eed368 !important;
-      background: url("~assets/img/tanContainer.png");
-      border: 1px solid #e7dfbd !important;
-    }
-  }
-  &--ruby {
-    background: url("~assets/img/noise-ruby-all.png");
-    .chapter-container {
-      background: url("~assets/img/rubyContainer.png");
-      color: #fdd4e4;
-      border: 1px solid red !important;
-    }
-    .mobile-navigation {
-      color: #fdd4e4;
-    }
-  }
-  &--sapphire {
-    background: url("~assets/img/noise-sapphire-all.png");
-    .chapter-container {
-      background: url("~assets/img/sapphireContainer.png");
-      color: #d4e6fd;
-      border: 1px solid blue !important;
-    }
-    .mobile-navigation {
-      color: #d4e6fd;
     }
   }
 }

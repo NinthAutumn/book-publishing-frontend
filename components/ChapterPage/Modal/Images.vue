@@ -1,6 +1,6 @@
 <template>
   <div class="images-modal">
-    <ul class="images-modal__list" v-if="modal === 'image'&&drawings">
+    <ul class="images-modal__list">
       <!-- {{chapter.drawings}} -->
       <li class="images-modal__item" v-for="(drawing) in drawings" :key="drawing">
         <v-img class="images-modal__img" :src="drawing.url" @click.stop="openImage(drawing.url)"></v-img>
@@ -35,43 +35,7 @@ export default {
   box-sizing: border-box;
   height: 100%;
   overflow: scroll;
-  &__dialog {
-    height: 100vh !important;
-    border: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    width: 100%;
-    z-index: 10000;
-    overflow: hidden;
-    position: fixed;
-    // scroll-behavior: smooth;
-    top: 0 !important;
 
-    img {
-      max-width: 80vw;
-      max-height: 70vh;
-      box-shadow: 1px 1px 5px rgb(238, 236, 236);
-    }
-    &__container {
-      position: relative;
-      // max-wid
-    }
-    &__close {
-      position: absolute;
-      top: -35px;
-      right: -30px;
-
-      &__icon {
-        color: rgb(226, 226, 226);
-        font-size: 30px;
-        transition: 300ms;
-        &:hover {
-          cursor: pointer;
-          transition: 300ms;
-          color: white;
-        }
-      }
-    }
-  }
   $self: &;
   &__list {
     #{$self}__img {

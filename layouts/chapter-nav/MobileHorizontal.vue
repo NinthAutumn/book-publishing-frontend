@@ -44,7 +44,6 @@ export default {
     background-color: #e9e1b8;
   }
   &__header {
-    // padding: 2rem 1rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -58,12 +57,7 @@ export default {
       display: flex;
       align-items: center;
       justify-content: center;
-
-      // padding: 0 1rem;
-      // border-radius: 1rem;
-      // color: grey;
       margin-right: 1rem;
-      // background-color: #e3e8ee;
     }
     #{$self}__title {
       font-size: 1.4rem;

@@ -4,7 +4,7 @@ import {
 export const state = () => ({
   books: [],
   fontFamily: "'IBM Plex Sans', 'Helvetica Neue', 'Segoe UI', Helvetica, Verdana, Arial, sans-serif",
-  theme: '',
+  theme: 'default',
   fontSize: 16,
   update_view: 'grid',
   bookmarkInbox: [],

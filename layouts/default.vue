@@ -61,7 +61,7 @@ export default {
       return () => import(`./${name}`);
     },
     verifyComponent() {
-      if (this.user.verified)
+      if (!this.user.verified)
         return () => import("@/components/Web/Modals/Auth/Verify");
       return;
     }

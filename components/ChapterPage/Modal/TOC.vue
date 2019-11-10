@@ -69,7 +69,7 @@ export default {
     #{$self}__chapter-list {
       #{$self}__chapter-item {
         user-select: none;
-        border-bottom: 1px solid rgb(155, 155, 155);
+        // border-bottom: 1px solid rgb(155, 155, 155);
         padding: 0.5rem;
         &:hover {
           cursor: pointer;

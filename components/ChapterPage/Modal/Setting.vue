@@ -1,15 +1,11 @@
 <template>
-  <div
-    class="setting-modal"
-    :class="{'setting-modal--black':theme === 'black','setting-modal--tan':theme === 'tan'}"
-  >
+  <div class="setting-modal">
     <header>設定</header>
     <div class="theme-main">
       <h4 v-text="'テーマ'"></h4>
       <div class="themes-list flex">
-        <div class="theme__item" @click.stop="updateTheme('')"></div>
+        <div class="theme__item" @click.stop="updateTheme('default')"></div>
         <div class="theme__item theme__item--black" @click.stop="updateTheme('black')"></div>
-        <div class="theme__item theme__item--white" @click.stop="updateTheme('default')"></div>
         <div class="theme__item theme__item--tan" @click.stop="updateTheme('tan')"></div>
       </div>
     </div>
@@ -140,45 +136,6 @@ export default {
 
 <style lang="scss">
 .setting-modal {
-  &--tan {
-    .font-style {
-      .active-font {
-        border: 1px solid $secondary !important;
-        color: $secondary;
-      }
-      &__list {
-      }
-      &__item {
-        border: 1px solid #eae2b9;
-        &:hover {
-          border: 1px solid $secondary;
-          color: $secondary;
-          cursor: pointer;
-        }
-        background-color: #fff7cc;
-      }
-    }
-  }
-  &--black {
-    // background-color: black;
-    .font-style {
-      .active-font {
-        border: 1px solid $secondary !important;
-        color: $secondary;
-      }
-      &__list {
-      }
-      &__item {
-        border: 1px solid rgb(243, 243, 243);
-        &:hover {
-          border: 1px solid $secondary;
-          color: $secondary;
-          cursor: pointer;
-        }
-        background-color: #3d3d3d;
-      }
-    }
-  }
   width: 400px;
   padding: 10px;
   box-sizing: border-box;

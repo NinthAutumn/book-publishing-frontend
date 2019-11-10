@@ -106,6 +106,8 @@ export default {
 .chapter-wrapper {
 }
 
+.chapter-section {
+}
 // .chapter-s
 .chapter-actions {
   $self: &;
@@ -162,13 +164,6 @@ export default {
 
 .chapter-content {
   line-height: 30px;
-  // display: inline-block;
-  // ::after {
-  //   content: "";
-  //   position: relative;
-  //   width: 100vw;
-  // }
-  //
 
   word-break: break-all;
   box-sizing: border-box;

@@ -121,12 +121,7 @@ export default {
     justify-content: center;
     max-width: 100%;
     box-sizing: border-box;
-    .chapter-navigation__next {
-      text-align: center;
-    }
-    .chapter-navigation__previous {
-      text-align: center;
-    }
+
     .chapter-container {
       background-color: white;
       position: relative;
@@ -135,6 +130,10 @@ export default {
       max-width: 750px;
       box-sizing: border-box;
       padding: 0 1rem;
+      @include themify($themes) {
+        background: themed("textBackgroundColor");
+        color: themed("textColor");
+      }
       &--mobile {
         max-width: 100%;
       }
@@ -154,8 +153,6 @@ export default {
         // position: relative;
         width: 80vw;
       }
-    }
-    .chapter-container::after {
     }
   }
 }

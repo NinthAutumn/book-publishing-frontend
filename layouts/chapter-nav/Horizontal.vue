@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="h-nav"
-    :class="{'h-nav--tan':theme === 'tan', 'h-nav--black':theme==='black','h-nav--ruby':theme==='ruby'}"
-  >
+  <div class="h-nav">
     <nav>
       <div class="left-menu flex flex--align">
         <nuxt-link v-ripple tag="div" to="/" class="site-logo flex-row">
@@ -129,11 +126,9 @@ export default {
       user: "auth/getUser",
       chapter: "chapter/getChapter",
       auth: "auth/isAuthenticated",
-      theme: "user/getTheme",
       productState: "getProductModalState",
       title: "chapter/getChapterBookTitle",
       wealth: "wallet/getWealth",
-      // auth:'auth/'
       subscribe: "subscription/getSiteModalState"
     }),
     loginState() {
@@ -184,7 +179,9 @@ export default {
 <style lang="scss" scoped>
 .site-sub {
   font-size: 2rem;
-  color: #000000;
+  @include themify($themes) {
+    color: themed("textColor");
+  }
   margin-right: 1rem;
   &:hover {
     cursor: pointer;
@@ -192,7 +189,6 @@ export default {
 }
 .inbox-icon {
   position: relative !important;
-
   font-size: 20px;
   margin-right: 0.5rem;
   color: rgb(85, 85, 85);
@@ -200,6 +196,9 @@ export default {
   border-radius: 100px;
   height: 35px;
   transition: 200ms;
+  @include themify($themes) {
+    color: themed("textColor");
+  }
   &__count {
     position: absolute;
     top: 0;
@@ -220,14 +219,6 @@ export default {
   .nav-title__book {
     margin-left: 0 !important;
   }
-}
-.loginform {
-  width: 30%;
-  margin: auto;
-}
-.signupform {
-  width: 30%;
-  margin: auto;
 }
 .beta-small {
   font-size: 1rem;
@@ -259,13 +250,6 @@ export default {
   // font-size: 16px;
   span {
     font-size: 16px;
-  }
-  .signup {
-  }
-  .login {
-    &:hover {
-      // cursor: pointer;
-    }
   }
 }
 .profile-pic {
@@ -312,25 +296,6 @@ export default {
     }
   }
 }
-.dropdown-inactive {
-  position: fixed;
-  top: -1111px;
-  height: 0;
-  border-radius: 100px;
-}
-.dropdown-active {
-  position: fixed;
-  width: 300px;
-  height: 500px;
-  background-color: #c8b0f5;
-  right: 5px;
-  z-index: 2200;
-  transition: 300ms;
-  box-shadow: 0px 2px 12px 3px rgba(191, 191, 191, 1);
-  border-radius: 10px;
-  background-image: none;
-}
-
 .h-nav {
   .nav-title {
     max-width: 100%;
@@ -344,6 +309,9 @@ export default {
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      @include themify($themes) {
+        color: themed("textColor");
+      }
       &:hover {
         text-decoration: underline;
       }
@@ -375,40 +343,6 @@ export default {
       }
     }
   }
-  &--tan {
-    background: url("~assets/img/tanContainer.png");
-    box-shadow: none;
-    border-bottom: 1px solid #d8ceb3;
-  }
-  &--black {
-    background-color: #1a1a1b;
-    box-shadow: none;
-    border-bottom: 1px solid black;
-    color: rgb(215, 218, 220);
-    box-shadow: 0 2px 5px 0 rgba(238, 238, 238, 0.1),
-      0 1px 1px 0 rgba(241, 241, 241, 0.07);
-    .inbox-icon {
-      color: rgb(215, 218, 220);
-      &__count {
-        background-color: red;
-        color: white;
-      }
-      &:hover {
-        cursor: pointer;
-      }
-    }
-    .nav-title {
-      color: rgb(215, 218, 220);
-    }
-    .nav-title__book {
-      color: rgb(215, 218, 220);
-    }
-  }
-  &--ruby {
-    background: url("~assets/img/rubyContainer.png");
-    box-shadow: none;
-    border-bottom: 1px solid #e0115f;
-  }
 
   height: 50px;
   width: 100%;
@@ -418,6 +352,10 @@ export default {
   left: 0;
   background-color: white;
   z-index: 1000;
+  @include themify($themes) {
+    background: themed("textBackgroundColor");
+    color: themed("textColor");
+  }
 }
 nav {
   display: flex;
@@ -431,13 +369,7 @@ ul {
   align-items: center;
   justify-content: space-between;
 }
-.el-icon-menu {
-  font-size: 32px;
-  color: #c9b1f5;
-}
-.el-icon-menu:hover {
-  cursor: pointer;
-}
+
 .menu-active {
   background-color: #eaecf5;
 }
@@ -487,12 +419,5 @@ ul {
       font-weight: 300;
     }
   }
-}
-
-.popper__arrow::after,
-.el-popper {
-  content: "arif";
-  background-color: black !important;
-  color: black !important;
 }
 </style>

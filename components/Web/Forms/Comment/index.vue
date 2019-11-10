@@ -60,11 +60,6 @@ export default {
 <style lang="scss">
 .comment-form {
   $self: &;
-  &--black {
-    textarea {
-      background-color: #030303;
-    }
-  }
   &__container {
     margin-top: 1rem;
     #{$self}__label {
