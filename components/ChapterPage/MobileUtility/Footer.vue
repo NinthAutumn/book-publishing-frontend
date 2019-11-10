@@ -83,14 +83,10 @@ export default {
     left: 0;
     width: 100vw;
     z-index: 100;
-    &--black {
-      background-color: #19191a;
-      color: #949698;
+    @include themify($themes) {
+      background: themed("modalBackgroundColor");
+      color: themed("textColor");
     }
-    &--tan {
-      background-color: #e9e1b8;
-    }
-    background-color: white;
     // padding: 2rem;
     padding: 1rem;
     box-sizing: border-box;

@@ -37,12 +37,9 @@ export default {
   $self: &;
 
   font-size: 1.7rem;
-  &--black {
-    background-color: #19191a;
-    color: #949698;
-  }
-  &--tan {
-    background-color: #e9e1b8;
+  @include themify($themes) {
+    background: themed("modalBackgroundColor");
+    color: themed("textColor");
   }
   padding: 0 1rem;
   display: flex;

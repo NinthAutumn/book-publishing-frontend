@@ -103,26 +103,30 @@ export default {
   left: 0;
   // scroll-behavior: none;
   // background-color: rgba(65, 65, 65, 0.527);
-  &--black {
-    #{$self}__volumes {
-      background-color: #030303;
-      color: rgb(215, 218, 220);
-      .ripple-color {
-        color: rgb(146, 146, 146);
-      }
-    }
+  @include themify($themes) {
+    // background: themed("backgroundColor");
+    color: themed("textColor");
   }
-  &--tan {
-    #{$self}__volumes {
-      background: url("~assets/img/noise-tan-all.png");
-      //  colo
-      border: 1px solid #e7dfbd !important;
-      // color: #2b352f !important;
-      .ripple-color {
-        color: rgb(146, 146, 146);
-      }
-    }
-  }
+  // &--black {
+  //   #{$self}__volumes {
+  //     background-color: #030303;
+  //     color: rgb(215, 218, 220);
+  //     .ripple-color {
+  //       color: rgb(146, 146, 146);
+  //     }
+  //   }
+  // }
+  // &--tan {
+  //   #{$self}__volumes {
+  //     background: url("~assets/img/noise-tan-all.png");
+  //     //  colo
+  //     border: 1px solid #e7dfbd !important;
+  //     // color: #2b352f !important;
+  //     .ripple-color {
+  //       color: rgb(146, 146, 146);
+  //     }
+  //   }
+  // }
   &__spinner {
     width: 100%;
     height: 100%;
@@ -133,18 +137,21 @@ export default {
   }
   &__volumes {
     .nuxt-link-exact-active {
-      color: $primary;
+      @include themify($themes) {
+        color: themed("activeLinkTextColor");
+      }
     }
-    .ripple-color {
-      color: rgb(206, 206, 206);
-    }
+
     height: 100vh;
     position: fixed;
 
     top: 0;
     left: 0;
     width: 85vw;
-    background-color: #fff;
+    @include themify($themes) {
+      background: themed("modalBackgroundColor");
+      color: themed("textColor");
+    }
     z-index: 1000;
     overflow: auto;
 

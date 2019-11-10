@@ -19,7 +19,7 @@ export default {
   },
   data() {
     return {
-      themes: ["black", "tan", "default", ""]
+      themes: ["black", "tan", "default"]
     };
   },
   methods: {
@@ -51,27 +51,11 @@ export default {
   // position
   bottom: 0;
   left: 0;
-  background-color: #fff;
-  &--default {
-    background: url("~assets/img/defaultContainer.png");
-    border-color: #dae0e6;
+  @include themify($themes) {
+    background: themed("modalBackgroundColor");
+    color: themed("textColor");
   }
-  &--black {
-    background-color: rgb(53, 53, 53);
-    border-color: black;
-  }
-  &--tan {
-    background: url("~assets/img/tanContainer.png");
-    border-color: #eed368;
-  }
-  &--ruby {
-    background: url("~assets/img/rubyContainer.png");
-    border-color: red;
-  }
-  &--sapphire {
-    background: url("~assets/img/sapphireContainer.png");
-    border-color: blue;
-  }
+
   &__options {
     display: flex;
     align-items: center;
@@ -89,8 +73,8 @@ export default {
         0 1px 1px 0 rgba(0, 0, 0, 0.07);
       border: 1px solid #dae0e6;
       &--default {
-        background: url("~assets/img/defaultContainer.png");
-        border-color: #dae0e6;
+        background-color: #fff;
+        border: 1px solid #dae0e6;
       }
       &--black {
         background-color: rgb(53, 53, 53);

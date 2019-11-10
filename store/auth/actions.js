@@ -198,9 +198,13 @@ export default {
         email
       })
       if (data.error) {
-        return Promise.reject(data.error)
+        return Promise.resolve({
+          error: data.error
+        })
       }
-      return Promise.resolve()
+      return Promise.resolve({
+        error: null
+      })
 
     } catch (error) {
       return Promise.reject(error)

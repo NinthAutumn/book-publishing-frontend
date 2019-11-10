@@ -18,21 +18,6 @@
       />
     </transition>
 
-    <!-- <transition name="slide-right">
-      <TOC v-if="modal===5" @toggle="toggleModal"></TOC>
-    </transition>
-    <transition name="slide-up">
-      <Theme v-if="modal===1" @toggle="toggleModal" :theme="theme"></Theme>
-    </transition>
-    <transition name="slide-up">
-      <FontSetting v-if="modal===2" :theme="theme" @toggle="toggleModal"></FontSetting>
-    </transition>
-    <transition name="slide-left">
-      <ImageM v-if="modal===3" :drawings="chapter.drawings" :theme="theme" @toggle="toggleModal"></ImageM>
-    </transition>
-    <transition name="slide-left">
-      <Comments v-if="modal===4" :chapter="chapter" :theme="theme" @toggle="toggleModal"></Comments>
-    </transition>-->
     <div
       v-if="!chapter.locked"
       class="mobile-chapter__wrapper"
@@ -305,6 +290,7 @@ export default {
 <style lang="scss">
 .mobile-chapter {
   $self: &;
+
   &__locked-content {
     &::after {
       content: "";
@@ -355,6 +341,7 @@ export default {
       margin: 1rem 0;
       max-width: 100%;
       word-break: break-all;
+      text-align: center;
     }
     #{$self}__ann {
       border-radius: 1rem;

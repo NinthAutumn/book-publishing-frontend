@@ -58,11 +58,10 @@ export default {
         });
         if (error) return this.$toast.error(error);
         return this.$toast.success(
-          "記入されたメールにパスワードリセットトークンが送られました",
-          { icon: "extension" }
+          "記入されたメールにパスワードリセットトークンが送られました"
         );
       } catch (error) {
-        return this.$toast.error(error, { icon: "extension" });
+        return this.$toast.error(error);
       }
     }
   },

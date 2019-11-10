@@ -1,6 +1,6 @@
 <template>
   <div :class="`theme-${theme}`">
-    <div class="chapter-page">
+    <div class="chapter-page" :class="{'chapter-page--mobile':$device.isMobile}">
       <div v-if="auth">
         <component :is="verifyComponent" :user="user" />
       </div>
@@ -11,15 +11,30 @@
           class="chapter-wrapper"
           :class="{'flex-row':!$device.isMobile, 'flex-column':$device.isMobile}"
         >
-          <nav-component icon="angle-left" theme="prev" :data="prev"></nav-component>
+          <component
+            :icon="$device.isMobile?'angle-up':'angle-left'"
+            theme="prev"
+            :data="prev"
+            :is="navComponent"
+            v-if="prev"
+          />
           <nuxt></nuxt>
-          <nav-component icon="angle-right" theme="next" :data="next"></nav-component>
+          <component
+            :icon="$device.isMobile?'angle-down':'angle-right'"
+            theme="next"
+            :data="next"
+            :is="navComponent"
+            v-if="next"
+          />
         </div>
       </div>
       <transition name="grow-shrink">
         <component :is="settingForm" />
       </transition>
       <component :is="showImageModal" />
+      <transition name="grow-shrink">
+        <AuthModal v-if="loginState"></AuthModal>
+      </transition>
     </div>
   </div>
 </template>
@@ -30,7 +45,10 @@ import { mapGetters } from "vuex";
 
 export default {
   components: {
-    NavComponent: () => import("@/components/Web/Layout/Nav/Navigation")
+    NavComponent: () => import("@/components/Web/Layout/Nav/Navigation"),
+    AuthModal: hydrateWhenVisible(() =>
+      import("@/components/Navigation/Auth/AuthModal")
+    )
   },
   computed: {
     ...mapGetters({
@@ -43,6 +61,14 @@ export default {
       auth: "auth/isAuthenticated",
       user: "auth/getUser"
     }),
+    loginState() {
+      return this.$store.state.loginForm;
+    },
+    navComponent() {
+      if (this.$device.isMobile)
+        return () => import("@/components/Mobile/Layout/Nav/ChapterNav");
+      return () => import("@/components/Web/Layout/Nav/Navigation");
+    },
     mobileHorizontalNav() {
       const name = this.$device.isMobile ? "MobileHorizontal" : "Horizontal";
       return () => import(`./${name}`);

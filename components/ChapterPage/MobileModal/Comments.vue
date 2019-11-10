@@ -154,55 +154,70 @@ export default {
   display: flex;
 
   flex-direction: column;
-
-  &--default {
-    background: url("~assets/img/defaultContainer.png");
-    border-color: #dae0e6;
-
-    #{$self}__header {
-      background-color: black;
-      color: #d7dadc;
-    }
+  @include themify($themes) {
+    background: themed("modalBackgroundColor");
+    color: themed("textColor");
   }
-  &--black {
-    background-color: rgb(53, 53, 53);
-    border-color: black;
-    #{$self}__form-modal {
-      background-color: black;
+  &__form {
+    @include themify($themes) {
+      background: themed("modalBackgroundColor");
+      color: themed("textColor");
     }
-    #{$self}__form {
-      background-color: black;
-      #{$self}__input {
-        background-color: rgb(53, 53, 53);
+    #{$self}__input {
+      @include themify($themes) {
+        background: themed("backgroundColor");
+        color: themed("textColor");
       }
     }
   }
-  &--tan {
-    background: url("~assets/img/tanContainer.png");
-    border-color: #eed368;
-    #{$self}__header {
-      background-color: #e9e1b8;
-    }
-    #{$self}__form-modal {
-      background-color: #e9e1b8;
-    }
-    #{$self}__form {
-      background-color: #e9e1b8;
-      #{$self}__input {
-        border-color: #eed368;
-        border: 1px solid;
-        background: url("~assets/img/tanContainer.png");
-      }
-    }
-  }
-  &--ruby {
-    background: url("~assets/img/rubyContainer.png");
-    border-color: red;
-  }
-  &--sapphire {
-    background: url("~assets/img/sapphireContainer.png");
-    border-color: blue;
-  }
+  // &--default {
+  //   background: url("~assets/img/defaultContainer.png");
+  //   border-color: #dae0e6;
+
+  //   #{$self}__header {
+  //     background-color: black;
+  //     color: #d7dadc;
+  //   }
+  // }
+  // &--black {
+  //   background-color: rgb(53, 53, 53);
+  //   border-color: black;
+  //   #{$self}__form-modal {
+  //     background-color: black;
+  //   }
+  //   #{$self}__form {
+  //     background-color: black;
+  //     #{$self}__input {
+  //       background-color: rgb(53, 53, 53);
+  //     }
+  //   }
+  // }
+  // &--tan {
+  //   background: url("~assets/img/tanContainer.png");
+  //   border-color: #eed368;
+  //   #{$self}__header {
+  //     background-color: #e9e1b8;
+  //   }
+  //   #{$self}__form-modal {
+  //     background-color: #e9e1b8;
+  //   }
+  //   #{$self}__form {
+  //     background-color: #e9e1b8;
+  //     #{$self}__input {
+  //       border-color: #eed368;
+  //       border: 1px solid;
+  //       background: url("~assets/img/tanContainer.png");
+  //     }
+  //   }
+  // }
+  // &--ruby {
+  //   background: url("~assets/img/rubyContainer.png");
+  //   border-color: red;
+  // }
+  // &--sapphire {
+  //   background: url("~assets/img/sapphireContainer.png");
+  //   border-color: blue;
+  // }
   &__none {
     display: flex;
     flex-direction: column;
@@ -254,6 +269,10 @@ export default {
     box-shadow: inset 0 -1px #e3e8ee;
     box-shadow: 0 7px 14px 0 rgba(60, 66, 87, 0.1),
       0 3px 6px 0 rgba(0, 0, 0, 0.07);
+    @include themify($themes) {
+      background: themed("modalBackgroundColor");
+      color: themed("textColor");
+    }
     #{$self}__modal-title {
       font-size: 1.4rem;
       padding: 0.2rem 1.2rem;

@@ -1,8 +1,7 @@
 <template>
   <div class="divider chapter-wrapper">
     <main class="divider chapter-container" :class="{'chapter-container--mobile':$device.isMobile}">
-      <Chapter v-if="!nochapter&&!$device.isMobile"></Chapter>
-      <mobile-chapter :comment="$route.query.comment" v-if="$device.isMobile"></mobile-chapter>
+      <component v-if="!nochapter" :is="chapterComponent" :comment="$route.query.comment" />
       <div v-if="nochapter" class="chapter-closed" @click="nochapter=false">
         <fa icon="expand-arrows-alt"></fa>
       </div>
@@ -92,7 +91,12 @@ export default {
     ...mapGetters({
       title: "chapter/getChapterBookTitle",
       chapter: "chapter/getChapter"
-    })
+    }),
+    chapterComponent() {
+      if (this.$device.isMobile)
+        return () => import("@/components/ChapterPage/MobileChapter");
+      return () => import("@/components/ChapterPage/Chapter");
+    }
   },
   scrollToTop: true,
   pageTransition: false,
@@ -126,7 +130,6 @@ export default {
       background-color: white;
       position: relative;
       display: inline-block;
-      border: 1px solid #cecece;
       max-width: 750px;
       box-sizing: border-box;
       padding: 0 1rem;

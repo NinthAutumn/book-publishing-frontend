@@ -49,28 +49,11 @@ export default {
   // position
   top: 0;
   right: 0;
-  background-color: #fff;
-  // overflow: auto;
-  &--default {
-    background: url("~assets/img/defaultContainer.png");
-    border-color: #dae0e6;
+  @include themify($themes) {
+    background: themed("modalBackgroundColor");
+    color: themed("textColor");
   }
-  &--black {
-    background-color: rgb(53, 53, 53);
-    border-color: black;
-  }
-  &--tan {
-    background: url("~assets/img/tanContainer.png");
-    border-color: #eed368;
-  }
-  &--ruby {
-    background: url("~assets/img/rubyContainer.png");
-    border-color: red;
-  }
-  &--sapphire {
-    background: url("~assets/img/sapphireContainer.png");
-    border-color: blue;
-  }
+
   &__header {
     height: 5rem;
     // background-color: black;

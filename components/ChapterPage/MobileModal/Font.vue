@@ -1,5 +1,5 @@
 <template>
-  <div class="mobile-setting" :class="`mobile-setting--${theme}`">
+  <div class="mobile-setting">
     <div class="mobile-setting__container">
       <div class="mobile-setting__font">
         <div class="mobile-setting__font-list">
@@ -47,9 +47,6 @@
 <script>
 import { mapGetters } from "vuex";
 export default {
-  props: {
-    theme: String
-  },
   computed: {
     ...mapGetters({
       fontFamily: "user/getFontFamily",
@@ -127,27 +124,11 @@ export default {
   // position
   bottom: 0;
   left: 0;
-  background-color: #fff;
-  &--default {
-    background: url("~assets/img/defaultContainer.png");
-    border-color: #dae0e6;
+  @include themify($themes) {
+    background: themed("textBackgroundColor");
+    color: themed("textColor");
   }
-  &--black {
-    background-color: rgb(53, 53, 53);
-    border-color: black;
-  }
-  &--tan {
-    background: url("~assets/img/tanContainer.png");
-    border-color: #eed368;
-  }
-  &--ruby {
-    background: url("~assets/img/rubyContainer.png");
-    border-color: red;
-  }
-  &--sapphire {
-    background: url("~assets/img/sapphireContainer.png");
-    border-color: blue;
-  }
+
   &__container {
     width: 100%;
     height: 100%;

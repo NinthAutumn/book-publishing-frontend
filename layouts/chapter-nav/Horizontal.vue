@@ -70,9 +70,7 @@
         </div>
       </div>
     </nav>
-    <transition name="grow-shrink">
-      <AuthModal v-if="loginState"></AuthModal>
-    </transition>
+
     <transition name="grow-shrink">
       <product-modal v-if="productState"></product-modal>
     </transition>
@@ -103,9 +101,6 @@ export default {
     }
   },
   components: {
-    AuthModal: hydrateWhenVisible(() =>
-      import("@/components/Navigation/Auth/AuthModal")
-    ),
     Dropdown: hydrateWhenVisible(() =>
       import("@/components/Navigation/Dropdown")
     ),
