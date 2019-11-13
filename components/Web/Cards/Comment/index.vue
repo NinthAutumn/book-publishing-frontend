@@ -28,18 +28,20 @@
         />
       </div>
     </div>
-    <component
-      @toggleReport="toggleReport"
-      v-for="child in comment.children"
-      :user_id="user_id"
-      :key="child.id"
-      :author_id="author_id"
-      :comment="child"
-      :auth="auth"
-      :theme="theme"
-      :depth="depth+1"
-      :is="childInstance"
-    />
+    <div class="comment-card__children">
+      <component
+        @toggleReport="toggleReport"
+        v-for="child in comment.children"
+        :user_id="user_id"
+        :key="child.id"
+        :author_id="author_id"
+        :comment="child"
+        :auth="auth"
+        :theme="theme"
+        :depth="depth+1"
+        :is="childInstance"
+      />
+    </div>
   </div>
 </template>
 
@@ -67,7 +69,7 @@ export default {
       return;
     },
     indent() {
-      return `padding-left:${this.depth > 0 ? 4 : 0}rem`;
+      return `padding-left:${this.depth > 0 ? 20 : 0}px`;
     },
     formInstance() {
       if (this.reply) return () => import("@/components/Web/Forms/Comment");
@@ -101,7 +103,7 @@ export default {
   position: relative;
 
   &__container {
-    padding-bottom: 1rem;
+    padding-bottom: 10px;
     &--selected {
       background-color: rgb(240, 240, 240);
     }
@@ -109,11 +111,12 @@ export default {
       width: 100%;
     }
     #{$self}__content {
-      font-size: 1.5rem;
-      margin-bottom: 1rem;
+      font-size: 15px;
+      margin-bottom: 10px;
+      word-break: break-all;
     }
     #{$self}__avatar {
-      margin-right: 1rem;
+      margin-right: 10px;
     }
   }
 }

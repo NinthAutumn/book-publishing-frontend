@@ -67,8 +67,8 @@ export default {
       }
     }
     #{$self}__item {
-      font-size: 1.3rem;
-      margin-right: 1rem;
+      font-size: 13px;
+      margin-right: 10px;
       color: #818384;
       &--rating {
       }
@@ -80,7 +80,7 @@ export default {
         color: blue;
       }
       &--date {
-        font-size: 1.1rem;
+        font-size: 11px;
       }
       &--anchor {
         cursor: pointer;

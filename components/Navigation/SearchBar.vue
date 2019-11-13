@@ -78,7 +78,7 @@ export default {
       padding-right: 7.5rem;
       // box-shadow: 0 2px 5px 0 rgba(60, 66, 87, 0.1),
       //   0 1px 1px 0 rgba(0, 0, 0, 0.07);
-      border-radius: 0.4rem;
+      border-radius: 10rem;
       height: 100%;
       // width: 80vw;
       border: 1px solid rgb(236, 236, 236);

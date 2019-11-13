@@ -153,25 +153,41 @@ export default {
   $self: &;
   &__list {
     #{$self}__item {
-      margin-right: 0.5rem;
+      // margin-right: px;
       cursor: pointer;
-      font-size: 1.3rem;
+      font-size: 13px;
+      @include themify($themes) {
+        color: themed("textLightColor");
+      }
+      padding: 3px 10px;
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      &:hover {
+        @include themify($themes) {
+          background: themed("textHoverLightColor");
+        }
+      }
       &--disliked {
+        padding: 3px;
         color: #7193ff;
       }
       &--dislike {
-        margin-right: 1rem;
+        padding: 3px;
         transform: rotateY(180deg) translateY(3px);
       }
       &--like {
+        padding: 3px;
       }
       &--liked {
+        padding: 3px;
         color: orangered;
       }
       #{$self}__text {
-        margin-right: 1rem;
-        margin-left: 0.5rem;
-        font-size: 1.2rem;
+        // margin-right: 10px;
+        margin-left: 5px;
+        font-size: 12px;
       }
     }
   }
