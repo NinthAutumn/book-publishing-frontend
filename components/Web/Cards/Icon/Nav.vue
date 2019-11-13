@@ -1,5 +1,5 @@
 <template>
-  <div class="navigation-icons">
+  <div class="navigation-icons" @click.stop="$emit('click')">
     <div
       class="navigation-icons__container"
       :class="`navigation-icons__container--${size}`"

@@ -16,14 +16,8 @@
         </div>
       </div>
       <div class="user-nav flex-row flex--align">
-        <nav-icon @click.stop="openSubModal" icon="rainbow"></nav-icon>
-        <nav-icon icon="bell"></nav-icon>
-        <nav-icon
-          v-if="loggedIn"
-          :notificationCount="notificationCount"
-          @click.stop="closeNotification"
-          icon="bell"
-        ></nav-icon>
+        <nav-icon @click="openSubModal" icon="rainbow"></nav-icon>
+        <nav-icon :notificationCount="notificationCount" @click="closeNotification" icon="bell"></nav-icon>
         <!-- <div
           v-ripple
           class="inbox-icon flex flex--align flex--center"

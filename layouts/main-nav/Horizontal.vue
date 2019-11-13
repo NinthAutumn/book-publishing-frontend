@@ -17,12 +17,12 @@
       <SearchBar class="searchbar"></SearchBar>
 
       <div class="user-nav flex-row flex--align">
-        <nav-icon @click.stop="$router.push('/dashboard/books/new')" icon="feather"></nav-icon>
-        <nav-icon @click.stop="openSubModal" icon="rainbow"></nav-icon>
+        <nav-icon @click="$router.push('/dashboard/books/new')" icon="feather"></nav-icon>
+        <nav-icon @click="openSubModal" icon="rainbow"></nav-icon>
         <nav-icon
           v-if="loggedIn"
           :notificationCount="notificationCount"
-          @click.stop="notification = !notification"
+          @click="notification = !notification"
           icon="bell"
         ></nav-icon>
 
