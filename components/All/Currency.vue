@@ -47,11 +47,11 @@ export default {
   }
   &__number {
     // font-family: Kameron;
-    font-size: 16px;
+    font-size: 1.6rem;
     // font-weight: bold;
     &--large {
       // margin-left: 5px;
-      font-size: 25px;
+      font-size: 2.5rem;
     }
     &--small {
       font-size: 1.2rem;
@@ -64,8 +64,8 @@ export default {
     transform-style: preserve-3d;
     transform: perspective(500px);
     &--large {
-      width: 45px;
-      height: 45px;
+      width: 4.5rem;
+      height: 4.5rem;
       margin: 0;
       margin-bottom: 10px;
     }
@@ -85,8 +85,8 @@ export default {
     position: relative;
     fill: $secondary;
     font-weight: bold;
-    width: 22px;
-    height: 22px;
+    width: 2.2rem;
+    height: 2.2rem;
     // margin-left: 15px;
     box-shadow: 1px 1px 3px $secondary;
     border-radius: 10000px;
@@ -95,8 +95,8 @@ export default {
     // transform: rotate3d(0, 1, 0, 40deg);
     z-index: 1;
     &--large {
-      width: 45px;
-      height: 45px;
+      width: 4.5rem;
+      height: 4.5rem;
     }
     &--small {
       width: 1.2rem;
