@@ -1,39 +1,48 @@
 <template>
-  <div class="loading-component">
-    <div class="loading-spinner">
-      <BallScaleRippleMultipleLoader v-show="loading" color="#8860d0" size="30px"></BallScaleRippleMultipleLoader>
-    </div>
-  </div>
+  <div class="loader" v-if="watching" />
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
   data: () => ({
-    loading: false
+    loader: null,
+    watching: false
   }),
+  computed: mapState({
+    active: state => state.active
+  }),
+  watch: {
+    active(isActive) {
+      if (this.watching && !isActive) {
+        this.watching = false;
+      }
+    }
+  },
   methods: {
     start() {
-      this.loading = true;
+      this.watching = true;
     },
     finish() {
-      this.loading = false;
+      if (this.active) {
+        this.watching = true;
+      }
     }
   }
 };
 </script>
 
 <style lang="scss">
-.loading-component {
-  width: 100%;
+.loader {
+  position: fixed;
   height: 100%;
-  z-index: 1000;
-  .loading-spinner {
-    position: fixed;
-    width: 50px;
-    height: 50px;
-    top: 60px;
-    right: 10px;
-    z-index: 10000;
-  }
+  width: 100%;
+  top: 0;
+  left: 0;
+  background: $primary;
+  z-index: 1000000;
 }
 </style>
+
+
+

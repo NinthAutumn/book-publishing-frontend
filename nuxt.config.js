@@ -90,6 +90,7 @@ module.exports = {
   /*
    ** Customize the progress-bar color
    */
+  // loading: '~/components/loading.vue',
   loading: {
     color: '#af9bd0',
     height: '3px',
@@ -145,7 +146,6 @@ module.exports = {
       src: '@/plugins/pull-to',
       ssr: false
     },
-
     {
       src: '@/plugins/datePicker',
       ssr: false

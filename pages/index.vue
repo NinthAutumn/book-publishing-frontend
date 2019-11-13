@@ -59,7 +59,7 @@ import {
   hydrateWhenIdle,
   hydrateOnInteraction
 } from "vue-lazy-hydration";
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters, mapActions, mapMutations } from "vuex";
 export default {
   components: {
     // BookSkeleton: () => import("@/components/Web/Cards/Skeleton/Book"),
@@ -101,6 +101,7 @@ export default {
     };
   },
   async mounted() {
+    this.setActive(true);
     await this.fetchFrequent();
     await this.fetchLatestBook({ page: 1, limit: 12, structured: false });
     await this.fetchTrending({ time: "weekly", page: 1 });
@@ -109,12 +110,16 @@ export default {
     await this.fetchTrendingReview();
     window.addEventListener("resize", this.handleResize);
     this.handleResize();
+    this.setActive(false);
     // this.compo = this.checkMobile() ? Header : null;
   },
   destroyed() {
     window.removeEventListener("resize", this.handleResize);
   },
   methods: {
+    ...mapMutations({
+      setActive: "SET_ACTIVE"
+    }),
     ...mapActions({
       fetchTrendingReading: "analytic/fetchTrendingReviews",
       fetchLatestReading: "reading/fetchLatestReadingList",

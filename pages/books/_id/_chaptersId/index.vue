@@ -136,7 +136,7 @@ export default {
       box-sizing: border-box;
       padding: 0 1rem;
       @include themify($themes) {
-        background: themed("textBackgroundColor");
+        background: themed("textBigBackgroundColor");
         color: themed("textColor");
       }
       &--mobile {

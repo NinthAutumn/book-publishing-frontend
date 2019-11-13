@@ -11,7 +11,8 @@ export const state = () => ({
   settingModal: false,
   volumeModal: false,
   imageUrl: "",
-  imageModal: false
+  imageModal: false,
+  active: false,
 })
 
 
@@ -23,6 +24,7 @@ export const getters = {
   isAuthenticated: (state) => {
     return state.auth.loggedIn
   },
+
   loggedInUser: (state) => {
     return state.auth.user
   },
@@ -40,6 +42,9 @@ export const getters = {
 export const mutations = {
   SIGNUP_STATE(state) {
     state.authStep = 1;
+  },
+  SET_ACTIVE(state, active) {
+    state.active = active;
   },
   TOGGLE_VOLUME(state) {
     state.volumeModal = !state.volumeModal
