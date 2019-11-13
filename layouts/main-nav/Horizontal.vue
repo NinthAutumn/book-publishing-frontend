@@ -17,24 +17,14 @@
       <SearchBar class="searchbar"></SearchBar>
 
       <div class="user-nav flex-row flex--align">
-        <nuxt-link v-ripple tag="div" to="/dashboard/books/new" class="create-book">
-          <fa icon="pen"></fa>
-        </nuxt-link>
-        <div class="site-sub" @click.stop="openSubModal">
-          <fa icon="rainbow"></fa>
-        </div>
-        <div
-          v-ripple
+        <nav-icon @click.stop="$router.push('/dashboard/books/new')" icon="feather"></nav-icon>
+        <nav-icon @click.stop="openSubModal" icon="rainbow"></nav-icon>
+        <nav-icon
           v-if="loggedIn"
-          class="inbox-icon flex flex--align flex--center"
+          :notificationCount="notificationCount"
           @click.stop="notification = !notification"
-        >
-          <span v-if="notificationCount > 0">
-            <div class="inbox-icon__count" v-if="notificationCount < 9">{{notificationCount}}</div>
-            <div class="inbox-icon__count" v-else>9+</div>
-          </span>
-          <fa icon="bell"></fa>
-        </div>
+          icon="bell"
+        ></nav-icon>
 
         <transition v-if="loggedIn" name="grow-shrink">
           <notification-list v-if="notification" v-click-outside="closeNotification"></notification-list>
@@ -122,7 +112,8 @@ export default {
     Currency: () => import("@/components/All/Currency"),
     SubMain: hydrateWhenVisible(() =>
       import("@/components/Navigation/Subscribe/SubMain")
-    )
+    ),
+    NavIcon: () => import("@/components/Web/Cards/Icon/Nav")
   },
   computed: {
     ...mapGetters({

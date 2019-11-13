@@ -16,10 +16,15 @@
         </div>
       </div>
       <div class="user-nav flex-row flex--align">
-        <div class="site-sub" @click.stop="openSubModal">
-          <fa icon="rainbow"></fa>
-        </div>
-        <div
+        <nav-icon @click.stop="openSubModal" icon="rainbow"></nav-icon>
+        <nav-icon icon="bell"></nav-icon>
+        <nav-icon
+          v-if="loggedIn"
+          :notificationCount="notificationCount"
+          @click.stop="closeNotification"
+          icon="bell"
+        ></nav-icon>
+        <!-- <div
           v-ripple
           class="inbox-icon flex flex--align flex--center"
           @click.stop="closeNotification"
@@ -30,7 +35,7 @@
           </span>
 
           <fa icon="bell"></fa>
-        </div>
+        </div>-->
         <transition name="grow-shrink">
           <notification-list v-if="notification" v-click-outside="closeNotification"></notification-list>
         </transition>
@@ -113,7 +118,8 @@ export default {
     Currency: hydrateWhenVisible(() => import("@/components/All/Currency")),
     SubMain: hydrateWhenVisible(() =>
       import("@/components/Navigation/Subscribe/SubMain")
-    )
+    ),
+    NavIcon: () => import("@/components/Web/Cards/Icon/Nav")
   },
   computed: {
     ...mapGetters({
