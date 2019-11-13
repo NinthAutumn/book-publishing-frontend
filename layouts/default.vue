@@ -107,7 +107,7 @@ export default {
 }
 
 .nuxt-pages .menu-active {
-  margin-left: 220px;
+  margin-left: 22rem;
   margin-top: 50px;
   // padding: 10px 50px;
   position: relative;

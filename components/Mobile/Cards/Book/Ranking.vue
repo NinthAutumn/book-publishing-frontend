@@ -13,7 +13,7 @@
         ></v-img>
       </div>
       <div class="mranking-card__meta">
-        <div class="mranking-card__title" v-line-clamp="1" v-text="book.title"></div>
+        <div class="mranking-card__title" v-text="book.title"></div>
         <div class="flex-divider flex-row">
           <div class="mranking-card__author" v-text="`${book.pen_name}・${book.name}`"></div>
         </div>

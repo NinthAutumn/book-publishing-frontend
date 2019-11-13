@@ -112,6 +112,7 @@ export default {
 .chapter {
   display: flex;
   justify-content: space-around;
+
   .chapter-closed {
     padding: 1rem;
     font-size: 2.5rem;
@@ -125,12 +126,13 @@ export default {
     justify-content: center;
     max-width: 100%;
     box-sizing: border-box;
-
     .chapter-container {
       background-color: white;
       position: relative;
       display: inline-block;
       max-width: 750px;
+      min-height: 100vh;
+
       box-sizing: border-box;
       padding: 0 1rem;
       @include themify($themes) {
