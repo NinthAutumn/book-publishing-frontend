@@ -1,10 +1,10 @@
 <template>
   <div class="mobile-profile">
     <div tag="div" class="mobile-profile__avatar">
-      <v-avatar size="100" v-if="profile.avatar">
-        <v-img :src="author&&profile.author_avatar? profile.author_avatar:profile.avatar"></v-img>
+      <v-avatar size="100">
+        <v-img :src="author? user.author_avatar:user.avatar"></v-img>
       </v-avatar>
-      <div class="mobile-profile__name" v-text="author? profile.pen_name : profile.username"></div>
+      <div class="mobile-profile__name" v-text="author? user.pen_name : user.username"></div>
     </div>
     <div class="mobile-profile__stats">
       <div class="mobile-profile__stat-container">
@@ -37,7 +37,6 @@ export default {
   },
   computed: {
     ...mapGetters({
-      profile: "user/getProfile",
       user: "auth/getUser",
       stat: "user/getProfileStats"
     })

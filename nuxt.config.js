@@ -13,6 +13,11 @@ module.exports = {
         name: 'viewport',
         content: 'width=device-width, initial-scale=1,minimum-scale=1, maximum-scale=1'
       },
+
+      {
+        name: "language",
+        content: "Japanese"
+      },
       {
         name: 'description',
         content: '優れた機能とデザインを雇用する令和を象徴する最新ネット小説投稿・閲覧サイトである。'
@@ -22,57 +27,14 @@ module.exports = {
         content: '最新WEB小説投稿・閲覧サイト ノーブル'
       },
       {
-        name: "language",
-        content: "Japanese"
-      },
-      {
         property: "og:type",
         content: 'website'
-      },
-      {
-        property: "og:url",
-        content: 'https://nobles.jp'
-      },
-      {
-        property: "og:title",
-        content: '最新WEB小説投稿・閲覧サイト ノーブル'
-      },
-      {
-        property: 'og:description',
-        content: '機能とデザインを雇用する令和を象徴する最新ネット小説投稿・閲覧サイトである。'
-      },
-      {
-        property: 'og:image',
-        content: '機能とデザインを雇用する令和を象徴する最新ネット小説投稿・閲覧サイトである。'
-      },
-      {
-        property: "og:site_name",
-        content: 'ノーブル'
       },
       {
         property: "og:locale",
         content: 'ja_JP'
       },
-      {
-        name: 'twitter:card',
-        content: "summary"
-      },
-      {
-        name: 'twitter:site',
-        content: '@NoblesJp'
-      },
-      {
-        name: 'twitter:title',
-        content: '最新WEB小説投稿・閲覧サイト ノーブル'
-      },
-      {
-        name: 'twitter:description',
-        content: '機能とデザインを雇用する令和を象徴する最新ネット小説投稿・閲覧サイトである。'
-      },
-      {
-        name: 'twitter:url',
-        content: 'https://nobles.jp'
-      }
+
 
     ],
     link: [{

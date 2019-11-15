@@ -111,7 +111,6 @@ export default {
     window.addEventListener("resize", this.handleResize);
     this.handleResize();
     this.setActive(false);
-    // this.compo = this.checkMobile() ? Header : null;
   },
   destroyed() {
     window.removeEventListener("resize", this.handleResize);
@@ -137,6 +136,54 @@ export default {
       this.height = this.$refs.homepage.clientWidth;
       this.compo = this.width > 1197;
     }
+  },
+  head() {
+    meta: [
+      {
+        property: "og:url",
+        content: "https://nobles.jp"
+      },
+      {
+        property: "og:title",
+        content: "最新WEB小説投稿・閲覧サイト ノーブル"
+      },
+      {
+        property: "og:description",
+        content:
+          "機能とデザインを雇用する令和を象徴する最新ネット小説投稿・閲覧サイトである。"
+      },
+      {
+        property: "og:image",
+        content:
+          "機能とデザインを雇用する令和を象徴する最新ネット小説投稿・閲覧サイトである。"
+      },
+      {
+        property: "og:site_name",
+        content: "ノーブル"
+      },
+
+      {
+        name: "twitter:card",
+        content: "summary"
+      },
+      {
+        name: "twitter:site",
+        content: "@NoblesJp"
+      },
+      {
+        name: "twitter:title",
+        content: "最新WEB小説投稿・閲覧サイト ノーブル"
+      },
+      {
+        name: "twitter:description",
+        content:
+          "機能とデザインを雇用する令和を象徴する最新ネット小説投稿・閲覧サイトである。"
+      },
+      {
+        name: "twitter:url",
+        content: "https://nobles.jp"
+      }
+    ];
   },
   computed: {
     ...mapGetters({

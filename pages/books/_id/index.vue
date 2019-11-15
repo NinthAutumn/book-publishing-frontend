@@ -40,7 +40,7 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { hydrateWhenVisible } from "vue-lazy-hydration";
+import { hydrateWhenVisible, hydrateSsrOnly } from "vue-lazy-hydration";
 export default {
   auth: false,
   async asyncData({ store, route, app }) {
@@ -58,6 +58,10 @@ export default {
         {
           name: "description",
           content: this.book.synopsis
+        },
+        {
+          name: "keywords",
+          content: this.book.title
         },
         {
           name: "title",

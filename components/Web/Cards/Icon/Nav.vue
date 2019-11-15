@@ -46,6 +46,13 @@ export default {
     border-radius: 10rem;
     margin: 0 2.5px;
     position: relative;
+    &:hover {
+      cursor: pointer;
+      @include themify($themes) {
+        background: themed("textColor");
+        color: themed("textBackgroundColor");
+      }
+    }
     #{$self}__count {
       position: absolute;
       top: 0;

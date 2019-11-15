@@ -102,7 +102,41 @@ export default {
   pageTransition: false,
   head() {
     return {
-      title: this.title
+      title: this.title,
+      meta: [
+        {
+          name: "keywords",
+          content: `第${this.chapter.index}話　${this.chapter.title}`
+        },
+        {
+          property: "og:type",
+          content: "book"
+        },
+        {
+          property: "og:url",
+          content: `https://nobles.jp/books/${this.$route.params.id}/${this.$route.params.chaptersId}`
+        },
+        {
+          property: "og:site_name",
+          content: "ノーブル"
+        },
+        {
+          property: "og:locale",
+          content: "ja_JP"
+        },
+        {
+          name: "twitter:card",
+          content: "summary"
+        },
+        {
+          name: "twitter:site",
+          content: "@NoblesJp"
+        },
+        {
+          name: "twitter:url",
+          content: `https://nobles.jp/books/${this.$route.params.id}/${this.$route.params.chaptersId}`
+        }
+      ]
     };
   }
 };

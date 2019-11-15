@@ -90,9 +90,15 @@ export default {
     #{$self}__item {
       display: flex;
       margin-bottom: 1rem;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
     }
     #{$self}__meta {
       width: 100%;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
     }
     #{$self}__rating {
       margin-bottom: 0.5rem;
@@ -111,6 +117,9 @@ export default {
       margin-bottom: 1rem;
     }
     #{$self}__title {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
       font-size: 1.6rem;
       margin-bottom: 0.5rem;
     }
@@ -120,6 +129,9 @@ export default {
       border-radius: 0.5rem;
       background-color: rgb(248, 248, 248);
       margin-bottom: 1rem;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
     }
     #{$self}__parent {
       font-size: 1.4rem;
@@ -128,6 +140,9 @@ export default {
       border: 1px solid rgb(241, 241, 241);
       color: grey;
       transition: transform 200ms;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
       &__icon {
         margin-right: 0.5rem;
       }

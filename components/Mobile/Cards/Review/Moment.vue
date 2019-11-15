@@ -99,6 +99,8 @@ export default {
     display: flex;
     max-width: 100%;
     overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
     #{$self}__content {
       word-break: break-word;
       max-width: 100%;
@@ -112,6 +114,8 @@ export default {
       max-width: 100%;
       width: 100%;
       overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
     }
     #{$self}__title {
       max-width: 100%;
@@ -126,6 +130,9 @@ export default {
       margin-bottom: 0.5rem;
       padding: 0.5rem;
       word-break: break-word;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
     }
     .v-icon {
       padding: 0 !important;

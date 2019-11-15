@@ -1,9 +1,9 @@
 <template>
   <nav class="mc-nav" :class="`mc-nav--${theme}`">
     <div class="mc-nav__header flex-row flex--align　flex--between">
-      <div class="mc-nav__back" @click="goBack" v-ripple>
+      <nuxt-link :to="`/books/${$route.params.id}`" class="mc-nav__back" v-ripple>
         <fa icon="arrow-left"></fa>
-      </div>
+      </nuxt-link>
       <div class="mc-nav__title">{{`${chapter.index}話 ${chapter.title} `}}</div>
     </div>
   </nav>
@@ -17,11 +17,6 @@ export default {
       chapter: "chapter/getChapter",
       theme: "user/getTheme"
     })
-  },
-  methods: {
-    goBack() {
-      this.$router.go(-1);
-    }
   }
 };
 </script>
@@ -35,14 +30,11 @@ export default {
   left: 0;
   z-index: 100;
   width: 100%;
-  background-color: #fff;
-  &--black {
-    background-color: #1a1a1b !important;
-    color: #d7dadc;
+  @include themify($themes) {
+    background: themed("modalBackgroundColor");
+    color: themed("textColor");
   }
-  &--tan {
-    background-color: #e9e1b8;
-  }
+
   &__header {
     display: flex;
     align-items: center;

@@ -6,7 +6,10 @@
         <fa icon="times"></fa>
       </div>
     </div>
-    <ul class="notification-component__list">
+    <ul
+      class="notification-component__list"
+      :class="{'notification-component__list--mobile':$device.isMobile}"
+    >
       <nuxt-link
         class="notification-component__item flex-row"
         v-for="(notification,index) in notifications"
@@ -122,6 +125,9 @@ export default {
   &__list {
     height: 40rem;
     overflow: auto;
+    &--mobile {
+      padding-bottom: 7.7rem;
+    }
     #{$self}__item {
       padding: 1.6rem;
       background-color: #fff;

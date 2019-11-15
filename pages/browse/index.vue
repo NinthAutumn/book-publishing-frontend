@@ -36,18 +36,6 @@
           <div class="flex-divider flex-row flex--right" style="width:100%;">
             <div class="browse-page__filter-genre" style="margin-right:1rem;">
               <genre-select @selected="refresh" v-model="selected_genre"></genre-select>
-              <!-- <Select
-                v-model="selected_genre"
-                transition="grow-shrink"
-                multiple
-                genre
-                disable="犬"
-                :data="genre_list"
-                icon="filter"
-                name="ジャンル"
-                :modalD="modalDirection"
-                :selected_item="$route.query.genre"
-              ></Select>-->
             </div>
             <button
               class="browse-page__open-tags flex-row flex--align flex--center"
@@ -153,7 +141,7 @@ export default {
   },
   created() {
     if (this.$device.isMobile) {
-      return this.$router.push("/browse/mobile");
+      return this.$router.replace("/browse/mobile");
     }
     if (this.$route.query.genre && this.$route.query.genre !== "undefined") {
       this.selected_genre = [{ name: this.$route.query.genre }];
