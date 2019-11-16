@@ -88,6 +88,9 @@ export default {
         white-space: nowrap;
         text-overflow: ellipsis;
         font-size: 2rem;
+        &:hover {
+          cursor: pointer;
+        }
       }
       &--rating {
         grid-area: rating;

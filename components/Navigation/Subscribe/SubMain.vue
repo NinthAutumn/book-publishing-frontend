@@ -2,7 +2,7 @@
   <div class="dialog dialog__container sub-modal__wrapper">
     <div class="dialog__content sub-modal__container" v-click-outside="toggle">
       <div class="sub-modal__header flex-row flex--between flex--align">
-        <div class="sub-modal__prev" v-if="step > 1" @click.stop="step--">
+        <div class="sub-modal__prev" v-if="step > 1" @click.stop="goBackHandler">
           <fa icon="arrow-left"></fa>
         </div>
         <div class="sub-modal__title">
@@ -53,12 +53,23 @@ export default {
   methods: {
     ...mapMutations({
       toggle: "subscription/TOGGLE_SITE_MODAL"
-    })
+    }),
+    goBackHandler() {
+      if (this.step === 4) {
+        this.step--;
+        this.step--;
+      } else if (
+        this.step === 3 &&
+        this.$store.getters["stripe/getPaymentMethods"].data.length < 1
+      ) {
+        this.step = 1;
+      } else {
+        this.step--;
+      }
+    }
   },
   components: {
     SubList: () => import("./SubList"),
-    SubPaymentList: () => import("./SubPaymentList"),
-    SubPaymentMethod: () => import("./SubPaymentMethod"),
     PaymentMethod: () => import("@/components/Navigation/Stripe/PaymentMethod"),
     PaymentForm: () => import("@/components/Navigation/Stripe/PaymentFormCard"),
     RippleLoader: () => import("@/components/Web/Loaders/Ripple")
@@ -96,6 +107,7 @@ export default {
   }
 
   &__header {
+    color: black;
     padding: 1rem 2rem;
     background-color: #fff;
     border-bottom: 1px solid #eeeeee;

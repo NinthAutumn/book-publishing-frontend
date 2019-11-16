@@ -166,12 +166,13 @@ export default {
     }
     #{$self}__container {
       min-height: 55rem;
-      // border-radius: 0.4rem;
+      border-radius: 0.5rem;
       padding: 0 !important;
       width: 40rem;
     }
 
     #{$self}__header {
+      color: black;
       font-size: 1.8rem;
       padding: 1rem 2rem;
       border-bottom: 1px solid rgb(238, 238, 238);

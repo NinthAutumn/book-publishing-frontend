@@ -259,7 +259,7 @@ export default {
         });
       }
     },
-    async checkPaymentAvailability() {
+    async checkPaymentAvailability(paymentRequest) {
       const result = await paymentRequest.canMakePayment();
       if (result) {
         prButton.mount("#payment-request-button");
@@ -320,7 +320,7 @@ export default {
       paymentRequest
     });
 
-    await this.checkPaymentAvailability();
+    await this.checkPaymentAvailability(paymentRequest);
     paymentRequest.on("paymentmethod", this.mountPayment);
     this.card = elements.create("card", { style: style });
     this.card.addEventListener("change", async function(event) {

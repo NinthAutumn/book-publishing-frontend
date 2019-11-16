@@ -7,7 +7,7 @@
           <v-avatar
             :size="180"
             class="profile-nav__avatar-img"
-            @click.stop="$store.commit('TOGGLE_SETTING_MODAL')"
+            @click.stop="$router.push('/auth/user/setting')"
           >
             <!-- <img
             :src="`https://storage.googleapis.com/theta-images/${user.avatar}`"
@@ -70,7 +70,9 @@ export default {
       stat_menu: [
         {
           name: "作品",
-          value: this.$store.getters["user/getProfileStats"].book_count
+          value: this.$route.query.author
+            ? this.$store.getters["user/getProfileStats"].book_count
+            : 0
         },
         {
           name: "レビュー",

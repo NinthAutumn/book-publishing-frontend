@@ -158,6 +158,7 @@ export default {
   transition: border-color 300ms;
   min-height: 10rem;
   position: relative;
+  color: black;
   &__bought {
     width: 100%;
     position: absolute;
@@ -227,6 +228,7 @@ export default {
       text-align: center;
       box-shadow: 0 7px 14px 0 rgba(60, 66, 87, 0.1),
         0 3px 6px 0 rgba(0, 0, 0, 0.07);
+      overflow: hidden;
       #{$self}__option {
         padding: 0.3rem 1.2rem;
         text-align: center;
@@ -242,7 +244,9 @@ export default {
     }
   }
   &__header {
+    color: black;
     #{$self}__title {
+      color: black;
       font-size: 1.6rem;
     }
     #{$self}__icon {
