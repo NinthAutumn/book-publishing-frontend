@@ -10,6 +10,7 @@ export const state = () => ({
   bookmarkInbox: [],
   user: {},
   reviews: [],
+  activities: [],
   comments: [],
   notification: [],
   author: {},
@@ -58,7 +59,8 @@ export const getters = {
   getAuthor: state => state.author,
   getCommentNotification: state => state.commentNotification,
   getCommentNotificationCount: state => state.commentNotificationCount,
-  getUser: state => state.user
+  getUser: state => state.user,
+  getUserActivity: state => state.activities
 }
 
 export const mutations = {
@@ -93,8 +95,12 @@ export const mutations = {
   SET_PROFILE: (state, profile) => {
     state.profile = profile
   },
-  SET_PROFILE_REVIEWS: (state, reviews) => {
-    state.reviews = reviews
+  SET_ACTIVITY_LIST: (state, {
+    list,
+    infinite
+  }) => {
+    if (!infinite) return state.activities = list;
+    state.activities.push(...list);
   },
   SET_USER_COMMENTS: (state, comments) => {
     state.comments = comments
@@ -103,9 +109,8 @@ export const mutations = {
     state.notification = notification
   },
   PUSH_NOTIFICATION: (state, notifications) => {
-    notifications.forEach((notification) => {
-      state.notification.push(notification)
-    })
+    state.notification.push(...notifications)
+
   },
   SET_AUTHOR: async (state, author) => {
     state.author = author
@@ -123,9 +128,7 @@ export const mutations = {
     state.commentNotification = notifications
   },
   PUSH_COMMENT_NOTIFICATION: (state, notifications) => {
-    notifications.forEach((notification) => {
-      state.commentNotification.push(notification)
-    })
+    state.commentNotification.push(...notifications)
   },
   SET_COMMENT_NOTIFICATION_COUNT: (state, count) => {
     state.commentNotificationCount = count
@@ -245,17 +248,23 @@ export const actions = {
       return Promise.reject(error)
     }
   },
-  async fetchProfileReviews({
+  async fetchUserActivityList({
     commit
   }, {
     userId,
     authorId,
-    page = 1
+    page = 1,
+    infinite = false
   }) {
     try {
+
       const res = await this.$axios.get(`/v2/user/${userId}/profile/reviews?page=${page}`)
-      commit('SET_PROFILE_REVIEWS', get(res, 'data'))
-      return Promise.resolve()
+      const list = get(res, 'data');
+      commit('SET_ACTIVITY_LIST', {
+        list,
+        infinite
+      })
+      return Promise.resolve(list)
     } catch (error) {
       return Promise.reject(error)
     }

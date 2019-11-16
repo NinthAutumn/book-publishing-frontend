@@ -25,13 +25,14 @@
         <div class="profile-content__activity-nav flex-row">
           <div class="profile-content__title profile-content__title--activity">アクティビーリスト</div>
         </div>
-        <activity-list reviews :user="user" :list="reviews"></activity-list>
+        <activity-list reviews :user="user" :list="activity"></activity-list>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   props: {
     user: Object,
@@ -42,9 +43,9 @@ export default {
     ActivityList: () => import("./ActivityList")
   },
   computed: {
-    reviews() {
-      return this.$store.getters["user/getProfileReviews"];
-    },
+    ...mapGetters({
+      activity: "user/getUserActivity"
+    }),
     comments() {
       return this.$store.getters["user/getUserComments"];
     },
@@ -71,7 +72,7 @@ export default {
     };
   },
   async mounted() {
-    await this.$store.dispatch("user/fetchProfileReviews", {
+    await this.$store.dispatch("user/fetchUserActivityList", {
       userId: this.$route.params.id
     });
     this.metas["calendar"]["value"] =

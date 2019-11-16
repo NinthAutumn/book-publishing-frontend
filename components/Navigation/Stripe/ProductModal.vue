@@ -167,6 +167,7 @@ export default {
     #{$self}__container {
       min-height: 55rem;
       border-radius: 0.5rem;
+
       padding: 0 !important;
       width: 40rem;
     }

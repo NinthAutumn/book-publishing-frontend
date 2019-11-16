@@ -14,7 +14,7 @@
         :type="'moment'"
         :review="review"
         :user="user"
-        v-for="review in reviews"
+        v-for="review in activity"
         :key="review.id"
       ></review-card>
     </div>
@@ -45,14 +45,14 @@ export default {
   },
   computed: {
     ...mapGetters({
-      reviews: "user/getProfileReviews"
+      activity: "user/getUserActivity"
     })
   },
   components: {
     ReviewCard: () => import("@/components/Mobile/Cards/Review")
   },
   async mounted() {
-    await this.$store.dispatch("user/fetchProfileReviews", {
+    await this.$store.dispatch("user/fetchUserActivityList", {
       userId: this.$route.params.id
     });
   }

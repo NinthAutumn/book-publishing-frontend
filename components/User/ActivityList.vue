@@ -50,6 +50,9 @@
           </nuxt-link>
         </div>
       </li>
+      <client-only>
+        <infinite-loading @infinite="infiniteHandler"></infinite-loading>
+      </client-only>
     </ul>
   </div>
 </template>
@@ -65,7 +68,8 @@ export default {
   data() {
     return {
       readMore: false,
-      avatar: require("~/assets/img/profile.png")
+      avatar: require("~/assets/img/profile.png"),
+      page: 2
     };
   },
   methods: {
@@ -78,6 +82,18 @@ export default {
     },
     toggleCollapse: function() {
       this.readMore = !this.readMore;
+    },
+    infiniteHandler: async function($state) {
+      let list = await this.$store.dispatch("user/fetchUserActivityList", {
+        userId: this.$route.params.id,
+        page: this.page++,
+        infinite: true
+      });
+      if (list.length > 0) {
+        $state.loaded();
+      } else {
+        $state.complete();
+      }
     }
   }
 };
