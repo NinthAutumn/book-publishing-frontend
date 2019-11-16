@@ -14,6 +14,7 @@
       <div class="book-scard__meta">
         <div class="book-scard__header flex-divider flex-row flex--align flex--between">
           <nuxt-link
+            tag="a"
             :to="`/books/${book.id}`"
             class="book-scard__title"
             v-line-clamp="1"

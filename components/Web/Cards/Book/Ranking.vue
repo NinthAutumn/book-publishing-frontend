@@ -19,7 +19,7 @@
       </div>
       <div class="book-ranking__meta">
         <nuxt-link
-          tag="div"
+          tag="a"
           :to="`/books/${book.id}`"
           class="book-ranking__title"
           v-text="book.title"

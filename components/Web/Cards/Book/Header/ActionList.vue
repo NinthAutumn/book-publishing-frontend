@@ -15,7 +15,10 @@
         >
           <div class="bheader-actions__content" v-if="loading !== key">
             <fa class="bheader-actions__button-icon" :icon="value.icon"></fa>
-            <div class="bheader-actions__button-text" v-text="value.title"></div>
+            <div
+              class="bheader-actions__button-text"
+              v-text="key==='bookmark'&&bookmarked?'ブックマーク済み':value.title"
+            ></div>
           </div>
           <div class="bheader-actions__content bheader-actions__content--loading" v-else></div>
         </div>

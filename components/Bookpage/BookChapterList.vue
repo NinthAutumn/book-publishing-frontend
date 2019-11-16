@@ -17,7 +17,7 @@
         <div class="book-chapters__container" v-if="volume.chapters[0].id">
           <transition-group name="list-complete" tag="ul" class="book-chapters__chapter-list">
             <nuxt-link
-              tag="li"
+              tag="a"
               class="book-chapters__chapter-item"
               v-for="(chapter) in volume.chapters"
               :key="chapter.id"
@@ -96,13 +96,7 @@ export default {
   created() {
     this.today = this.$moment().toDate();
   },
-  async mounted() {
-    await this.$store.dispatch("chapter/fetchChapterList", {
-      bookId: this.$route.params.id,
-      state: "published",
-      structured: true
-    });
-  },
+  async mounted() {},
   methods: {
     async asc() {
       this.$store.commit("chapter/TOC_REVERSE", "published");
@@ -111,7 +105,6 @@ export default {
   },
   computed: {
     ...mapGetters({
-      volumes: "chapter/getChapterList",
       auth: "auth/isAuthenticated"
     })
   },

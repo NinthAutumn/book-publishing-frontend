@@ -19,6 +19,7 @@
     <div class="update-book__meta">
       <div class="flex-divider flex-row flex--align flex--between">
         <nuxt-link
+          tag="a"
           :to="`books/${book? book[0].book_id: ''}`"
           class="update-book__title"
           v-line-clamp="2"

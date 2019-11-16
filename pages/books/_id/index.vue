@@ -33,7 +33,7 @@
           <ReviewsList :rating="book.rating"></ReviewsList>
         </section>
       </div>
-      <BookChapterList class="book-page__content" v-show="tabs.open ==='toc'"></BookChapterList>
+      <BookChapterList :sections="volumes" class="book-page__content" v-show="tabs.open ==='toc'"></BookChapterList>
     </div>
   </main>
 </template>
@@ -49,6 +49,11 @@ export default {
   async fetch({ store, route }) {
     await store.dispatch("book/fetchBook", {
       id: route.params.id
+    });
+    await store.dispatch("chapter/fetchChapterList", {
+      bookId: route.params.id,
+      state: "published",
+      structured: true
     });
   },
   head() {
@@ -126,6 +131,7 @@ export default {
       count: "book/getBookChapterCount",
       reviewCount: "review/getReviewCount",
       genres: "book/getBookGenres",
+      volumes: "chapter/getChapterList",
       tags: "book/getBookTags"
     })
   },
@@ -209,7 +215,7 @@ export default {
       import("@/components/Bookpage/BookContent")
     ),
     BookChapterList: hydrateWhenVisible(() =>
-      import("@/components/Bookpage/BookChapterList")
+      import("@/components/Web/Lists/Chapter")
     ),
     ReviewsList: hydrateWhenVisible(() =>
       import("@/components/Bookpage/ReviewsList")

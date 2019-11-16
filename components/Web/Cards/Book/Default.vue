@@ -46,7 +46,7 @@
       </div>
       <div class="book-card__footer flex-row flex--align flex--between">
         <nuxt-link
-          tag="div"
+          tag="a"
           :to="`/books/${book.book_id||book.id}`"
           v-line-clamp="clampLine"
           class="book-card__title"

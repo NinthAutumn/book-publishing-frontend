@@ -19,14 +19,6 @@ module.exports = {
         content: "Japanese"
       },
       {
-        name: 'description',
-        content: '優れた機能とデザインを雇用する令和を象徴する最新ネット小説投稿・閲覧サイトである。'
-      },
-      {
-        name: 'title',
-        content: '最新WEB小説投稿・閲覧サイト ノーブル'
-      },
-      {
         property: "og:type",
         content: 'website'
       },
@@ -34,8 +26,6 @@ module.exports = {
         property: "og:locale",
         content: 'ja_JP'
       },
-
-
     ],
     link: [{
       rel: 'icon',
