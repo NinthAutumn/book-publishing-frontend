@@ -25,9 +25,8 @@
         class="desktop book-page__content book-page__content--main"
         v-show="tabs.open === 'review'"
       >
-        <book-category class="book-page__category" v-if="!$device.isMobile"></book-category>
+        <book-category class="book-page__category"></book-category>
         <BookContent class="book-page__synopsis" :book="book"></BookContent>
-        <!-- <Tags :tags="tags" :genres="genres" ></Tags> -->
         <section class="book-page__reviews">
           <div class="book-page__review-title">レビュー({{reviewCount}})</div>
           <ReviewsList :rating="book.rating"></ReviewsList>

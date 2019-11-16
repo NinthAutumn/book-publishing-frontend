@@ -6,6 +6,7 @@
     >
       <header>作品を探す</header>
     </div>
+
     <div class="flex-divider browse-page__section flex">
       <div class="flex-divider" style="flex-grow:1;">
         <div class="browse-page__sorting-list flex-row">
@@ -80,6 +81,7 @@
           </div>
         </transition>
         <TagCreate @selected="refresh" v-if="tag_search" v-model="tag_list"></TagCreate>
+
         <div class="browse-page__content flex-row">
           <BookList
             :type="type"
@@ -104,7 +106,8 @@ export default {
     Select: hydrateWhenIdle(() => import("@/components/All/Select")),
     BookList: hydrateWhenVisible(() => import("@/components/Browse/BookList")),
     TagCreate: hydrateWhenIdle(() => import("@/components/Browse/TagCreate")),
-    GenreSelect: hydrateWhenIdle(() => import("@/components/Web/Select/Genre"))
+    GenreSelect: hydrateWhenIdle(() => import("@/components/Web/Select/Genre")),
+    SearchBook: () => import("@/components/Web/Forms/Search/SearchBook")
   },
   computed: {
     ...mapGetters({
