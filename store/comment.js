@@ -58,9 +58,7 @@ export const mutations = {
     // chcomment.children.push(comment)
   },
   PUSH_COMMENT_LIST(state, comments) {
-    comments.forEach((comment) => {
-      state.comments.push(comment)
-    })
+    state.comments.push(...comments)
   },
   SHIFT_COMMENT(state, comment) {
     state.comments.unshift(comment)

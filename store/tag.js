@@ -1,9 +1,11 @@
 export const state = () => ({
-  list: []
+  list: [],
+  category: [],
 })
 
 export const getters = {
-  getTagList: (state) => state.list
+  getTagList: (state) => state.list,
+  getCategoryList: state => state.category
 }
 
 export const mutations = {
@@ -11,12 +13,37 @@ export const mutations = {
     state.list = tags
   },
   PUSH_TAGS: (state, tags) => {
-    tags.forEach((tag) => {
-      state.tags.push(tag)
-    })
-  }
+    state.list.push(...tags)
+  },
+  SET_CATEGORY: (state, category) => {
+    state.category = category;
+  },
+  PUSH_CATEGORY: (state, category) => {
+    state.category.push(...category)
+  },
 }
 export const actions = {
+  async fetchCategoryList({
+    commit
+  }, {
+    search,
+    limit,
+    page,
+    infinite
+  }) {
+    try {
+      const {
+        data
+      } = await this.$axios.get(`/v2/tag/query/category?search=${search}&limit=${limit}&page=${page}`)
+      // infinite ? commit('PUSH_CATEGORY', data) : commit('SET_CATEGORY', data)
+      // if (data.error) {
+      //   return Promise.reject(data.error)
+      // }
+      return Promise.resolve(data)
+    } catch (error) {
+      return Promise.reject(error)
+    }
+  },
   fetchTagList: async function ({
     commit
   }, {

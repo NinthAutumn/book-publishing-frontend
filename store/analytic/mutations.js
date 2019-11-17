@@ -18,9 +18,7 @@ export default {
     state.comments = comments
   },
   PUSH_COMMENTS: (state, comments) => {
-    comments.forEach((comment) => {
-      state.comments.push(comment)
-    })
+    state.comments.push(...comments)
   },
   SET_LATEST: (state, latest) => {
     state.latest = latest
@@ -32,19 +30,13 @@ export default {
     state.voteRanking = voteRanking
   },
   PUSH_VOTE_RANKING: (state, voteRanking) => {
-    voteRanking.forEach((book) => {
-      state.voteRanking.push(book)
-    })
+    state.voteRanking.push(...voteRanking)
   },
   PUSH_TRENDING: (state, trending) => {
-    trending.forEach((book) => {
-      state.trending.push(book)
-    })
+    state.trending.push(...trending)
   },
   PUSH_RANKING: (state, ranking) => {
-    ranking.forEach((book) => {
-      state.ranking.push(book)
-    })
+    state.ranking.push(...ranking)
   },
   SET_FREQUENT: (state, frequent) => {
     state.frequent = frequent

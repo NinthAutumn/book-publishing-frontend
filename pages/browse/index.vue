@@ -1,6 +1,7 @@
 <template>
   <div class="browse-page page-padding">
-    <div
+    <book-page></book-page>
+    <!-- <div
       class="browse-page__header flex-row flex--align"
       :class="{'browse-page__header--mobile':$device.isMobile}"
     >
@@ -92,7 +93,7 @@
           ></BookList>
         </div>
       </div>
-    </div>
+    </div>-->
   </div>
 </template>
 
@@ -107,7 +108,7 @@ export default {
     BookList: hydrateWhenVisible(() => import("@/components/Browse/BookList")),
     TagCreate: hydrateWhenIdle(() => import("@/components/Browse/TagCreate")),
     GenreSelect: hydrateWhenIdle(() => import("@/components/Web/Select/Genre")),
-    SearchBook: () => import("@/components/Web/Forms/Search/SearchBook")
+    BookPage: () => import("@/components/Web/Page/Browse")
   },
   computed: {
     ...mapGetters({

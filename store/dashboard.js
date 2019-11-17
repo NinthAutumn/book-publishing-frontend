@@ -33,9 +33,8 @@ export const mutations = {
     state.ranking = ranking
   },
   PUSH_TRANSACTIONS: (state, transactions) => {
-    transactions.forEach((transaction) => {
-      state.transactions.push(transaction)
-    })
+    state.transactions.push(...transactions)
+
   },
   SET_TRANSACTION_PIE: (state, transactionPie) => {
     state.transactionPie = transactionPie
