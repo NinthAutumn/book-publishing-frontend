@@ -21,6 +21,11 @@ export default {
   }),
   props: {
     param: String
+  },
+  watch: {
+    query(val) {
+      this.$emit("input", val);
+    }
   }
 };
 </script>

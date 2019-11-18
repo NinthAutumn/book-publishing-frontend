@@ -15,14 +15,18 @@
           :class="`search-category__pill--${pill.type}`"
           v-for="(pill,index) in tags"
           :key="index"
+          @click="pillClickHandler(pill)"
+          v-ripple
         >{{pill.name}}</li>
         <input
           class="search-category__input"
           type="text"
+          ref="input"
           v-model="query"
           @keyup.delete="keyDeleteHandler"
+          @keydown="compositionEndedSafariHandler"
           placeholder="ジャンル・タグでフィルター"
-          @focus="modal=true"
+          @focus="toggleModalOn"
         />
       </div>
       <transition name="grow-shrink">
@@ -61,8 +65,10 @@ export default {
     category: [],
     limit: 10,
     page: 2,
-    infiniteId: 1,
-    modal: false
+    infiniteId: Math.floor(Math.random() * (20000 - 1)) + 1,
+    modal: false,
+    isComposing: false,
+    hasCompositionJustEnded: false
   }),
   watch: {
     query() {
@@ -75,8 +81,13 @@ export default {
     ...mapActions({
       fetchCategory: "tag/fetchCategoryList"
     }),
-    toggleModal() {
+    toggleModal(val) {
       this.modal = false;
+      this.$emit("toggleModal", false);
+    },
+    toggleModalOn() {
+      this.modal = true;
+      this.$emit("toggleModal", true);
     },
     modalItemClass(item) {
       return `search-category__item--${item.type}`;
@@ -94,16 +105,20 @@ export default {
       this.$emit("category", this.tags);
       this.query = "";
     },
-    keyUpHandler($e) {
-      this.query = this.query.replace(",", "");
-
-      if ($e.key === "," || $e.key === "Enter") {
-        // this.query = this.query.substring(0, this.query.length - 1);
-        this.tags.push(this.query);
-        this.query = "";
-      }
+    pillClickHandler(pill) {
+      this.tags = this.tags.filter(val => val.name !== pill.name);
+      this.$emit("category", this.tags);
+      this.category = this.category.map(val => {
+        if (val.name === pill.name) val.selected = false;
+        return val;
+      });
     },
     keyDeleteHandler($e) {
+      if (this.isComposing || this.hasCompositionJustEnded) {
+        // IME composing fires keydown/keyup events
+        this.hasCompositionJustEnded = false;
+        return;
+      }
       if (this.tags.length < 1) return;
       if (this.query.length < 1) {
         this.query = this.tags[this.tags.length - 1].name;
@@ -123,6 +138,18 @@ export default {
       } else {
         $state.complete();
       }
+    },
+    compositionStartHandler() {
+      this.isComposing = true;
+    },
+    compositionEndHandler() {
+      this.isComposing = false;
+      this.hasCompositionJustEnded = true;
+    },
+    compositionEndedSafariHandler($e) {
+      if ($e.which !== 229) {
+        this.hasCompositionJustEnded = false;
+      }
     }
   },
   computed: {
@@ -130,12 +157,30 @@ export default {
       return;
     }
   },
+  beforeDestroy() {
+    this.$refs.input.removeEventListener(
+      "compositionstart",
+      this.compositionStartHandler
+    );
+    this.$refs.input.removeEventListener(
+      "compositionend",
+      this.compositionEndHandler
+    );
+  },
   async mounted() {
     this.category = await this.fetchCategory({
       search: "",
       limit: this.limit,
       page: 1
     });
+    this.$refs.input.addEventListener(
+      "compositionstart",
+      this.compositionStartHandler
+    );
+    this.$refs.input.addEventListener(
+      "compositionend",
+      this.compositionEndHandler
+    );
   }
 };
 </script>
@@ -180,9 +225,11 @@ export default {
       width: 100%;
       z-index: -1;
       transition: border-radius 200ms;
+      background-color: #fff;
       #{$self}__list {
         max-height: 20rem;
         overflow: auto;
+        background-color: #fff;
       }
       #{$self}__item {
         font-size: 1.4rem;
@@ -208,10 +255,14 @@ export default {
     margin-bottom: -1rem;
     overflow: hidden;
     #{$self}__pill {
-      font-size: 1.4rem;
-      padding: 0.25rem 2.5rem;
+      font-size: 1.3rem;
+      padding: 0.1rem 2.5rem;
       margin-right: 1rem;
       border-radius: 10rem;
+      &:hover {
+        cursor: pointer;
+        user-select: none;
+      }
       &--tag {
         border: 1px solid $secondary;
         color: $secondary;
@@ -225,7 +276,9 @@ export default {
       // margin-bottom: 1rem;
     }
     #{$self}__input {
+      display: block;
       // width: 100%;
+      background-color: white;
       margin-bottom: 1rem;
       flex-grow: 1;
 

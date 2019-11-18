@@ -145,10 +145,11 @@ export const actions = {
     page,
     tags = [],
     limit = 20,
-    infinite = false
+    infinite = false,
+    query = ""
   }) {
     try {
-      const res = await this.$axios.get(`/v2/book/show/browse?genres=${genres}&tags=${tags}&direction=${direction}&page=${page}&limit=${limit}&type=${type}`)
+      const res = await this.$axios.get(`/v2/book/show/browse?genres=${genres}&tags=${tags}&direction=${direction}&page=${page}&limit=${limit}&type=${type}&query=${query}`)
       if (infinite) {
         commit('BROWSE_BOOKS_NEXT', res.data)
         return Promise.resolve(res.data)
