@@ -260,7 +260,14 @@ module.exports = {
 
   router: {
     middleware: ['auth'],
-    linkActiveClass: 'active-link'
+    linkActiveClass: 'active-link',
+    extendRoutes(routes, resolve) {
+      routes.push({
+        name: 'browse-book',
+        path: '/browse',
+        component: '~/components/Web/Page/Browse'
+      })
+    }
   },
   webfontloader: {
     google: {

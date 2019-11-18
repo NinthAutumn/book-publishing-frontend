@@ -6,7 +6,7 @@
       </li>
     </ul>
     <client-only>
-      <infinite-loading @infinite="infiniteHandler"></infinite-loading>
+      <infinite-loading :identifier="infiniteId" @infinite="infiniteHandler"></infinite-loading>
     </client-only>
   </div>
 </template>
@@ -17,43 +17,36 @@ export default {
     trendings: Boolean,
     history: Boolean,
     type: Number,
-    genres: Array,
+    category: { type: Array, default: [] },
     direction: [String, Number],
-    tags: Array
-  },
-  data() {
-    return {
-      page: 2
-    };
-  },
-  watch: {
-    type: function(val) {
-      this.page = 2;
-    },
-    tags: function(val) {
-      this.page = 2;
-    },
-    direction: function(val) {
-      this.page = 2;
-    },
-    genres: function(val) {
-      this.page = 2;
-    }
+    tags: Array,
+    page: Number,
+    infiniteId: Number,
+    query: String
   },
   components: {
     BookCard: () => import("@/components/Web/Cards/Book/Search")
   },
   methods: {
     async infiniteHandler($state) {
+      const genres = this.category
+        .filter(val => val.type === "genre")
+        .map(val => val.id);
+      const tags = this.category
+        .filter(val => val.type === "tag")
+        .map(val => val.id);
       const books = await this.$store.dispatch("book/browseBooks", {
         type: this.type,
         direction: this.direction,
-        genres: this.genres,
-        tags: this.tags,
-        page: this.page++,
+        genres: genres,
+        tags: tags,
+        page: this.page,
         limit: 20,
-        infinite: true
+        infinite: true,
+        query: this.query
       });
+      this.$emit("setPage", this.page + 1);
+      // if()
       if (books.length > 0) {
         $state.loaded();
       } else {

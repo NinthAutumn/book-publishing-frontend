@@ -47,15 +47,11 @@ export const mutations = {
     state.reviews.unshift(reviews)
   },
   GET_GOOD_REVIEWS(state, goodReviews) {
-    goodReviews.forEach((review) => {
-      state.goodReviews.push(review)
-
-    })
+    state.goodReviews.push(...goodReviews)
   },
   GET_MYREVIEWS(state, reviews) {
-    reviews.forEach((review) => {
-      state.myReviews.push(review)
-    })
+    state.myReviews.push(...reviews)
+
   },
   GET_USER_REVIEW(state, review) {
     state.myReview = review
@@ -64,9 +60,7 @@ export const mutations = {
     state.nextChapterLength = count
   },
   SET_TRENDING(state, reviews) {
-    reviews.forEach((review) => {
-      state.trending.push(review)
-    })
+    state.trending.push(...reviews)
   },
   SET_REVIEW_COUNT(state, count) {
     state.count = count
@@ -82,25 +76,6 @@ export const mutations = {
   }
 }
 export const actions = {
-  async fetchNextReviews({
-    commit,
-    rootState
-  }, {
-    bookId,
-    limit = 10,
-    page = 2,
-    userId = "",
-    direction,
-    type
-  }) {
-    // await this.$axios.get(`/review/book?bookId=${bookId}&limit=${limit}&page=${page}&userId=${userId}&direction=${direction}`).then(async (res) => {
-    //   res.data.forEach((review) => {
-    //     commit('SET_NEXT_REVIEWS', review)
-    //   })
-    //   commit('SET_NEXT_REVIEW_LENGTH', res.data.length)
-
-    // })
-  },
   async fetchReview({
     commit
   }, {

@@ -145,10 +145,11 @@ export const actions = {
     page,
     tags = [],
     limit = 20,
-    infinite = false
+    infinite = false,
+    query = ""
   }) {
     try {
-      const res = await this.$axios.get(`/v2/book/show/browse?genres=${genres}&tags=${tags}&direction=${direction}&page=${page}&limit=${limit}&type=${type}`)
+      const res = await this.$axios.get(`/v2/book/show/browse?genres=${genres}&tags=${tags}&direction=${direction}&page=${page}&limit=${limit}&type=${type}&query=${query}`)
       if (infinite) {
         commit('BROWSE_BOOKS_NEXT', res.data)
         return Promise.resolve(res.data)
@@ -370,19 +371,11 @@ export const mutations = {
     state.browse = books
   },
   BROWSE_BOOKS_NEXT(state, books) {
-    books.forEach((book) => {
-      state.browse.push(book)
-    })
-
+    state.browse.push(...books)
   },
   SET_TAG_LIST(state, tags) {
     state.tagList = tags
   },
-  // PUSH_TAG_LIST(state, tags) {
-  //   tags.forEach((tag) => {
-  //     state.tagList.push(tag)
-  //   })
-  // },
   SET_BOOK_VIEW(state, view) {
     state.view = view
   },
@@ -414,29 +407,14 @@ export const mutations = {
     state.createAuthor = !state.createAuthor
   },
   SET_MORE_LATEST_BOOKS(state, books) {
-    let temp = books
-    // state.latest.forEach((item) => {
-    //   temp.forEach((book, index) => {
-    //     if (item.date === book.date) {
-    //       book.book.forEach((boo) => {
-    //         item.book.push(boo)
-    //       })
-    //       temp.splice(index, 1)
-    //     }
-    //   })
-    // })
-    // (books);
-    temp.forEach((book) => {
-      state.latest.push(book)
-    })
+    state.latest.push(...books)
+
   },
   SET_ANNOUNCEMENTS: (state, announcements) => {
     state.announcements = announcements
   },
   PUSH_ANNOUNCEMENTS: (state, announcements) => {
-    announcements.forEach((announcement) => {
-      state.announcements.push(announcement)
-    })
+    state.announcements.push(...announcements)
   },
   SET_MOBILE_BROWSE: function (state, {
     books,
@@ -448,9 +426,7 @@ export const mutations = {
     books,
     type
   }) {
-    books.forEach((book) => {
-      state.books[type].push(book)
-    })
+    state.books[type].push(...books)
   },
   SELECT_GENRE: (state, {
     index,

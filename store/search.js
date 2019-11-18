@@ -23,9 +23,7 @@ export const mutations = {
     state.isLoading = false
   },
   PUSH_BOOKS: (state, books) => {
-    books.forEach((book) => {
-      state.books.push(book)
-    })
+    state.books.push(...books)
   },
   RESET_BOOKS(state) {
     state.books = []

@@ -87,6 +87,7 @@
   }
 }
 
+
 .twitter-nav {
   &-enter {
     transform: translateY(3rem);
@@ -166,17 +167,32 @@
 
 }
 
-.slide-right {
-  @keyframes slide-down {
-    from {
-      transform: translateX(-50%);
-    }
+.grow-down {
+  &-enter {
+    transform-origin: top center;
+    transform: scale(1);
 
-    to {
-      transform: translateX(0);
+
+    &-active {
+      transition: 300ms;
     }
   }
 
+  &-leave {
+
+    &-active {
+      transition: 300ms;
+    }
+
+    &-to {
+      transform-origin: top center;
+      transform: scale(0);
+
+    }
+  }
+}
+
+.slide-right {
   &-enter {
     transform: translateX(-50%);
 
