@@ -15,12 +15,12 @@ export default {
       type = 5,
       genres = [],
       tags = [];
-    // if (route.query.genre && route.query.genre !== "undefined") {
-    //   genres = [route.query.genre];
-    // }
-    // if (route.query.tag && route.query.tag !== "undefined") {
-    //   tags.push(route.query.tag);
-    // }
+    if (route.query.genre && route.query.genre !== "undefined") {
+      genres = [route.query.genre];
+    }
+    if (route.query.tag && route.query.tag !== "undefined") {
+      tags.push(route.query.tag);
+    }
     await store.dispatch("book/browseBooks", {
       type,
       direction,

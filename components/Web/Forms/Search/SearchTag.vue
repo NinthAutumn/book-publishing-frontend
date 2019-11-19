@@ -90,6 +90,9 @@ export default {
       this.$emit("toggleModal", true);
     },
     modalItemClass(item) {
+      if (item.selected) {
+        return `search-category__item--selected search-category__item--${item.type}`;
+      }
       return `search-category__item--${item.type}`;
     },
     selectCategoryHandler({ item, index }) {
@@ -126,12 +129,25 @@ export default {
         this.$emit("category", this.tags);
       }
     },
+    checkIfCategoryExists(category) {
+      let cat = category;
+
+      cat.forEach((val, index) => {
+        this.tags.forEach(tag => {
+          if (val.name === tag.name) cat[index].selected = true;
+        });
+      });
+
+      return cat;
+    },
     async infiniteHandler($state) {
-      const category = await this.fetchCategory({
+      let category = await this.fetchCategory({
         search: this.query,
         limit: this.limit,
         page: this.page++
       });
+      if (this.tags.length > 0) category = this.checkIfCategoryExists(category);
+
       if (category.length > 0) {
         this.category.push(...category);
         $state.loaded();
@@ -152,11 +168,6 @@ export default {
       }
     }
   },
-  computed: {
-    inputHeight() {
-      return;
-    }
-  },
   beforeDestroy() {
     this.$refs.input.removeEventListener(
       "compositionstart",
@@ -168,11 +179,28 @@ export default {
     );
   },
   async mounted() {
+    if (this.$route.query.genre && this.$route.query.genre !== "undefined") {
+      this.tags.push({
+        name: this.$route.query.genre,
+        id: this.$route.query.genre,
+        type: "genre"
+      });
+    }
+    if (this.$route.query.tag && this.$route.query.tag !== "undefined") {
+      this.tags.push({
+        name: this.$route.query.tag,
+        id: this.$route.query.tag,
+        type: "tag"
+      });
+    }
     this.category = await this.fetchCategory({
       search: "",
       limit: this.limit,
       page: 1
     });
+    if (this.tags.length > 0)
+      this.category = this.checkIfCategoryExists(this.category);
+
     this.$refs.input.addEventListener(
       "compositionstart",
       this.compositionStartHandler
@@ -234,6 +262,9 @@ export default {
       #{$self}__item {
         font-size: 1.4rem;
         padding: 1rem 0;
+        &--selected {
+          color: black !important;
+        }
         &--genre {
           color: $primary;
         }
