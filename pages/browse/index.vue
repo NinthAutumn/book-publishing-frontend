@@ -10,6 +10,11 @@ export default {
   components: {
     BookPage: () => import("@/components/Web/Page/Browse")
   },
+  created() {
+    if (this.$device.isMobile) {
+      this.$router.replace("/browse/mobile");
+    }
+  },
   async fetch({ store, route }) {
     let direction = 0,
       type = 5,
