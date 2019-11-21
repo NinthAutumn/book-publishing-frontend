@@ -1,7 +1,7 @@
 const pkg = require('./package')
 const webpack = require('webpack')
 require('dotenv').config()
-
+const getRoutes = require('./utils/getRoutes');
 module.exports = {
   mode: 'universal',
   head: {
@@ -235,9 +235,19 @@ module.exports = {
         threshold: 10240
       }
     }],
+    '@nuxtjs/sitemap'
   ],
   axios: {
     proxy: true
+  },
+  sitemap: {
+    hostname: 'https://nobles.jp',
+    routes() {
+      return getRoutes();
+    },
+    path: '/sitemap.xml',
+    gzip: true,
+    generate: false,
   },
   proxy: {
     '/v2': {
@@ -262,11 +272,11 @@ module.exports = {
     middleware: ['auth'],
     linkActiveClass: 'active-link',
     extendRoutes(routes, resolve) {
-      routes.push({
-        name: 'browse-book',
-        path: '/browse',
-        component: '~/components/Web/Page/Browse'
-      })
+      // routes.push({
+      //   name: 'browse-book',
+      //   path: '/browse',
+      //   component: '~/components/Web/Page/Browse'
+      // })
     }
   },
   webfontloader: {

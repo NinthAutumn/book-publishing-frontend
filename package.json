@@ -28,6 +28,7 @@
     "@nuxtjs/pwa": "^2.6.0",
     "@nuxtjs/recaptcha": "^0.5.3",
     "@nuxtjs/robots": "^2.4.2",
+    "@nuxtjs/sitemap": "^2.0.1",
     "@nuxtjs/style-resources": "^0.1.2",
     "@nuxtjs/svg-sprite": "^0.2.1",
     "@nuxtjs/toast": "^3.3.0",
