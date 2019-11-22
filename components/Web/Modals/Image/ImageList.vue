@@ -208,11 +208,12 @@ export default {
     }
     #{$self}__list {
       display: grid;
-      grid-template-columns: repeat(5, 1fr);
+      grid-template-columns: repeat(5, minmax(0, 1fr));
       // max-height: 10rem;
       grid-gap: 1rem;
       max-height: 40rem;
       // height: 40rem;
+      max-width: 100%;
       overflow: auto;
       margin-bottom: 1rem;
       padding-bottom: 1rem;

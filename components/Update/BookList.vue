@@ -21,7 +21,7 @@
 // import Book from "./Book";
 export default {
   props: {
-    latestBooks: Array
+    latestBooks: [Array, Object]
   },
   data() {
     return {

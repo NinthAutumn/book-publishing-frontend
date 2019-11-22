@@ -9,8 +9,8 @@
         ></div>
         <v-img
           :aspect-ratio="1/1.5"
-          max-width="15rem"
-          min-width="12.5rem"
+          max-width="12.5rem"
+          min-width="10rem"
           class="book-ranking__img"
           :src="book.cover + '/m'"
           :lazy-src="cover"

@@ -14,8 +14,6 @@
             :src="book.cover + `${cover_size > 150? '/l':'/m'}`"
             :aspect-ratio="1/1.5"
             :lazy-src="cover"
-            max-width="20rem"
-            :min-width="$device.isMobile?'8rem':'12rem'"
             alt="Book cover"
             style="border-radius: 0.4rem;     box-shadow: 0 2px 5px 0 rgba(60,66,87, 0.1), 0 1px 1px 0 rgba(0, 0, 0, .07); "
             class="recommendation-books__img"
@@ -38,7 +36,7 @@
             </div>
             <div class="recommendation-books__chapter-list">
               <fa class="recommendation-books__icon" icon="eye"></fa>
-              <p>{{book.chapter_count}}話</p>
+              <p>{{book.chapter_count}} chapters</p>
             </div>
           </div>
         </div>
@@ -84,8 +82,12 @@ export default {
       #{$self}__item {
         margin: 0;
         flex-direction: column;
+        width: 100%;
+        margin-right: 0 !important;
         #{$self}__cover {
           margin: 0;
+          width: 100% !important;
+          max-width: 8rem;
         }
       }
       #{$self}__info {
@@ -96,7 +98,7 @@ export default {
       }
       #{$self}__title {
         font-size: 1.5rem;
-        word-break: break-all;
+        word-break: break-word;
         @media screen and (max-width: 450px) {
           p {
             font-size: 1.2rem;
@@ -128,8 +130,6 @@ export default {
         padding: 0;
       }
     }
-
-    // padding-right: 2rem;
   }
   &__loading {
     display: flex;
@@ -146,21 +146,15 @@ export default {
     padding-right: 2rem;
     #{$self}__item {
       display: flex;
-      // transform: scale(1);
-      // align-items: center;
       &:hover {
         cursor: pointer;
       }
-      &:focus,
-      &:active {
-      }
       #{$self}__cover {
         margin-right: 2rem;
-        width: 50%;
-        // overflow: hidden;
+        width: 45%;
+        max-width: 12rem;
+        min-width: 12rem;
         #{$self}__img {
-          // box-shadow: 0 2px 5px 0 rgba(60, 66, 87, 0.1),
-          //   0 1px 1px 0 rgba(0, 0, 0, 0.07);
           &:hover {
             transition: 200ms;
           }
@@ -175,17 +169,11 @@ export default {
         margin-bottom: 1rem;
         font-size: 1.6rem;
         word-break: break-all;
-        // max-height: 4rem;
-        // max-height: 4rem;
+
         span {
           font-size: 1.6rem;
           // word-break: break-all;
         }
-        p {
-          // font-size: 1.6rem;
-          // word-break: break-all;
-        }
-        // overflow: hidden;
       }
       #{$self}__author {
         margin-bottom: 2rem;

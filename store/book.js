@@ -407,8 +407,11 @@ export const mutations = {
     state.createAuthor = !state.createAuthor
   },
   SET_MORE_LATEST_BOOKS(state, books) {
-    state.latest.push(...books)
-
+    state.latest = {
+      ...state.latest,
+      ...books
+    }
+    // state.latest.push(...books)
   },
   SET_ANNOUNCEMENTS: (state, announcements) => {
     state.announcements = announcements

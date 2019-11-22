@@ -6,7 +6,10 @@
     </div>
     <div class="reviews-like">
       <v-avatar :size="size">
-        <v-img :src="book.user_id === review.user_id? book.avatar : review.avatar"></v-img>
+        <v-img
+          :lazy-src="avatar"
+          :src="book.user_id === review.user_id? book.avatar : review.avatar"
+        ></v-img>
       </v-avatar>
 
       <p
@@ -118,7 +121,8 @@ export default {
         "児童虐待",
         "その他"
       ],
-      problem: false
+      problem: false,
+      avatar: require("~/assets/img/profile.png")
     };
   },
   components: {

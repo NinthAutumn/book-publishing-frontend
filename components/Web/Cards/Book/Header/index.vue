@@ -9,7 +9,7 @@
           alt="book cover"
           max-width="20rem"
           min-width="10rem"
-          :lazy-src="cover"
+          eager
           :aspect-ratio="1/1.5"
         ></v-img>
         <div

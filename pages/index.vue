@@ -24,6 +24,7 @@
       <div class="card-title flex flex--align">
         <h3>評価が高いレビュー</h3>
       </div>
+
       <ReviewList :height="height"></ReviewList>
       <div class="card-title">
         <h3>今日人気の作品</h3>
@@ -34,21 +35,29 @@
       <div class="card-title">
         <h3>更新された作品</h3>
       </div>
-      <BooksList :books="latest"></BooksList>
+      <v-lazy v-model="first" transition="fade-transition">
+        <BooksList :books="latest"></BooksList>
+      </v-lazy>
       <mobile-ranking v-if="$device.isMobile"></mobile-ranking>
       <adsbygoogle v-if="!user.status||!user" />
       <div class="card-title">
         <h3>人気急上昇中のリスト</h3>
       </div>
-      <reading-list :reading="reading"></reading-list>
+      <v-lazy v-model="first" transition="fade-transition">
+        <reading-list :reading="reading"></reading-list>
+      </v-lazy>
       <div class="card-title">
         <h3>更新頻度が高い</h3>
       </div>
-      <BooksList :books="frequent"></BooksList>
+      <v-lazy v-model="second" transition="fade-transition">
+        <BooksList :books="frequent"></BooksList>
+      </v-lazy>
       <div class="card-title">
         <h3>最新リスト</h3>
       </div>
-      <reading-list :reading="latestReading"></reading-list>
+      <v-lazy v-model="second" transition="fade-transition">
+        <reading-list :reading="latestReading"></reading-list>
+      </v-lazy>
     </div>
   </div>
 </template>
@@ -97,7 +106,10 @@ export default {
     return {
       compo: false,
       width: 0,
-      height: 0
+      height: 0,
+      first: false,
+      second: false,
+      thrid: false
     };
   },
   async mounted() {

@@ -70,7 +70,6 @@ export default {
         limit: 30,
         infinite: true
       });
-
       if (array.length < 1) {
         $state.complete();
       } else {

@@ -1,7 +1,7 @@
 const axios = require('axios');
 
 
-module.export = getAppRoutes = async () => {
+export default async () => {
   let routes = [];
   const instance = axios.create({
     baseURL: 'https://api.nobles.com',

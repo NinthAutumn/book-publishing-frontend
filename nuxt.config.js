@@ -1,7 +1,7 @@
 const pkg = require('./package')
 const webpack = require('webpack')
 require('dotenv').config()
-const getRoutes = require('./utils/getRoutes');
+import getRoutes from './utils/getRoutes'
 module.exports = {
   mode: 'universal',
   head: {
@@ -301,6 +301,8 @@ module.exports = {
 
     splitChunks: {
       layouts: true,
+      pages: true,
+      commons: true
     },
     optimization: {
       splitChunks: {

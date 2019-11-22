@@ -59,7 +59,7 @@
 <script>
 export default {
   props: {
-    latestBooks: Array
+    latestBooks: [Array, Object]
   },
   data() {
     return {
