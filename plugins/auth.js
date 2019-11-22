@@ -19,6 +19,13 @@ export default async function ({
   let token = $storage.getUniversal('access_token')
   const refresh = $storage.getUniversal('refresh_token')
   let strategy = $storage.getUniversal('strategy')
+  let track_id = $storage.getCookie('track_id')
+  if (!track_id) {
+    track_id = uuid()
+    $storage.setCookie('track_id', track_id)
+  }
+
+  $axios.defaults.headers.common['trackid'] = track_id
   if (token) {
     $axios.defaults.headers.common['Authorization'] = 'Bearer ' + token
     store.commit('auth/SET_AUTH', {
@@ -61,13 +68,7 @@ export default async function ({
       }, expdate);
     }
   }
-  let track_id = $storage.getUniversal('track_id')
-  if (!track_id) {
-    track_id = uuid()
-    $storage.setUniversal('track_id', track_id)
-  }
 
-  $axios.defaults.headers.common['TrackId'] = track_id
 
 
 }

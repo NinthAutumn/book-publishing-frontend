@@ -1,5 +1,8 @@
 <template>
   <div class="swiper-books" :class="{'swiper-books--mobile':$device.isMobile}">
+    <div class="swiper-books__skeleton" v-if="loading">
+      <book-skeleton v-for="(book) in slides" :key="book"></book-skeleton>
+    </div>
     <div v-swiper:mySwiper="$device.isMobile? swiperMobile:swiperOption">
       <div class="swiper-wrapper">
         <div class="swiper-slide" v-for="(book) in books" :key="book.id">
@@ -18,7 +21,14 @@ import { hydrateWhenVisible } from "vue-lazy-hydration";
 export default {
   props: ["books"],
   components: {
-    BookCard: hydrateWhenVisible(() => import("@/components/Web/Cards/Book"))
+    BookCard: hydrateWhenVisible(() => import("@/components/Web/Cards/Book")),
+    BookSkeleton: () => import("@/components/Web/Cards/Skeleton/Book")
+  },
+  creaetd() {
+    this.slides = this.$device.isMobile ? 3 : 7;
+  },
+  mounted() {
+    this.loading = false;
   },
   data() {
     return {
@@ -48,7 +58,9 @@ export default {
         },
         on: {},
         breakpoints: {}
-      }
+      },
+      loading: true,
+      slides: 7
     };
   }
 };
@@ -104,6 +116,11 @@ export default {
 
 .swiping-page {
   position: relative;
+}
+.swiper-books {
+  &__skeleton {
+    display: flex;
+  }
 }
 .swiping-books--mobile {
   .swiper-slide {

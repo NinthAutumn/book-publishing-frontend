@@ -1,6 +1,10 @@
 <template>
   <div class="recommendation-books" :class="{'recommendation-books--mobile': $device.isMobile}">
-    <div class="recommendation-books__list">
+    <div class="recommendation-books__list" v-if="loading">
+      <book-skeleton v-for="i in 6" :key="i"></book-skeleton>
+    </div>
+
+    <div class="recommendation-books__list" v-else>
       <nuxt-link
         tag="div"
         :to="'/books/' + book.id"
@@ -11,9 +15,10 @@
       >
         <div class="recommendation-books__cover" ref="cover">
           <v-img
-            :src="book.cover + `${cover_size > 150? '/l':'/m'}`"
+            :src="book.cover + `/m`"
             :aspect-ratio="1/1.5"
             :lazy-src="cover"
+            max-width="12rem"
             alt="Book cover"
             style="border-radius: 0.4rem;     box-shadow: 0 2px 5px 0 rgba(60,66,87, 0.1), 0 1px 1px 0 rgba(0, 0, 0, .07); "
             class="recommendation-books__img"
@@ -51,8 +56,15 @@ export default {
   data() {
     return {
       cover: require("~/assets/img/NobleCardLight.png?size=200"),
-      cover_size: 0
+      cover_size: 0,
+      loading: true
     };
+  },
+  components: {
+    BookSkeleton: () => import("@/components/Web/Cards/Skeleton/RBook")
+  },
+  beforeMount() {
+    this.loading = false;
   },
   mounted() {
     this.cover_size = this.$refs.cover.clientWidth;
@@ -75,7 +87,7 @@ export default {
     }
     #{$self}__list {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       /* autoprefixer: ignore next */
       grid-gap: 0.5rem;
       padding: 0;
@@ -87,7 +99,7 @@ export default {
         #{$self}__cover {
           margin: 0;
           width: 100% !important;
-          max-width: 8rem;
+          min-width: 8rem !important;
         }
       }
       #{$self}__info {
@@ -139,7 +151,7 @@ export default {
   }
   &__list {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     grid-template-rows: repeat(2, 1fr);
     /* autoprefixer: ignore next */
     grid-gap: 1.5rem;

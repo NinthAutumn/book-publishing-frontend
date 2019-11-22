@@ -5,9 +5,8 @@
     </div>
     <nuxt-child></nuxt-child>
     <div class="head-banner">
-      <BannerList></BannerList>
+      <banner-list></banner-list>
     </div>
-    <!-- <book-sekeleton></book-sekeleton> -->
     <nav-list v-if="$device.isMobile"></nav-list>
     <div class="main-books">
       <div class="flex-divider flex-row flex--between">
@@ -35,9 +34,7 @@
       <div class="card-title">
         <h3>更新された作品</h3>
       </div>
-      <v-lazy v-model="first" transition="fade-transition">
-        <BooksList :books="latest"></BooksList>
-      </v-lazy>
+      <BooksList :books="latest"></BooksList>
       <mobile-ranking v-if="$device.isMobile"></mobile-ranking>
       <adsbygoogle v-if="!user.status||!user" />
       <div class="card-title">
@@ -76,10 +73,8 @@ export default {
     ReviewList: hydrateWhenVisible(() =>
       import("@/components/Homepage/ReviewList")
     ),
-    Ranking: hydrateWhenVisible(() => import("@/components/Homepage/Ranking")),
-    BannerList: hydrateWhenVisible(() =>
-      import("@/components/Homepage/BannerList")
-    ),
+    Ranking: () => import("@/components/Homepage/Ranking"),
+    BannerList: () => import("@/components/Homepage/BannerList"),
     SearchBar: hydrateOnInteraction(() =>
       import("@/components/Navigation/SearchBar")
     ),
@@ -89,10 +84,8 @@ export default {
     MobileRanking: hydrateWhenVisible(() =>
       import("@/components/Mobile/List/Book/Ranking/Home")
     ),
-    NavList: hydrateWhenVisible(() => import("@/components/Mobile/Layout/Nav")),
-    ReadingList: hydrateWhenVisible(() =>
-      import("@/components/Web/Lists/Reading/Swiper")
-    )
+    NavList: () => import("@/components/Mobile/Layout/Nav"),
+    ReadingList: () => import("@/components/Web/Lists/Reading/Swiper")
   },
   async fetch({ store }) {
     await store.dispatch("analytic/fetchRecommended");
@@ -112,8 +105,10 @@ export default {
       thrid: false
     };
   },
+
   async mounted() {
     this.setActive(true);
+
     await this.fetchFrequent();
     await this.fetchLatestBook({ page: 1, limit: 12, structured: false });
     await this.fetchTrending({ time: "weekly", page: 1 });

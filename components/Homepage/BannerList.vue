@@ -10,8 +10,9 @@
           <nuxt-link tag="div" class="banner-list__container" :to="image.link">
             <v-img
               class="banner-list__image"
-              :max-height="250"
+              :aspect-ratio="1.75"
               :max-width="437.5"
+              eager
               :src="image.cover"
             ></v-img>
           </nuxt-link>
@@ -56,7 +57,7 @@ export default {
       swiperOption: {
         slidesPerView: "auto",
         spaceBetween: 15,
-        freeMode: true,
+        freeMode: false,
         mousewheel: {
           invert: true,
           sensitivity: 1,
@@ -68,13 +69,20 @@ export default {
         },
         on: {},
         breakpoints: {}
-      }
+      },
+      loading: true
     };
   },
   methods: {
     nav: function(image) {
       this.$router.push(image.link);
     }
+  },
+  components: {
+    BannerSkeleton: () => import("@/components/Web/Cards/Skeleton/Banner")
+  },
+  mounted() {
+    this.loading = false;
   },
   async created() {
     if (this.$device.isMobile) {
@@ -94,6 +102,7 @@ export default {
   &__image {
     border-radius: 2rem;
     // margin: 1rem;
+    background-color: #e8e8e8;
   }
   .VueCarousel-pagination {
     width: 100%;
