@@ -40,9 +40,7 @@ export default {
 <style lang="scss">
 .drawing-item {
   $self: &;
-  overflow: auto;
-  min-width: 10rem;
-  min-height: 10rem;
+
   margin-bottom: 1rem;
   margin-right: 0.5rem;
   &__content {

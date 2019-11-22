@@ -262,7 +262,7 @@ export default {
     #{$self}__list {
       display: grid;
       width: 100%;
-      grid-template-columns: repeat(5, 1fr);
+      grid-template-columns: repeat(5, minmax(0, 1fr));
       grid-gap: 0.5rem;
       #{$self}__item {
         // width: 20rem;

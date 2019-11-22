@@ -29,8 +29,12 @@
         ></drawing-item>
         <!-- <div class="drawing-modal__add"></div> -->
       </div>
-
-      <div class="drawing-modal__submit" @click="$emit('select')" v-if="editor">選んだ画像を挟む</div>
+      <div class="drawing-modal__button">
+        <div
+          class="drawing-modal__submit"
+          @click="editor?$emit('select'):$emit('close')"
+        >{{editor?'選んだ画像を挟む':'絵を話に付ける'}}</div>
+      </div>
     </div>
   </div>
 </template>
@@ -124,6 +128,23 @@ export default {
     width: 50rem;
     height: 50rem;
     max-height: 50rem;
+    #{$self}__button {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      margin-top: 1rem;
+      justify-content: flex-end;
+      #{$self}__submit {
+        font-size: 1.4rem;
+        padding: 0.5rem 2rem;
+        border-radius: 0.5rem;
+        background: #3ecc8d;
+        color: white;
+        &:hover {
+          cursor: pointer;
+        }
+      }
+    }
     #{$self}__upload {
       label {
         user-select: none;
@@ -149,8 +170,8 @@ export default {
       padding: 1rem;
       border-radius: 0.5rem;
       background-color: #e3e8ee;
-      display: flex;
-      flex-wrap: wrap;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       // justify-content: space-between;
 
       overflow: auto;
