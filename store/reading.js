@@ -27,35 +27,21 @@ export const getters = {
 }
 
 export const mutations = {
-  SET_USER_READING_LIST(state, list) {
-    state.list = list
-  },
-  SET_READING_LIST(state, list) {
-    state.show = list
-  },
-  SET_USER_READING_LIST_WITHOUT_BOOK(state, list) {
-    state.listWithoutBooks = list
-  },
+  SET_USER_READING_LIST: (state, list) => state.list = list,
+  SET_READING_LIST: (state, list) => state.show = list,
+  SET_USER_READING_LIST_WITHOUT_BOOK: (state, list) => state.listWithoutBooks = list,
   TOGGLE_STATE(state, id) {
     state.modal = !state.modal
     state.selected_book = id
   },
-  SET_LATEST(state, list) {
-    state.latest = list
-  },
-  SET_LIST_BY_BOOK(state, list) {
-    state.listByBook = list
-  },
-  SET_READING_LIST_INFO(state, list) {
-    state.listInfo = list
-  },
+  SET_LATEST: (state, list) => state.latest = list,
+  SET_LIST_BY_BOOK: (state, list) => state.listByBook = list,
+  SET_READING_LIST_INFO: (state, list) => state.listInfo = list,
   TOGGLE_LIST_MODAL(state, id) {
     state.listModal = !state.listModal
     state.selected_list = id
   },
-  SET_READING_LIST_BOOKS(state, list) {
-    state.books = list
-  }
+  SET_READING_LIST_BOOKS: (state, list) => state.books = list
 }
 
 export const actions = {

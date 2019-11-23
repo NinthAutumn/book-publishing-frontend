@@ -19,24 +19,12 @@ export const getters = {
 }
 
 export const mutations = {
-  SET_SUBSCRIPTIONS: (state, subscriptions) => {
-    state.subscriptions = subscriptions
-  },
-  SET_SUBSCRIPTION: (state, subscription) => {
-    state.subscription = subscription
-  },
-  SET_SITE_PLANS: (state, plans) => {
-    state.sitePlans = plans
-  },
-  SET_BOOK_PLANS: (state, plans) => {
-    state.bookPlans = plans
-  },
-  TOGGLE_SITE_MODAL: (state) => {
-    state.siteModal = !state.siteModal
-  },
-  SET_SITE_PLAN: (state, plan) => {
-    state.sitePlan = plan
-  }
+  SET_SUBSCRIPTIONS: (state, subscriptions) => state.subscriptions = subscriptions,
+  SET_SUBSCRIPTION: (state, subscription) => state.subscription = subscription,
+  SET_SITE_PLANS: (state, plans) => state.sitePlans = plans,
+  SET_BOOK_PLANS: (state, plans) => state.bookPlans = plans,
+  TOGGLE_SITE_MODAL: (state) => state.siteModal = !state.siteModal,
+  SET_SITE_PLAN: (state, plan) => state.sitePlan = plan
 }
 export const actions = {
   fetchAllSubscriptions: async function ({

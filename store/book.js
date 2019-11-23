@@ -56,6 +56,111 @@ export const getters = {
   }
 }
 
+export const mutations = {
+  ADD(state, book) {
+    state.books.push(book)
+  },
+  SET_BOOK_TAGS(state, tags) {
+    state.tags = tags
+  },
+  SET_BOOK_GENRES(state, genres) {
+    state.bookGenres = genres
+  },
+  SET_GENRES(state, genres) {
+    state.genres = []
+    genres.forEach((genre) => {
+      state.genres.push({
+        ...genre,
+        selected: false
+      })
+    })
+
+  },
+  REMOVE_GENRES(state) {
+    state.genres = []
+  },
+  SET_RECOMMENDED(state, books) {
+    state.recommended = books
+  },
+  TRENDING(state, books) {
+    state.books.trending = books
+  },
+  SET_BOOK(state, book) {
+    state.book = book
+  },
+  BROWSE_BOOKS(state, books) {
+    state.browse = books
+  },
+  BROWSE_BOOKS_NEXT(state, books) {
+    state.browse.push(...books)
+  },
+  SET_TAG_LIST(state, tags) {
+    state.tagList = tags
+  },
+  SET_BOOK_VIEW(state, view) {
+    state.view = view
+  },
+  SET_BOOK_CHAPTER_COUNT(state, chapterCount) {
+    state.chapterCount = chapterCount
+  },
+  SYNOPSIS_TRUE(state) {
+    state.bookSynopsis = true
+  },
+  SYNOPSIS_FALSE(state) {
+    state.bookSynopsis = false
+  },
+  BOOKMARKED(state, bookmark) {
+    if (bookmark.store) {
+      bookmark.store.forEach((store) => {
+        if (store.bookId === state.book._id) {
+          state.book.bookmarked = true
+        }
+      })
+    }
+  },
+  BOOKMARK(state) {
+    state.book.bookmarked = true
+  },
+  SET_LATEST_BOOKS(state, books) {
+    state.latest = books
+  },
+  CHANGE_AUTHOR_STATE: function (state) {
+    state.createAuthor = !state.createAuthor
+  },
+  SET_MORE_LATEST_BOOKS(state, books) {
+    state.latest = {
+      ...state.latest,
+      ...books
+    }
+  },
+  SET_ANNOUNCEMENTS: (state, announcements) => {
+    state.announcements = announcements
+  },
+  PUSH_ANNOUNCEMENTS: (state, announcements) => {
+    state.announcements.push(...announcements)
+  },
+  SET_MOBILE_BROWSE: function (state, {
+    books,
+    type
+  }) {
+    state.books[type] = books
+  },
+  SET_MOBILE_BROWSE_NEXT: function (state, {
+    books,
+    type
+  }) {
+    state.books[type].push(...books)
+  },
+  SELECT_GENRE: (state, {
+    index,
+    genre
+  }) => {
+    Vue.set(state.genres, index, genre);
+
+  }
+}
+
+
 export const actions = {
   async fetchBook({
     commit,
@@ -332,110 +437,5 @@ export const actions = {
     } catch (error) {
       console.log(error);
     }
-  }
-}
-
-export const mutations = {
-  ADD(state, book) {
-    state.books.push(book)
-  },
-  SET_BOOK_TAGS(state, tags) {
-    state.tags = tags
-  },
-  SET_BOOK_GENRES(state, genres) {
-    state.bookGenres = genres
-  },
-  SET_GENRES(state, genres) {
-    state.genres = []
-    genres.forEach((genre) => {
-      state.genres.push({
-        ...genre,
-        selected: false
-      })
-    })
-
-  },
-  REMOVE_GENRES(state) {
-    state.genres = []
-  },
-  SET_RECOMMENDED(state, books) {
-    state.recommended = books
-  },
-  TRENDING(state, books) {
-    state.books.trending = books
-  },
-  SET_BOOK(state, book) {
-    state.book = book
-  },
-  BROWSE_BOOKS(state, books) {
-    state.browse = books
-  },
-  BROWSE_BOOKS_NEXT(state, books) {
-    state.browse.push(...books)
-  },
-  SET_TAG_LIST(state, tags) {
-    state.tagList = tags
-  },
-  SET_BOOK_VIEW(state, view) {
-    state.view = view
-  },
-  SET_BOOK_CHAPTER_COUNT(state, chapterCount) {
-    state.chapterCount = chapterCount
-  },
-  SYNOPSIS_TRUE(state) {
-    state.bookSynopsis = true
-  },
-  SYNOPSIS_FALSE(state) {
-    state.bookSynopsis = false
-  },
-  BOOKMARKED(state, bookmark) {
-    if (bookmark.store) {
-      bookmark.store.forEach((store) => {
-        if (store.bookId === state.book._id) {
-          state.book.bookmarked = true
-        }
-      })
-    }
-  },
-  BOOKMARK(state) {
-    state.book.bookmarked = true
-  },
-  SET_LATEST_BOOKS(state, books) {
-    state.latest = books
-  },
-  CHANGE_AUTHOR_STATE: function (state) {
-    state.createAuthor = !state.createAuthor
-  },
-  SET_MORE_LATEST_BOOKS(state, books) {
-    state.latest = {
-      ...state.latest,
-      ...books
-    }
-    // state.latest.push(...books)
-  },
-  SET_ANNOUNCEMENTS: (state, announcements) => {
-    state.announcements = announcements
-  },
-  PUSH_ANNOUNCEMENTS: (state, announcements) => {
-    state.announcements.push(...announcements)
-  },
-  SET_MOBILE_BROWSE: function (state, {
-    books,
-    type
-  }) {
-    state.books[type] = books
-  },
-  SET_MOBILE_BROWSE_NEXT: function (state, {
-    books,
-    type
-  }) {
-    state.books[type].push(...books)
-  },
-  SELECT_GENRE: (state, {
-    index,
-    genre
-  }) => {
-    Vue.set(state.genres, index, genre);
-
   }
 }

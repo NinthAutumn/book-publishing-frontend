@@ -27,7 +27,7 @@
               v-if="index < 3"
               :lazy-src="cover"
               :src="book.cover"
-              :min-width="'6.5rem'"
+              :width="'6.5rem'"
               :aspect-ratio="1/1.5"
             ></v-img>
           </div>

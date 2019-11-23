@@ -22,30 +22,14 @@ export const state = () => ({
 })
 
 export const getters = {
-  getTheme: (state) => {
-    return state.theme
-  },
-  getFontFamily: (state) => {
-    return state.fontFamily
-  },
-  getFontSize: (state) => {
-    return state.fontSize
-  },
-  getProfile: (state) => {
-    return state.profile
-  },
-  getProfileBooks: (state) => {
-    return state.books
-  },
-  getUserComments: (state) => {
-    return state.comments
-  },
-  getProfileReviews: (state) => {
-    return state.reviews
-  },
-  getUpdateView: (state) => {
-    return state.update_view
-  },
+  getTheme: (state) => state.theme,
+  getFontFamily: (state) => state.fontFamily,
+  getFontSize: (state) => state.fontSize,
+  getProfile: (state) => state.profile,
+  getProfileBooks: (state) => state.books,
+  getUserComments: (state) => state.comments,
+  getProfileReviews: (state) => state.reviews,
+  getUpdateView: (state) => state.update_view,
   getNotification: state => state.notification,
   isAuthor: state => {
     if (state.author) {
@@ -64,37 +48,17 @@ export const getters = {
 }
 
 export const mutations = {
-  SET_USER_BOOKS(state, books) {
-    state.books = books
-  },
-  SET_USER: (state, user) => {
-    state.user = user
-  },
+  SET_USER_BOOKS: (state, books) => state.books = books,
+  SET_USER: (state, user) => state.user = user,
 
-  LOADING: (state) => {
-    state.isLoading = true
-  },
-  LOADING_FIN: (state) => {
-    state.isLoading = false
-  },
-  SET_FONT_FAMILY: (state, fontFamily) => {
-    state.fontFamily = fontFamily
-  },
-  SET_FONT_SIZE: (state, fontSize) => {
-    state.fontSize = fontSize
-  },
-  SET_THEME: (state, theme) => {
-    state.theme = theme
-  },
-  SET_UPDATE_VIEW: (state, update_view) => {
-    state.update_view = update_view
-  },
-  GET_BOOKMARK_UPDATE: (state, update) => {
-    state.bookmarkInbox = update
-  },
-  SET_PROFILE: (state, profile) => {
-    state.profile = profile
-  },
+  LOADING: (state) => state.isLoading = true,
+  LOADING_FIN: (state) => state.isLoading = false,
+  SET_FONT_FAMILY: (state, fontFamily) => state.fontFamily = fontFamily,
+  SET_FONT_SIZE: (state, fontSize) => state.fontSize = fontSize,
+  SET_THEME: (state, theme) => state.theme = theme,
+  SET_UPDATE_VIEW: (state, update_view) => state.update_view = update_view,
+  GET_BOOKMARK_UPDATE: (state, update) => state.bookmarkInbox = update,
+  SET_PROFILE: (state, profile) => state.profile = profile,
   SET_ACTIVITY_LIST: (state, {
     list,
     infinite
@@ -102,37 +66,16 @@ export const mutations = {
     if (!infinite) return state.activities = list;
     state.activities.push(...list);
   },
-  SET_USER_COMMENTS: (state, comments) => {
-    state.comments = comments
-  },
-  SET_NOTIFICATION: (state, notification) => {
-    state.notification = notification
-  },
-  PUSH_NOTIFICATION: (state, notifications) => {
-    state.notification.push(...notifications)
-
-  },
-  SET_AUTHOR: async (state, author) => {
-    state.author = author
-  },
-  SET_USERNAME_AVAILABILITY: async (state, username) => {
-    state.username = username
-  },
-  SET_PROFILE_BOOKS: async (state, books) => {
-    state.books = books
-  },
-  SET_PROFILE_STATS: async (state, stats) => {
-    state.stats = stats
-  },
-  SET_COMMENT_NOTIFICATION: (state, notifications) => {
-    state.commentNotification = notifications
-  },
-  PUSH_COMMENT_NOTIFICATION: (state, notifications) => {
-    state.commentNotification.push(...notifications)
-  },
-  SET_COMMENT_NOTIFICATION_COUNT: (state, count) => {
-    state.commentNotificationCount = count
-  }
+  SET_USER_COMMENTS: (state, comments) => state.comments = comments,
+  SET_NOTIFICATION: (state, notification) => state.notification = notification,
+  PUSH_NOTIFICATION: (state, notifications) => state.notification.push(...notifications),
+  SET_AUTHOR: (state, author) => state.author = author,
+  SET_USERNAME_AVAILABILITY: (state, username) => state.username = username,
+  SET_PROFILE_BOOKS: (state, books) => state.books = books,
+  SET_PROFILE_STATS: (state, stats) => state.stats = stats,
+  SET_COMMENT_NOTIFICATION: (state, notifications) => state.commentNotification = notifications,
+  PUSH_COMMENT_NOTIFICATION: (state, notifications) => state.commentNotification.push(...notifications),
+  SET_COMMENT_NOTIFICATION_COUNT: (state, count) => state.commentNotificationCount = count
 }
 export const actions = {
   async fetchUser({

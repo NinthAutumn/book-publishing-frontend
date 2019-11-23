@@ -6,22 +6,14 @@
       </div>
       <p>検索</p>
     </div>
-    <div class="mobile-browse__tab">
-      <v-tabs v-model="tab" light color="#e3e8ee">
-        <v-tabs-slider color="white"></v-tabs-slider>
-        <v-tab v-for="item in items" :key="item.key">{{ item.value }}</v-tab>
-        <v-tabs-items v-touch:swipe.left="swipeTab" v-touch:swipe.right="swipeRight">
-          <v-tab-item v-for="item in items" :key="item.key" class="mobile-browse__list">
-            <!-- {{popular}} -->
-            <nuxt-link :to="`/books/${book.id}`" v-for="(book,index) in  item.list" :key="index">
-              <BookCard v-ripple :book="book"></BookCard>
-            </nuxt-link>
-            <client-only>
-              <infinite-loading :identifier="infinite[items[tab].key]" @infinite="infiniteHandler"></infinite-loading>
-            </client-only>
-          </v-tab-item>
-        </v-tabs-items>
-      </v-tabs>
+    <div class="mobile-browse__list">
+      <div class="mobile-browse__pills"></div>
+      <nuxt-link tag="div" :to="`/books/${book.id}`" v-for="book in items" :key="book.id">
+        <book-card v-ripple :book="book"></book-card>
+      </nuxt-link>
+      <client-only>
+        <infinite-loading :identifier="infiniteId" @infinite="infiniteHandler"></infinite-loading>
+      </client-only>
     </div>
     <div class="mobile-browse__bottom">
       <div class="mobile-browse__bottom-container" @click.stop="toggleModal">
@@ -64,28 +56,11 @@ export default {
   auth: false,
   data() {
     return {
-      items: [
-        { value: "今人気", key: "popular", list: [] },
-        { value: "話数", key: "chapter", list: [] },
-        { value: "視聴回数", key: "view", list: [] },
-        { value: "評価", key: "rating", list: [] },
-        { value: "字数", key: "word", list: [] }
-      ],
+      items: [],
       tab: 0,
-      page: {
-        popular: 1,
-        chapter: 1,
-        view: 1,
-        rating: 1,
-        word: 1
-      },
-      infinite: {
-        popular: 0,
-        chapter: 1,
-        view: 2,
-        rating: 3,
-        word: 4
-      },
+      infiniteId: Math.floor(Math.random() * (20000 - 1)) + 1,
+      page: 1,
+      selected_type: "popular",
       selected_filter: { key: "全部", value: 0 },
       selected_state: { key: "全部", value: "all" },
       noMore: false,
@@ -120,6 +95,15 @@ export default {
   async mounted() {
     await this.$store.dispatch("book/fetchAllGenres");
     this.genres.forEach(this.mountedHandler);
+    // this.items = await this.$store.dispatch("book/browseMobileBooks", {
+    //   type: this.selected_type,
+    //   page: this.page++,
+    //   limit: 20,
+    //   genre: this.selected_filter.key,
+    //   tag: this.$route.query.tag || null,
+    //   state: this.selected_state.value,
+    //   infinite: true
+    // });
   },
   methods: {
     mountedHandler(genre) {
@@ -144,36 +128,22 @@ export default {
     },
     async infiniteHandler($state) {
       const books = await this.$store.dispatch("book/browseMobileBooks", {
-        type: this.items[this.tab].key,
-        page: this.page[this.items[this.tab].key]++,
+        type: this.selected_type,
+        page: this.page++,
         limit: 20,
         genre: this.selected_filter.key,
         tag: this.$route.query.tag || null,
         state: this.selected_state.value,
-        limit: 10,
         infinite: true
       });
       if (books.length > 0) {
-        books.forEach(book => {
-          this.items[this.tab].list.push(book);
-        });
-        // for (let i = 0; i < books.length; i++) {
-
-        // }
-        // books.forEach(val => {});
+        this.items.push(...books);
         $state.loaded();
       } else {
         $state.complete();
       }
     },
-    swipeTab(val) {
-      const tab = parseInt(this.tab);
-      this.tab = tab < 4 ? tab + 1 : 0;
-    },
-    swipeRight(val) {
-      const tab = parseInt(this.tab);
-      this.tab = tab > 0 ? tab - 1 : 4;
-    },
+
     goBack() {
       this.$router.go(-1);
     },
@@ -186,7 +156,6 @@ export default {
           if (index === i) {
             item.selected = true;
             this.selected_filter = item;
-            // this.$route.query.genre = item.key;
             this.$router.replace({
               path: "/browse/mobile",
               query: { genre: item.key }
@@ -195,44 +164,30 @@ export default {
             item.selected = false;
           }
         });
-        this.items.forEach(val => {
-          val.list = [];
-        });
-        Object.keys(this.page).forEach(val => {
-          this.page[val] = 1;
-        });
-        Object.keys(this.infinite).forEach(val => {
-          this.infinite[val] += 5;
-        });
       } else if (key === "state") {
         this.filters[key].list.forEach((item, i) => {
           if (index === i) {
             item.selected = true;
             this.selected_state = item;
-            // this.$route.query.genre = item.key;
-            // this.$router.push()
           } else {
             item.selected = false;
           }
         });
-        this.items.forEach(val => {
-          val.list = [];
-        });
-        Object.keys(this.page).forEach(val => {
-          this.page[val] = 1;
-        });
-        Object.keys(this.infinite).forEach(val => {
-          this.infinite[val] += 5;
-        });
       }
+      this.items = [];
+      this.page = 1;
+      this.infiniteId += 5;
     }
-  }
+  },
+  layout: "browse"
 };
 </script>
 
 <style lang="scss">
 .mobile-browse {
   $self: &;
+  height: 100%;
+  width: 100%;
   &__nav {
     height: 4rem;
     width: 100%;
@@ -257,7 +212,11 @@ export default {
     }
   }
   &__list {
-    padding-top: 3rem;
+    padding-top: 4rem;
+    padding-bottom: 6.5rem;
+    height: 100%;
+    min-height: 100vh;
+    width: 100%;
   }
   &__bottom {
     width: 100%;
@@ -293,6 +252,8 @@ export default {
     bottom: 0;
     background-color: #fff;
     // overflow: auto;
+    border-top-left-radius: 2rem;
+    border-top-right-radius: 2rem;
     padding: 1rem;
     #{$self}__modal-list {
       display: flex;
@@ -342,26 +303,5 @@ export default {
       }
     }
   }
-}
-.mobile-browse__nav {
-}
-.v-tabs__item {
-  color: black;
-  font-size: 1.4rem !important;
-  // font-weight: bold;
-}
-.v-tabs__container {
-  height: 30px !important;
-}
-.v-tabs__wrapper {
-  position: fixed;
-  top: 3.5rem;
-  left: 0;
-  background-color: rgb(247, 244, 244);
-  width: 100%;
-  z-index: 1000;
-}
-.v-tabs__slider {
-  background-color: $primary !important;
 }
 </style>

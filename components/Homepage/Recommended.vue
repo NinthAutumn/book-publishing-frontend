@@ -139,7 +139,8 @@ export default {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        padding: 0;
+        padding: 0 !important;
+        margin-top: 0.5rem;
       }
     }
   }

@@ -23,37 +23,16 @@ export const getters = {
 }
 
 export const mutations = {
-  SET_TRANSACTIONS: (state, transactions) => {
-    state.transactions = transactions
-  },
-  SET_STATISTICS: (state, statistics) => {
-    state.statistics = statistics
-  },
-  SET_RANKING: (state, ranking) => {
-    state.ranking = ranking
-  },
-  PUSH_TRANSACTIONS: (state, transactions) => {
-    state.transactions.push(...transactions)
-
-  },
-  SET_TRANSACTION_PIE: (state, transactionPie) => {
-    state.transactionPie = transactionPie
-  },
-  SET_VOTES_BAR: (state, votesBar) => {
-    state.votesBar = votesBar
-  },
-  SET_BANKS: function (state, banks) {
-    state.banks = banks
-  },
-  SET_SHOPS: function (state, shops) {
-    state.shops = shops
-  },
-  SET_TOTAL_COINS: function (state, totalCoins) {
-    state.totalCoins = totalCoins
-  },
-  SET_TOTAL_EARNING: function (state, totalEarning) {
-    state.totalEarning = totalEarning
-  }
+  SET_TRANSACTIONS: (state, transactions) => state.transactions = transactions,
+  SET_STATISTICS: (state, statistics) => state.statistics = statistics,
+  SET_RANKING: (state, ranking) => state.ranking = ranking,
+  PUSH_TRANSACTIONS: (state, transactions) => state.transactions.push(...transactions),
+  SET_TRANSACTION_PIE: (state, transactionPie) => state.transactionPie = transactionPie,
+  SET_VOTES_BAR: (state, votesBar) => state.votesBar = votesBar,
+  SET_BANKS: (state, banks) => state.banks = banks,
+  SET_SHOPS: (state, shops) => state.shops = shops,
+  SET_TOTAL_COINS: (state, totalCoins) => state.totalCoins = totalCoins,
+  SET_TOTAL_EARNING: (state, totalEarning) => state.totalEarning = totalEarning
 }
 export const actions = {
   async fetchTransactionList({

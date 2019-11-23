@@ -5,7 +5,6 @@
       <div class="mranking-card__cover">
         <v-img
           :aspect-ratio="1/1.5"
-          max-width="15rem"
           class="mranking-card__img"
           :src="book.cover + '/m'"
           :lazy-src="cover"
@@ -100,6 +99,7 @@ export default {
     }
     #{$self}__cover {
       min-width: 6rem;
+      max-width: 6rem;
       margin-right: 0.5rem;
 
       #{$self}__img {

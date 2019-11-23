@@ -18,7 +18,7 @@ export default {
     };
   },
   components: {
-    CreateChapter: () => import("@/components/Dashboard/Forms/Chapter/index"),
+    // CreateChapter: () => import("@/components/Dashboard/Forms/Chapter/index"),
     ChapterForm: () => import("@/components/Web/Forms/Chapter")
   },
   created() {},

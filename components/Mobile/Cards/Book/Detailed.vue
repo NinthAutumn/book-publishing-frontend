@@ -7,8 +7,7 @@
           :src="book.cover"
           :lazy-src="lazyCover"
           :aspect-ratio="1/1.5"
-          max-width="15rem"
-          min-width="7rem"
+          max-width="6rem"
         ></v-img>
       </div>
       <div class="mobile-detailed__meta">

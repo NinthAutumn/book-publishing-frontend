@@ -17,17 +17,10 @@ export const state = () => ({
 
 
 export const getters = {
-  getMenuState(state) {
-    return state.menuState
-  },
+  getMenuState: (state) => state.menuState,
   getDMenuState: state => state.dashboardMenuState,
-  isAuthenticated: (state) => {
-    return state.auth.loggedIn
-  },
-
-  loggedInUser: (state) => {
-    return state.auth.user
-  },
+  isAuthenticated: (state) => state.auth.loggedIn,
+  loggedInUser: (state) => state.auth.user,
   getProductModalState: state => state.productModal,
   getContractModalState: state => state.contractModal,
   getContractStep: state => state.contractStep,
@@ -40,41 +33,20 @@ export const getters = {
 
 
 export const mutations = {
-  SIGNUP_STATE(state) {
-    state.authStep = 1;
+  SIGNUP_STATE: (state) => state.authStep = 1,
+  SET_ACTIVE: (state, active) => state.active = active,
+  TOGGLE_VOLUME: (state) => state.volumeModal = !state.volumeModal,
+  TOGGLE_PRODUCT_MODAL: (state, status) => state.productModal = status,
+  SET_AUTH_PAGE: (state, page) => state.authStep = page,
+  SET_CONTRACT_STEP: (state, step) => state.contractStep = step,
+  START: (state) => state.authStep = 0,
+  LOGIN_STATE: (state) => {
+    if (state.loginForm) state.authStep = 0
+    state.loginForm = !state.loginForm
+
   },
-  SET_ACTIVE(state, active) {
-    state.active = active;
-  },
-  TOGGLE_VOLUME(state) {
-    state.volumeModal = !state.volumeModal
-  },
-  TOGGLE_PRODUCT_MODAL(state, status) {
-    state.productModal = status
-  },
-  SET_AUTH_PAGE(state, page) {
-    state.authStep = page
-  },
-  SET_CONTRACT_STEP(state, step) {
-    state.contractStep = step
-  },
-  START(state) {
-    state.authStep = 0
-  },
-  LOGIN_STATE(state) {
-    if (state.loginForm) {
-      state.loginForm = false
-    } else {
-      state.loginForm = true
-      state.authStep = 0;
-    }
-  },
-  LOGIN_FALSE(state) {
-    state.loginForm = false
-  },
-  increment(state) {
-    state.counter++
-  },
+  LOGIN_FALSE: (state) => state.loginForm = false,
+  increment: (state) => state.counter++,
   menuStateChange(state) {
     if (state.menuState != "menu-active") {
       state.menuState = "menu-active";
@@ -84,32 +56,19 @@ export const mutations = {
       state.slidesPerView = 9
     }
   },
-  DROPDOWN_STATE(state) {
-    state.dropdownState = !state.dropdownState
-  },
-  DROPDOWN_FALSE(state) {
-    state.dropdownState = false
-  },
+  DROPDOWN_STATE: (state) => state.dropdownState = !state.dropdownState,
+  DROPDOWN_FALSE: (state) => state.dropdownState = false,
   DASHBOARD_MENU_STATE_CHANGE(state) {
     if (state.dashboardMenuState === "dashboard-active") {
       state.dashboardMenuState = "dashboard-inactive"
     } else {
       state.dashboardMenuState = "dashboard-active"
     }
-
   },
-  SET_CONTRACT_MODAL_STATE(state) {
-    state.contractModal = !state.contractModal
-  },
-  TOGGLE_SETTING_MODAL(state) {
-    state.settingModal = !state.settingModal
-  },
-  SET_IMAGE_URL(state, imageUrl) {
-    state.imageUrl = imageUrl
-  },
-  TOGGLE_IMAGE(state) {
-    state.imageModal = !state.imageModal
-  },
+  SET_CONTRACT_MODAL_STATE: (state) => state.contractModal = !state.contractModal,
+  TOGGLE_SETTING_MODAL: (state) => state.settingModal = !state.settingModal,
+  SET_IMAGE_URL: (state, imageUrl) => state.imageUrl = imageUrl,
+  TOGGLE_IMAGE: (state) => state.imageModal = !state.imageModal,
 
 }
 

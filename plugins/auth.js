@@ -41,31 +41,32 @@ export default async function ({
       if (!refresh_token || !token) {
         return
       }
-      const decoded = parseJwt(token)
-      let expdate = ((decoded.exp * 1000) - (Date.now())) * 0.75
-      if (expdate < 10000) {
-        refreshInterval = 10000
+      try {
+        const res = await $axios.patch('/v2/auth/token', {
+          refresh: refresh_token
+        })
+        let access_token = res.data.token
+        store.commit('auth/SET_AUTH', {
+          refresh_token,
+          access_token,
+          strategy: strategy
+        })
+        $storage.setUniversal('access_token', access_token)
+        $axios.defaults.headers.common['Authorization'] = 'Bearer ' + access_token
+      } catch (error) {
+        console.log(error);
+        throw new Error('トークンの再生に失敗した')
       }
+      // const decoded = parseJwt(token)
+      // let expdate = ((decoded.exp * 1000) - (Date.now())) * 0.75
+      // if (expdate < 10000) {
+      //     expdate = 10000
+      // }
 
-      let refresher = setInterval(async function () {
-        try {
-          const res = await $axios.patch('/v2/auth/token', {
-            refresh: refresh_token
-          })
-          let access_token = res.data.token
-          store.commit('auth/SET_AUTH', {
-            refresh_token,
-            access_token,
-            strategy: strategy
-          })
-          $storage.setUniversal('access_token', access_token)
-          $axios.defaults.headers.common['Authorization'] = 'Bearer ' + access_token
-        } catch (error) {
-          console.log(error);
-          throw new Error('トークンの再生に失敗した')
-        }
+      // let refresher = setInterval(async function () {
 
-      }, expdate);
+
+      // }, expdate);
     }
   }
 

@@ -16,21 +16,11 @@ export const getters = {
 }
 
 export const mutations = {
-  SET_PAYMENT_METHODS: (state, methods) => {
-    state.paymentMethods = methods
-  },
-  SET_CUSTOMER: (state, customer) => {
-    state.customer = customer
-  },
-  SET_PAYMENT_INTENT: (state, intent) => {
-    state.paymentIntent = intent
-  },
-  SET_PAYMENT_METHOD: (state, method) => {
-    state.paymentMethod = method
-  },
-  SET_SUBSCRIPTION: (state, subscription) => {
-    state.subscription = subscription
-  }
+  SET_PAYMENT_METHODS: (state, methods) => state.paymentMethods = methods,
+  SET_CUSTOMER: (state, customer) => state.customer = customer,
+  SET_PAYMENT_INTENT: (state, intent) => state.paymentIntent = intent,
+  SET_PAYMENT_METHOD: (state, method) => state.paymentMethod = method,
+  SET_SUBSCRIPTION: (state, subscription) => state.subscription = subscription
 }
 export const actions = {
   fetchPaymentMethods: async function ({

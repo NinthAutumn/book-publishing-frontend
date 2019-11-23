@@ -9,18 +9,10 @@ export const getters = {
 }
 
 export const mutations = {
-  SET_TAGS: (state, tags) => {
-    state.list = tags
-  },
-  PUSH_TAGS: (state, tags) => {
-    state.list.push(...tags)
-  },
-  SET_CATEGORY: (state, category) => {
-    state.category = category;
-  },
-  PUSH_CATEGORY: (state, category) => {
-    state.category.push(...category)
-  },
+  SET_TAGS: (state, tags) => state.list = tags,
+  PUSH_TAGS: (state, tags) => state.list.push(...tags),
+  SET_CATEGORY: (state, category) => state.category = category,
+  PUSH_CATEGORY: (state, category) => state.category.push(...category),
 }
 export const actions = {
   async fetchCategoryList({

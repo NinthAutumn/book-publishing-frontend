@@ -24,8 +24,8 @@ export default {
     BookCard: hydrateWhenVisible(() => import("@/components/Web/Cards/Book")),
     BookSkeleton: () => import("@/components/Web/Cards/Skeleton/Book")
   },
-  creaetd() {
-    this.slides = this.$device.isMobile ? 3 : 7;
+  created() {
+    this.slides = this.$device.isMobile ? 4 : 7;
   },
   mounted() {
     this.loading = false;
@@ -35,7 +35,7 @@ export default {
       swiperMobile: {
         slidesPerView: 3.5,
         spaceBetween: 5,
-        freeMode: true,
+        freeMode: false,
         mousewheel: {
           invert: true,
           sensitivity: 1,
@@ -47,7 +47,7 @@ export default {
       swiperOption: {
         slidesPerView: "auto",
         spaceBetween: 15,
-        freeMode: true,
+        freeMode: false,
         mousewheel: {
           invert: true,
           sensitivity: 1,

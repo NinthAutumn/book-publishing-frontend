@@ -12,12 +12,8 @@ export const state = () => ({
 })
 
 export const getters = {
-  getRankingList: (state) => {
-    return state.list
-  },
-  getTrendingList: (state) => {
-    return state.trending
-  },
+  getRankingList: (state) => state.list,
+  getTrendingList: (state) => state.trending,
   getRankingsList: state => state.rankings,
   getBookRanking: state => state.ranking,
   getVoteRanking: state => state.voteRanking,
@@ -26,24 +22,12 @@ export const getters = {
 }
 
 export const mutations = {
-  SET_RANKING_LIST(state, list) {
-    state.list = list
-  },
-  SET_TRENDING_LIST(state, list) {
-    state.trending = list
-  },
-  SET_RANKINGS(state, list) {
-    state.rankings = list
-  },
-  SET_BOOK_RANKING(state, ranking) {
-    state.ranking = ranking
-  },
-  SET_VOTE_RANKING: (state, voteRanking) => {
-    state.voteRanking = voteRanking
-  },
-  SET_TRENDING_READING_LIST(state, list) {
-    state.reading = list
-  }
+  SET_RANKING_LIST: (state, list) => state.list = list,
+  SET_TRENDING_LIST: (state, list) => state.trending = list,
+  SET_RANKINGS: (state, list) => state.rankings = list,
+  SET_BOOK_RANKING: (state, ranking) => state.ranking = ranking,
+  SET_VOTE_RANKING: (state, voteRanking) => state.voteRanking = voteRanking,
+  SET_TRENDING_READING_LIST: (state, list) => state.reading = list
 }
 
 export const actions = {

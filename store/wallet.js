@@ -11,15 +11,9 @@ export const getters = {
 }
 
 export const mutations = {
-  SET_WEALTH(state, wealth) {
-    state.wealth = wealth
-  },
-  SET_VOTE_TOKEN(state, token) {
-    state.token = token
-  },
-  SET_PAYOUT_LIST: function (state, payout) {
-    state.payout = payout
-  }
+  SET_WEALTH: (state, wealth) => state.wealth = wealth,
+  SET_VOTE_TOKEN: (state, token) => state.token = token,
+  SET_PAYOUT_LIST: (state, payout) => state.payout = payout
 }
 export const actions = {
   async buyChapter({

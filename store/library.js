@@ -11,12 +11,8 @@ export const state = () => ({
 })
 
 export const getters = {
-  getLatestChapters: (state) => {
-    return state.latestChapters
-  },
-  isBookmarked: (state) => {
-    return state.bookmarked
-  },
+  getLatestChapters: (state) => state.latestChapters,
+  isBookmarked: (state) => state.bookmarked,
   getReviews: state => state.reviews,
   getBookmarks: state => state.bookmarks,
   getHistory: state => state.history,
