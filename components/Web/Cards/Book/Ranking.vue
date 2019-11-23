@@ -53,7 +53,12 @@ export default {
   },
   data() {
     return {
-      cover: require("~/assets/img/NobleCardLight.png")
+      cover: require("~/assets/img/NobleCardLight.png"),
+      status_types: {
+        completed: "完結",
+        ongoing: "連載中",
+        hiatus: "休憩中"
+      }
     };
   }
 };
@@ -69,9 +74,16 @@ export default {
 
     display: flex;
     width: 100%;
+    background: white;
+    &:hover {
+      cursor: pointer;
+    }
     #{$self}__cover {
       position: relative;
       margin-right: 1rem;
+      box-shadow: 0 2px 5px 0 rgba(60, 66, 87, 0.1),
+        0 1px 1px 0 rgba(0, 0, 0, 0.07);
+      border-radius: 0.5rem;
     }
     #{$self}__ranking {
       font-size: 1.6rem;
@@ -103,7 +115,7 @@ export default {
     #{$self}__meta {
       display: flex;
       // align-items:center;
-      justify-content: space-between;
+      justify-content: space-evenly;
       flex-direction: column;
       width: 100%;
       #{$self}__title {
@@ -116,12 +128,12 @@ export default {
       #{$self}__author {
         font-size: 1.4rem;
         padding: 0.1rem 2rem;
-
         border-radius: 10rem;
         background-color: $secondary;
         color: white;
       }
       #{$self}__synopsis {
+        opacity: 0.8;
         font-size: 1.4rem;
       }
     }

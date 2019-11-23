@@ -2,7 +2,7 @@
   <div class="update-book">
     <nuxt-link
       tag="div"
-      :to="`books/${book? book[0].book_id: ''}`"
+      :to="`books/${book? book.id: ''}`"
       class="update-book__cover"
       style=" border-radius: 0.4rem;"
     >
@@ -10,23 +10,23 @@
         :aspect-ratio="1/1.5"
         max-width="15rem"
         class="update-book__img"
-        :src="book[0].cover + '/m'"
+        :src="book.cover + '/m'"
         :lazy-src="cover"
         style=" border-radius: 0.4rem;"
       ></v-img>
-      <span class="update-book__cover-meta">{{book.length}}</span>
+      <span class="update-book__cover-meta">{{book.chapters.length}}</span>
     </nuxt-link>
     <div class="update-book__meta">
       <div class="flex-divider flex-row flex--align flex--between">
         <nuxt-link
           tag="a"
-          :to="`books/${book? book[0].book_id: ''}`"
+          :to="`books/${book? book.id: ''}`"
           class="update-book__title"
           v-line-clamp="2"
-        >{{book[0].title}}</nuxt-link>
+        >{{book.title}}</nuxt-link>
         <div class="update-book__menu" @click.stop="toggleModal">
           <fa icon="ellipsis-v"></fa>
-          <select-modal top v-if="modal" @toggle="toggleModal" :bookId="book?book[0].book_id:1"></select-modal>
+          <select-modal top v-if="modal" @toggle="toggleModal" :bookId="book?book.id:1"></select-modal>
         </div>
       </div>
 
@@ -34,20 +34,20 @@
         <div
           class="update-book__chapter-item"
           :key="chapter.chapter_id"
-          v-for="(chapter,index) in book"
+          v-for="(chapter,index) in book.chapters"
         >
           <nuxt-link
             tag="div"
             v-ripple
-            :to="`/books/${chapter.book_id}/${chapter.chapter_id}`"
+            :to="`/books/${book.id}/${chapter.id}`"
             class="update-book__chapter-container flex-row"
             v-if="index < 3"
           >
             <div class="update-book__chapter-index">{{chapter.index}}</div>
-            <div class="update-book__chapter-title" v-line-clamp="1">{{chapter.chapter_title}}</div>
+            <div class="update-book__chapter-title" v-line-clamp="1">{{chapter.title}}</div>
           </nuxt-link>
         </div>
-        <p class="text--right" v-if="book.length > 3">・・・ {{book.length- 3}}+</p>
+        <p class="text--right" v-if="book.chapters.length > 3">・・・ {{book.chapters.length- 3}}+</p>
       </div>
     </div>
   </div>

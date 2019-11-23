@@ -50,7 +50,6 @@ export const getters = {
 export const mutations = {
   SET_USER_BOOKS: (state, books) => state.books = books,
   SET_USER: (state, user) => state.user = user,
-
   LOADING: (state) => state.isLoading = true,
   LOADING_FIN: (state) => state.isLoading = false,
   SET_FONT_FAMILY: (state, fontFamily) => state.fontFamily = fontFamily,

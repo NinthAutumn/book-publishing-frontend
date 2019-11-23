@@ -29,6 +29,12 @@
           max-width="15rem"
           min-width="5rem"
         ></v-img>
+        <div
+          v-if="!$device.isMobile&&book.status"
+          class="book-card__status"
+          :class="{'book-card__status--completed':book.status === 'completed'}"
+          v-text="status"
+        ></div>
       </nuxt-link>
       <div class="book-card__progress-bar" v-if="progress">
         <v-progress-linear
@@ -105,19 +111,27 @@ export default {
     rating: Boolean,
     editMode: [Boolean, String]
   },
-  data() {
-    return {
-      lazyCover: require("~/assets/img/NobleCardLight.png"),
-      timer: false,
-      lockTimer: false,
-      touchduration: 500,
-      selected: false,
-      modal: false,
-      isVisible: false
-    };
-  },
+  data: () => ({
+    lazyCover: require("~/assets/img/NobleCardLight.png"),
+    timer: false,
+    lockTimer: false,
+    touchduration: 500,
+    selected: false,
+    modal: false,
+    isVisible: false,
+    status_types: {
+      completed: "完結",
+      ongoing: "連載中",
+      hiatus: "休憩中"
+    }
+  }),
   components: {
     SelectModal: () => import("@/components/Web/Modals/Book/Select")
+  },
+  computed: {
+    status() {
+      return this.status_types[this.book.status];
+    }
   },
   methods: {
     toggleModal() {
@@ -163,8 +177,27 @@ export default {
       visibility: visible !important;
     }
   }
+
   &__container {
     position: relative;
+    #{$self}__status {
+      font-size: 1.2rem;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      border-radius: 0.5rem;
+      padding: 0.3rem 1.5rem;
+      box-shadow: 0 2px 5px 0 rgba(60, 66, 87, 0.1),
+        0 1px 1px 0 rgba(0, 0, 0, 0.07);
+      color: white;
+      font-weight: bold;
+      background-color: #2a2f45;
+      &--completed {
+        background-color: white;
+        // text-shadow: 1px 1px 5px #2a2f4527;
+        color: #2a2f45;
+      }
+    }
   }
   &__editmode {
     position: absolute;

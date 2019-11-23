@@ -17,11 +17,7 @@
         icon="th-list"
       ></fa>
     </div>
-    <BookList
-      v-loading="loading"
-      :latestBooks="latestBooks"
-      v-if="!$device.isMobile?update_view === 'grid':true"
-    ></BookList>
+    <BookList :latestBooks="latestBooks" v-if="!$device.isMobile?update_view === 'grid':true"></BookList>
     <book-table :latestBooks="latestBooks" v-if="!$device.isMobile?update_view === 'list':false"></book-table>
     <client-only>
       <infinite-loading @infinite="infiniteHandler"></infinite-loading>
@@ -45,7 +41,7 @@ export default {
     }
     await store.dispatch("book/fetchLatestBooks", {
       page: 1,
-      limit: 30,
+      limit: 3,
       structured: true
     });
   },
@@ -67,8 +63,9 @@ export default {
     infiniteHandler: async function($state) {
       const array = await this.fetchLatest({
         page: this.page++,
-        limit: 30,
-        infinite: true
+        limit: 3,
+        infinite: true,
+        structured: true
       });
       if (array.length < 1) {
         $state.complete();

@@ -6,11 +6,15 @@ export default async () => {
   const instance = axios.create({
     baseURL: 'https://api.nobles.com',
   });
-  const {
-    data
-  } = await axios.get('/book/show/all')
-  data.forEach((book) => {
-    routes.push(`/books/${book.id}`)
-  })
-  return routes
+  try {
+    const {
+      data
+    } = await axios.get('/api/book/show/all')
+    for (let book in data) {
+      routes.push(`/books/${book.id}`)
+    }
+    return routes
+  } catch (error) {
+    return routes
+  }
 }

@@ -2,7 +2,7 @@
   <div class="update-mobile" v-ripple>
     <nuxt-link
       tag="div"
-      :to="`books/${book? book[0].book_id: ''}`"
+      :to="`books/${book? book.id: ''}`"
       class="update-mobile__cover"
       style=" border-radius: 0.4rem;"
     >
@@ -10,14 +10,14 @@
         :aspect-ratio="1/1.5"
         max-width="15rem"
         class="update-mobile__img"
-        :src="book[0].cover"
+        :src="book.cover"
         :lazy-src="cover"
         style=" border-radius: 0.4rem;"
       ></v-img>
-      <span class="update-mobile__cover-meta">{{book.length}}</span>
+      <span class="update-mobile__cover-meta">{{book.chapters.length}}</span>
     </nuxt-link>
     <div class="update-mobile__meta">
-      <div class="update-mobile__title" v-line-clamp="2">{{book[0].title}}</div>
+      <div class="update-mobile__title" v-line-clamp="2">{{book.title}}</div>
     </div>
   </div>
 </template>

@@ -23,6 +23,12 @@
             style="border-radius: 0.4rem;     box-shadow: 0 2px 5px 0 rgba(60,66,87, 0.1), 0 1px 1px 0 rgba(0, 0, 0, .07); "
             class="recommendation-books__img"
           ></v-img>
+          <div
+            v-if="!$device.isMobile"
+            class="recommendation-books__status"
+            :class="{'recommendation-books__status--completed':book.status === 'completed'}"
+            v-text="status(book.status)"
+          ></div>
         </div>
         <div class="recommendation-books__meta">
           <div class="recommendation-books__rating" v-if="!$device.isMobile">
@@ -57,7 +63,12 @@ export default {
     return {
       cover: require("~/assets/img/NobleCardLight.png?size=200"),
       cover_size: 0,
-      loading: true
+      loading: true,
+      status_types: {
+        completed: "完結",
+        ongoing: "連載中",
+        hiatus: "休憩中"
+      }
     };
   },
   components: {
@@ -68,6 +79,11 @@ export default {
   },
   mounted() {
     this.cover_size = this.$refs.cover.clientWidth;
+  },
+  methods: {
+    status(status) {
+      return this.status_types[status];
+    }
   },
   computed: {
     ...mapGetters({
@@ -98,6 +114,7 @@ export default {
         margin-right: 0 !important;
         #{$self}__cover {
           margin: 0;
+
           width: 100% !important;
           min-width: 8rem !important;
         }
@@ -163,10 +180,29 @@ export default {
         cursor: pointer;
       }
       #{$self}__cover {
+        position: relative;
         margin-right: 2rem;
         width: 45%;
         max-width: 12rem;
         min-width: 12rem;
+        #{$self}__status {
+          font-size: 1.2rem;
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          border-radius: 0.5rem;
+          padding: 0.3rem 1rem;
+          box-shadow: 0 2px 5px 0 rgba(60, 66, 87, 0.1),
+            0 1px 1px 0 rgba(0, 0, 0, 0.07);
+          color: white;
+          font-weight: bold;
+          background-color: #2a2f45;
+          &--completed {
+            background-color: white;
+            // text-shadow: 1px 1px 5px #2a2f4527;
+            color: #2a2f45;
+          }
+        }
         #{$self}__img {
           &:hover {
             transition: 200ms;

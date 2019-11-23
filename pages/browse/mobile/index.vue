@@ -51,7 +51,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 export default {
   auth: false,
   data() {
@@ -93,7 +93,7 @@ export default {
   },
   watch: {},
   async mounted() {
-    await this.$store.dispatch("book/fetchAllGenres");
+    await this.fetchGenres();
     this.genres.forEach(this.mountedHandler);
     // this.items = await this.$store.dispatch("book/browseMobileBooks", {
     //   type: this.selected_type,
@@ -106,6 +106,10 @@ export default {
     // });
   },
   methods: {
+    ...mapActions({
+      fetchGenres: "book/fetchAllGenres",
+      fetchBooks: "book/browseMobileBooks"
+    }),
     mountedHandler(genre) {
       if (genre.name === this.$route.query.genre) {
         this.filters["genre"].list.push({
@@ -127,7 +131,7 @@ export default {
       }
     },
     async infiniteHandler($state) {
-      const books = await this.$store.dispatch("book/browseMobileBooks", {
+      const books = await this.fetchBooks({
         type: this.selected_type,
         page: this.page++,
         limit: 20,
@@ -143,7 +147,6 @@ export default {
         $state.complete();
       }
     },
-
     goBack() {
       this.$router.go(-1);
     },
