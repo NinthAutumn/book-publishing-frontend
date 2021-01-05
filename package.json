@@ -36,7 +36,7 @@
     "@nuxtjs/vuetify": "^1.9.0",
     "@sum.cumo/nuxt-styleguide": "^5.3.0",
     "atob": "^2.1.2",
-    "axios": "^0.19.0",
+    "axios": "^0.21.1",
     "browser-image-resizer": "^2.0.1",
     "browserslist": "^4.7.2",
     "caniuse-lite": "^1.0.30001006",
