@@ -61,7 +61,7 @@
     "nuxt-validate": "^1.0.1",
     "nuxt-webfontloader": "^1.1.0",
     "set-value": "^2.0.1",
-    "swiper": "^4.5.1",
+    "swiper": "^6.5.1",
     "tar": "^4.4.13",
     "tb-skeleton": "^0.3.6",
     "uuid": "^3.3.3",
