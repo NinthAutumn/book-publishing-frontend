@@ -50,7 +50,7 @@
     "intersection-observer": "^0.7.0",
     "js-yaml": "^3.13.1",
     "jwt-decode": "^2.2.0",
-    "lodash-es": "^4.17.15",
+    "lodash-es": "^4.17.21",
     "mixin-deep": "^2.0.1",
     "moment": "^2.24.0",
     "nuxt": "^2.10.2",
