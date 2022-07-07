@@ -52,7 +52,7 @@
     "jwt-decode": "^2.2.0",
     "lodash-es": "^4.17.15",
     "mixin-deep": "^2.0.1",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "nuxt": "^2.10.2",
     "nuxt-compress": "^1.0.2",
     "nuxt-fontawesome": "^0.4.0",
